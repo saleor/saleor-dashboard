@@ -1,3 +1,4 @@
+import { ButtonLink } from "@dashboard/components/ButtonLink";
 import {
   DiscountValueTypeEnum,
   OrderDetailsFragment,
@@ -22,37 +23,6 @@ const emptyDiscount: OrderDiscountCommonInput = {
   reason: "",
   calculationMode: DiscountValueTypeEnum.PERCENTAGE,
 };
-
-const InlineLink = ({
-  children,
-  onClick,
-  title,
-  "data-test-id": dataTestId,
-}: {
-  children: ReactNode;
-  onClick?: () => void;
-  title?: string;
-  "data-test-id"?: string;
-}): ReactNode => (
-  <Text
-    as="a"
-    color="accent1"
-    onClick={e => {
-      e.preventDefault();
-      onClick?.();
-    }}
-    href="#"
-    title={title}
-    data-test-id={dataTestId}
-    style={{
-      cursor: "pointer",
-      textDecoration: "none",
-    }}
-    __textDecoration={{ hover: "underline" }}
-  >
-    {children}
-  </Text>
-);
 
 const messages = defineMessages({
   discount: {
@@ -257,9 +227,9 @@ export const OrderValue = (props: Props): ReactNode => {
       return (
         <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
           {intl.formatMessage(messages.shipping)}{" "}
-          <InlineLink onClick={editableProps?.onShippingMethodEdit}>
+          <ButtonLink onClick={editableProps?.onShippingMethodEdit}>
             {shippingMethodName}
-          </InlineLink>
+          </ButtonLink>
         </OrderSummaryListItem>
       );
     }
@@ -288,12 +258,12 @@ export const OrderValue = (props: Props): ReactNode => {
 
     return (
       <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
-        <InlineLink
+        <ButtonLink
           onClick={editableProps?.onShippingMethodEdit}
           data-test-id="add-shipping-carrier"
         >
           {intl.formatMessage(messages.setShippingMethod)}
-        </InlineLink>
+        </ButtonLink>
       </OrderSummaryListItem>
     );
   };
@@ -339,9 +309,9 @@ export const OrderValue = (props: Props): ReactNode => {
           >
             <Popover.Trigger>
               <Text as="span">
-                <InlineLink onClick={editableProps?.openDialog}>
+                <ButtonLink onClick={editableProps?.openDialog}>
                   {intl.formatMessage(messages.addDiscount)}
-                </InlineLink>
+                </ButtonLink>
               </Text>
             </Popover.Trigger>
             <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
@@ -382,9 +352,9 @@ export const OrderValue = (props: Props): ReactNode => {
         >
           <Popover.Trigger>
             <Text as="span">
-              <InlineLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
+              <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
                 {discountDisplayValue}
-              </InlineLink>
+              </ButtonLink>
             </Text>
           </Popover.Trigger>
           <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>

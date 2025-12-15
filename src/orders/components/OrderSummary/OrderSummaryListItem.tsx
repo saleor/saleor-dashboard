@@ -27,7 +27,15 @@ export const OrderSummaryListItem = ({
   const fontWeight = bold ? "bold" : "regular";
 
   return (
-    <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2} title={title} {...props}>
+    <Box
+      as="li"
+      display="grid"
+      __gridTemplateColumns="1fr auto"
+      alignItems="baseline"
+      gap={2}
+      title={title}
+      {...props}
+    >
       <Text fontWeight={fontWeight} size={4}>
         {children}
       </Text>
