@@ -224,6 +224,7 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                     data-test-id="confirm-button"
                     transitionState={confirmButtonState}
                     onClick={submit}
+                    disabled={!isClearable && data.shippingMethod === NO_SHIPPING_METHOD_ID}
                   >
                     <FormattedMessage {...buttonMessages.confirm} />
                   </ConfirmButton>

@@ -5849,13 +5849,13 @@
   "YIT1XP": {
     "string": "Create voucher"
   },
-  "YPCB7b": {
-    "context": "label for fixed amount discount type",
-    "string": "Fixed amount"
-  },
   "YL8K/3": {
     "context": "automatic completion delay input label",
     "string": "Delay before completion (minutes). Default is 30."
+  },
+  "YPCB7b": {
+    "context": "label for fixed amount discount type",
+    "string": "Fixed amount"
   },
   "YQ3EXR": {
     "context": "product types section name",
