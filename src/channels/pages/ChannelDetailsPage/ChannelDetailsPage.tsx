@@ -49,25 +49,7 @@ import {
   createWarehouseReorderHandler,
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
-
-const parseDateTimeToDateAndTime = (
-  dateTime: string | null | undefined,
-): { date: string; time: string } => {
-  if (!dateTime) {
-    return { date: "", time: "" };
-  }
-
-  const dateObj = new Date(dateTime);
-
-  if (isNaN(dateObj.getTime())) {
-    return { date: "", time: "" };
-  }
-
-  const date = dateObj.toISOString().split("T")[0];
-  const time = dateObj.toTimeString().slice(0, 5);
-
-  return { date, time };
-};
+import { parseDateTimeToDateAndTime } from "./utils";
 
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
