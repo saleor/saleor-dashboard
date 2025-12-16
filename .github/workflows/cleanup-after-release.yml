@@ -71,21 +71,13 @@ jobs:
           # Fetch latest changes
           git fetch origin
 
-          # Check if a cleanup PR already exists
-          EXISTING_PR=$(gh pr list --base main --head "$CURRENT_RELEASE" --json number --jq '.[0].number' || echo "")
+          echo "Creating new cleanup PR from $CURRENT_RELEASE to main"
 
-          if [ -n "$EXISTING_PR" ]; then
-            echo "ℹ️  Cleanup PR already exists: #$EXISTING_PR"
-            echo "Updating existing PR..."
-            gh pr edit "$EXISTING_PR" --title "Clean up after release $VERSION"
-          else
-            echo "Creating new cleanup PR from $CURRENT_RELEASE to main"
-
-            gh pr create \
-              --base main \
-              --head "$CURRENT_RELEASE" \
-              --title "Clean up after release $VERSION" \
-              --body "$(cat <<EOF
+          gh pr create \
+            --base main \
+            --head "$CURRENT_RELEASE" \
+            --title "Clean up after release $VERSION" \
+            --body "$(cat <<EOF
           This PR syncs changes from the release branch back to main after a release.
 
           - Release branch: $CURRENT_RELEASE
