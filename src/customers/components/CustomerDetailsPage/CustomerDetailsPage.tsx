@@ -20,7 +20,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { orderListUrl } from "@dashboard/orders/urls";
+import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Divider } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -111,9 +111,7 @@ const CustomerDetailsPage = ({
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
                   orders={mapEdgesToItems(customer?.orders)}
-                  viewAllHref={orderListUrl({
-                    customer: customer?.email,
-                  })}
+                  viewAllHref={orderListUrlWithCustomerEmail(customer?.email)}
                 />
                 <CardSpacer />
               </RequirePermissions>

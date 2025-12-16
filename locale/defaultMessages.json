@@ -6006,6 +6006,10 @@
     "context": "ProductTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?"
   },
+  "ZGmd4h": {
+    "context": "button",
+    "string": "Copy to clipboard"
+  },
   "ZHF4Z9": {
     "context": "delete product dialog subtitle",
     "string": "Are you sure you want to delete {name}?"
@@ -6597,6 +6601,9 @@
   "cdiRSf": {
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
+  },
+  "ce2kVF": {
+    "string": "View in payment provider"
   },
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
@@ -8312,6 +8319,10 @@
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "oIS3NK": {
+    "context": "button",
+    "string": "Show more"
   },
   "oIvtua": {
     "context": "attribute's editor component",
