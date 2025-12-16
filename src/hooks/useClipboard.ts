@@ -9,15 +9,20 @@ export function useClipboard(): [boolean, (text: string) => void] {
       timeout.current = null;
     }
   };
-  const copy = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopyStatus(true);
+  const copy = (text: string): void => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setCopyStatus(true);
 
-      timeout.current = window.setTimeout(() => {
-        clear();
-        setCopyStatus(false);
-      }, 2000);
-    });
+        timeout.current = window.setTimeout(() => {
+          clear();
+          setCopyStatus(false);
+        }, 2000);
+      })
+      .catch(() => {
+        console.warn("Failed to use clipboard, ensure browser permission is enabled.");
+      });
   };
 
   // Clear timeout after hook unmounting

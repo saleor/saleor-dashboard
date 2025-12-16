@@ -1,0 +1,5 @@
+.editTextarea,
+.editTextarea > div,
+.editTextarea textarea {
+  background-color: var(--mu-colors-background-default1) !important;
+}

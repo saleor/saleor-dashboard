@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Link from "@dashboard/components/Link";
-import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { customerPath } from "@dashboard/customers/urls";
 import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
