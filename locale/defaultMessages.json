@@ -6139,6 +6139,9 @@
     "context": "warehouse",
     "string": "Name"
   },
+  "aCdAsI": {
+    "string": "Copy to clipboard"
+  },
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
