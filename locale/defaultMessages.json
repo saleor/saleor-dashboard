@@ -3487,10 +3487,6 @@
   "JiVwOU": {
     "string": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
   },
-  "Jiy1HB": {
-    "context": "button",
-    "string": "Show more"
-  },
   "Jj0de8": {
     "context": "voucher status",
     "string": "Scheduled"
@@ -8282,6 +8278,10 @@
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "oIS3NK": {
+    "context": "button",
+    "string": "Show more"
   },
   "oIvtua": {
     "context": "attribute's editor component",
