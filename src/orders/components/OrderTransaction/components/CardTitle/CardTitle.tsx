@@ -55,14 +55,17 @@ interface CardTitleProps {
   transaction: ExtendedOrderTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
   showActions?: boolean;
+  chevron?: React.ReactNode;
 }
 
 const TransactionTitle = ({
   transaction,
   index,
+  chevron,
 }: {
   transaction: ExtendedOrderTransaction;
   index: number;
+  chevron?: React.ReactNode;
 }) => {
   const intl = useIntl();
 
@@ -80,6 +83,7 @@ const TransactionTitle = ({
   return (
     <Box display="flex" flexDirection="column" gap={0.5}>
       <Box display="flex" alignItems="center" gap={2}>
+        {chevron}
         <Text size={4} fontWeight="medium">
           {transactionTitle}
         </Text>
@@ -116,6 +120,7 @@ export const OrderTransactionCardTitle = ({
   transaction,
   onTransactionAction,
   showActions = true,
+  chevron,
 }: CardTitleProps) => {
   const intl = useIntl();
 
@@ -129,7 +134,7 @@ export const OrderTransactionCardTitle = ({
 
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" gap={4}>
-      <TransactionTitle transaction={transaction} index={index} />
+      <TransactionTitle transaction={transaction} index={index} chevron={chevron} />
 
       <Box display="flex" gap={4} alignItems="center">
         {amounts.map(({ label, money }) => (

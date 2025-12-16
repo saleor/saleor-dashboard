@@ -55,22 +55,19 @@ const OrderTransaction = ({
             overflow="hidden"
           >
             <Accordion.Trigger>
-              <Box
-                display="flex"
-                alignItems="flex-start"
-                gap={3}
-                paddingY={4}
-                paddingX={5}
-                width="100%"
-              >
-                <Box className={styles.chevron} marginTop={1}>
-                  <ChevronDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                </Box>
-
+              <Box paddingY={4} paddingX={5} width="100%">
                 <OrderTransactionCardTitle
                   transaction={transaction}
                   onTransactionAction={onTransactionAction}
                   showActions={showActions}
+                  chevron={
+                    <Box className={styles.chevron}>
+                      <ChevronDown
+                        size={iconSize.small}
+                        strokeWidth={iconStrokeWidthBySize.small}
+                      />
+                    </Box>
+                  }
                 />
               </Box>
             </Accordion.Trigger>
