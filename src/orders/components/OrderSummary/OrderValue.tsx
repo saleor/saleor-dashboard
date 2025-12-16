@@ -1,3 +1,4 @@
+import { ButtonLink } from "@dashboard/components/ButtonLink";
 import {
   DiscountValueTypeEnum,
   OrderDetailsFragment,
@@ -22,37 +23,6 @@ const emptyDiscount: OrderDiscountCommonInput = {
   reason: "",
   calculationMode: DiscountValueTypeEnum.PERCENTAGE,
 };
-
-const InlineLink = ({
-  children,
-  onClick,
-  title,
-  "data-test-id": dataTestId,
-}: {
-  children: ReactNode;
-  onClick?: () => void;
-  title?: string;
-  "data-test-id"?: string;
-}): ReactNode => (
-  <Text
-    as="a"
-    color="accent1"
-    onClick={e => {
-      e.preventDefault();
-      onClick?.();
-    }}
-    href="#"
-    title={title}
-    data-test-id={dataTestId}
-    style={{
-      cursor: "pointer",
-      textDecoration: "none",
-    }}
-    __textDecoration={{ hover: "underline" }}
-  >
-    {children}
-  </Text>
-);
 
 const messages = defineMessages({
   discount: {
@@ -129,6 +99,11 @@ const messages = defineMessages({
     id: "ztsvOP",
     defaultMessage: "Gift card amount used",
     description: "tooltip for gift card amount",
+  },
+  fixedAmount: {
+    id: "YPCB7b",
+    defaultMessage: "Fixed amount",
+    description: "label for fixed amount discount type",
   },
 });
 
@@ -252,30 +227,22 @@ export const OrderValue = (props: Props): ReactNode => {
       return (
         <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
           {intl.formatMessage(messages.shipping)}{" "}
-          <InlineLink onClick={editableProps?.onShippingMethodEdit}>
+          <ButtonLink onClick={editableProps?.onShippingMethodEdit}>
             {shippingMethodName}
-          </InlineLink>
+          </ButtonLink>
         </OrderSummaryListItem>
       );
     }
 
     const hasShippingAddress = !!editableProps?.shippingAddress;
 
-    if (!hasShippingAddress) {
+    if (!hasShippingAddress || !hasShippingMethods) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
           <Text as="span" color="default2">
-            {intl.formatMessage(messages.noShippingAddress)}
-          </Text>
-        </OrderSummaryListItem>
-      );
-    }
-
-    if (!hasShippingMethods) {
-      return (
-        <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
-          <Text as="span" color="default2">
-            {intl.formatMessage(messages.noShippingMethods)}
+            {intl.formatMessage(
+              !hasShippingAddress ? messages.noShippingAddress : messages.noShippingMethods,
+            )}
           </Text>
         </OrderSummaryListItem>
       );
@@ -283,12 +250,12 @@ export const OrderValue = (props: Props): ReactNode => {
 
     return (
       <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
-        <InlineLink
+        <ButtonLink
           onClick={editableProps?.onShippingMethodEdit}
           data-test-id="add-shipping-carrier"
         >
           {intl.formatMessage(messages.setShippingMethod)}
-        </InlineLink>
+        </ButtonLink>
       </OrderSummaryListItem>
     );
   };
@@ -300,13 +267,15 @@ export const OrderValue = (props: Props): ReactNode => {
       return discounts.map(discount => (
         <OrderSummaryListItem
           key={`order-value-discount-${discount.id}`}
-          amount={-discount.amount.amount}
+          amount={discount.amount.amount}
           amountTitle={discountAmountTitle}
-          showSign
         >
           {intl.formatMessage(messages.discount)}{" "}
           <Text as="span" color="default2">
             {discount.name}
+          </Text>{" "}
+          <Text color="default2" fontWeight="medium" size={3}>
+            (applied)
           </Text>
         </OrderSummaryListItem>
       ));
@@ -332,9 +301,9 @@ export const OrderValue = (props: Props): ReactNode => {
           >
             <Popover.Trigger>
               <Text as="span">
-                <InlineLink onClick={editableProps?.openDialog}>
+                <ButtonLink onClick={editableProps?.openDialog}>
                   {intl.formatMessage(messages.addDiscount)}
-                </InlineLink>
+                </ButtonLink>
               </Text>
             </Popover.Trigger>
             <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
@@ -358,15 +327,12 @@ export const OrderValue = (props: Props): ReactNode => {
       );
     }
 
-    const discountDisplayValue = discountLabel.percentage || discountLabel.value;
+    const discountDisplayValue =
+      discountLabel.percentage || intl.formatMessage(messages.fixedAmount);
     const discountAmount = parseFloat(discountLabel.value) || 0;
 
     return (
-      <OrderSummaryListItem
-        amount={-discountAmount}
-        amountTitle={discountAmountTitle}
-        showSign={discountAmount > 0}
-      >
+      <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
         {intl.formatMessage(messages.discount)}{" "}
         <Popover
           onOpenChange={val => {
@@ -378,9 +344,9 @@ export const OrderValue = (props: Props): ReactNode => {
         >
           <Popover.Trigger>
             <Text as="span">
-              <InlineLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
+              <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
                 {discountDisplayValue}
-              </InlineLink>
+              </ButtonLink>
             </Text>
           </Popover.Trigger>
           <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
@@ -399,7 +365,10 @@ export const OrderValue = (props: Props): ReactNode => {
               )}
             </Box>
           </Popover.Content>
-        </Popover>
+        </Popover>{" "}
+        <Text color="default2" fontWeight="medium" size={3}>
+          (applied)
+        </Text>
       </OrderSummaryListItem>
     );
   };
@@ -456,8 +425,6 @@ export const OrderValue = (props: Props): ReactNode => {
           </OrderSummaryListItem>
         )}
 
-        {renderDiscountRow()}
-
         <Box display="grid" placeItems="end" title={intl.formatMessage(messages.totalTitle)}>
           <Box
             borderStyle="solid"
@@ -473,7 +440,7 @@ export const OrderValue = (props: Props): ReactNode => {
               },
               {
                 currency: (
-                  <Text fontWeight="medium" color="default2" size={3}>
+                  <Text fontWeight="bold" color="default2" size={3}>
                     {orderTotal.gross.currency}
                   </Text>
                 ),
@@ -484,6 +451,8 @@ export const OrderValue = (props: Props): ReactNode => {
             )}
           </Box>
         </Box>
+
+        {renderDiscountRow()}
 
         {displayGrossPrices && (
           <OrderSummaryListItem

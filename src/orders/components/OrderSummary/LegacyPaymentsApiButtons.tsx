@@ -8,7 +8,7 @@ type Props = {
   canRefund: boolean;
   canVoid: boolean;
   canMarkAsPaid: boolean;
-  onMarkAsPaid: () => any;
+  onMarkAsPaid?: () => void;
   onLegacyPaymentsApiCapture?: () => any;
   onLegacyPaymentsApiRefund?: () => any;
   onLegacyPaymentsApiVoid?: () => any;
@@ -28,7 +28,8 @@ export const LegacyPaymentsApiButtons = ({
   const intl = useIntl();
 
   const showButtons =
-    order?.status !== OrderStatus.CANCELED && (canCapture || canRefund || canVoid || canMarkAsPaid);
+    order?.status !== OrderStatus.CANCELED &&
+    (canCapture || canRefund || canVoid || (canMarkAsPaid && onMarkAsPaid));
 
   if (!showButtons) {
     return null;
@@ -64,7 +65,7 @@ export const LegacyPaymentsApiButtons = ({
           })}
         </Button>
       )}
-      {canMarkAsPaid && (
+      {canMarkAsPaid && onMarkAsPaid && (
         <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
           {intl.formatMessage({
             defaultMessage: "Mark as Paid",

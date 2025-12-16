@@ -33,7 +33,7 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
           id="Qb2XN5"
           values={{
             link: (
-              <Link href={PAYMENT_APPS_DOCS_URL} target="_blank" rel="noopener noreferer">
+              <Link href={PAYMENT_APPS_DOCS_URL} target="_blank" rel="noopener noreferrer">
                 <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
               </Link>
             ),
@@ -46,7 +46,7 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
           id="eR2vV/"
           values={{
             link: (
-              <Link href={PAYMENT_PLUGINS_DOCS_URL} target="_blank" rel="noopener noreferer">
+              <Link href={PAYMENT_PLUGINS_DOCS_URL} target="_blank" rel="noopener noreferrer">
                 <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
               </Link>
             ),
