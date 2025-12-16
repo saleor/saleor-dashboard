@@ -1,8 +1,17 @@
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 
-export function useCurrentDate(): number {
-  // todo why Date.now() can't be used?
-  const currentDate = useRef(Date.now());
+export function useCurrentDate(refreshInterval = 10_000): number {
+  const [currentDate, setCurrentDate] = useState(() => Date.now());
 
-  return currentDate.current;
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setCurrentDate(Date.now());
+    }, refreshInterval);
+
+    return () => {
+      clearTimeout(intervalId);
+    };
+  }, [refreshInterval]);
+
+  return currentDate;
 }
