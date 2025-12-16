@@ -2,6 +2,8 @@ import { Button } from "@saleor/macaw-ui-next";
 import { CheckIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
+import { transactionActionMessages } from "../OrderTransaction/messages";
+
 type Props = {
   hasNoPayment: boolean;
   canMarkAsPaid: boolean;
@@ -18,10 +20,7 @@ export const TransactionsApiButtons = ({ hasNoPayment, canMarkAsPaid, onMarkAsPa
   return (
     <Button variant="secondary" onClick={onMarkAsPaid}>
       <CheckIcon size={16} />
-      {intl.formatMessage({
-        defaultMessage: "Mark as Paid",
-        id: "RsLoDB",
-      })}
+      {intl.formatMessage(transactionActionMessages.markAsPaid)}
     </Button>
   );
 };

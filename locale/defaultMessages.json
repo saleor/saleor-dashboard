@@ -27,9 +27,6 @@
     "context": "discount button",
     "string": "Discount"
   },
-  "+9HL0i": {
-    "string": "Capture"
-  },
   "+B25o/": {
     "context": "dialog header",
     "string": "Mark Order as Paid"
@@ -1599,6 +1596,10 @@
   },
   "8HRy+U": {
     "string": "Category Description"
+  },
+  "8HmEqK": {
+    "context": "Transaction refund button - return captured amount to client",
+    "string": "Refund"
   },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
@@ -3308,9 +3309,6 @@
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
-  "IeUH3/": {
-    "string": "Refund"
-  },
   "IeoGgH": {
     "context": "variant created success message",
     "string": "Variant created"
@@ -4758,9 +4756,6 @@
   "RrCui3": {
     "string": "Summary"
   },
-  "RsLoDB": {
-    "string": "Mark as Paid"
-  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -4825,6 +4820,10 @@
   "SC/eNC": {
     "context": "Payment card title",
     "string": "Payment status"
+  },
+  "SDgGcU": {
+    "context": "Button to manually mark order as paid without actual payment",
+    "string": "Mark as Paid"
   },
   "SGdcJD": {
     "string": "Enter code"
@@ -7531,9 +7530,6 @@
   },
   "jGvclB": {
     "string": "Transaction Reference"
-  },
-  "jHfCjd": {
-    "string": "Void"
   },
   "jMzyU8": {
     "context": "tax classes card header",
