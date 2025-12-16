@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix main title overflow
+Update order Transactions cards
