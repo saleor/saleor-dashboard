@@ -9,7 +9,7 @@ export function useCurrentDate(refreshInterval = 10_000): number {
     }, refreshInterval);
 
     return () => {
-      clearTimeout(intervalId);
+      clearInterval(intervalId);
     };
   }, [refreshInterval]);
 
