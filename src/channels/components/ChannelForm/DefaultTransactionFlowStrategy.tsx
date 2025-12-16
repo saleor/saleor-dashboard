@@ -44,7 +44,7 @@ export const DefaultTransactionFlowStrategy = ({
               <Link
                 href={TRANSACTION_FLOW_STRATEGY_DOCS_URL}
                 target="_blank"
-                rel="noopener noreferer"
+                rel="noopener noreferrer"
               >
                 <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
               </Link>
