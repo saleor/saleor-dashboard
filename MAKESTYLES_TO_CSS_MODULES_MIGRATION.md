@@ -1,5 +1,7 @@
 # makeStyles to CSS Modules Migration Plan
 
+> **Quick Start**: For a concise guide to pick up and continue this migration, see [MIGRATION_QUICK_START.md](./MIGRATION_QUICK_START.md)
+
 ## Overview
 
 Migrating 245 files from Material-UI/macaw-ui makeStyles to CSS modules.
@@ -10,6 +12,8 @@ Migrating 245 files from Material-UI/macaw-ui makeStyles to CSS modules.
 - 67 separate styles.ts files
 
 **Strategy**: Small batches (10-15 files), organized by feature module, using CSS variables for theme values.
+
+**Status**: 0/245 files migrated (0%)
 
 ---
 
