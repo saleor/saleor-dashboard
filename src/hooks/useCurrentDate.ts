@@ -1,13 +1,8 @@
-import { DateContext } from "@dashboard/components/Date/DateContext";
-import { useContext } from "react";
+import { useRef } from "react";
 
-/**
- * @deprecated Use `Date.now()` directly instead.
- */
-function useCurrentDate(): number {
-  const currentDate = useContext(DateContext);
+export function useCurrentDate(): number {
+  // todo why Date.now() can't be used?
+  const currentDate = useRef(Date.now());
 
-  return currentDate;
+  return currentDate.current;
 }
-
-export default useCurrentDate;
