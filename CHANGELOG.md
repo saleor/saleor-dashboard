@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.22.21
+
+### Patch Changes
+
+- [#6196](https://github.com/saleor/saleor-dashboard/pull/6196) [`5f22cde`](https://github.com/saleor/saleor-dashboard/commit/5f22cded76c3736447dae769b6564fe6fd05e4d9) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Invalid event sent from app to dashboard will not throw anymore, but gracefully show notification
+
+- [#6150](https://github.com/saleor/saleor-dashboard/pull/6150) [`e0f798c`](https://github.com/saleor/saleor-dashboard/commit/e0f798cf09b7fb761febdc57b653155644fe6329) Thanks [@mirekm](https://github.com/mirekm)! - Fix and redesign Order history
+
+- [#6205](https://github.com/saleor/saleor-dashboard/pull/6205) [`fb40e57`](https://github.com/saleor/saleor-dashboard/commit/fb40e57ab0c6a5842c87fbfe03c3e2486019e3b9) Thanks [@mirekm](https://github.com/mirekm)! - Fix main title overflow
+
+- [#6168](https://github.com/saleor/saleor-dashboard/pull/6168) [`c366f94`](https://github.com/saleor/saleor-dashboard/commit/c366f9487affa218ab04ff0b9c0ebfae54a585ed) Thanks [@mirekm](https://github.com/mirekm)! - Cleanup order's Customer Details and Addresses sections
+
+- [#6204](https://github.com/saleor/saleor-dashboard/pull/6204) [`dacee7d`](https://github.com/saleor/saleor-dashboard/commit/dacee7de926a45c8c8ee91284882e18fcdb35fae) Thanks [@mirekm](https://github.com/mirekm)! - New label for ConfirmButton error state
+
+- [#6196](https://github.com/saleor/saleor-dashboard/pull/6196) [`5f22cde`](https://github.com/saleor/saleor-dashboard/commit/5f22cded76c3736447dae769b6564fe6fd05e4d9) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Clipboard operations no longer crash the website if browser permissions are not enabled
+
+- [#6206](https://github.com/saleor/saleor-dashboard/pull/6206) [`a0893de`](https://github.com/saleor/saleor-dashboard/commit/a0893deb0a4b78ba4c69a6a220d48049ac4af78c) Thanks [@mirekm](https://github.com/mirekm)! - Improve icons color consistency with timeline
+
+- [#6208](https://github.com/saleor/saleor-dashboard/pull/6208) [`bcb4854`](https://github.com/saleor/saleor-dashboard/commit/bcb485469a0327a518deb3d91dfb68b8501c8e61) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added UI to control "automatic checkout completion" from the dashboard settings page. What previously was allowed only via graphQL, now can be controlled easily by staff.
+
 ## 3.22.20
 
 ### Patch Changes
