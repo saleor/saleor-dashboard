@@ -1,14 +1,6 @@
-import { makeStyles } from "@saleor/macaw-ui";
 import * as React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    spacer: {
-      marginTop: theme.spacing(3),
-    },
-  }),
-  { name: "FormSpacer" },
-);
+import styles from "./FormSpacer.module.css";
 
 interface FormSpacerProps {
   children?: React.ReactNode;
@@ -16,9 +8,8 @@ interface FormSpacerProps {
 
 export const FormSpacer = (props: FormSpacerProps) => {
   const { children } = props;
-  const classes = useStyles(props);
 
-  return <div className={classes.spacer}>{children}</div>;
+  return <div className={styles.spacer}>{children}</div>;
 };
 
 FormSpacer.displayName = "FormSpacer";

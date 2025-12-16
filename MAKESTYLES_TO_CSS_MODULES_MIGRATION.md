@@ -13,7 +13,7 @@ Migrating 245 files from Material-UI/macaw-ui makeStyles to CSS modules.
 
 **Strategy**: Small batches (10-15 files), organized by feature module, using CSS variables for theme values.
 
-**Status**: 0/245 files migrated (0%)
+**Status**: 11/245 files migrated (4.5%)
 
 ---
 
@@ -460,18 +460,36 @@ Continue with other modules with scattered usage
 
 ---
 
-## Batch 1: Shared Components ⏳
+## Batch 1: Shared Components 🚧
 
-**Target**: `/src/components/` (10-15 files)
+**Target**: `/src/components/` (11/62 files completed so far)
 
-### Files to Migrate:
+### Files Migrated:
 
-1. ⏳ `/src/components/Pill/Pill.tsx` (inline)
-2. ⏳ `/src/components/Filter/FilterKeyValueField.tsx` (inline)
-3. ⏳ `/src/components/AppLayout/` (separate styles.ts)
-4. ⏳ [Add more after exploration]
+1. ✅ `/src/components/Pill/Pill.tsx` (inline) - Simple hardcoded styles
+2. ✅ `/src/components/Filter/FilterKeyValueField.tsx` (inline) - Used theme.spacing()
+3. ✅ `/src/components/CardSpacer.tsx` (inline) - Used theme.spacing() and breakpoints
+4. ✅ `/src/components/FormSpacer.tsx` (inline) - Simple spacing
+5. ✅ `/src/components/VerticalSpacer/VerticalSpacer.tsx` (inline) - Dynamic styles → inline style
+6. ✅ `/src/components/HorizontalSpacer/HorizontalSpacer.tsx` (inline) - Dynamic styles → inline style
+7. ✅ `/src/components/Link.tsx` (inline) - Used theme.palette colors
+8. ✅ `/src/components/ExternalLink/ExternalLink.tsx` (inline) - Simple styles
+9. ✅ `/src/components/Checkbox/Checkbox.tsx` (inline) - Used theme.palette.error
+10. ✅ `/src/components/Money/Money.tsx` (inline) - Hardcoded styles
+11. ✅ `/src/components/Chip/Chip.tsx` (inline) - Used theme.spacing() and alpha()
 
-**Notes**: Start with simplest components first.
+### Remaining Files (51):
+
+- ⏳ `/src/components/AppLayout/` (separate styles.ts)
+- ⏳ 50 more components with makeStyles...
+
+**Notes**:
+
+- Successfully migrated 11 simple components
+- Color mappings used: `--mu-colors-text-accent1`, `--mu-colors-text-default2`, `--mu-colors-text-critical1`
+- Used `color-mix()` for alpha blending in Chip component
+- Dynamic spacer components converted to inline styles
+- All migrations passed lint, check-types, and knip tests
 
 ---
 
@@ -676,4 +694,4 @@ pnpm run dev
 ---
 
 Last Updated: 2025-12-16
-Total Progress: 0/245 files (0%)
+Total Progress: 11/245 files (4.5%)

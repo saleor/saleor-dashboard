@@ -1,0 +1,18 @@
+.closeIcon {
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: var(--mu-spacing-8);
+  vertical-align: middle;
+}
+
+.label {
+  color: #fff;
+}
+
+.root {
+  background: color-mix(in srgb, var(--mu-colors-background-accent1), transparent 20%);
+  border-radius: 18px;
+  display: inline-block;
+  margin-right: var(--mu-spacing-16);
+  padding: 6px 12px;
+}

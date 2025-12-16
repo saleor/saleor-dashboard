@@ -1,21 +1,9 @@
-import { makeStyles } from "@saleor/macaw-ui";
-
 interface VerticalSpacerProps {
   spacing?: number;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    container: ({ spacing }: Required<VerticalSpacerProps>) => ({
-      height: theme.spacing(spacing),
-    }),
-  }),
-  { name: "VerticalSpacer" },
-);
 const VerticalSpacer = ({ spacing = 1 }: VerticalSpacerProps) => {
-  const classes = useStyles({ spacing });
-
-  return <div className={classes.container} />;
+  return <div style={{ height: spacing * 8 }} />;
 };
 
 export default VerticalSpacer;
