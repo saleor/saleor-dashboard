@@ -340,6 +340,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button",
   },
+  moreOptions: {
+    id: "oIS3NK",
+    defaultMessage: "Show more",
+    description: "button",
+  },
   nextStep: {
     id: "wlQTfb",
     defaultMessage: "Next",

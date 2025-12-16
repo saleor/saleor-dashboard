@@ -1,5 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TransactionActionEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink, MoreVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -151,7 +152,7 @@ export const OrderTransactionCardTitle = ({
                 }
                 onClick={e => e.stopPropagation()}
                 data-test-id="transaction-menu-button"
-                title="Show more"
+                title={intl.formatMessage(buttonMessages.moreOptions)}
               />
             </Dropdown.Trigger>
             <Dropdown.Content align="end">
