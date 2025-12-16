@@ -7,13 +7,13 @@ import { transactionActionMessages } from "../OrderTransaction/messages";
 type Props = {
   hasNoPayment: boolean;
   canMarkAsPaid: boolean;
-  onMarkAsPaid?: () => void;
+  onMarkAsPaid: () => void;
 };
 
 export const TransactionsApiButtons = ({ hasNoPayment, canMarkAsPaid, onMarkAsPaid }: Props) => {
   const intl = useIntl();
 
-  if (!hasNoPayment || !canMarkAsPaid || !onMarkAsPaid) {
+  if (!hasNoPayment || !canMarkAsPaid) {
     return null;
   }
 
