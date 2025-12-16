@@ -85,7 +85,7 @@ jobs:
               --base main \
               --head "$CURRENT_RELEASE" \
               --title "Clean up after release $VERSION" \
-              --body "$(cat <<'EOF'
+              --body "$(cat <<EOF
           This PR syncs changes from the release branch back to main after a release.
 
           - Release branch: $CURRENT_RELEASE
