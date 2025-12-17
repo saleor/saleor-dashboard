@@ -1,4 +1,3 @@
-import { ProductWhereInput } from "@dashboard/graphql";
 import { createContext, FC, ReactNode, useContext } from "react";
 
 import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
@@ -60,5 +59,3 @@ export const useModalProductFilterContext = (): ModalProductFilterContextValue =
 
   return context;
 };
-
-export type { ProductWhereInput };

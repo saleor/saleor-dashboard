@@ -81,9 +81,16 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     const index = parseInt(position, 10);
     const element = value[index];
 
-    // Respect fully disabled constraints (all 3 controls disabled) - element cannot be modified
-    if (FilterElement.isFilterElement(element) && element.constraint?.disabled?.length === 3) {
-      return;
+    // Respect fully disabled constraints (all controls disabled) - element cannot be modified
+    if (FilterElement.isFilterElement(element)) {
+      const isFullyDisabled =
+        element.constraint?.disabled?.includes("left") &&
+        element.constraint?.disabled?.includes("right") &&
+        element.constraint?.disabled?.includes("condition");
+
+      if (isFullyDisabled) {
+        return;
+      }
     }
 
     setValue(v => v.map(updateFilterElement(index, cb)));

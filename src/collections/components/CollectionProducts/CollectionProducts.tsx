@@ -30,6 +30,7 @@ import { Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
@@ -112,13 +113,16 @@ const CollectionProducts = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const handleFilterChange = (filterVariables: ProductWhereInput, channel: string | undefined) => {
-    result.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      where: filterVariables,
-      channel,
-    });
-  };
+  const handleFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined) => {
+      result.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: filterVariables,
+        channel,
+      });
+    },
+    [result.refetch],
+  );
 
   const assignedProductDict = getAssignedProductIdsToCollection(collection, result.data?.search);
 

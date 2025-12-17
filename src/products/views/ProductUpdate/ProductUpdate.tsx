@@ -32,7 +32,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -231,21 +231,21 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const handleProductFilterChange = (
-    filterVariables: ProductWhereInput,
-    channel: string | undefined,
-  ) => {
-    // Merge productType constraint from reference attribute with user filters
-    const baseWhere: ProductWhereInput = initialConstraints?.productTypes?.length
-      ? { productType: { oneOf: initialConstraints.productTypes.map(pt => pt.id) } }
-      : {};
+  const handleProductFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined) => {
+      // Merge productType constraint from reference attribute with user filters
+      const baseWhere: ProductWhereInput = initialConstraints?.productTypes?.length
+        ? { productType: { oneOf: initialConstraints.productTypes.map(pt => pt.id) } }
+        : {};
 
-    searchProductsOpts.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      where: { ...baseWhere, ...filterVariables },
-      channel,
-    });
-  };
+      searchProductsOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: { ...baseWhere, ...filterVariables },
+        channel,
+      });
+    },
+    [initialConstraints, searchProductsOpts.refetch],
+  );
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
