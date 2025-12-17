@@ -82,11 +82,13 @@ export const OrderSummary = (props: Props) => {
             }
           />
         ) : (
-          <TransactionsApiButtons
-            canMarkAsPaid={canMarkAsPaid}
-            onMarkAsPaid={onMarkAsPaid}
-            hasNoPayment={hasNoPayment}
-          />
+          onMarkAsPaid && (
+            <TransactionsApiButtons
+              canMarkAsPaid={canMarkAsPaid}
+              onMarkAsPaid={onMarkAsPaid}
+              hasNoPayment={hasNoPayment}
+            />
+          )
         )}
       </Box>
 
