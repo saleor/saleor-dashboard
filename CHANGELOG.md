@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.22.22
+
+### Patch Changes
+
+- [#6178](https://github.com/saleor/saleor-dashboard/pull/6178) [`33d7143`](https://github.com/saleor/saleor-dashboard/commit/33d71430997daeef3b408c9f75e2d8dfa1567f12) Thanks [@mirekm](https://github.com/mirekm)! - Update order Transactions cards
+
+- [#6189](https://github.com/saleor/saleor-dashboard/pull/6189) [`0e6e5a3`](https://github.com/saleor/saleor-dashboard/commit/0e6e5a3f7e0da47415d79a17f1423c9939d6f42c) Thanks [@mirekm](https://github.com/mirekm)! - Introduced a redesigned "Order summary" section that unifies order details and payment information across all order types, including Drafts and Unconfirmed orders. The updated "Order value" breakdown now clearly separates subtotal, taxes, discounts, and shipping. Additionally, a new "Payments summary" section has been added, featuring a dedicated "no data" state when no payments are present.
+
+- [#6213](https://github.com/saleor/saleor-dashboard/pull/6213) [`e2ca67b`](https://github.com/saleor/saleor-dashboard/commit/e2ca67b92745fedc62ad704fd66b0f3702a3d8dd) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed redirection between Customer Details -> See all orders to Orders List (which this customer selected). Now filter is properly set on the URL and only relevant orders are displayed
+
 ## 3.22.21
 
 ### Patch Changes
