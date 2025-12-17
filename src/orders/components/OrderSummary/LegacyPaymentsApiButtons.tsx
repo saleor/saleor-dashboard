@@ -2,13 +2,15 @@ import { OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
+import { transactionActionMessages } from "../OrderTransaction/messages";
+
 type Props = {
   order: OrderDetailsFragment;
   canCapture: boolean;
   canRefund: boolean;
   canVoid: boolean;
   canMarkAsPaid: boolean;
-  onMarkAsPaid: () => any;
+  onMarkAsPaid?: () => void;
   onLegacyPaymentsApiCapture?: () => any;
   onLegacyPaymentsApiRefund?: () => any;
   onLegacyPaymentsApiVoid?: () => any;
@@ -27,49 +29,40 @@ export const LegacyPaymentsApiButtons = ({
 }: Props) => {
   const intl = useIntl();
 
+  const showButtons =
+    order?.status !== OrderStatus.CANCELED &&
+    (canCapture || canRefund || canVoid || (canMarkAsPaid && onMarkAsPaid));
+
+  if (!showButtons) {
+    return null;
+  }
+
   return (
-    <Box>
-      {order?.status !== OrderStatus.CANCELED &&
-        (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-          <>
-            {canCapture && (
-              <Button variant="secondary" onClick={onLegacyPaymentsApiCapture}>
-                {intl.formatMessage({
-                  defaultMessage: "Capture",
-                  id: "+9HL0i",
-                })}
-              </Button>
-            )}
-            {canRefund && (
-              <Button
-                variant="secondary"
-                onClick={onLegacyPaymentsApiRefund}
-                data-test-id="refund-button"
-              >
-                {intl.formatMessage({
-                  defaultMessage: "Refund",
-                  id: "IeUH3/",
-                })}
-              </Button>
-            )}
-            {canVoid && (
-              <Button variant="secondary" onClick={onLegacyPaymentsApiVoid}>
-                {intl.formatMessage({
-                  defaultMessage: "Void",
-                  id: "jHfCjd",
-                })}
-              </Button>
-            )}
-            {canMarkAsPaid && (
-              <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
-                {intl.formatMessage({
-                  defaultMessage: "Mark as Paid",
-                  id: "RsLoDB",
-                })}
-              </Button>
-            )}
-          </>
-        )}
+    <Box display="flex" gap={2}>
+      {canCapture && (
+        <Button variant="secondary" onClick={onLegacyPaymentsApiCapture}>
+          {intl.formatMessage(transactionActionMessages.capture)}
+        </Button>
+      )}
+      {canRefund && (
+        <Button
+          variant="secondary"
+          onClick={onLegacyPaymentsApiRefund}
+          data-test-id="refund-button"
+        >
+          {intl.formatMessage(transactionActionMessages.refund)}
+        </Button>
+      )}
+      {canVoid && (
+        <Button variant="secondary" onClick={onLegacyPaymentsApiVoid}>
+          {intl.formatMessage(transactionActionMessages.void)}
+        </Button>
+      )}
+      {canMarkAsPaid && onMarkAsPaid && (
+        <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
+          {intl.formatMessage(transactionActionMessages.markAsPaid)}
+        </Button>
+      )}
     </Box>
   );
 };

@@ -27,9 +27,6 @@
     "context": "discount button",
     "string": "Discount"
   },
-  "+9HL0i": {
-    "string": "Capture"
-  },
   "+B25o/": {
     "context": "dialog header",
     "string": "Mark Order as Paid"
@@ -519,6 +516,10 @@
     "context": "dialog header",
     "string": "Change customer shipping address"
   },
+  "12K83x": {
+    "context": "shipping method option when name unknown",
+    "string": "Current method"
+  },
   "15PiOX": {
     "context": "button title",
     "string": "Unassign"
@@ -541,10 +542,6 @@
   },
   "16sza6": {
     "string": "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction."
-  },
-  "18wvf7": {
-    "context": "section header",
-    "string": "Order Details"
   },
   "19/lwV": {
     "string": "Determine attributes used to create product types"
@@ -829,6 +826,9 @@
   },
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
+  },
+  "3Eyq0y": {
+    "string": "Mark as paid manually if the payment is confirmed"
   },
   "3Gkj+d": {
     "context": "button to reset cut-off date to saved value",
@@ -1318,6 +1318,9 @@
   "6J1m2c": {
     "string": "Create a Model"
   },
+  "6Jgwpc": {
+    "string": "No payment received"
+  },
   "6QjMei": {
     "string": "Preorder end time needs to be set in the future"
   },
@@ -1500,6 +1503,10 @@
     "context": "model",
     "string": "will be visible from {date}"
   },
+  "7ZKQU3": {
+    "context": "no shipping method option",
+    "string": "No shipping method"
+  },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
@@ -1589,6 +1596,10 @@
   },
   "8HRy+U": {
     "string": "Category Description"
+  },
+  "8HmEqK": {
+    "context": "Transaction refund button - return captured amount to client",
+    "string": "Refund"
   },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
@@ -1943,6 +1954,10 @@
     "context": "attribute properties regarding storefront",
     "string": "Storefront Properties"
   },
+  "Ai4XSg": {
+    "context": "shown when shipping address is required but not set",
+    "string": "No shipping address"
+  },
   "AiurXc": {
     "string": "Outstanding authorized"
   },
@@ -2112,10 +2127,6 @@
   "BfJGij": {
     "context": "header",
     "string": "Address Information"
-  },
-  "BjxQ3u": {
-    "context": "add shipping address first label",
-    "string": "add shipping address first"
   },
   "Bkxrhw": {
     "context": "no webhooks message",
@@ -2289,6 +2300,10 @@
     "context": "channel publication status",
     "string": "Not published"
   },
+  "ClUKur": {
+    "context": "tooltip for subtotal amount",
+    "string": "Sum of all line items"
+  },
   "CmxKIg": {
     "context": "window title",
     "string": "Grant refund"
@@ -2433,6 +2448,10 @@
   },
   "Dd0Dwl": {
     "string": "Go to promotions"
+  },
+  "Dg4Y2p": {
+    "context": "set shipping method link when no shipping method selected",
+    "string": "Set shipping method"
   },
   "Dgp38J": {
     "context": "checkbox label",
@@ -2709,9 +2728,6 @@
     "context": "postal codes, header",
     "string": "Postal codes"
   },
-  "Fcxl/G": {
-    "string": "This order has no payment yet"
-  },
   "FemBUF": {
     "context": "header",
     "string": "Translations to {language}"
@@ -2800,6 +2816,10 @@
   "G+9nOZ": {
     "context": "checkbox description",
     "string": "If selected, this will add all of the countries not selected to other shipping zones"
+  },
+  "G+MtyG": {
+    "context": "no shipping methods available",
+    "string": "No applicable shipping methods"
   },
   "G/pgG3": {
     "context": "dialog header",
@@ -3289,9 +3309,6 @@
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
-  "IeUH3/": {
-    "string": "Refund"
-  },
   "IeoGgH": {
     "context": "variant created success message",
     "string": "Variant created"
@@ -3347,6 +3364,10 @@
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
+  },
+  "J/6a1+": {
+    "context": "tooltip for taxes when showing net prices",
+    "string": "Net prices"
   },
   "J/QqOI": {
     "string": "This value already exists within this attribute"
@@ -3452,10 +3473,6 @@
   "Ja7gHc": {
     "context": "button",
     "string": "Edit"
-  },
-  "Jb1/3V": {
-    "context": "add shipping carrier button",
-    "string": "Add shipping carrier"
   },
   "JbUg2b": {
     "context": "activate app",
@@ -3810,10 +3827,6 @@
     "context": "WarehouseSettings disabled warehouse description",
     "string": "If selected customer won't be able to choose this warehouse as pickup point"
   },
-  "M9LXb5": {
-    "context": "no shipping carriers title",
-    "string": "No applicable shipping carriers"
-  },
   "MAsLIT": {
     "context": "custom app token key",
     "string": "Key"
@@ -3821,6 +3834,10 @@
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
+  },
+  "MHY5da": {
+    "context": "tooltip for shipping amount",
+    "string": "Shipping cost"
   },
   "MIC9W7": {
     "context": "WarehouseSettings pickup title",
@@ -4739,9 +4756,6 @@
   "RrCui3": {
     "string": "Summary"
   },
-  "RsLoDB": {
-    "string": "Mark as Paid"
-  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -4760,10 +4774,6 @@
   },
   "RzsKm8": {
     "string": "Shipping methods"
-  },
-  "S/yAtJ": {
-    "context": "total price",
-    "string": "Total"
   },
   "S1u2pa": {
     "context": "app settings error",
@@ -4799,9 +4809,6 @@
   "S8kqP9": {
     "string": "Conditions"
   },
-  "SB//YQ": {
-    "string": "Order summary"
-  },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
@@ -4813,6 +4820,10 @@
   "SC/eNC": {
     "context": "Payment card title",
     "string": "Payment status"
+  },
+  "SDgGcU": {
+    "context": "Button to manually mark order as paid without actual payment",
+    "string": "Mark as Paid"
   },
   "SGdcJD": {
     "string": "Enter code"
@@ -5046,6 +5057,10 @@
   },
   "TdTXXf": {
     "string": "Learn more"
+  },
+  "TdoAea": {
+    "context": "tooltip for taxes when showing gross prices",
+    "string": "Gross prices"
   },
   "Tenl9A": {
     "context": "grant refund, refund card toggle",
@@ -5581,6 +5596,10 @@
     "context": "successfully created gift card alert title",
     "string": "Successfully created gift card"
   },
+  "X1NCdA": {
+    "context": "shipping method not available label",
+    "string": "(not available)"
+  },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
@@ -5832,6 +5851,10 @@
   "YL8K/3": {
     "context": "automatic completion delay input label",
     "string": "Delay before completion (minutes). Default is 30."
+  },
+  "YPCB7b": {
+    "context": "label for fixed amount discount type",
+    "string": "Fixed amount"
   },
   "YQ3EXR": {
     "context": "product types section name",
@@ -6211,6 +6234,10 @@
   "aZDHYr": {
     "context": "price rates info",
     "string": "This rate will apply to all orders"
+  },
+  "aaj/MI": {
+    "context": "tooltip for total amount",
+    "string": "Order total"
   },
   "aasX8r": {
     "context": "label",
@@ -6825,6 +6852,10 @@
     "context": "all captured amount from transactions in order",
     "string": "Captured"
   },
+  "empNV9": {
+    "context": "add products button tooltip",
+    "string": "Add products from {channelName}"
+  },
   "epB7b7": {
     "context": "fulfillment status replaced",
     "string": "Replaced"
@@ -6908,6 +6939,10 @@
   "fP9FXB": {
     "context": "input label",
     "string": "Search Attributes"
+  },
+  "fS2rip": {
+    "context": "tooltip for taxes amount",
+    "string": "Tax amount"
   },
   "fU+a9k": {
     "context": "date attribute type",
@@ -7043,6 +7078,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
+  "gCZYcl": {
+    "context": "tooltip shown when shipping method is selected but no other options exist",
+    "string": "No alternative shipping methods available"
+  },
   "gE6aiQ": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created models."
@@ -7112,6 +7151,10 @@
   "gksZwp": {
     "context": "button",
     "string": "Create product type"
+  },
+  "glR0om": {
+    "context": "shipping label",
+    "string": "Shipping"
   },
   "glT6fm": {
     "string": "Voucher is limited to these countries"
@@ -7308,6 +7351,10 @@
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
   },
+  "i3Hquc": {
+    "context": "tooltip for discount amount",
+    "string": "Discount amount"
+  },
   "i3Mvj8": {
     "context": "product attribute error",
     "string": "This variant already exists"
@@ -7483,9 +7530,6 @@
   },
   "jGvclB": {
     "string": "Transaction Reference"
-  },
-  "jHfCjd": {
-    "string": "Void"
   },
   "jMzyU8": {
     "context": "tax classes card header",
@@ -8002,10 +8046,6 @@
   "mMOskm": {
     "string": "Open product detail"
   },
-  "mQtoRO": {
-    "context": "taxes title",
-    "string": "Taxes (VAT included)"
-  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
@@ -8049,9 +8089,6 @@
   },
   "mmcHeH": {
     "string": "Discount Value"
-  },
-  "mpkBZc": {
-    "string": "Shipping {carrierName}"
   },
   "mr9jbO": {
     "string": "Preferred Language"
@@ -9528,9 +9565,6 @@
     "context": "success notifier message",
     "string": "Saved draft"
   },
-  "vs0xiH": {
-    "string": "Discount {discountName}"
-  },
   "vuKrlW": {
     "string": "Stock"
   },
@@ -9606,6 +9640,10 @@
   },
   "wL7VAE": {
     "string": "Actions"
+  },
+  "wL850U": {
+    "context": "draft order lines, section header",
+    "string": "Order lines"
   },
   "wLB8B3": {
     "context": "column header",
@@ -9774,10 +9812,6 @@
   },
   "xTyg+p": {
     "string": "No options to select"
-  },
-  "xUvWaP": {
-    "context": "subtotal price",
-    "string": "Subtotal"
   },
   "xVn5B0": {
     "context": "added new attribute value",
@@ -10157,6 +10191,10 @@
   },
   "ztQgD8": {
     "string": "No attributes found"
+  },
+  "ztsvOP": {
+    "context": "tooltip for gift card amount",
+    "string": "Gift card amount used"
   },
   "ztvvcm": {
     "context": "swatch attribute type",

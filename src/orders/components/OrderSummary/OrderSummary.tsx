@@ -1,5 +1,6 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
+import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
@@ -8,26 +9,29 @@ import { OrderValue } from "./OrderValue";
 import { PaymentsSummary } from "./PaymentsSummary";
 import { TransactionsApiButtons } from "./TransactionsApiButtons";
 
-type OrderSummaryWithLegacyApi = {
-  useLegacyPaymentsApi: true;
-  onLegacyPaymentsApiCapture: () => any;
-  onLegacyPaymentsApiRefund: () => any;
-  onLegacyPaymentsApiVoid: () => any;
-};
+type EditableOrderSummary = {
+  isEditable: true;
+  onShippingMethodEdit: () => void;
+  errors?: OrderErrorFragment[];
+} & OrderDiscountContextConsumerProps;
 
-type OrderSummaryWithoutLegacyApi = {
-  useLegacyPaymentsApi?: false;
+type ReadOnlyOrderSummary = {
+  isEditable?: false;
 };
 
 type Props = PropsWithBox<
   {
     order: OrderDetailsFragment;
-    onMarkAsPaid: () => any;
-  } & (OrderSummaryWithLegacyApi | OrderSummaryWithoutLegacyApi)
+    onMarkAsPaid?: () => void;
+    useLegacyPaymentsApi?: boolean;
+    onLegacyPaymentsApiCapture?: () => void;
+    onLegacyPaymentsApiRefund?: () => void;
+    onLegacyPaymentsApiVoid?: () => void;
+  } & (EditableOrderSummary | ReadOnlyOrderSummary)
 >;
 
 export const OrderSummary = (props: Props) => {
-  const { order, onMarkAsPaid, useLegacyPaymentsApi = false, ...restProps } = props;
+  const { order, onMarkAsPaid, useLegacyPaymentsApi = false, isEditable = false } = props;
   const intl = useIntl();
   const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed({
     id: order.id,
@@ -47,13 +51,15 @@ export const OrderSummary = (props: Props) => {
   const canVoid = OrderDetailsViewModel.canOrderVoid(order.actions);
   const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
 
+  const editableProps = isEditable ? (props as Props & EditableOrderSummary) : null;
+
   return (
-    <Box padding={6} display="grid" gap={6} {...restProps} data-test-id="OrderSummary">
+    <Box padding={6} display="grid" gap={6} data-test-id="OrderSummary">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text size={6} fontWeight="medium">
           {intl.formatMessage({
-            defaultMessage: "Order summary",
-            id: "SB//YQ",
+            defaultMessage: "Summary",
+            id: "RrCui3",
           })}
         </Text>
 
@@ -76,25 +82,56 @@ export const OrderSummary = (props: Props) => {
             }
           />
         ) : (
-          <TransactionsApiButtons
-            canMarkAsPaid={canMarkAsPaid}
-            onMarkAsPaid={onMarkAsPaid}
-            hasNoPayment={hasNoPayment}
-          />
+          onMarkAsPaid && (
+            <TransactionsApiButtons
+              canMarkAsPaid={canMarkAsPaid}
+              onMarkAsPaid={onMarkAsPaid}
+              hasNoPayment={hasNoPayment}
+            />
+          )
         )}
       </Box>
 
       <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>
-        <OrderValue
-          orderSubtotal={order.subtotal}
-          shippingMethodName={order.shippingMethodName}
-          shippingPrice={order.shippingPrice}
-          orderTotal={order.total}
-          discounts={order.discounts}
-          giftCardsAmount={giftCardsAmount ?? null}
-          usedGiftCards={usedGiftCards}
-          displayGrossPrices={order.displayGrossPrices}
-        />
+        {isEditable && editableProps ? (
+          <OrderValue
+            orderSubtotal={order.subtotal}
+            shippingMethodName={order.shippingMethodName}
+            shippingPrice={order.shippingPrice}
+            orderTotal={order.total}
+            discounts={order.discounts}
+            giftCardsAmount={giftCardsAmount ?? null}
+            usedGiftCards={usedGiftCards}
+            displayGrossPrices={order.displayGrossPrices}
+            isEditable={true}
+            onShippingMethodEdit={editableProps.onShippingMethodEdit}
+            shippingMethods={order.shippingMethods}
+            shippingMethod={order.shippingMethod}
+            shippingAddress={order.shippingAddress}
+            isShippingRequired={order.isShippingRequired}
+            errors={editableProps.errors}
+            orderDiscount={editableProps.orderDiscount}
+            addOrderDiscount={editableProps.addOrderDiscount}
+            removeOrderDiscount={editableProps.removeOrderDiscount}
+            openDialog={editableProps.openDialog}
+            closeDialog={editableProps.closeDialog}
+            isDialogOpen={editableProps.isDialogOpen}
+            orderDiscountAddStatus={editableProps.orderDiscountAddStatus}
+            orderDiscountRemoveStatus={editableProps.orderDiscountRemoveStatus}
+            undiscountedPrice={editableProps.undiscountedPrice}
+          />
+        ) : (
+          <OrderValue
+            orderSubtotal={order.subtotal}
+            shippingMethodName={order.shippingMethodName}
+            shippingPrice={order.shippingPrice}
+            orderTotal={order.total}
+            discounts={order.discounts}
+            giftCardsAmount={giftCardsAmount ?? null}
+            usedGiftCards={usedGiftCards}
+            displayGrossPrices={order.displayGrossPrices}
+          />
+        )}
         <PaymentsSummary
           hasNoPayment={hasNoPayment}
           orderAmounts={{
