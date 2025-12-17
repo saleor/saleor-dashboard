@@ -15,5 +15,5 @@ export const rippleRefreshedOrderSections: Ripple = {
       </>
     ),
   },
-  dateAdded: new Date(2025, 12, 17),
+  dateAdded: new Date(2025, 11, 17),
 };
