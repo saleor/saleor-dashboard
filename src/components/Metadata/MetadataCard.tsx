@@ -16,6 +16,7 @@ export interface MetadataCardProps {
   readonly?: boolean;
   disabled?: boolean;
   error?: string | undefined;
+  defaultExpanded?: boolean;
 }
 
 export const MetadataCard = ({
@@ -25,9 +26,11 @@ export const MetadataCard = ({
   readonly = false,
   disabled,
   error,
+  defaultExpanded,
 }: MetadataCardProps) => {
   const intl = useIntl();
-  const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
+  const isExpanded = defaultExpanded ?? readonly;
+  const [expanded, setExpanded] = useState(isExpanded ? "metadata-accordion" : undefined);
 
   return (
     <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
