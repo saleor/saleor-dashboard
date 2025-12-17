@@ -204,15 +204,18 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       return undefined;
     }
 
-    // Check if reference types are ProductTypes
-    if (refAttr.referenceTypes[0]?.__typename !== "ProductType") {
+    // Filter to get only ProductType references
+    const productTypeRefs = refAttr.referenceTypes.filter(
+      (t): t is { __typename: "ProductType"; id: string; name: string } =>
+        t?.__typename === "ProductType" && Boolean(t?.id),
+    );
+
+    if (productTypeRefs.length === 0) {
       return undefined;
     }
 
     return {
-      productTypes: refAttr.referenceTypes
-        .filter((t): t is { __typename: "ProductType"; id: string; name: string } => Boolean(t?.id))
-        .map(t => ({ id: t.id, name: t.name })),
+      productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
     };
   }, [refAttr?.referenceTypes]);
 
