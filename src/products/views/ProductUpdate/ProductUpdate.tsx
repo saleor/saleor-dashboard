@@ -233,18 +233,13 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
 
   const handleProductFilterChange = useCallback(
     (filterVariables: ProductWhereInput, channel: string | undefined) => {
-      // Merge productType constraint from reference attribute with user filters
-      const baseWhere: ProductWhereInput = initialConstraints?.productTypes?.length
-        ? { productType: { oneOf: initialConstraints.productTypes.map(pt => pt.id) } }
-        : {};
-
       searchProductsOpts.refetch({
         ...DEFAULT_INITIAL_SEARCH_DATA,
-        where: { ...baseWhere, ...filterVariables },
+        where: filterVariables,
         channel,
       });
     },
-    [initialConstraints, searchProductsOpts.refetch],
+    [searchProductsOpts.refetch],
   );
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
