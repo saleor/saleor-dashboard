@@ -1228,6 +1228,15 @@ export enum CheckoutAuthorizeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
+export type CheckoutAutoCompleteInput = {
+  /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
+  cutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
+  delay?: InputMaybe<Scalars['Minute']>;
+  /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
+  enabled: Scalars['Boolean'];
+};
+
 /**
  * Determine the current charge status for the checkout.
  *
@@ -1402,9 +1411,16 @@ export type CheckoutLineUpdateInput = {
 
 export type CheckoutSettingsInput = {
   /**
-   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+   * Settings for automatic completion of fully paid checkouts.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
+  /**
+   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
+   * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -6894,6 +6910,13 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+   *
+   * Added in Saleor 3.22.
+   * @deprecated Field no longer supported
+   */
+  useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ShopSettingsTranslationInput = {
@@ -9025,7 +9048,7 @@ export type ChannelCreateMutationVariables = Exact<{
 }>;
 
 
-export type ChannelCreateMutation = { __typename: 'Mutation', channelCreate: { __typename: 'ChannelCreate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+export type ChannelCreateMutation = { __typename: 'Mutation', channelCreate: { __typename: 'ChannelCreate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9033,7 +9056,7 @@ export type ChannelUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ChannelUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+export type ChannelUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9048,14 +9071,14 @@ export type ChannelActivateMutationVariables = Exact<{
 }>;
 
 
-export type ChannelActivateMutation = { __typename: 'Mutation', channelActivate: { __typename: 'ChannelActivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+export type ChannelActivateMutation = { __typename: 'Mutation', channelActivate: { __typename: 'ChannelActivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelDeactivateMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ChannelDeactivateMutation = { __typename: 'Mutation', channelDeactivate: { __typename: 'ChannelDeactivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+export type ChannelDeactivateMutation = { __typename: 'Mutation', channelDeactivate: { __typename: 'ChannelDeactivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelReorderWarehousesMutationVariables = Exact<{
   channelId: Scalars['ID'];
@@ -9063,7 +9086,7 @@ export type ChannelReorderWarehousesMutationVariables = Exact<{
 }>;
 
 
-export type ChannelReorderWarehousesMutation = { __typename: 'Mutation', channelReorderWarehouses: { __typename: 'ChannelReorderWarehouses', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+export type ChannelReorderWarehousesMutation = { __typename: 'Mutation', channelReorderWarehouses: { __typename: 'ChannelReorderWarehouses', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type BaseChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9073,14 +9096,14 @@ export type BaseChannelsQuery = { __typename: 'Query', channels: Array<{ __typen
 export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
+export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
 export type ChannelQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
+export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
 
 export type CollectionUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10059,7 +10082,7 @@ export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelEr
 
 export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
 
-export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
+export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
 
 export type CollectionFragment = { __typename: 'Collection', id: string, name: string, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null };
 

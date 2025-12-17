@@ -21,6 +21,8 @@ Before completing changes make sure you run these commands:
 - `pnpm run check-types` - Run TypeScript type checking
 - `pnpm run knip` - Check for unused files/dependencies/exports
 
+- ALWAYS run linter with autoformatter after you change the code, BEFORE you try to manually fix linter errors
+
 #### Test Scripts
 
 - `pnpm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)

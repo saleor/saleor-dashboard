@@ -1,0 +1,95 @@
+name: Create Draft Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  create-draft-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all tags
+
+      - name: Extract changelog for version
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          echo "Creating release for version: $VERSION"
+
+          # Extract changelog section for this version
+          # This awk script extracts content between ## VERSION and the next ## line
+          CHANGELOG=$(awk -v version="$VERSION" '
+            /^## / {
+              if (found) exit;
+              if ($2 == version) found=1;
+              next;
+            }
+            found { print }
+          ' CHANGELOG.md)
+
+          if [ -z "$CHANGELOG" ]; then
+            echo "No changelog entry found for version $VERSION"
+            exit 1
+          fi
+
+          # Save changelog to file (multiline output)
+          echo "$CHANGELOG" > /tmp/changelog.txt
+          echo "changelog_file=/tmp/changelog.txt" >> $GITHUB_OUTPUT
+
+      - name: Get previous tag
+        id: prev_tag
+        run: |
+          CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+
+          # Get all tags sorted by version, find the one before current
+          PREV_TAG=$(git tag --sort=-version:refname | grep -A1 "^${CURRENT_TAG}$" | tail -n1)
+
+          if [ -z "$PREV_TAG" ] || [ "$PREV_TAG" = "$CURRENT_TAG" ]; then
+            echo "No previous tag found"
+            echo "has_prev_tag=false" >> $GITHUB_OUTPUT
+          else
+            echo "Previous tag: $PREV_TAG"
+            echo "prev_tag=$PREV_TAG" >> $GITHUB_OUTPUT
+            echo "has_prev_tag=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create release body
+        id: release_body
+        run: |
+          CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+          CHANGELOG=$(cat /tmp/changelog.txt)
+
+          # Start building the release body
+          {
+            echo "$CHANGELOG"
+            echo ""
+
+            # Add diff link if we have a previous tag
+            if [ "${{ steps.prev_tag.outputs.has_prev_tag }}" = "true" ]; then
+              PREV_TAG="${{ steps.prev_tag.outputs.prev_tag }}"
+              echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_TAG}"
+            fi
+          } > /tmp/release_body.txt
+
+          echo "release_body_file=/tmp/release_body.txt" >> $GITHUB_OUTPUT
+
+      - name: Create draft release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+          RELEASE_BODY=$(cat /tmp/release_body.txt)
+
+          gh release create "$CURRENT_TAG" \
+            --draft \
+            --title "$CURRENT_TAG" \
+            --notes "$RELEASE_BODY"
+
+          echo "✅ Draft release created for $CURRENT_TAG"

@@ -55,7 +55,7 @@ export const OrderTransactionsSection = ({
           justifyContent="space-between"
           paddingX={6}
         >
-          <Text size={5} fontWeight="bold">
+          <Text size={6} fontWeight="medium">
             <FormattedMessage defaultMessage="Transactions" id="/jJLYy" />
           </Text>
           <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />

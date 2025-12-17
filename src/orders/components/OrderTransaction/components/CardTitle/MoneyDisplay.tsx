@@ -13,11 +13,15 @@ export const MoneyDisplay = ({ label, money }: MoneyDisplayProps) => {
   const amount = formatMoneyAmount(money, locale);
 
   return (
-    <Box display="flex" flexDirection="column">
-      <Text size={1}>{label}</Text>
+    <Box display="flex" flexDirection="column" alignItems="flex-end">
+      <Text size={2} color="default2">
+        {label}
+      </Text>
       <Box as="span">
-        <Text size={1}>{money.currency}&nbsp;</Text>
-        <Text size={1}>{amount}</Text>
+        <Text size={3}>{money.currency}&nbsp;</Text>
+        <Text size={3} fontWeight="bold">
+          {amount}
+        </Text>
       </Box>
     </Box>
   );
