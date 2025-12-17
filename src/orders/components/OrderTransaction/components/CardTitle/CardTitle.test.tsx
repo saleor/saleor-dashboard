@@ -45,8 +45,87 @@ describe("OrderTransactionCardTitle", () => {
     });
   });
 
-  describe("actions menu logic", () => {
-    it("filters out REFUND action from menu", async () => {
+  describe("actions display logic", () => {
+    it("shows CHARGE as a primary button and CANCEL in menu", async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={jest.fn()}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+
+      // Assert - CHARGE is visible as button, CANCEL is in menu
+      expect(screen.getByTestId("transaction-action-charge-button")).toBeInTheDocument();
+      expect(screen.getByText("Capture")).toBeInTheDocument();
+
+      // Cancel should be in menu, not visible yet
+      expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+
+      // Open menu to see Cancel
+      await user.click(screen.getByTestId("transaction-menu-button"));
+      expect(screen.getByText("Cancel")).toBeInTheDocument();
+    });
+
+    it("shows only CHARGE button when no menu actions exist", () => {
+      // Arrange
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CHARGE],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={jest.fn()}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+
+      // Assert - CHARGE button visible, no menu
+      expect(screen.getByTestId("transaction-action-charge-button")).toBeInTheDocument();
+      expect(screen.queryByTestId("transaction-menu-button")).not.toBeInTheDocument();
+    });
+
+    it("shows only menu when only CANCEL action exists", async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CANCEL],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={jest.fn()}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+
+      // Assert - no primary button, only menu
+      expect(screen.queryByTestId("transaction-action-charge-button")).not.toBeInTheDocument();
+      expect(screen.getByTestId("transaction-menu-button")).toBeInTheDocument();
+
+      // Open menu to see Cancel
+      await user.click(screen.getByTestId("transaction-menu-button"));
+      expect(screen.getByText("Cancel")).toBeInTheDocument();
+    });
+
+    it("filters out REFUND action entirely", async () => {
       // Arrange
       const user = userEvent.setup();
       const transaction = createTransaction({
@@ -67,15 +146,15 @@ describe("OrderTransactionCardTitle", () => {
           />
         </Wrapper>,
       );
-      await user.click(screen.getByTestId("transaction-menu-button"));
 
-      // Assert - REFUND is handled separately in Send Refund view
-      expect(screen.getByText("Capture")).toBeInTheDocument();
+      // Assert - CHARGE as button, CANCEL in menu, REFUND nowhere
+      expect(screen.getByTestId("transaction-action-charge-button")).toBeInTheDocument();
+      await user.click(screen.getByTestId("transaction-menu-button"));
       expect(screen.getByText("Cancel")).toBeInTheDocument();
       expect(screen.queryByText("Refund")).not.toBeInTheDocument();
     });
 
-    it("hides menu when showActions is false even if actions exist", () => {
+    it("hides all actions when showActions is false", () => {
       // Arrange
       const transaction = createTransaction({
         actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
@@ -93,10 +172,11 @@ describe("OrderTransactionCardTitle", () => {
       );
 
       // Assert
+      expect(screen.queryByTestId("transaction-action-charge-button")).not.toBeInTheDocument();
       expect(screen.queryByTestId("transaction-menu-button")).not.toBeInTheDocument();
     });
 
-    it("hides menu when actions array is empty", () => {
+    it("hides all actions when actions array is empty", () => {
       // Arrange
       const transaction = createTransaction({ actions: [] });
 
@@ -112,10 +192,11 @@ describe("OrderTransactionCardTitle", () => {
       );
 
       // Assert
+      expect(screen.queryByTestId("transaction-action-charge-button")).not.toBeInTheDocument();
       expect(screen.queryByTestId("transaction-menu-button")).not.toBeInTheDocument();
     });
 
-    it("hides menu when only REFUND action is available", () => {
+    it("hides all actions when only REFUND action is available", () => {
       // Arrange - REFUND gets filtered out, leaving no actions
       const transaction = createTransaction({
         actions: [TransactionActionEnum.REFUND],
@@ -133,10 +214,36 @@ describe("OrderTransactionCardTitle", () => {
       );
 
       // Assert
+      expect(screen.queryByTestId("transaction-action-charge-button")).not.toBeInTheDocument();
       expect(screen.queryByTestId("transaction-menu-button")).not.toBeInTheDocument();
     });
 
-    it("calls onTransactionAction with correct transaction id and action type", async () => {
+    it("calls onTransactionAction when clicking primary button", async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const onTransactionAction = jest.fn();
+      const transaction = createTransaction({
+        id: "txn-abc-123",
+        actions: [TransactionActionEnum.CHARGE],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={onTransactionAction}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+      await user.click(screen.getByTestId("transaction-action-charge-button"));
+
+      // Assert
+      expect(onTransactionAction).toHaveBeenCalledWith("txn-abc-123", TransactionActionEnum.CHARGE);
+    });
+
+    it("calls onTransactionAction when clicking menu action", async () => {
       // Arrange
       const user = userEvent.setup();
       const onTransactionAction = jest.fn();

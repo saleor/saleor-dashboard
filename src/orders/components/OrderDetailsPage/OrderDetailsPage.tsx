@@ -28,9 +28,11 @@ import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
+import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -136,6 +138,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
+  const orderDiscountContext = useContext(OrderDiscountContext);
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -249,7 +252,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
-                    onShippingMethodEdit={onShippingMethodEdit}
                   />
                   <CardSpacer />
                 </>
@@ -269,7 +271,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 />
               ))}
 
-              {order && (
+              {order && !isOrderUnconfirmed && (
                 <>
                   <OrderSummary
                     order={order}
@@ -294,6 +296,36 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                       />
                       <CardSpacer />
                     </>
+                  )}
+                </>
+              )}
+
+              {order && isOrderUnconfirmed && orderDiscountContext && (
+                <>
+                  <OrderSummary
+                    order={order}
+                    onMarkAsPaid={onMarkAsPaid}
+                    useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
+                    onLegacyPaymentsApiCapture={onPaymentCapture}
+                    onLegacyPaymentsApiRefund={onPaymentRefund}
+                    onLegacyPaymentsApiVoid={onPaymentVoid}
+                    isEditable
+                    onShippingMethodEdit={onShippingMethodEdit}
+                    errors={errors}
+                    {...orderDiscountContext}
+                  />
+                  <CardSpacer />
+
+                  {orderShouldUseTransactions(order) && (
+                    <OrderTransactionsSection
+                      order={order}
+                      shop={shop}
+                      onTransactionAction={onTransactionAction}
+                      onPaymentCapture={onPaymentCapture}
+                      onPaymentVoid={onPaymentVoid}
+                      onAddManualTransaction={onAddManualTransaction}
+                      onRefundAdd={onRefundAdd}
+                    />
                   )}
                 </>
               )}

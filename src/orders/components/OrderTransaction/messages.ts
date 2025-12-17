@@ -16,4 +16,14 @@ export const transactionActionMessages = defineMessages({
     id: "iIfq2+",
     description: "Transaction cancel button - return preauthorized amount to client",
   },
+  refund: {
+    defaultMessage: "Refund",
+    description: "Transaction refund button - return captured amount to client",
+    id: "8HmEqK",
+  },
+  markAsPaid: {
+    defaultMessage: "Mark as Paid",
+    description: "Button to manually mark order as paid without actual payment",
+    id: "SDgGcU",
+  },
 });

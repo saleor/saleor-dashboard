@@ -9,19 +9,46 @@ type Props = PropsWithBox<{
   showSign?: boolean;
   showCurrency?: boolean;
   currency?: string;
+  title?: string;
+  amountTitle?: string;
+  bold?: boolean;
 }>;
 
-export const OrderSummaryListItem = ({ children, amount, showSign, currency, ...props }: Props) => {
+export const OrderSummaryListItem = ({
+  children,
+  amount,
+  showSign,
+  currency,
+  title,
+  amountTitle,
+  bold = false,
+  ...props
+}: Props): ReactNode => {
+  const fontWeight = bold ? "bold" : "regular";
+
   return (
-    <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2} {...props}>
-      <Text fontWeight="medium" size={3}>
+    <Box
+      as="li"
+      display="grid"
+      __gridTemplateColumns="1fr auto"
+      alignItems="baseline"
+      gap={2}
+      title={title}
+      {...props}
+    >
+      <Text fontWeight={fontWeight} size={4}>
         {children}
       </Text>
-      <Box>
-        <Text fontWeight="medium" color="default2" size={3}>
+      <Box title={amountTitle}>
+        <Text fontWeight={fontWeight} color="default2" size={3}>
           {currency}
         </Text>{" "}
-        <OrderSummaryListAmount amount={amount} showSign={showSign} />
+        <OrderSummaryListAmount
+          amount={amount}
+          showSign={showSign}
+          size={4}
+          fontWeight={fontWeight}
+        />
       </Box>
     </Box>
   );
