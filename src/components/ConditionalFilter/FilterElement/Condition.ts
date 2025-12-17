@@ -1,4 +1,4 @@
-import errorTracker from "@dashboard/services/errorTracking";
+import { errorTracker } from "@dashboard/services/errorTracking";
 
 import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";

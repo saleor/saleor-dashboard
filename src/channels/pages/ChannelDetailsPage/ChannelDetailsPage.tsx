@@ -22,6 +22,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
@@ -48,6 +49,7 @@ import {
   createWarehouseReorderHandler,
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
+import { parseDateTimeToDateAndTime } from "./utils";
 
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
@@ -109,11 +111,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     paymentSettings,
     checkoutSettings,
     ...formData
-  } = channel || ({} as ChannelDetailsFragment);
+  } = channel || ({} as ChannelDetailsFragment | ChannelDetailsFragmentWithAllowLegacyGiftCardUse);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
+  const cutOffDateTime = parseDateTimeToDateAndTime(
+    checkoutSettings?.automaticCompletionCutOffDate,
+  );
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -132,7 +137,16 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
+    allowLegacyGiftCardUse: checkoutSettings
+      ? "allowLegacyGiftCardUse" in checkoutSettings
+        ? checkoutSettings.allowLegacyGiftCardUse
+        : undefined
+      : undefined,
+    automaticallyCompleteCheckouts:
+      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
+    automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
+    automaticCompletionCutOffDate: cutOffDateTime.date,
+    automaticCompletionCutOffTime: cutOffDateTime.time,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -226,6 +240,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleAllowLegacyGiftCardUseChange = () => {
+          set({
+            allowLegacyGiftCardUse: !data.allowLegacyGiftCardUse,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -249,12 +269,18 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 countries={countryChoices}
                 selectedCurrencyCode={selectedCurrencyCode}
                 selectedCountryDisplayName={selectedCountryDisplayName}
+                savedAutomaticallyCompleteCheckouts={
+                  checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false
+                }
+                savedAutomaticCompletionCutOffDate={cutOffDateTime.date}
+                savedAutomaticCompletionCutOffTime={cutOffDateTime.time}
                 onChange={change}
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
+                onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>

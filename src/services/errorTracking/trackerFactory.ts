@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { History } from "history";
 
 import { TrackerMethods, TrackerPermission, UserData } from "./types";
@@ -14,7 +13,7 @@ export const ErrorTrackerFactory: ErrorTrackerFactory = (extension, permissions 
   const safelyInvoke = <T extends () => any>(
     fn: T,
     permission?: TrackerPermission,
-  ): ReturnType<T> => {
+  ): ReturnType<T> | undefined => {
     const hasPermission = permission !== undefined ? permissions.includes(permission) : true;
 
     if (ENABLED && hasPermission) {
@@ -25,6 +24,7 @@ export const ErrorTrackerFactory: ErrorTrackerFactory = (extension, permissions 
       }
     }
   };
+
   const init: TrackerMethods["init"] = (history: History) => {
     if (!ENABLED) {
       ENABLED = extension.init(history);

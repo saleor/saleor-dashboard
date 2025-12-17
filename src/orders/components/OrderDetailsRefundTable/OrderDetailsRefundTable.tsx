@@ -2,7 +2,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
-import { Box, Button, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
@@ -30,7 +31,7 @@ export const OrderDetailsRefundTable = ({
   return (
     <DashboardCard data-test-id="order-refund-section">
       <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
-        <Text size={5} fontWeight="bold">
+        <Text size={6} fontWeight="medium">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
 
@@ -42,7 +43,7 @@ export const OrderDetailsRefundTable = ({
               onClick={onRefundAdd}
               disabled={refundState !== "refundable"}
             >
-              <PlusIcon />
+              <Plus />
               <FormattedMessage {...refundGridMessages.addNewRefund} />
             </Button>
           </Tooltip.Trigger>

@@ -1,4 +1,5 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ListItemLink from "@dashboard/components/ListItemLink";
 import { TaxCountryConfigurationFragment } from "@dashboard/graphql";
 import { taxesMessages } from "@dashboard/taxes/messages";
@@ -6,8 +7,9 @@ import { taxCountriesListUrl } from "@dashboard/taxes/urls";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Trash2 } from "lucide-react";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,7 +68,9 @@ const TaxCountriesMenu = ({
                   <div className={classes.spaceBetween}>
                     {config.country.country}
                     <Button
-                      icon={<TrashBinIcon />}
+                      icon={
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      }
                       variant="tertiary"
                       onClick={event => {
                         event.stopPropagation();

@@ -34,8 +34,8 @@ const OrderDraftCancelDialog = ({
       onConfirm={onConfirm}
       open={open}
       title={intl.formatMessage({
-        id: "APcoSA",
-        defaultMessage: "Delete Daft Order",
+        id: "Yk0avO",
+        defaultMessage: "Delete Draft Order",
         description: "dialog header",
       })}
       variant="delete"

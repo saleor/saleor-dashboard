@@ -5,7 +5,7 @@ import {
   WebhookEventTypeAsyncEnum,
   WebhookFragment,
 } from "@dashboard/graphql";
-import errorTracker from "@dashboard/services/errorTracking";
+import { errorTracker } from "@dashboard/services/errorTracking";
 import { IntlShape } from "react-intl";
 
 import { appManifestErrorMessages, localAppErrorMessages } from "./messages";

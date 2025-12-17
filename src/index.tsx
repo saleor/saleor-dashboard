@@ -15,7 +15,7 @@ import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import { lazy, Suspense } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
@@ -30,7 +30,6 @@ import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import { channelsSection } from "./channels/urls";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
-import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
@@ -52,7 +51,7 @@ import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import { NotFound } from "./NotFound";
-import errorTracker from "./services/errorTracking";
+import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
 
@@ -122,37 +121,35 @@ const App = () => (
         {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
-                        <ProductAnalytics>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <SavebarRefProvider>
-                                      <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider>
-                                          <Routes />
-                                        </OnboardingProvider>
-                                      </FeatureFlagsProviderWithUser>
-                                    </SavebarRefProvider>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </ProductAnalytics>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
+            <LocaleProvider>
+              <MessageManagerProvider>
+                <BackgroundTasksProvider>
+                  <AppStateProvider>
+                    <AuthProvider>
+                      <ProductAnalytics>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExitFormDialogProvider>
+                              <DevModeProvider>
+                                <NavigatorSearchProvider>
+                                  <SavebarRefProvider>
+                                    <FeatureFlagsProviderWithUser>
+                                      <OnboardingProvider>
+                                        <Routes />
+                                      </OnboardingProvider>
+                                    </FeatureFlagsProviderWithUser>
+                                  </SavebarRefProvider>
+                                </NavigatorSearchProvider>
+                              </DevModeProvider>
+                            </ExitFormDialogProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </ProductAnalytics>
+                    </AuthProvider>
+                  </AppStateProvider>
+                </BackgroundTasksProvider>
+              </MessageManagerProvider>
+            </LocaleProvider>
           </ThemeProvider>
         </LegacyThemeProvider>
       </Router>
@@ -345,4 +342,16 @@ const Routes = () => {
 
 const root = createRoot(document.querySelector("#dashboard-app")!);
 
-root.render(<App />);
+// StrictMode is development-only (no effect in production)
+// Set VITE_DISABLE_STRICT_MODE=true to disable for testing
+const enableStrictMode = import.meta.env.DEV && import.meta.env.VITE_DISABLE_STRICT_MODE !== "true";
+
+root.render(
+  enableStrictMode ? (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  ) : (
+    <App />
+  ),
+);

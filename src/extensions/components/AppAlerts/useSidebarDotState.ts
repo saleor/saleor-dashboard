@@ -1,4 +1,4 @@
-import errorTracker from "@dashboard/services/errorTracking";
+import { errorTracker } from "@dashboard/services/errorTracking";
 import { useEffect, useRef, useState } from "react";
 
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";

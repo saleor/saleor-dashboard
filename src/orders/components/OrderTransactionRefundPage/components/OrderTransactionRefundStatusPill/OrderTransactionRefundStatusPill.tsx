@@ -14,11 +14,11 @@ const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
     case OrderGrantedRefundStatusEnum.FAILURE:
       return "error";
     case OrderGrantedRefundStatusEnum.NONE:
-      return "generic";
+      return "neutral";
     case OrderGrantedRefundStatusEnum.PENDING:
       return "info";
     default:
-      return "generic";
+      return "neutral";
   }
 };
 

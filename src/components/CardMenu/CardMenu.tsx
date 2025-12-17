@@ -1,16 +1,11 @@
 // @ts-strict-ignore
-import {
-  CircularProgress,
-  ClickAwayListener,
-  Grow,
-  MenuItem,
-  MenuList,
-  Paper,
-  Popper,
-} from "@material-ui/core";
-import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
+import { IconButtonProps, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { EllipsisVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
@@ -131,7 +126,10 @@ const CardMenu = (props: CardMenuProps) => {
     }
   };
   const isWithLoading = menuItems.some(({ withLoading }) => withLoading);
-  const Icon = icon ?? SettingsIcon;
+  const DefaultIcon = () => (
+    <EllipsisVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+  );
+  const Icon = icon ?? DefaultIcon;
 
   return (
     <div className={className} {...rest}>
@@ -189,7 +187,7 @@ const CardMenu = (props: CardMenuProps) => {
                             <Text fontSize={3}>
                               <FormattedMessage {...messages.cardMenuItemLoading} />
                             </Text>
-                            <CircularProgress size={24} />
+                            <SaleorThrobber size={24} />
                           </>
                         ) : (
                           <Text>

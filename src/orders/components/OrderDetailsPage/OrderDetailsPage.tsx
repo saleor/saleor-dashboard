@@ -5,6 +5,7 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -165,6 +166,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
       item: {
         label: intl.formatMessage(messages.cancelOrder),
         onSelect: onOrderCancel,
+        color: "critical1" as const,
       },
       shouldExist: canCancel,
     },
@@ -203,7 +205,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               <Box position="relative" marginRight={3}>
                 <Button
                   variant="secondary"
-                  icon={<Code />}
+                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
                   onClick={onOrderShowMetadata}
                   data-test-id="show-order-metadata"
                   title="Edit order metadata"
@@ -280,15 +282,18 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   <CardSpacer />
 
                   {orderShouldUseTransactions(order) && (
-                    <OrderTransactionsSection
-                      order={order}
-                      shop={shop}
-                      onTransactionAction={onTransactionAction}
-                      onPaymentCapture={onPaymentCapture}
-                      onPaymentVoid={onPaymentVoid}
-                      onAddManualTransaction={onAddManualTransaction}
-                      onRefundAdd={onRefundAdd}
-                    />
+                    <>
+                      <OrderTransactionsSection
+                        order={order}
+                        shop={shop}
+                        onTransactionAction={onTransactionAction}
+                        onPaymentCapture={onPaymentCapture}
+                        onPaymentVoid={onPaymentVoid}
+                        onAddManualTransaction={onAddManualTransaction}
+                        onRefundAdd={onRefundAdd}
+                      />
+                      <CardSpacer />
+                    </>
                   )}
                 </>
               )}
@@ -312,8 +317,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onProfileView={onProfileView}
               />
               <CardSpacer />
+              <Divider />
               <OrderChannelSectionCard channel={order?.channel} />
               <CardSpacer />
+              <Divider />
               {!isOrderUnconfirmed && (
                 <>
                   <OrderInvoiceList
@@ -323,6 +330,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     onInvoiceSend={onInvoiceSend}
                   />
                   <CardSpacer />
+                  <Divider />
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />

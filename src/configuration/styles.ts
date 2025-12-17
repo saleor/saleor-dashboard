@@ -1,5 +1,4 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -36,14 +35,6 @@ export const useStyles = makeStyles(
     sectionTitle: {
       fontSize: 20,
       fontWeight: 600 as const,
-    },
-    navigationCard: {
-      border: `1px solid ${vars.colors.border.default1}`,
-      height: 130,
-      boxShadow: "none !important",
-      "& .MuiCardContent-root": {
-        borderRadius: vars.borderRadius[3],
-      },
     },
   }),
   { name: "ConfigurationPage" },

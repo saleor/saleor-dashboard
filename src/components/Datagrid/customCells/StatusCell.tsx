@@ -18,6 +18,7 @@ export const statusCellRenderer = (themeValues: ThemeTokensValues): CustomRender
     const { x, y, height } = rect;
 
     ctx.fillStyle = theme.textDark;
+    ctx.font = `500 ${theme.fontFamily}`;
     ctx.fillText(cell.data.value, x + 30, y + height / 2);
 
     const circle = new Path2D();

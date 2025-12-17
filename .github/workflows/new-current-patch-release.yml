@@ -1,0 +1,67 @@
+name: New Current Patch Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # Patching current stable version is basically merging commits from main to release branch
+  # Since we ensure main is compatible with 3.22, instead of cherry-picking and porting, we
+  # just branch from main to current stable and create a release candidate. On this branch we run tests
+  # and release changelogs and tags.
+  # This workflow is automating this and ensuring branch protection is omitted for authorized actor.
+  recreate-release-branch:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Get Token
+        id: get-token
+        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "Saleor Deployments"
+
+      - name: Recreate current release branch
+        run: |
+          CURRENT_RELEASE='3.22'
+
+          echo "Recreating release branch: $CURRENT_RELEASE"
+
+          # Fetch all branches
+          git fetch origin
+
+          # Switch to main branch
+          git checkout main
+          git pull origin main
+
+          # Delete the old release branch locally if it exists
+          if git show-ref --verify --quiet refs/heads/$CURRENT_RELEASE; then
+            echo "Deleting local branch $CURRENT_RELEASE"
+            git branch -D $CURRENT_RELEASE
+          fi
+
+          # Delete the remote release branch if it exists
+          if git ls-remote --heads origin $CURRENT_RELEASE | grep -q $CURRENT_RELEASE; then
+            echo "Deleting remote branch $CURRENT_RELEASE"
+            git push origin --delete refs/heads/$CURRENT_RELEASE
+          fi
+
+          # Create new branch from main
+          echo "Creating new branch $CURRENT_RELEASE from main"
+          git checkout -b $CURRENT_RELEASE
+
+          # Push the new branch
+          echo "Pushing new branch $CURRENT_RELEASE to remote"
+          git push origin refs/heads/$CURRENT_RELEASE:refs/heads/$CURRENT_RELEASE
+
+          echo "✅ Successfully recreated release branch $CURRENT_RELEASE from main"

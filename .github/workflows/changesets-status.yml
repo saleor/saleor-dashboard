@@ -2,6 +2,8 @@ name: Changesets
 
 on:
   pull_request:
+    branches-ignore:
+      - changeset-release/main
     types:
       - opened
       - labeled

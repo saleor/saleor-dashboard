@@ -8,6 +8,8 @@ import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
   ChannelUpdateMutation,
+  isMainSchema,
+  isStagingSchema,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
@@ -15,6 +17,11 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import {
+  useChannelQuery as useChannelQueryStaging,
+  useChannelsQuery as useChannelsQueryStaging,
+  useChannelUpdateMutation as useChannelUpdateMutationStaging,
+} from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -41,22 +48,46 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const channelsListData = useChannelsQuery({ displayLoader: true });
+  const channelsListDataMain = useChannelsQuery({
+    displayLoader: true,
+    skip: isStagingSchema(),
+  });
+  const channelsListDataStaging = useChannelsQueryStaging({
+    displayLoader: true,
+    skip: isMainSchema(),
+  });
+  const channelsListData = channelsListDataStaging ?? channelsListDataMain;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
 
-  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+  const [updateChannelMain, updateChannelOptsMain] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const { data, loading } = useChannelQuery({
+  const [updateChannelStaging, updateChannelOptsStaging] = useChannelUpdateMutationStaging({
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
+      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+  });
+
+  const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
+    skip: isStagingSchema(),
   });
+
+  const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
+    displayLoader: true,
+    variables: { id },
+    skip: isMainSchema(),
+  });
+
+  const data = dataStaging ?? dataMain;
+  const loading = loadingMain ?? loadingStaging;
+  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
@@ -102,35 +133,101 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     warehousesIdsToRemove,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
+    automaticCompletionDelay,
+    automaticCompletionCutOffDate,
+    automaticCompletionCutOffTime,
   }: FormData) => {
-    const updateChannelMutation = updateChannel({
-      variables: {
-        id: data?.channel.id,
-        input: {
-          name,
-          checkoutSettings: {
-            automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+    const getCutOffDateTimeISO = (): string | null => {
+      if (!automaticCompletionCutOffDate) {
+        return null;
+      }
+
+      const time = automaticCompletionCutOffTime || "00:00";
+
+      return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
+    };
+
+    // Build automaticCompletion input - only include delay and cutOffDate when enabled
+    const automaticCompletionInput: {
+      enabled: boolean;
+      delay?: number | null;
+      cutOffDate?: string | null;
+    } = {
+      enabled: automaticallyCompleteCheckouts,
+    };
+
+    if (automaticallyCompleteCheckouts) {
+      // Convert delay to number or null (handle empty string case)
+      const delayValue = automaticCompletionDelay;
+
+      if (delayValue === null || delayValue === undefined || delayValue === "") {
+        automaticCompletionInput.delay = null;
+      } else {
+        automaticCompletionInput.delay = Number(delayValue);
+      }
+
+      automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
+    }
+
+    const updateChannelMutation = isStagingSchema()
+      ? updateChannelStaging({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticCompletion: automaticCompletionInput,
+                allowLegacyGiftCardUse,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          slug,
-          defaultCountry,
-          addShippingZones: shippingZonesIdsToAdd,
-          removeShippingZones: shippingZonesIdsToRemove,
-          addWarehouses: warehousesIdsToAdd,
-          removeWarehouses: warehousesIdsToRemove,
-          stockSettings: {
-            allocationStrategy,
+        })
+      : updateChannelMain({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticCompletion: automaticCompletionInput,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          paymentSettings: {
-            defaultTransactionFlowStrategy,
-          },
-          orderSettings: {
-            markAsPaidStrategy,
-            deleteExpiredOrdersAfter,
-            allowUnpaidOrders,
-          },
-        },
-      },
-    });
+        });
 
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);

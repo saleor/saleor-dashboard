@@ -1,4 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
@@ -8,7 +9,8 @@ import {
   OrderRefundDisplay,
   OrderRefundsViewModel,
 } from "@dashboard/orders/utils/OrderRefundsViewModel";
-import { Box, Button, EditIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Pencil } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -76,12 +78,19 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
         <Box data-test-id="edit-refund-button" display="flex" justifyContent="flex-end">
           {isEditable ? (
             <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
-              <Button icon={<EditIcon />} variant="secondary" />
+              <Button
+                icon={<Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+                variant="secondary"
+              />
             </Link>
           ) : (
             <Tooltip>
               <Tooltip.Trigger>
-                <Button disabled icon={<EditIcon />} variant="secondary" />
+                <Button
+                  disabled
+                  icon={<Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+                  variant="secondary"
+                />
               </Tooltip.Trigger>
               <Tooltip.Content>
                 <Tooltip.Arrow />

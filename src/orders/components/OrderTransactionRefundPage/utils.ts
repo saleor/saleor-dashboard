@@ -199,7 +199,7 @@ export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
     case OrderGrantedRefundStatusEnum.PENDING:
       return "warning";
     default:
-      return "generic";
+      return "neutral";
   }
 };
 

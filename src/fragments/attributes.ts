@@ -36,7 +36,6 @@ export const attributeFragment = gql`
     filterableInStorefront
     unit
     inputType
-    ...Metadata
   }
 `;
 

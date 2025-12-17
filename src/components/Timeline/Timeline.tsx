@@ -1,126 +1,88 @@
-// @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { Button } from "@dashboard/components/Button";
-import { getUserInitials } from "@dashboard/misc";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { sprinkles, vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
+import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
+import { PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { DashboardCard } from "../Card";
-import { UserAvatar } from "../UserAvatar";
-
-const useStyles = makeStyles(
-  theme => ({
-    button: {
-      padding: `7px`,
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
-    },
-    input: {
-      "& > div": {
-        padding: "0 0 0 14px",
-      },
-      "& textarea": {
-        "&::placeholder": {
-          opacity: [[1], "!important"] as any,
-        },
-      },
-      background: vars.colors.background.default1,
-    },
-    noteRoot: {
-      marginBottom: theme.spacing(3),
-      top: 0,
-      left: -19,
-      right: 0,
-    },
-    noteTitle: {
-      "&:last-child": {
-        paddingBottom: 0,
-        paddingRight: 0,
-      },
-      paddingLeft: 0,
-    },
-    root: {
-      marginLeft: 20,
-      paddingLeft: 21,
-      position: "relative",
-    },
-  }),
-  { name: "Timeline" },
-);
-
-interface TimelineProps {
-  children?: React.ReactNode;
-}
+export const Timeline = ({ children }: PropsWithChildren) => {
+  return <Box position="relative">{children}</Box>;
+};
 
 interface TimelineAddNoteProps {
   disabled?: boolean;
   message: string;
   reset: () => void;
-  onChange: (event: React.ChangeEvent<any>) => any;
-  onSubmit: (event: React.FormEvent<any>) => any;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: () => void;
+  placeholder?: string;
+  buttonLabel?: string | React.ReactNode;
+  label?: string;
 }
 
-export const Timeline = (props: TimelineProps) => {
-  const { children } = props;
-  const classes = useStyles(props);
-
-  return <div className={classes.root}>{children}</div>;
-};
-
-export const TimelineAddNote = (props: TimelineAddNoteProps) => {
-  const { message, onChange, onSubmit, reset, disabled } = props;
-  const classes = useStyles(props);
-  const { user } = useUser();
+export const TimelineAddNote = ({
+  message,
+  onChange,
+  onSubmit,
+  reset,
+  disabled,
+  placeholder,
+  buttonLabel,
+  label,
+}: TimelineAddNoteProps) => {
   const intl = useIntl();
-  const submit = e => {
-    reset();
-    onSubmit(e);
+  const [isFocused, setIsFocused] = useState(false);
+  const isMessageEmpty = message.trim().length === 0;
+  const canSubmit = !disabled && !isMessageEmpty;
+
+  const submit = () => {
+    if (canSubmit) {
+      reset();
+      onSubmit();
+    }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+      e.preventDefault();
+      submit();
+    }
+  };
+
+  const defaultPlaceholder = intl.formatMessage({
+    id: "3evXPj",
+    defaultMessage: "Leave your note here...",
+  });
+
+  const defaultButtonLabel = (
+    <FormattedMessage id="v/1VA6" defaultMessage="Send" description="add order note, button" />
+  );
+
   return (
-    <div className={classes.noteRoot}>
-      <DashboardCard.Content paddingX={0}>
-        <UserAvatar
-          url={user?.avatar?.url}
-          initials={getUserInitials(user)}
-          className={sprinkles({
-            position: "absolute",
-            top: 0,
-          })}
-          style={{ left: -19 }}
-        />
-        <TextField
+    <Box marginBottom={6}>
+      <Box position="relative">
+        <Textarea
           disabled={disabled}
-          className={classes.input}
-          placeholder={intl.formatMessage({
-            id: "3evXPj",
-            defaultMessage: "Leave your note here...",
-          })}
+          label={label}
+          placeholder={placeholder ?? defaultPlaceholder}
           onChange={onChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           value={message}
           name="message"
-          fullWidth
-          multiline
-          InputProps={{
-            endAdornment: (
-              <Button className={classes.button} disabled={disabled} onClick={e => submit(e)}>
-                <FormattedMessage
-                  id="v/1VA6"
-                  defaultMessage="Send"
-                  description="add order note, button"
-                />
-              </Button>
-            ),
-          }}
-          variant="outlined"
+          width="100%"
+          rows={3}
         />
-      </DashboardCard.Content>
-    </div>
+        <Box position="absolute" __bottom="8px" __right="8px">
+          <SendFormKeyboardShortcutHint visible={isFocused} />
+        </Box>
+      </Box>
+      <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
+        <Button disabled={!canSubmit} onClick={submit} variant="secondary" type="button">
+          {buttonLabel ?? defaultButtonLabel}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
 Timeline.displayName = "Timeline";
-export default Timeline;

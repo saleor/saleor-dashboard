@@ -70,7 +70,7 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: StatusType.ERROR,
+        status: StatusType.INFO,
       };
     case PaymentChargeStatusEnum.FULLY_CHARGED:
       return {
@@ -80,12 +80,12 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: StatusType.INFO,
+        status: StatusType.ATTENTION,
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: StatusType.INFO,
+        status: StatusType.NEUTRAL,
       };
     case PaymentChargeStatusEnum.PENDING:
       return {
@@ -105,7 +105,7 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.NOT_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: StatusType.ERROR,
+        status: StatusType.NEUTRAL,
       };
   }
 
@@ -152,7 +152,7 @@ export const transformOrderStatus = (
     case OrderStatus.UNFULFILLED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
-        status: StatusType.ERROR,
+        status: StatusType.WARNING,
       };
     case OrderStatus.CANCELED:
       return {
@@ -162,22 +162,22 @@ export const transformOrderStatus = (
     case OrderStatus.DRAFT:
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
-        status: StatusType.INFO,
+        status: StatusType.NEUTRAL,
       };
     case OrderStatus.UNCONFIRMED:
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
-        status: StatusType.ERROR,
+        status: StatusType.NEUTRAL,
       };
     case OrderStatus.PARTIALLY_RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
-        status: StatusType.INFO,
+        status: StatusType.ATTENTION,
       };
     case OrderStatus.RETURNED:
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
-        status: StatusType.INFO,
+        status: StatusType.NEUTRAL,
       };
     case OrderStatusFilter.READY_TO_CAPTURE:
       return {
@@ -192,7 +192,7 @@ export const transformOrderStatus = (
     case OrderStatus.EXPIRED:
       return {
         localized: intl.formatMessage(orderStatusMessages.expired),
-        status: StatusType.ERROR,
+        status: StatusType.NEUTRAL,
       };
   }
 
@@ -498,7 +498,14 @@ export const getById = (idToCompare: string) => (obj: Node) => obj.id === idToCo
 export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) =>
   obj.id !== idToCompare;
 
-export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
+export type PillStatusType =
+  | "error"
+  | "warning"
+  | "info"
+  | "success"
+  | "neutral"
+  | "attention"
+  | "generic";
 
 export const getStatusColor = ({
   status,
@@ -515,10 +522,12 @@ export const getStatusColor = ({
 };
 
 const getStatusHue = (status: PillStatusType): number => {
-  const red = 0;
-  const blue = 236;
-  const green = 145;
-  const yellow = 71;
+  const red = 8;
+  const blue = 240;
+  const green = 135;
+  const amber = 75;
+  const orange = 40;
+  const gray = 0;
 
   switch (status) {
     case "error":
@@ -528,11 +537,14 @@ const getStatusHue = (status: PillStatusType): number => {
     case "success":
       return green;
     case "warning":
-      return yellow;
+      return amber;
+    case "neutral":
     case "generic":
-      return yellow;
+      return gray;
+    case "attention":
+      return orange;
     default:
-      return blue;
+      return gray;
   }
 };
 

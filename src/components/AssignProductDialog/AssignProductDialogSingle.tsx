@@ -4,12 +4,13 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
-import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -130,7 +131,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
         fullWidth
         InputProps={{
           autoComplete: "off",
-          endAdornment: loading && <CircularProgress size={16} />,
+          endAdornment: loading && <SaleorThrobber size={16} />,
         }}
       />
 

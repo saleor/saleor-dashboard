@@ -17,7 +17,6 @@ import DataEditor, {
   Theme,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
@@ -34,6 +33,7 @@ import {
 
 import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
+import { SaleorThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
@@ -47,7 +47,12 @@ import { useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { useTooltipContainer } from "./hooks/useTooltipContainer";
-import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from "./styles";
+import useStyles, {
+  cellHeight,
+  rowActionBarWidth as defaultRowActionBarWidth,
+  useDatagridTheme,
+  useFullScreenStyles,
+} from "./styles";
 import { AvailableColumn } from "./types";
 import { preventRowClickOnSelectionCheckbox } from "./utils";
 
@@ -119,7 +124,7 @@ const Datagrid = ({
   onChange,
   renderColumnPicker,
   renderRowActions,
-  rowActionBarWidth = 36,
+  rowActionBarWidth = defaultRowActionBarWidth,
   onRowClick,
   getColumnTooltipContent,
   readonly = false,
@@ -450,7 +455,7 @@ const Datagrid = ({
   if (loading) {
     return (
       <Box data-test-id="datagrid-loader" display="flex" justifyContent="center" marginY={9}>
-        <CircularProgress />
+        <SaleorThrobber />
       </Box>
     );
   }
@@ -485,6 +490,7 @@ const Datagrid = ({
                     borderColor="default1"
                   />
                   <DataEditor
+                    width="100%"
                     {...datagridProps}
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}

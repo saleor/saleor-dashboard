@@ -75,16 +75,11 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
     await expect(permissionDetails.permissionGroupCheckbox(permission)).toBeChecked();
   }
 });
-test("TC: SALEOR_134 Should be able to edit existing permission group #permissions #e2e", async () => {
-  await permissions.gotoPermissionGroupsView();
-
+test("TC: SALEOR_134 Should be able to edit an existing permission group #permissions #e2e", async () => {
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
 
   await permissions.gotoExistingPermissionGroupPage(permission.id);
-  await permissionDetails.permissionGroupList.waitFor({
-    state: "visible",
-    timeout: 30000,
-  });
+  await expect(permissionDetails.permissionGroupList).toBeVisible();
 
   const oldName = permission.name;
 
@@ -102,7 +97,14 @@ test("TC: SALEOR_134 Should be able to edit existing permission group #permissio
   for (const permission of permissionsToBeUnchecked) {
     await permissionDetails.selectPermissionGroup(permission);
   }
+  const newPermission = "HANDLE_CHECKOUTS";
+  await permissionDetails.selectPermissionGroup(newPermission);
+  await expect(permissionDetails.permissionGroupCheckbox(newPermission)).toBeChecked();
 
+  await permissionDetails.clickSaveButton();
+  await expect(permissions.successBanner).toBeVisible();
+
+  await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
   await expect(
     permissionDetails.permissionGroupCheckbox(assignedPermissions.names[2]),
   ).toBeChecked();
@@ -112,40 +114,28 @@ test("TC: SALEOR_134 Should be able to edit existing permission group #permissio
   await expect(
     permissionDetails.permissionGroupCheckbox(assignedPermissions.names[1]),
   ).not.toBeChecked();
-  await permissionDetails.selectPermissionGroup("HANDLE_CHECKOUTS");
-  await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
+});
+
+test("TC: SALEOR_218 Should be able to edit members of existing permission group #permissions #e2e", async () => {
+  const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
+
+  await permissions.gotoExistingPermissionGroupPage(permission.id);
+  await expect(permissionDetails.permissionGroupList).toBeVisible();
 
   const assignedMembers = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
-
   await permissionDetails.unassignSingleMember(assignedMembers.names[0]);
-  await permissionDetails.unassignMembersDialog.waitFor({
-    state: "visible",
-    timeout: 50000,
-  });
+  await expect(permissionDetails.unassignMembersDialog).toBeVisible();
+
   await unassignDialog.clickConfirmUnassignButton();
-  for (const name of await permissionDetails.assignedMemberName.all()) {
-    await expect(name).not.toContainText(assignedMembers.names[0]);
-  }
+  await expect(permissionDetails.assignedMemberName.first()).not.toContainText(
+    assignedMembers.names[0],
+  );
   await expect(permissionDetails.assignedMemberName.first()).toContainText(
     assignedMembers.names[1],
   );
   await expect(permissionDetails.assignedMemberName.last()).toContainText(assignedMembers.names[2]);
-  await permissionDetails.membersSection
-    .getByTestId("select-all-checkbox")
-    .locator("input")
-    .click();
-  await permissionDetails.clickUnassignMembersButton();
-  await permissionDetails.unassignMembersDialog.waitFor({
-    state: "visible",
-    timeout: 30000,
-  });
-  await unassignDialog.clickConfirmUnassignButton();
-  await expect(permissionDetails.assignedMembersTable).not.toBeAttached();
   await permissionDetails.clickSaveButton();
-  await permissions.successBanner.waitFor({
-    state: "visible",
-    timeout: 50000,
-  });
+  await expect(permissions.successBanner).toBeVisible();
 });
 test("TC: SALEOR_135 Should be able to delete single permission group #permissions #e2e", async () => {
   await permissions.gotoPermissionGroupsView();

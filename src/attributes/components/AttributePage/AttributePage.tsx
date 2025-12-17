@@ -25,7 +25,6 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  AttributeDetailsFragment,
   AttributeDetailsQuery,
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
@@ -59,7 +58,7 @@ import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSectio
 import AttributeValues from "../AttributeValues";
 
 interface AttributePageProps {
-  attribute?: AttributeDetailsFragment | null | undefined;
+  attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;

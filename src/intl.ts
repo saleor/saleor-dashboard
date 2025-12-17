@@ -340,6 +340,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button",
   },
+  moreOptions: {
+    id: "oIS3NK",
+    defaultMessage: "Show more",
+    description: "button",
+  },
   nextStep: {
     id: "wlQTfb",
     defaultMessage: "Next",
@@ -403,6 +408,11 @@ export const buttonMessages = defineMessages({
   close: {
     id: "rbrahO",
     defaultMessage: "Close",
+  },
+  copyToClipboard: {
+    id: "ZGmd4h",
+    defaultMessage: "Copy to clipboard",
+    description: "button",
   },
   proceed: {
     id: "VNX4fn",

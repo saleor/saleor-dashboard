@@ -1,13 +1,11 @@
-// @ts-strict-ignore
 import { SentryAdapter } from "./adapters";
 import { ErrorTrackerFactory } from "./trackerFactory";
 
-const errorTracker = ErrorTrackerFactory(
+export const errorTracker = ErrorTrackerFactory(
   SentryAdapter({
-    dsn: process.env.SENTRY_DSN,
+    // todo install t3/env
+    dsn: process.env.SENTRY_DSN as string,
     environment: process.env.ENVIRONMENT,
     release: process.env.RELEASE_NAME,
   }),
 );
-
-export default errorTracker;

@@ -1,13 +1,6 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  ChervonDownIcon,
-  Dropdown,
-  List,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 
 interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
@@ -49,7 +42,7 @@ export const ButtonGroupWithDropdown = ({
         <Dropdown.Trigger>
           <Button
             variant={variant}
-            icon={<ChervonDownIcon />}
+            icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}

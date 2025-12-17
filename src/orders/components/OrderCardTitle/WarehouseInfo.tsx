@@ -8,29 +8,25 @@ import { UnderlineLink } from "./UnderlineLink";
 interface WarehouseInfoProps {
   warehouseName: string;
   warehouseId: string;
-  createdDate: string;
 }
 
-export const WarehouseInfo = ({
-  warehouseName,
-  warehouseId,
-  createdDate,
-}: WarehouseInfoProps): JSX.Element => {
+export const WarehouseInfo = ({ warehouseName, warehouseId }: WarehouseInfoProps): JSX.Element => {
   const intl = useIntl();
 
   return (
-    <Text color="default2" size={2} marginRight={1}>
-      {intl.formatMessage(orderTitleMessages.fulfilledFrom, {
+    <Text
+      color="default2"
+      size={2}
+      ellipsis
+      title={warehouseName}
+      style={{ maxWidth: "250px" }}
+      as="span"
+    >
+      {", "}
+      {intl.formatMessage(orderTitleMessages.fulfilledFromWarehouse, {
         warehouseName: (
           <UnderlineLink to={warehouseUrl(warehouseId)}>{warehouseName}</UnderlineLink>
         ),
-        fulfillmentDate: intl.formatDate(createdDate, {
-          day: "numeric",
-          month: "short",
-          year: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
       })}
     </Text>
   );
