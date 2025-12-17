@@ -2,7 +2,7 @@
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
-import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";

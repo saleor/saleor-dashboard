@@ -1,5 +1,5 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { FormatDate } from "@dashboard/components/Date";
+import { FormatDate } from "@dashboard/components/Date/FormatDate";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
