@@ -1,4 +1,5 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
+import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
@@ -8,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -80,6 +81,21 @@ export const OrderLineMetadataDialog = ({
     variantPrivateMetadataErrors,
   } = useOrderLineMetadataFormControls({ control, trigger, getValues, formState });
 
+  const [showExitDialog, setShowExitDialog] = useState(false);
+
+  const handleClose = () => {
+    if (formState.isDirty) {
+      setShowExitDialog(true);
+    } else {
+      onClose();
+    }
+  };
+
+  const handleConfirmClose = () => {
+    setShowExitDialog(false);
+    onClose();
+  };
+
   useEffect(() => {
     if (!open) {
       reset();
@@ -87,7 +103,7 @@ export const OrderLineMetadataDialog = ({
   }, [open, reset]);
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content size="md" overflowY="hidden">
         <DashboardModal.Header>
           <OrderLineDetails data={data} loading={loading} />
@@ -227,7 +243,7 @@ export const OrderLineMetadataDialog = ({
           width="100%"
           backgroundColor="default1"
         >
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+          <Button data-test-id="back" variant="secondary" onClick={handleClose}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ButtonWithLoader
@@ -242,6 +258,12 @@ export const OrderLineMetadataDialog = ({
           </ButtonWithLoader>
         </DashboardModal.Actions>
       </DashboardModal.Content>
+
+      <ExitFormDialog
+        isOpen={showExitDialog}
+        onClose={() => setShowExitDialog(false)}
+        onLeave={handleConfirmClose}
+      />
     </DashboardModal>
   );
 };

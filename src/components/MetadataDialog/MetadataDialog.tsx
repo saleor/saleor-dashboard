@@ -1,10 +1,12 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
+import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface MetadataDialogProps {
@@ -39,9 +41,23 @@ export const MetadataDialog = ({
   formIsDirty = false,
 }: MetadataDialogProps) => {
   const intl = useIntl();
+  const [showExitDialog, setShowExitDialog] = useState(false);
+
+  const handleClose = () => {
+    if (formIsDirty) {
+      setShowExitDialog(true);
+    } else {
+      onClose();
+    }
+  };
+
+  const handleConfirmClose = () => {
+    setShowExitDialog(false);
+    onClose();
+  };
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content size="md" overflowY="hidden">
         <DashboardModal.Header paddingLeft={6}>
           {title ?? intl.formatMessage(commonMessages.metadata)}
@@ -86,7 +102,7 @@ export const MetadataDialog = ({
           width="100%"
           backgroundColor="default1"
         >
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+          <Button data-test-id="back" variant="secondary" onClick={handleClose}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>
           <ButtonWithLoader
@@ -100,6 +116,12 @@ export const MetadataDialog = ({
           </ButtonWithLoader>
         </DashboardModal.Actions>
       </DashboardModal.Content>
+
+      <ExitFormDialog
+        isOpen={showExitDialog}
+        onClose={() => setShowExitDialog(false)}
+        onLeave={handleConfirmClose}
+      />
     </DashboardModal>
   );
 };
