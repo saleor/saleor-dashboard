@@ -10,7 +10,8 @@ export const rippleRefreshedOrderSections: Ripple = {
     global: (
       <>
         <Paragraph>
-          We redesigned the Order page look - welcome the refreshed Order Summary, Transactions, and History sections
+          We redesigned the Order page look - welcome the refreshed Order Summary, Transactions, and
+          History sections
         </Paragraph>
       </>
     ),
