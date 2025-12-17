@@ -11,10 +11,6 @@ import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
   ProductFragment,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
 } from "@dashboard/graphql";
 import {
   CommonUseFormResultWithHandlers,
@@ -29,7 +25,7 @@ import {
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { ReorderEvent } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -80,8 +76,6 @@ export interface ProductUpdateHandlers
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
-  fetchReferences: (value: string) => void;
-  fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;
 }
 
@@ -101,19 +95,6 @@ export interface UseProductUpdateFormOpts
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: Option[];
   hasVariants: boolean;
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
-  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
-  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  fetchReferencePages?: (data: string) => void;
-  fetchMoreReferencePages?: FetchMoreProps;
-  fetchReferenceProducts?: (data: string) => void;
-  fetchMoreReferenceProducts?: FetchMoreProps;
-  fetchReferenceCollections?: (data: string) => void;
-  fetchMoreReferenceCollections?: FetchMoreProps;
-  fetchReferenceCategories?: (data: string) => void;
-  fetchMoreReferenceCategories?: FetchMoreProps;
-  assignReferencesAttributeId?: string;
   isSimpleProduct: boolean;
 }
 

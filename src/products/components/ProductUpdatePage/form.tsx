@@ -12,8 +12,6 @@ import {
   createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
   createAttributeValueReorderHandler,
-  createFetchMoreReferencesHandler,
-  createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import {
   DatagridChangeOpts,
@@ -31,6 +29,7 @@ import {
   getProductUpdatePageFormData,
 } from "@dashboard/products/utils/data";
 import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
+import { useReferenceModalConsumer } from "@dashboard/products/views/ProductUpdate/state/useReferenceModalConsumer";
 import createMultiselectChangeHandler from "@dashboard/utils/handlers/multiselectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
@@ -59,6 +58,8 @@ export function useProductUpdateForm(
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
+  const { searchResults } = useReferenceModalConsumer();
+
   const initial = useMemo(
     () => getProductUpdatePageFormData(product, product?.variants),
     [product],
@@ -138,22 +139,6 @@ export function useProductUpdateForm(
     attributes,
     triggerChange,
   );
-  const handleFetchReferences = createFetchReferencesHandler(
-    attributes.data,
-    opts.assignReferencesAttributeId,
-    opts.fetchReferencePages,
-    opts.fetchReferenceProducts,
-    opts.fetchReferenceCategories,
-    opts.fetchReferenceCollections,
-  );
-  const handleFetchMoreReferences = createFetchMoreReferencesHandler(
-    attributes.data,
-    opts.assignReferencesAttributeId,
-    opts.fetchMoreReferencePages,
-    opts.fetchMoreReferenceProducts,
-    opts.fetchMoreReferenceCategories,
-    opts.fetchMoreReferenceCollections,
-  );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
     attributesWithNewFileValue.data,
@@ -175,10 +160,10 @@ export function useProductUpdateForm(
   const data: ProductUpdateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
-      pages: opts.referencePages,
-      products: opts.referenceProducts,
-      collections: opts.referenceCollections,
-      categories: opts.referenceCategories,
+      pages: searchResults.pages,
+      products: searchResults.products,
+      collections: searchResults.collections,
+      categories: searchResults.categories,
     }),
     channels,
     description: null,
@@ -283,8 +268,6 @@ export function useProductUpdateForm(
       changeChannels: handleChannelChange,
       changeMetadata,
       changeVariants: handleVariantChange,
-      fetchMoreReferences: handleFetchMoreReferences,
-      fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
       selectAttributeFile: handleAttributeFileChange,

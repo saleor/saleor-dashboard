@@ -1,14 +1,8 @@
 // @ts-strict-ignore
-import {
-  getReferenceAttributeEntityTypeFromAttribute,
-  handleMetadataReferenceAssignment,
-} from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
@@ -32,13 +26,10 @@ import {
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
-  ProductWhereInput,
   RefreshLimitsQuery,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
@@ -64,7 +55,7 @@ import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeValuesMetadata, getChoices } from "../../utils/data";
+import { getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
@@ -73,7 +64,8 @@ import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
-import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
+import { ReferenceAttributeModal } from "./ReferenceAttributeModal";
+import { ProductUpdateData, ProductUpdateSubmitData } from "./types";
 
 interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -96,28 +88,14 @@ interface ProductUpdatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
-  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
-  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
-  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
-  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  assignReferencesAttributeId?: string;
-  fetchMoreReferencePages?: FetchMoreProps;
-  fetchMoreReferenceProducts?: FetchMoreProps;
-  fetchMoreReferenceCategories?: FetchMoreProps;
-  fetchMoreReferenceCollections?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   isSimpleProduct: boolean;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
-  fetchReferencePages?: (data: string) => void;
-  fetchReferenceProducts?: (data: string) => void;
-  fetchReferenceCategories?: (data: string) => void;
-  fetchReferenceCollections?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   refetch: () => Promise<any>;
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  onCloseDialog: () => void;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
@@ -127,12 +105,6 @@ interface ProductUpdatePageProps {
   onImageUpload: (file: File) => any;
   onMediaUrlUpload: (mediaUrl: string) => any;
   onSeoClick?: () => any;
-  onProductFilterChange?: (
-    filterVariables: ProductWhereInput,
-    channel: string | undefined,
-    query: string,
-  ) => void;
-  initialConstraints?: InitialConstraints;
 }
 
 const ProductUpdatePage = ({
@@ -158,10 +130,6 @@ const ProductUpdatePage = ({
   variants,
   taxClasses,
   fetchMoreTaxClasses,
-  referencePages = [],
-  referenceProducts = [],
-  referenceCategories = [],
-  referenceCollections = [],
   onDelete,
   onImageDelete,
   onImageReorder,
@@ -171,24 +139,12 @@ const ProductUpdatePage = ({
   onSeoClick,
   onSubmit,
   isMediaUrlModalVisible,
-  assignReferencesAttributeId,
   onAttributeValuesSearch,
   onAssignReferencesClick,
-  fetchReferencePages,
-  fetchMoreReferencePages,
-  fetchReferenceProducts,
-  fetchMoreReferenceProducts,
-  fetchReferenceCategories,
-  fetchMoreReferenceCategories,
-  fetchReferenceCollections,
-  fetchMoreReferenceCollections,
   fetchAttributeValues,
   fetchMoreAttributeValues,
   refetch,
-  onCloseDialog,
   onAttributeSelectBlur,
-  onProductFilterChange,
-  initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
@@ -224,20 +180,6 @@ const ProductUpdatePage = ({
       label: taxClass.name,
       value: taxClass.id,
     })) || [];
-  const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-  const handleAssignReferenceAttribute = (
-    attributeValues: AttributeValuesMetadata[],
-    data: ProductUpdateData,
-    handlers: ProductUpdateHandlers,
-  ) => {
-    handleMetadataReferenceAssignment(
-      assignReferencesAttributeId,
-      attributeValues,
-      data.attributes,
-      handlers,
-    );
-    onCloseDialog();
-  };
   const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.PRODUCT_DETAILS,
   );
@@ -369,19 +311,6 @@ const ProductUpdatePage = ({
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
       hasVariants={hasVariants}
-      referencePages={referencePages}
-      referenceProducts={referenceProducts}
-      referenceCategories={referenceCategories}
-      referenceCollections={referenceCollections}
-      fetchReferencePages={fetchReferencePages}
-      fetchMoreReferencePages={fetchMoreReferencePages}
-      fetchReferenceProducts={fetchReferenceProducts}
-      fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-      fetchReferenceCategories={fetchReferenceCategories}
-      fetchMoreReferenceCategories={fetchMoreReferenceCategories}
-      fetchReferenceCollections={fetchReferenceCollections}
-      fetchMoreReferenceCollections={fetchMoreReferenceCollections}
-      assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
       refetch={refetch}
     >
@@ -417,11 +346,6 @@ const ProductUpdatePage = ({
 
         const byChannel = mapByChannel(channels);
         const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
-
-        const entityType = getReferenceAttributeEntityTypeFromAttribute(
-          assignReferencesAttributeId,
-          data.attributes,
-        );
 
         return (
           <DetailPageLayout>
@@ -583,35 +507,7 @@ const ProductUpdatePage = ({
               />
             </Savebar>
 
-            {canOpenAssignReferencesAttributeDialog && entityType && (
-              <AssignAttributeValueDialog
-                entityType={entityType}
-                confirmButtonState={"default"}
-                products={referenceProducts}
-                pages={referencePages}
-                collections={referenceCollections}
-                categories={referenceCategories}
-                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
-                hasMore={handlers.fetchMoreReferences?.hasMore}
-                open={canOpenAssignReferencesAttributeDialog}
-                onFetch={handlers.fetchReferences}
-                onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
-                loading={handlers.fetchMoreReferences?.loading}
-                onClose={onCloseDialog}
-                onFilterChange={onProductFilterChange}
-                initialConstraints={initialConstraints}
-                onSubmit={attributeValues =>
-                  handleAssignReferenceAttribute(
-                    attributeValues.map(container => ({
-                      value: container.id,
-                      label: container.name,
-                    })),
-                    data,
-                    handlers,
-                  )
-                }
-              />
-            )}
+            <ReferenceAttributeModal attributes={data.attributes} handlers={handlers} />
 
             <ProductExternalMediaDialog
               product={product}

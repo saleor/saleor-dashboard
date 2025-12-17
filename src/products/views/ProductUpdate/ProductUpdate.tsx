@@ -2,14 +2,12 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
-import { AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ProductMediaCreateMutationVariables,
-  ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
@@ -32,7 +30,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -47,6 +45,7 @@ import {
 import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import { productUpdatePageMessages as messages } from "./messages";
+import { useReferenceAttributeModal } from "./state/useReferenceAttributeModal";
 
 interface ProductUpdateProps {
   id: string;
@@ -171,15 +170,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables }),
   );
-  const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
-    navigate(
-      productUrl(id, {
-        ...params,
-        action: "assign-attribute-value",
-        id: attribute.id,
-      }),
-      { resetScroll: false },
-    );
   const disableFormSave =
     submitOpts.loading ||
     createProductImageOpts.loading ||
@@ -231,25 +221,39 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const handleProductFilterChange = useCallback(
-    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
-      searchProductsOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where: filterVariables,
-        channel,
-        query,
-      });
+  // Initialize Jotai state for reference modal
+  const referenceModal = useReferenceAttributeModal({
+    productId: id,
+    searchHooks: {
+      pages: { loadMore: loadMorePages, search: searchPages, result: searchPagesOpts, query: "" },
+      products: {
+        loadMore: loadMoreProducts,
+        search: searchProducts,
+        result: searchProductsOpts,
+        query: "",
+      },
+      categories: {
+        loadMore: loadMoreCategories,
+        search: searchCategories,
+        result: searchCategoriesOpts,
+        query: "",
+      },
+      collections: {
+        loadMore: loadMoreCollections,
+        search: searchCollections,
+        result: searchCollectionsOpts,
+        query: "",
+      },
     },
-    [searchProductsOpts],
-  );
+    refAttr,
+    initialConstraints,
+  });
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
   const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
-  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
-  const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
@@ -300,26 +304,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
-        onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
-        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
-        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
-        fetchReferencePages={searchPages}
-        fetchMoreReferencePages={fetchMoreReferencePages}
-        fetchReferenceProducts={searchProducts}
-        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCategories}
-        fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreCollections}
+        onAssignReferencesClick={referenceModal.openModal}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onProductFilterChange={handleProductFilterChange}
-        initialConstraints={initialConstraints}
       />
       <ActionDialog
         open={params.action === "remove"}

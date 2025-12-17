@@ -200,3 +200,5 @@ Once opening a pull request or working with GitHub directly, prefer to use `gh` 
 ## Code review
 
 During code review, do not verify auto-generated files. Such files are suffixed with `.generated.ts`
+
+- don't use barell files (index.ts)
