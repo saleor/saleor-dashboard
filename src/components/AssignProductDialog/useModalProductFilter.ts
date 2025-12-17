@@ -121,7 +121,7 @@ export const stripGlobalConstraints = (filterValue: FilterContainer): FilterCont
  * GLOBAL constraint-specific behavior for persistence, counting, and token lookup.
  *
  * What it does:
- * 1. Inject constraint element at the beginning of value
+ * 1. Inject constraint element at the beginning of filter value
  * 2. Strip GLOBAL constraints when persisting to URL
  * 3. Exclude constraint from count
  */
@@ -133,15 +133,15 @@ export const createWrappedValueProvider = (
     return valueProvider;
   }
 
-  // Inject constraint at the beginning of value
-  const valueWithConstraint: FilterContainer =
+  // Compute the value with constraint injected
+  const finalValue: FilterContainer =
     valueProvider.value.length === 0
       ? [constraintElement]
       : [constraintElement, "AND" as const, ...valueProvider.value];
 
   return {
     ...valueProvider,
-    value: valueWithConstraint,
+    value: finalValue,
     // Exclude "GLOBAL" constraints from displayed count
     count: valueProvider.value.filter(v => typeof v !== "string").length,
     // Strip GLOBAL constraints before persisting to URL
@@ -196,7 +196,7 @@ export const useModalProductFilter = ({
     [constraintElement, valueProvider],
   );
 
-  const containerState = useContainerState(wrappedValueProvider);
+  const containerState = useContainerState(wrappedValueProvider, { syncOnce: true });
 
   const filterContext = useMemo(
     () => ({
@@ -211,17 +211,16 @@ export const useModalProductFilter = ({
   );
 
   // Extract channel separately from where variables (channel is not valid in ProductWhereInput)
-  // Use containerState.value (current UI state) instead of wrappedValueProvider.value (URL state)
-  // This ensures filters are applied immediately when user changes them, not just after URL persist
+  // Use wrappedValueProvider.value (persisted URL state) - search only triggers when user saves filters
   const { filterVariables, filterChannel } = useMemo(() => {
-    const queryVars = createProductQueryVariables(containerState.value);
+    const queryVars = createProductQueryVariables(wrappedValueProvider.value);
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where,
       filterChannel: channel?.eq,
     };
-  }, [containerState.value]);
+  }, [wrappedValueProvider.value]);
 
   const clearFilters = (): void => {
     wrappedValueProvider.clear();

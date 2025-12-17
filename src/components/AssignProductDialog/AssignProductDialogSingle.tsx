@@ -7,7 +7,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
@@ -30,7 +30,6 @@ interface AssignProductDialogSingleProps extends FetchMoreProps {
   productUnavailableText?: string;
   selectedId?: string;
   loading: boolean;
-  onFetch: (value: string) => void;
   onFilterChange?: (
     filterVariables: ProductWhereInput,
     channel: string | undefined,
@@ -55,7 +54,6 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     loading,
     products,
     onClose,
-    onFetch,
     onFilterChange,
     onFetchMore,
     onSubmit,
@@ -65,37 +63,36 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedProductId, setSelectedProductId] = useState<string>(selectedId ?? "");
   const { filterVariables, filterChannel, clearFilters } = useModalProductFilterContext();
+
+  const combinedFilters = useMemo(
+    () => ({
+      where: filterVariables,
+      channel: filterChannel,
+    }),
+    [filterVariables, filterChannel],
+  );
+
+  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+    filterVariables: combinedFilters,
+    open,
+    onFetch: (filters, query) => onFilterChange?.(filters.where, filters.channel, query),
+  });
 
   useEffect(() => {
     setSelectedProductId(selectedId ?? "");
   }, [selectedId]);
 
   const handleClose = () => {
-    queryReset();
+    resetQuery();
     clearFilters();
     onClose();
   };
 
-  // Serialize filterVariables, channel, and query to detect changes
-  const filterVariablesKey = useMemo(
-    () => JSON.stringify({ filterVariables, filterChannel, query }),
-    [filterVariables, filterChannel, query],
-  );
-
-  // Trigger onFilterChange when filterVariables or query changes
-  // This ensures the search includes both filter variables AND query
-  useEffect(() => {
-    if (open) {
-      onFilterChange?.(filterVariables, filterChannel, query);
-    }
-  }, [filterVariablesKey, open]);
-
   useModalDialogOpen(open, {
     onOpen: () => {
-      queryReset();
+      resetQuery();
       clearFilters();
     },
     onClose: handleClose,

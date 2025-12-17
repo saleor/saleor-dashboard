@@ -17,7 +17,6 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   productUnavailableText?: string;
   selectedIds?: Record<string, boolean>;
   loading: boolean;
-  onFetch: (value: string) => void;
   onFilterChange?: (
     filterVariables: ProductWhereInput,
     channel: string | undefined,

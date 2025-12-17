@@ -57,6 +57,8 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
   initialConstraints?: InitialConstraints;
+  // onFetch is required for non-product dialogs (containers, variants, collections, categories)
+  onFetch: (value: string) => void;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {

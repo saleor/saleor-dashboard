@@ -1,10 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
 import { FilterValueProvider } from "./FilterValueProvider";
 
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
+
+export interface UseContainerStateOptions {
+  /**
+   * Only sync with valueProvider on first mount, not on subsequent changes.
+   *
+   * Use this for modals where `valueProvider.value` is wrapped/computed
+   * (e.g., with injected constraints). The wrapping creates new array
+   * references on each render, causing unwanted resyncs that overwrite
+   * user's unsaved edits.
+   */
+  syncOnce?: boolean;
+}
 
 const removeConstraint = (container: FilterContainer) => {
   return container.map(el => {
@@ -53,14 +65,24 @@ const removeEmptyElements = (
   return removeEmptyElements(removeElement(container, emptyIndex), provider);
 };
 
-export const useContainerState = (valueProvider: FilterValueProvider) => {
+export const useContainerState = (
+  valueProvider: FilterValueProvider,
+  options?: UseContainerStateOptions,
+) => {
   const [value, setValue] = useState<FilterContainer>([]);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     if (!valueProvider.loading) {
+      // Skip resync if syncOnce is enabled and already initialized
+      if (options?.syncOnce && initializedRef.current) {
+        return;
+      }
+
       setValue(valueProvider.value);
+      initializedRef.current = true;
     }
-  }, [valueProvider.loading, valueProvider.value]);
+  }, [valueProvider.loading, valueProvider.value, options?.syncOnce]);
 
   const isFilterElementAtIndex = (
     elIndex: number,
@@ -159,6 +181,10 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
   const clear = () => {
     setValue([]);
+
+    if (options?.syncOnce) {
+      initializedRef.current = false; // Allow re-initialization after clear
+    }
   };
   const clearEmpty = () => {
     setValue(v => removeEmptyElements(v, valueProvider));

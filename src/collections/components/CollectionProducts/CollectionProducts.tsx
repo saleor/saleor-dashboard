@@ -109,7 +109,7 @@ const CollectionProducts = ({
     paginationState,
   );
 
-  const { search, loadMore, result } = useProductSearch({
+  const { loadMore, result } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
@@ -232,7 +232,6 @@ const CollectionProducts = ({
         confirmButtonState={assignProductOpts.status}
         hasMore={result.data?.search?.pageInfo?.hasNextPage ?? false}
         open={params.action === "assign"}
-        onFetch={search}
         onFetchMore={loadMore}
         loading={result.loading}
         onClose={closeModal}

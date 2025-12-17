@@ -553,7 +553,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}
-        onFetch={searchProducts}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}
