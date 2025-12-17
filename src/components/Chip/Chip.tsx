@@ -1,10 +1,10 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { alpha } from "@material-ui/core/styles";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import * as React from "react";
+
+import styles from "./Chip.module.css";
 
 interface ChipProps {
   className?: string;
@@ -12,40 +12,18 @@ interface ChipProps {
   onClose?: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    closeIcon: {
-      cursor: "pointer",
-      fontSize: 16,
-      marginLeft: theme.spacing(),
-      verticalAlign: "middle",
-    },
-    label: {
-      color: theme.palette.common.white,
-    },
-    root: {
-      background: alpha(theme.palette.primary.main, 0.8),
-      borderRadius: 18,
-      display: "inline-block",
-      marginRight: theme.spacing(2),
-      padding: "6px 12px",
-    },
-  }),
-  { name: "Chip" },
-);
 const Chip = (props: ChipProps) => {
   const { className, label, onClose } = props;
-  const classes = useStyles(props);
 
   return (
-    <div className={clsx(classes.root, className)}>
-      <Text className={classes.label} size={2} fontWeight="medium">
+    <div className={clsx(styles.root, className)}>
+      <Text className={styles.label} size={2} fontWeight="medium">
         {label}
         {onClose && (
           <X
             size={iconSize.small}
             strokeWidth={iconStrokeWidth}
-            className={classes.closeIcon}
+            className={styles.closeIcon}
             onClick={onClose}
           />
         )}

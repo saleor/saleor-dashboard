@@ -1,0 +1,9 @@
+.spacer {
+  margin-top: var(--mu-spacing-32);
+}
+
+@media (max-width: 600px) {
+  .spacer {
+    margin-top: var(--mu-spacing-16);
+  }
+}

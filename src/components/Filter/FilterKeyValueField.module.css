@@ -1,0 +1,26 @@
+.metadataField {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-4);
+}
+
+.fieldsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+  margin-bottom: var(--mu-spacing-8);
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.addButton {
+  align-self: flex-end;
+}
+
+.deleteButton {
+  margin-left: 0.25rem;
+  margin-right: -0.75rem;
+}

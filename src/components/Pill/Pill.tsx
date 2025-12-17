@@ -1,31 +1,11 @@
 // @ts-strict-ignore
 import { getStatusColor, PillStatusType } from "@dashboard/misc";
-import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
+import { Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { forwardRef } from "react";
 
-const useStyles = makeStyles(
-  {
-    pill: {
-      borderRadius: "32px",
-      border: "1px solid",
-      fontWeight: 500,
-      paddingLeft: "2px",
-      paddingRight: "2px",
-      paddingTop: "0",
-      paddingBottom: "0",
-      "& > span": {
-        fontWeight: 500,
-      },
-      // Override MacawUI Pill padding when there is an icon
-      "& > div, & > svg": {
-        marginLeft: "8px", // Compemsate for the icon internal padding if needed, or adjust based on real DOM
-      },
-    },
-  },
-  { name: "Pill" },
-);
+import styles from "./Pill.module.css";
 
 export interface CustomPillProps extends Omit<PillProps, "color"> {
   color: PillStatusType;
@@ -42,7 +22,6 @@ export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
       status: status,
       currentTheme,
     });
-    const classes = useStyles();
 
     return (
       <MacawuiPill
@@ -51,7 +30,7 @@ export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
         onPointerLeaveCapture={undefined}
         {...(props as any)}
         ref={ref}
-        className={clsx(classes.pill, props.className)}
+        className={clsx(styles.pill, props.className)}
         style={{
           backgroundColor: colors.base,
           borderColor: colors.border,

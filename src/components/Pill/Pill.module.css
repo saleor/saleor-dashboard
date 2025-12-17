@@ -1,0 +1,19 @@
+.pill {
+  border-radius: 32px;
+  border: 1px solid;
+  font-weight: 500;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.pill > span {
+  font-weight: 500;
+}
+
+/* Override MacawUI Pill padding when there is an icon */
+.pill > div,
+.pill > svg {
+  margin-left: 8px;
+}

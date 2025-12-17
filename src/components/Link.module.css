@@ -1,0 +1,25 @@
+.primary {
+  color: var(--mu-colors-text-accent1);
+}
+
+.root {
+  cursor: pointer;
+  display: inline;
+}
+
+.secondary {
+  color: var(--mu-colors-text-accent1);
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.noUnderline {
+  text-decoration: none;
+}
+
+.disabled {
+  cursor: default;
+  color: var(--mu-colors-text-default2);
+}
