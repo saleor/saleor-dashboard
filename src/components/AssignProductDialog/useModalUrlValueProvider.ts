@@ -52,6 +52,13 @@ export const useModalUrlValueProvider = (
   );
   const filterQueryString = useMemo(() => stringify(filterParams), [filterParams]);
   const tokenizedUrl = useMemo(() => new TokenArray(filterQueryString), [filterQueryString]);
+
+  // Ref to read latest tokenizedUrl without triggering effect re-runs
+  // This prevents double-execution when URL changes (once for URL, once for data)
+  const tokenizedUrlRef = useRef(tokenizedUrl);
+
+  tokenizedUrlRef.current = tokenizedUrl;
+
   const fetchingParams = useMemo(() => {
     const paramsFromType: FetchingParams = {
       category: [],
@@ -87,14 +94,17 @@ export const useModalUrlValueProvider = (
 
     if (!data) return;
 
-    setValue(tokenizedUrl.asFilterValuesFromResponse(data));
-  }, [data, loading, tokenizedUrl]);
+    // Use ref to read current tokenizedUrl without making it a dependency
+    // This prevents double-execution when URL changes (once for URL, once for data)
+    setValue(tokenizedUrlRef.current.asFilterValuesFromResponse(data));
+  }, [data, loading]);
 
   useEffect(() => {
     if (hasInitialState) return;
 
-    setValue(tokenizedUrl.asFilterValueFromEmpty());
-  }, [hasInitialState, tokenizedUrl]);
+    // When no initialState, we immediately populate from URL
+    setValue(tokenizedUrlRef.current.asFilterValueFromEmpty());
+  }, [locationSearch, hasInitialState]);
 
   const persist = (filterValue: FilterContainer): void => {
     const currentSearch = router.location.search;

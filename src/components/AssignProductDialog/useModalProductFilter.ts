@@ -15,6 +15,7 @@ import {
   FilterContainer,
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
+import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { createProductQueryVariables, QUERY_API_TYPES } from "../ConditionalFilter/queryVariables";
 import { useContainerState } from "../ConditionalFilter/useContainerState";
@@ -37,7 +38,7 @@ export interface UseModalProductFilterResult {
   hasActiveFilters: boolean;
 }
 
-const getFilteredProductOptions = (
+export const getFilteredProductOptions = (
   excludedFilters?: string[],
   initialConstraints?: InitialConstraints,
 ): LeftOperand[] => {
@@ -61,7 +62,7 @@ const getFilteredProductOptions = (
  * Creates a locked FilterElement for productType constraint.
  * This element has all operands disabled and cannot be removed.
  */
-const createProductTypeConstraintElement = (
+export const createProductTypeConstraintElement = (
   productTypes: ProductTypeConstraint[],
 ): FilterElement => {
   const expressionValue = new ExpressionValue("productType", "ProductType", "productType");
@@ -102,7 +103,7 @@ const createProductTypeConstraintElement = (
  *   → ["AND", filter1, "AND", filter2]  (after filtering)
  *   → [filter1, "AND", filter2]         (after removing orphaned "AND")
  */
-const stripGlobalConstraints = (filterValue: FilterContainer): FilterContainer => {
+export const stripGlobalConstraints = (filterValue: FilterContainer): FilterContainer => {
   const nonConstraintElements = filterValue.filter(
     item => !FilterElement.isFilterElement(item) || !item.constraint?.isGlobal,
   );
@@ -113,6 +114,57 @@ const stripGlobalConstraints = (filterValue: FilterContainer): FilterContainer =
   }
 
   return nonConstraintElements;
+};
+
+/**
+ * Creates a wrapped value provider that injects a constraint element and handles
+ * GLOBAL constraint-specific behavior for persistence, counting, and token lookup.
+ *
+ * What it does:
+ * 1. Inject constraint element at the beginning of value
+ * 2. Strip GLOBAL constraints when persisting to URL
+ * 3. Exclude constraint from count
+ */
+export const createWrappedValueProvider = (
+  valueProvider: FilterValueProvider,
+  constraintElement: FilterElement | null,
+): FilterValueProvider => {
+  if (!constraintElement) {
+    return valueProvider;
+  }
+
+  // Inject constraint at the beginning of value
+  const valueWithConstraint: FilterContainer =
+    valueProvider.value.length === 0
+      ? [constraintElement]
+      : [constraintElement, "AND" as const, ...valueProvider.value];
+
+  return {
+    ...valueProvider,
+    value: valueWithConstraint,
+    // Exclude "GLOBAL" constraints from displayed count
+    count: valueProvider.value.filter(v => typeof v !== "string").length,
+    // Strip GLOBAL constraints before persisting to URL
+    persist: (filterValue: FilterContainer): void => {
+      valueProvider.persist(stripGlobalConstraints(filterValue));
+    },
+    // GLOBAL constraints are always considered "persisted"
+    isPersisted: (element: FilterElement): boolean => {
+      if (element.constraint?.isGlobal) {
+        return true;
+      }
+
+      return valueProvider.value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
+    },
+    // Don't return token for constraint fields (they're not from URL)
+    getTokenByName: (name: string): UrlToken | undefined => {
+      if (name === "productType") {
+        return undefined;
+      }
+
+      return valueProvider.getTokenByName(name);
+    },
+  };
 };
 
 export const useModalProductFilter = ({
@@ -139,48 +191,10 @@ export const useModalProductFilter = ({
     return createProductTypeConstraintElement(initialConstraints.productTypes);
   }, [initialConstraints?.productTypes]);
 
-  // Wrap value provider to:
-  // 1. Inject constraint element at the beginning of value
-  // 2. Strip GLOBAL constraints when persisting to URL
-  // 3. Exclude constraint from count
-  const wrappedValueProvider = useMemo(() => {
-    if (!constraintElement) {
-      return valueProvider;
-    }
-
-    // Inject constraint at the beginning of value
-    const valueWithConstraint: FilterContainer =
-      valueProvider.value.length === 0
-        ? [constraintElement]
-        : [constraintElement, "AND" as const, ...valueProvider.value];
-
-    return {
-      ...valueProvider,
-      value: valueWithConstraint,
-      // Exclude "GLOBAL" constraints from displayed count
-      count: valueProvider.value.filter(v => typeof v !== "string").length,
-      // Strip GLOBAL constraints before persisting to URL
-      persist: (filterValue: FilterContainer): void => {
-        valueProvider.persist(stripGlobalConstraints(filterValue));
-      },
-      // GLOBAL constraints are always considered "persisted"
-      isPersisted: (element: FilterElement): boolean => {
-        if (element.constraint?.isGlobal) {
-          return true;
-        }
-
-        return valueProvider.value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
-      },
-      // Don't return token for constraint fields (they're not from URL)
-      getTokenByName: (name: string): UrlToken | undefined => {
-        if (name === "productType") {
-          return undefined;
-        }
-
-        return valueProvider.getTokenByName(name);
-      },
-    };
-  }, [constraintElement, valueProvider]);
+  const wrappedValueProvider = useMemo(
+    () => createWrappedValueProvider(valueProvider, constraintElement),
+    [constraintElement, valueProvider],
+  );
 
   const containerState = useContainerState(wrappedValueProvider);
 
