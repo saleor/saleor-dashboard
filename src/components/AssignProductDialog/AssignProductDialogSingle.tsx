@@ -31,7 +31,11 @@ interface AssignProductDialogSingleProps extends FetchMoreProps {
   selectedId?: string;
   loading: boolean;
   onFetch: (value: string) => void;
-  onFilterChange?: (filterVariables: ProductWhereInput, channel: string | undefined) => void;
+  onFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   onClose: () => void;
   labels?: {
@@ -75,16 +79,17 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     onClose();
   };
 
-  // Serialize filterVariables and channel to detect changes
+  // Serialize filterVariables, channel, and query to detect changes
   const filterVariablesKey = useMemo(
-    () => JSON.stringify({ filterVariables, filterChannel }),
-    [filterVariables, filterChannel],
+    () => JSON.stringify({ filterVariables, filterChannel, query }),
+    [filterVariables, filterChannel, query],
   );
 
-  // Trigger onFilterChange when filterVariables actually changes
+  // Trigger onFilterChange when filterVariables or query changes
+  // This ensures the search includes both filter variables AND query
   useEffect(() => {
     if (open) {
-      onFilterChange?.(filterVariables, filterChannel);
+      onFilterChange?.(filterVariables, filterChannel, query);
     }
   }, [filterVariablesKey, open]);
 

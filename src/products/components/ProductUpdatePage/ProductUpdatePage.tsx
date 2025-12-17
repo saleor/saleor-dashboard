@@ -127,7 +127,11 @@ interface ProductUpdatePageProps {
   onImageUpload: (file: File) => any;
   onMediaUrlUpload: (mediaUrl: string) => any;
   onSeoClick?: () => any;
-  onProductFilterChange?: (filterVariables: ProductWhereInput, channel: string | undefined) => void;
+  onProductFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   initialConstraints?: InitialConstraints;
 }
 

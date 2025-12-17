@@ -18,7 +18,11 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onFilterChange?: (filterVariables: ProductWhereInput, channel: string | undefined) => void;
+  onFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   // name is part of Container interface
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   labels?: {

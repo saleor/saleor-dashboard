@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 import { useProductInitialAPIState } from "../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
 import { useProductFilterAPIProvider } from "../ConditionalFilter/API/providers/ProductFilterAPIProvider";
-import { STATIC_PRODUCT_OPTIONS } from "../ConditionalFilter/constants";
+import { STATIC_CONDITIONS, STATIC_PRODUCT_OPTIONS } from "../ConditionalFilter/constants";
 import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../ConditionalFilter/FilterElement/ConditionOptions";
@@ -75,7 +75,7 @@ export const createProductTypeConstraintElement = (
 
   // Create condition with "in" operator and the selected productType IDs
   const options = ConditionOptions.fromStaticElementName("productType");
-  const inOption = options.findByLabel("in") ?? options.first();
+  const inOption = STATIC_CONDITIONS.productType[1];
 
   const conditionSelected = ConditionSelected.fromConditionItemAndValue(
     inOption,
@@ -211,16 +211,17 @@ export const useModalProductFilter = ({
   );
 
   // Extract channel separately from where variables (channel is not valid in ProductWhereInput)
-  // wrappedValueProvider.value already includes constraint element
+  // Use containerState.value (current UI state) instead of wrappedValueProvider.value (URL state)
+  // This ensures filters are applied immediately when user changes them, not just after URL persist
   const { filterVariables, filterChannel } = useMemo(() => {
-    const queryVars = createProductQueryVariables(wrappedValueProvider.value);
+    const queryVars = createProductQueryVariables(containerState.value);
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where,
       filterChannel: channel?.eq,
     };
-  }, [wrappedValueProvider.value]);
+  }, [containerState.value]);
 
   const clearFilters = (): void => {
     wrappedValueProvider.clear();

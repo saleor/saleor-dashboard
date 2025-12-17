@@ -1,6 +1,6 @@
 import { parseQs } from "@dashboard/url-utils";
 import { stringify } from "qs";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialProductAPIState } from "../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
@@ -57,7 +57,9 @@ export const useModalUrlValueProvider = (
   // This prevents double-execution when URL changes (once for URL, once for data)
   const tokenizedUrlRef = useRef(tokenizedUrl);
 
-  tokenizedUrlRef.current = tokenizedUrl;
+  useEffect(() => {
+    tokenizedUrlRef.current = tokenizedUrl;
+  }, [tokenizedUrl]);
 
   const fetchingParams = useMemo(() => {
     const paramsFromType: FetchingParams = {
@@ -106,22 +108,25 @@ export const useModalUrlValueProvider = (
     setValue(tokenizedUrlRef.current.asFilterValueFromEmpty());
   }, [locationSearch, hasInitialState]);
 
-  const persist = (filterValue: FilterContainer): void => {
-    const currentSearch = router.location.search;
-    const { preservedParams } = splitSearchIntoFilterAndPreserved(currentSearch);
-    const filterStructureParams = { ...prepareStructure(filterValue) } as Record<string, unknown>;
+  const persist = useCallback(
+    (filterValue: FilterContainer): void => {
+      const currentSearch = router.location.search;
+      const { preservedParams } = splitSearchIntoFilterAndPreserved(currentSearch);
+      const filterStructureParams = { ...prepareStructure(filterValue) } as Record<string, unknown>;
 
-    router.history.replace({
-      pathname: router.location.pathname,
-      search: stringify({
-        ...preservedParams,
-        ...filterStructureParams,
-      }),
-    });
-    setValue(filterValue);
-  };
+      router.history.replace({
+        pathname: router.location.pathname,
+        search: stringify({
+          ...preservedParams,
+          ...filterStructureParams,
+        }),
+      });
+      setValue(filterValue);
+    },
+    [router],
+  );
 
-  const clear = (): void => {
+  const clear = useCallback((): void => {
     const currentSearch = router.location.search;
     const { preservedParams } = splitSearchIntoFilterAndPreserved(currentSearch);
 
@@ -130,25 +135,39 @@ export const useModalUrlValueProvider = (
       search: stringify(preservedParams),
     });
     setValue([]);
-  };
+  }, [router]);
 
-  const isPersisted = (element: FilterElement): boolean => {
-    return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
-  };
+  const isPersisted = useCallback(
+    (element: FilterElement): boolean => {
+      return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
+    },
+    [value],
+  );
 
-  const getTokenByName = (name: string): UrlToken | undefined => {
-    return tokenizedUrl.asFlatArray().find(token => token.name === name);
-  };
+  const getTokenByName = useCallback(
+    (name: string): UrlToken | undefined => {
+      return tokenizedUrl.asFlatArray().find(token => token.name === name);
+    },
+    [tokenizedUrl],
+  );
 
-  const count = value.filter(v => typeof v !== "string").length;
+  const count = useMemo(() => value.filter(v => typeof v !== "string").length, [value]);
+  const loadingState = initialState?.loading || false;
 
-  return {
-    value,
-    loading: initialState?.loading || false,
-    persist,
-    clear,
-    isPersisted,
-    getTokenByName,
-    count,
-  };
+  // Memoize the returned object to prevent unnecessary re-renders
+  // This is critical when using wrapped providers (e.g., with constraints)
+  // because a new object reference would cause the wrapper to recreate,
+  // e.g. triggering useEffect resets in useContainerState
+  return useMemo(
+    () => ({
+      value,
+      loading: loadingState,
+      persist,
+      clear,
+      isPersisted,
+      getTokenByName,
+      count,
+    }),
+    [value, loadingState, persist, clear, isPersisted, getTokenByName, count],
+  );
 };

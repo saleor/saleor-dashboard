@@ -232,11 +232,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   } = useReferencePageSearch(refAttr);
 
   const handleProductFilterChange = useCallback(
-    (filterVariables: ProductWhereInput, channel: string | undefined) => {
+    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
       searchProductsOpts.refetch({
         ...DEFAULT_INITIAL_SEARCH_DATA,
         where: filterVariables,
         channel,
+        query,
       });
     },
     [searchProductsOpts.refetch],
