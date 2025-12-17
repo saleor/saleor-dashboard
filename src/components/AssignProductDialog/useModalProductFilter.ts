@@ -15,15 +15,18 @@ import {
   FilterContainer,
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { createProductQueryVariables, QUERY_API_TYPES } from "../ConditionalFilter/queryVariables";
-import { useContainerState } from "../ConditionalFilter/useContainerState";
+import {
+  applyMiddleware,
+  createConstraintMiddleware,
+  useContainerStateStore,
+  useFilterValueProvider,
+  useModalFilterStore,
+} from "../ConditionalFilter/store";
 import { useFilterLeftOperandsProvider } from "../ConditionalFilter/useFilterLeftOperands";
 import { useFilterWindow } from "../ConditionalFilter/useFilterWindow";
-import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { InitialConstraints, ProductTypeConstraint } from "./ModalProductFilterProvider";
-import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 
 export interface UseModalProductFilterOptions {
   excludedFilters?: string[];
@@ -117,56 +120,14 @@ export const stripGlobalConstraints = (filterValue: FilterContainer): FilterCont
 };
 
 /**
- * Creates a wrapped value provider that injects a constraint element and handles
- * GLOBAL constraint-specific behavior for persistence, counting, and token lookup.
+ * Hook for modal product filters using the external store pattern with middleware.
  *
- * What it does:
- * 1. Inject constraint element at the beginning of filter value
- * 2. Strip GLOBAL constraints when persisting to URL
- * 3. Exclude constraint from count
+ * This replaces the old `createWrappedValueProvider` pattern which had issues
+ * with stale closures. Instead, we use middleware to:
+ * - Inject constraints into the snapshot
+ * - Strip constraints before persisting to URL
+ * - Handle constraint-specific behavior (isPersisted, getTokenByName)
  */
-export const createWrappedValueProvider = (
-  valueProvider: FilterValueProvider,
-  constraintElement: FilterElement | null,
-): FilterValueProvider => {
-  if (!constraintElement) {
-    return valueProvider;
-  }
-
-  // Compute the value with constraint injected
-  const finalValue: FilterContainer =
-    valueProvider.value.length === 0
-      ? [constraintElement]
-      : [constraintElement, "AND" as const, ...valueProvider.value];
-
-  return {
-    ...valueProvider,
-    value: finalValue,
-    // Exclude "GLOBAL" constraints from displayed count
-    count: valueProvider.value.filter(v => typeof v !== "string").length,
-    // Strip GLOBAL constraints before persisting to URL
-    persist: (filterValue: FilterContainer): void => {
-      valueProvider.persist(stripGlobalConstraints(filterValue));
-    },
-    // GLOBAL constraints are always considered "persisted"
-    isPersisted: (element: FilterElement): boolean => {
-      if (element.constraint?.isGlobal) {
-        return true;
-      }
-
-      return valueProvider.value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
-    },
-    // Don't return token for constraint fields (they're not from URL)
-    getTokenByName: (name: string): UrlToken | undefined => {
-      if (name === "productType") {
-        return undefined;
-      }
-
-      return valueProvider.getTokenByName(name);
-    },
-  };
-};
-
 export const useModalProductFilter = ({
   excludedFilters,
   initialConstraints,
@@ -178,9 +139,12 @@ export const useModalProductFilter = ({
 
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
-  const valueProvider = useModalUrlValueProvider(initialState);
-  const leftOperandsProvider = useFilterLeftOperandsProvider(filteredOptions);
-  const filterWindow = useFilterWindow();
+
+  // Create the base store using the modal-specific hook
+  const { store: baseStore } = useModalFilterStore({
+    type: "product",
+    initialState,
+  });
 
   // Create constraint element if productTypes are provided
   const constraintElement = useMemo(() => {
@@ -191,44 +155,59 @@ export const useModalProductFilter = ({
     return createProductTypeConstraintElement(initialConstraints.productTypes);
   }, [initialConstraints?.productTypes]);
 
-  const wrappedValueProvider = useMemo(
-    () => createWrappedValueProvider(valueProvider, constraintElement),
-    [constraintElement, valueProvider],
-  );
+  // Apply constraint middleware to the store
+  // This replaces the old createWrappedValueProvider pattern
+  const constrainedStore = useMemo(() => {
+    if (!constraintElement) {
+      return baseStore;
+    }
 
-  const containerState = useContainerState(wrappedValueProvider, { syncOnce: true });
+    const middleware = createConstraintMiddleware(constraintElement);
+
+    return applyMiddleware(baseStore, middleware);
+  }, [baseStore, constraintElement]);
+
+  // Create value provider from the constrained store
+  const valueProvider = useFilterValueProvider(constrainedStore);
+
+  // Create container state from the constrained store
+  // No `syncOnce` needed - the store pattern handles this correctly
+  const containerState = useContainerStateStore(constrainedStore);
+
+  const leftOperandsProvider = useFilterLeftOperandsProvider(filteredOptions);
+  const filterWindow = useFilterWindow();
 
   const filterContext = useMemo(
     () => ({
       apiProvider,
-      valueProvider: wrappedValueProvider,
+      valueProvider,
       leftOperandsProvider,
       containerState,
       filterWindow,
       queryApiType: QUERY_API_TYPES.PRODUCT,
     }),
-    [apiProvider, wrappedValueProvider, leftOperandsProvider, containerState, filterWindow],
+    [apiProvider, valueProvider, leftOperandsProvider, containerState, filterWindow],
   );
 
   // Extract channel separately from where variables (channel is not valid in ProductWhereInput)
-  // Use wrappedValueProvider.value (persisted URL state) - search only triggers when user saves filters
+  // Use valueProvider.value (persisted URL state) - search only triggers when user saves filters
   const { filterVariables, filterChannel } = useMemo(() => {
-    const queryVars = createProductQueryVariables(wrappedValueProvider.value);
+    const queryVars = createProductQueryVariables(valueProvider.value);
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where,
       filterChannel: channel?.eq,
     };
-  }, [wrappedValueProvider.value]);
+  }, [valueProvider.value]);
 
   const clearFilters = (): void => {
-    wrappedValueProvider.clear();
+    valueProvider.clear();
     containerState.clear();
   };
 
   // Count active filters (excluding constraint)
-  const hasActiveFilters = wrappedValueProvider.count > 0;
+  const hasActiveFilters = valueProvider.count > 0;
 
   return {
     filterContext,

@@ -36,21 +36,29 @@ import {
   STATIC_VOUCHER_OPTIONS,
 } from "../constants";
 import { QUERY_API_TYPES } from "../queryVariables";
-import { useContainerState } from "../useContainerState";
+import { useContainerStateStore, useFilterStore } from "../store";
 import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
 import { useFilterWindow } from "../useFilterWindow";
-import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
+/**
+ * Provider for Product filters using the external store pattern.
+ *
+ * This uses useSyncExternalStore for synchronous URL reads, eliminating
+ * the multiple re-renders and race conditions of the old useEffect approach.
+ */
 export const ConditionalProductFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
-  const valueProvider = useUrlValueProvider(locationSearch, "product", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "product",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -72,11 +80,13 @@ export const ConditionalProductFilterProvider: FC<{
 export const ConditionalDiscountFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useDiscountFilterAPIProvider();
-  const valueProvider = useUrlValueProvider(locationSearch, "discount");
+  const { store, valueProvider } = useFilterStore({
+    type: "discount",
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DISCOUNT_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -98,13 +108,15 @@ export const ConditionalDiscountFilterProvider: FC<{
 export const ConditionalOrderFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useOrderFilterAPIProvider();
-
   const initialState = useInitialOrderState();
-  const valueProvider = useUrlValueProvider(locationSearch, "order", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "order",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ORDER_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -126,13 +138,15 @@ export const ConditionalOrderFilterProvider: FC<{
 export const ConditionalVoucherFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useVoucherAPIProvider();
-
   const initialState = useInitialVouchersState();
-  const valueProvider = useUrlValueProvider(locationSearch, "voucher", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "voucher",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_VOUCHER_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -154,13 +168,15 @@ export const ConditionalVoucherFilterProvider: FC<{
 export const ConditionalPageFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = usePageAPIProvider();
-
   const initialState = useInitialPageState();
-  const valueProvider = useUrlValueProvider(locationSearch, "page", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "page",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PAGE_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -182,12 +198,13 @@ export const ConditionalPageFilterProvider: FC<{
 export const ConditionalDraftOrderFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useDraftOrderFilterAPIProvider();
-
-  const valueProvider = useUrlValueProvider(locationSearch, "draft-order");
+  const { store, valueProvider } = useFilterStore({
+    type: "draft-order",
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DRAFT_ORDER_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -209,12 +226,15 @@ export const ConditionalDraftOrderFilterProvider: FC<{
 export const ConditionalGiftCardsFilterProver: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const initialState = useInitialGiftCardsState();
   const apiProvider = useGiftCardsFiltersAPIProvider();
-  const valueProvider = useUrlValueProvider(locationSearch, "gift-cards", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "gift-cards",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_GIFT_CARDS_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -236,12 +256,13 @@ export const ConditionalGiftCardsFilterProver: FC<{
 export const ConditionalCustomerFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useCustomerAPIProvider();
-
-  const valueProvider = useUrlValueProvider(locationSearch, "customer");
+  const { store, valueProvider } = useFilterStore({
+    type: "customer",
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_CUSTOMER_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -263,14 +284,15 @@ export const ConditionalCustomerFilterProvider: FC<{
 export const ConditionalCollectionFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useCollectionFilterAPIProvider();
-
   const initialState = useInitialCollectionState();
-
-  const valueProvider = useUrlValueProvider(locationSearch, "collection", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "collection",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_COLLECTION_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -292,13 +314,15 @@ export const ConditionalCollectionFilterProvider: FC<{
 export const ConditionalProductTypesFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useProductTypesFilterAPIProvider();
-
   const initialState = useInitialProductTypesState();
-  const valueProvider = useUrlValueProvider(locationSearch, "product-types", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "product-types",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PRODUCT_TYPES_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -320,13 +344,15 @@ export const ConditionalProductTypesFilterProvider: FC<{
 export const ConditionalStaffMembersFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useStaffMembersFilterAPIProvider();
-
   const initialState = useInitialStaffMembersState();
-  const valueProvider = useUrlValueProvider(locationSearch, "staff-members", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "staff-members",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STAFF_MEMBER_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
@@ -348,13 +374,15 @@ export const ConditionalStaffMembersFilterProvider: FC<{
 export const ConditionalAttributesFilterProvider: FC<{
   locationSearch: string;
   children: ReactNode;
-}> = ({ children, locationSearch }) => {
+}> = ({ children }) => {
   const apiProvider = useAttributesFilterAPIProvider();
-
   const initialState = useInitialAttributesState();
-  const valueProvider = useUrlValueProvider(locationSearch, "attributes", initialState);
+  const { store, valueProvider } = useFilterStore({
+    type: "attributes",
+    initialState,
+  });
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_ATTRIBUTES_OPTIONS);
-  const containerState = useContainerState(valueProvider);
+  const containerState = useContainerStateStore(store);
   const filterWindow = useFilterWindow();
 
   return (
