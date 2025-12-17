@@ -56,9 +56,16 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  /**
+   * Initial constraints for the product filter modal.
+   * Only used when entityType is PRODUCT.
+   */
   initialConstraints?: InitialConstraints;
-  // onFetch is required for non-product dialogs (containers, variants, collections, categories)
-  onFetch: (value: string) => void;
+  /**
+   * Search callback for non-product entity types (PAGE, PRODUCT_VARIANT, COLLECTION, CATEGORY).
+   * Not used when entityType is PRODUCT (use onFilterChange instead).
+   */
+  onFetch?: (value: string) => void;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
@@ -82,6 +89,7 @@ const AssignAttributeValueDialog = ({
   attribute,
   labels,
   initialConstraints,
+  onFetch,
   ...rest
 }: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
@@ -108,6 +116,7 @@ const AssignAttributeValueDialog = ({
             title: intl.formatMessage(pagesMessages.header),
             ...labels,
           }}
+          onFetch={onFetch!}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -125,6 +134,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignVariantDialog
           products={filteredProducts}
+          onFetch={onFetch!}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -133,6 +143,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignCollectionDialog
           collections={filteredCollections}
+          onFetch={onFetch!}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -141,6 +152,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignCategoryDialog
           categories={filteredCategories}
+          onFetch={onFetch!}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

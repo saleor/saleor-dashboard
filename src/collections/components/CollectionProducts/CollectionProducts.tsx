@@ -122,7 +122,7 @@ const CollectionProducts = ({
         query,
       });
     },
-    [result.refetch],
+    [result],
   );
 
   const assignedProductDict = getAssignedProductIdsToCollection(collection, result.data?.search);

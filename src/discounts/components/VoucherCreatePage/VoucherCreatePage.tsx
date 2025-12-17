@@ -12,6 +12,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import DiscountCategories from "@dashboard/discounts/components/DiscountCategories";
 import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
@@ -31,6 +32,7 @@ import {
   CountryWithCodeFragment,
   DiscountErrorFragment,
   PermissionEnum,
+  ProductWhereInput,
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsWithTotalProductsQuery,
@@ -195,6 +197,19 @@ const VoucherCreatePage = ({
     triggerChange(true);
     set({
       codes: [generateDraftVoucherCode(code), ...data.codes],
+    });
+  };
+
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    productsSearch.result.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
     });
   };
 
@@ -552,6 +567,7 @@ const VoucherCreatePage = ({
             assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
           }
           products={getFilteredProducts(data, productsSearch.result)}
+          onFilterChange={handleProductFilterChange}
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}

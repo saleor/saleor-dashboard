@@ -93,18 +93,34 @@ export function useModalSearchWithFilters<TFilterVariables>({
     onFetch?.(filterVariables, query);
   }, debounceMs);
 
-  // Trigger debounced search when query changes
+  // Track if this is the initial mount to prevent double fetch
+  const isInitialMount = useRef(true);
+
+  // Trigger debounced search when query changes (skip on mount to avoid double fetch)
   useEffect(() => {
-    if (open) {
+    if (open && !isInitialMount.current) {
       debouncedSearch();
     }
+    // Intentionally omitting debouncedSearch - it reads from searchParamsRef.current
+    // which is updated synchronously on each render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, open]);
 
   // Trigger immediate search when filter variables change (user saved filters)
+  // This also handles the initial fetch when the modal opens
   useEffect(() => {
     if (open) {
       onFetch?.(filterVariables, query);
     }
+
+    // After the first render with open=true, mark initial mount as complete
+    if (open && isInitialMount.current) {
+      isInitialMount.current = false;
+    }
+    // Intentionally using filterVariablesKey (serialized) to avoid triggering on reference changes
+    // onFetch, filterVariables, and query are intentionally omitted - we use the serialized key
+    // to detect actual filter value changes, not reference changes from re-renders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterVariablesKey, open]);
 
   const onQueryChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {

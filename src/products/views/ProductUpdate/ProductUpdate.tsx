@@ -240,7 +240,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         query,
       });
     },
-    [searchProductsOpts.refetch],
+    [searchProductsOpts],
   );
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
