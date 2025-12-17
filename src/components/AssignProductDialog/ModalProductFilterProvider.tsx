@@ -3,7 +3,7 @@ import { createContext, FC, ReactNode, useContext } from "react";
 import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
 import { useModalProductFilter, UseModalProductFilterResult } from "./useModalProductFilter";
 
-interface ModalProductFilterContextValue extends UseModalProductFilterResult {}
+type ModalProductFilterContextValue = UseModalProductFilterResult;
 
 const ModalProductFilterContext = createContext<ModalProductFilterContextValue | null>(null);
 
