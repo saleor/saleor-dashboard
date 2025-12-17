@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {

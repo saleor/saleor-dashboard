@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Date from "@dashboard/components/Date";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import Percent from "@dashboard/components/Percent";

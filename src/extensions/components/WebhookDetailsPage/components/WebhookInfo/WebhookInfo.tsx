@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import { WebhookErrorFragment } from "@dashboard/graphql";

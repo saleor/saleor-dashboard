@@ -1,9 +1,9 @@
-import * as React from "react";
+import { ReactNode } from "react";
 
 import styles from "./FormSpacer.module.css";
 
 interface FormSpacerProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export const FormSpacer = (props: FormSpacerProps) => {
@@ -11,6 +11,3 @@ export const FormSpacer = (props: FormSpacerProps) => {
 
   return <div className={styles.spacer}>{children}</div>;
 };
-
-FormSpacer.displayName = "FormSpacer";
-export default FormSpacer;

@@ -5,7 +5,7 @@ import {
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   ChannelErrorFragment,

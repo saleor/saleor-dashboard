@@ -1,6 +1,6 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
 import { DashboardCard } from "@dashboard/components/Card";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import {
   AttributeEntityTypeEnum,

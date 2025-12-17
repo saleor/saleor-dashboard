@@ -1,6 +1,6 @@
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { getAppMountUri } from "@dashboard/config";
 import { AccountErrorCode } from "@dashboard/graphql";
