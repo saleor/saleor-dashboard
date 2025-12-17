@@ -1,4 +1,3 @@
-import { Provider as DateProvider } from "@dashboard/components/Date/DateContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { TimezoneProvider } from "@dashboard/components/Timezone";
 import { IntlProvider } from "react-intl";
@@ -17,13 +16,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => (
           setLocale: () => undefined,
         }}
       >
-        <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
-          <TimezoneProvider value="America/New_York">
-            <ThemeWrapper>
-              <AppExtensionPopupProvider>{children}</AppExtensionPopupProvider>
-            </ThemeWrapper>
-          </TimezoneProvider>
-        </DateProvider>
+        <TimezoneProvider value="America/New_York">
+          <ThemeWrapper>
+            <AppExtensionPopupProvider>{children}</AppExtensionPopupProvider>
+          </ThemeWrapper>
+        </TimezoneProvider>
       </RawLocaleProvider>
     </IntlProvider>
   </ApolloMockedProvider>

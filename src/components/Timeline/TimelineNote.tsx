@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { DateTime } from "../Date";
+import { DateTime } from "../Date/DateTime";
 import styles from "./TimelineNote.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
 import { Actor } from "./types";

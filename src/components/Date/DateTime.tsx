@@ -1,11 +1,11 @@
 // @ts-strict-ignore
+import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import ReactMoment from "react-moment";
 
 import { LocaleConsumer } from "../Locale";
 import { TimezoneConsumer } from "../Timezone";
-import { Consumer } from "./DateContext";
 
 interface DateTimeProps {
   date: string;
@@ -13,6 +13,8 @@ interface DateTimeProps {
 }
 
 export const DateTime = ({ date, plain }: DateTimeProps) => {
+  const currentDate = useCurrentDate();
+
   const getTitle = (value: string, locale?: string, tz?: string) => {
     let date = moment(value).locale(locale);
 
@@ -27,33 +29,28 @@ export const DateTime = ({ date, plain }: DateTimeProps) => {
     <TimezoneConsumer>
       {tz => (
         <LocaleConsumer>
-          {({ locale }) => (
-            <Consumer>
-              {currentDate =>
-                plain ? (
-                  getTitle(date, locale, tz)
-                ) : (
-                  <Tooltip>
-                    <Tooltip.Trigger>
-                      <div>
-                        <ReactMoment from={currentDate} locale={locale} tz={tz}>
-                          {date}
-                        </ReactMoment>
-                      </div>
-                    </Tooltip.Trigger>
-                    <Tooltip.Content side="bottom">
-                      <Tooltip.Arrow />
-                      {getTitle(date, locale, tz)}
-                    </Tooltip.Content>
-                  </Tooltip>
-                )
-              }
-            </Consumer>
-          )}
+          {({ locale }) =>
+            plain ? (
+              getTitle(date, locale, tz)
+            ) : (
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <div>
+                    <ReactMoment from={currentDate} locale={locale} tz={tz}>
+                      {date}
+                    </ReactMoment>
+                  </div>
+                </Tooltip.Trigger>
+                <Tooltip.Content side="bottom">
+                  <Tooltip.Arrow />
+                  {getTitle(date, locale, tz)}
+                </Tooltip.Content>
+              </Tooltip>
+            )
+          }
         </LocaleConsumer>
       )}
     </TimezoneConsumer>
   );
 };
 DateTime.displayName = "DateTime";
-export default DateTime;
