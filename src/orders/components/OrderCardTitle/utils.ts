@@ -13,6 +13,7 @@ const STATUS_MESSAGE_MAP: Record<CardTitleStatus, MessageDescriptor> = {
   [FulfillmentStatus.RETURNED]: orderTitleMessages.returned,
   [FulfillmentStatus.WAITING_FOR_APPROVAL]: orderTitleMessages.waitingForApproval,
   unfulfilled: orderTitleMessages.unfulfilled,
+  draft: orderTitleMessages.draft,
 };
 
 export const getOrderTitleMessage = (status?: CardTitleStatus): MessageDescriptor =>

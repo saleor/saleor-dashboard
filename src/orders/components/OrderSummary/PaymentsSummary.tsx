@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import { OrderAuthorizeStatusBadge } from "./OrderAuthorizeStatusBadge";
 import { OrderChargeStatusBadge } from "./OrderChargeStatusBadge";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
+import { PaymentsSummaryEmptyState } from "./PaymentsSummaryEmptyState";
 import { PaymentsSummaryHeader } from "./PaymentsSummaryHeader";
 
 type Props = PropsWithBox<{
@@ -31,13 +32,8 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
         borderWidth={1}
         {...props}
       >
-        <PaymentsSummaryHeader
-          order={order}
-          description={intl.formatMessage({
-            defaultMessage: "This order has no payment yet",
-            id: "Fcxl/G",
-          })}
-        />
+        <PaymentsSummaryHeader order={order} />
+        <PaymentsSummaryEmptyState />
       </Box>
     );
   }
@@ -60,7 +56,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
         })}
       />
 
-      <Box marginTop={2} display="flex" gap={3}>
+      <Box marginTop={2} display="flex" gap={3} data-test-id="payment-status-badges">
         <OrderChargeStatusBadge status={order.chargeStatus} />
         <OrderAuthorizeStatusBadge status={order.authorizeStatus} />
       </Box>
@@ -83,6 +79,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
           showSign
           showCurrency
           currency={orderAmounts.totalBalance.currency}
+          bold
         >
           {intl.formatMessage({
             defaultMessage: "Outstanding balance",

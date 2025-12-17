@@ -1,13 +1,17 @@
-import { DateContext } from "@dashboard/components/Date/DateContext";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 
-/**
- * @deprecated Use `Date.now()` directly instead.
- */
-function useCurrentDate(): number {
-  const currentDate = useContext(DateContext);
+export function useCurrentDate(refreshInterval = 10_000): number {
+  const [currentDate, setCurrentDate] = useState(() => Date.now());
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setCurrentDate(Date.now());
+    }, refreshInterval);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [refreshInterval]);
 
   return currentDate;
 }
-
-export default useCurrentDate;
