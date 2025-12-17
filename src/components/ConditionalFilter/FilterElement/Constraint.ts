@@ -35,7 +35,7 @@ export class Constraint {
     return fieldConstraint[0] as StaticElementName;
   }
 
-  public static fromSlug(slug: string): Constraint {
+  public static fromSlug(slug: string): Constraint | null {
     const constraintKey = Object.keys(CONSTRAINTS).find(key => key === slug);
 
     if (!constraintKey) return null;

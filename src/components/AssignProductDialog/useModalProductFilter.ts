@@ -93,32 +93,26 @@ const createProductTypeConstraintElement = (
   return element;
 };
 
-const stripProductTypeFromPersistedValue = (filterValue: FilterContainer): FilterContainer => {
-  const collectElements = (container: FilterContainer): FilterElement[] => {
-    const collected: FilterElement[] = [];
-
-    for (const item of container) {
-      if (FilterElement.isFilterElement(item)) {
-        if (item.value.value !== "productType") {
-          collected.push(item);
-        }
-
-        continue;
-      }
-
-      if (Array.isArray(item)) {
-        collected.push(...collectElements(item));
-      }
-    }
-
-    return collected;
-  };
-
-  const remainingElements = collectElements(filterValue);
-
-  return remainingElements.flatMap((element, index) =>
-    index === 0 ? [element] : (["AND", element] as const),
+/**
+ * Strips GLOBAL constraint elements from a FilterContainer.
+ * Used to exclude constraint elements from URL persistence.
+ *
+ * Example:
+ *   [constraint, "AND", filter1, "AND", filter2]
+ *   → ["AND", filter1, "AND", filter2]  (after filtering)
+ *   → [filter1, "AND", filter2]         (after removing orphaned "AND")
+ */
+const stripGlobalConstraints = (filterValue: FilterContainer): FilterContainer => {
+  const nonConstraintElements = filterValue.filter(
+    item => !FilterElement.isFilterElement(item) || !item.constraint?.isGlobal,
   );
+
+  // Remove orphaned "AND" left after removing constraint at index 0
+  if (nonConstraintElements[0] === "AND") {
+    return nonConstraintElements.slice(1);
+  }
+
+  return nonConstraintElements;
 };
 
 export const useModalProductFilter = ({
@@ -135,7 +129,6 @@ export const useModalProductFilter = ({
   const valueProvider = useModalUrlValueProvider(initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(filteredOptions);
   const filterWindow = useFilterWindow();
-  const hasProductTypeConstraint = Boolean(initialConstraints?.productTypes?.length);
 
   // Create constraint element if productTypes are provided
   const constraintElement = useMemo(() => {
@@ -146,32 +139,40 @@ export const useModalProductFilter = ({
     return createProductTypeConstraintElement(initialConstraints.productTypes);
   }, [initialConstraints?.productTypes]);
 
-  const persistedValueWithoutProductType = useMemo<FilterContainer>(() => {
-    if (!hasProductTypeConstraint) {
-      return valueProvider.value;
-    }
-
-    return stripProductTypeFromPersistedValue(valueProvider.value);
-  }, [hasProductTypeConstraint, valueProvider.value]);
-
+  // Wrap value provider to:
+  // 1. Inject constraint element at the beginning of value
+  // 2. Strip GLOBAL constraints when persisting to URL
+  // 3. Exclude constraint from count
   const wrappedValueProvider = useMemo(() => {
-    if (!hasProductTypeConstraint) {
+    if (!constraintElement) {
       return valueProvider;
     }
 
+    // Inject constraint at the beginning of value
+    const valueWithConstraint: FilterContainer =
+      valueProvider.value.length === 0
+        ? [constraintElement]
+        : [constraintElement, "AND" as const, ...valueProvider.value];
+
     return {
       ...valueProvider,
-      count: persistedValueWithoutProductType.filter(v => typeof v !== "string").length,
-      value: persistedValueWithoutProductType,
+      value: valueWithConstraint,
+      // Exclude "GLOBAL" constraints from displayed count
+      count: valueProvider.value.filter(v => typeof v !== "string").length,
+      // Strip GLOBAL constraints before persisting to URL
       persist: (filterValue: FilterContainer): void => {
-        valueProvider.persist(stripProductTypeFromPersistedValue(filterValue));
+        valueProvider.persist(stripGlobalConstraints(filterValue));
       },
+      // GLOBAL constraints are always considered "persisted"
       isPersisted: (element: FilterElement): boolean => {
-        return persistedValueWithoutProductType.some(
-          p => FilterElement.isFilterElement(p) && p.equals(element),
-        );
+        if (element.constraint?.isGlobal) {
+          return true;
+        }
+
+        return valueProvider.value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
       },
-      getTokenByName: (name: string): UrlToken => {
+      // Don't return token for constraint fields (they're not from URL)
+      getTokenByName: (name: string): UrlToken | undefined => {
         if (name === "productType") {
           return undefined;
         }
@@ -179,81 +180,9 @@ export const useModalProductFilter = ({
         return valueProvider.getTokenByName(name);
       },
     };
-  }, [hasProductTypeConstraint, persistedValueWithoutProductType, valueProvider]);
+  }, [constraintElement, valueProvider]);
 
-  const baseContainerState = useContainerState(wrappedValueProvider);
-
-  // Wrap container state to inject constraint element
-  const containerState = useMemo(() => {
-    if (!constraintElement) {
-      return baseContainerState;
-    }
-
-    const hasUserFilters = baseContainerState.value.length > 0;
-    const offset = hasUserFilters ? 2 : 1;
-
-    const valueWithConstraint: FilterContainer = [
-      constraintElement,
-      ...(hasUserFilters ? ["AND" as const, ...baseContainerState.value] : []),
-    ];
-
-    return {
-      ...baseContainerState,
-      value: valueWithConstraint,
-      // Override removeAt to prevent removing the constraint element
-      removeAt: (position: string) => {
-        const index = parseInt(position, 10);
-
-        // Index 0 is the constraint element - don't allow removal
-        if (index === 0) {
-          return;
-        }
-
-        // Index 1 is "AND" separator when there are user filters
-        if (hasUserFilters && index === 1) {
-          return;
-        }
-
-        const adjustedPosition = String(index - offset);
-
-        baseContainerState.removeAt(adjustedPosition);
-      },
-      // Override updateAt to prevent updating the constraint element
-      updateAt: (position: string, cb: (el: FilterElement) => void) => {
-        const index = parseInt(position, 10);
-
-        // Index 0 is the constraint element - don't allow updates
-        if (index === 0) {
-          return;
-        }
-
-        // Index 1 is "AND" separator when there are user filters
-        if (hasUserFilters && index === 1) {
-          return;
-        }
-
-        const adjustedPosition = String(index - offset);
-
-        baseContainerState.updateAt(adjustedPosition, cb);
-      },
-      // Override getAt to handle constraint element
-      getAt: (position: string) => {
-        const index = parseInt(position, 10);
-
-        if (index === 0) {
-          return constraintElement;
-        }
-
-        if (hasUserFilters && index === 1) {
-          return "AND";
-        }
-
-        const adjustedPosition = String(index - offset);
-
-        return baseContainerState.getAt(adjustedPosition);
-      },
-    };
-  }, [baseContainerState, constraintElement]);
+  const containerState = useContainerState(wrappedValueProvider);
 
   const filterContext = useMemo(
     () => ({
@@ -267,32 +196,21 @@ export const useModalProductFilter = ({
     [apiProvider, wrappedValueProvider, leftOperandsProvider, containerState, filterWindow],
   );
 
-  const persistedValueWithConstraints = useMemo<FilterContainer>(() => {
-    if (!constraintElement) {
-      return wrappedValueProvider.value;
-    }
-
-    if (wrappedValueProvider.value.length === 0) {
-      return [constraintElement];
-    }
-
-    return [constraintElement, "AND" as const, ...wrappedValueProvider.value];
-  }, [constraintElement, wrappedValueProvider.value]);
-
   // Extract channel separately from where variables (channel is not valid in ProductWhereInput)
+  // wrappedValueProvider.value already includes constraint element
   const { filterVariables, filterChannel } = useMemo(() => {
-    const queryVars = createProductQueryVariables(persistedValueWithConstraints);
+    const queryVars = createProductQueryVariables(wrappedValueProvider.value);
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where,
       filterChannel: channel?.eq,
     };
-  }, [persistedValueWithConstraints]);
+  }, [wrappedValueProvider.value]);
 
   const clearFilters = (): void => {
     wrappedValueProvider.clear();
-    baseContainerState.clear();
+    containerState.clear();
   };
 
   // Count active filters (excluding constraint)

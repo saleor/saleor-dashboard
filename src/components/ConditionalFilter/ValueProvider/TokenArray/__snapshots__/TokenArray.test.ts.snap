@@ -132,6 +132,7 @@ TokenArray [
         "left",
         "condition",
       ],
+      "isGlobal": false,
       "removable": false,
     },
     "loading": false,

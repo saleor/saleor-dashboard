@@ -79,6 +79,12 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     };
   const updateAt = (position: string, cb: StateCallback) => {
     const index = parseInt(position, 10);
+    const element = value[index];
+
+    // Respect fully disabled constraints (all 3 controls disabled) - element cannot be modified
+    if (FilterElement.isFilterElement(element) && element.constraint?.disabled?.length === 3) {
+      return;
+    }
 
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
@@ -100,6 +106,12 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
   const removeAt = (position: string) => {
     const index = parseInt(position, 10);
+    const element = value[index];
+
+    // Respect constraint.removable === false - element cannot be removed
+    if (FilterElement.isFilterElement(element) && element.constraint?.removable === false) {
+      return;
+    }
 
     setValue(v => removeElement(v, index));
   };

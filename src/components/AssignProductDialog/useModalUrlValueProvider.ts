@@ -126,7 +126,7 @@ export const useModalUrlValueProvider = (
     return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
   };
 
-  const getTokenByName = (name: string): UrlToken => {
+  const getTokenByName = (name: string): UrlToken | undefined => {
     return tokenizedUrl.asFlatArray().find(token => token.name === name);
   };
 
