@@ -59,7 +59,7 @@ export const LegacyPaymentsApiButtons = ({
         </Button>
       )}
       {canMarkAsPaid && onMarkAsPaid && (
-        <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
+        <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="mark-as-paid-button">
           {intl.formatMessage(transactionActionMessages.markAsPaid)}
         </Button>
       )}
