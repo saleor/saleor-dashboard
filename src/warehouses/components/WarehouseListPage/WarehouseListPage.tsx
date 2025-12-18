@@ -13,7 +13,6 @@ import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboa
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { warehouseAddUrl, WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,10 +65,6 @@ const WarehouseListPage = ({
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
-            <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRight />
-            </Box>
-
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}
               onSelect={onTabChange}
