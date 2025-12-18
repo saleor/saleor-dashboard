@@ -2,12 +2,17 @@ import sideBarDefaultLogoDarkMode from "@assets/images/sidebar-deafult-logo-dark
 import sideBarDefaultLogo from "@assets/images/sidebar-default-logo.png";
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useLegacyThemeHandler } from "@dashboard/components/Sidebar/user/Controls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Avatar, Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CloudIcon } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useEnvLink } from "./menu/hooks/useEnvLink";
+import { rippleCloudEnvLink } from "./ripples/cloudEnvLink";
+
+// TODO: Remove this before merging - for local testing only
+const DEV_FORCE_SHOW_CLOUD_LINK = true;
 
 export const MountingPoint = () => {
   const { theme } = useLegacyThemeHandler();
@@ -15,6 +20,8 @@ export const MountingPoint = () => {
   const { isAuthenticatedViaCloud } = useCloud();
   const envLink = useEnvLink();
   const [isHovered, setIsHovered] = useState(false);
+
+  const showCloudFeatures = DEV_FORCE_SHOW_CLOUD_LINK || isAuthenticatedViaCloud;
 
   return (
     <Box
@@ -30,34 +37,37 @@ export const MountingPoint = () => {
       <Text size={3} fontWeight="bold" __flex="1">
         Saleor Dashboard
       </Text>
-      {isAuthenticatedViaCloud && (
-        <Tooltip>
-          <Tooltip.Trigger>
-            <Box
-              as="a"
-              href={envLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              display="flex"
-              alignItems="center"
-              color="default2"
-              paddingRight={1}
-              style={{
-                opacity: isHovered ? 1 : 0,
-                transition: "opacity 0.15s ease-in-out",
-              }}
-              data-test-id="cloud-environment-link"
-            >
-              <CloudIcon size={16} />
-            </Box>
-          </Tooltip.Trigger>
-          <Tooltip.Content side="bottom">
-            <Tooltip.Arrow />
-            <Text size={2}>
-              <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
-            </Text>
-          </Tooltip.Content>
-        </Tooltip>
+      {showCloudFeatures && (
+        <>
+          <Ripple model={rippleCloudEnvLink} />
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Box
+                as="a"
+                href={envLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                display="flex"
+                alignItems="center"
+                color="default2"
+                paddingRight={1}
+                style={{
+                  opacity: isHovered ? 1 : 0,
+                  transition: "opacity 0.15s ease-in-out",
+                }}
+                data-test-id="cloud-environment-link"
+              >
+                <CloudIcon size={16} />
+              </Box>
+            </Tooltip.Trigger>
+            <Tooltip.Content side="bottom">
+              <Tooltip.Arrow />
+              <Text size={2}>
+                <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
+              </Text>
+            </Tooltip.Content>
+          </Tooltip>
+        </>
       )}
     </Box>
   );
