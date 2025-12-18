@@ -83,8 +83,10 @@ describe("MetadataDialog", () => {
       expect(screen.getByTestId("ignore-changes")).toBeInTheDocument();
 
       // Act - click "Keep editing" (back button in ExitFormDialog)
-      const exitDialog = screen.getByTestId("ignore-changes").closest("[role='dialog']");
-      const keepEditingButton = within(exitDialog!).getAllByTestId("back")[0];
+      const exitDialog = screen
+        .getByTestId("ignore-changes")
+        .closest("[role='dialog']") as HTMLElement;
+      const keepEditingButton = within(exitDialog).getAllByTestId("back")[0];
 
       await user.click(keepEditingButton);
 
