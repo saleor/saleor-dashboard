@@ -2,17 +2,31 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import styles from "./PaymentsSummaryEmptyState.module.css";
-
 export const PaymentsSummaryEmptyState = () => {
   const intl = useIntl();
 
   return (
-    <Box className={styles.emptyState}>
-      <Box className={styles.iconWrapper} color="default2">
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      paddingX={4}
+      paddingY={8}
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        width={14}
+        height={14}
+        borderRadius="100%"
+        backgroundColor="default2"
+        color="default2"
+      >
         <CreditCard size={24} stroke="currentColor" />
       </Box>
-      <Box className={styles.textContainer}>
+      <Box display="flex" flexDirection="column" alignItems="center" gap={1} textAlign="center">
         <Text fontWeight="medium" size={4}>
           {intl.formatMessage({
             defaultMessage: "No payment received",

@@ -2,6 +2,8 @@ import { OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
+import { transactionActionMessages } from "../OrderTransaction/messages";
+
 type Props = {
   order: OrderDetailsFragment;
   canCapture: boolean;
@@ -39,10 +41,7 @@ export const LegacyPaymentsApiButtons = ({
     <Box display="flex" gap={2}>
       {canCapture && (
         <Button variant="secondary" onClick={onLegacyPaymentsApiCapture}>
-          {intl.formatMessage({
-            defaultMessage: "Capture",
-            id: "+9HL0i",
-          })}
+          {intl.formatMessage(transactionActionMessages.capture)}
         </Button>
       )}
       {canRefund && (
@@ -51,26 +50,17 @@ export const LegacyPaymentsApiButtons = ({
           onClick={onLegacyPaymentsApiRefund}
           data-test-id="refund-button"
         >
-          {intl.formatMessage({
-            defaultMessage: "Refund",
-            id: "IeUH3/",
-          })}
+          {intl.formatMessage(transactionActionMessages.refund)}
         </Button>
       )}
       {canVoid && (
         <Button variant="secondary" onClick={onLegacyPaymentsApiVoid}>
-          {intl.formatMessage({
-            defaultMessage: "Void",
-            id: "jHfCjd",
-          })}
+          {intl.formatMessage(transactionActionMessages.void)}
         </Button>
       )}
       {canMarkAsPaid && onMarkAsPaid && (
         <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
-          {intl.formatMessage({
-            defaultMessage: "Mark as Paid",
-            id: "RsLoDB",
-          })}
+          {intl.formatMessage(transactionActionMessages.markAsPaid)}
         </Button>
       )}
     </Box>
