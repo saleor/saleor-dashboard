@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
@@ -106,6 +105,24 @@ export const productListStaticColumnAdapter = ({
     icon: getColumnSortDirectionIcon(sort, column.id),
   }));
 
+interface ProductListDynamicColumnAdapterParams {
+  availableAttributesData:
+    | RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>
+    | undefined;
+  selectedAttributesData:
+    | RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>
+    | undefined;
+  activeAttributeSortId: string | undefined;
+  sort: Sort<ProductListUrlSortField>;
+  onSearch: (query: string) => void;
+  initialSearch: string;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  onNextPage: (query: string) => void;
+  onPreviousPage: (query: string) => void;
+  intl: IntlShape;
+}
+
 export const productListDynamicColumnAdapter = ({
   availableAttributesData,
   selectedAttributesData,
@@ -118,7 +135,7 @@ export const productListDynamicColumnAdapter = ({
   onNextPage,
   onPreviousPage,
   intl,
-}): ColumnCategory[] => [
+}: ProductListDynamicColumnAdapterParams): ColumnCategory[] => [
   {
     name: intl.formatMessage(categoryMetaGroups.attribute),
     prefix: "attribute",
@@ -144,14 +161,14 @@ export const productListDynamicColumnAdapter = ({
 ];
 
 const parseAttributesColumns = (
-  attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
-  activeAttributeSortId: string,
+  attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]> | undefined,
+  activeAttributeSortId: string | undefined,
   sort: Sort<ProductListUrlSortField>,
   intl: IntlShape,
 ) =>
   attributes?.map(attribute => ({
     id: `attribute:${attribute.id}`,
-    title: attribute.name,
+    title: attribute.name ?? "",
     metaGroup: intl.formatMessage(categoryMetaGroups.attribute),
     width: 200,
     icon:
@@ -201,7 +218,7 @@ export function createGetCellContent({
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
-      : products[getDatagridRowDataIndex(row, removed)];
+      : products?.[getDatagridRowDataIndex(row, removed)];
     const channel = rowData?.channelListings?.find(
       listing => listing.channel.id === selectedChannelId,
     );
@@ -231,7 +248,7 @@ export function createGetCellContent({
       return getAttributeCellContent(columnId, rowData);
     }
 
-    const value = change ?? rowData?.[columnId] ?? "";
+    const value = change ?? "";
 
     return readonlyTextCell(value || "");
   };
@@ -239,29 +256,25 @@ export function createGetCellContent({
 
 const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
 
-function getDateCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
+type ProductRowData = RelayToFlat<NonNullable<ProductListQuery["products"]>>[number];
+
+function getDateCellContent(rowData: ProductRowData | undefined) {
   return dateCell(rowData?.updatedAt, COMMON_CELL_PROPS);
 }
 
-function getCreatedCellContent(rowData: RelayToFlat<ProductListQuery["products"]>[number]) {
+function getCreatedCellContent(rowData: ProductRowData | undefined) {
   return dateCell(rowData?.created, COMMON_CELL_PROPS);
 }
 
-function getProductTypeCellContent(
-  theme: DefaultTheme,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
-  const hue = stringToHue(rowData?.productType?.name);
+function getProductTypeCellContent(theme: DefaultTheme, rowData: ProductRowData | undefined) {
+  const hue = stringToHue(rowData?.productType?.name ?? "");
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
-  return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
+  return pillCell(rowData?.productType?.name ?? "", color, COMMON_CELL_PROPS);
 }
 
-function getCategoryCellContent(
-  theme: DefaultTheme,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
-  if (!rowData.category) {
+function getCategoryCellContent(theme: DefaultTheme, rowData: ProductRowData | undefined) {
+  if (!rowData?.category) {
     return readonlyTextCell("-", true);
   }
 
@@ -271,15 +284,12 @@ function getCategoryCellContent(
   return pillCell(rowData.category?.name, color, COMMON_CELL_PROPS);
 }
 
-function getCollectionsCellContent(
-  theme: DefaultTheme,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
-  if (rowData.collections === undefined || rowData.collections.length === 0) {
+function getCollectionsCellContent(theme: DefaultTheme, rowData: ProductRowData | undefined) {
+  if (!rowData?.collections || rowData.collections.length === 0) {
     return readonlyTextCell("-", true);
   }
 
-  const tags = rowData.collections.map(collection => {
+  const tags = rowData.collections.map((collection: { name: string | null }) => {
     const hue = stringToHue(collection.name);
     const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
@@ -291,7 +301,7 @@ function getCollectionsCellContent(
 
   return tagsCell(
     tags,
-    tags.map(tag => tag.tag),
+    tags.map((tag: { tag: string }) => tag.tag),
     {
       ...COMMON_CELL_PROPS,
       allowOverlay: false,
@@ -300,9 +310,9 @@ function getCollectionsCellContent(
 }
 
 function getAvailabilityCellContent(
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  rowData: ProductRowData | undefined,
   intl: IntlShape,
-  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
+  selectedChannnel?: NonNullable<ProductRowData["channelListings"]>[number],
 ) {
   if (selectedChannnel) {
     return statusCell(
@@ -327,22 +337,19 @@ function getAvailabilityCellContent(
 
 function getDescriptionCellContent(
   columnId: string,
-  change: boolean,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  change: any,
+  rowData: ProductRowData | undefined,
 ) {
-  const value = change ?? rowData?.[columnId] ?? "";
+  const value = typeof change === "string" ? change : (rowData?.description ?? "");
 
   if (!value) {
     return readonlyTextCell("", true);
   }
 
-  return readonlyTextCell(getDescriptionValue(value), true);
+  return readonlyTextCell(getDescriptionValue(String(value)), true);
 }
 
-function getNameCellContent(
-  change: ThumbnailCellProps,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
+function getNameCellContent(change: ThumbnailCellProps, rowData: ProductRowData | undefined) {
   const name = change?.name ?? rowData?.name ?? "";
 
   return thumbnailCell(name, rowData?.thumbnail?.url ?? "", COMMON_CELL_PROPS);
@@ -350,7 +357,7 @@ function getNameCellContent(
 
 function getPriceCellContent(
   intl: IntlShape,
-  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
+  selectedChannnel?: NonNullable<ProductRowData["channelListings"]>[number],
 ) {
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
@@ -373,13 +380,10 @@ function getPriceCellContent(
       );
 }
 
-function getAttributeCellContent(
-  columnId: string,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
-) {
+function getAttributeCellContent(columnId: string, rowData: ProductRowData | undefined) {
   const attributeId = getAttributeIdFromColumnValue(columnId);
-  const productAttribute = rowData?.attributes.find(
-    attribute => attribute.attribute.id === attributeId,
+  const productAttribute = rowData?.attributes?.find(
+    (attribute: { attribute: { id: string } }) => attribute.attribute.id === attributeId,
   );
 
   if (productAttribute) {
@@ -393,7 +397,9 @@ function getAttributeCellContent(
       }
     }
 
-    const textValue = productAttribute.values.map(value => value.name).join(", ");
+    const textValue = productAttribute.values
+      .map((value: { name: string | null }) => value.name ?? "")
+      .join(", ");
 
     return readonlyTextCell(textValue);
   }
@@ -539,10 +545,11 @@ export const getAttributesFetchMoreProps = ({
         type: AttributeTypeEnum.PRODUCT_TYPE,
         after:
           availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
-          gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
+          gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor ??
+          undefined,
         first: 10,
-        last: null,
-        before: null,
+        last: undefined,
+        before: undefined,
       },
     });
   const onPreviousPage = (query: string) =>
@@ -550,15 +557,17 @@ export const getAttributesFetchMoreProps = ({
       variables: {
         search: query,
         type: AttributeTypeEnum.PRODUCT_TYPE,
-        before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
+        before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor ?? undefined,
         last: 10,
-        first: null,
-        after: null,
+        first: undefined,
+        after: undefined,
       },
     });
   const hasNextPage =
     availableColumnsAttributesData.data?.attributes?.pageInfo?.hasNextPage ??
+    false ??
     gridAttributesOpts.data?.availableAttributes?.pageInfo?.hasNextPage ??
+    false ??
     false;
   const hasPreviousPage =
     availableColumnsAttributesData.data?.attributes?.pageInfo?.hasPreviousPage ?? false;
@@ -574,5 +583,5 @@ export const getCellAction = (
   availableColumns: readonly AvailableColumn[] | undefined,
   column: number,
 ) => {
-  return availableColumns[column]?.action;
+  return availableColumns?.[column]?.action;
 };

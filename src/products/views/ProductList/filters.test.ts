@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import {
   ProductListUrlFilters,

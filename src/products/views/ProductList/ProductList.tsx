@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
@@ -142,7 +141,7 @@ const ProductList = ({ params }: ProductListProps) => {
   });
   const [exportProducts, exportProductsOpts] = useProductExportMutation({
     onCompleted: data => {
-      if (data.exportProducts.errors.length === 0) {
+      if (data.exportProducts && data.exportProducts.errors.length === 0) {
         notify({
           text: intl.formatMessage({
             id: "dPYqy0",
@@ -156,7 +155,7 @@ const ProductList = ({ params }: ProductListProps) => {
           }),
         });
         queue(Task.EXPORT, {
-          id: data.exportProducts.exportFile.id,
+          id: data.exportProducts.exportFile!.id,
         });
         closeModal();
         clearRowSelection();
@@ -165,7 +164,7 @@ const ProductList = ({ params }: ProductListProps) => {
   });
   const [productBulkDelete, productBulkDeleteOpts] = useProductBulkDeleteMutation({
     onCompleted: data => {
-      if (data.productBulkDelete.errors.length === 0) {
+      if (data.productBulkDelete && data.productBulkDelete.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -180,7 +179,7 @@ const ProductList = ({ params }: ProductListProps) => {
   const [_, resetFilters, handleSearchChange] = useFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: productListUrl,
-    getFilterQueryParam,
+    getFilterQueryParam: getFilterQueryParam as any,
     params,
     keepActiveTab: true,
     defaultSortField: DEFAULT_SORT_KEY,
@@ -228,8 +227,8 @@ const ProductList = ({ params }: ProductListProps) => {
     variables: {
       ...queryVariables,
       hasChannel: !!selectedChannel,
-      includeCategories: settings.columns.includes("productCategory"),
-      includeCollections: settings.columns.includes("productCollections"),
+      includeCategories: (settings.columns ?? []).includes("productCategory"),
+      includeCollections: (settings.columns ?? []).includes("productCollections"),
     },
     skip: valueProvider.loading,
   });
@@ -273,7 +272,7 @@ const ProductList = ({ params }: ProductListProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const fetchMoreDialogProductTypes = {
-    hasMore: searchDialogProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchDialogProductTypesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchDialogProductTypesOpts.loading,
     onFetchMore: loadMoreDialogProductTypes,
   };
@@ -286,7 +285,7 @@ const ProductList = ({ params }: ProductListProps) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <ProductListPage
-        activeAttributeSortId={params.attributeId}
+        activeAttributeSortId={params.attributeId ?? ""}
         sort={{
           asc: params.asc,
           sort: params.sort,
@@ -299,8 +298,8 @@ const ProductList = ({ params }: ProductListProps) => {
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
         disabled={!data}
-        limits={limitOpts.data?.shop.limits}
-        products={products}
+        limits={limitOpts.data?.shop.limits!}
+        products={products!}
         onUpdateListSettings={(...props) => {
           clearRowSelection();
           updateListSettings(...props);
@@ -321,7 +320,7 @@ const ProductList = ({ params }: ProductListProps) => {
         initialSearch={params.query || ""}
         tabs={presets.map(tab => tab.name)}
         onExport={() => openModal("export")}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannel?.id ?? ""}
         selectedProductIds={selectedRowIds}
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}
@@ -350,16 +349,16 @@ const ProductList = ({ params }: ProductListProps) => {
       </ActionDialog>
       <ProductExportDialog
         attributes={mapEdgesToItems(searchAttributes?.result?.data?.search) || []}
-        hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
+        hasMore={searchAttributes.result.data?.search?.pageInfo?.hasNextPage ?? false}
         loading={searchAttributes.result.loading || countAllProducts.loading || warehouses.loading}
         onFetch={searchAttributes.search}
         onFetchMore={searchAttributes.loadMore}
         open={params.action === "export"}
         confirmButtonState={exportProductsOpts.status}
-        errors={exportProductsOpts.data?.exportProducts.errors || []}
+        errors={exportProductsOpts.data?.exportProducts?.errors || []}
         productQuantity={{
-          all: countAllProducts.data?.products?.totalCount,
-          filter: data?.products?.totalCount,
+          all: countAllProducts.data?.products?.totalCount ?? 0,
+          filter: data?.products?.totalCount ?? 0,
         }}
         selectedProducts={selectedRowIds.length}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
@@ -395,9 +394,11 @@ const ProductList = ({ params }: ProductListProps) => {
       <ProductTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-product"}
-        productTypes={mapNodeToChoice(mapEdgesToItems(searchDialogProductTypesOpts?.data?.search))}
+        productTypes={mapNodeToChoice(
+          mapEdgesToItems(searchDialogProductTypesOpts?.data?.search) ?? [],
+        )}
         fetchProductTypes={searchDialogProductTypes}
-        fetchMoreProductTypes={fetchMoreDialogProductTypes}
+        fetchMoreProductTypes={fetchMoreDialogProductTypes as any}
         onClose={closeModal}
         onConfirm={productTypeId =>
           navigate(

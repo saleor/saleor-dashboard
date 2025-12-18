@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -8,7 +7,7 @@ import { Package } from "lucide-react";
 import { getTileStatus } from "./utils";
 
 interface ProductTileProps {
-  product: RelayToFlat<ProductListQuery["products"]>[0];
+  product: RelayToFlat<NonNullable<ProductListQuery["products"]>>[0];
   onClick: () => void;
 }
 

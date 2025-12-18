@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { products } from "@dashboard/products/fixtures";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -9,8 +8,10 @@ import { ProductTile } from "./ProductTile";
 describe("ProductTile", () => {
   const PLACEHOLDER_URL =
     "https://master.staging.saleor.cloud/media/thumbnails/products/saleordemoproduct_fd_juice_02_thumbnail_256.png";
-  const mockProduct = (withThumbnail: boolean) =>
-    withThumbnail ? products(PLACEHOLDER_URL)[0] : { ...products(null)[0], thumbnail: null };
+  const mockProduct = (withThumbnail: boolean | null) =>
+    withThumbnail
+      ? products(PLACEHOLDER_URL)![0]
+      : { ...products(null as any)![0], thumbnail: null };
 
   it("renders correctly with thumbnail", () => {
     // Arrange

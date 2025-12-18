@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import {
   ChannelData,
@@ -58,7 +57,7 @@ export function createChannelsChangeHandler(
 export function createProductTypeSelectHandler(
   setProductType: (productTypeId: string) => void,
   triggerChange: () => void,
-): FormChange {
+) {
   return (event: React.ChangeEvent<any>) => {
     const id = event.target.value;
 
@@ -143,10 +142,7 @@ export const handleAssignMedia = async <T extends Pick<ProductVariantFragment, "
     variables: VariantMediaUnassignMutationVariables,
   ) => Promise<FetchResult<VariantMediaUnassignMutation>>,
 ) => {
-  const { added, removed } = diff(
-    variant.media.map(mediaObj => mediaObj.id),
-    media,
-  );
+  const { added, removed } = diff(variant.media?.map(mediaObj => mediaObj.id) || [], media);
   const assignResults = await Promise.all(
     added.map(mediaId =>
       assignMedia({
@@ -163,12 +159,12 @@ export const handleAssignMedia = async <T extends Pick<ProductVariantFragment, "
       }),
     ),
   );
-  const assignErrors = assignResults.reduce(
-    (errors, result) => [...errors, ...(result.data?.variantMediaAssign.errors || [])],
+  const assignErrors = assignResults.reduce<any[]>(
+    (errors, result) => [...errors, ...(result.data?.variantMediaAssign?.errors || [])],
     [],
   );
-  const unassignErrors = unassignResults.reduce(
-    (errors, result) => [...errors, ...(result.data?.variantMediaUnassign.errors || [])],
+  const unassignErrors = unassignResults.reduce<any[]>(
+    (errors, result) => [...errors, ...(result.data?.variantMediaUnassign?.errors || [])],
     [],
   );
 

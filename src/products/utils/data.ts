@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
@@ -32,26 +31,24 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
-  productAttributes: ProductTypeQuery["productType"]["productAttributes"];
+  productAttributes: NonNullable<ProductTypeQuery["productType"]>["productAttributes"];
 }
 
 export function getAttributeInputFromProduct(product: ProductFragment): AttributeInput[] {
-  return (
-    product?.attributes?.map(attribute => ({
-      data: {
-        entityType: attribute.attribute.entityType,
-        inputType: attribute.attribute.inputType,
-        isRequired: attribute.attribute.valueRequired,
-        selectedValues: attribute.values,
-        values: mergeChoicesWithValues(attribute),
-        unit: attribute.attribute.unit,
-      },
-      id: attribute.attribute.id,
-      label: attribute.attribute.name,
-      value: getSelectedAttributeValues(attribute),
-      additionalData: getReferenceAttributeValuesLabels(attribute),
-    })) ?? []
-  );
+  return (product?.attributes || []).map(attribute => ({
+    data: {
+      entityType: attribute.attribute.entityType,
+      inputType: attribute.attribute.inputType,
+      isRequired: attribute.attribute.valueRequired,
+      selectedValues: attribute.values,
+      values: mergeChoicesWithValues(attribute),
+      unit: attribute.attribute.unit,
+    },
+    id: attribute.attribute.id,
+    label: attribute.attribute.name ?? "",
+    value: getSelectedAttributeValues(attribute),
+    additionalData: getReferenceAttributeValuesLabels(attribute),
+  })) as AttributeInput[];
 }
 export interface AttributeValuesMetadata {
   value: string;
@@ -63,14 +60,14 @@ const getReferenceAttributeValuesLabels = (
 ): AttributeValuesMetadata[] => {
   return attribute.values.map(value => {
     return {
-      label: value.name,
-      value: value.reference,
+      label: value.name ?? "",
+      value: value.reference ?? "",
     };
   });
 };
 
 export function getAttributeInputFromProductType(productType: ProductType): AttributeInput[] {
-  return productType.productAttributes.map(attribute => ({
+  return (productType.productAttributes || []).map((attribute: any) => ({
     data: {
       entityType: attribute.entityType,
       inputType: attribute.inputType,
@@ -79,16 +76,16 @@ export function getAttributeInputFromProductType(productType: ProductType): Attr
       unit: attribute.unit,
     },
     id: attribute.id,
-    label: attribute.name,
+    label: attribute.name ?? "",
     value: [],
-  }));
+  })) as AttributeInput[];
 }
 
 function getAttributeInputFromAttributes(
   variantAttributes: VariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
-  return variantAttributes?.map(attribute => ({
+  return (variantAttributes || []).map(attribute => ({
     data: {
       entityType: attribute.entityType,
       inputType: attribute.inputType,
@@ -98,16 +95,16 @@ function getAttributeInputFromAttributes(
       variantAttributeScope,
     },
     id: attribute.id,
-    label: attribute.name,
+    label: attribute.name ?? "",
     value: [],
-  }));
+  })) as AttributeInput[];
 }
 
 function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
-  return variantAttributes?.map(attribute => ({
+  return (variantAttributes || []).map(attribute => ({
     data: {
       entityType: attribute.attribute.entityType,
       inputType: attribute.attribute.inputType,
@@ -118,7 +115,7 @@ function getAttributeInputFromSelectedAttributes(
       variantAttributeScope,
     },
     id: attribute.attribute.id,
-    label: attribute.attribute.name,
+    label: attribute.attribute.name ?? "",
     value: getSelectedAttributeValues(attribute),
     /** Load selected options in this attribute to useFormset metadata
      * in order to display labels for selection correctly in the UI
@@ -126,51 +123,49 @@ function getAttributeInputFromSelectedAttributes(
     metadata: attribute.values
       .filter(value => value.reference)
       .map(value => ({
-        label: value.name,
-        value: value.reference,
+        label: value.name ?? "",
+        value: value.reference ?? "",
       })),
-  }));
+  })) as AttributeInput[];
 }
 
 export function getAttributeInputFromVariant(variant: ProductVariantFragment): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
-    variant?.selectionAttributes,
+    variant?.selectionAttributes || [],
     VariantAttributeScope.VARIANT_SELECTION,
   );
   const nonSelectionAttributeInput = getAttributeInputFromSelectedAttributes(
-    variant?.nonSelectionAttributes,
+    variant?.nonSelectionAttributes || [],
     VariantAttributeScope.NOT_VARIANT_SELECTION,
   );
 
-  return selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? [];
+  return selectionAttributeInput.concat(nonSelectionAttributeInput);
 }
 
 export function getVariantAttributeInputFromProduct(
   product: ProductVariantCreateDataQuery["product"],
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromAttributes(
-    product?.productType?.selectionVariantAttributes,
+    product?.productType?.selectionVariantAttributes || [],
     VariantAttributeScope.VARIANT_SELECTION,
   );
   const nonSelectionAttributeInput = getAttributeInputFromAttributes(
-    product?.productType?.nonSelectionVariantAttributes,
+    product?.productType?.nonSelectionVariantAttributes || [],
     VariantAttributeScope.NOT_VARIANT_SELECTION,
   );
 
-  return selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? [];
+  return selectionAttributeInput.concat(nonSelectionAttributeInput);
 }
 
 export function getStockInputFromVariant(variant: ProductVariantFragment): ProductStockInput[] {
-  return (
-    variant?.stocks.map(stock => ({
-      data: {
-        quantityAllocated: stock.quantityAllocated,
-      },
-      id: stock.warehouse.id,
-      label: stock.warehouse.name,
-      value: stock.quantity.toString(),
-    })) || []
-  );
+  return (variant?.stocks || []).map(stock => ({
+    data: {
+      quantityAllocated: stock.quantityAllocated,
+    },
+    id: stock.warehouse.id,
+    label: stock.warehouse.name,
+    value: stock.quantity.toString(),
+  }));
 }
 
 export function getChoices(nodes: Node[]): Option[] {
@@ -188,35 +183,36 @@ export function getProductUpdatePageFormData(
   product: ProductFragment,
   variants: ProductDetailsVariantFragment[],
 ): ProductUpdateFormData {
-  const variant = product?.variants[0];
+  const variant = (product?.variants || [])[0];
 
   return {
-    category: maybe(() => product.category.id, ""),
-    taxClassId: product?.taxClass?.id,
+    category: maybe(() => product.category?.id, "") ?? null,
+    taxClassId: product?.taxClass?.id ?? "",
     collections: maybe(
       () =>
-        product.collections.map(collection => ({
+        (product.collections || []).map(collection => ({
           label: collection.name,
           value: collection.id,
         })),
       [],
     ),
     isAvailable: !!product?.isAvailable,
-    metadata: product?.metadata?.map(mapMetadataItemToInput),
+    metadata: product?.metadata?.map(mapMetadataItemToInput) ?? [],
     name: maybe(() => product.name, ""),
-    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
-    rating: maybe(() => product.rating, null),
-    seoDescription: maybe(() => product.seoDescription, ""),
-    seoTitle: maybe(() => product.seoTitle, ""),
-    sku: maybe(
-      () =>
-        product.productType.hasVariants
-          ? undefined
-          : variants && variants[0]
-            ? variants[0].sku
-            : undefined,
-      "",
-    ),
+    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput) ?? [],
+    rating: maybe(() => product.rating ?? 0, 0) as number,
+    seoDescription: maybe(() => product.seoDescription, "") ?? "",
+    seoTitle: maybe(() => product.seoTitle, "") ?? "",
+    sku:
+      maybe(
+        () =>
+          product.productType.hasVariants
+            ? undefined
+            : variants && variants[0]
+              ? (variants[0].sku ?? "")
+              : undefined,
+        "",
+      ) ?? "",
     slug: product?.slug || "",
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
@@ -224,7 +220,7 @@ export function getProductUpdatePageFormData(
     globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
+    preorderEndDateTime: variant?.preorder?.endDate ?? "",
   };
 }
 
@@ -241,4 +237,4 @@ export const getSelectedMedia = <T extends Pick<ProductMediaFragment, "id" | "so
 ) =>
   media
     .filter(image => selectedMediaIds.includes(image.id))
-    .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
+    .sort((prev, next) => ((prev.sortOrder ?? 0) > (next.sortOrder ?? 0) ? 1 : -1));

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ProductListColumns } from "@dashboard/config";
@@ -35,7 +34,7 @@ export const ProductListTiles = ({
       );
     }
 
-    if (products?.length > 0) {
+    if (products && products.length > 0) {
       return (
         <Box
           display="grid"
@@ -45,7 +44,7 @@ export const ProductListTiles = ({
           __paddingTop={`calc(${vars.spacing[9]} - ${vars.spacing[5]}`}
           data-test-id="tile-view"
         >
-          {products.map(product => (
+          {products!.map(product => (
             <ProductTile
               key={product.id}
               product={product}
@@ -78,7 +77,7 @@ export const ProductListTiles = ({
               description: "tile view pagination label",
             }),
           }}
-          onUpdateListSettings={onUpdateListSettings}
+          onUpdateListSettings={onUpdateListSettings as any}
         />
       </Box>
     </>

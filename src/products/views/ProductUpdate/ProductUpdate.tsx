@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
@@ -103,7 +102,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   });
   const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
     onCompleted: data => {
-      const imageError = data.productMediaCreate.errors.find(
+      const imageError = data.productMediaCreate!.errors.find(
         error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
       );
 
@@ -131,7 +130,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: data => {
-      const errors = data.productMediaCreate.errors;
+      const errors = data.productMediaCreate!.errors;
 
       if (errors.length) {
         errors.map(error =>
@@ -152,7 +151,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     const variables = {
       alt: "",
       mediaUrl,
-      product: product.id,
+      product: product!.id,
     };
 
     createProductMedia({
@@ -161,11 +160,11 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   };
   const handleBack = () => navigate(productListUrl());
   const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
-  const [submit, submitOpts] = useProductUpdateHandler(product);
+  const [submit, submitOpts] = useProductUpdateHandler(product!);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
-  const handleImageReorder = createImageReorderHandler(product, variables =>
+  const handleImageReorder = createImageReorderHandler(product!, variables =>
     reorderProductImages({ variables }),
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
@@ -188,7 +187,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     submitOpts.called,
     submitOpts.loading,
     submitOpts.errors,
-    createProductMediaOpts.data?.productMediaCreate.errors,
+    createProductMediaOpts.data?.productMediaCreate?.errors ?? [],
   );
   const refAttr =
     params.action === "assign-attribute-value" && params.id
@@ -208,11 +207,21 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   } = useReferencePageSearch(refAttr);
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
-  const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
-  const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
-  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
-  const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute!.choices) || [];
+  const fetchMoreCollections = getSearchFetchMoreProps(
+    searchCollectionsOpts as any,
+    loadMoreCollections,
+  );
+  const fetchMoreCategories = getSearchFetchMoreProps(
+    searchCategoriesOpts as any,
+    loadMoreCategories,
+  );
+  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts as any, loadMorePages);
+  const fetchMoreReferenceProducts = getSearchFetchMoreProps(
+    searchProductsOpts as any,
+    loadMoreProducts,
+  );
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
@@ -226,7 +235,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
 
   return (
     <>
-      <WindowTitle title={data?.product?.name} />
+      <WindowTitle title={data?.product?.name!} />
       <ProductUpdatePage
         channels={availableChannels}
         productId={id}
@@ -242,14 +251,14 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
         refetch={refetch}
-        limits={limitOpts.data?.shop.limits}
+        limits={limitOpts.data?.shop.limits!}
         saveButtonBarState={formTransitionState}
-        media={data?.product?.media}
-        header={product?.name}
+        media={data?.product?.media!}
+        header={product?.name!}
         product={product}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
-        variants={product?.variants}
+        variants={product?.variants!}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
@@ -263,7 +272,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
+        assignReferencesAttributeId={
+          (params.action === "assign-attribute-value" && params.id) || undefined
+        }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
@@ -280,7 +291,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
-        onAttributeValuesSearch={getAttributeValuesSuggestions}
+        onAttributeValuesSearch={getAttributeValuesSuggestions as any}
       />
       <ActionDialog
         open={params.action === "remove"}

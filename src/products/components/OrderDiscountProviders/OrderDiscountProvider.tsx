@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   MoneyFragment,
@@ -35,17 +34,19 @@ interface OrderDiscountProviderProps {
 export const OrderDiscountProvider = ({ children, order }: OrderDiscountProviderProps) => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { id: orderId } = order;
+  const { id: orderId } = order!;
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
-  const orderDiscount = getManualOrderDiscount(order);
+  const orderDiscount = getManualOrderDiscount(order!);
   const [orderDiscountAdd, orderDiscountAddOpts] = useOrderDiscountAddMutation({
-    onCompleted: ({ orderDiscountAdd: { errors } }) => handleDiscountDataSubmission(errors),
+    onCompleted: data => handleDiscountDataSubmission((data.orderDiscountAdd as any)?.errors ?? []),
   });
   const [orderDiscountUpdate, orderDiscountUpdateOpts] = useOrderDiscountUpdateMutation({
-    onCompleted: ({ orderDiscountUpdate: { errors } }) => handleDiscountDataSubmission(errors),
+    onCompleted: data =>
+      handleDiscountDataSubmission((data.orderDiscountUpdate as any)?.errors ?? []),
   });
   const [orderDiscountRemove, orderDiscountRemoveOpts] = useOrderDiscountDeleteMutation({
-    onCompleted: ({ orderDiscountDelete: { errors } }) => handleDiscountDataSubmission(errors),
+    onCompleted: data =>
+      handleDiscountDataSubmission((data.orderDiscountDelete as any)?.errors ?? []),
   });
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
@@ -84,8 +85,8 @@ export const OrderDiscountProvider = ({ children, order }: OrderDiscountProvider
     isDialogOpen,
     closeDialog,
     openDialog,
-    discountedPrice: order.total.gross,
-    undiscountedPrice: order.undiscountedTotal.gross,
+    discountedPrice: order!.total.gross,
+    undiscountedPrice: order!.undiscountedTotal.gross,
   };
 
   return (
@@ -95,4 +96,4 @@ export const OrderDiscountProvider = ({ children, order }: OrderDiscountProvider
   );
 };
 
-export const OrderDiscountContext = createContext<OrderDiscountContextConsumerProps>(null);
+export const OrderDiscountContext = createContext<OrderDiscountContextConsumerProps>(null as any);

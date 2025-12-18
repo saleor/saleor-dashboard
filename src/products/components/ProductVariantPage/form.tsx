@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -173,15 +172,15 @@ function useProductVariantUpdateForm(
   });
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
   const initial: ProductVariantUpdateFormData = {
-    metadata: variant?.metadata?.map(mapMetadataItemToInput),
-    privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
+    metadata: variant?.metadata?.map(mapMetadataItemToInput) ?? [],
+    privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput) ?? [],
     sku: variant?.sku || "",
-    trackInventory: variant?.trackInventory,
+    trackInventory: variant?.trackInventory ?? false,
     isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || null,
+    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
+    preorderEndDateTime: variant?.preorder?.endDate ?? "",
     weight: variant?.weight?.value.toString() || "",
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null,
     variantName: variant?.name ?? "",
@@ -212,7 +211,7 @@ function useProductVariantUpdateForm(
   const handleAttributeChangeWithName = (id: string, value: string) => {
     triggerChange();
     attributes.change(id, value === "" ? [] : [value]);
-    handleChange({ target: { value, name: "name" } });
+    handleChange({ target: { value, name: "name" } } as any);
   };
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
@@ -245,7 +244,7 @@ function useProductVariantUpdateForm(
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
-    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.data as any,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
     triggerChange,
@@ -286,7 +285,7 @@ function useProductVariantUpdateForm(
   );
   const handleMediaChange = createMediaChangeHandler(form, triggerChange);
   const handleUpdateChannels = (selectedIds: string[]) => {
-    const allChannels = variant.product.channelListings.map(listing => {
+    const allChannels = (variant.product.channelListings || []).map(listing => {
       const variantChannel = variant?.channelListings?.find(
         channelListing => channelListing.channel.id === listing.channel.id,
       );
@@ -297,8 +296,8 @@ function useProductVariantUpdateForm(
         return {
           ...variantChannel.channel,
           currency: variantChannel.channel.currencyCode,
-          preorderThreshold: variantChannel?.preorderThreshold.quantity,
-          soldUnits: variantChannel?.preorderThreshold?.soldUnits,
+          preorderThreshold: variantChannel?.preorderThreshold?.quantity ?? null,
+          soldUnits: variantChannel?.preorderThreshold?.soldUnits ?? null,
           price,
           costPrice,
         };
@@ -308,16 +307,17 @@ function useProductVariantUpdateForm(
         ...listing.channel,
         currency: listing.channel.currencyCode,
         price: "",
+        costPrice: "",
         preorderThreshold: null,
         soldUnits: null,
       };
-    });
+    }) as ChannelPriceAndPreorderData[];
 
     channels.set(concatChannelsBySelection(selectedIds, channels, allChannels));
     triggerChange();
   };
   const dataStocks = stocks.data.map(stock => stock.id);
-  const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
+  const variantStocks = (variant?.stocks || []).map(stock => stock.warehouse.id);
   const stockDiff = arrayDiff(variantStocks, dataStocks);
   const addStocks = stocks.data.filter(stock =>
     stockDiff.added.some(addedStock => addedStock === stock.id),
@@ -328,10 +328,10 @@ function useProductVariantUpdateForm(
   const data: ProductVariantUpdateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
-      pages: opts.referencePages,
-      products: opts.referenceProducts,
-      collections: opts.referenceCollections,
-      categories: opts.referenceCategories,
+      pages: opts.referencePages || [],
+      products: opts.referenceProducts || [],
+      collections: opts.referenceCollections || [],
+      categories: opts.referenceCategories || [],
     }),
     channelListings: channels.data,
     stocks: stocks.data,
@@ -395,7 +395,11 @@ function useProductVariantUpdateForm(
       changePreorderEndDate: handlePreorderEndDateChange,
       changeMedia: handleMediaChange,
       deleteStock: handleStockDelete,
-      fetchMoreReferences: handleFetchMoreReferences,
+      fetchMoreReferences: handleFetchMoreReferences || {
+        hasMore: false,
+        loading: false,
+        onFetchMore: () => {},
+      },
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChangeWithName,

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   MoneyFragment,
@@ -37,7 +36,9 @@ interface DiscountProviderProps {
   order: OrderDetailsFragment;
 }
 
-const OrderLineDiscountContext = createContext<GetOrderLineDiscountContextConsumerProps>(null);
+const OrderLineDiscountContext = createContext<GetOrderLineDiscountContextConsumerProps>(
+  null as any,
+);
 
 export const useOrderLineDiscountContext = () => {
   const context = useContext(OrderLineDiscountContext);
@@ -64,13 +65,13 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
   };
   const [orderLineDiscountAddOrUpdate, orderLineDiscountAddOrUpdateOpts] =
     useOrderLineDiscountUpdateMutation({
-      onCompleted: ({ orderLineDiscountUpdate: { errors } }) =>
-        handleDiscountDataSubmission(errors),
+      onCompleted: data =>
+        handleDiscountDataSubmission((data.orderLineDiscountUpdate as any)?.errors ?? []),
     });
   const [orderLineDiscountRemove, orderLineDiscountRemoveOpts] = useOrderLineDiscountRemoveMutation(
     {
-      onCompleted: ({ orderLineDiscountRemove: { errors } }) =>
-        handleDiscountDataSubmission(errors),
+      onCompleted: data =>
+        handleDiscountDataSubmission((data.orderLineDiscountRemove as any)?.errors ?? []),
     },
   );
   const handleDiscountDataSubmission = (errors: any[]) => {
@@ -88,22 +89,26 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
     orderLineDiscountRemove({ variables: { orderLineId } });
   const isOrderLineDialogOpen = (orderLineId: string) =>
     isDialogOpen && currentLineId === orderLineId;
-  const getOrderLine = (orderLineId: string) => order?.lines.find(getById(orderLineId));
+  const getOrderLine = (orderLineId: string) => (order as any)?.lines?.find(getById(orderLineId));
   const getDiscountProviderValues = (
     orderLineId: string,
-  ): OrderLineDiscountContextConsumerProps => ({
-    addOrderLineDiscount: addOrUpdateOrderLineDiscount(orderLineId),
-    removeOrderLineDiscount: removeOrderLineDiscount(orderLineId),
-    orderLineDiscount: getOrderLineDiscount(order, orderLineId),
-    isDialogOpen: isOrderLineDialogOpen(orderLineId),
-    orderLineDiscountUpdateStatus: orderLineDiscountAddOrUpdateOpts.status,
-    orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
-    closeDialog: handleCloseDialog,
-    openDialog: handleOpenDialog(orderLineId),
-    totalDiscountedPrice: getOrderLine(orderLineId).totalPrice.gross,
-    unitDiscountedPrice: getOrderLine(orderLineId).unitPrice.gross,
-    unitUndiscountedPrice: getOrderLine(orderLineId).undiscountedUnitPrice.gross,
-  });
+  ): OrderLineDiscountContextConsumerProps => {
+    const orderLine = getOrderLine(orderLineId);
+
+    return {
+      addOrderLineDiscount: addOrUpdateOrderLineDiscount(orderLineId),
+      removeOrderLineDiscount: removeOrderLineDiscount(orderLineId),
+      orderLineDiscount: getOrderLineDiscount(order, orderLineId),
+      isDialogOpen: isOrderLineDialogOpen(orderLineId),
+      orderLineDiscountUpdateStatus: orderLineDiscountAddOrUpdateOpts.status,
+      orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,
+      closeDialog: handleCloseDialog,
+      openDialog: handleOpenDialog(orderLineId),
+      totalDiscountedPrice: orderLine?.totalPrice?.gross!,
+      unitDiscountedPrice: orderLine?.unitPrice?.gross!,
+      unitUndiscountedPrice: orderLine?.undiscountedUnitPrice?.gross!,
+    };
+  };
 
   return (
     <OrderLineDiscountContext.Provider value={getDiscountProviderValues}>
