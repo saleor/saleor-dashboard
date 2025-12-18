@@ -15,8 +15,7 @@ jobs:
   # This workflow creates a PR from the release branch to main for cleanup.
   create-cleanup-pr:
     runs-on: ubuntu-22.04
-    # Only run if the push is from merging a PR (not direct commits)
-    if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Merge pull request')
+    if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Release 3.22')
     env:
       CURRENT_RELEASE: "3.22"
 
