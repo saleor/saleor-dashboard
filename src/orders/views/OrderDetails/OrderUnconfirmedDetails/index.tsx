@@ -34,7 +34,7 @@ import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderD
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -170,6 +170,10 @@ export const OrderUnconfirmedDetails = ({
   const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
   const defaultZeroMoney = { amount: 0, currency: "USD" };
+  const selectedTransaction = useMemo(
+    () => order?.transactions?.find(t => t.id === params.id),
+    [order?.transactions, params.id],
+  );
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
     fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
@@ -374,12 +378,8 @@ export const OrderUnconfirmedDetails = ({
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
           orderTotal={order?.total.gross ?? defaultZeroMoney}
-          authorizedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? defaultZeroMoney
-          }
-          chargedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? defaultZeroMoney
-          }
+          authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
+          chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
           orderBalance={order?.totalBalance ?? defaultZeroMoney}
           isTransaction
           open={true}
