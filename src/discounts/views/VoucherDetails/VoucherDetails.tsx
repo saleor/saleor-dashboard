@@ -31,6 +31,7 @@ import {
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
 import {
+  ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
@@ -98,6 +99,20 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    searchProductsOpts.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
+    });
+  };
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
@@ -538,7 +553,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-product"}
-        onFetch={searchProducts}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}
@@ -555,6 +569,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           })
         }
         products={getFilteredProducts(data, searchProductsOpts)}
+        excludedFilters={["channel"]}
+        onFilterChange={handleProductFilterChange}
       />
       <ActionDialog
         open={params.action === "unassign-category" && canOpenBulkActionDialog}
