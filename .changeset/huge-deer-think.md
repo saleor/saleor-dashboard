@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Update order Transactions cards
+Fix removing saved filters

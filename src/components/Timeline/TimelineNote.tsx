@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, Button, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -188,19 +188,35 @@ export const TimelineNote = ({
             </Box>
             <Box display="flex" alignItems="center" gap={2}>
               {eventDataString && (
-                <Box
-                  as="span"
-                  title={eventDataString}
-                  cursor="pointer"
-                  display="inline-flex"
-                  alignItems="center"
-                  style={{
-                    opacity: isHovered ? 1 : 0,
-                    transition: "opacity 0.15s ease-in-out",
-                  }}
-                >
-                  <InfoIcon size={16} color={vars.colors.text.default2} />
-                </Box>
+                <Tooltip>
+                  <Tooltip.Trigger>
+                    <Box
+                      as="span"
+                      cursor="pointer"
+                      display="inline-flex"
+                      alignItems="center"
+                      style={{
+                        opacity: isHovered ? 1 : 0,
+                        transition: "opacity 0.15s ease-in-out",
+                      }}
+                    >
+                      <InfoIcon size={16} color={vars.colors.text.default2} />
+                    </Box>
+                  </Tooltip.Trigger>
+                  <Tooltip.Content side="bottom">
+                    <Tooltip.Arrow />
+                    <Box
+                      __maxWidth="400px"
+                      __maxHeight="300px"
+                      overflowY="auto"
+                      __whiteSpace="pre-wrap"
+                    >
+                      <Text size={2} fontFamily="Geist Mono" wordBreak="break-all">
+                        {eventDataString}
+                      </Text>
+                    </Box>
+                  </Tooltip.Content>
+                </Tooltip>
               )}
               <Text size={2} color="default2" whiteSpace="nowrap">
                 {dateToRender}
