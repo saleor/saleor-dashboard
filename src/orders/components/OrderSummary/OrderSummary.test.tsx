@@ -431,7 +431,7 @@ describe("OrderSummary", () => {
       );
 
       // Assert
-      expect(screen.getByTestId("markAsPaidButton")).toBeInTheDocument();
+      expect(screen.getByTestId("mark-as-paid-button")).toBeInTheDocument();
     });
 
     it("should call onLegacyPaymentsApiCapture when Capture button is clicked", async () => {
@@ -558,7 +558,7 @@ describe("OrderSummary", () => {
         </Wrapper>,
       );
 
-      const markAsPaidButton = screen.getByTestId("markAsPaidButton");
+      const markAsPaidButton = screen.getByTestId("mark-as-paid-button");
 
       await userEvent.click(markAsPaidButton);
 
@@ -600,7 +600,7 @@ describe("OrderSummary", () => {
       expect(screen.getByText("Capture")).toBeInTheDocument();
       expect(screen.getByText("Refund")).toBeInTheDocument();
       expect(screen.getByText("Void")).toBeInTheDocument();
-      expect(screen.getByTestId("markAsPaidButton")).toBeInTheDocument();
+      expect(screen.getByTestId("mark-as-paid-button")).toBeInTheDocument();
     });
   });
 

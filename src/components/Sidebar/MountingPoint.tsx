@@ -11,17 +11,12 @@ import { FormattedMessage } from "react-intl";
 import { useEnvLink } from "./menu/hooks/useEnvLink";
 import { rippleCloudEnvLink } from "./ripples/cloudEnvLink";
 
-// TODO: Remove this before merging - for local testing only
-const DEV_FORCE_SHOW_CLOUD_LINK = true;
-
 export const MountingPoint = () => {
   const { theme } = useLegacyThemeHandler();
   const logo = theme === "defaultLight" ? sideBarDefaultLogo : sideBarDefaultLogoDarkMode;
   const { isAuthenticatedViaCloud } = useCloud();
   const envLink = useEnvLink();
   const [isHovered, setIsHovered] = useState(false);
-
-  const showCloudFeatures = DEV_FORCE_SHOW_CLOUD_LINK || isAuthenticatedViaCloud;
 
   return (
     <Box
@@ -37,7 +32,7 @@ export const MountingPoint = () => {
       <Text size={3} fontWeight="bold" __flex="1">
         Saleor Dashboard
       </Text>
-      {showCloudFeatures && (
+      {isAuthenticatedViaCloud && (
         <>
           <Ripple model={rippleCloudEnvLink} />
           <Tooltip>
