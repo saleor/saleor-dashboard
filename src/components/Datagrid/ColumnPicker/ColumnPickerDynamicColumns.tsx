@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { Minus, Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -40,7 +40,7 @@ export const ColumnPickerDynamicColumns = ({
             data-test-id={`remove-dynamic-col-button-${column.title}`}
             variant="tertiary"
             size="small"
-            icon={<Minus size={iconSize.small} strokeWidth={iconStrokeWidth} />}
+            icon={<X size={iconSize.small} strokeWidth={iconStrokeWidth} />}
             __width="20px"
             __height="20px"
           />

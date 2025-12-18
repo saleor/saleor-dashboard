@@ -1,5 +1,6 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import { Minus } from "lucide-react";
+import { X } from "lucide-react";
 import { MouseEvent } from "react";
 import * as React from "react";
 
@@ -49,14 +50,10 @@ export const FilterPresetItem = ({
             display="flex"
             alignItems="center"
           >
-            <Minus
+            <X
               data-test-id="preset-delete-button"
-              // @ts-expect-error - check why style is not accepted in types, but can be used
-              color={{
-                default: "default2",
-                hover: "default1",
-                focusVisible: "default1",
-              }}
+              size={iconSize.small}
+              strokeWidth={iconStrokeWidthBySize.small}
             />
           </Box>
         )}
