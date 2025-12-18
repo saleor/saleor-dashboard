@@ -489,48 +489,30 @@ export const OrderCaptureDialog = ({
         {canSubmit && selectedAmount > 0 && (
           <Box display="flex" alignItems="center" gap={1}>
             <Text size={2} color="default2">
-              {outcomeStatus === "overcharged" && (
-                <FormattedMessage
-                  {...messages.outcomeOvercharged}
-                  values={{
-                    status: (
-                      <Pill
-                        size="small"
-                        color="error"
-                        label={intl.formatMessage(messages.statusOvercapturedPill)}
-                      />
-                    ),
-                  }}
-                />
-              )}
-              {outcomeStatus === "fullyCharged" && (
-                <FormattedMessage
-                  {...messages.outcomeFullyCharged}
-                  values={{
-                    status: (
-                      <Pill
-                        size="small"
-                        color="success"
-                        label={intl.formatMessage(messages.statusFullyCapturedPill)}
-                      />
-                    ),
-                  }}
-                />
-              )}
-              {outcomeStatus === "partiallyCharged" && (
-                <FormattedMessage
-                  {...messages.outcomePartiallyCharged}
-                  values={{
-                    status: (
-                      <Pill
-                        size="small"
-                        color="warning"
-                        label={intl.formatMessage(messages.statusPartiallyCapturedPill)}
-                      />
-                    ),
-                  }}
-                />
-              )}
+              <FormattedMessage
+                {...messages.outcomeMessage}
+                values={{
+                  status: (
+                    <Pill
+                      size="small"
+                      color={
+                        outcomeStatus === "overcharged"
+                          ? "error"
+                          : outcomeStatus === "fullyCharged"
+                            ? "success"
+                            : "warning"
+                      }
+                      label={intl.formatMessage(
+                        outcomeStatus === "overcharged"
+                          ? messages.statusOvercapturedPill
+                          : outcomeStatus === "fullyCharged"
+                            ? messages.statusFullyCapturedPill
+                            : messages.statusPartiallyCapturedPill,
+                      )}
+                    />
+                  ),
+                }}
+              />
             </Text>
           </Box>
         )}

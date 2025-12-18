@@ -815,6 +815,10 @@
     "context": "filter range separator",
     "string": "and"
   },
+  "34wIzn": {
+    "context": "outcome prediction showing resulting order status after capture",
+    "string": "This will result in {status} order"
+  },
   "38dS1A": {
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
@@ -2458,10 +2462,6 @@
   },
   "DWWw3M": {
     "string": "Model type Name"
-  },
-  "DXaxpH": {
-    "context": "outcome prediction when order will be overcharged",
-    "string": "This will result in an {status} order"
   },
   "DaPGcn": {
     "string": "Model title"
@@ -5469,10 +5469,6 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
-  },
-  "VwCTbx": {
-    "context": "outcome prediction when order will be fully charged",
-    "string": "This will result in a {status} order"
   },
   "VxStyU": {
     "context": "order history message",
@@ -10058,10 +10054,6 @@
   "ycMLN9": {
     "context": "warehouses section name",
     "string": "Warehouses"
-  },
-  "ycg2RR": {
-    "context": "outcome prediction when order will be partially charged",
-    "string": "This will result in a {status} order"
   },
   "ychKsb": {
     "context": "error message",
