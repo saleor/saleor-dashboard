@@ -219,11 +219,19 @@ export const OrderUnconfirmedDetails = ({
             order={order}
             shop={shop}
             onTransactionAction={(id, action) =>
-              openModal("transaction-action", {
-                type: action,
-                id,
-                action: "transaction-action",
-              })
+              openModal(
+                action === TransactionActionEnum.CHARGE
+                  ? "transaction-charge-action"
+                  : "transaction-action",
+                {
+                  type: action,
+                  id,
+                  action:
+                    action === TransactionActionEnum.CHARGE
+                      ? "transaction-charge-action"
+                      : "transaction-action",
+                },
+              )
             }
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineChange={(id, data) =>
@@ -373,7 +381,7 @@ export const OrderUnconfirmedDetails = ({
         handleTransactionReference={({ target }) => setTransactionReference(target.value)}
       />
       {/* Transaction Capture Dialog - for CHARGE action */}
-      {params.action === "transaction-action" && params.type === TransactionActionEnum.CHARGE && (
+      {params.action === "transaction-charge-action" && (
         <OrderCaptureDialog
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
@@ -399,9 +407,7 @@ export const OrderUnconfirmedDetails = ({
       <OrderTransactionActionDialog
         confirmButtonState={orderTransactionAction.opts.status}
         onClose={closeModal}
-        open={
-          params.action === "transaction-action" && params.type !== TransactionActionEnum.CHARGE
-        }
+        open={params.action === "transaction-action"}
         action={params.type}
         onSubmit={() =>
           orderTransactionAction
