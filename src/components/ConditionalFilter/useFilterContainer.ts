@@ -24,7 +24,22 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
     const currentDependency =
       FilterElement.isFilterElement(current) && Constraint.getDependency(current.value.value);
 
+    const selfConstraint = Constraint.fromSlug(leftOperator.value);
+    const hasDependentFilters =
+      !!selfConstraint &&
+      value.some(row => {
+        if (!FilterElement.isFilterElement(row)) return false;
+
+        if (FilterElement.isFilterElement(current) && row.equals(current)) return false;
+
+        return selfConstraint.dependsOn.includes(row.value.value);
+      });
+
     updateAt(position, el => el.updateLeftOperator(leftOperator));
+
+    if (selfConstraint && !hasDependentFilters) {
+      updateAt(position, el => el.clearConstraint());
+    }
 
     if (currentDependency && !dependency) {
       updateBySlug(currentDependency, el => {
