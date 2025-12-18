@@ -15,6 +15,8 @@ import { MoneyDisplay } from "./MoneyDisplay";
 const isDestructiveAction = (action: TransactionActionEnum) =>
   action === TransactionActionEnum.CANCEL || action === TransactionActionEnum.REFUND;
 
+const isPrimaryAction = (action: TransactionActionEnum) => action === TransactionActionEnum.CHARGE;
+
 const getTransactionAmounts = ({
   chargedAmount,
   authorizedAmount,
@@ -127,8 +129,16 @@ export const OrderTransactionCardTitle = ({
 
   const { index = 0 } = transaction;
 
-  const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
-  const showActionsMenu = showActions && actions.length > 0;
+  const availableActions = transaction.actions.filter(
+    action => action !== TransactionActionEnum.REFUND,
+  );
+  // Primary actions (like Capture) are shown as visible buttons
+  const primaryActions = availableActions.filter(isPrimaryAction);
+  // Secondary/destructive actions (like Cancel) go into the menu
+  const menuActions = availableActions.filter(action => !isPrimaryAction(action));
+
+  const showPrimaryActions = showActions && primaryActions.length > 0;
+  const showActionsMenu = showActions && menuActions.length > 0;
 
   // Collect all non-zero amounts for display
   const amounts = getTransactionAmounts(transaction);
@@ -142,46 +152,68 @@ export const OrderTransactionCardTitle = ({
           <MoneyDisplay key={label.id} label={intl.formatMessage(label)} money={money} />
         ))}
 
-        {showActionsMenu && (
-          <Dropdown>
-            <Dropdown.Trigger>
-              <Button
-                variant="tertiary"
-                icon={
-                  <MoreVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                }
-                onClick={e => e.stopPropagation()}
-                data-test-id="transaction-menu-button"
-                title={intl.formatMessage(buttonMessages.moreOptions)}
-              />
-            </Dropdown.Trigger>
-            <Dropdown.Content align="end">
-              <List
-                padding={2}
-                borderRadius={4}
-                boxShadow="defaultOverlay"
-                backgroundColor="default1"
-              >
-                {actions.map(action => (
-                  <Dropdown.Item key={`transaction-action-${action}`}>
-                    <List.Item
-                      borderRadius={4}
-                      paddingX={1.5}
-                      paddingY={2}
-                      onClick={e => {
-                        e.stopPropagation();
-                        onTransactionAction(transaction.id, action);
-                      }}
-                    >
-                      <Text color={isDestructiveAction(action) ? "critical1" : undefined}>
-                        <FormattedMessage {...mapActionToMessage[action]} />
-                      </Text>
-                    </List.Item>
-                  </Dropdown.Item>
-                ))}
-              </List>
-            </Dropdown.Content>
-          </Dropdown>
+        {(showPrimaryActions || showActionsMenu) && (
+          <Box display="flex" gap={2} alignItems="center">
+            {showPrimaryActions &&
+              primaryActions.map(action => (
+                <Button
+                  key={`transaction-primary-action-${action}`}
+                  variant="secondary"
+                  onClick={e => {
+                    e.stopPropagation();
+                    onTransactionAction(transaction.id, action);
+                  }}
+                  data-test-id={`transaction-action-${action.toLowerCase()}-button`}
+                >
+                  <FormattedMessage {...mapActionToMessage[action]} />
+                </Button>
+              ))}
+
+            {showActionsMenu && (
+              <Dropdown>
+                <Dropdown.Trigger>
+                  <Button
+                    variant="tertiary"
+                    icon={
+                      <MoreVertical
+                        size={iconSize.small}
+                        strokeWidth={iconStrokeWidthBySize.small}
+                      />
+                    }
+                    onClick={e => e.stopPropagation()}
+                    data-test-id="transaction-menu-button"
+                    title={intl.formatMessage(buttonMessages.moreOptions)}
+                  />
+                </Dropdown.Trigger>
+                <Dropdown.Content align="end">
+                  <List
+                    padding={2}
+                    borderRadius={4}
+                    boxShadow="defaultOverlay"
+                    backgroundColor="default1"
+                  >
+                    {menuActions.map(action => (
+                      <Dropdown.Item key={`transaction-action-${action}`}>
+                        <List.Item
+                          borderRadius={4}
+                          paddingX={1.5}
+                          paddingY={2}
+                          onClick={e => {
+                            e.stopPropagation();
+                            onTransactionAction(transaction.id, action);
+                          }}
+                        >
+                          <Text color={isDestructiveAction(action) ? "critical1" : undefined}>
+                            <FormattedMessage {...mapActionToMessage[action]} />
+                          </Text>
+                        </List.Item>
+                      </Dropdown.Item>
+                    ))}
+                  </List>
+                </Dropdown.Content>
+              </Dropdown>
+            )}
+          </Box>
         )}
       </Box>
     </Box>
