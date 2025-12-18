@@ -45,7 +45,7 @@ test("TC: SALEOR_28 Create basic order #e2e #order", async () => {
   await ordersPage.rightSideDetailsPage.selectCustomer();
   await ordersPage.addressDialog.clickConfirmButton();
   await ordersPage.clickAddShippingCarrierButton();
-  await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await ordersPage.shippingAddressDialog.pickAndConfirmShippingMethod();
   await ordersPage.clickFinalizeButton();
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
@@ -63,7 +63,7 @@ test("TC: SALEOR_76 Create order with transaction flow activated #e2e #order", a
   await expect(ordersPage.addressDialog.existingAddressRadioButton).toBeVisible();
   await ordersPage.addressDialog.clickConfirmButton();
   await ordersPage.clickAddShippingCarrierButton();
-  await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await ordersPage.shippingAddressDialog.pickAndConfirmShippingMethod();
   await ordersPage.clickFinalizeButton();
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
@@ -261,7 +261,7 @@ test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
   await expect(draftOrdersPage.addShippingCarrierLink).toBeVisible();
   await draftOrdersPage.clickAddShippingCarrierButton();
 
-  await draftOrdersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await draftOrdersPage.shippingAddressDialog.pickAndConfirmShippingMethod();
   await draftOrdersPage.clickFinalizeButton();
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
@@ -361,21 +361,14 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
   ): number => {
     return undiscountedPrice - (undiscountedPrice * discountPercentage) / 100;
   };
-
-  const formatPrice = (price: string): number => parseFloat(price.slice(3));
-
   const discountedProduct = PRODUCTS.productWithDiscountChannelPLN;
   const productAlreadyInBasket = ORDERS.draftOrderChannelPLN.productInBasket;
-  const totalPriceLocator = ordersPage.orderSummary.locator(ordersPage.totalPrice);
+  const totalPriceLocator = ordersPage.totalPrice;
 
   await ordersPage.goToExistingOrderPage(ORDERS.draftOrderChannelPLN.id);
-
-  const [initialTotal] = await Promise.all([
-    totalPriceLocator.innerText(),
-    draftOrdersPage.basketProductList.isVisible(),
-  ]);
-
-  expect(initialTotal).toContain(productAlreadyInBasket.price.toString());
+  await draftOrdersPage.basketProductList.isVisible();
+  const initialTotal = Number(await totalPriceLocator.innerText());
+  expect(initialTotal).toBeCloseTo(productAlreadyInBasket.price, 2);
 
   await draftOrdersPage.clickAddProductsButton();
   await draftOrdersPage.addProductsDialog.searchForProductInDialog(discountedProduct.name);
@@ -394,13 +387,11 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
 
   await totalPriceLocator.waitFor({ state: "visible" });
 
-  const finalTotal = await totalPriceLocator.innerText();
+  const finalTotal = Number(await totalPriceLocator.innerText());
 
-  const expectedTotal = (
-    productAlreadyInBasket.price + discountedProduct.variant.discountedPrice
-  ).toFixed(2);
+  const expectedTotal = productAlreadyInBasket.price + discountedProduct.variant.discountedPrice;
 
-  expect(formatPrice(finalTotal).toFixed(2)).toEqual(expectedTotal);
+  expect(finalTotal).toBeCloseTo(expectedTotal, 2);
 });
 
 test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
@@ -427,16 +418,11 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
   // const giftProduct = PRODUCTS.giftProduct.name;
 
   // expect(draftOrdersPage.basketProductList).toContainText(giftProduct);
+  const initialTotalPrice = Number(await ordersPage.totalPrice.innerText());
+  const initialSubTotalPrice = Number(await ordersPage.subTotalPrice.innerText());
 
-  const initialTotalPrice = await ordersPage.orderSummary
-    .locator(ordersPage.totalPrice)
-    .innerText();
-  const initialSubTotalPrice = await ordersPage.subTotalPrice.innerText();
-
-  expect(parseFloat(initialSubTotalPrice.slice(3))).toBeLessThan(20);
-  expect(parseFloat(initialSubTotalPrice.slice(3))).toEqual(
-    PRODUCTS.productWithPriceLowerThan20.price,
-  );
+  expect(initialSubTotalPrice).toBeLessThan(20);
+  expect(initialSubTotalPrice).toEqual(PRODUCTS.productWithPriceLowerThan20.price);
   expect(initialTotalPrice).toBe(initialSubTotalPrice);
 
   await draftOrdersPage.clickAddProductsButton();
@@ -452,19 +438,19 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
   await ordersPage.totalPrice.waitFor({ state: "visible" });
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
 
-  const finalSubTotalPrice = await ordersPage.subTotalPrice.innerText();
+  const finalSubTotalPrice = Number(await ordersPage.subTotalPrice.innerText());
 
-  expect(parseFloat(finalSubTotalPrice.slice(3))).toBeGreaterThan(20);
+  expect(finalSubTotalPrice).toBeGreaterThan(20);
 
   const undiscountedOrderSubTotal =
     PRODUCTS.productWithPriceLowerThan20.price + PRODUCTS.productWithPriceHigherThan20.price;
-  const finalTotalPrice = await ordersPage.orderSummary.locator(ordersPage.totalPrice).innerText();
+  const finalTotalPrice = Number(await ordersPage.totalPrice.innerText());
 
-  expect(finalTotalPrice.slice(3)).not.toContain(initialSubTotalPrice);
+  expect(finalTotalPrice).not.toBe(initialSubTotalPrice);
 
   const discountedOrderSubTotal = undiscountedOrderSubTotal - (undiscountedOrderSubTotal * 5) / 100;
 
-  expect(finalTotalPrice.slice(3)).toContain(discountedOrderSubTotal.toString());
+  expect(finalTotalPrice).toBeCloseTo(discountedOrderSubTotal, 2);
 });
 
 /**
@@ -486,7 +472,7 @@ test.skip("TC: SALEOR_217 Complete basic order for non existing customer #e2e #o
   await addressDialog.clickConfirmButton();
   await ordersPage.expectSuccessBanner();
   await ordersPage.clickAddShippingCarrierButton();
-  await ordersPage.shippingAddressDialog.pickAndConfirmFirstShippingMethod();
+  await ordersPage.shippingAddressDialog.pickAndConfirmShippingMethod();
   await ordersPage.clickFinalizeButton();
   await ordersPage.expectSuccessBanner({ message: "finalized" });
 });

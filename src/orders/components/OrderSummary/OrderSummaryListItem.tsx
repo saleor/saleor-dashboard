@@ -48,6 +48,7 @@ export const OrderSummaryListItem = ({
           showSign={showSign}
           size={4}
           fontWeight={fontWeight}
+          data-test-id={"amount"}
         />
       </Box>
     </Box>
