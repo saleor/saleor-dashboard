@@ -36,7 +36,7 @@ export class OrdersPage extends BasePage {
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
-    readonly markAsPaidButton = page.getByText("Mark as Paid"),
+    readonly markAsPaidButton = page.getByTestId("mark-as-paid-button"),
     readonly addTrackingButton = page.getByTestId("add-tracking-button"),
     readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
     readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
@@ -57,12 +57,8 @@ export class OrdersPage extends BasePage {
     readonly orderRefundList = page.getByTestId("refund-list"),
     readonly orderSummary = page.getByTestId("order-summary"),
     readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
-    readonly totalPrice = page
-      .getByTestId("order-total-price")
-      .locator(page.getByTestId("money-value")),
-    readonly subTotalPrice = page
-      .getByTestId("order-total-price")
-      .locator(page.getByTestId("money-value")),
+    readonly totalPrice = page.getByTestId("order-total"),
+    readonly subTotalPrice = page.getByTestId("order-subtotal-line").getByTestId("amount"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
