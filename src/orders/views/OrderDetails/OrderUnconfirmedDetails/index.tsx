@@ -169,6 +169,7 @@ export const OrderUnconfirmedDetails = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
+  const defaultZeroMoney = { amount: 0, currency: "USD" };
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
     fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
@@ -372,20 +373,14 @@ export const OrderUnconfirmedDetails = ({
         <OrderCaptureDialog
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
-          orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
+          orderTotal={order?.total.gross ?? defaultZeroMoney}
           authorizedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
+            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? defaultZeroMoney
           }
           chargedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
+            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? defaultZeroMoney
           }
-          orderBalance={order?.totalBalance ?? { amount: 0, currency: "USD" }}
+          orderBalance={order?.totalBalance ?? defaultZeroMoney}
           isTransaction
           open={true}
           onClose={closeModal}
@@ -438,8 +433,8 @@ export const OrderUnconfirmedDetails = ({
       <OrderCaptureDialog
         confirmButtonState={orderPaymentCapture.opts.status}
         errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-        orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
-        authorizedAmount={order?.totalAuthorized ?? { amount: 0, currency: "USD" }}
+        orderTotal={order?.total.gross ?? defaultZeroMoney}
+        authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
         open={params.action === "capture"}
         onClose={closeModal}
         onSubmit={amount =>
