@@ -366,13 +366,9 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
   const totalPriceLocator = ordersPage.totalPrice;
 
   await ordersPage.goToExistingOrderPage(ORDERS.draftOrderChannelPLN.id);
-
-  const [initialTotal] = await Promise.all([
-    totalPriceLocator.innerText(),
-    draftOrdersPage.basketProductList.isVisible(),
-  ]);
-
-  expect(initialTotal).toContain(productAlreadyInBasket.price.toString());
+  await draftOrdersPage.basketProductList.isVisible();
+  const initialTotal = Number(await totalPriceLocator.innerText());
+  expect(initialTotal).toBeCloseTo(productAlreadyInBasket.price, 2);
 
   await draftOrdersPage.clickAddProductsButton();
   await draftOrdersPage.addProductsDialog.searchForProductInDialog(discountedProduct.name);
@@ -393,11 +389,9 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
 
   const finalTotal = Number(await totalPriceLocator.innerText());
 
-  const expectedTotal = (
-    productAlreadyInBasket.price + discountedProduct.variant.discountedPrice
-  ).toFixed(2);
+  const expectedTotal = productAlreadyInBasket.price + discountedProduct.variant.discountedPrice;
 
-  expect(finalTotal.toFixed(2)).toEqual(expectedTotal);
+  expect(finalTotal).toBeCloseTo(expectedTotal, 2);
 });
 
 test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
@@ -452,7 +446,7 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
     PRODUCTS.productWithPriceLowerThan20.price + PRODUCTS.productWithPriceHigherThan20.price;
   const finalTotalPrice = Number(await ordersPage.totalPrice.innerText());
 
-  expect(finalTotalPrice).not.toContain(initialSubTotalPrice);
+  expect(finalTotalPrice).not.toBe(initialSubTotalPrice);
 
   const discountedOrderSubTotal = undiscountedOrderSubTotal - (undiscountedOrderSubTotal * 5) / 100;
 
