@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.22.23
+
+### Patch Changes
+
+- [#6227](https://github.com/saleor/saleor-dashboard/pull/6227) [`2db65da`](https://github.com/saleor/saleor-dashboard/commit/2db65da3b027e7736388fa60490532dbff4301e0) Thanks [@mirekm](https://github.com/mirekm)! - Added confirmation dialog ("Leave without saving changes?") to prevent accidental data loss when closing metadata dialogs with unsaved changes:
+  - Order metadata dialog
+  - Order fulfillment metadata dialog
+  - Order line metadata dialog
+
+- [#6224](https://github.com/saleor/saleor-dashboard/pull/6224) [`adb6abe`](https://github.com/saleor/saleor-dashboard/commit/adb6abe535a2967a191bac76c0940c6090e2e0dc) Thanks [@mirekm](https://github.com/mirekm)! - Use Tooltip component for info icon and dates in timeline
+
+- [#6223](https://github.com/saleor/saleor-dashboard/pull/6223) [`974e327`](https://github.com/saleor/saleor-dashboard/commit/974e327f1ee52dacddd67b719b7f10007200d0b3) Thanks [@mirekm](https://github.com/mirekm)! - Fix removing saved filters
+
+- [#6222](https://github.com/saleor/saleor-dashboard/pull/6222) [`f21cadf`](https://github.com/saleor/saleor-dashboard/commit/f21cadf38995c9901aa40bc4f654167c037e180b) Thanks [@mirekm](https://github.com/mirekm)! - Remove redundant elements in the main titles
+
 ## 3.22.22
 
 ### Patch Changes
