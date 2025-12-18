@@ -1,4 +1,5 @@
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
+import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { IntlShape, useIntl } from "react-intl";
 
 interface OrderHistoryDateProps {
@@ -114,9 +115,17 @@ export const OrderHistoryDate = ({ date }: OrderHistoryDateProps) => {
         const { dateStr, fullDate } = getRelativeDate({ date, intl, tz });
 
         return (
-          <span title={fullDate} style={{ cursor: "default" }}>
-            {dateStr}
-          </span>
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Text size={2} color="default2">
+                {dateStr}
+              </Text>
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              <Tooltip.Arrow />
+              <Text size={2}>{fullDate}</Text>
+            </Tooltip.Content>
+          </Tooltip>
         );
       }}
     </TimezoneConsumer>
