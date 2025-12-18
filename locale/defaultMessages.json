@@ -812,10 +812,6 @@
     "context": "filter range separator",
     "string": "and"
   },
-  "34wIzn": {
-    "context": "outcome prediction showing resulting order status after capture",
-    "string": "This will result in {status} order"
-  },
   "38dS1A": {
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
@@ -3130,6 +3126,10 @@
   "HRXLYk": {
     "context": "cta button label",
     "string": "Get in touch"
+  },
+  "HSYM17": {
+    "context": "outcome prediction showing resulting order status after capture",
+    "string": "This will result in {status} order"
   },
   "HSmg1/": {
     "context": "gift cards section name",
