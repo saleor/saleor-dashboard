@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -19,7 +20,9 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
+import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import { Box } from "@saleor/macaw-ui-next";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
@@ -49,6 +52,51 @@ const TranslationsCategoriesPage = ({
   });
 
   const navigate = useNavigator();
+  const { attachFormState, active } = useActiveAppExtension();
+
+  // Emit data to app
+  useEffect(() => {
+    if (active && data?.category) {
+      attachFormState(
+        // @ts-ignore - wtf with types
+        DashboardEventFactory.createFormEvent({
+          form: "category-translate",
+          categoryId: data.category.id,
+          translationLanguage: languageCode,
+          fields: {
+            categoryName: {
+              type: "short-text",
+              fieldName: "categoryName",
+              translatedValue: data.translation.name,
+              currentValue: "todo",
+              originalValue: data.category.name,
+            },
+            categoryDescription: {
+              type: "editorjs",
+              fieldName: "categoryDescription",
+              translatedValue: data.translation.description,
+              currentValue: "todo",
+              originalValue: data.category.description,
+            },
+            seoName: {
+              type: "short-text",
+              fieldName: "seoName",
+              translatedValue: data.translation.seoTitle,
+              currentValue: "todo",
+              originalValue: data.category.seoTitle,
+            },
+            seoDescription: {
+              type: "short-text",
+              fieldName: "seoDescription",
+              translatedValue: data.translation.seoDescription,
+              currentValue: "todo",
+              originalValue: data.category.seoDescription,
+            },
+          },
+        }),
+      );
+    }
+  }, [active, data?.category, data?.category?.id]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
