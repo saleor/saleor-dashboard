@@ -19,7 +19,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import WarehouseList from "../WarehouseList";
 
 interface WarehouseListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {

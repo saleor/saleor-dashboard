@@ -92,8 +92,7 @@ export interface PageUpdateHandlers {
 }
 
 interface UsePageUpdateFormOutput
-  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
-    RichTextProps {
+  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>, RichTextProps {
   valid: boolean;
   validationErrors: PageErrorWithAttributesFragment[];
 }

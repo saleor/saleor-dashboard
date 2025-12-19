@@ -115,7 +115,8 @@ interface UseProductVariantUpdateFormOpts {
 }
 
 export interface ProductVariantUpdateHandlers
-  extends Record<
+  extends
+    Record<
       "changeStock" | "selectAttribute" | "selectAttributeMultiple" | "changeChannels",
       FormsetChange
     >,
@@ -134,7 +135,8 @@ export interface ProductVariantUpdateHandlers
 }
 
 interface UseProductVariantUpdateFormResult
-  extends CommonUseFormResultWithHandlers<ProductVariantUpdateData, ProductVariantUpdateHandlers>,
+  extends
+    CommonUseFormResultWithHandlers<ProductVariantUpdateData, ProductVariantUpdateHandlers>,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
   validationErrors: ProductErrorWithAttributesFragment[];

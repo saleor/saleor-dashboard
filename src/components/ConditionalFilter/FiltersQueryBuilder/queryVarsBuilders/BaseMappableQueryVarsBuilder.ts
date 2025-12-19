@@ -8,9 +8,9 @@ import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 /** This class is used when we need a simple rename from FilterElement value
  * to different query variables
  * For example: attributeType -> type */
-export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
-  implements BothApiQueryVarsBuilder<T>
-{
+export abstract class BaseMappableQueryVarsBuilder<
+  T extends FilterQuery = FilterQuery,
+> implements BothApiQueryVarsBuilder<T> {
   abstract canHandle(element: FilterElement): boolean;
 
   abstract createOptionFetcher(

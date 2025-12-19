@@ -21,9 +21,7 @@ type QueryWithAnd = {
  * @example {AND: [{metadata: {key: "color", value: {eq: "red"}}}, {metadata: {key: "size", value: {eq: "M"}}}]}
  * @important When using this builder, make sure to enable `useAndWrapper` option in FiltersQueryBuilder
  * */
-export class MetadataFilterInputQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<QueryWithAnd>
-{
+export class MetadataFilterInputQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<QueryWithAnd> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "metadata";
   }

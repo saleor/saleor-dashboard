@@ -1,11 +1,10 @@
 // @ts-strict-ignore
 import RichTextEditor, { RichTextEditorProps } from "./RichTextEditor";
 
-interface RichTextEditorLoadingProps
-  extends Omit<
-    RichTextEditorProps,
-    "disabled" | "editorRef" | "onChange" | "defaultValue" | "error" | "helperText"
-  > {
+interface RichTextEditorLoadingProps extends Omit<
+  RichTextEditorProps,
+  "disabled" | "editorRef" | "onChange" | "defaultValue" | "error" | "helperText"
+> {
   helperText?: RichTextEditorProps["helperText"];
 }
 

@@ -11,11 +11,10 @@ interface AttributeValueSearchHandlerState {
   query: string;
 }
 
-interface UseAttributeValueSearchHandler
-  extends Omit<
-    UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
-    "search"
-  > {
+interface UseAttributeValueSearchHandler extends Omit<
+  UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
+  "search"
+> {
   reset: () => void;
   search: (query: string, id: string | null) => void;
 }

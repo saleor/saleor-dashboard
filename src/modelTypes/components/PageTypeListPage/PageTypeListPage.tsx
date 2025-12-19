@@ -28,7 +28,8 @@ import {
 import PageTypeList from "../PageTypeList";
 
 interface PageTypeListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     ListActions,
     SearchPageProps,
     SortPage<PageTypeListUrlSortField>,

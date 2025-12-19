@@ -48,7 +48,8 @@ import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 
 interface ProductListPageProps
-  extends PageListProps<ProductListColumns>,
+  extends
+    PageListProps<ProductListColumns>,
     SearchPageProps,
     Omit<TabPageProps, "onTabDelete" | "onTabDelete">,
     SortPage<ProductListUrlSortField>,
