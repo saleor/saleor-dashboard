@@ -1,19 +1,22 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useMemo } from "react";
 import { toast, Toaster } from "sonner";
 
 import { INotificationContext, NotificationContext } from ".";
 import { ToastDebug } from "./ToastDebug";
 
 const NotificationProvider = ({ children }: PropsWithChildren) => {
-  const context: INotificationContext = {
-    show: () => {},
-    remove: (id: number) => {
-      toast.dismiss(id);
-    },
-    clearErrorNotifications: () => {
-      toast.dismiss();
-    },
-  };
+  const context = useMemo<INotificationContext>(
+    () => ({
+      show: () => {},
+      remove: (id: number) => {
+        toast.dismiss(id);
+      },
+      clearErrorNotifications: () => {
+        toast.dismiss();
+      },
+    }),
+    [],
+  );
 
   return (
     <NotificationContext.Provider value={context}>
