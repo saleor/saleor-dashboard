@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 type Status = "success" | "error" | "info" | "warning";
 
-export interface IMessage {
+export interface INotification {
   actionBtn?: {
     label: string;
     action: () => void;
@@ -15,13 +15,13 @@ export interface IMessage {
 }
 
 export interface INotificationContext {
-  show: (message: IMessage, timeout?: number | null) => void;
+  show: (notification: INotification, timeout?: number | null) => void;
   remove: (notificationId: number) => void;
   clearErrorNotifications: () => void;
 }
 
-export type IMessageContext = (message: IMessage) => void;
-export const MessageContext = createContext<INotificationContext | null>(null);
+export type INotificationCallback = (notification: INotification) => void;
+export const NotificationContext = createContext<INotificationContext | null>(null);
 
-export * from "./MessageManagerProvider";
-export { default } from "./MessageManagerProvider";
+export * from "./NotificationProvider";
+export { default } from "./NotificationProvider";

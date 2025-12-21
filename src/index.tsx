@@ -36,8 +36,8 @@ import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
-import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
+import NotificationProvider from "./components/notifications";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
@@ -124,7 +124,7 @@ const App = () => (
           <ThemeProvider>
             <DateProvider>
               <LocaleProvider>
-                <MessageManagerProvider>
+                <NotificationProvider>
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <AuthProvider>
@@ -150,7 +150,7 @@ const App = () => (
                       </AuthProvider>
                     </AppStateProvider>
                   </BackgroundTasksProvider>
-                </MessageManagerProvider>
+                </NotificationProvider>
               </LocaleProvider>
             </DateProvider>
           </ThemeProvider>

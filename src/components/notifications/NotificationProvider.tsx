@@ -5,10 +5,10 @@ import { AlertTriangle, CheckCircle2, Info, XCircle } from "lucide-react";
 import { CSSProperties, PropsWithChildren } from "react";
 import { toast, Toaster } from "sonner";
 
-import { INotificationContext, MessageContext } from ".";
+import { INotificationContext, NotificationContext } from ".";
 import { ToastDebug } from "./ToastDebug";
 
-const MessageManagerProvider = ({ children }: PropsWithChildren) => {
+const NotificationProvider = ({ children }: PropsWithChildren) => {
   const { theme, themeValues } = useTheme();
   const isDark = theme === "defaultDark";
 
@@ -33,7 +33,7 @@ const MessageManagerProvider = ({ children }: PropsWithChildren) => {
   } as CSSProperties;
 
   return (
-    <MessageContext.Provider value={context}>
+    <NotificationContext.Provider value={context}>
       {children}
       <Toaster
         position="top-right"
@@ -50,8 +50,8 @@ const MessageManagerProvider = ({ children }: PropsWithChildren) => {
         }}
       />
       <ToastDebug />
-    </MessageContext.Provider>
+    </NotificationContext.Provider>
   );
 };
 
-export default MessageManagerProvider;
+export default NotificationProvider;

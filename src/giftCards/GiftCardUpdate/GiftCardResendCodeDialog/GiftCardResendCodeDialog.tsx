@@ -2,7 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { Combobox } from "@dashboard/components/Combobox";
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
@@ -63,7 +63,7 @@ const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendMutation({
     onCompleted: data => {
       const errors = data?.giftCardResend?.errors;
-      const notifierData: IMessage = errors?.length
+      const notifierData: INotification = errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),

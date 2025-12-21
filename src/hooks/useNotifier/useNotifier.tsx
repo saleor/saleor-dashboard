@@ -1,11 +1,11 @@
-import { IMessage, IMessageContext } from "@dashboard/components/messages";
+import { INotification, INotificationCallback } from "@dashboard/components/notifications";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { toast } from "sonner";
 
-export type UseNotifierResult = IMessageContext;
+export type UseNotifierResult = INotificationCallback;
 
 function useNotifier(): UseNotifierResult {
-  const notify = (options: IMessage) => {
+  const notify = (options: INotification) => {
     const duration =
       options.status === "error" ? Infinity : (options.autohide ?? DEFAULT_NOTIFICATION_SHOW_TIME);
 

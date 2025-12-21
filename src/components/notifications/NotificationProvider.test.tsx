@@ -2,8 +2,8 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { renderHook } from "@testing-library/react-hooks";
 import { PropsWithChildren, useContext } from "react";
 
-import { MessageContext } from ".";
-import MessageManagerProvider from "./MessageManagerProvider";
+import { NotificationContext } from ".";
+import NotificationProvider from "./NotificationProvider";
 
 // Mock sonner
 jest.mock("sonner", () => ({
@@ -17,16 +17,16 @@ jest.mock("sonner", () => ({
   Toaster: () => null,
 }));
 
-describe("MessageManagerProvider", () => {
+describe("NotificationProvider", () => {
   const wrapper = ({ children }: PropsWithChildren) => (
     <ThemeProvider>
-      <MessageManagerProvider>{children}</MessageManagerProvider>
+      <NotificationProvider>{children}</NotificationProvider>
     </ThemeProvider>
   );
 
-  test("should provide MessageContext to children", () => {
+  test("should provide NotificationContext to children", () => {
     // Arrange & Act
-    const { result } = renderHook(() => useContext(MessageContext), { wrapper });
+    const { result } = renderHook(() => useContext(NotificationContext), { wrapper });
 
     // Assert
     expect(result.current).toBeTruthy();
