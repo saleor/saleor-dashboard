@@ -25,3 +25,5 @@ export const NotificationContext = createContext<INotificationContext | null>(nu
 
 export * from "./NotificationProvider";
 export { default } from "./NotificationProvider";
+export type { ToastProps } from "./Toast";
+export { Toast } from "./Toast";

@@ -8,10 +8,7 @@ import NotificationProvider from "./NotificationProvider";
 // Mock sonner
 jest.mock("sonner", () => ({
   toast: {
-    success: jest.fn(),
-    error: jest.fn(),
-    warning: jest.fn(),
-    info: jest.fn(),
+    custom: jest.fn(),
     dismiss: jest.fn(),
   },
   Toaster: () => null,

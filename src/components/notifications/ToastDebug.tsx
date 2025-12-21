@@ -7,6 +7,8 @@ import { GripVertical } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
+import { Toast } from "./Toast";
+
 export const ToastDebug = () => {
   const [position, setPosition] = useState({ x: 20, y: 20 });
   const [isDragging, setIsDragging] = useState(false);
@@ -36,67 +38,18 @@ export const ToastDebug = () => {
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const showSavedChanges = () => {
-    toast.success("Saved changes", {
-      description: "Product details have been updated successfully.",
-    });
-  };
-
-  const showOrderConfirmed = () => {
-    toast.success("Order confirmed", {
-      description: "Order #12345 has been confirmed and is ready for fulfillment.",
-    });
-  };
-
-  const showSimpleError = () => {
-    toast.error("Something went wrong", {
-      description: "Unable to save changes. Please try again.",
-      duration: Infinity,
-    });
-  };
-
-  const showPermissionError = () => {
-    toast.error("Permission denied", {
-      description: "You don't have permission to perform this action.",
-      duration: Infinity,
-    });
-  };
-
-  const showGraphQLError = () => {
-    toast.error("Failed to update product", {
-      description: "Product with this SKU already exists.",
-      duration: Infinity,
-    });
-  };
-
-  const showNetworkError = () => {
-    toast.error("Network error", {
-      description: "Unable to connect to the server. Please try again later.",
-      duration: Infinity,
-    });
-  };
-
-  const showSessionExpiring = () => {
-    toast.warning("Session expiring soon", {
-      description: "Your session will expire in 5 minutes. Save your work.",
-    });
-  };
-
-  const showExportStarted = () => {
-    toast.info("Export started", {
-      description: "Your export is being processed. You'll be notified when it's ready.",
-    });
-  };
-
-  const showUndoAction = () => {
-    toast.success("Product deleted", {
-      description: "The product has been moved to trash.",
-      action: {
-        label: "Undo",
-        onClick: () => toast.success("Restored", { description: "Product has been restored." }),
+  const showToast = (
+    type: "success" | "error" | "warning" | "info",
+    title: string,
+    description?: string,
+    action?: { label: string; onClick: () => void },
+  ) => {
+    toast.custom(
+      id => <Toast id={id} type={type} title={title} description={description} action={action} />,
+      {
+        duration: type === "error" ? Infinity : 5000,
       },
-      duration: 8000,
-    });
+    );
   };
 
   return (
@@ -137,13 +90,42 @@ export const ToastDebug = () => {
           SUCCESS
         </Text>
         <Box display="flex" gap={2} flexWrap="wrap">
-          <Button variant="secondary" size="small" onClick={showSavedChanges}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "success",
+                "Saved changes",
+                "Product details have been updated successfully.",
+              )
+            }
+          >
             Saved changes
           </Button>
-          <Button variant="secondary" size="small" onClick={showOrderConfirmed}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "success",
+                "Order confirmed",
+                "Order #12345 has been confirmed and is ready for fulfillment.",
+              )
+            }
+          >
             Order confirmed
           </Button>
-          <Button variant="secondary" size="small" onClick={showUndoAction}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast("success", "Product deleted", "The product has been moved to trash.", {
+                label: "Undo",
+                onClick: () => showToast("success", "Restored", "Product has been restored."),
+              })
+            }
+          >
             With Undo
           </Button>
         </Box>
@@ -154,16 +136,56 @@ export const ToastDebug = () => {
           ERRORS
         </Text>
         <Box display="flex" gap={2} flexWrap="wrap">
-          <Button variant="secondary" size="small" onClick={showSimpleError}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "error",
+                "Something went wrong",
+                "Unable to save changes. Please try again.",
+              )
+            }
+          >
             Simple
           </Button>
-          <Button variant="secondary" size="small" onClick={showPermissionError}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "error",
+                "Permission denied",
+                "You don't have permission to perform this action.",
+              )
+            }
+          >
             Permission
           </Button>
-          <Button variant="secondary" size="small" onClick={showGraphQLError}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "error",
+                "Failed to update product",
+                "Product with this SKU already exists.",
+              )
+            }
+          >
             GraphQL
           </Button>
-          <Button variant="secondary" size="small" onClick={showNetworkError}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "error",
+                "Network error",
+                "Unable to connect to the server. Please try again later.",
+              )
+            }
+          >
             Network
           </Button>
         </Box>
@@ -174,10 +196,30 @@ export const ToastDebug = () => {
           OTHER
         </Text>
         <Box display="flex" gap={2} flexWrap="wrap">
-          <Button variant="secondary" size="small" onClick={showSessionExpiring}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "warning",
+                "Session expiring soon",
+                "Your session will expire in 5 minutes. Save your work.",
+              )
+            }
+          >
             Warning
           </Button>
-          <Button variant="secondary" size="small" onClick={showExportStarted}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "info",
+                "Export started",
+                "Your export is being processed. You'll be notified when it's ready.",
+              )
+            }
+          >
             Info
           </Button>
         </Box>

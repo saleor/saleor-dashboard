@@ -1,4 +1,5 @@
 import { INotification, INotificationCallback } from "@dashboard/components/notifications";
+import { Toast } from "@dashboard/components/notifications/Toast";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -16,32 +17,45 @@ function useNotifier(): UseNotifierResult {
     // Build description - use apiMessage as fallback if no text
     const description = options.text || options.apiMessage;
 
-    const toastOptions = {
-      description: description as string | undefined,
-      duration,
-      ...(options.actionBtn && {
-        action: {
-          label: options.actionBtn.label,
-          onClick: options.actionBtn.action,
-        },
-      }),
+    // Determine title with fallback to localized default
+    const getDefaultTitle = () => {
+      switch (options.status) {
+        case "success":
+          return intl.formatMessage(commonMessages.success);
+        case "error":
+          return intl.formatMessage(commonMessages.error);
+        case "warning":
+          return intl.formatMessage(commonMessages.warning);
+        case "info":
+        default:
+          return intl.formatMessage(commonMessages.info);
+      }
     };
 
-    switch (options.status) {
-      case "success":
-        toast.success(options.title || intl.formatMessage(commonMessages.success), toastOptions);
-        break;
-      case "error":
-        toast.error(options.title || intl.formatMessage(commonMessages.error), toastOptions);
-        break;
-      case "warning":
-        toast.warning(options.title || intl.formatMessage(commonMessages.warning), toastOptions);
-        break;
-      case "info":
-      default:
-        toast.info(options.title || intl.formatMessage(commonMessages.info), toastOptions);
-        break;
-    }
+    const title = options.title || getDefaultTitle();
+    const type = options.status || "info";
+
+    toast.custom(
+      id => (
+        <Toast
+          id={id}
+          type={type}
+          title={title}
+          description={description}
+          action={
+            options.actionBtn
+              ? {
+                  label: options.actionBtn.label,
+                  onClick: options.actionBtn.action,
+                }
+              : undefined
+          }
+        />
+      ),
+      {
+        duration,
+      },
+    );
   };
 
   return notify;
