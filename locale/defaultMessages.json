@@ -2564,6 +2564,9 @@
     "context": "max price in channel",
     "string": "Max. value"
   },
+  "EXqb2l": {
+    "string": "Go to Saleor Cloud"
+  },
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"

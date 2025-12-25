@@ -37,7 +37,6 @@ export const Root = ({
         <Box
           __flex={isAlignToRight ? "1 1 auto" : 0}
           overflow="hidden"
-          paddingRight={4}
           title={typeof title === "string" ? title : undefined}
         >
           <Text size={6} ellipsis display="block">
