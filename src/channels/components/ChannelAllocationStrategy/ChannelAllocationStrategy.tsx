@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
@@ -52,7 +53,11 @@ const ChannelAllocationStrategy = ({
               <FormattedMessage {...messages.allocationStrategyDescription} />
               <Tooltip>
                 <Tooltip.Trigger>
-                  <CircleQuestionMark className={classes.tooltipIcon} />
+                  <CircleQuestionMark
+                    size={iconSize.small}
+                    strokeWidth={iconStrokeWidthBySize.small}
+                    className={classes.tooltipIcon}
+                  />
                 </Tooltip.Trigger>
                 <Tooltip.Content side="bottom">
                   <Tooltip.Arrow />
