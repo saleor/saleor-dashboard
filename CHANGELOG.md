@@ -1,5 +1,52 @@
 # Changelog
 
+## 3.22.23
+
+### Patch Changes
+
+- [#6227](https://github.com/saleor/saleor-dashboard/pull/6227) [`2db65da`](https://github.com/saleor/saleor-dashboard/commit/2db65da3b027e7736388fa60490532dbff4301e0) Thanks [@mirekm](https://github.com/mirekm)! - Added confirmation dialog ("Leave without saving changes?") to prevent accidental data loss when closing metadata dialogs with unsaved changes:
+  - Order metadata dialog
+  - Order fulfillment metadata dialog
+  - Order line metadata dialog
+
+- [#6224](https://github.com/saleor/saleor-dashboard/pull/6224) [`adb6abe`](https://github.com/saleor/saleor-dashboard/commit/adb6abe535a2967a191bac76c0940c6090e2e0dc) Thanks [@mirekm](https://github.com/mirekm)! - Use Tooltip component for info icon and dates in timeline
+
+- [#6223](https://github.com/saleor/saleor-dashboard/pull/6223) [`974e327`](https://github.com/saleor/saleor-dashboard/commit/974e327f1ee52dacddd67b719b7f10007200d0b3) Thanks [@mirekm](https://github.com/mirekm)! - Fix removing saved filters
+
+- [#6222](https://github.com/saleor/saleor-dashboard/pull/6222) [`f21cadf`](https://github.com/saleor/saleor-dashboard/commit/f21cadf38995c9901aa40bc4f654167c037e180b) Thanks [@mirekm](https://github.com/mirekm)! - Remove redundant elements in the main titles
+
+## 3.22.22
+
+### Patch Changes
+
+- [#6217](https://github.com/saleor/saleor-dashboard/pull/6217) [`9670756`](https://github.com/saleor/saleor-dashboard/commit/967075601bedbd199715c746f3e953288d4965a8) Thanks [@mirekm](https://github.com/mirekm)! - Transaction actions: The Capture button is now directly visible on transaction cards for quicker access, while destructive actions like Cancel remain safely tucked in the menu.
+
+- [#6178](https://github.com/saleor/saleor-dashboard/pull/6178) [`33d7143`](https://github.com/saleor/saleor-dashboard/commit/33d71430997daeef3b408c9f75e2d8dfa1567f12) Thanks [@mirekm](https://github.com/mirekm)! - Update order Transactions cards
+
+- [#6189](https://github.com/saleor/saleor-dashboard/pull/6189) [`0e6e5a3`](https://github.com/saleor/saleor-dashboard/commit/0e6e5a3f7e0da47415d79a17f1423c9939d6f42c) Thanks [@mirekm](https://github.com/mirekm)! - Introduced a redesigned "Order summary" section that unifies order details and payment information across all order types, including Drafts and Unconfirmed orders. The updated "Order value" breakdown now clearly separates subtotal, taxes, discounts, and shipping. Additionally, a new "Payments summary" section has been added, featuring a dedicated "no data" state when no payments are present.
+
+- [#6213](https://github.com/saleor/saleor-dashboard/pull/6213) [`e2ca67b`](https://github.com/saleor/saleor-dashboard/commit/e2ca67b92745fedc62ad704fd66b0f3702a3d8dd) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed redirection between Customer Details -> See all orders to Orders List (which this customer selected). Now filter is properly set on the URL and only relevant orders are displayed
+
+## 3.22.21
+
+### Patch Changes
+
+- [#6196](https://github.com/saleor/saleor-dashboard/pull/6196) [`5f22cde`](https://github.com/saleor/saleor-dashboard/commit/5f22cded76c3736447dae769b6564fe6fd05e4d9) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Invalid event sent from app to dashboard will not throw anymore, but gracefully show notification
+
+- [#6150](https://github.com/saleor/saleor-dashboard/pull/6150) [`e0f798c`](https://github.com/saleor/saleor-dashboard/commit/e0f798cf09b7fb761febdc57b653155644fe6329) Thanks [@mirekm](https://github.com/mirekm)! - Fix and redesign Order history
+
+- [#6205](https://github.com/saleor/saleor-dashboard/pull/6205) [`fb40e57`](https://github.com/saleor/saleor-dashboard/commit/fb40e57ab0c6a5842c87fbfe03c3e2486019e3b9) Thanks [@mirekm](https://github.com/mirekm)! - Fix main title overflow
+
+- [#6168](https://github.com/saleor/saleor-dashboard/pull/6168) [`c366f94`](https://github.com/saleor/saleor-dashboard/commit/c366f9487affa218ab04ff0b9c0ebfae54a585ed) Thanks [@mirekm](https://github.com/mirekm)! - Cleanup order's Customer Details and Addresses sections
+
+- [#6204](https://github.com/saleor/saleor-dashboard/pull/6204) [`dacee7d`](https://github.com/saleor/saleor-dashboard/commit/dacee7de926a45c8c8ee91284882e18fcdb35fae) Thanks [@mirekm](https://github.com/mirekm)! - New label for ConfirmButton error state
+
+- [#6196](https://github.com/saleor/saleor-dashboard/pull/6196) [`5f22cde`](https://github.com/saleor/saleor-dashboard/commit/5f22cded76c3736447dae769b6564fe6fd05e4d9) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Clipboard operations no longer crash the website if browser permissions are not enabled
+
+- [#6206](https://github.com/saleor/saleor-dashboard/pull/6206) [`a0893de`](https://github.com/saleor/saleor-dashboard/commit/a0893deb0a4b78ba4c69a6a220d48049ac4af78c) Thanks [@mirekm](https://github.com/mirekm)! - Improve icons color consistency with timeline
+
+- [#6208](https://github.com/saleor/saleor-dashboard/pull/6208) [`bcb4854`](https://github.com/saleor/saleor-dashboard/commit/bcb485469a0327a518deb3d91dfb68b8501c8e61) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added UI to control "automatic checkout completion" from the dashboard settings page. What previously was allowed only via graphQL, now can be controlled easily by staff.
+
 ## 3.22.20
 
 ### Patch Changes

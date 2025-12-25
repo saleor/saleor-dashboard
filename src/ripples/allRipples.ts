@@ -1,4 +1,6 @@
+import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
+import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
@@ -14,12 +16,16 @@ export const allRipples: Ripple[] = [
   // Orders
   rippleNewRefundReasons,
   rippleOrderMetadata,
+  rippleRefreshedOrderSections,
   // Products
 
   // ...
 
   // Core
   rippleIntroducedRipples,
+
+  // Channels
+  checkoutAutocompleteSettings,
 ];
 
 /**

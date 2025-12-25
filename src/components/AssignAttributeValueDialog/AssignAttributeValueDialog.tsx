@@ -12,6 +12,7 @@ import AssignCategoryDialog from "../AssignCategoryDialog";
 import AssignCollectionDialog from "../AssignCollectionDialog";
 import AssignContainerDialog from "../AssignContainerDialog";
 import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
+import { InitialConstraints } from "../AssignProductDialog/ModalProductFilterProvider";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
 import {
@@ -55,6 +56,9 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  initialConstraints?: InitialConstraints;
+  // onFetch is required for non-product dialogs (containers, variants, collections, categories)
+  onFetch: (value: string) => void;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
@@ -77,6 +81,7 @@ const AssignAttributeValueDialog = ({
   categories,
   attribute,
   labels,
+  initialConstraints,
   ...rest
 }: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
@@ -111,6 +116,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignProductDialog
           products={filteredProducts ?? []}
+          initialConstraints={initialConstraints}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

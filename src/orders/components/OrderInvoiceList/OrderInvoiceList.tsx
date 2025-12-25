@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Date from "@dashboard/components/Date";
+import { Date } from "@dashboard/components/Date/Date";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
@@ -53,7 +53,7 @@ const OrderInvoiceList = (props: OrderInvoiceListProps) => {
   return (
     <DashboardCard className={classes.card}>
       <DashboardCard.Header>
-        <DashboardCard.Title>
+        <DashboardCard.Title size={6} fontWeight="medium">
           {intl.formatMessage({
             id: "Gzg8hy",
             defaultMessage: "Invoices",

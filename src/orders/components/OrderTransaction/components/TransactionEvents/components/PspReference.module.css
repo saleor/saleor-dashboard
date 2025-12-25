@@ -1,0 +1,17 @@
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.externalIcon {
+  color: var(--mu-colors-text-default2);
+  transition: color 0.15s ease-in-out;
+}
+
+.pillHovered .externalIcon {
+  color: var(--mu-colors-text-default1);
+}

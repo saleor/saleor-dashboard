@@ -30,7 +30,6 @@ import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import { channelsSection } from "./channels/urls";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
-import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
@@ -100,7 +99,7 @@ errorTracker.init(history);
   Handle legacy theming toggle. Since we use new and old macaw,
   we need to handle both theme swticher for a while.
 */
-const handleLegacyTheming = () => {
+const handleLegacyTheming = (): void => {
   const activeTheme = localStorage.getItem("activeMacawUITheme");
 
   if (activeTheme === "defaultDark") {
@@ -114,7 +113,7 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App = () => (
+const App = (): JSX.Element => (
   // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
@@ -122,37 +121,35 @@ const App = () => (
         {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <NotificationProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
-                        <ProductAnalytics>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <SavebarRefProvider>
-                                      <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider>
-                                          <Routes />
-                                        </OnboardingProvider>
-                                      </FeatureFlagsProviderWithUser>
-                                    </SavebarRefProvider>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </ProductAnalytics>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </NotificationProvider>
-              </LocaleProvider>
-            </DateProvider>
+            <LocaleProvider>
+              <NotificationProvider>
+                <BackgroundTasksProvider>
+                  <AppStateProvider>
+                    <AuthProvider>
+                      <ProductAnalytics>
+                        <ShopProvider>
+                          <AppChannelProvider>
+                            <ExitFormDialogProvider>
+                              <DevModeProvider>
+                                <NavigatorSearchProvider>
+                                  <SavebarRefProvider>
+                                    <FeatureFlagsProviderWithUser>
+                                      <OnboardingProvider>
+                                        <Routes />
+                                      </OnboardingProvider>
+                                    </FeatureFlagsProviderWithUser>
+                                  </SavebarRefProvider>
+                                </NavigatorSearchProvider>
+                              </DevModeProvider>
+                            </ExitFormDialogProvider>
+                          </AppChannelProvider>
+                        </ShopProvider>
+                      </ProductAnalytics>
+                    </AuthProvider>
+                  </AppStateProvider>
+                </BackgroundTasksProvider>
+              </NotificationProvider>
+            </LocaleProvider>
           </ThemeProvider>
         </LegacyThemeProvider>
       </Router>

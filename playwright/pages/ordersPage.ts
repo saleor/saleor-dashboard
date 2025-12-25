@@ -36,15 +36,14 @@ export class OrdersPage extends BasePage {
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
-    readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly markAsPaidButton = page.getByTestId("mark-as-paid-button"),
     readonly addTrackingButton = page.getByTestId("add-tracking-button"),
     readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
     readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
     readonly manualTransactionButton = page.getByTestId("captureManualTransactionButton"),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
-    readonly paymentStatusInfo = page.getByTestId("payment-status"),
-    readonly balanceStatusInfo = page.getByTestId("order-balance-status"),
+    readonly paymentStatusBadges = page.getByTestId("payment-status-badges"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly orderTransactionsList = page.getByTestId("orderTransactionsList").locator("table"),
@@ -58,12 +57,8 @@ export class OrdersPage extends BasePage {
     readonly orderRefundList = page.getByTestId("refund-list"),
     readonly orderSummary = page.getByTestId("order-summary"),
     readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
-    readonly totalPrice = page
-      .getByTestId("order-total-price")
-      .locator(page.getByTestId("money-value")),
-    readonly subTotalPrice = page
-      .getByTestId("order-total-price")
-      .locator(page.getByTestId("money-value")),
+    readonly totalPrice = page.getByTestId("order-total"),
+    readonly subTotalPrice = page.getByTestId("order-subtotal-line").getByTestId("amount"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -126,8 +121,6 @@ export class OrdersPage extends BasePage {
     console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
     await this.waitForDOMToFullyLoad();
-    await this.waitForGrid();
-    await this.waitForGrid();
   }
 
   async clickAddRefundButton() {

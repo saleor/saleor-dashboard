@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DateTime } from "@dashboard/components/Date";
+import { DateTime } from "@dashboard/components/Date/DateTime";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";

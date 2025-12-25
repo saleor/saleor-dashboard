@@ -1,6 +1,8 @@
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
@@ -22,22 +24,16 @@ type ReadOnlyOrderSummary = {
 type Props = PropsWithBox<
   {
     order: OrderDetailsFragment;
-    onMarkAsPaid: () => any;
+    onMarkAsPaid?: () => void;
     useLegacyPaymentsApi?: boolean;
-    onLegacyPaymentsApiCapture?: () => any;
-    onLegacyPaymentsApiRefund?: () => any;
-    onLegacyPaymentsApiVoid?: () => any;
+    onLegacyPaymentsApiCapture?: () => void;
+    onLegacyPaymentsApiRefund?: () => void;
+    onLegacyPaymentsApiVoid?: () => void;
   } & (EditableOrderSummary | ReadOnlyOrderSummary)
 >;
 
 export const OrderSummary = (props: Props) => {
-  const {
-    order,
-    onMarkAsPaid,
-    useLegacyPaymentsApi = false,
-    isEditable = false,
-    ...restProps
-  } = props;
+  const { order, onMarkAsPaid, useLegacyPaymentsApi = false, isEditable = false } = props;
   const intl = useIntl();
   const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed({
     id: order.id,
@@ -57,42 +53,21 @@ export const OrderSummary = (props: Props) => {
   const canVoid = OrderDetailsViewModel.canOrderVoid(order.actions);
   const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
 
-  // Extract editable props
   const editableProps = isEditable ? (props as Props & EditableOrderSummary) : null;
 
-  // Filter out props that shouldn't be passed to the DOM
-  const {
-    isEditable: _isEditable,
-    onShippingMethodEdit: _onShippingMethodEdit,
-    errors: _errors,
-    orderDiscount: _orderDiscount,
-    addOrderDiscount: _addOrderDiscount,
-    removeOrderDiscount: _removeOrderDiscount,
-    openDialog: _openDialog,
-    closeDialog: _closeDialog,
-    isDialogOpen: _isDialogOpen,
-    orderDiscountAddStatus: _orderDiscountAddStatus,
-    orderDiscountRemoveStatus: _orderDiscountRemoveStatus,
-    undiscountedPrice: _undiscountedPrice,
-    discountedPrice: _discountedPrice,
-    onLegacyPaymentsApiCapture: _onLegacyPaymentsApiCapture,
-    onLegacyPaymentsApiRefund: _onLegacyPaymentsApiRefund,
-    onLegacyPaymentsApiVoid: _onLegacyPaymentsApiVoid,
-    onTestCaptureFull: _onTestCaptureFull,
-    onTestCapturePartial: _onTestCapturePartial,
-    onTestCaptureNone: _onTestCaptureNone,
-    ...boxProps
-  } = restProps as any;
-
   return (
-    <Box padding={6} display="grid" gap={6} {...boxProps} data-test-id="OrderSummary">
+    <Box padding={6} display="grid" gap={6} data-test-id="OrderSummary">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Text size={6} fontWeight="medium">
-          {intl.formatMessage({
-            defaultMessage: "Summary",
-            id: "RrCui3",
-          })}
-        </Text>
+        <Box display="flex" alignItems="center" justifyContent="center" gap={4}>
+          <Text size={6} fontWeight="medium">
+            {intl.formatMessage({
+              defaultMessage: "Summary",
+              id: "RrCui3",
+            })}
+          </Text>
+
+          <Ripple model={rippleRefreshedOrderSections} />
+        </Box>
 
         {useLegacyPaymentsApi ? (
           <LegacyPaymentsApiButtons
@@ -113,11 +88,13 @@ export const OrderSummary = (props: Props) => {
             }
           />
         ) : (
-          <TransactionsApiButtons
-            canMarkAsPaid={canMarkAsPaid}
-            onMarkAsPaid={onMarkAsPaid}
-            hasNoPayment={hasNoPayment}
-          />
+          onMarkAsPaid && (
+            <TransactionsApiButtons
+              canMarkAsPaid={canMarkAsPaid}
+              onMarkAsPaid={onMarkAsPaid}
+              hasNoPayment={hasNoPayment}
+            />
+          )
         )}
       </Box>
 

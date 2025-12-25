@@ -2,7 +2,7 @@ import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
 import { getStatusColor, PillStatusType } from "@dashboard/misc";
-import { Accordion, Box, sprinkles, useTheme, vars } from "@saleor/macaw-ui-next";
+import { Accordion, Box, sprinkles, Text, Tooltip, useTheme, vars } from "@saleor/macaw-ui-next";
 import {
   AlertTriangleIcon,
   BanIcon,
@@ -149,7 +149,6 @@ export interface TimelineEventProps {
   isLastInGroup?: boolean;
 }
 
-// Icon color that works in both light and dark mode
 const ICON_COLOR = vars.colors.text.default2;
 
 // Icon wrapper component with circle background
@@ -212,13 +211,27 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   }, [eventData]);
 
   const infoIcon = eventDataString ? (
-    <span
-      className={styles.infoIcon}
-      title={eventDataString}
-      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
-    >
-      <InfoIcon size={16} color={ICON_COLOR} />
-    </span>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Box
+          as="span"
+          className={styles.infoIcon}
+          cursor="pointer"
+          display="inline-flex"
+          alignItems="center"
+        >
+          <InfoIcon size={16} color={ICON_COLOR} />
+        </Box>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="bottom">
+        <Tooltip.Arrow />
+        <Box __maxWidth="400px" __maxHeight="300px" overflowY="auto" __whiteSpace="pre-wrap">
+          <Text size={2} fontFamily="Geist Mono" wordBreak="break-all">
+            {eventDataString}
+          </Text>
+        </Box>
+      </Tooltip.Content>
+    </Tooltip>
   ) : null;
 
   return (
