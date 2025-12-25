@@ -225,6 +225,43 @@ export const ToastDebug = () => {
         </Box>
       </Box>
 
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Text size={1} color="default2" fontWeight="medium">
+          LENGTH TEST
+        </Text>
+        <Box display="flex" gap={2} flexWrap="wrap">
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() => showToast("info", "Short", "Single line.")}
+          >
+            1 line
+          </Button>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast("info", "Medium", "This is a two line message that should wrap nicely.")
+            }
+          >
+            2 lines
+          </Button>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={() =>
+              showToast(
+                "error",
+                "Long message",
+                "This is a much longer error message that spans multiple lines to test how the toast handles longer content. It should wrap properly and the toast should expand to fit.",
+              )
+            }
+          >
+            Many lines
+          </Button>
+        </Box>
+      </Box>
+
       <Button variant="tertiary" size="small" onClick={() => toast.dismiss()}>
         Dismiss All
       </Button>

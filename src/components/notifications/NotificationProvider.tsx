@@ -1,3 +1,5 @@
+import "./notifications.css";
+
 import { PropsWithChildren, useMemo } from "react";
 import { toast, Toaster } from "sonner";
 
