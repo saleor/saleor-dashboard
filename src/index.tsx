@@ -32,6 +32,7 @@ import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
+import { DevToolsPanel, DevToolsProvider } from "./components/DevTools";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
@@ -124,33 +125,36 @@ const App = () => (
           <ThemeProvider>
             <DateProvider>
               <LocaleProvider>
-                <NotificationProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
-                        <ProductAnalytics>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExitFormDialogProvider>
-                                <DevModeProvider>
-                                  <NavigatorSearchProvider>
-                                    <SavebarRefProvider>
-                                      <FeatureFlagsProviderWithUser>
-                                        <OnboardingProvider>
-                                          <Routes />
-                                        </OnboardingProvider>
-                                      </FeatureFlagsProviderWithUser>
-                                    </SavebarRefProvider>
-                                  </NavigatorSearchProvider>
-                                </DevModeProvider>
-                              </ExitFormDialogProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </ProductAnalytics>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </NotificationProvider>
+                <DevToolsProvider>
+                  <NotificationProvider>
+                    <BackgroundTasksProvider>
+                      <AppStateProvider>
+                        <AuthProvider>
+                          <ProductAnalytics>
+                            <ShopProvider>
+                              <AppChannelProvider>
+                                <ExitFormDialogProvider>
+                                  <DevModeProvider>
+                                    <NavigatorSearchProvider>
+                                      <SavebarRefProvider>
+                                        <FeatureFlagsProviderWithUser>
+                                          <OnboardingProvider>
+                                            <Routes />
+                                          </OnboardingProvider>
+                                        </FeatureFlagsProviderWithUser>
+                                      </SavebarRefProvider>
+                                    </NavigatorSearchProvider>
+                                  </DevModeProvider>
+                                </ExitFormDialogProvider>
+                              </AppChannelProvider>
+                            </ShopProvider>
+                          </ProductAnalytics>
+                        </AuthProvider>
+                      </AppStateProvider>
+                    </BackgroundTasksProvider>
+                  </NotificationProvider>
+                  <DevToolsPanel />
+                </DevToolsProvider>
               </LocaleProvider>
             </DateProvider>
           </ThemeProvider>
