@@ -21,6 +21,24 @@ describe("normalizeDecimalSeparator", () => {
   it("handles empty string", () => {
     expect(normalizeDecimalSeparator("")).toBe("");
   });
+
+  it("handles European format with thousand separator (dot) and decimal comma", () => {
+    // 1.234,56 = one thousand two hundred thirty-four and 56 cents
+    expect(normalizeDecimalSeparator("1.234,56")).toBe("1234.56");
+  });
+
+  it("handles US format with thousand separator (comma) and decimal dot", () => {
+    // 1,234.56 = one thousand two hundred thirty-four and 56 cents
+    expect(normalizeDecimalSeparator("1,234.56")).toBe("1234.56");
+  });
+
+  it("handles large European format numbers", () => {
+    expect(normalizeDecimalSeparator("1.234.567,89")).toBe("1234567.89");
+  });
+
+  it("handles large US format numbers", () => {
+    expect(normalizeDecimalSeparator("1,234,567.89")).toBe("1234567.89");
+  });
 });
 
 describe("parseDecimalValue", () => {
