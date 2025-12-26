@@ -47,8 +47,6 @@ export interface OrderCaptureDialogProps {
    * When provided, used instead of (orderTotal - chargedAmount) for remaining calculation.
    */
   orderBalance?: IMoney;
-  /** When true, shows "Transaction authorized" instead of "Authorized" */
-  isTransaction?: boolean;
   /** Server errors from the capture mutation (supports both Legacy and Transactions API errors) */
   errors?: CaptureError[];
   onClose: () => void;
@@ -62,7 +60,6 @@ export const OrderCaptureDialog = ({
   authorizedAmount,
   chargedAmount,
   orderBalance,
-  isTransaction: _isTransaction = false,
   errors = [],
   onClose,
   onSubmit,

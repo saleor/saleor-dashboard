@@ -328,7 +328,6 @@ export const OrderNormalDetails = ({
           authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
           chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
           orderBalance={order?.totalBalance ?? defaultZeroMoney}
-          isTransaction
           open={true}
           onClose={closeModal}
           onSubmit={amount =>

@@ -36,11 +36,6 @@ export const messages = defineMessages({
     defaultMessage: "Authorized",
     description: "label for authorized amount",
   },
-  transactionAuthorized: {
-    id: "H0eCbU",
-    defaultMessage: "Transaction authorized",
-    description: "label for transaction authorized amount",
-  },
   capturedSoFar: {
     id: "0YOedO",
     defaultMessage: "Captured so far",
