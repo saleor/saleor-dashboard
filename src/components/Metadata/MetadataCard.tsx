@@ -19,6 +19,8 @@ export interface MetadataCardProps {
   defaultExpanded?: boolean;
 }
 
+const ACCORDION_VALUE = "metadata-accordion";
+
 export const MetadataCard = ({
   data,
   isPrivate,
@@ -29,14 +31,14 @@ export const MetadataCard = ({
   defaultExpanded,
 }: MetadataCardProps) => {
   const intl = useIntl();
-  const isExpanded = defaultExpanded ?? readonly;
-  const [expanded, setExpanded] = useState(isExpanded ? "metadata-accordion" : undefined);
+  const initiallyExpanded = defaultExpanded ?? false;
+  const [expanded, setExpanded] = useState(initiallyExpanded ? ACCORDION_VALUE : undefined);
 
   return (
     <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
       <DashboardCard.Content>
         <Accordion value={expanded} onValueChange={setExpanded}>
-          <Accordion.Item data-test-id="metadata-item" value="metadata-accordion">
+          <Accordion.Item data-test-id="metadata-item" value={ACCORDION_VALUE}>
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
                 <Text size={5} fontWeight="bold">
