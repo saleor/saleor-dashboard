@@ -544,7 +544,6 @@ const VoucherCreatePage = ({
           })}
           confirmButtonState="default"
           hasMore={productsSearch?.result.data?.search?.pageInfo?.hasNextPage ?? false}
-          onFetch={productsSearch.search}
           onFetchMore={productsSearch.loadMore}
           loading={productsSearch.result.loading}
           open={action === "assign-product"}

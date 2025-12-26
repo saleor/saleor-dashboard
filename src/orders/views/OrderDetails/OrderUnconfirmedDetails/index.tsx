@@ -34,7 +34,7 @@ import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderD
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -169,6 +169,11 @@ export const OrderUnconfirmedDetails = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
+  const defaultZeroMoney = { amount: 0, currency: "USD" };
+  const selectedTransaction = useMemo(
+    () => order?.transactions?.find(t => t.id === params.id),
+    [order?.transactions, params.id],
+  );
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
     fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
@@ -214,11 +219,19 @@ export const OrderUnconfirmedDetails = ({
             order={order}
             shop={shop}
             onTransactionAction={(id, action) =>
-              openModal("transaction-action", {
-                type: action,
-                id,
-                action: "transaction-action",
-              })
+              openModal(
+                action === TransactionActionEnum.CHARGE
+                  ? "transaction-charge-action"
+                  : "transaction-action",
+                {
+                  type: action,
+                  id,
+                  action:
+                    action === TransactionActionEnum.CHARGE
+                      ? "transaction-charge-action"
+                      : "transaction-action",
+                },
+              )
             }
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineChange={(id, data) =>
@@ -368,24 +381,14 @@ export const OrderUnconfirmedDetails = ({
         handleTransactionReference={({ target }) => setTransactionReference(target.value)}
       />
       {/* Transaction Capture Dialog - for CHARGE action */}
-      {params.action === "transaction-action" && params.type === TransactionActionEnum.CHARGE && (
+      {params.action === "transaction-charge-action" && (
         <OrderCaptureDialog
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
-          orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
-          authorizedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
-          }
-          chargedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
-          }
-          orderBalance={order?.totalBalance ?? { amount: 0, currency: "USD" }}
+          orderTotal={order?.total.gross ?? defaultZeroMoney}
+          authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
+          chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
+          orderBalance={order?.totalBalance ?? defaultZeroMoney}
           isTransaction
           open={true}
           onClose={closeModal}
@@ -404,9 +407,7 @@ export const OrderUnconfirmedDetails = ({
       <OrderTransactionActionDialog
         confirmButtonState={orderTransactionAction.opts.status}
         onClose={closeModal}
-        open={
-          params.action === "transaction-action" && params.type !== TransactionActionEnum.CHARGE
-        }
+        open={params.action === "transaction-action"}
         action={params.type}
         onSubmit={() =>
           orderTransactionAction
@@ -438,8 +439,8 @@ export const OrderUnconfirmedDetails = ({
       <OrderCaptureDialog
         confirmButtonState={orderPaymentCapture.opts.status}
         errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-        orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
-        authorizedAmount={order?.totalAuthorized ?? { amount: 0, currency: "USD" }}
+        orderTotal={order?.total.gross ?? defaultZeroMoney}
+        authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
         open={params.action === "capture"}
         onClose={closeModal}
         onSubmit={amount =>

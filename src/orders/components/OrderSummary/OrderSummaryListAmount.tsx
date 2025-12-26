@@ -15,7 +15,7 @@ export const OrderSummaryListAmount = ({ amount, showSign = false, ...props }: P
   const intl = useIntl();
 
   return (
-    <Text fontWeight="medium" style={tabularNumsStyle} {...props}>
+    <Text fontWeight="regular" style={tabularNumsStyle} {...props}>
       {intl.formatNumber(amount, {
         minimumFractionDigits: 2,
         signDisplay: showSign ? "exceptZero" : "auto",

@@ -113,20 +113,10 @@ export const messages = defineMessages({
       "No payment has been authorized for this order. The full amount of {amount} cannot be captured.",
     description: "error when no authorization exists",
   },
-  outcomeFullyCharged: {
-    id: "VwCTbx",
-    defaultMessage: "This will result in a {status} order",
-    description: "outcome prediction when order will be fully charged",
-  },
-  outcomePartiallyCharged: {
-    id: "ycg2RR",
-    defaultMessage: "This will result in a {status} order",
-    description: "outcome prediction when order will be partially charged",
-  },
-  outcomeOvercharged: {
-    id: "DXaxpH",
-    defaultMessage: "This will result in an {status} order",
-    description: "outcome prediction when order will be overcharged",
+  outcomeMessage: {
+    id: "HSYM17",
+    defaultMessage: "This will result in {status} order",
+    description: "outcome prediction showing resulting order status after capture",
   },
   statusFullyCapturedPill: {
     id: "G9y5Ze",

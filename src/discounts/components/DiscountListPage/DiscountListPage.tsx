@@ -23,7 +23,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -80,10 +79,6 @@ const DiscountListPage = ({
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
-            <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRight />
-            </Box>
-
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}
               onSelect={onFilterPresetChange}

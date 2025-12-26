@@ -27,9 +27,6 @@
     "context": "discount button",
     "string": "Discount"
   },
-  "+9HL0i": {
-    "string": "Capture"
-  },
   "+B25o/": {
     "context": "dialog header",
     "string": "Mark Order as Paid"
@@ -102,6 +99,10 @@
   },
   "+a+2ug": {
     "string": "Members"
+  },
+  "+ahkGr": {
+    "context": "section header",
+    "string": "Customer details"
   },
   "+b/qJ9": {
     "string": "Delete draft orders"
@@ -395,6 +396,9 @@
   },
   "0KVj6r": {
     "string": "Copy tracking number"
+  },
+  "0Kz+nM": {
+    "string": "Cut-off date"
   },
   "0MetrR": {
     "context": "webhook input help text",
@@ -834,6 +838,10 @@
   "3Eyq0y": {
     "string": "Mark as paid manually if the payment is confirmed"
   },
+  "3Gkj+d": {
+    "context": "button to reset cut-off date to saved value",
+    "string": "Reset to saved value"
+  },
   "3PVGWj": {
     "string": "Filter preset"
   },
@@ -982,10 +990,6 @@
   "4JcNaA": {
     "context": "button",
     "string": "Invite staff member"
-  },
-  "4Jp83O": {
-    "context": "subheader",
-    "string": "Contact Information"
   },
   "4KRhwm": {
     "context": "link in infoCardText, to Saleor docs",
@@ -1388,6 +1392,9 @@
     "context": "section header",
     "string": "About this extension"
   },
+  "6orx1c": {
+    "string": "Billing address"
+  },
   "6oxTyq": {
     "string": "All events related to this order. For more information regarding order events visit our docs {link}."
   },
@@ -1437,6 +1444,10 @@
   "750Ymk": {
     "context": "apps about permissions",
     "string": "This extension has permissions to:"
+  },
+  "7A+FJl": {
+    "context": "link",
+    "string": "View profile"
   },
   "7Chrsf": {
     "string": "Passwords do not match"
@@ -1598,6 +1609,10 @@
   "8HRy+U": {
     "string": "Category Description"
   },
+  "8HmEqK": {
+    "context": "Transaction refund button - return captured amount to client",
+    "string": "Refund"
+  },
   "8InCjD": {
     "string": "Please provide range of postal codes you want to add to the include/exclude list."
   },
@@ -1647,6 +1662,10 @@
   "8iUzOU": {
     "context": "allow unpaid orders checbkox description",
     "string": "Enables completing checkout with order before a successful payment."
+  },
+  "8jgfPX": {
+    "context": "automatic completion disabled info message",
+    "string": "Disabling automatic completion will not stop checkouts that are already scheduled for completion."
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -2136,10 +2155,6 @@
   "Bl6896": {
     "string": "Refund amount"
   },
-  "BnB/7Y": {
-    "context": "callout, title",
-    "string": "Info"
-  },
   "Bphmwe": {
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
@@ -2170,6 +2185,10 @@
   },
   "C4hCsD": {
     "string": "App is out of your permissions scope"
+  },
+  "C4zBRT": {
+    "context": "automatic completion cut-off date label",
+    "string": "Cut-off date"
   },
   "C50ahv": {
     "context": "button",
@@ -2408,9 +2427,6 @@
   "DOkfyZ": {
     "string": "Insufficient permissions"
   },
-  "DP5VOH": {
-    "string": "Shipping Address"
-  },
   "DP6b8U": {
     "context": "section header",
     "string": "Background Image (optional)"
@@ -2439,10 +2455,6 @@
   },
   "DWWw3M": {
     "string": "Model type Name"
-  },
-  "DXaxpH": {
-    "context": "outcome prediction when order will be overcharged",
-    "string": "This will result in an {status} order"
   },
   "DaPGcn": {
     "string": "Model title"
@@ -2547,6 +2559,9 @@
   "ER/yBq": {
     "context": "max price in channel",
     "string": "Max. value"
+  },
+  "EXqb2l": {
+    "string": "Go to Saleor Cloud"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -2746,6 +2761,10 @@
   "FjrExY": {
     "context": "price based shipping methods, section header",
     "string": "Price Based Rates"
+  },
+  "FjywW1": {
+    "context": "automatic completion delay input description",
+    "string": "Time in minutes to wait after checkout is fully paid before automatically completing it. Set to 0 for immediate completion. Default is 30 minutes."
   },
   "FkDObY": {
     "context": "label",
@@ -2996,6 +3015,10 @@
   "GsBRWL": {
     "string": "Languages"
   },
+  "Gt5T8I": {
+    "context": "automatic completion cut-off date warning",
+    "string": "If cut-off date is not set, system will automatically use current date & time. If you want to customize this behavior, you can provide custom time (past or the future)"
+  },
   "GuYTfQ": {
     "context": "card description",
     "string": "Expand or restrict extension permissions to access certain part of Saleor system."
@@ -3102,6 +3125,10 @@
   "HRXLYk": {
     "context": "cta button label",
     "string": "Get in touch"
+  },
+  "HSYM17": {
+    "context": "outcome prediction showing resulting order status after capture",
+    "string": "This will result in {status} order"
   },
   "HSmg1/": {
     "context": "gift cards section name",
@@ -3321,9 +3348,6 @@
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
-  "IeUH3/": {
-    "string": "Refund"
-  },
   "IeoGgH": {
     "context": "variant created success message",
     "string": "Variant created"
@@ -3401,10 +3425,6 @@
   },
   "J4E+jp": {
     "string": "Variant name"
-  },
-  "J4NBVR": {
-    "context": "link",
-    "string": "View Orders"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -3732,6 +3752,10 @@
   "LJPHdt": {
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
+  },
+  "LJqVaO": {
+    "context": "automatic completion cut-off date earlier warning message",
+    "string": "Setting cut-off date {timeDifference} earlier (from {previousDate} to {newDate}) will cause checkouts created between these dates to be automatically completed."
   },
   "LKD6fB": {
     "string": "Remove product"
@@ -4288,6 +4312,10 @@
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
   },
+  "Oy1LhB": {
+    "context": "button error state label",
+    "string": "Try again"
+  },
   "OzHN0Z": {
     "context": "order history message",
     "string": "Links to the order's digital goods were sent"
@@ -4397,10 +4425,6 @@
   "PV0SQd": {
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
-  },
-  "PX2zWy": {
-    "context": "customer is not set in draft order",
-    "string": "Not set"
   },
   "PXatmC": {
     "string": "Customer Removed"
@@ -4646,9 +4670,6 @@
   "Ql7OM1": {
     "string": "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance."
   },
-  "Qovenh": {
-    "string": "Anonymous user"
-  },
   "Qox+kb": {
     "string": "on field {fieldName}"
   },
@@ -4794,9 +4815,6 @@
   "RrCui3": {
     "string": "Summary"
   },
-  "RsLoDB": {
-    "string": "Mark as Paid"
-  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -4862,6 +4880,10 @@
     "context": "Payment card title",
     "string": "Payment status"
   },
+  "SDgGcU": {
+    "context": "Button to manually mark order as paid without actual payment",
+    "string": "Mark as Paid"
+  },
   "SGdcJD": {
     "string": "Enter code"
   },
@@ -4890,6 +4912,10 @@
   "SPBLzT": {
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+  },
+  "SPGU7Z": {
+    "context": "automatic completion cut-off date later info message",
+    "string": "Setting cut-off date {timeDifference} later (from {previousDate} to {newDate}) will not stop checkouts that are already scheduled for completion."
   },
   "SPp3cx": {
     "context": "alert message",
@@ -5225,10 +5251,6 @@
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
   },
-  "UUVUyy": {
-    "context": "callout, title",
-    "string": "Warning"
-  },
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
@@ -5348,10 +5370,6 @@
     "context": "collection label",
     "string": "Hidden"
   },
-  "VCzrEZ": {
-    "context": "link",
-    "string": "View Profile"
-  },
   "VEE4gD": {
     "context": "error message",
     "string": "Shipping method is not valid for chosen shipping address"
@@ -5445,10 +5463,6 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
-  },
-  "VwCTbx": {
-    "context": "outcome prediction when order will be fully charged",
-    "string": "This will result in a {status} order"
   },
   "VxStyU": {
     "context": "order history message",
@@ -5803,6 +5817,10 @@
     "context": "column picker search input placeholder",
     "string": "Search for columns"
   },
+  "XtULua": {
+    "context": "button to set cut-off date to current date and time",
+    "string": "Set to current date and time"
+  },
   "Xtd0AT": {
     "string": "Original String"
   },
@@ -5859,10 +5877,6 @@
     "context": "dialog header",
     "string": "Ending preorder"
   },
-  "Y7M1YQ": {
-    "context": "section header",
-    "string": "Customer"
-  },
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
@@ -5901,9 +5915,21 @@
   "YIT1XP": {
     "string": "Create voucher"
   },
+  "YL8K/3": {
+    "context": "automatic completion delay input label",
+    "string": "Delay before completion (minutes). Default is 30."
+  },
+  "YPCB7b": {
+    "context": "label for fixed amount discount type",
+    "string": "Fixed amount"
+  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
+  },
+  "YTvn5m": {
+    "context": "automatic completion zero delay warning message",
+    "string": "Setting delay to 0 will complete checkouts immediately after payment. This may break your storefront if it expects the Checkout object to remain available. ({link})"
   },
   "YUaalK": {
     "context": "Cancel in progress transaction amount, data display header",
@@ -6013,6 +6039,10 @@
     "context": "stock exceeded dialog description",
     "string": "Stock for items shown below are not enough to prepare fulfillment:"
   },
+  "Z7YrIb": {
+    "context": "no customer assigned to order",
+    "string": "Not set"
+  },
   "Z7lX6t": {
     "context": "canceled fulfillment, section header",
     "string": "Canceled"
@@ -6041,6 +6071,10 @@
   "ZFfG4L": {
     "context": "ProductTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?"
+  },
+  "ZGmd4h": {
+    "context": "button",
+    "string": "Copy to clipboard"
   },
   "ZHF4Z9": {
     "context": "delete product dialog subtitle",
@@ -6088,6 +6122,10 @@
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
   },
+  "ZZb4E+": {
+    "context": "automatically complete checkouts checkbox description",
+    "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}"
+  },
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
@@ -6115,6 +6153,9 @@
   "Zj/7QZ": {
     "context": "details title",
     "string": "Details"
+  },
+  "ZpVtCa": {
+    "string": "Shipping address"
   },
   "ZrIt1W": {
     "string": "Delete discount"
@@ -6242,6 +6283,10 @@
   "aUUgUV": {
     "context": "Button with  app settings label",
     "string": "Extension settings"
+  },
+  "aWJPo+": {
+    "context": "tooltip explaining why cut-off date checkbox is disabled",
+    "string": "Cut-off date cannot be disabled once automatic completion is enabled. You can change the date to a different value."
   },
   "aWzvoq": {
     "string": "{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
@@ -6534,9 +6579,6 @@
   "c5pMZ8": {
     "string": "API error"
   },
-  "c7/79+": {
-    "string": "Billing Address"
-  },
   "c7cakc": {
     "context": "model attribute entity type",
     "string": "Models"
@@ -6559,6 +6601,10 @@
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
+  },
+  "cFA9vl": {
+    "context": "link",
+    "string": "View orders"
   },
   "cFVgOo": {
     "context": "Channel label",
@@ -6629,6 +6675,9 @@
   "cdiRSf": {
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
+  },
+  "ce2kVF": {
+    "string": "View in payment provider"
   },
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
@@ -7252,10 +7301,6 @@
     "context": "product type name",
     "string": "Type Name"
   },
-  "hIh8bm": {
-    "context": "automatically complete checkouts checkbox description",
-    "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})"
-  },
   "hJZwTS": {
     "string": "Email address"
   },
@@ -7501,6 +7546,10 @@
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
+  "j+lQWT": {
+    "context": "error message when cut-off date is older than 30 days",
+    "string": "Cut-off date cannot be more than 30 days in the past"
+  },
   "j/Oo0B": {
     "context": "bulk actions button label",
     "string": "Publish"
@@ -7556,9 +7605,6 @@
   },
   "jGvclB": {
     "string": "Transaction Reference"
-  },
-  "jHfCjd": {
-    "string": "Void"
   },
   "jMzyU8": {
     "context": "tax classes card header",
@@ -7616,6 +7662,10 @@
   },
   "joN8sy": {
     "string": "Extension doesn't have any permissions granted."
+  },
+  "jp2Jjs": {
+    "context": "automatic completion cut-off date description",
+    "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
   },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
@@ -8348,6 +8398,10 @@
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
     "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "oIS3NK": {
+    "context": "button",
+    "string": "Show more"
   },
   "oIvtua": {
     "context": "attribute's editor component",
@@ -9446,6 +9500,10 @@
     "context": "hint for order total option",
     "string": "Matches what customer owes"
   },
+  "v9D1pm": {
+    "context": "automatic completion cut-off date info message",
+    "string": "Setting a cut-off date will not stop checkouts that are already in the process of being completed."
+  },
   "vAxm7u": {
     "string": "You must select a channel first and select at least one gift"
   },
@@ -9719,6 +9777,9 @@
   "wbsq7O": {
     "string": "Usage"
   },
+  "we4Lby": {
+    "string": "Info"
+  },
   "werrDz": {
     "context": "refunded event title",
     "string": "Products were refunded"
@@ -9753,6 +9814,10 @@
   },
   "wn3di2": {
     "string": "This password is too commonly used"
+  },
+  "wo7tA9": {
+    "context": "automatic completion cut-off date checkbox label",
+    "string": "Custom cut-off date"
   },
   "wpAXKX": {
     "context": "checkbox label description",
@@ -9975,10 +10040,6 @@
   "ycMLN9": {
     "context": "warehouses section name",
     "string": "Warehouses"
-  },
-  "ycg2RR": {
-    "context": "outcome prediction when order will be partially charged",
-    "string": "This will result in a {status} order"
   },
   "ychKsb": {
     "context": "error message",

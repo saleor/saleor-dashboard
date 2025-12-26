@@ -8,6 +8,7 @@ import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
@@ -31,6 +32,7 @@ import {
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
+  ProductWhereInput,
   RefreshLimitsQuery,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
@@ -125,6 +127,12 @@ interface ProductUpdatePageProps {
   onImageUpload: (file: File) => any;
   onMediaUrlUpload: (mediaUrl: string) => any;
   onSeoClick?: () => any;
+  onProductFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
+  initialConstraints?: InitialConstraints;
 }
 
 const ProductUpdatePage = ({
@@ -179,6 +187,8 @@ const ProductUpdatePage = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
+  onProductFilterChange,
+  initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
@@ -588,6 +598,8 @@ const ProductUpdatePage = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
+                onFilterChange={onProductFilterChange}
+                initialConstraints={initialConstraints}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues.map(container => ({

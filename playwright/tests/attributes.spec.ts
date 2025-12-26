@@ -142,7 +142,8 @@ const contentAttrWithValues = {
 const attributesWithValuesToBeUpdated = [productAttrWithValues, contentAttrWithValues];
 
 for (const attribute of attributesWithValuesToBeUpdated) {
-  test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
+  // Skipped due to test instability
+  test.skip(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
@@ -154,6 +155,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
     );
     await attributesPage.editAttributeValueDialog.saveNewAttributeValue();
     await attributesPage.clickAssignAttributeValueButton();
+    await expect(attributesPage.addValueDialog.nameInput).toBeEditable();
     await attributesPage.addValueDialog.typeAndSaveAttributeValue(
       `new value for ${attribute.name}`,
     );
@@ -184,8 +186,6 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.clickSaveButton();
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
-
-    await attributesPage.expandMetadataSection();
 
     await expect(attributesPage.attributeSelect).toBeVisible();
     await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");

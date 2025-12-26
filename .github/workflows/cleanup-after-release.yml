@@ -1,0 +1,87 @@
+name: Cleanup After Release
+
+on:
+  push:
+    branches:
+      - "3.22"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # When a release PR (changeset-release/3.22) is merged to the release branch,
+  # we need to sync those changes back to main to keep it up to date.
+  # This workflow creates a PR from the release branch to main for cleanup.
+  create-cleanup-pr:
+    runs-on: ubuntu-22.04
+    if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Release 3.22')
+    env:
+      CURRENT_RELEASE: "3.22"
+
+    steps:
+      - name: Get Token
+        id: get-token
+        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        with:
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+          fetch-depth: 0 # Fetch all history to get proper version info
+
+      - name: Configure Git
+        run: |
+          git config user.name "Saleor Deployments"
+          git config user.email "deployments@saleor.io"
+
+      - name: Check if merged PR was from changeset-release
+        id: check-release
+        run: |
+          # Get the commit message to check if it's from changeset-release branch
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+
+          if echo "$COMMIT_MSG" | grep -q "\[automated\]"; then
+            echo "is_release_merge=true" >> $GITHUB_OUTPUT
+            echo "✅ This is a release PR merge from changeset-release/$CURRENT_RELEASE"
+          else
+            echo "is_release_merge=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  This is not a release PR merge, skipping cleanup PR creation"
+          fi
+
+      - name: Get version from package.json
+        if: steps.check-release.outputs.is_release_merge == 'true'
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Version: $VERSION"
+
+      - name: Create cleanup PR
+        if: steps.check-release.outputs.is_release_merge == 'true'
+        env:
+          GH_TOKEN: ${{ steps.get-token.outputs.token }}
+        run: |
+          VERSION="${{ steps.get-version.outputs.version }}"
+
+          # Fetch latest changes
+          git fetch origin
+
+          echo "Creating new cleanup PR from $CURRENT_RELEASE to main"
+
+          gh pr create \
+            --base main \
+            --head "$CURRENT_RELEASE" \
+            --title "Clean up after release $VERSION" \
+            --body "$(cat <<EOF
+          This PR syncs changes from the release branch back to main after a release.
+
+          - Release branch: $CURRENT_RELEASE
+          - Version: $VERSION
+
+          Please review and merge to keep main up to date with the latest release changes.
+          EOF
+          )"

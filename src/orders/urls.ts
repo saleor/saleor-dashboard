@@ -78,6 +78,11 @@ export type OrderListUrlQueryParams = BulkAction &
   OrderListUrlSort &
   Pagination &
   ActiveTab;
+
+/**
+ * @deprecated
+ * This helper is likely broken, at least filters don't work. Either construct url manually or fix it
+ */
 export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
   const orderList = orderListPath;
 
@@ -204,6 +209,7 @@ export type OrderUrlDialog =
   | "mark-paid"
   | "void"
   | "transaction-action"
+  | "transaction-charge-action"
   | "invoice-send"
   | "add-manual-transaction"
   | "view-order-line-metadata"
@@ -211,7 +217,7 @@ export type OrderUrlDialog =
   | "view-fulfillment-metadata";
 
 interface TransactionAction {
-  action: "transaction-action";
+  action: "transaction-action" | "transaction-charge-action";
   id: string;
   type: TransactionActionEnum;
 }

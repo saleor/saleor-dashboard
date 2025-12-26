@@ -431,7 +431,7 @@ describe("OrderCaptureDialog", () => {
       });
 
       // Assert - outcome prediction message is shown
-      expect(screen.getByText(/This will result in a/)).toBeInTheDocument();
+      expect(screen.getByText(/This will result in/)).toBeInTheDocument();
     });
 
     it("shows outcome message when capturing partial balance", () => {
@@ -442,7 +442,7 @@ describe("OrderCaptureDialog", () => {
       });
 
       // Assert - outcome prediction message is shown
-      expect(screen.getByText(/This will result in a/)).toBeInTheDocument();
+      expect(screen.getByText(/This will result in/)).toBeInTheDocument();
     });
   });
 

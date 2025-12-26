@@ -1,28 +1,24 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
-interface PspRerefenceLinkProps {
-  href: string | null;
+interface PspReferenceLinkProps {
+  href: string | null | undefined;
   children: React.ReactChild;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    link: {
-      color: theme.palette.saleor.active[1],
-    },
-  }),
-  { name: "PspReferenceLink" },
-);
-
-export const PspReferenceLink = ({ href, children }: PspRerefenceLinkProps) => {
-  const classes = useStyles();
-
+export const PspReferenceLink = ({ href, children }: PspReferenceLinkProps) => {
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={classes.link}>
+      <Box
+        as="a"
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        color="inherit"
+        textDecoration={{ default: "none", hover: "underline" }}
+      >
         {children}
-      </a>
+      </Box>
     );
   }
 

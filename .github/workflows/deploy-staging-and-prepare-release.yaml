@@ -40,7 +40,7 @@ jobs:
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
-          commit: "Release ${{ github.ref_name }}"
+          commit: "Release ${{ github.ref_name }} [automated]"
           publish: "pnpm run release"
         env:
           GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}

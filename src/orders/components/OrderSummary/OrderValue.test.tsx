@@ -216,7 +216,7 @@ describe("OrderValue", () => {
       const setShippingLink = screen.getByText("Set shipping method");
 
       expect(setShippingLink).toBeInTheDocument();
-      expect(setShippingLink.tagName).toBe("A");
+      expect(setShippingLink.tagName).toBe("BUTTON");
     });
 
     it("should call onShippingMethodEdit when 'Set shipping method' link is clicked", async () => {
@@ -267,7 +267,7 @@ describe("OrderValue", () => {
       const methodLink = screen.getByText("Standard Shipping");
 
       expect(methodLink).toBeInTheDocument();
-      expect(methodLink.tagName).toBe("A");
+      expect(methodLink.tagName).toBe("BUTTON");
 
       await userEvent.click(methodLink);
       expect(onShippingMethodEdit).toHaveBeenCalledTimes(1);
@@ -415,7 +415,8 @@ describe("OrderValue", () => {
 
       // Assert
       expect(screen.getByText("Discount")).toBeInTheDocument();
-      expect(screen.getByText("15.00")).toBeInTheDocument();
+      expect(screen.getByText("Fixed amount")).toBeInTheDocument();
+      expect(screen.getByText("15")).toBeInTheDocument();
     });
 
     it("should show discount reason as tooltip on existing discount", () => {
