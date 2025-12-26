@@ -383,6 +383,7 @@ export const OrderUnconfirmedDetails = ({
       {/* Transaction Capture Dialog - for CHARGE action */}
       {params.action === "transaction-charge-action" && (
         <OrderCaptureDialog
+          key={params.id}
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
           orderTotal={order?.total.gross ?? defaultZeroMoney}
