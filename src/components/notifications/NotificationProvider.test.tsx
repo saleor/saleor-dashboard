@@ -2,6 +2,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { renderHook } from "@testing-library/react-hooks";
 import { PropsWithChildren, useContext } from "react";
 
+import { DevToolsProvider } from "../DevTools";
 import { NotificationContext } from ".";
 import NotificationProvider from "./NotificationProvider";
 
@@ -17,7 +18,9 @@ jest.mock("sonner", () => ({
 describe("NotificationProvider", () => {
   const wrapper = ({ children }: PropsWithChildren) => (
     <ThemeProvider>
-      <NotificationProvider>{children}</NotificationProvider>
+      <DevToolsProvider>
+        <NotificationProvider>{children}</NotificationProvider>
+      </DevToolsProvider>
     </ThemeProvider>
   );
 
