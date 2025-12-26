@@ -3061,10 +3061,6 @@
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
   },
-  "H0eCbU": {
-    "context": "label for transaction authorized amount",
-    "string": "Transaction authorized"
-  },
   "H1L1cc": {
     "context": "url",
     "string": "URL"
