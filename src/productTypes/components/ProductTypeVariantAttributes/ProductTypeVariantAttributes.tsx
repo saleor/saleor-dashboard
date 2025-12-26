@@ -44,10 +44,10 @@ const useStyles = makeStyles(
       alignItems: "center",
     },
     colVariantDisabled: {
-      fill: theme.palette.alert.icon.info,
-      fillOpacity: 0.6,
+      color: theme.palette.alert.icon.info,
+      opacity: 0.6,
       "&:hover": {
-        fillOpacity: 1,
+        opacity: 1,
       },
     },
     link: {
@@ -243,7 +243,11 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         {!!variantSelectionDisabled && (
                           <Tooltip>
                             <Tooltip.Trigger>
-                              <CircleQuestionMark className={classes.colVariantDisabled} />
+                              <CircleQuestionMark
+                                size={iconSize.small}
+                                strokeWidth={iconStrokeWidthBySize.small}
+                                className={classes.colVariantDisabled}
+                              />
                             </Tooltip.Trigger>
                             <Tooltip.Content side="bottom">
                               <Tooltip.Arrow />

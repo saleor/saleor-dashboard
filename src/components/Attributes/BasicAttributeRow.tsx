@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import * as React from "react";
@@ -43,9 +44,10 @@ export const BasicAttributeRow = ({
       {description && (
         <Tooltip>
           <Tooltip.Trigger>
-            <Box>
+            <Box display="flex" alignItems="center" marginTop={2}>
               <Info
-                size={20}
+                size={iconSize.small}
+                strokeWidth={iconStrokeWidthBySize.small}
                 className={sprinkles({
                   display: "block",
                 })}

@@ -1,10 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
 import { FilterValueProvider } from "./FilterValueProvider";
 
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
+
+export interface UseContainerStateOptions {
+  /**
+   * Only sync with valueProvider on first mount, not on subsequent changes.
+   *
+   * Use this for modals where `valueProvider.value` is wrapped/computed
+   * (e.g., with injected constraints). The wrapping creates new array
+   * references on each render, causing unwanted resyncs that overwrite
+   * user's unsaved edits.
+   */
+  syncOnce?: boolean;
+}
 
 const removeConstraint = (container: FilterContainer) => {
   return container.map(el => {
@@ -53,14 +65,24 @@ const removeEmptyElements = (
   return removeEmptyElements(removeElement(container, emptyIndex), provider);
 };
 
-export const useContainerState = (valueProvider: FilterValueProvider) => {
+export const useContainerState = (
+  valueProvider: FilterValueProvider,
+  options?: UseContainerStateOptions,
+) => {
   const [value, setValue] = useState<FilterContainer>([]);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     if (!valueProvider.loading) {
+      // Skip resync if syncOnce is enabled and already initialized
+      if (options?.syncOnce && initializedRef.current) {
+        return;
+      }
+
       setValue(valueProvider.value);
+      initializedRef.current = true;
     }
-  }, [valueProvider.loading, valueProvider.value]);
+  }, [valueProvider.loading, valueProvider.value, options?.syncOnce]);
 
   const isFilterElementAtIndex = (
     elIndex: number,
@@ -79,6 +101,19 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     };
   const updateAt = (position: string, cb: StateCallback) => {
     const index = parseInt(position, 10);
+    const element = value[index];
+
+    // Respect fully disabled constraints (all controls disabled) - element cannot be modified
+    if (FilterElement.isFilterElement(element)) {
+      const isFullyDisabled =
+        element.constraint?.disabled?.includes("left") &&
+        element.constraint?.disabled?.includes("right") &&
+        element.constraint?.disabled?.includes("condition");
+
+      if (isFullyDisabled) {
+        return;
+      }
+    }
 
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
@@ -100,6 +135,12 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
   const removeAt = (position: string) => {
     const index = parseInt(position, 10);
+    const element = value[index];
+
+    // Respect constraint.removable === false - element cannot be removed
+    if (FilterElement.isFilterElement(element) && element.constraint?.removable === false) {
+      return;
+    }
 
     setValue(v => removeElement(v, index));
   };
@@ -140,6 +181,10 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
   const clear = () => {
     setValue([]);
+
+    if (options?.syncOnce) {
+      initializedRef.current = false; // Allow re-initialization after clear
+    }
   };
   const clearEmpty = () => {
     setValue(v => removeEmptyElements(v, valueProvider));

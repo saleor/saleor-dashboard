@@ -395,6 +395,7 @@ export const OrderValue = (props: Props): ReactNode => {
         <OrderSummaryListItem
           amount={orderSubtotal.gross.amount}
           amountTitle={intl.formatMessage(messages.subtotalTitle)}
+          data-test-id="order-subtotal-line"
         >
           {intl.formatMessage({
             defaultMessage: "Subtotal",
@@ -445,7 +446,11 @@ export const OrderValue = (props: Props): ReactNode => {
                   </Text>
                 ),
                 totalAmount: (
-                  <OrderSummaryListAmount amount={orderTotal.gross.amount} fontWeight="bold" />
+                  <OrderSummaryListAmount
+                    amount={orderTotal.gross.amount}
+                    fontWeight="bold"
+                    data-test-id="order-total"
+                  />
                 ),
               },
             )}

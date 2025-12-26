@@ -18,7 +18,7 @@ export const TransactionsApiButtons = ({ hasNoPayment, canMarkAsPaid, onMarkAsPa
   }
 
   return (
-    <Button variant="secondary" onClick={onMarkAsPaid}>
+    <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="mark-as-paid-button">
       <CheckIcon size={16} />
       {intl.formatMessage(transactionActionMessages.markAsPaid)}
     </Button>

@@ -5,17 +5,20 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import { messages } from "./messages";
+import { ModalFilters } from "./ModalFilters";
+import { useModalProductFilterContext } from "./ModalProductFilterProvider";
 import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
@@ -27,7 +30,11 @@ interface AssignProductDialogSingleProps extends FetchMoreProps {
   productUnavailableText?: string;
   selectedId?: string;
   loading: boolean;
-  onFetch: (value: string) => void;
+  onFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   onClose: () => void;
   labels?: {
@@ -47,7 +54,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     loading,
     products,
     onClose,
-    onFetch,
+    onFilterChange,
     onFetchMore,
     onSubmit,
     selectedId,
@@ -56,19 +63,38 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedProductId, setSelectedProductId] = useState<string>(selectedId ?? "");
+  const { filterVariables, filterChannel, clearFilters } = useModalProductFilterContext();
+
+  const combinedFilters = useMemo(
+    () => ({
+      where: filterVariables,
+      channel: filterChannel,
+    }),
+    [filterVariables, filterChannel],
+  );
+
+  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+    filterVariables: combinedFilters,
+    open,
+    onFetch: (filters, query) => onFilterChange?.(filters.where, filters.channel, query),
+  });
 
   useEffect(() => {
     setSelectedProductId(selectedId ?? "");
   }, [selectedId]);
 
   const handleClose = () => {
-    queryReset();
+    resetQuery();
+    clearFilters();
     onClose();
   };
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      resetQuery();
+      clearFilters();
+    },
     onClose: handleClose,
   });
 
@@ -110,6 +136,8 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
           endAdornment: loading && <SaleorThrobber size={16} />,
         }}
       />
+
+      <ModalFilters />
 
       <InfiniteScroll
         id={scrollableTargetId}
