@@ -206,7 +206,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
   return (
     <DashboardModal {...props}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Grid>
+        <DashboardModal.Grid gap={0}>
           {/* Header */}
           <Box>
             <Box display="flex" justifyContent="space-between" alignItems="flex-start">
@@ -226,6 +226,15 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
               </Box>
               <DashboardModal.Close onClose={() => props.onChange?.(false)} />
             </Box>
+            {/* Bottom border - full width */}
+            <Box
+              marginTop={4}
+              __marginLeft="calc(var(--mu-spacing-6) * -1)"
+              __marginRight="calc(var(--mu-spacing-6) * -1)"
+              borderTopWidth={1}
+              borderTopStyle="solid"
+              borderColor="default1Hovered"
+            />
           </Box>
 
           {/* Content */}
@@ -242,6 +251,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
 
           {/* Footer - use negative margins to extend borders full width and remove bottom padding */}
           <Box
+            marginTop={4}
             __marginLeft="calc(var(--mu-spacing-6) * -1)"
             __marginRight="calc(var(--mu-spacing-6) * -1)"
             __marginBottom="calc(var(--mu-spacing-6) * -1)"
