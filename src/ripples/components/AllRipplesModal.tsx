@@ -238,7 +238,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
           </Box>
 
           {/* Content */}
-          <Box __maxHeight="400px" overflowY="auto" paddingRight={2}>
+          <Box __maxHeight="500px" overflowY="auto" paddingRight={2} paddingY={4}>
             {flattenedRipples.map((entry, index) => (
               <RippleEntryRow
                 key={entry.ripple.ID}
@@ -249,9 +249,8 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
             ))}
           </Box>
 
-          {/* Footer - use negative margins to extend borders full width and remove bottom padding */}
+          {/* Footer - negative horizontal margins for full-width borders, negative bottom to remove modal padding */}
           <Box
-            marginTop={4}
             __marginLeft="calc(var(--mu-spacing-6) * -1)"
             __marginRight="calc(var(--mu-spacing-6) * -1)"
             __marginBottom="calc(var(--mu-spacing-6) * -1)"
