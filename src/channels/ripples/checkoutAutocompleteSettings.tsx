@@ -1,6 +1,7 @@
 import { Ripple } from "@dashboard/ripples/types";
 
 export const checkoutAutocompleteSettings: Ripple = {
+  type: "feature",
   ID: "checkout-autocomplete-settings",
   TTL_seconds: 60 * 60 * 24 * 3, // 3 days
   content: {

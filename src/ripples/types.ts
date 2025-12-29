@@ -1,8 +1,14 @@
 import { ReactNode } from "react";
 import { MessageDescriptor } from "react-intl";
 
+export type RippleType = "feature" | "improvement" | "bugfix";
+
 // TODO Consider translations
 export type Ripple = {
+  /**
+   * Type of change - used for badge display in the changelog
+   */
+  type: RippleType;
   /**
    * Date when the Ripple was added to the system. It doesn't have to be accurate, but will be used for sorting.
    * Can be approx date of the release

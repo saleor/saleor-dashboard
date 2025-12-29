@@ -5,6 +5,7 @@ import { getRipplesSortedAndGroupedByMonths } from "./AllRipplesModal";
 describe("getRipplesSortedAndGroupedByMonths", () => {
   // Arrange
   const createMockRipple = (id: string, dateAdded: Date): Ripple => ({
+    type: "feature",
     ID: id,
     dateAdded,
     content: {
@@ -76,8 +77,8 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(result["2024 January"]).toBeDefined();
     expect(result["2023 December"]).toBeDefined();
 
-    expect(result["2024 January"][0].dateDisplay).toBe("January 2024");
-    expect(result["2023 December"][0].dateDisplay).toBe("December 2023");
+    expect(result["2024 January"][0].dateDisplay).toBe("Jan 2024");
+    expect(result["2023 December"][0].dateDisplay).toBe("Dec 2023");
   });
 
   it("should handle ripples from different years correctly", () => {
@@ -127,7 +128,7 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(Object.keys(result)).toHaveLength(1);
     expect(result["2024 April"]).toHaveLength(1);
     expect(result["2024 April"][0].ripple.ID).toBe("single-ripple");
-    expect(result["2024 April"][0].dateDisplay).toBe("April 2024");
+    expect(result["2024 April"][0].dateDisplay).toBe("Apr 2024");
   });
 
   it("should handle ripples with same date correctly", () => {
@@ -146,7 +147,7 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(Object.keys(result)).toHaveLength(1);
     expect(result["2024 March"]).toHaveLength(3);
     result["2024 March"].forEach(item => {
-      expect(item.dateDisplay).toBe("March 2024");
+      expect(item.dateDisplay).toBe("Mar 2024");
     });
   });
 });
