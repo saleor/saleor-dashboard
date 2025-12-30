@@ -40,5 +40,10 @@ export type Ripple = {
   actions?: Array<{
     label: MessageDescriptor;
     onClick: () => void;
+    /**
+     * If true, this action won't be shown in the global "What's New" modal.
+     * Useful for actions that open the modal itself (would be redundant).
+     */
+    hideInModal?: boolean;
   }>;
 };

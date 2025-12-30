@@ -26,6 +26,7 @@ export const rippleIntroducedRipples: Ripple = {
       onClick() {
         defaultStore.set(allRipplesModalOpen, true);
       },
+      hideInModal: true,
     },
   ],
 };

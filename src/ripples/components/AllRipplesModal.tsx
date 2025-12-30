@@ -8,7 +8,7 @@ import { Ripple, RippleType } from "@dashboard/ripples/types";
 import { Box, Button, ModalRootProps, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 interface RippleEntry {
   ripple: Ripple;
@@ -49,13 +49,23 @@ const rippleTypeToPillStatus: Record<RippleType, PillStatusType> = {
   bugfix: "error",
 };
 
-const rippleTypeLabels: Record<RippleType, string> = {
-  feature: "Feature",
-  improvement: "Improvement",
-  bugfix: "Bug Fix",
-};
+const rippleTypeMessages = defineMessages({
+  feature: {
+    id: "lZTwh4",
+    defaultMessage: "Feature",
+  },
+  improvement: {
+    id: "cpI605",
+    defaultMessage: "Improvement",
+  },
+  bugfix: {
+    id: "RUwHjA",
+    defaultMessage: "Bug Fix",
+  },
+});
 
 const TypeBadge = ({ type }: { type: RippleType }) => {
+  const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const colors = getStatusColor({ status: rippleTypeToPillStatus[type], currentTheme });
 
@@ -73,7 +83,7 @@ const TypeBadge = ({ type }: { type: RippleType }) => {
       borderWidth={1}
       borderStyle="solid"
     >
-      {rippleTypeLabels[type]}
+      {intl.formatMessage(rippleTypeMessages[type])}
     </Box>
   );
 };
@@ -170,10 +180,12 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
           {ripple.content.global}
         </Box>
 
-        {/* Actions */}
-        {ripple.actions?.map((action, index) => (
-          <RippleAction key={index} action={action} />
-        ))}
+        {/* Actions - filter out actions marked as hideInModal */}
+        {ripple.actions
+          ?.filter(action => !action.hideInModal)
+          .map((action, index) => (
+            <RippleAction key={`${ripple.ID}-action-${index}`} action={action} />
+          ))}
       </Box>
     </Box>
   );
@@ -194,7 +206,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
       day: "numeric",
       year: "numeric",
     });
-  }, []);
+  }, [allRipples]);
 
   useEffect(() => {
     if (props.open) {
