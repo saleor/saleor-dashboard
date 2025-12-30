@@ -4668,6 +4668,9 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
+  "RKHBh0": {
+    "string": "What's New"
+  },
   "RLTaAR": {
     "context": "order history message",
     "string": "Order address was updated"
@@ -4690,6 +4693,9 @@
   "RUS52q": {
     "context": "order history message",
     "string": "Restocked {quantity, plural, one {# item} other {# items}}"
+  },
+  "RUwHjA": {
+    "string": "Bug Fix"
   },
   "RUzdUH": {
     "string": "No shipping rates found"
@@ -6639,6 +6645,9 @@
     "context": "Refund success status",
     "string": "Success"
   },
+  "cpI605": {
+    "string": "Improvement"
+  },
   "cpZLRH": {
     "context": "dialog header",
     "string": "Delete Shipping Zones"
@@ -7946,6 +7955,9 @@
   },
   "lZC/1a": {
     "string": "greater than {value}"
+  },
+  "lZTwh4": {
+    "string": "Feature"
   },
   "laax5C": {
     "context": "order returned success message",
