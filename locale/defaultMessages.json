@@ -4665,6 +4665,9 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
+  "RKHBh0": {
+    "string": "What's New"
+  },
   "RLTaAR": {
     "context": "order history message",
     "string": "Order address was updated"
@@ -6066,6 +6069,9 @@
     "context": "subsection header",
     "string": "Shipping Address"
   },
+  "ZdCdo5": {
+    "string": "Last updated: {date}"
+  },
   "ZepEWY": {
     "context": "Dry run item",
     "string": "Item"
@@ -6648,6 +6654,9 @@
   "cryH86": {
     "context": "assign collections to sale and save",
     "string": "Assign and save"
+  },
+  "ctdEON": {
+    "string": "Latest updates and improvements"
   },
   "cti4iA": {
     "string": "Read the blog post"
@@ -9048,6 +9057,9 @@
   "stjHjY": {
     "context": "error message",
     "string": "Promo code already exists"
+  },
+  "suggest-change-link": {
+    "string": "Suggest a change"
   },
   "sw8Wl2": {
     "context": "variant pricing section subtitle",

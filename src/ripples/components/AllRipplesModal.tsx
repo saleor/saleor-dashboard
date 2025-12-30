@@ -292,7 +292,8 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
             {/* Last updated section */}
             <Box
               display="flex"
-              justifyContent="center"
+              justifyContent="space-between"
+              alignItems="center"
               paddingX={6}
               paddingY={2}
               backgroundColor="default2"
@@ -306,6 +307,24 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
                   { date: lastUpdatedDate },
                 )}
               </Text>
+              <Box
+                as="a"
+                href="https://github.com/saleor/saleor-dashboard/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                display="flex"
+                alignItems="center"
+                gap={1}
+                __color={vars.colors.text.accent1}
+                textDecoration={{ default: "none", hover: "underline" }}
+                fontSize={1}
+              >
+                {intl.formatMessage({
+                  defaultMessage: "Suggest a change",
+                  id: "FN+iLO",
+                })}
+                <ChevronRightIcon size={12} />
+              </Box>
             </Box>
           </Box>
         </DashboardModal.Grid>
