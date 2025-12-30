@@ -2663,6 +2663,9 @@
     "context": "dialog content",
     "string": "Select method you want to use to change address"
   },
+  "FN+iLO": {
+    "string": "Suggest a change"
+  },
   "FNAZoh": {
     "string": "Last login"
   },
@@ -4664,9 +4667,6 @@
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
-  },
-  "RKHBh0": {
-    "string": "What's New"
   },
   "RLTaAR": {
     "context": "order history message",
@@ -9057,9 +9057,6 @@
   "stjHjY": {
     "context": "error message",
     "string": "Promo code already exists"
-  },
-  "suggest-change-link": {
-    "string": "Suggest a change"
   },
   "sw8Wl2": {
     "context": "variant pricing section subtitle",
