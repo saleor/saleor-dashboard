@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.22.24
+
+### Patch Changes
+
+- [#6244](https://github.com/saleor/saleor-dashboard/pull/6244) [`9f6b076`](https://github.com/saleor/saleor-dashboard/commit/9f6b0763e472dc4ac93b49dbd5b51ef124d1c40f) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Changed release workflow to use `release/<version>` branch name instead of `<version>`.
+
+- [#6238](https://github.com/saleor/saleor-dashboard/pull/6238) [`2b2311e`](https://github.com/saleor/saleor-dashboard/commit/2b2311eb2a0a98567efbbe5eef5c3daf66eeeb92) Thanks [@mirekm](https://github.com/mirekm)! - - Fixed broken question mark icons in Product Type variant attributes view
+
+- [#6233](https://github.com/saleor/saleor-dashboard/pull/6233) [`e5b2c3c`](https://github.com/saleor/saleor-dashboard/commit/e5b2c3c634c2ea46a31b31d5291e03231e7ade1e) Thanks [@mirekm](https://github.com/mirekm)! - Fixed info icon sizing and alignment in Product details view attributes. Info icons are now consistently small (16px) and properly aligned with text labels.
+
+- [#6225](https://github.com/saleor/saleor-dashboard/pull/6225) [`f7ef997`](https://github.com/saleor/saleor-dashboard/commit/f7ef9972d9f9ca69681aee68a4967ec5450958b7) Thanks [@mirekm](https://github.com/mirekm)! - Move Cloud env link to the Saleor Dashboard top-left logo hover state
+
+- [#6165](https://github.com/saleor/saleor-dashboard/pull/6165) [`f5d17f8`](https://github.com/saleor/saleor-dashboard/commit/f5d17f8dc869e4925bd804a7c2ab8fae2e95f96c) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Modals for assigning Products will now show Filter button.
+  This means that list in the modal can now be filtered based on the same conditions available on the Product list page.
+  This new UI will also display constraints based on context (e.g. limited Product type filter, based on Reference Types config when assigning attribute).
+
 ## 3.22.23
 
 ### Patch Changes
