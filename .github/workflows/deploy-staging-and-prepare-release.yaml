@@ -3,10 +3,7 @@ on:
   push:
     branches:
       # Matches release branches
-      # we must use release/<version>
-      # because just using version would be blocked by GitHub Rulesets
-      # https://github.com/saleor/saleor-dashboard/rules/6590960?ref=refs%2Fheads%2F3.22
-      - "release/[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -82,17 +79,11 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
+      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
-      - name: Set version from ref
-        run: |
-          # Strip 'release/' prefix if present
-          RAW_VERSION="${{ github.event.inputs.git_ref || github.ref_name }}"
-          VERSION="${RAW_VERSION#release/}"
-          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
-
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.VERSION }}
@@ -105,6 +96,8 @@ jobs:
           echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
 
       - name: Set custom version
+        env:
+          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
         # Add commit hash to basic version number
         run: |
           set -x
