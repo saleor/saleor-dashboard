@@ -1,7 +1,7 @@
 import { Ripple } from "@dashboard/ripples/types";
 
 export const rippleRefreshedOrderSections: Ripple = {
-  type: "feature",
+  type: "improvement",
   ID: "refreshed-order-sections",
   TTL_seconds: 60 * 60 * 24 * 3, // 3 days
   content: {
