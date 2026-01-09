@@ -39,7 +39,14 @@ export type Ripple = {
    */
   actions?: Array<{
     label: MessageDescriptor;
-    onClick: () => void;
+    /**
+     * Click handler for in-app actions
+     */
+    onClick?: () => void;
+    /**
+     * URL for external links - renders as <Button> with target="_blank"
+     */
+    href?: string;
     /**
      * If true, this action won't be shown in the global "What's New" modal.
      * Useful for actions that open the modal itself (would be redundant).

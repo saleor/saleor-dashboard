@@ -19,9 +19,7 @@ export const rippleNewRefundReasons: Ripple = {
         defaultMessage: "Read the blog post",
         id: "cti4iA",
       }),
-      onClick() {
-        window.open("https://saleor.io/blog/refund-reasons", "_blank");
-      },
+      href: "https://saleor.io/blog/refund-reasons",
     },
   ],
 };

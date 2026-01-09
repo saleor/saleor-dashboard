@@ -88,9 +88,52 @@ const TypeBadge = ({ type }: { type: RippleType }) => {
   );
 };
 
+const RippleActionContent = ({ label, isHovered }: { label: string; isHovered: boolean }) => (
+  <>
+    <Text
+      fontSize={3}
+      __color={vars.colors.text.accent1}
+      textDecoration={isHovered ? "underline" : "none"}
+    >
+      {label}
+    </Text>
+    <Box
+      __color={vars.colors.text.accent1}
+      __transition="transform 0.2s ease"
+      __transform={isHovered ? "translateX(4px)" : "translateX(0)"}
+      display="flex"
+      alignItems="center"
+    >
+      <ChevronRightIcon size={16} />
+    </Box>
+  </>
+);
+
 const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[number] }) => {
   const intl = useIntl();
   const [isHovered, setIsHovered] = useState(false);
+  const label = intl.formatMessage(action.label);
+
+  if (action.href) {
+    return (
+      <Box
+        as="a"
+        href={action.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        display="flex"
+        alignItems="center"
+        gap={1}
+        marginTop={3}
+        cursor="pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        textDecoration="none"
+      >
+        <RippleActionContent label={label} isHovered={isHovered} />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -107,22 +150,7 @@ const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[numbe
       borderWidth={0}
       padding={0}
     >
-      <Text
-        fontSize={3}
-        __color={vars.colors.text.accent1}
-        textDecoration={isHovered ? "underline" : "none"}
-      >
-        {intl.formatMessage(action.label)}
-      </Text>
-      <Box
-        __color={vars.colors.text.accent1}
-        __transition="transform 0.2s ease"
-        __transform={isHovered ? "translateX(4px)" : "translateX(0)"}
-        display="flex"
-        alignItems="center"
-      >
-        <ChevronRightIcon size={16} />
-      </Box>
+      <RippleActionContent label={label} isHovered={isHovered} />
     </Box>
   );
 };
@@ -327,9 +355,9 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
                 display="flex"
                 alignItems="center"
                 gap={1}
+                fontSize={1}
                 __color={vars.colors.text.accent1}
                 textDecoration={{ default: "none", hover: "underline" }}
-                fontSize={1}
               >
                 {intl.formatMessage({
                   defaultMessage: "Suggest a change",
