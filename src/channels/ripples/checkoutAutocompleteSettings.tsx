@@ -1,4 +1,6 @@
+import { DOCS_ULRS } from "@dashboard/links";
 import { Ripple } from "@dashboard/ripples/types";
+import { defineMessage } from "react-intl";
 
 export const checkoutAutocompleteSettings: Ripple = {
   type: "feature",
@@ -11,4 +13,13 @@ export const checkoutAutocompleteSettings: Ripple = {
       "When checkouts are paid, but not completed by the customer, they can be automatically completed by Saleor. Visit settings to configure this behavior.",
   },
   dateAdded: new Date("2025-12-15"),
+  actions: [
+    {
+      label: defineMessage({
+        defaultMessage: "Read the docs",
+        id: "Cm2/+V",
+      }),
+      href: DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION,
+    },
+  ],
 };
