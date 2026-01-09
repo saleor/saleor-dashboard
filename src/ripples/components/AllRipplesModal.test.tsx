@@ -222,7 +222,7 @@ describe("Ripple actions", () => {
     expect(visibleActions[0].href).toBe("https://example.com");
   });
 
-  it("should support both href and onClick being optional", () => {
+  it("should enforce that action has either href or onClick (mutually exclusive)", () => {
     // Arrange
     const rippleWithHref = createMockRipple("with-href", new Date(2024, 0, 15), {
       actions: [{ label: mockLabel, href: "https://example.com" }],
@@ -231,10 +231,11 @@ describe("Ripple actions", () => {
       actions: [{ label: mockLabel, onClick: jest.fn() }],
     });
 
-    // Assert
-    expect(rippleWithHref.actions![0].href).toBeDefined();
-    expect(rippleWithHref.actions![0].onClick).toBeUndefined();
-    expect(rippleWithOnClick.actions![0].onClick).toBeDefined();
-    expect(rippleWithOnClick.actions![0].href).toBeUndefined();
+    // Assert - each action type has its required property
+    expect(rippleWithHref.actions![0]).toHaveProperty("href");
+    expect(rippleWithOnClick.actions![0]).toHaveProperty("onClick");
+
+    // Note: TypeScript enforces that actions cannot have both href and onClick,
+    // and cannot have neither. This is enforced at compile time via the RippleAction union type.
   });
 });

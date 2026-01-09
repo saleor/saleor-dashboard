@@ -3,6 +3,39 @@ import { MessageDescriptor } from "react-intl";
 
 export type RippleType = "feature" | "improvement" | "bugfix";
 
+/**
+ * Base properties shared by all action types
+ */
+interface RippleActionBase {
+  label: MessageDescriptor;
+  /**
+   * If true, this action won't be shown in the global "What's New" modal.
+   * Useful for actions that open the modal itself (would be redundant).
+   */
+  hideInModal?: boolean;
+}
+
+/**
+ * Action with a click handler for in-app actions
+ */
+interface RippleActionWithOnClick extends RippleActionBase {
+  onClick: () => void;
+  href?: never;
+}
+
+/**
+ * Action with an href for external links
+ */
+interface RippleActionWithHref extends RippleActionBase {
+  href: string;
+  onClick?: never;
+}
+
+/**
+ * A ripple action must have either onClick or href, but not both
+ */
+export type RippleAction = RippleActionWithOnClick | RippleActionWithHref;
+
 // TODO Consider translations
 export type Ripple = {
   /**
@@ -35,22 +68,8 @@ export type Ripple = {
   // A unique ID to reference Ripple when checking it's state in the storage
   ID: string;
   /**
-   * Extra buttons rendered apart from the default "OK" button
+   * Extra buttons rendered apart from the default "OK" button.
+   * Each action must have either onClick (for in-app actions) or href (for external links).
    */
-  actions?: Array<{
-    label: MessageDescriptor;
-    /**
-     * Click handler for in-app actions
-     */
-    onClick?: () => void;
-    /**
-     * URL for external links - renders as <Button> with target="_blank"
-     */
-    href?: string;
-    /**
-     * If true, this action won't be shown in the global "What's New" modal.
-     * Useful for actions that open the modal itself (would be redundant).
-     */
-    hideInModal?: boolean;
-  }>;
+  actions?: RippleAction[];
 };
