@@ -1,3 +1,4 @@
+import githubLogo from "@assets/images/github-logo.svg";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { getStatusColor, PillStatusType } from "@dashboard/misc";
@@ -8,6 +9,7 @@ import { Ripple, RippleType } from "@dashboard/ripples/types";
 import { Box, Button, ModalRootProps, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import SVG from "react-inlinesvg";
 import { defineMessages, useIntl } from "react-intl";
 
 interface RippleEntry {
@@ -338,15 +340,37 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
               paddingY={2}
               backgroundColor="default2"
             >
-              <Text fontSize={1} color="default2">
-                {intl.formatMessage(
-                  {
-                    defaultMessage: "Last updated: {date}",
-                    id: "ZdCdo5",
-                  },
-                  { date: lastUpdatedDate },
-                )}
-              </Text>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Text fontSize={1} color="default2">
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: "Last updated: {date}",
+                      id: "ZdCdo5",
+                    },
+                    { date: lastUpdatedDate },
+                  )}
+                  ,{" "}
+                </Text>
+                <Box
+                  as="a"
+                  href="https://github.com/saleor/saleor-dashboard/releases"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  display="flex"
+                  alignItems="center"
+                  gap={1}
+                  __opacity={{ default: "0.7", hover: "1" }}
+                  __color={vars.colors.text.default2}
+                  textDecoration={{ default: "none", hover: "underline" }}
+                  fontSize={1}
+                >
+                  <SVG src={githubLogo} width={12} height={12} />
+                  {intl.formatMessage({
+                    defaultMessage: "Releases",
+                    id: "JEw8ys",
+                  })}
+                </Box>
+              </Box>
               <Box
                 as="a"
                 href="https://github.com/saleor/saleor-dashboard/issues/new"
