@@ -3837,6 +3837,9 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MH1qA1": {
+    "string": "Test Action"
+  },
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
@@ -4018,6 +4021,9 @@
   },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
+  },
+  "NJ9ngY": {
+    "string": "Visible Action"
   },
   "NL5C12": {
     "context": "orderLine.quantity, subheader, oredr line metadata dialog",
