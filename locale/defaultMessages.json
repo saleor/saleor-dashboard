@@ -2304,6 +2304,9 @@
     "context": "tooltip for subtotal amount",
     "string": "Sum of all line items"
   },
+  "Cm2/+V": {
+    "string": "Read the docs"
+  },
   "CmxKIg": {
     "context": "window title",
     "string": "Grant refund"
@@ -3408,6 +3411,9 @@
   "JEIN47": {
     "context": "label",
     "string": "Automatic Amount"
+  },
+  "JEw8ys": {
+    "string": "Releases"
   },
   "JFmOfi": {
     "context": "button",

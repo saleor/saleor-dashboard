@@ -1,5 +1,5 @@
+import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { Ripple } from "@dashboard/ripples/types";
-import { defineMessage } from "react-intl";
 
 export const ripplePagesAreModels: Ripple = {
   type: "feature",
@@ -15,10 +15,7 @@ export const ripplePagesAreModels: Ripple = {
   dateAdded: new Date(2025, 5, 1),
   actions: [
     {
-      label: defineMessage({
-        defaultMessage: "Read the blog post",
-        id: "cti4iA",
-      }),
+      label: rippleActionMessages.readTheBlogPost,
       href: "https://saleor.io/blog/modeling",
     },
   ],

@@ -1,7 +1,7 @@
+import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { allRipplesModalOpen } from "@dashboard/ripples/state";
 import { Ripple } from "@dashboard/ripples/types";
 import { getDefaultStore } from "jotai";
-import { defineMessage } from "react-intl";
 
 const defaultStore = getDefaultStore();
 
@@ -18,11 +18,7 @@ export const rippleIntroducedRipples: Ripple = {
   dateAdded: new Date(2025, 8),
   actions: [
     {
-      label: defineMessage({
-        defaultMessage: "Show me",
-        id: "1ACBFw",
-        description: "Ripple tooltip confirmation button",
-      }),
+      label: rippleActionMessages.showMe,
       onClick() {
         defaultStore.set(allRipplesModalOpen, true);
       },
