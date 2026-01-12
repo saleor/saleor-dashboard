@@ -1,6 +1,4 @@
-// @ts-strict-ignore
 import { isExternalURL } from "@dashboard/utils/urls";
-import { TypographyProps } from "@material-ui/core/Typography";
 import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";
@@ -18,7 +16,6 @@ interface LinkProps
   color?: "primary" | "secondary";
   inline?: boolean;
   underline?: boolean;
-  typographyProps?: TypographyProps;
   onClick?: React.MouseEventHandler;
   disabled?: boolean;
   state?: LinkState;
@@ -65,52 +62,57 @@ export const Link = (props: LinkProps): JSX.Element => {
 
   // Sprinkles doesn't support display: "inline", so we use inline styles for this
   const inlineStyle = {
-    display: inline ? ("inline" as const) : undefined,
+    display: inline ? "inline" : undefined,
     ...style,
-  };
+  } as const;
 
   const commonLinkProps = {
     className: linkClassName,
     onClick: handleClick,
     target,
-    rel: (rel ?? (opensNewTab && isExternalURL(href))) ? "noopener noreferer" : "",
+    rel: (rel ?? (opensNewTab && href && isExternalURL(href))) ? "noopener noreferer" : "",
     style: inlineStyle,
     ...linkProps,
-  };
-  const urlObject = new URL(href, window.location.origin);
+  } as const;
 
-  return (
-    <>
-      {!!href && !isExternalURL(href) ? (
-        <RouterLink<LinkState>
-          to={
-            disabled
-              ? undefined
-              : {
-                  pathname: urlObject.pathname,
-                  search: urlObject.search,
-                  hash: urlObject.hash,
-                  state,
-                }
+  if (!!href && !isExternalURL(href)) {
+    const urlObject = new URL(href, window.location.origin);
+    const routerLinkToParams = {
+      pathname: urlObject.pathname,
+      search: urlObject.search,
+      hash: urlObject.hash,
+      state,
+    } as const;
+
+    return (
+      <RouterLink<LinkState>
+        to={disabled ? "#" : routerLinkToParams}
+        {...commonLinkProps}
+        onClick={e => {
+          // Router Link can't be natively disabled so just kill the event
+          if (disabled) {
+            e.preventDefault();
+            e.stopPropagation();
           }
-          {...commonLinkProps}
-        >
-          {children}
-        </RouterLink>
-      ) : (
-        // @ts-expect-error - HTML anchor attributes don't perfectly match Text component types
-        <Text
-          as="a"
-          href={disabled ? undefined : href}
-          display="block"
-          color={textColor}
-          {...commonLinkProps}
-        >
-          {children}
-        </Text>
-      )}
-    </>
-  );
+        }}
+      >
+        {children}
+      </RouterLink>
+    );
+  } else {
+    return (
+      // @ts-expect-error - spreading HTML link props on Text is not compatbile, fixme
+      <Text
+        as="a"
+        href={disabled ? undefined : href}
+        display="block"
+        color={textColor}
+        {...commonLinkProps}
+      >
+        {children}
+      </Text>
+    );
+  }
 };
 
 Link.displayName = "Link";
