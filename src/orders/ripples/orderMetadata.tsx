@@ -1,6 +1,7 @@
 import { Ripple } from "@dashboard/ripples/types";
 
 export const rippleOrderMetadata: Ripple = {
+  type: "improvement",
   ID: "order-metadata",
   TTL_seconds: 60 * 60 * 24 * 3, // 3 days
   content: {
