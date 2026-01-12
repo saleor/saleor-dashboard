@@ -77,6 +77,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                           borderColor="defaultDisabled"
                           borderRadius={4}
                           key={itemIndex}
+                          borderWidth={1}
                           data-test-id={
                             item.testId + "-settings-subsection-" + item.title.toLowerCase()
                           }
