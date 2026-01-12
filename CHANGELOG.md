@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.22.25
+
+### Patch Changes
+
+- [#6226](https://github.com/saleor/saleor-dashboard/pull/6226) [`1486e12`](https://github.com/saleor/saleor-dashboard/commit/1486e1207176b6cf571a22c0c8b7c7146c9755c6) Thanks [@mirekm](https://github.com/mirekm)! - Prevent accidental variant metadata edits from order context
+
+  Previously, users could edit product variant metadata directly from the Order Line Metadata dialog. This could be misleading because variant metadata is shared across all orders—changes made here would affect the variant globally, not just this order.
+
+  Variant metadata is now displayed as read-only in the order context, with a direct link to the variant page for intentional edits.
+
+- [#6245](https://github.com/saleor/saleor-dashboard/pull/6245) [`bc27812`](https://github.com/saleor/saleor-dashboard/commit/bc278122cb81f6303cdee816e35c929043209254) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `qs`, and patched `posthog` to use packages without security warnings
+
 ## 3.22.24
 
 ### Patch Changes
