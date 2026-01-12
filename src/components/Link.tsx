@@ -71,7 +71,7 @@ export const Link = (props: LinkProps): JSX.Element => {
     className: linkClassName,
     onClick: handleClick,
     target,
-    rel: (rel ?? (opensNewTab && href && isExternalURL(href))) ? "noopener noreferer" : "",
+    rel: (rel ?? (opensNewTab && href && isExternalURL(href))) ? "noopener noreferrer" : "",
     style: inlineStyle,
     ...linkProps,
   } as const;
