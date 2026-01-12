@@ -26,7 +26,7 @@ export const Link = (props: LinkProps): JSX.Element => {
     className,
     children,
     inline = true,
-    color: _color = "primary",
+    color = "primary",
     underline = false,
     onClick,
     disabled,
@@ -39,7 +39,8 @@ export const Link = (props: LinkProps): JSX.Element => {
   } = props;
   const opensNewTab = target === "_blank";
 
-  const textColor = disabled ? "default2" : "accent1";
+  const colorTheme = color === "primary" ? "accent1" : "default1";
+  const textColor = disabled ? "default2" : colorTheme;
 
   const linkClassName = clsx(
     sprinkles({
