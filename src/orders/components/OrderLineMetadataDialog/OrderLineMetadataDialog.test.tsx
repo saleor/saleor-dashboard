@@ -203,16 +203,16 @@ describe("OrderLineMetadataDialog", () => {
 
       fireEvent.click(expandButtons[0]);
 
-      // Assert - variant metadata fields should be disabled
+      // Assert - variant metadata fields should be readonly
       const variantKeyInput = within(productVariantMetadata).getByDisplayValue(
         "variant-key",
       ) as HTMLInputElement;
       const variantValueInput = within(productVariantMetadata).getByDisplayValue(
         "variant-value",
-      ) as HTMLInputElement;
+      ) as HTMLTextAreaElement;
 
-      expect(variantKeyInput.disabled).toBe(true);
-      expect(variantValueInput.disabled).toBe(true);
+      expect(variantKeyInput.readOnly).toBe(true);
+      expect(variantValueInput.readOnly).toBe(true);
     });
   });
 

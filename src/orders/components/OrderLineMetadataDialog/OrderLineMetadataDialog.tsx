@@ -7,11 +7,13 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
+import { productVariantEditUrl } from "@dashboard/products/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
@@ -77,8 +79,6 @@ export const OrderLineMetadataDialog = ({
     handleVariantPrivateMetadataChange,
     orderLineMetadataErrors,
     orderLinePrivateMetadataErrors,
-    variantMetadataErrors,
-    variantPrivateMetadataErrors,
   } = useOrderLineMetadataFormControls({ control, trigger, getValues, formState });
 
   const [showExitDialog, setShowExitDialog] = useState(false);
@@ -192,9 +192,22 @@ export const OrderLineMetadataDialog = ({
                   </Text>
                   <Text>
                     <FormattedMessage
-                      defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                      description="modal subheader, editable product variant metadata"
-                      id="tquei9"
+                      defaultMessage="The read-only metadata of the actual variant used in this order. {link}"
+                      description="info about variant metadata with link to edit"
+                      id="00d8GP"
+                      values={{
+                        link: data?.variant?.id ? (
+                          <Link to={productVariantEditUrl(data.variant.id)}>
+                            <Text as="span" color="accent1" textDecoration="underline">
+                              <FormattedMessage
+                                defaultMessage="Edit on variant page"
+                                description="link to edit variant metadata"
+                                id="tf+OkY"
+                              />
+                            </Text>
+                          </Link>
+                        ) : null,
+                      }}
                     />
                   </Text>
                 </Box>
@@ -209,24 +222,18 @@ export const OrderLineMetadataDialog = ({
                     <MetadataCard
                       data={mapFieldArrayToMetadataInput(variantMetadataFields)}
                       isPrivate={false}
-                      disabled={loading || submitInProgress || !hasManageProducts}
+                      readonly={true}
+                      defaultExpanded={false}
                       onChange={handleVariantMetadataChange}
-                      error={
-                        variantMetadataErrors.length ? variantMetadataErrors.join(", ") : undefined
-                      }
                     />
 
                     {hasManageProducts && (
                       <MetadataCard
                         data={mapFieldArrayToMetadataInput(variantPrivateMetadataFields)}
                         isPrivate={true}
-                        disabled={loading || submitInProgress || !hasManageProducts}
+                        readonly={true}
+                        defaultExpanded={false}
                         onChange={handleVariantPrivateMetadataChange}
-                        error={
-                          variantPrivateMetadataErrors.length
-                            ? variantPrivateMetadataErrors.join(", ")
-                            : undefined
-                        }
                       />
                     )}
                   </Box>
