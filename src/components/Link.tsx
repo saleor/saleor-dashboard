@@ -24,7 +24,7 @@ interface LinkProps
   state?: LinkState;
 }
 
-export const Link = (props: LinkProps) => {
+export const Link = (props: LinkProps): JSX.Element => {
   const {
     className,
     children,
@@ -37,13 +37,19 @@ export const Link = (props: LinkProps) => {
     target,
     rel,
     state,
+    style,
     ...linkProps
   } = props;
   const opensNewTab = target === "_blank";
 
+  const textColor = disabled ? "default2" : "accent1";
+
   const linkClassName = clsx(
     sprinkles({
       cursor: disabled ? "not-allowed" : "pointer",
+      fontSize: "inherit",
+      textDecoration: underline ? "underline" : "none",
+      color: textColor,
     }),
     className,
   );
@@ -57,16 +63,21 @@ export const Link = (props: LinkProps) => {
     onClick(event);
   };
 
+  // Sprinkles doesn't support display: "inline", so we use inline styles for this
+  const inlineStyle = {
+    display: inline ? ("inline" as const) : undefined,
+    ...style,
+  };
+
   const commonLinkProps = {
     className: linkClassName,
     onClick: handleClick,
     target,
     rel: (rel ?? (opensNewTab && isExternalURL(href))) ? "noopener noreferer" : "",
+    style: inlineStyle,
     ...linkProps,
   };
   const urlObject = new URL(href, window.location.origin);
-
-  const textColor = disabled ? "default2" : "accent1";
 
   return (
     <>
@@ -83,11 +94,6 @@ export const Link = (props: LinkProps) => {
                 }
           }
           {...commonLinkProps}
-          style={{
-            display: inline ? "inline" : "block",
-            fontSize: "inherit",
-            textDecoration: underline ? "underline" : "none",
-          }}
         >
           {children}
         </RouterLink>
@@ -96,10 +102,8 @@ export const Link = (props: LinkProps) => {
         <Text
           as="a"
           href={disabled ? undefined : href}
+          display="block"
           color={textColor}
-          display={inline ? "inline-block" : "block"}
-          textDecoration={underline ? "underline" : "none"}
-          fontSize="inherit"
           {...commonLinkProps}
         >
           {children}
@@ -110,4 +114,7 @@ export const Link = (props: LinkProps) => {
 };
 
 Link.displayName = "Link";
+/**
+ * @deprecated use named export
+ */
 export default Link;
