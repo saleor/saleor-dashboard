@@ -2,6 +2,7 @@ import { Ripple } from "@dashboard/ripples/types";
 import { Paragraph } from "@saleor/macaw-ui-next";
 
 export const rippleCloudEnvLink: Ripple = {
+  type: "improvement",
   ID: "cloud-env-link-logo",
   TTL_seconds: 60 * 60 * 24 * 3, // 3 days
   content: {
