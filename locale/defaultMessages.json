@@ -351,6 +351,10 @@
     "context": "date group header",
     "string": "Last 7 days"
   },
+  "00d8GP": {
+    "context": "info about variant metadata with link to edit",
+    "string": "The read-only metadata of the actual variant used in this order. {link}"
+  },
   "01+5kQ": {
     "string": "Mark as paid"
   },
@@ -9171,6 +9175,10 @@
     "context": "order total amount",
     "string": "Total"
   },
+  "tf+OkY": {
+    "context": "link to edit variant metadata",
+    "string": "Edit on variant page"
+  },
   "tiY7bx": {
     "string": "Add new product"
   },
@@ -9194,10 +9202,6 @@
   "tqJwfo": {
     "context": "button",
     "string": "Set end date"
-  },
-  "tquei9": {
-    "context": "modal subheader, editable product variant metadata",
-    "string": "This is a metadata of the variant that is being used in this ordered item"
   },
   "tsL3IW": {
     "context": "gift card history message",
