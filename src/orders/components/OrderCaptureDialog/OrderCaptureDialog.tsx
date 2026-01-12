@@ -116,28 +116,36 @@ export const OrderCaptureDialog = ({
     return isFirstOptionDisabled ? "custom" : "orderTotal";
   };
 
-  const getDefaultCustomAmount = (): string => {
+  const getDefaultCustomAmount = (): number => {
     if (authStatus === "none" || authStatus === "charged") {
-      return "0";
+      return 0;
     }
 
     if (authStatus === "partial") {
       // Default to max capturable (remaining auth)
-      return String(availableToCapture);
+      return availableToCapture;
     }
 
     // Default to remaining amount to pay
-    return String(remainingToPay);
+    return remainingToPay;
   };
 
   const [selectedOption, setSelectedOption] = useState<CaptureAmountOption>(getDefaultOption);
-  const [customAmount, setCustomAmount] = useState<string>(getDefaultCustomAmount);
+  const [customAmount, setCustomAmount] = useState<number>(getDefaultCustomAmount);
+  // String representation for the input field (allows user to type intermediate values like "10.")
+  const [customAmountInput, setCustomAmountInput] = useState<string>(
+    String(getDefaultCustomAmount()),
+  );
 
   // Reset state when dialog opens to ensure correct defaults based on current props
   useEffect(() => {
     if (open) {
       setSelectedOption(getDefaultOption());
-      setCustomAmount(getDefaultCustomAmount());
+
+      const defaultAmount = getDefaultCustomAmount();
+
+      setCustomAmount(defaultAmount);
+      setCustomAmountInput(String(defaultAmount));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -148,7 +156,8 @@ export const OrderCaptureDialog = ({
   const handleCustomAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const limitedValue = limitDecimalPlaces(e.target.value, maxDecimalPlaces);
 
-    setCustomAmount(limitedValue);
+    setCustomAmountInput(limitedValue);
+    setCustomAmount(parseDecimalValue(limitedValue));
   };
 
   const getSelectedAmount = (): number => {
@@ -157,13 +166,12 @@ export const OrderCaptureDialog = ({
         // For partial auth, capture max available; for full, capture remaining balance
         return authStatus === "partial" ? availableToCapture : remainingToPay;
       case "custom":
-        return parseDecimalValue(customAmount);
+        return customAmount;
     }
   };
 
   const selectedAmount = getSelectedAmount();
-  const customAmountValue = parseDecimalValue(customAmount);
-  const isCustomAmountInRange = customAmountValue > 0 && customAmountValue <= maxCapturable;
+  const isCustomAmountInRange = customAmount > 0 && customAmount <= maxCapturable;
   const isCustomAmountValid = selectedOption !== "custom" || isCustomAmountInRange;
   const showCustomAmountError =
     selectedOption === "custom" &&
@@ -449,7 +457,7 @@ export const OrderCaptureDialog = ({
                         size="small"
                         type="text"
                         inputMode="decimal"
-                        value={customAmount}
+                        value={customAmountInput}
                         onChange={handleCustomAmountChange}
                         error={showCustomAmountError}
                         disabled={
