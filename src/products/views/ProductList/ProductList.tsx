@@ -378,18 +378,16 @@ const ProductList = ({ params }: ProductListProps) => {
           };
 
           // Include filter when exporting filtered products
-          if (data.scope === "FILTER") {
+          if (data.scope === ExportScope.FILTER) {
             const filter = getExportProductFilter({
               queryParams: params,
             });
 
-            const hasFilter = Object.keys(filter || {}).length > 0;
-
-            if (hasFilter) {
-              exportInput.filter = filter;
-            } else {
+            if (!filter || Object.keys(filter).length === 0) {
               // Fall back to exporting all when no filters are applied
               exportInput.scope = ExportScope.ALL;
+            } else {
+              exportInput.filter = filter;
             }
           }
 

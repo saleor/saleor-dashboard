@@ -208,8 +208,25 @@ export const getFilterVariables = ({
   };
 };
 
+/**
+ * Converts URL query parameters into a GraphQL ProductFilterInput object
+ * for product export operations.
+ *
+ * @param queryParams - Current URL filter parameters from ProductListUrlFilters
+ * @returns ProductFilterInput compatible with exportProducts mutation, or empty object if no filters
+ *
+ * @example
+ * const filter = getExportProductFilter({
+ *   queryParams: { query: "shirt", channel: "default-channel" }
+ * });
+ * // Returns: { search: "shirt", channel: "default-channel" }
+ */
 export const getExportProductFilter = ({ queryParams }: { queryParams: ProductListUrlFilters }) => {
-  const filterInput: Record<string, any> = {};
+  if (!queryParams) {
+    return {} as InputMaybe<ProductFilterInput>;
+  }
+
+  const filterInput: Partial<ProductFilterInput> = {};
 
   // Include search phrase
   if (queryParams.query) {
@@ -233,79 +250,48 @@ export const getExportProductFilter = ({ queryParams }: { queryParams: ProductLi
 
   // Add product type filter
   if (queryParams.productTypes) {
-    filterInput.productType = queryParams.productTypes;
+    filterInput.productTypes = queryParams.productTypes;
   }
 
   // Add price range filter
-  if (queryParams.priceFrom || queryParams.priceTo) {
-    filterInput.minimalPrice = {};
+  const hasPriceFilter = queryParams.priceFrom !== undefined || queryParams.priceTo !== undefined;
 
-    if (queryParams.priceFrom) {
-      filterInput.minimalPrice.gte = queryParams.priceFrom;
-    }
+  if (hasPriceFilter) {
+    const minimalPrice = {
+      ...(queryParams.priceFrom && { gte: parseFloat(queryParams.priceFrom) }),
+      ...(queryParams.priceTo && { lte: parseFloat(queryParams.priceTo) }),
+    };
 
-    if (queryParams.priceTo) {
-      filterInput.minimalPrice.lte = queryParams.priceTo;
+    // Only add minimalPrice if it has at least one property
+    if (Object.keys(minimalPrice).length > 0) {
+      filterInput.minimalPrice = minimalPrice;
     }
   }
 
   // Add stock filter
   if (queryParams.stockStatus) {
-    filterInput.stockAvailability = queryParams.stockStatus;
-  }
-
-  // Add product kind filter
-  if (queryParams.productKind) {
-    filterInput.productKind = queryParams.productKind;
+    filterInput.stockAvailability = queryParams.stockStatus as StockAvailability;
   }
 
   // Add attribute filters from different attribute types
-  const attributes: Array<{ slug: string; value: string[] }> = [];
+  const attributes: Array<{ slug: string; values: string[] }> = [];
+  const attributeTypes = [
+    "string-attributes",
+    "numeric-attributes",
+    "boolean-attributes",
+    "date-attributes",
+    "datetime-attributes",
+  ] as const;
 
-  // Add string attributes
-  if (queryParams["string-attributes"]) {
-    Object.entries(queryParams["string-attributes"]).forEach(([slug, values]) => {
-      if (values && values.length > 0) {
-        attributes.push({ slug, value: values });
-      }
-    });
-  }
-
-  // Add numeric attributes
-  if (queryParams["numeric-attributes"]) {
-    Object.entries(queryParams["numeric-attributes"]).forEach(([slug, values]) => {
-      if (values && values.length > 0) {
-        attributes.push({ slug, value: values });
-      }
-    });
-  }
-
-  // Add boolean attributes
-  if (queryParams["boolean-attributes"]) {
-    Object.entries(queryParams["boolean-attributes"]).forEach(([slug, values]) => {
-      if (values && values.length > 0) {
-        attributes.push({ slug, value: values });
-      }
-    });
-  }
-
-  // Add date attributes
-  if (queryParams["date-attributes"]) {
-    Object.entries(queryParams["date-attributes"]).forEach(([slug, values]) => {
-      if (values && values.length > 0) {
-        attributes.push({ slug, value: values });
-      }
-    });
-  }
-
-  // Add datetime attributes
-  if (queryParams["datetime-attributes"]) {
-    Object.entries(queryParams["datetime-attributes"]).forEach(([slug, values]) => {
-      if (values && values.length > 0) {
-        attributes.push({ slug, value: values });
-      }
-    });
-  }
+  attributeTypes.forEach(attrType => {
+    if (queryParams[attrType]) {
+      Object.entries(queryParams[attrType]).forEach(([slug, values]) => {
+        if (values?.length > 0) {
+          attributes.push({ slug, values });
+        }
+      });
+    }
+  });
 
   if (attributes.length > 0) {
     filterInput.attributes = attributes;
