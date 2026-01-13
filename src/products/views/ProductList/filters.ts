@@ -1,7 +1,13 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import {
+  AttributeFragment,
+  AttributeInputTypeEnum,
+  InputMaybe,
+  ProductFilterInput,
+  StockAvailability,
+} from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {
@@ -200,4 +206,110 @@ export const getFilterVariables = ({
     search: queryParams.query,
     channel: channel?.eq,
   };
+};
+
+export const getExportProductFilter = ({ queryParams }: { queryParams: ProductListUrlFilters }) => {
+  const filterInput: Record<string, any> = {};
+
+  // Include search phrase
+  if (queryParams.query) {
+    filterInput.search = queryParams.query;
+  }
+
+  // Add channel filter
+  if (queryParams.channel) {
+    filterInput.channel = queryParams.channel;
+  }
+
+  // Add categories filter
+  if (queryParams.categories) {
+    filterInput.categories = queryParams.categories;
+  }
+
+  // Add collections filter
+  if (queryParams.collections) {
+    filterInput.collections = queryParams.collections;
+  }
+
+  // Add product type filter
+  if (queryParams.productTypes) {
+    filterInput.productType = queryParams.productTypes;
+  }
+
+  // Add price range filter
+  if (queryParams.priceFrom || queryParams.priceTo) {
+    filterInput.minimalPrice = {};
+
+    if (queryParams.priceFrom) {
+      filterInput.minimalPrice.gte = queryParams.priceFrom;
+    }
+
+    if (queryParams.priceTo) {
+      filterInput.minimalPrice.lte = queryParams.priceTo;
+    }
+  }
+
+  // Add stock filter
+  if (queryParams.stockStatus) {
+    filterInput.stockAvailability = queryParams.stockStatus;
+  }
+
+  // Add product kind filter
+  if (queryParams.productKind) {
+    filterInput.productKind = queryParams.productKind;
+  }
+
+  // Add attribute filters from different attribute types
+  const attributes: Array<{ slug: string; value: string[] }> = [];
+
+  // Add string attributes
+  if (queryParams["string-attributes"]) {
+    Object.entries(queryParams["string-attributes"]).forEach(([slug, values]) => {
+      if (values && values.length > 0) {
+        attributes.push({ slug, value: values });
+      }
+    });
+  }
+
+  // Add numeric attributes
+  if (queryParams["numeric-attributes"]) {
+    Object.entries(queryParams["numeric-attributes"]).forEach(([slug, values]) => {
+      if (values && values.length > 0) {
+        attributes.push({ slug, value: values });
+      }
+    });
+  }
+
+  // Add boolean attributes
+  if (queryParams["boolean-attributes"]) {
+    Object.entries(queryParams["boolean-attributes"]).forEach(([slug, values]) => {
+      if (values && values.length > 0) {
+        attributes.push({ slug, value: values });
+      }
+    });
+  }
+
+  // Add date attributes
+  if (queryParams["date-attributes"]) {
+    Object.entries(queryParams["date-attributes"]).forEach(([slug, values]) => {
+      if (values && values.length > 0) {
+        attributes.push({ slug, value: values });
+      }
+    });
+  }
+
+  // Add datetime attributes
+  if (queryParams["datetime-attributes"]) {
+    Object.entries(queryParams["datetime-attributes"]).forEach(([slug, values]) => {
+      if (values && values.length > 0) {
+        attributes.push({ slug, value: values });
+      }
+    });
+  }
+
+  if (attributes.length > 0) {
+    filterInput.attributes = attributes;
+  }
+
+  return filterInput as InputMaybe<ProductFilterInput>;
 };
