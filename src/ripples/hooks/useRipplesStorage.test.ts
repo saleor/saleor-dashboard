@@ -9,6 +9,7 @@ if (!global.structuredClone) {
 
 // Mock ripples for testing
 const mockRipple1: Ripple = {
+  type: "feature",
   ID: "test-ripple-1",
   TTL_seconds: 3600, // 1 hour
   dateAdded: new Date("2023-01-01"),
@@ -20,6 +21,7 @@ const mockRipple1: Ripple = {
 };
 
 const mockRipple2: Ripple = {
+  type: "improvement",
   ID: "test-ripple-2",
   TTL_seconds: 7200, // 2 hours
   dateAdded: new Date("2023-01-02"),
@@ -31,6 +33,7 @@ const mockRipple2: Ripple = {
 };
 
 const mockRipple3: Ripple = {
+  type: "bugfix",
   ID: "test-ripple-3",
   TTL_seconds: 1800, // 30 minutes
   dateAdded: new Date("2023-01-03"),

@@ -351,6 +351,10 @@
     "context": "date group header",
     "string": "Last 7 days"
   },
+  "00d8GP": {
+    "context": "info about variant metadata with link to edit",
+    "string": "The read-only metadata of the actual variant used in this order. {link}"
+  },
   "01+5kQ": {
     "string": "Mark as paid"
   },
@@ -2304,6 +2308,9 @@
     "context": "tooltip for subtotal amount",
     "string": "Sum of all line items"
   },
+  "Cm2/+V": {
+    "string": "Read the docs"
+  },
   "CmxKIg": {
     "context": "window title",
     "string": "Grant refund"
@@ -2662,6 +2669,9 @@
   "FIZvTx": {
     "context": "dialog content",
     "string": "Select method you want to use to change address"
+  },
+  "FN+iLO": {
+    "string": "Suggest a change"
   },
   "FNAZoh": {
     "string": "Last login"
@@ -3406,6 +3416,9 @@
     "context": "label",
     "string": "Automatic Amount"
   },
+  "JEw8ys": {
+    "string": "Releases"
+  },
   "JFmOfi": {
     "context": "button",
     "string": "Create Product"
@@ -3834,6 +3847,9 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MH1qA1": {
+    "string": "Test Action"
+  },
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
@@ -4015,6 +4031,9 @@
   },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
+  },
+  "NJ9ngY": {
+    "string": "Visible Action"
   },
   "NL5C12": {
     "context": "orderLine.quantity, subheader, oredr line metadata dialog",
@@ -4665,6 +4684,9 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
+  "RKHBh0": {
+    "string": "What's New"
+  },
   "RLTaAR": {
     "context": "order history message",
     "string": "Order address was updated"
@@ -4687,6 +4709,9 @@
   "RUS52q": {
     "context": "order history message",
     "string": "Restocked {quantity, plural, one {# item} other {# items}}"
+  },
+  "RUwHjA": {
+    "string": "Bug Fix"
   },
   "RUzdUH": {
     "string": "No shipping rates found"
@@ -6066,6 +6091,9 @@
     "context": "subsection header",
     "string": "Shipping Address"
   },
+  "ZdCdo5": {
+    "string": "Last updated: {date}"
+  },
   "ZepEWY": {
     "context": "Dry run item",
     "string": "Item"
@@ -6633,6 +6661,9 @@
     "context": "Refund success status",
     "string": "Success"
   },
+  "cpI605": {
+    "string": "Improvement"
+  },
   "cpZLRH": {
     "context": "dialog header",
     "string": "Delete Shipping Zones"
@@ -6648,6 +6679,9 @@
   "cryH86": {
     "context": "assign collections to sale and save",
     "string": "Assign and save"
+  },
+  "ctdEON": {
+    "string": "Latest updates and improvements"
   },
   "cti4iA": {
     "string": "Read the blog post"
@@ -7938,6 +7972,9 @@
   "lZC/1a": {
     "string": "greater than {value}"
   },
+  "lZTwh4": {
+    "string": "Feature"
+  },
   "laax5C": {
     "context": "order returned success message",
     "string": "Successfully returned products and granted refund!"
@@ -9138,6 +9175,10 @@
     "context": "order total amount",
     "string": "Total"
   },
+  "tf+OkY": {
+    "context": "link to edit variant metadata",
+    "string": "Edit on variant page"
+  },
   "tiY7bx": {
     "string": "Add new product"
   },
@@ -9161,10 +9202,6 @@
   "tqJwfo": {
     "context": "button",
     "string": "Set end date"
-  },
-  "tquei9": {
-    "context": "modal subheader, editable product variant metadata",
-    "string": "This is a metadata of the variant that is being used in this ordered item"
   },
   "tsL3IW": {
     "context": "gift card history message",
