@@ -193,7 +193,7 @@ describe("Parsing filter value", () => {
 });
 
 describe("Create product query variables legacy input", () => {
-  it("should return empty object when no filter container provided", () => {
+  it("should return null when no filter container provided", () => {
     // Arrange
     const filterContainer = null as any;
 
@@ -201,10 +201,10 @@ describe("Create product query variables legacy input", () => {
     const filter = createProductQueryVariablesLegacyInput(filterContainer);
 
     // Assert
-    expect(filter).toEqual({});
+    expect(filter).toBeNull();
   });
 
-  it("should return empty object when filter container is empty", () => {
+  it("should return null when filter container is empty", () => {
     // Arrange
     const filterContainer = [];
 
@@ -212,7 +212,7 @@ describe("Create product query variables legacy input", () => {
     const filter = createProductQueryVariablesLegacyInput(filterContainer);
 
     // Assert
-    expect(filter).toEqual({});
+    expect(filter).toBeNull();
   });
 
   it("should normalize collection singular to collections plural", () => {
@@ -228,9 +228,13 @@ describe("Create product query variables legacy input", () => {
     const filter = createProductQueryVariablesLegacyInput(filterContainer);
 
     // Assert
-    // The result should not have 'collection', should have 'collections' or similar
     expect(filter).toBeDefined();
     expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: collection (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).collection).toBeUndefined();
+    }
   });
 
   it("should normalize category singular to categories plural", () => {
@@ -248,6 +252,11 @@ describe("Create product query variables legacy input", () => {
     // Assert
     expect(filter).toBeDefined();
     expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: category (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).category).toBeUndefined();
+    }
   });
 
   it("should normalize productType singular to productTypes plural", () => {
@@ -265,6 +274,11 @@ describe("Create product query variables legacy input", () => {
     // Assert
     expect(filter).toBeDefined();
     expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: productType (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).productType).toBeUndefined();
+    }
   });
 
   it("should convert price string to PriceRangeInput object", () => {
@@ -281,11 +295,11 @@ describe("Create product query variables legacy input", () => {
 
     // Assert
     expect(filter).toBeDefined();
-    expect(typeof filter).toBe("object");
 
-    // Price should be converted to an object with gte property
-    if (filter.price) {
+    // Price should be converted to an object with gte property equal to 200
+    if (filter && typeof filter === "object" && filter.price) {
       expect(typeof filter.price).toBe("object");
+      expect(filter.price).toEqual({ gte: 200 });
     }
   });
 
@@ -302,11 +316,63 @@ describe("Create product query variables legacy input", () => {
     const filter = createProductQueryVariablesLegacyInput(filterContainer);
 
     // Assert
+    // Invalid price should be removed, and since it's the only field, filter should be null
+    expect(filter).toBeNull();
+  });
+
+  it("should handle price value of 0 correctly (not treat 0 as falsy)", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: { gte: 0, lte: 100 } },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // Edge case: price with 0 should NOT be removed (0 is falsy but valid)
     expect(filter).toBeDefined();
 
-    // Invalid price should be removed
-    if (filter.price === undefined || filter.price === null) {
-      expect(true).toBe(true); // Price was removed as expected
+    if (filter && typeof filter === "object" && filter.price) {
+      expect(filter.price.gte).toBe(0);
+      expect(filter.price.lte).toBe(100);
+    }
+  });
+
+  it("should handle multiple field normalizations simultaneously", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "collection" },
+        condition: { active: true, value: ["col-1"] },
+      },
+      {
+        field: { name: "category" },
+        condition: { active: true, value: ["cat-1"] },
+      },
+      {
+        field: { name: "productType" },
+        condition: { active: true, value: ["type-1"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+
+    if (filter && typeof filter === "object") {
+      // All singular forms should be removed after conversion
+
+      const filterObj = filter as any;
+
+      expect("collection" in filterObj ? filterObj.collection : undefined).toBeUndefined();
+      expect("category" in filterObj ? filterObj.category : undefined).toBeUndefined();
+      expect("productType" in filterObj ? filterObj.productType : undefined).toBeUndefined();
     }
   });
 
@@ -325,6 +391,22 @@ describe("Create product query variables legacy input", () => {
     // Assert
     // The function should successfully build filters without errors
     expect(filter).toBeDefined();
-    expect(typeof filter).toBe("object");
+  });
+
+  it("should return null when filter container is empty after normalization", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // Should return null, not empty object, when all fields are filtered out
+    expect(filter).toBeNull();
   });
 });

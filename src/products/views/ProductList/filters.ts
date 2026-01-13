@@ -215,22 +215,27 @@ export const getFilterVariables = ({
  * The export API uses plural field names (collections, categories, productTypes)
  * while internal representation may use singular forms.
  * Also handles price field format conversion.
+ *
+ * Note: This function uses QueryApiType.FILTER (legacy export API format),
+ * while the main product list uses QueryApiType.WHERE. Output structures may differ.
  */
-const normalizeFilterFieldsForExport = (filter: any): ProductFilterInput => {
+const normalizeFilterFieldsForExport = (
+  filter: Partial<ProductFilterInput>,
+): ProductFilterInput => {
   const normalized: any = { ...filter };
 
   // Convert singular field names to plural for export API
-  if (normalized.collection !== undefined) {
+  if ("collection" in normalized && normalized.collection !== undefined) {
     normalized.collections = normalized.collection;
     delete normalized.collection;
   }
 
-  if (normalized.category !== undefined) {
+  if ("category" in normalized && normalized.category !== undefined) {
     normalized.categories = normalized.category;
     delete normalized.category;
   }
 
-  if (normalized.productType !== undefined) {
+  if ("productType" in normalized && normalized.productType !== undefined) {
     normalized.productTypes = normalized.productType;
     delete normalized.productType;
   }
@@ -249,7 +254,8 @@ const normalizeFilterFieldsForExport = (filter: any): ProductFilterInput => {
       }
     } else if (typeof normalized.price === "object" && normalized.price !== null) {
       // If it's already an object, ensure it has the right structure
-      if (!normalized.price.gte && !normalized.price.lte) {
+      // Use strict equality to handle price = 0 case correctly (0 is falsy but valid)
+      if (normalized.price.gte === undefined && normalized.price.lte === undefined) {
         delete normalized.price;
       }
     }
@@ -261,24 +267,23 @@ const normalizeFilterFieldsForExport = (filter: any): ProductFilterInput => {
 /**
  * Builds a ProductFilterInput for product export operations using the legacy FILTER API.
  *
- * Reuses the ConditionalFilter's FiltersQueryBuilder to ensure consistency with the main
- * product list filtering logic. This avoids duplicating filter building logic and ensures
- * both list filtering and export use the same filter transformations.
- *
- * The FILTER API is the legacy export endpoint format that differs from the modern WHERE API.
+ * Reuses the ConditionalFilter's FiltersQueryBuilder to avoid duplicating filter-building logic
+ * for exports. Note that this function uses QueryApiType.FILTER (the legacy FILTER API format),
+ * while the main product list uses QueryApiType.WHERE, so the exact filter transformations and
+ * output structure may differ from those used by the main product list.
  *
  * @param filterContainer - The current filter state from ConditionalFilter context
- * @returns ProductFilterInput compatible with exportProducts mutation, or empty object if no filters
+ * @returns ProductFilterInput compatible with exportProducts mutation, or null if no filters
  *
  * @example
  * const filter = createProductQueryVariablesLegacyInput(filterContainer);
- * // Returns: { search: "shirt", categories: ["id1"], price: { gte: 10 }, ... }
+ * // Returns: { search: "shirt", categories: ["id1"], price: { gte: 10 }, ... } or null
  */
 export const createProductQueryVariablesLegacyInput = (
   filterContainer: FilterContainer,
 ): InputMaybe<ProductFilterInput> => {
   if (!filterContainer) {
-    return {} as InputMaybe<ProductFilterInput>;
+    return null;
   }
 
   const builder = new FiltersQueryBuilder<ProductFilterInput, "channel">({
@@ -289,5 +294,8 @@ export const createProductQueryVariablesLegacyInput = (
   const { filters } = builder.build();
 
   // Normalize field names for export API compatibility
-  return normalizeFilterFieldsForExport({ ...filters }) as InputMaybe<ProductFilterInput>;
+  const normalized = normalizeFilterFieldsForExport(filters);
+
+  // Return null if no filters remain after normalization
+  return Object.keys(normalized).length === 0 ? null : normalized;
 };

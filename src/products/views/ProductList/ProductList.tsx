@@ -381,7 +381,7 @@ const ProductList = ({ params }: ProductListProps) => {
           if (data.scope === ExportScope.FILTER) {
             const filter = createProductQueryVariablesLegacyInput(valueProvider.value);
 
-            if (!filter || Object.keys(filter).length === 0) {
+            if (!filter || (typeof filter === "object" && Object.keys(filter).length === 0)) {
               // Fall back to exporting all when no filters are applied
               exportInput.scope = ExportScope.ALL;
             } else {
