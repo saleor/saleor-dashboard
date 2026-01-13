@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { FiltersQueryBuilder } from "@dashboard/components/ConditionalFilter/FiltersQueryBuilder";
+import { QueryApiType } from "@dashboard/components/ConditionalFilter/FiltersQueryBuilder/types";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import {
   AttributeFragment,
@@ -209,93 +211,83 @@ export const getFilterVariables = ({
 };
 
 /**
- * Converts URL query parameters into a GraphQL ProductFilterInput object
- * for product export operations.
+ * Converts filter field names from internal format to export API format.
+ * The export API uses plural field names (collections, categories, productTypes)
+ * while internal representation may use singular forms.
+ * Also handles price field format conversion.
+ */
+const normalizeFilterFieldsForExport = (filter: any): ProductFilterInput => {
+  const normalized: any = { ...filter };
+
+  // Convert singular field names to plural for export API
+  if (normalized.collection !== undefined) {
+    normalized.collections = normalized.collection;
+    delete normalized.collection;
+  }
+
+  if (normalized.category !== undefined) {
+    normalized.categories = normalized.category;
+    delete normalized.category;
+  }
+
+  if (normalized.productType !== undefined) {
+    normalized.productTypes = normalized.productType;
+    delete normalized.productType;
+  }
+
+  // Handle price field format - must be an object with gte/lte, not a string
+  if (normalized.price !== undefined) {
+    // If price is a string or number, convert it to proper PriceRangeInput format
+    if (typeof normalized.price === "string" || typeof normalized.price === "number") {
+      const priceValue = parseFloat(String(normalized.price));
+
+      if (!Number.isNaN(priceValue)) {
+        normalized.price = { gte: priceValue };
+      } else {
+        // If we can't parse it, remove it
+        delete normalized.price;
+      }
+    } else if (typeof normalized.price === "object" && normalized.price !== null) {
+      // If it's already an object, ensure it has the right structure
+      if (!normalized.price.gte && !normalized.price.lte) {
+        delete normalized.price;
+      }
+    }
+  }
+
+  return normalized as ProductFilterInput;
+};
+
+/**
+ * Builds a ProductFilterInput for product export operations using the legacy FILTER API.
  *
- * @param queryParams - Current URL filter parameters from ProductListUrlFilters
+ * Reuses the ConditionalFilter's FiltersQueryBuilder to ensure consistency with the main
+ * product list filtering logic. This avoids duplicating filter building logic and ensures
+ * both list filtering and export use the same filter transformations.
+ *
+ * The FILTER API is the legacy export endpoint format that differs from the modern WHERE API.
+ *
+ * @param filterContainer - The current filter state from ConditionalFilter context
  * @returns ProductFilterInput compatible with exportProducts mutation, or empty object if no filters
  *
  * @example
- * const filter = getExportProductFilter({
- *   queryParams: { query: "shirt", channel: "default-channel" }
- * });
- * // Returns: { search: "shirt", channel: "default-channel" }
+ * const filter = createProductQueryVariablesLegacyInput(filterContainer);
+ * // Returns: { search: "shirt", categories: ["id1"], price: { gte: 10 }, ... }
  */
-export const getExportProductFilter = ({ queryParams }: { queryParams: ProductListUrlFilters }) => {
-  if (!queryParams) {
+export const createProductQueryVariablesLegacyInput = (
+  filterContainer: FilterContainer,
+): InputMaybe<ProductFilterInput> => {
+  if (!filterContainer) {
     return {} as InputMaybe<ProductFilterInput>;
   }
 
-  const filterInput: Partial<ProductFilterInput> = {};
-
-  // Include search phrase
-  if (queryParams.query) {
-    filterInput.search = queryParams.query;
-  }
-
-  // Add channel filter
-  if (queryParams.channel) {
-    filterInput.channel = queryParams.channel;
-  }
-
-  // Add categories filter
-  if (queryParams.categories) {
-    filterInput.categories = queryParams.categories;
-  }
-
-  // Add collections filter
-  if (queryParams.collections) {
-    filterInput.collections = queryParams.collections;
-  }
-
-  // Add product type filter
-  if (queryParams.productTypes) {
-    filterInput.productTypes = queryParams.productTypes;
-  }
-
-  // Add price range filter
-  const hasPriceFilter = queryParams.priceFrom !== undefined || queryParams.priceTo !== undefined;
-
-  if (hasPriceFilter) {
-    const minimalPrice = {
-      ...(queryParams.priceFrom && { gte: parseFloat(queryParams.priceFrom) }),
-      ...(queryParams.priceTo && { lte: parseFloat(queryParams.priceTo) }),
-    };
-
-    // Only add minimalPrice if it has at least one property
-    if (Object.keys(minimalPrice).length > 0) {
-      filterInput.minimalPrice = minimalPrice;
-    }
-  }
-
-  // Add stock filter
-  if (queryParams.stockStatus) {
-    filterInput.stockAvailability = queryParams.stockStatus as StockAvailability;
-  }
-
-  // Add attribute filters from different attribute types
-  const attributes: Array<{ slug: string; values: string[] }> = [];
-  const attributeTypes = [
-    "string-attributes",
-    "numeric-attributes",
-    "boolean-attributes",
-    "date-attributes",
-    "datetime-attributes",
-  ] as const;
-
-  attributeTypes.forEach(attrType => {
-    if (queryParams[attrType]) {
-      Object.entries(queryParams[attrType]).forEach(([slug, values]) => {
-        if (values?.length > 0) {
-          attributes.push({ slug, values });
-        }
-      });
-    }
+  const builder = new FiltersQueryBuilder<ProductFilterInput, "channel">({
+    apiType: QueryApiType.FILTER,
+    filterContainer,
+    topLevelKeys: ["channel"],
   });
+  const { filters } = builder.build();
 
-  if (attributes.length > 0) {
-    filterInput.attributes = attributes;
-  }
-
-  return filterInput as InputMaybe<ProductFilterInput>;
+  // Normalize field names for export API compatibility
+  return normalizeFilterFieldsForExport({ ...filters }) as InputMaybe<ProductFilterInput>;
 };

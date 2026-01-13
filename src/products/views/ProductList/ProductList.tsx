@@ -63,7 +63,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
 import { ProductsExportParameters } from "./export";
 import {
-  getExportProductFilter,
+  createProductQueryVariablesLegacyInput,
   getFilterQueryParam,
   getFilterVariables,
   storageUtils,
@@ -379,9 +379,7 @@ const ProductList = ({ params }: ProductListProps) => {
 
           // Include filter when exporting filtered products
           if (data.scope === ExportScope.FILTER) {
-            const filter = getExportProductFilter({
-              queryParams: params,
-            });
+            const filter = createProductQueryVariablesLegacyInput(valueProvider.value);
 
             if (!filter || Object.keys(filter).length === 0) {
               // Fall back to exporting all when no filters are applied
