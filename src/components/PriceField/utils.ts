@@ -39,12 +39,14 @@ export const findPriceSeparator = (input: string) =>
  * - European: "1.234,56" → "1234.56" (comma decimal, dot thousand)
  * - US: "1,234.56" → "1234.56" (dot decimal, comma thousand)
  * - Simple: "10,50" or "10.50" → "10.50"
+ * - US thousands only: "1,234,567" → "1234567"
+ * - European thousands only: "1.234.567" → "1234567"
  */
 export const normalizeDecimalSeparator = (value: string): string => {
-  const hasComma = value.includes(",");
-  const hasDot = value.includes(".");
+  const commaCount = (value.match(/,/g) || []).length;
+  const dotCount = (value.match(/\./g) || []).length;
 
-  if (hasComma && hasDot) {
+  if (commaCount > 0 && dotCount > 0) {
     // Both separators present - last one is decimal, other is thousand
     const lastComma = value.lastIndexOf(",");
     const lastDot = value.lastIndexOf(".");
@@ -58,7 +60,17 @@ export const normalizeDecimalSeparator = (value: string): string => {
     }
   }
 
-  // Only comma (European decimal) or only dot (US decimal) or no separator
+  // Multiple commas = US thousands separators (e.g., "1,234,567")
+  if (commaCount > 1) {
+    return value.replace(/,/g, "");
+  }
+
+  // Multiple dots = European thousands separators (e.g., "1.234.567")
+  if (dotCount > 1) {
+    return value.replace(/\./g, "");
+  }
+
+  // Single comma (European decimal) or single dot (US decimal) or no separator
   return value.replace(",", ".");
 };
 

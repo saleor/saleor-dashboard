@@ -39,6 +39,16 @@ describe("normalizeDecimalSeparator", () => {
   it("handles large US format numbers", () => {
     expect(normalizeDecimalSeparator("1,234,567.89")).toBe("1234567.89");
   });
+
+  it("handles US thousands-only format without decimal", () => {
+    // 1,234,567 = one million two hundred thirty-four thousand five hundred sixty-seven
+    expect(normalizeDecimalSeparator("1,234,567")).toBe("1234567");
+  });
+
+  it("handles European thousands-only format without decimal", () => {
+    // 1.234.567 = one million two hundred thirty-four thousand five hundred sixty-seven
+    expect(normalizeDecimalSeparator("1.234.567")).toBe("1234567");
+  });
 });
 
 describe("parseDecimalValue", () => {
