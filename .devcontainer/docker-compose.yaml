@@ -1,0 +1,18 @@
+services:
+  dashboard:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:5005:5005
+    env_file:
+      - ./dashboard.env
+    volumes:
+      - ../src:/app/src/
+      - ../assets/:/app/assets/
+      - ../locale/:/app/locale/
+      - ../scripts/:/app/scripts/
+      - ../.featureFlags/:/app/.featureFlags/
+      - ../vite.config.js:/app/vite.config.js
+      - ../schema-main.graphql:/app/schema-main.graphql

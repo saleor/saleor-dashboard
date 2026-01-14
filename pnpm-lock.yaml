@@ -10,6 +10,7 @@ overrides:
   glob@>=10.3.7 <=11.0.3: ">=11.1.0"
   js-yaml@>=4.0.0 <4.1.1: ">=4.1.1"
   js-yaml@<3.14.2: ">=3.14.2"
+  preact@>=10.28.0 <10.28.2: ">=10.28.2"
   tmp@<0.2.4: ">=0.2.4"
   vite@>=6.0.0 <6.4.1: ">=6.4.1"
   ws@>=8.0.0 <8.17.1: ">=8.17.1"
@@ -186,8 +187,8 @@ importers:
         specifier: ^1.293.0
         version: 1.301.1
       qs:
-        specifier: ^6.14.0
-        version: 6.14.0
+        specifier: ^6.14.1
+        version: 6.14.1
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -10775,10 +10776,10 @@ packages:
         integrity: sha512-ikkW716dfO1RkLREq5nrVDmcfQTrQfk3sAcP0ExuvSJ9NWOsvA2hz75bgV3GcHqG9xYlSm7Qe6Fzbn5kzx6MiQ==,
       }
 
-  preact@10.28.0:
+  preact@10.28.2:
     resolution:
       {
-        integrity: sha512-rytDAoiXr3+t6OIP3WGlDd0ouCUG1iCWzkcY3++Nreuoi17y6T5i/zRhe6uYfoVcxq6YU+sBtJouuRDsq8vvqA==,
+        integrity: sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA==,
       }
 
   prelude-ls@1.2.1:
@@ -10936,10 +10937,10 @@ packages:
       }
     engines: { node: ">=16.0.0" }
 
-  qs@6.14.0:
+  qs@6.14.1:
     resolution:
       {
-        integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==,
+        integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==,
       }
     engines: { node: ">=0.6" }
 
@@ -15613,7 +15614,7 @@ snapshots:
 
   "@pollyjs/utils@6.0.6":
     dependencies:
-      qs: 6.14.0
+      qs: 6.14.1
       url-parse: 1.5.10
     optional: true
 
@@ -20957,10 +20958,10 @@ snapshots:
       "@posthog/core": 1.7.0
       core-js: 3.47.0
       fflate: 0.4.8
-      preact: 10.28.0
+      preact: 10.28.2
       web-vitals: 4.2.4
 
-  preact@10.28.0: {}
+  preact@10.28.2: {}
 
   prelude-ls@1.2.1: {}
 
@@ -21063,7 +21064,7 @@ snapshots:
 
   pvutils@1.1.5: {}
 
-  qs@6.14.0:
+  qs@6.14.1:
     dependencies:
       side-channel: 1.1.0
 
