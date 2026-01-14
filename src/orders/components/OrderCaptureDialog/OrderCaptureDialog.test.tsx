@@ -70,7 +70,7 @@ describe("OrderCaptureDialog", () => {
       expect(screen.getByText("Fully Authorized")).toBeInTheDocument();
     });
 
-    it("shows 'Partial authorisation' pill when authorized < remaining", () => {
+    it("shows 'Partial Authorisation' pill when authorized < remaining", () => {
       // Arrange & Act
       renderDialog({
         orderTotal: createMoney(100),
@@ -78,7 +78,7 @@ describe("OrderCaptureDialog", () => {
       });
 
       // Assert
-      expect(screen.getByText("Partial authorisation")).toBeInTheDocument();
+      expect(screen.getByText("Partial Authorisation")).toBeInTheDocument();
     });
 
     it("shows warning callout for partial authorization with shortfall", () => {
