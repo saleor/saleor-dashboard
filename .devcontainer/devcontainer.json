@@ -1,0 +1,12 @@
+{
+  "name": "Saleor Dashboard",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "dashboard",
+  "workspaceFolder": "/app",
+  "forwardPorts": [5005],
+  "portsAttributes": {
+    "5005": {
+       "label": "Saleor Dashboard"
+    }
+  }
+}
