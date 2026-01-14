@@ -327,7 +327,6 @@ export const OrderNormalDetails = ({
           authorizedAmount={selectedTransaction.authorizedAmount}
           chargedAmount={selectedTransaction.chargedAmount}
           orderBalance={order.totalBalance}
-          open={true}
           onClose={closeModal}
           onSubmit={amount =>
             orderTransactionAction
@@ -398,7 +397,6 @@ export const OrderNormalDetails = ({
           errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
           orderTotal={order.total.gross}
           authorizedAmount={order.totalAuthorized}
-          open={true}
           onClose={closeModal}
           onSubmit={amount =>
             orderPaymentCapture.mutate({

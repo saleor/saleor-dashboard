@@ -16,10 +16,11 @@ import { getOrderTransactionErrorMessage } from "@dashboard/utils/errors/transac
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, Box as BoxIcon, CheckCircle2, CircleAlert, CreditCard } from "lucide-react";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { AuthorizationStatus, useCaptureState } from "./useCaptureState";
 
 type CaptureError = OrderErrorFragment | TransactionRequestActionErrorFragment;
 
@@ -32,10 +33,7 @@ const isTransactionError = (
 
 export type CaptureAmountOption = "orderTotal" | "custom";
 
-type AuthorizationStatus = "full" | "partial" | "none" | "charged";
-
 export interface OrderCaptureDialogProps {
-  open: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   orderTotal: IMoney;
   authorizedAmount: IMoney;
@@ -54,7 +52,6 @@ export interface OrderCaptureDialogProps {
 }
 
 export const OrderCaptureDialog = ({
-  open,
   confirmButtonState,
   orderTotal,
   authorizedAmount,
@@ -66,48 +63,28 @@ export const OrderCaptureDialog = ({
 }: OrderCaptureDialogProps): JSX.Element => {
   const intl = useIntl();
 
-  const totalAmount = orderTotal.amount;
-  const authAmount = authorizedAmount.amount; // Available to capture (bucket model)
-  const alreadyCharged = chargedAmount?.amount ?? 0;
   const currency = orderTotal.currency;
 
-  // With bucket model: authorizedAmount = what's available to capture
-  // (funds move from authorizedAmount to chargedAmount when captured)
-  const availableToCapture = authAmount;
+  // Use custom hook for capture state calculations
+  const captureState = useCaptureState({
+    orderTotal,
+    authorizedAmount,
+    chargedAmount,
+    orderBalance,
+  });
 
-  // Calculate what customer still owes:
-  // - If orderBalance provided (multi-transaction): use it (negative balance = owes money)
-  // - Otherwise: simple calculation from order total minus charged
-  const remainingToPay = orderBalance
-    ? Math.max(0, -orderBalance.amount) // Convert negative balance to positive amount owed
-    : totalAmount - alreadyCharged;
+  const {
+    availableToCapture,
+    alreadyCharged,
+    remainingToPay,
+    status: authStatus,
+    maxCapturable,
+    shortfall,
+    canCaptureOrderTotal,
+    orderTotalCaptured,
+  } = captureState;
 
-  // Order-wide captured amount (for display in Order section)
-  // = order total minus what's still owed
-  const orderTotalCaptured = totalAmount - remainingToPay;
-
-  // Determine authorization status
-  const getAuthorizationStatus = (): AuthorizationStatus => {
-    // Check if fully charged first (nothing left to pay)
-    if (remainingToPay <= 0) {
-      return "charged";
-    }
-
-    if (availableToCapture <= 0) {
-      return "none";
-    }
-
-    if (availableToCapture >= remainingToPay) {
-      return "full";
-    }
-
-    return "partial";
-  };
-
-  const authStatus = getAuthorizationStatus();
-  const maxCapturable = Math.max(0, availableToCapture);
-  const canCaptureOrderTotal = availableToCapture >= remainingToPay && remainingToPay > 0;
-  const shortfall = remainingToPay - availableToCapture;
+  const totalAmount = orderTotal.amount;
 
   // Default selection: always prefer "orderTotal" unless it's disabled
   const isFirstOptionDisabled = authStatus === "none" || authStatus === "charged";
@@ -136,19 +113,6 @@ export const OrderCaptureDialog = ({
   const [customAmountInput, setCustomAmountInput] = useState<string>(
     String(getDefaultCustomAmount()),
   );
-
-  // Reset state when dialog opens to ensure correct defaults based on current props
-  useEffect(() => {
-    if (open) {
-      setSelectedOption(getDefaultOption());
-
-      const defaultAmount = getDefaultCustomAmount();
-
-      setCustomAmount(defaultAmount);
-      setCustomAmountInput(String(defaultAmount));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
 
   // Get max decimal places for this currency (e.g., 2 for USD, 0 for JPY, 3 for KWD)
   const maxDecimalPlaces = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
@@ -259,7 +223,7 @@ export const OrderCaptureDialog = ({
   const authorizedAmountColor = authStatusColorMap[authStatus];
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open onChange={onClose}>
       <DashboardModal.Content size="sm">
         <DashboardModal.Header>
           <Box display="flex" alignItems="center" gap={3}>

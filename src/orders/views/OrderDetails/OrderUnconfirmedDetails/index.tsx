@@ -390,7 +390,6 @@ export const OrderUnconfirmedDetails = ({
           authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
           chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
           orderBalance={order?.totalBalance ?? defaultZeroMoney}
-          open={true}
           onClose={closeModal}
           onSubmit={amount =>
             orderTransactionAction
@@ -436,20 +435,21 @@ export const OrderUnconfirmedDetails = ({
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
-      <OrderCaptureDialog
-        confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-        orderTotal={order?.total.gross ?? defaultZeroMoney}
-        authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
-        open={params.action === "capture"}
-        onClose={closeModal}
-        onSubmit={amount =>
-          orderPaymentCapture.mutate({
-            amount,
-            id,
-          })
-        }
-      />
+      {params.action === "capture" && (
+        <OrderCaptureDialog
+          confirmButtonState={orderPaymentCapture.opts.status}
+          errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
+          orderTotal={order?.total.gross ?? defaultZeroMoney}
+          authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
+          onClose={closeModal}
+          onSubmit={amount =>
+            orderPaymentCapture.mutate({
+              amount,
+              id,
+            })
+          }
+        />
+      )}
       <OrderFulfillmentApproveDialog
         confirmButtonState={orderFulfillmentApprove.opts.status}
         errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}

@@ -12,7 +12,6 @@ const createMoney = (amount: number, currency = "USD"): IMoney => ({
 });
 
 const defaultProps: OrderCaptureDialogProps = {
-  open: true,
   confirmButtonState: "default" as ConfirmButtonTransitionState,
   orderTotal: createMoney(100),
   authorizedAmount: createMoney(100),
@@ -40,14 +39,6 @@ describe("OrderCaptureDialog", () => {
       // Assert
       expect(screen.getByRole("dialog")).toBeInTheDocument();
       expect(screen.getByText("Capture Payment")).toBeInTheDocument();
-    });
-
-    it("does not render the dialog when open is false", () => {
-      // Arrange & Act
-      renderDialog({ open: false });
-
-      // Assert
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
 
     it("displays order total label", () => {
