@@ -13,7 +13,7 @@ export const messages = defineMessages({
   },
   statusPartial: {
     id: "ZUYQ+C",
-    defaultMessage: "Partial authorisation",
+    defaultMessage: "Partial Authorisation",
     description: "status pill for partial authorization",
   },
   statusNoAuthorization: {
