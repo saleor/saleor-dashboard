@@ -1,5 +1,7 @@
 import { defineMessages } from "react-intl";
 
+// Re-export common messages for backward compatibility
+// TODO: Remove and use `commonMessages` from @dashboard/intl
 export const calloutTitleMessages = defineMessages({
   info: {
     defaultMessage: "Info",
