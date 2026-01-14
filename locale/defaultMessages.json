@@ -6144,10 +6144,6 @@
     "context": "empty state message",
     "string": "No refunds made for this order."
   },
-  "ZUYQ+C": {
-    "context": "status pill for partial authorization",
-    "string": "Partial authorisation"
-  },
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
   },
@@ -6396,6 +6392,10 @@
   "axFFaD": {
     "context": "range input label",
     "string": "Postal codes (end)"
+  },
+  "ayylzh": {
+    "context": "status pill for partial authorization",
+    "string": "Partial Authorisation"
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
