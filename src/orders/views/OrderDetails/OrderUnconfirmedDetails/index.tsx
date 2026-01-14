@@ -169,7 +169,10 @@ export const OrderUnconfirmedDetails = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
-  const defaultZeroMoney = { amount: 0, currency: "USD" };
+  const defaultZeroMoney = {
+    amount: 0,
+    currency: order?.total?.gross?.currency ?? order?.totalBalance?.currency ?? "USD",
+  };
   const selectedTransaction = useMemo(
     () => order?.transactions?.find(t => t.id === params.id),
     [order?.transactions, params.id],
