@@ -431,6 +431,10 @@
     "context": "column header",
     "string": "Title"
   },
+  "0YOedO": {
+    "context": "label for already charged amount",
+    "string": "Captured so far"
+  },
   "0YjGFG": {
     "context": "alert message",
     "string": "For subscription"
@@ -449,6 +453,10 @@
   "0em8tI": {
     "context": "ProductTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those products types and assigned products"
+  },
+  "0f6YvV": {
+    "context": "dialog title",
+    "string": "Capture Payment"
   },
   "0iMYc+": {
     "context": "field is optional",
@@ -1021,6 +1029,10 @@
   },
   "4YJHut": {
     "string": "Clear search"
+  },
+  "4YyeCx": {
+    "context": "label for order total amount",
+    "string": "Order total"
   },
   "4Z0O2B": {
     "context": "section header title",
@@ -1612,6 +1624,10 @@
     "context": "ordered product sku",
     "string": "SKU"
   },
+  "8JEG80": {
+    "context": "warning when authorized is less than total",
+    "string": "The remaining authorization doesn't cover the balance. {shortfall} will need a separate payment."
+  },
   "8LWaFr": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
@@ -2064,6 +2080,10 @@
   "BHr3fj": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for this product. To add stock quantity to the product <a>configure a warehouse</a> or use existing one by clicking button below."
+  },
+  "BJRu4V": {
+    "context": "pill status for partially captured outcome",
+    "string": "Partially captured"
   },
   "BJtUQI": {
     "context": "button",
@@ -2857,6 +2877,10 @@
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
   },
+  "G9y5Ze": {
+    "context": "pill status for fully captured outcome",
+    "string": "Fully captured"
+  },
   "GA+Djy": {
     "string": "Are you sure you want to delete these voucher codes?"
   },
@@ -3112,6 +3136,10 @@
     "context": "cta button label",
     "string": "Get in touch"
   },
+  "HSYM17": {
+    "context": "outcome prediction showing resulting order status after capture",
+    "string": "This will result in {status} order"
+  },
   "HSmg1/": {
     "context": "gift cards section name",
     "string": "Gift Cards"
@@ -3184,6 +3212,10 @@
   },
   "HvJPcU": {
     "string": "Category deleted"
+  },
+  "HwIhau": {
+    "context": "status pill for fully authorized payment",
+    "string": "Fully Authorized"
   },
   "HwTMFL": {
     "string": "Go to channels"
@@ -3284,6 +3316,10 @@
   },
   "ITYiRy": {
     "string": "Go to collections"
+  },
+  "IU1lif": {
+    "context": "radio option for custom capture amount",
+    "string": "Custom amount"
   },
   "IUWJKt": {
     "context": "order was discounted event title",
@@ -3703,6 +3739,10 @@
   "L87bp7": {
     "string": "Order payment successfully voided"
   },
+  "L8J/jr": {
+    "context": "status pill when order is fully paid",
+    "string": "Fully Captured"
+  },
   "L8seEc": {
     "string": "Subtotal"
   },
@@ -3939,9 +3979,17 @@
     "context": "customer input label",
     "string": "Customer"
   },
+  "MhlYkx": {
+    "context": "label for available authorization amount",
+    "string": "Available to capture (authorized)"
+  },
   "MjUyhA": {
     "context": "section subheader",
     "string": "Active member since {date}"
+  },
+  "Mm/Stj": {
+    "context": "hint showing maximum allowed custom amount",
+    "string": "Max: {amount}"
   },
   "MmGlkp": {
     "context": "dialog header",
@@ -4229,6 +4277,10 @@
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
+  },
+  "OUMqG1": {
+    "context": "label for remaining balance to capture",
+    "string": "Remaining balance"
   },
   "OUX4LB": {
     "context": "input label",
@@ -4658,6 +4710,10 @@
     "context": "add new refund button",
     "string": "New refund"
   },
+  "R/YHMH": {
+    "context": "label for amount already captured from this transaction",
+    "string": "Already captured"
+  },
   "R4IIw1": {
     "context": "tracking number of the shipment",
     "string": "Tracking number"
@@ -4928,6 +4984,10 @@
     "context": "product filter label",
     "string": "Product"
   },
+  "SnV3LR": {
+    "context": "error when no authorization exists",
+    "string": "No payment has been authorized for this order. The full amount of {amount} cannot be captured."
+  },
   "SpngiS": {
     "context": "sale status",
     "string": "Status"
@@ -5124,6 +5184,10 @@
   "U+79k0": {
     "context": "order expiration card description",
     "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
+  },
+  "U0IK0G": {
+    "context": "label for authorized amount",
+    "string": "Authorized"
   },
   "U2DyeR": {
     "string": "Are you sure you want to delete structure {menuName}?"
@@ -5774,6 +5838,10 @@
     "context": "product pricing, section header",
     "string": "Pricing"
   },
+  "XrliJg": {
+    "context": "label for amount selection",
+    "string": "Select amount to capture:"
+  },
   "Xsh2Pa": {
     "context": "column picker search input placeholder",
     "string": "Search for columns"
@@ -6325,6 +6393,10 @@
     "context": "range input label",
     "string": "Postal codes (end)"
   },
+  "ayylzh": {
+    "context": "status pill for partial authorization",
+    "string": "Partial Authorisation"
+  },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
@@ -6408,6 +6480,10 @@
   "bRJD/v": {
     "context": "button",
     "string": "Create permission group"
+  },
+  "bRXgSC": {
+    "context": "capture button with amount",
+    "string": "Capture {amount}"
   },
   "bS7A8u": {
     "context": "add tracking button",
@@ -7600,6 +7676,10 @@
     "context": "product price",
     "string": "Select channel"
   },
+  "jhyt3I": {
+    "context": "label for max capturable amount when partial authorization",
+    "string": "Remaining max (authorized)"
+  },
   "jiXbx5": {
     "context": "fulfillment status canceled",
     "string": "Canceled"
@@ -8139,6 +8219,10 @@
   },
   "mvVmbJ": {
     "string": "Install extension from manifest"
+  },
+  "mxGY7T": {
+    "context": "status pill for no authorization",
+    "string": "No Authorization"
   },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
@@ -8769,6 +8853,10 @@
     "context": "bulk delete label",
     "string": "Delete"
   },
+  "qlfssi": {
+    "context": "label for remaining amount customer owes",
+    "string": "Balance due"
+  },
   "qov29K": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
@@ -9143,6 +9231,10 @@
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"
   },
+  "tS2K/N": {
+    "context": "radio option for capturing order total",
+    "string": "Order total"
+  },
   "tTuCYj": {
     "context": "all gift cards label",
     "string": "All Gift Cards"
@@ -9261,6 +9353,10 @@
   "u6V5I/": {
     "context": "shipping zones configuration",
     "string": "Change default weight unit"
+  },
+  "u7ShY+": {
+    "context": "pill status for overcaptured outcome",
+    "string": "Overcaptured"
   },
   "u9/vj9": {
     "context": "webhook input label",
@@ -9444,6 +9540,10 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "v8e93p": {
+    "context": "hint for order total option",
+    "string": "Matches what customer owes"
   },
   "v9D1pm": {
     "context": "automatic completion cut-off date info message",
