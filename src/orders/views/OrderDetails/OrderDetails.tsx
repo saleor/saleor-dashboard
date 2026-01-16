@@ -138,7 +138,12 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
             }
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
-          onTransactionActionSend={orderMessages.handleTransactionAction}
+          onTransactionActionSend={async data => {
+            await apolloClient.refetchQueries({
+              include: [OrderDetailsWithMetadataDocument],
+            });
+            orderMessages.handleTransactionAction(data);
+          }}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
               include: [OrderDetailsWithMetadataDocument],
