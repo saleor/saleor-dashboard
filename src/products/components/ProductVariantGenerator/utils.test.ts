@@ -342,6 +342,26 @@ describe("ProductVariantGenerator utils", () => {
       expect(result[0].stocks).toEqual([{ warehouse: "wh1", quantity: 0 }]);
     });
 
+    it("ignores negative stock quantity", () => {
+      // Arrange
+      const attributes = createAttributes();
+      const selections: SelectionState = {
+        size: new Set(["s"]),
+        color: new Set(["r"]),
+      };
+      const warehouses = [{ id: "wh1" }];
+      const defaults = createDefaults({
+        stockEnabled: true,
+        stockQuantity: "-5",
+      });
+
+      // Act
+      const result = toBulkCreateInputs(attributes, selections, defaults, warehouses, []);
+
+      // Assert
+      expect(result[0].stocks).toBeUndefined();
+    });
+
     it("does not include stock when stockEnabled is false", () => {
       // Arrange
       const attributes = createAttributes();

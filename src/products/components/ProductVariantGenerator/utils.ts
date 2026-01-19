@@ -157,11 +157,12 @@ export function toBulkCreateInputs(
       name: variantName,
       // Only include SKU if enabled
       ...(sku && { sku }),
-      // Only include stocks if enabled and user provided a value (including 0)
+      // Only include stocks if enabled and user provided a valid non-negative value
       ...(defaults.stockEnabled &&
         hasStockValue &&
         parsedStock !== null &&
-        !isNaN(parsedStock) && {
+        !isNaN(parsedStock) &&
+        parsedStock >= 0 && {
           stocks: warehouses.map(w => ({
             warehouse: w.id,
             quantity: parsedStock,
