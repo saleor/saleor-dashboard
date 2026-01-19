@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

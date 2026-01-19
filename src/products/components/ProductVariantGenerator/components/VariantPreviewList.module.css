@@ -1,0 +1,57 @@
+.container {
+  height: 100%;
+  border: 1px solid var(--macaw-color-border-default1);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background-color: var(--macaw-color-bg-default1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.item > span:last-child,
+.item > p:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.newBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  color: oklch(39% 0.06 135);
+  font-size: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Dark mode for new badge */
+[data-macaw-ui-theme="defaultDark"] .newBadge {
+  color: oklch(80% 0.065 135);
+}
+
+.badge {
+  flex-shrink: 0;
+  min-width: 40px;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}

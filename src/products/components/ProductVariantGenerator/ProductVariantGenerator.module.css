@@ -1,0 +1,42 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.attributesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.noAttributes {
+  color: var(--macaw-color-text-default2);
+  text-align: center;
+  padding: 40px;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--macaw-color-border-default1);
+}
+
+.viewToggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--macaw-color-bg-default2);
+  border-radius: 8px;
+}
+
+.previewContent {
+  height: 280px;
+  overflow: auto;
+}

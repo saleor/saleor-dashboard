@@ -8,8 +8,10 @@ import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
+  ProductVariantBulkCreateInput,
   RefreshLimitsQuery,
   useWarehouseListQuery,
+  VariantAttributeFragment,
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
@@ -19,9 +21,10 @@ import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ProductVariantGenerator } from "../ProductVariantGenerator/ProductVariantGenerator";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
 import {
   useAttributesAdapter,
@@ -44,9 +47,10 @@ interface ProductVariantsProps {
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
+  onBulkCreate?: (inputs: ProductVariantBulkCreateInput[]) => Promise<void>;
 }
 
-const ProductVariants = ({
+export const ProductVariants = ({
   channels,
   errors,
   variants,
@@ -56,8 +60,10 @@ const ProductVariants = ({
   onAttributeValuesSearch,
   onChange,
   onRowClick,
+  onBulkCreate,
 }: ProductVariantsProps) => {
   const intl = useIntl();
+  const [generatorOpen, setGeneratorOpen] = useState(false);
 
   // https://github.com/saleor/saleor-dashboard/issues/4165
   const { data: warehousesData } = useWarehouseListQuery({
@@ -66,6 +72,40 @@ const ProductVariants = ({
     },
   });
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
+
+  const handleOpenGenerator = useCallback(() => {
+    setGeneratorOpen(true);
+  }, []);
+
+  const handleCloseGenerator = useCallback(() => {
+    setGeneratorOpen(false);
+  }, []);
+
+  const handleGenerateVariants = useCallback(
+    async (inputs: ProductVariantBulkCreateInput[]) => {
+      if (onBulkCreate) {
+        await onBulkCreate(inputs);
+        setGeneratorOpen(false);
+      }
+    },
+    [onBulkCreate],
+  );
+
+  // Transform variants for the generator
+  const existingVariantsForGenerator = useMemo(
+    () =>
+      (variants ?? []).map(variant => ({
+        id: variant.id,
+        name: variant.name,
+        attributes: variant.attributes.map(attr => ({
+          attribute: { id: attr.attribute.id },
+          values: attr.values.map(v => ({ slug: v.slug })),
+        })),
+      })),
+    [variants],
+  );
+
+  const hasVariantAttributes = (variantAttributes?.length ?? 0) > 0;
 
   // Normally this should be in LS handled by useListSettings hook
   // https://github.com/saleor/saleor-dashboard/issues/4164
@@ -175,49 +215,63 @@ const ProductVariants = ({
   );
 
   return (
-    <Datagrid
-      fillHandle={true}
-      renderHeader={props => (
-        <ProductVariantsHeader {...props} productId={productId} productName={productName} />
-      )}
-      availableColumns={visibleColumns}
-      emptyText={intl.formatMessage(messages.empty)}
-      getCellContent={getCellContent}
-      getCellError={getCellError}
-      menuItems={index => [
-        {
-          label: "Edit Variant",
-          onSelect: () => onRowClick(variants[index].id),
-          Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-        },
-      ]}
-      rows={variants?.length ?? 0}
-      selectionActions={(indexes, { removeRows }) => (
-        <Button
-          data-test-id="bulk-delete-button"
-          variant="tertiary"
-          onClick={() => removeRows(indexes)}
-        >
-          <FormattedMessage {...buttonMessages.delete} />
-        </Button>
-      )}
-      onColumnResize={handlers.onResize}
-      onColumnMoved={handlers.onMove}
-      renderColumnPicker={() => (
-        <ColumnPicker
-          staticColumns={staticColumns}
-          dynamicColumns={dynamicColumns}
-          selectedColumns={selectedColumns}
-          columnCategories={columnCategories}
-          onToggle={handlers.onToggle}
-          side="left"
+    <>
+      <Datagrid
+        fillHandle={true}
+        renderHeader={props => (
+          <ProductVariantsHeader
+            {...props}
+            productId={productId}
+            productName={productName}
+            hasVariantAttributes={hasVariantAttributes}
+            onGenerateVariants={handleOpenGenerator}
+          />
+        )}
+        availableColumns={visibleColumns}
+        emptyText={intl.formatMessage(messages.empty)}
+        getCellContent={getCellContent}
+        getCellError={getCellError}
+        menuItems={index => [
+          {
+            label: "Edit Variant",
+            onSelect: () => onRowClick(variants[index].id),
+            Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          },
+        ]}
+        rows={variants?.length ?? 0}
+        selectionActions={(indexes, { removeRows }) => (
+          <Button
+            data-test-id="bulk-delete-button"
+            variant="tertiary"
+            onClick={() => removeRows(indexes)}
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </Button>
+        )}
+        onColumnResize={handlers.onResize}
+        onColumnMoved={handlers.onMove}
+        renderColumnPicker={() => (
+          <ColumnPicker
+            staticColumns={staticColumns}
+            dynamicColumns={dynamicColumns}
+            selectedColumns={selectedColumns}
+            columnCategories={columnCategories}
+            onToggle={handlers.onToggle}
+            side="left"
+          />
+        )}
+        onChange={onChange}
+        recentlyAddedColumn={recentlyAddedColumn}
+      />
+      {hasVariantAttributes && onBulkCreate && (
+        <ProductVariantGenerator
+          open={generatorOpen}
+          onClose={handleCloseGenerator}
+          variantAttributes={variantAttributes as VariantAttributeFragment[]}
+          existingVariants={existingVariantsForGenerator}
+          onSubmit={handleGenerateVariants}
         />
       )}
-      onChange={onChange}
-      recentlyAddedColumn={recentlyAddedColumn}
-    />
+    </>
   );
 };
-
-ProductVariants.displayName = "ProductVariants";
-export default ProductVariants;

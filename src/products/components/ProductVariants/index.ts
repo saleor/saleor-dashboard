@@ -1,2 +1,2 @@
-export { default } from "./ProductVariants";
-export * from "./ProductVariants";
+export { ProductVariants } from "./ProductVariants";
+export { ProductVariants as default } from "./ProductVariants";

@@ -11598,10 +11598,11 @@ export type ProductBulkDeleteMutation = { __typename: 'Mutation', productBulkDel
 export type ProductVariantBulkCreateMutationVariables = Exact<{
   id: Scalars['ID'];
   inputs: Array<ProductVariantBulkCreateInput> | ProductVariantBulkCreateInput;
+  errorPolicy?: InputMaybe<ErrorPolicyEnum>;
 }>;
 
 
-export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string }> } | null };
+export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null }>, results: Array<{ __typename: 'ProductVariantBulkResult', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> | null, productVariant: { __typename: 'ProductVariant', id: string, name: string } | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string, name: string }> } | null };
 
 export type ProductVariantBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
