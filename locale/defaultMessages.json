@@ -31,6 +31,10 @@
     "context": "dialog header",
     "string": "Mark Order as Paid"
   },
+  "+BkNuT": {
+    "context": "aria label for grid view button",
+    "string": "Grid view"
+  },
   "+CeEe3": {
     "context": "order shipping method name",
     "string": "Shipping"
@@ -333,6 +337,10 @@
     "context": "dialog header",
     "string": "Select a product type"
   },
+  "/yy0uS": {
+    "context": "message when no SKU prefix is provided",
+    "string": "SKU will not be set"
+  },
   "/z5aI6": {
     "context": "section header",
     "string": "Extension Webhooks"
@@ -621,6 +629,10 @@
     "context": "sum of all granted refunds for an order",
     "string": "Granted refund"
   },
+  "1qukRr": {
+    "context": "message when all selected variant combinations already exist",
+    "string": "All selected combinations already exist as variants"
+  },
   "1rpzrM": {
     "context": "search placeholder",
     "string": "Search by country name"
@@ -663,6 +675,10 @@
   "26BKkX": {
     "context": "order status",
     "string": "Partially returned"
+  },
+  "28vvyx": {
+    "context": "deselect all values button",
+    "string": "None"
   },
   "29L5Yq": {
     "context": "gift card not found message",
@@ -2603,6 +2619,9 @@
     "context": "info card title",
     "string": "Card information"
   },
+  "EkdOXh": {
+    "string": "{success} variants created, {failed} failed"
+  },
   "EoTI4r": {
     "context": "authorize status none",
     "string": "None"
@@ -2719,6 +2738,10 @@
   "FRJRmi": {
     "context": "selected customer gift card is sent to subtitle",
     "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
+  },
+  "FS6Drh": {
+    "context": "sku prefix input label",
+    "string": "SKU prefix"
   },
   "FSOOH7": {
     "context": "option title",
@@ -3702,6 +3725,10 @@
     "context": "default gift card delete description",
     "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} gift cards?}}"
   },
+  "KvK69l": {
+    "context": "limit reached warning",
+    "string": "Maximum {limit} variants can be generated at once. Please reduce your selection."
+  },
   "Kw0jHS": {
     "context": "created products counter",
     "string": "{count}/{max} SKUs used"
@@ -4224,6 +4251,10 @@
     "context": "alert message",
     "string": "There are no available products in this channel."
   },
+  "O90S9P": {
+    "context": "empty state when no variant attributes",
+    "string": "No variant attributes defined for this product type."
+  },
   "O95R3Z": {
     "string": "Phone"
   },
@@ -4311,6 +4342,10 @@
   "OhdPS1": {
     "context": "amount of refunded money",
     "string": "Amount"
+  },
+  "Om1LKj": {
+    "context": "stock input label",
+    "string": "Initial stock (all warehouses)"
   },
   "OqYCQ4": {
     "context": "allow legacy gift card use description",
@@ -4524,6 +4559,10 @@
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
+  "Q+oKl+": {
+    "context": "confirmation dialog description",
+    "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
+  },
   "Q/Nbku": {
     "context": "product field",
     "string": "Type"
@@ -4640,6 +4679,10 @@
   "QX0gQb": {
     "context": "radio button label",
     "string": "Use the product list to suggest refund amount. Ideal for refunding specific items or entire order."
+  },
+  "QY31tL": {
+    "context": "placeholder for multiselect dropdown",
+    "string": "Search and select values..."
   },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
@@ -4912,6 +4955,10 @@
   "SGdcJD": {
     "string": "Enter code"
   },
+  "SHm5Dv": {
+    "context": "count of existing variants",
+    "string": "{count} already exist and will be skipped"
+  },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
   },
@@ -5027,6 +5074,10 @@
   "T5nU7u": {
     "context": "header",
     "string": "Create Token"
+  },
+  "T61cLQ": {
+    "context": "generate button",
+    "string": "Generate {count} {count, plural, one {variant} other {variants}}"
   },
   "T6dXGG": {
     "context": "header",
@@ -5492,6 +5543,10 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
+  },
+  "Vwqh4L": {
+    "context": "dialog subtitle explaining what user should do",
+    "string": "Select attribute values to create all possible variant combinations"
   },
   "VxStyU": {
     "context": "order history message",
@@ -5982,6 +6037,10 @@
     "context": "imperial unit system",
     "string": "Imperial"
   },
+  "YhGcC5": {
+    "context": "select all values button",
+    "string": "All"
+  },
   "YiC3cn": {
     "context": "option description",
     "string": "Allocate stock in the first warehouse in the list assigned to this channel. If stock is insufficient, the remaining quantity is allocated in the next warehouse on the list and repeated if necessary."
@@ -6154,6 +6213,10 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
+  },
+  "ZcbW+/": {
+    "context": "generate variants menu item",
+    "string": "Generate variants"
   },
   "Zd3Eew": {
     "context": "subsection header",
@@ -6611,6 +6674,10 @@
   "c5pMZ8": {
     "string": "API error"
   },
+  "c5tWY8": {
+    "context": "dialog title",
+    "string": "Generate Variants"
+  },
   "c7cakc": {
     "context": "model attribute entity type",
     "string": "Models"
@@ -6630,6 +6697,10 @@
     "context": "grant refund, reason input field placeholder",
     "string": "Reason for refund"
   },
+  "cD0BQQ": {
+    "context": "sku preview example showing resulting SKU",
+    "string": "→ {example}"
+  },
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
@@ -6641,6 +6712,10 @@
   "cFVgOo": {
     "context": "Channel label",
     "string": "Channel"
+  },
+  "cHsr1m": {
+    "context": "badge for new variant that will be created",
+    "string": "New"
   },
   "cIoOf0": {
     "context": "relative time in minutes",
@@ -6783,6 +6858,10 @@
   },
   "d+qgix": {
     "string": "Next step"
+  },
+  "d1AzfC": {
+    "context": "hint text showing number of available options in multiselect",
+    "string": "{count} options available"
   },
   "d1PvC8": {
     "context": "checkbox",
@@ -7016,6 +7095,9 @@
   "f4oJRg": {
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
+  },
+  "f8jN6/": {
+    "string": "{count} variants created successfully"
   },
   "fDc5ys": {
     "context": "order transaction refund summary label",
@@ -7730,6 +7812,10 @@
     "context": "app privacy policy link",
     "string": "View this extension's privacy policy."
   },
+  "jww7Wl": {
+    "context": "confirmation dialog title",
+    "string": "Generate {count} variants?"
+  },
   "jxoMLL": {
     "context": "product field",
     "string": "Collections"
@@ -7866,6 +7952,10 @@
   "kVTWtR": {
     "context": "product updated at",
     "string": "Last updated"
+  },
+  "kWuOqa": {
+    "context": "badge for variant that already exists",
+    "string": "Exists"
   },
   "kWw0fr": {
     "string": "Grant refund"
@@ -8517,6 +8607,10 @@
   "osPBn1": {
     "context": "currency filter label",
     "string": "Currency"
+  },
+  "owCz2y": {
+    "context": "message when matrix view cannot be shown",
+    "string": "Matrix view requires exactly 2 attributes with selected values"
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
@@ -9174,6 +9268,10 @@
     "context": "error message",
     "string": "Promo code already exists"
   },
+  "suAexp": {
+    "context": "aria label for list view button",
+    "string": "List view"
+  },
   "sw8Wl2": {
     "context": "variant pricing section subtitle",
     "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
@@ -9474,6 +9572,10 @@
   "ukdRUv": {
     "context": "delete variant dialog subtitle",
     "string": "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
+  },
+  "ukjCvM": {
+    "context": "empty state prompt",
+    "string": "Select values above to generate variants"
   },
   "ulh3kf": {
     "string": "Collections"
