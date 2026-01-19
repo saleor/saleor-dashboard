@@ -347,18 +347,11 @@ export function handleMetadataReferenceAssignment(
       firstValue ? [firstValue] : [],
     );
   } else {
-    console.log(
-      "🟣 handleMetadataReferenceAssignment - attributeValues from modal:",
-      attributeValues,
-    );
-
     const finalValues = mergeAttributeValues(
       assignReferencesAttributeId,
       attributeValues.map(({ value }) => value),
       attributes as FormsetData<AttributeInputData, string[]>,
     );
-
-    console.log("🟣 handleMetadataReferenceAssignment - finalValues after merge:", finalValues);
 
     /* We will store attribute selection display values in useFormset "additionalData" field
      * This has to be done, because when user chooses new references in the modal,
@@ -366,10 +359,6 @@ export function handleMetadataReferenceAssignment(
     const existingMetadata = attribute?.additionalData || [];
     const newMetadata = attributeValues;
     const allMetadata = [...existingMetadata, ...newMetadata];
-
-    console.log("🟣 handleMetadataReferenceAssignment - existingMetadata:", existingMetadata);
-    console.log("🟣 handleMetadataReferenceAssignment - newMetadata:", newMetadata);
-    console.log("🟣 handleMetadataReferenceAssignment - allMetadata:", allMetadata);
 
     // Remove duplicate entries, happens when user deletes and adds value before saving the form
     const uniqueMetadata = allMetadata.reduce((acc, meta) => {
@@ -379,11 +368,6 @@ export function handleMetadataReferenceAssignment(
 
       return acc;
     }, [] as AttributeValuesMetadata[]);
-
-    console.log(
-      "🟣 handleMetadataReferenceAssignment - uniqueMetadata after dedup:",
-      uniqueMetadata,
-    );
 
     // IMPORTANT: Set metadata BEFORE updating values to prevent race condition
     // where selectAttributeReference filters out metadata that hasn't been saved yet
@@ -606,14 +590,6 @@ export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
 ) => {
-  console.log("getReferenceAttributeDisplayData called", {
-    attributeId: attribute.id,
-    attributeLabel: attribute.label,
-    attributeValue: attribute.value,
-    additionalData: attribute.additionalData,
-    entityType: attribute.data.entityType,
-  });
-
   return {
     ...attribute,
     data: {
@@ -621,23 +597,17 @@ export const getReferenceAttributeDisplayData = (
       references:
         attribute.value && attribute.value.length > 0
           ? attribute.value.map(valueId => {
-              console.log(`Processing reference valueId: ${valueId}`);
-
               /* "additionalData" is the cache for newly selected values from useFormset hook.
                * It is populated from the initial GraphQL payload
                * and whenever the user assigns references in the dialog into useFormset data. */
               const meta = attribute.additionalData?.find(m => m.value === valueId);
 
               if (meta) {
-                console.log("✅ Found in additionalData (meta):", meta);
-
                 return {
                   label: meta.label,
                   value: meta.value,
                 };
               }
-
-              console.log("⚠️ Not found in additionalData, checking search results...");
 
               /* As a fallback, look at the latest referenced entity search results.
                * This should cover scenarios where the user has just added a reference in modal
@@ -652,27 +622,19 @@ export const getReferenceAttributeDisplayData = (
               );
 
               if (searchResult) {
-                console.log("✅ Found in search results:", searchResult);
-
                 return searchResult;
               }
-
-              console.log("❌ FALLBACK TRIGGERED - Looking up in attribute.data.values");
 
               // Fallback: Look up the name from attribute.data.values
               // This array contains the correct mapping of reference ID to entity name
               const valueWithName = attribute.data.values.find(val => val.reference === valueId);
 
               if (valueWithName) {
-                console.log("✅ Found name in attribute.data.values:", valueWithName.name);
-
                 return {
                   label: valueWithName.name,
                   value: valueId,
                 };
               }
-
-              console.log("❌ ULTIMATE FALLBACK - Using valueId as label:", valueId);
 
               // Ultimate fallback if not found anywhere
               return {

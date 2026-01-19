@@ -74,28 +74,15 @@ export function createAttributeReferenceChangeHandler(
   triggerChange: () => void,
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
-    console.log("🔵 createAttributeReferenceChangeHandler called with values:", values);
     attributes.change(attributeId, values);
-
-    /* Note: "additionalData" is a part of useFormset API.
-     * In here it is used to hold display values for references selected by user
-     * before they are returned from our API as attribute references
-     *  */
-    const currentAdditionalData =
-      attributes.data.find(a => a.id === attributeId)?.additionalData || [];
-
-    console.log("🔵 currentAdditionalData (might be stale):", currentAdditionalData);
 
     // When user removes attribute values from selection, delete them in useFormset additionalData
     // Use setAdditionalData with merge function to avoid race conditions with async state updates
     attributes.setAdditionalData(attributeId, [], (prev: AttributeValuesMetadata[]) => {
       // Filter using the latest state (prev), not currentAdditionalData which might be stale
-      console.log("🔵 Filter function - prev:", prev, "values:", values);
       const filtered = (prev ?? []).filter((meta: AttributeValuesMetadata) =>
         values.includes(meta.value),
       );
-
-      console.log("🔵 Filter function - result:", filtered);
 
       return filtered;
     });
@@ -119,13 +106,8 @@ export function createAttributeReferenceAdditionalDataHandler(
    *  */
 
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    console.log("🟢 createAttributeReferenceAdditionalDataHandler called with metadata:", values);
-
     const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
-      console.log("🟢 Merge function - prev:", prev, "next:", next);
       const merged = mergeReferencesAdditionalData(prev, next);
-
-      console.log("🟢 Merge function - merged result:", merged);
 
       // Don't filter here - let the caller (handleMetadataReferenceAssignment) handle filtering
       // Filtering here causes issues because attributes.data might have stale values
