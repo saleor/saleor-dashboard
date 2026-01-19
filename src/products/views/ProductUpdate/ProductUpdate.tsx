@@ -229,10 +229,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ).length;
 
       if (successCount === 0 && inputs.length > 0) {
-        throw new Error("All variants failed to create");
+        throw new Error(intl.formatMessage(messages.variantBulkCreateAllFailed));
       }
     },
-    [bulkCreateVariants, id],
+    [bulkCreateVariants, id, intl],
   );
   const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
   const [submit, submitOpts] = useProductUpdateHandler(product);

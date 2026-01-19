@@ -1,4 +1,5 @@
 import { ProductVariantBulkCreateInput } from "@dashboard/graphql";
+import slugify from "slugify";
 
 import {
   AttributeData,
@@ -144,7 +145,9 @@ export function toBulkCreateInputs(
     let sku: string | undefined;
 
     if (shouldGenerateSku) {
-      const skuParts = combo.map(v => v.slug ?? v.name ?? "").filter(Boolean);
+      const skuParts = combo
+        .map(v => v.slug ?? (v.name ? slugify(v.name).toLowerCase() : ""))
+        .filter(Boolean);
 
       sku = [skuPrefix, ...skuParts].join("-");
     }

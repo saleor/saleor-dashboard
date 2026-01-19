@@ -76,7 +76,7 @@ export const DefaultsSection = ({
             disabled={!defaults.skuEnabled}
             size="small"
             __width="120px"
-            placeholder="TSHIRT"
+            placeholder={intl.formatMessage(messages.skuPrefixPlaceholder)}
           />
           {defaults.skuEnabled && skuPreviewExample && (
             <Text size={1} color="default2">

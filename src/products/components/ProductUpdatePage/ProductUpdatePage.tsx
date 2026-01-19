@@ -70,7 +70,7 @@ import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import ProductTaxes from "../ProductTaxes";
-import ProductVariants from "../ProductVariants";
+import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";

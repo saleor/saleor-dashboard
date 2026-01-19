@@ -401,6 +401,44 @@ describe("ProductVariantGenerator utils", () => {
       expect(result[0].sku).toBe("SHIRT-small-red");
     });
 
+    it("slugifies attribute names when slug is missing", () => {
+      // Arrange
+      const attributes: AttributeData[] = [
+        {
+          id: "size",
+          name: "Size",
+          slug: "size",
+          inputType: AttributeInputTypeEnum.DROPDOWN,
+          values: [
+            { id: "s", name: "Extra Large", slug: null }, // No slug, has spaces
+          ],
+        },
+        {
+          id: "color",
+          name: "Color",
+          slug: "color",
+          inputType: AttributeInputTypeEnum.DROPDOWN,
+          values: [
+            { id: "r", name: "Bright Red", slug: null }, // No slug, has spaces
+          ],
+        },
+      ];
+      const selections: SelectionState = {
+        size: new Set(["s"]),
+        color: new Set(["r"]),
+      };
+      const defaults = createDefaults({
+        skuEnabled: true,
+        skuPrefix: "SHIRT",
+      });
+
+      // Act
+      const result = toBulkCreateInputs(attributes, selections, defaults, [], []);
+
+      // Assert - names should be slugified (lowercase, hyphens)
+      expect(result[0].sku).toBe("SHIRT-extra-large-bright-red");
+    });
+
     it("does not generate SKU when skuEnabled is false", () => {
       // Arrange
       const attributes = createAttributes();

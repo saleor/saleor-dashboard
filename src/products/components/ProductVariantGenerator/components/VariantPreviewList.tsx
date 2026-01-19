@@ -51,8 +51,8 @@ export const VariantPreviewList = ({ previews }: VariantPreviewListProps) => {
   return (
     <Box className={styles.container}>
       <Box className={styles.list}>
-        {sortedPreviews.map(variant => (
-          <Box key={variant.name} className={styles.item}>
+        {sortedPreviews.map((variant, index) => (
+          <Box key={`${variant.name}-${index}`} className={styles.item}>
             {variant.isExisting ? (
               <Text size={2} color="default2" className={styles.badge}>
                 {intl.formatMessage(messages.existsBadge)}

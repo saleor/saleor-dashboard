@@ -66,6 +66,11 @@ export const messages = defineMessages({
     defaultMessage: "→ {example}",
     description: "sku preview example showing resulting SKU",
   },
+  skuPrefixPlaceholder: {
+    id: "kdK1YM",
+    defaultMessage: "e.g. SHIRT",
+    description: "placeholder for SKU prefix input",
+  },
   skuNotSet: {
     id: "/yy0uS",
     defaultMessage: "SKU will not be set",
