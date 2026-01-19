@@ -369,11 +369,7 @@ export function handleMetadataReferenceAssignment(
       return acc;
     }, [] as AttributeValuesMetadata[]);
 
-    // IMPORTANT: Set metadata BEFORE updating values to prevent race condition
-    // where selectAttributeReference filters out metadata that hasn't been saved yet
     handlers.selectAttributeReferenceAdditionalData(assignReferencesAttributeId, uniqueMetadata);
-
-    // Set the reference values in useFormset hook AFTER metadata is saved
     handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
   }
 }
