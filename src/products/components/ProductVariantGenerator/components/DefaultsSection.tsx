@@ -1,4 +1,4 @@
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, CheckedState, Input, Text } from "@saleor/macaw-ui-next";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -20,8 +20,8 @@ export const DefaultsSection = ({
   const intl = useIntl();
 
   const handleSkuEnabledChange = useCallback(
-    (checked: boolean) => {
-      onChange({ ...defaults, skuEnabled: checked });
+    (checked: CheckedState) => {
+      onChange({ ...defaults, skuEnabled: checked === true });
     },
     [defaults, onChange],
   );
@@ -34,8 +34,8 @@ export const DefaultsSection = ({
   );
 
   const handleStockEnabledChange = useCallback(
-    (checked: boolean) => {
-      onChange({ ...defaults, stockEnabled: checked });
+    (checked: CheckedState) => {
+      onChange({ ...defaults, stockEnabled: checked === true });
     },
     [defaults, onChange],
   );
