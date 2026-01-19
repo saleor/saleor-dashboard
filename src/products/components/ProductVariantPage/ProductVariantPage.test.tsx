@@ -37,6 +37,8 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "ProductChannelListing" as const,
         isPublished: true,
         publishedAt: "2023-01-01",
+        isAvailableForPurchase: true,
+        availableForPurchaseAt: "2023-01-01",
         visibleInListings: true,
         channel: {
           id: "1",
@@ -67,6 +69,8 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "ProductChannelListing" as const,
         isPublished: true,
         publishedAt: "2023-01-01",
+        isAvailableForPurchase: true,
+        availableForPurchaseAt: "2023-01-01",
         visibleInListings: true,
         channel: {
           id: "1",
@@ -188,12 +192,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           media: [],
         },
       ],
-      productType: {
-        __typename: "ProductType" as const,
-        id: "product-type-1",
-        hasVariants: true,
-        name: "Test Product Type",
-      },
       thumbnail: {
         __typename: "Image" as const,
         url: "test-thumb.jpg",
@@ -204,7 +202,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           id: "listing-1",
           isPublished: true,
           publishedAt: "2023-01-01",
-          visibleInListings: true,
           channel: {
             __typename: "Channel" as const,
             id: "channel-1",
