@@ -91,12 +91,10 @@ export const ProductVariants = ({
     [onBulkCreate],
   );
 
-  // Transform variants for the generator
+  // Transform variants for the generator (only need attributes for comparison)
   const existingVariantsForGenerator = useMemo(
     () =>
       (variants ?? []).map(variant => ({
-        id: variant.id,
-        name: variant.name,
         attributes: variant.attributes.map(attr => ({
           attribute: { id: attr.attribute.id },
           values: attr.values.map(v => ({ slug: v.slug })),

@@ -1,5 +1,6 @@
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
@@ -30,13 +31,6 @@ export const AttributeValueChips = ({
   const allSelected = selectedCount === attribute.values.length;
   const noneSelected = selectedCount === 0;
 
-  const handleToggle = useCallback(
-    (valueId: string) => {
-      onToggleValue(valueId);
-    },
-    [onToggleValue],
-  );
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -58,9 +52,9 @@ export const AttributeValueChips = ({
             key={value.id}
             label={value.name ?? ""}
             selected={value.selected}
-            onClick={() => handleToggle(value.id)}
+            onClick={() => onToggleValue(value.id)}
             swatch={
-              attribute.inputType === "SWATCH"
+              attribute.inputType === AttributeInputTypeEnum.SWATCH
                 ? { file: value.file, value: value.value }
                 : undefined
             }

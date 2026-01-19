@@ -21,7 +21,9 @@ import { ProductVariantGeneratorProps } from "./types";
 import { useVariantGenerator } from "./useVariantGenerator";
 import { toBulkCreateInputs } from "./utils";
 
+// Maximum variants that can be created in a single batch (API performance consideration)
 const VARIANT_LIMIT = 100;
+// Show confirmation dialog when creating this many or more variants
 const CONFIRMATION_THRESHOLD = 30;
 
 type ViewMode = "grid" | "list";
@@ -47,9 +49,6 @@ export const ProductVariantGenerator = ({
     () => mapEdgesToItems(warehousesData?.warehouses) ?? [],
     [warehousesData],
   );
-
-  // For now, we'll pass empty channels - the pricing can be set later in the datagrid
-  const channels: Array<{ id: string }> = [];
 
   const {
     attributes,
@@ -105,20 +104,14 @@ export const ProductVariantGenerator = ({
     setShowConfirmation(false);
 
     try {
-      const inputs = toBulkCreateInputs(
-        attributes,
-        defaults,
-        warehouses,
-        channels,
-        existingCombinations,
-      );
+      const inputs = toBulkCreateInputs(attributes, defaults, warehouses, existingCombinations);
 
       await onSubmit(inputs);
       setConfirmState("success");
-    } catch (error) {
+    } catch {
       setConfirmState("error");
     }
-  }, [attributes, defaults, warehouses, channels, existingCombinations, onSubmit]);
+  }, [attributes, defaults, warehouses, existingCombinations, onSubmit]);
 
   const handleGenerate = useCallback(() => {
     if (!canGenerate || isOverLimit) return;
@@ -175,6 +168,8 @@ export const ProductVariantGenerator = ({
                     size="small"
                     onClick={() => setViewMode("grid")}
                     disabled={!canShowMatrix}
+                    aria-label={intl.formatMessage(messages.gridView)}
+                    data-test-id="view-toggle-grid"
                   >
                     <LayoutGrid size={16} />
                   </Button>
@@ -183,6 +178,8 @@ export const ProductVariantGenerator = ({
                     size="small"
                     onClick={() => setViewMode("list")}
                     disabled={previews.length === 0}
+                    aria-label={intl.formatMessage(messages.listView)}
+                    data-test-id="view-toggle-list"
                   >
                     <List size={16} />
                   </Button>
@@ -197,11 +194,7 @@ export const ProductVariantGenerator = ({
                     existingCombinations={existingCombinations}
                   />
                 ) : (
-                  <VariantPreviewList
-                    previews={previews}
-                    newCount={newVariantsCount}
-                    existingCount={existingCount}
-                  />
+                  <VariantPreviewList previews={previews} />
                 )}
               </Box>
 

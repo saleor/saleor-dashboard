@@ -1,4 +1,8 @@
-import { ProductVariantBulkCreateInput, VariantAttributeFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  ProductVariantBulkCreateInput,
+  VariantAttributeFragment,
+} from "@dashboard/graphql";
 
 export interface AttributeValueSelection {
   id: string;
@@ -14,13 +18,12 @@ export interface AttributeWithSelections {
   id: string;
   name: string | null;
   slug: string | null;
-  inputType: string | null;
+  inputType: AttributeInputTypeEnum | null;
   values: AttributeValueSelection[];
 }
 
 export interface GeneratorDefaults {
   stockQuantity: string;
-  priceAmount: string;
 }
 
 export interface GeneratedVariantPreview {
@@ -39,8 +42,6 @@ export interface ProductVariantGeneratorProps {
   onClose: () => void;
   variantAttributes: VariantAttributeFragment[];
   existingVariants: Array<{
-    id: string;
-    name: string;
     attributes: Array<{
       attribute: { id: string };
       values: Array<{ slug: string | null }>;

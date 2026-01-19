@@ -5,14 +5,14 @@
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.15s ease;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--macaw-color-border-default1);
   background-color: transparent;
   color: var(--macaw-color-text-default1);
   overflow: hidden;
 }
 
 .chip:hover:not(:disabled) {
-  border-color: #9ca3af;
+  border-color: var(--macaw-color-border-default2);
   background-color: var(--macaw-color-bg-default2);
 }
 
@@ -21,21 +21,9 @@
   cursor: not-allowed;
 }
 
-/* Selected state uses CSS custom properties that we define based on theme */
-.selected {
-  --chip-bg: #111827;
-  --chip-border: #111827;
-  --chip-text: #ffffff;
-  --chip-hover-bg: #1f2937;
-
-  background-color: var(--chip-bg);
-  border-color: var(--chip-border);
-  color: var(--chip-text);
-}
-
+/* Selected state colors are applied via inline styles from useTheme() for theme-aware inversion */
 .selected:hover:not(:disabled) {
-  background-color: var(--chip-hover-bg);
-  border-color: var(--chip-hover-bg);
+  opacity: 0.9;
 }
 
 .content {

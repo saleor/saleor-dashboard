@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "../messages";
+import styles from "./ProductVariantsHeader.module.css";
 
 interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   productId: string;
@@ -46,61 +47,63 @@ export const ProductVariantsHeader = ({
     : intl.formatMessage(messages.title);
 
   return (
-    <DatagridHeader title={headerTitle}>
-      {hasVariantAttributes && !isFullscreenOpen && (
-        <Dropdown>
-          <Dropdown.Trigger>
-            <Button
-              variant="tertiary"
-              icon={<MoreVertical size={20} />}
-              data-test-id="variants-menu-button"
-            />
-          </Dropdown.Trigger>
-          <Dropdown.Content align="end">
-            <List
-              padding={2}
-              borderRadius={4}
-              boxShadow="defaultOverlay"
-              backgroundColor="default1"
-            >
-              <Dropdown.Item>
-                <List.Item
-                  borderRadius={4}
-                  paddingX={1.5}
-                  paddingY={2}
-                  onClick={onGenerateVariants}
-                  data-test-id="generate-variants-button"
-                >
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <CopyPlus size={16} />
-                    <Text>
-                      <FormattedMessage
-                        defaultMessage="Generate variants"
-                        id="ZcbW+/"
-                        description="generate variants menu item"
-                      />
-                    </Text>
-                  </Box>
-                </List.Item>
-              </Dropdown.Item>
-            </List>
-          </Dropdown.Content>
-        </Dropdown>
-      )}
-      <DatagridHeader.ButtonFullScreen isOpen={isFullscreenOpen} onToggle={toggleFullscreen}>
-        {isFullscreenOpen ? (
-          <FormattedMessage id="QjPJ78" defaultMessage="Close" description="close full-screen" />
-        ) : (
-          <FormattedMessage
-            id="9OZ/fr"
-            defaultMessage="Bulk edit"
-            description="open full-screen mode with bulk edit"
-          />
+    <div className={styles.header}>
+      <DatagridHeader title={headerTitle}>
+        {hasVariantAttributes && !isFullscreenOpen && (
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button
+                variant="tertiary"
+                icon={<MoreVertical size={20} />}
+                data-test-id="variants-menu-button"
+              />
+            </Dropdown.Trigger>
+            <Dropdown.Content align="end">
+              <List
+                padding={2}
+                borderRadius={4}
+                boxShadow="defaultOverlay"
+                backgroundColor="default1"
+              >
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={1.5}
+                    paddingY={2}
+                    onClick={onGenerateVariants}
+                    data-test-id="generate-variants-button"
+                  >
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <CopyPlus size={16} />
+                      <Text>
+                        <FormattedMessage
+                          defaultMessage="Generate variants"
+                          id="ZcbW+/"
+                          description="generate variants menu item"
+                        />
+                      </Text>
+                    </Box>
+                  </List.Item>
+                </Dropdown.Item>
+              </List>
+            </Dropdown.Content>
+          </Dropdown>
         )}
-      </DatagridHeader.ButtonFullScreen>
-      <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
-        <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
-      </DatagridHeader.ButtonAddRow>
-    </DatagridHeader>
+        <DatagridHeader.ButtonFullScreen isOpen={isFullscreenOpen} onToggle={toggleFullscreen}>
+          {isFullscreenOpen ? (
+            <FormattedMessage id="QjPJ78" defaultMessage="Close" description="close full-screen" />
+          ) : (
+            <FormattedMessage
+              id="9OZ/fr"
+              defaultMessage="Bulk edit"
+              description="open full-screen mode with bulk edit"
+            />
+          )}
+        </DatagridHeader.ButtonFullScreen>
+        <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
+          <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
+        </DatagridHeader.ButtonAddRow>
+      </DatagridHeader>
+    </div>
   );
 };

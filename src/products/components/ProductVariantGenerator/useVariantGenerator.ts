@@ -39,7 +39,6 @@ export function useVariantGenerator({
 
   const [defaults, setDefaults] = useState<GeneratorDefaults>({
     stockQuantity: "",
-    priceAmount: "",
   });
 
   // Extract existing combinations for comparison
@@ -122,7 +121,7 @@ export function useVariantGenerator({
         })),
       })),
     );
-    setDefaults({ stockQuantity: "", priceAmount: "" });
+    setDefaults({ stockQuantity: "" });
   }, [variantAttributes]);
 
   return {

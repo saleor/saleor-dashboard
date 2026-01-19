@@ -11,6 +11,26 @@ export const messages = defineMessages({
     defaultMessage: "Select attribute values to create all possible variant combinations",
     description: "dialog subtitle explaining what user should do",
   },
+  newBadge: {
+    id: "cHsr1m",
+    defaultMessage: "New",
+    description: "badge for new variant that will be created",
+  },
+  existsBadge: {
+    id: "kWuOqa",
+    defaultMessage: "Exists",
+    description: "badge for variant that already exists",
+  },
+  gridView: {
+    id: "+BkNuT",
+    defaultMessage: "Grid view",
+    description: "aria label for grid view button",
+  },
+  listView: {
+    id: "suAexp",
+    defaultMessage: "List view",
+    description: "aria label for list view button",
+  },
   selectAll: {
     id: "YhGcC5",
     defaultMessage: "All",

@@ -13,7 +13,7 @@
 }
 
 .equalCol {
-  width: 1fr;
+  /* Equal width columns achieved through table-layout: fixed on parent */
 }
 
 /* Header row with bottom border */
@@ -110,14 +110,9 @@
 .newBadge {
   display: inline-block;
   padding: 3px 10px;
-  color: oklch(39% 0.06 135);
+  color: var(--macaw-color-text-success1);
   font-size: 11px;
   font-weight: 500;
-}
-
-/* Dark mode for new badge */
-[data-macaw-ui-theme="defaultDark"] .newBadge {
-  color: oklch(80% 0.065 135);
 }
 
 /* Empty state */

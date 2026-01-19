@@ -113,7 +113,6 @@ export function toBulkCreateInputs(
   attributes: AttributeWithSelections[],
   defaults: GeneratorDefaults,
   warehouses: Array<{ id: string }>,
-  channels: Array<{ id: string }>,
   existingCombinations: ExistingVariantCombination[][],
 ): ProductVariantBulkCreateInput[] {
   const selected = getSelectedValues(attributes);
@@ -153,13 +152,6 @@ export function toBulkCreateInputs(
             quantity: parsedStock,
           })),
         }),
-      // Only include channel listings if price is provided
-      ...(defaults.priceAmount.trim() && {
-        channelListings: channels.map(c => ({
-          channelId: c.id,
-          price: parseFloat(defaults.priceAmount) || 0,
-        })),
-      }),
     };
 
     return input;

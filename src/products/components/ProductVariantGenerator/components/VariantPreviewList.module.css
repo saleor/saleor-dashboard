@@ -32,15 +32,10 @@
 .newBadge {
   display: inline-block;
   padding: 2px 8px;
-  color: oklch(39% 0.06 135);
+  color: var(--macaw-color-text-success1);
   font-size: 10px;
   font-weight: 500;
   flex-shrink: 0;
-}
-
-/* Dark mode for new badge */
-[data-macaw-ui-theme="defaultDark"] .newBadge {
-  color: oklch(80% 0.065 135);
 }
 
 .badge {

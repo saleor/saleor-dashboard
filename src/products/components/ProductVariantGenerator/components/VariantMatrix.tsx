@@ -1,15 +1,20 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
-import { AttributeValueSelection, AttributeWithSelections } from "../types";
+import {
+  AttributeValueSelection,
+  AttributeWithSelections,
+  ExistingVariantCombination,
+} from "../types";
 import styles from "./VariantMatrix.module.css";
 
 interface VariantMatrixProps {
   attributes: AttributeWithSelections[];
-  existingCombinations: Array<{ attributeId: string; valueSlug: string | null }[]>;
+  existingCombinations: ExistingVariantCombination[][];
 }
 
 const ColorDot = ({ value }: { value: AttributeValueSelection }) => {
@@ -99,7 +104,9 @@ export const VariantMatrix = ({ attributes, existingCombinations }: VariantMatri
             {colAttr.values.map(value => (
               <GridTable.Cell key={value.id} className={styles.columnHeaderCell}>
                 <Box className={styles.columnHeaderContent} title={value.name ?? undefined}>
-                  {colAttr.inputType === "SWATCH" && <ColorDot value={value} />}
+                  {colAttr.inputType === AttributeInputTypeEnum.SWATCH && (
+                    <ColorDot value={value} />
+                  )}
                   <span className={styles.columnHeaderText}>{value.name}</span>
                 </Box>
               </GridTable.Cell>
@@ -125,10 +132,12 @@ export const VariantMatrix = ({ attributes, existingCombinations }: VariantMatri
                   <GridTable.Cell key={colValue.id} className={styles.dataCell}>
                     {exists ? (
                       <Text size={2} color="default2">
-                        Exists
+                        {intl.formatMessage(messages.existsBadge)}
                       </Text>
                     ) : (
-                      <span className={styles.newBadge}>New</span>
+                      <span className={styles.newBadge}>
+                        {intl.formatMessage(messages.newBadge)}
+                      </span>
                     )}
                   </GridTable.Cell>
                 );
