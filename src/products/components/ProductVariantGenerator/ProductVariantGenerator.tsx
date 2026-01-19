@@ -28,9 +28,17 @@ const CONFIRMATION_THRESHOLD = 30;
 
 type ViewMode = "grid" | "list";
 
+// Convert product name to a URL-safe SKU prefix (uppercase, no spaces, max 20 chars)
+const toSkuPrefix = (name: string): string =>
+  name
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "")
+    .slice(0, 20);
+
 export const ProductVariantGenerator = ({
   open,
   onClose,
+  productName,
   variantAttributes,
   existingVariants,
   onSubmit,
@@ -50,11 +58,15 @@ export const ProductVariantGenerator = ({
     [warehousesData],
   );
 
+  const defaultSkuPrefix = useMemo(() => toSkuPrefix(productName), [productName]);
+
   const {
     attributes,
+    selections,
     defaults,
     setDefaults,
     toggleValue,
+    setSelectedValues,
     selectAllValues,
     deselectAllValues,
     previews,
@@ -62,18 +74,13 @@ export const ProductVariantGenerator = ({
     existingCount,
     existingCombinations,
     canGenerate,
+    canShowMatrix,
     reset,
   } = useVariantGenerator({
     variantAttributes,
     existingVariants,
+    defaultSkuPrefix,
   });
-
-  // Determine if matrix view is available (exactly 2 attributes with selections)
-  const canShowMatrix = useMemo(() => {
-    const selectedAttrs = attributes.filter(attr => attr.values.some(v => v.selected));
-
-    return selectedAttrs.length === 2;
-  }, [attributes]);
 
   // Reset state when modal opens
   useEffect(() => {
@@ -99,19 +106,38 @@ export const ProductVariantGenerator = ({
   const isOverLimit = newVariantsCount > VARIANT_LIMIT;
   const needsConfirmation = newVariantsCount >= CONFIRMATION_THRESHOLD && !isOverLimit;
 
+  // Generate SKU preview example from first preview
+  const skuPreviewExample = useMemo(() => {
+    if (previews.length === 0) return undefined;
+
+    const firstPreview = previews.find(p => !p.isExisting) ?? previews[0];
+    const slugParts = firstPreview.attributes.map(a =>
+      a.valueName.toLowerCase().replace(/\s+/g, "-"),
+    );
+    const prefix = defaults.skuPrefix.trim();
+
+    return prefix ? [prefix, ...slugParts].join("-") : slugParts.join("-");
+  }, [previews, defaults.skuPrefix]);
+
   const executeGenerate = useCallback(async () => {
     setConfirmState("loading");
     setShowConfirmation(false);
 
     try {
-      const inputs = toBulkCreateInputs(attributes, defaults, warehouses, existingCombinations);
+      const inputs = toBulkCreateInputs(
+        attributes,
+        selections,
+        defaults,
+        warehouses,
+        existingCombinations,
+      );
 
       await onSubmit(inputs);
       setConfirmState("success");
     } catch {
       setConfirmState("error");
     }
-  }, [attributes, defaults, warehouses, existingCombinations, onSubmit]);
+  }, [attributes, selections, defaults, warehouses, existingCombinations, onSubmit]);
 
   const handleGenerate = useCallback(() => {
     if (!canGenerate || isOverLimit) return;
@@ -152,16 +178,22 @@ export const ProductVariantGenerator = ({
                   <AttributeValueChips
                     key={attr.id}
                     attribute={attr}
+                    selectedIds={selections[attr.id] ?? new Set()}
                     onToggleValue={valueId => toggleValue(attr.id, valueId)}
                     onSelectAll={() => selectAllValues(attr.id)}
                     onDeselectAll={() => deselectAllValues(attr.id)}
+                    onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
                   />
                 ))}
               </Box>
 
               {/* Defaults row with view toggle */}
               <Box className={styles.controlsRow}>
-                <DefaultsSection defaults={defaults} onChange={setDefaults} />
+                <DefaultsSection
+                  defaults={defaults}
+                  onChange={setDefaults}
+                  skuPreviewExample={skuPreviewExample}
+                />
                 <Box className={styles.viewToggle}>
                   <Button
                     variant={viewMode === "grid" ? "primary" : "secondary"}
@@ -191,6 +223,7 @@ export const ProductVariantGenerator = ({
                 {viewMode === "grid" && canShowMatrix ? (
                   <VariantMatrix
                     attributes={attributes}
+                    selections={selections}
                     existingCombinations={existingCombinations}
                   />
                 ) : (
@@ -246,7 +279,7 @@ export const ProductVariantGenerator = ({
         onConfirm={executeGenerate}
         confirmButtonState={confirmState}
         title={intl.formatMessage(messages.confirmTitle, { count: newVariantsCount })}
-        confirmButtonLabel={intl.formatMessage(messages.continueButton)}
+        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
       >
         <Text>{intl.formatMessage(messages.confirmDescription, { count: newVariantsCount })}</Text>
       </ActionDialog>

@@ -5,19 +5,22 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
+// Note: Parent component (ProductVariantGenerator) only renders this when canShowMatrix is true
 import {
-  AttributeValueSelection,
-  AttributeWithSelections,
+  AttributeData,
+  AttributeValue,
   ExistingVariantCombination,
+  SelectionState,
 } from "../types";
 import styles from "./VariantMatrix.module.css";
 
 interface VariantMatrixProps {
-  attributes: AttributeWithSelections[];
+  attributes: AttributeData[];
+  selections: SelectionState;
   existingCombinations: ExistingVariantCombination[][];
 }
 
-const ColorDot = ({ value }: { value: AttributeValueSelection }) => {
+const ColorDot = ({ value }: { value: AttributeValue }) => {
   if (!value.file?.url && !value.value) {
     return null;
   }
@@ -42,7 +45,7 @@ function combinationExists(
   rowValueSlug: string | null,
   colAttrId: string,
   colValueSlug: string | null,
-  existingCombinations: Array<{ attributeId: string; valueSlug: string | null }[]>,
+  existingCombinations: ExistingVariantCombination[][],
 ): boolean {
   return existingCombinations.some(
     combo =>
@@ -51,34 +54,24 @@ function combinationExists(
   );
 }
 
-export const VariantMatrix = ({ attributes, existingCombinations }: VariantMatrixProps) => {
+export const VariantMatrix = ({
+  attributes,
+  selections,
+  existingCombinations,
+}: VariantMatrixProps) => {
   const intl = useIntl();
 
-  // Get selected values for each attribute
+  // Get selected values for each attribute (parent ensures exactly 2 attributes with selections)
   const selectedByAttribute = useMemo(
     () =>
       attributes.map(attr => ({
         id: attr.id,
         name: attr.name,
         inputType: attr.inputType,
-        values: attr.values.filter(v => v.selected),
+        values: attr.values.filter(v => selections[attr.id]?.has(v.id)),
       })),
-    [attributes],
+    [attributes, selections],
   );
-
-  // For matrix view, we need exactly 2 attributes with selections
-  const canShowMatrix =
-    selectedByAttribute.length === 2 && selectedByAttribute.every(attr => attr.values.length > 0);
-
-  if (!canShowMatrix) {
-    return (
-      <Box className={styles.emptyState}>
-        <Text size={2} color="default2">
-          {intl.formatMessage(messages.matrixRequiresTwoAttributes)}
-        </Text>
-      </Box>
-    );
-  }
 
   const [rowAttr, colAttr] = selectedByAttribute;
   const columnCount = colAttr.values.length + 1; // +1 for row label column

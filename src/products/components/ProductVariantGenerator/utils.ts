@@ -1,11 +1,13 @@
 import { ProductVariantBulkCreateInput } from "@dashboard/graphql";
 
 import {
-  AttributeValueSelection,
-  AttributeWithSelections,
+  AttributeData,
+  AttributeValue,
   ExistingVariantCombination,
+  ExistingVariantData,
   GeneratedVariantPreview,
   GeneratorDefaults,
+  SelectionState,
 } from "./types";
 
 /**
@@ -24,13 +26,13 @@ export function cartesianProduct<T>(arrays: T[][]): T[][] {
 }
 
 /**
- * Extracts selected values from each attribute.
+ * Gets selected values for each attribute based on selection state.
  */
-export function getSelectedValues(attributes: AttributeWithSelections[]) {
+function getSelectedValues(attributes: AttributeData[], selections: SelectionState) {
   return attributes.map(attr => ({
     attributeId: attr.id,
     attributeName: attr.name,
-    values: attr.values.filter(v => v.selected),
+    values: attr.values.filter(v => selections[attr.id]?.has(v.id)),
   }));
 }
 
@@ -38,8 +40,8 @@ export function getSelectedValues(attributes: AttributeWithSelections[]) {
  * Checks if a combination of attribute values already exists as a variant.
  */
 function isCombinationExisting(
-  combo: AttributeValueSelection[],
-  selectedAttrs: Array<{ attributeId: string; values: AttributeValueSelection[] }>,
+  combo: AttributeValue[],
+  selectedAttrs: Array<{ attributeId: string; values: AttributeValue[] }>,
   existingCombinations: ExistingVariantCombination[][],
 ): boolean {
   return existingCombinations.some(existing =>
@@ -55,10 +57,11 @@ function isCombinationExisting(
  * Generates a preview of all variant combinations that would be created.
  */
 export function generateVariantPreviews(
-  attributes: AttributeWithSelections[],
+  attributes: AttributeData[],
+  selections: SelectionState,
   existingCombinations: ExistingVariantCombination[][],
 ): GeneratedVariantPreview[] {
-  const selected = getSelectedValues(attributes);
+  const selected = getSelectedValues(attributes, selections);
 
   // If any attribute has no selections, return empty
   const hasEmptySelection = selected.some(s => s.values.length === 0);
@@ -89,12 +92,7 @@ export function generateVariantPreviews(
  * Converts existing variants to a format suitable for comparison.
  */
 export function extractExistingCombinations(
-  existingVariants: Array<{
-    attributes: Array<{
-      attribute: { id: string };
-      values: Array<{ slug: string | null }>;
-    }>;
-  }>,
+  existingVariants: ExistingVariantData,
 ): ExistingVariantCombination[][] {
   return existingVariants.map(variant =>
     variant.attributes.flatMap(attr =>
@@ -110,12 +108,13 @@ export function extractExistingCombinations(
  * Converts the selected attribute combinations into bulk create input format.
  */
 export function toBulkCreateInputs(
-  attributes: AttributeWithSelections[],
+  attributes: AttributeData[],
+  selections: SelectionState,
   defaults: GeneratorDefaults,
   warehouses: Array<{ id: string }>,
   existingCombinations: ExistingVariantCombination[][],
 ): ProductVariantBulkCreateInput[] {
-  const selected = getSelectedValues(attributes);
+  const selected = getSelectedValues(attributes, selections);
 
   // If any attribute has no selections, return empty
   if (selected.some(s => s.values.length === 0)) {
@@ -134,8 +133,21 @@ export function toBulkCreateInputs(
   const hasStockValue = stockQuantity !== "";
   const parsedStock = hasStockValue ? parseInt(stockQuantity, 10) : null;
 
+  // Generate SKU from prefix + attribute slugs (only if enabled and prefix provided)
+  const skuPrefix = defaults.skuPrefix.trim();
+  const shouldGenerateSku = defaults.skuEnabled && skuPrefix !== "";
+
   return newCombinations.map(combo => {
     const variantName = combo.map(v => v.name ?? "").join(" / ");
+
+    // SKU is optional - only generate if enabled and prefix provided
+    let sku: string | undefined;
+
+    if (shouldGenerateSku) {
+      const skuParts = combo.map(v => v.slug ?? v.name ?? "").filter(Boolean);
+
+      sku = [skuPrefix, ...skuParts].join("-");
+    }
 
     const input: ProductVariantBulkCreateInput = {
       attributes: combo.map((value, attrIndex) => ({
@@ -143,8 +155,11 @@ export function toBulkCreateInputs(
         values: value.slug ? [value.slug] : [],
       })),
       name: variantName,
-      // Only include stocks if user provided a value (including 0)
-      ...(hasStockValue &&
+      // Only include SKU if enabled
+      ...(sku && { sku }),
+      // Only include stocks if enabled and user provided a value (including 0)
+      ...(defaults.stockEnabled &&
+        hasStockValue &&
         parsedStock !== null &&
         !isNaN(parsedStock) && {
           stocks: warehouses.map(w => ({

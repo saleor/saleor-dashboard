@@ -265,6 +265,7 @@ export const ProductVariants = ({
         <ProductVariantGenerator
           open={generatorOpen}
           onClose={handleCloseGenerator}
+          productName={productName}
           variantAttributes={variantAttributes as VariantAttributeFragment[]}
           existingVariants={existingVariantsForGenerator}
           onSubmit={handleGenerateVariants}

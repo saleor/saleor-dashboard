@@ -11,17 +11,6 @@
   padding-bottom: 0;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.actions {
-  display: flex;
-  gap: 4px;
-}
-
 .chips {
   display: flex;
   flex-wrap: wrap;

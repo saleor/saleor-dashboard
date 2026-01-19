@@ -56,6 +56,21 @@ export const messages = defineMessages({
     defaultMessage: "Initial stock (all warehouses)",
     description: "stock input label",
   },
+  skuPrefix: {
+    id: "FS6Drh",
+    defaultMessage: "SKU prefix",
+    description: "sku prefix input label",
+  },
+  skuPreview: {
+    id: "cD0BQQ",
+    defaultMessage: "→ {example}",
+    description: "sku preview example showing resulting SKU",
+  },
+  skuNotSet: {
+    id: "/yy0uS",
+    defaultMessage: "SKU will not be set",
+    description: "message when no SKU prefix is provided",
+  },
   generate: {
     id: "T61cLQ",
     defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",
@@ -83,11 +98,6 @@ export const messages = defineMessages({
       "Maximum {limit} variants can be generated at once. Please reduce your selection.",
     description: "limit reached warning",
   },
-  continueButton: {
-    id: "ddDDdG",
-    defaultMessage: "Continue",
-    description: "confirmation continue button",
-  },
   allAlreadyExist: {
     id: "1qukRr",
     defaultMessage: "All selected combinations already exist as variants",
@@ -97,5 +107,15 @@ export const messages = defineMessages({
     id: "owCz2y",
     defaultMessage: "Matrix view requires exactly 2 attributes with selected values",
     description: "message when matrix view cannot be shown",
+  },
+  selectValuesPlaceholder: {
+    id: "QY31tL",
+    defaultMessage: "Search and select values...",
+    description: "placeholder for multiselect dropdown",
+  },
+  selectValuesHint: {
+    id: "d1AzfC",
+    defaultMessage: "{count} options available",
+    description: "hint text showing number of available options in multiselect",
   },
 });

@@ -1,10 +1,20 @@
 .container {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.field {
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkboxLabel {
+  min-width: 200px;
+}
+
+.inputWithPreview {
   display: flex;
   align-items: center;
   gap: 8px;

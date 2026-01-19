@@ -4,26 +4,16 @@
   padding: 0;
   border-radius: 20px;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid var(--macaw-color-border-default1);
-  background-color: transparent;
-  color: var(--macaw-color-text-default1);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+  border: 1px solid;
   overflow: hidden;
 }
 
-.chip:hover:not(:disabled) {
-  border-color: var(--macaw-color-border-default2);
-  background-color: var(--macaw-color-bg-default2);
-}
-
-.chip:disabled {
+.chip.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-/* Selected state colors are applied via inline styles from useTheme() for theme-aware inversion */
-.selected:hover:not(:disabled) {
-  opacity: 0.9;
 }
 
 .content {
