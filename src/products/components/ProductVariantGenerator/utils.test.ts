@@ -18,7 +18,9 @@ describe("ProductVariantGenerator utils", () => {
       const result = cartesianProduct(input);
 
       // Assert
-      expect(result).toEqual([[]]);
+      expect(result.combinations).toEqual([[]]);
+      expect(result.totalCount).toBe(1);
+      expect(result.isTruncated).toBe(false);
     });
 
     it("returns single array items wrapped in arrays", () => {
@@ -29,7 +31,9 @@ describe("ProductVariantGenerator utils", () => {
       const result = cartesianProduct(input);
 
       // Assert
-      expect(result).toEqual([["a"], ["b"]]);
+      expect(result.combinations).toEqual([["a"], ["b"]]);
+      expect(result.totalCount).toBe(2);
+      expect(result.isTruncated).toBe(false);
     });
 
     it("computes cartesian product of two arrays", () => {
@@ -43,12 +47,14 @@ describe("ProductVariantGenerator utils", () => {
       const result = cartesianProduct(input);
 
       // Assert
-      expect(result).toEqual([
+      expect(result.combinations).toEqual([
         ["S", "Red"],
         ["S", "Blue"],
         ["M", "Red"],
         ["M", "Blue"],
       ]);
+      expect(result.totalCount).toBe(4);
+      expect(result.isTruncated).toBe(false);
     });
 
     it("computes cartesian product of three arrays", () => {
@@ -59,12 +65,29 @@ describe("ProductVariantGenerator utils", () => {
       const result = cartesianProduct(input);
 
       // Assert
-      expect(result).toEqual([
+      expect(result.combinations).toEqual([
         ["S", "Red", "Cotton"],
         ["S", "Red", "Polyester"],
         ["M", "Red", "Cotton"],
         ["M", "Red", "Polyester"],
       ]);
+      expect(result.totalCount).toBe(4);
+      expect(result.isTruncated).toBe(false);
+    });
+
+    it("truncates result and reports total when combinations exceed safety limit", () => {
+      // Arrange - 5 arrays × 20 items = 3.2 million theoretical combinations
+      const input = Array.from({ length: 5 }, (_, i) =>
+        Array.from({ length: 20 }, (_, j) => `${i}-${j}`),
+      );
+
+      // Act
+      const result = cartesianProduct(input);
+
+      // Assert - should be capped at 1000 (MAX_COMBINATIONS) but report true total
+      expect(result.combinations.length).toBeLessThanOrEqual(1000);
+      expect(result.totalCount).toBe(3_200_000);
+      expect(result.isTruncated).toBe(true);
     });
   });
 
@@ -138,7 +161,7 @@ describe("ProductVariantGenerator utils", () => {
       },
     ];
 
-    it("returns empty array when no values selected", () => {
+    it("returns empty previews when no values selected", () => {
       // Arrange
       const attributes = createAttributes();
       const selections: SelectionState = {
@@ -150,10 +173,12 @@ describe("ProductVariantGenerator utils", () => {
       const result = generateVariantPreviews(attributes, selections, []);
 
       // Assert
-      expect(result).toEqual([]);
+      expect(result.previews).toEqual([]);
+      expect(result.totalCount).toBe(0);
+      expect(result.isTruncated).toBe(false);
     });
 
-    it("returns empty array when only some attributes have selections", () => {
+    it("returns empty previews when only some attributes have selections", () => {
       // Arrange
       const attributes = createAttributes();
       const selections: SelectionState = {
@@ -165,7 +190,7 @@ describe("ProductVariantGenerator utils", () => {
       const result = generateVariantPreviews(attributes, selections, []);
 
       // Assert
-      expect(result).toEqual([]);
+      expect(result.previews).toEqual([]);
     });
 
     it("generates previews for all combinations", () => {
@@ -180,8 +205,10 @@ describe("ProductVariantGenerator utils", () => {
       const result = generateVariantPreviews(attributes, selections, []);
 
       // Assert
-      expect(result).toHaveLength(2);
-      expect(result).toEqual([
+      expect(result.previews).toHaveLength(2);
+      expect(result.totalCount).toBe(2);
+      expect(result.isTruncated).toBe(false);
+      expect(result.previews).toEqual([
         {
           name: "Small / Red",
           attributes: [
@@ -218,9 +245,9 @@ describe("ProductVariantGenerator utils", () => {
       // Act
       const result = generateVariantPreviews(attributes, selections, existingCombinations);
 
-      // Assert
-      expect(result[0].isExisting).toBe(true); // Small / Red exists
-      expect(result[1].isExisting).toBe(false); // Medium / Red is new
+      // Assert - new variants are sorted first
+      expect(result.previews[0].isExisting).toBe(false); // Medium / Red is new (sorted first)
+      expect(result.previews[1].isExisting).toBe(true); // Small / Red exists (sorted last)
     });
   });
 

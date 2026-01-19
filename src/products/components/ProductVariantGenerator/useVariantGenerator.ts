@@ -101,10 +101,12 @@ export function useVariantGenerator({
   }, []);
 
   // Generate previews
-  const previews = useMemo(
+  const previewResult = useMemo(
     () => generateVariantPreviews(attributes, selections, existingCombinations),
     [attributes, selections, existingCombinations],
   );
+
+  const { previews, totalCount, isTruncated } = previewResult;
 
   const newVariantsCount = useMemo(() => previews.filter(p => !p.isExisting).length, [previews]);
 
@@ -148,6 +150,8 @@ export function useVariantGenerator({
     previews,
     newVariantsCount,
     existingCount,
+    totalCount,
+    isTruncated,
     existingCombinations,
     canGenerate,
     canShowMatrix,

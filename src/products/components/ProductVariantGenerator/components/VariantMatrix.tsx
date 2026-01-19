@@ -61,17 +61,25 @@ export const VariantMatrix = ({
 }: VariantMatrixProps) => {
   const intl = useIntl();
 
-  // Get selected values for each attribute (parent ensures exactly 2 attributes with selections)
+  // Get only attributes that have at least one selected value
+  // Parent ensures exactly 2 attributes with selections (canShowMatrix check)
   const selectedByAttribute = useMemo(
     () =>
-      attributes.map(attr => ({
-        id: attr.id,
-        name: attr.name,
-        inputType: attr.inputType,
-        values: attr.values.filter(v => selections[attr.id]?.has(v.id)),
-      })),
+      attributes
+        .map(attr => ({
+          id: attr.id,
+          name: attr.name,
+          inputType: attr.inputType,
+          values: attr.values.filter(v => selections[attr.id]?.has(v.id)),
+        }))
+        .filter(attr => attr.values.length > 0),
     [attributes, selections],
   );
+
+  // Safety check - parent should ensure this, but guard against runtime issues
+  if (selectedByAttribute.length !== 2) {
+    return null;
+  }
 
   const [rowAttr, colAttr] = selectedByAttribute;
   const columnCount = colAttr.values.length + 1; // +1 for row label column

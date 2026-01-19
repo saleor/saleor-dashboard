@@ -72,6 +72,8 @@ export const ProductVariantGenerator = ({
     previews,
     newVariantsCount,
     existingCount,
+    totalCount,
+    isTruncated,
     existingCombinations,
     canGenerate,
     canShowMatrix,
@@ -238,6 +240,21 @@ export const ProductVariantGenerator = ({
                   title={
                     <Text size={2}>
                       {intl.formatMessage(messages.existingSkipped, { count: existingCount })}
+                    </Text>
+                  }
+                />
+              )}
+
+              {/* Truncation warning */}
+              {isTruncated && (
+                <Callout
+                  type="warning"
+                  title={
+                    <Text size={2}>
+                      {intl.formatMessage(messages.previewTruncated, {
+                        total: totalCount.toLocaleString(),
+                        limit: VARIANT_LIMIT,
+                      })}
                     </Text>
                   }
                 />

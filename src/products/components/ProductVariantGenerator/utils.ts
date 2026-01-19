@@ -11,19 +11,59 @@ import {
   SelectionState,
 } from "./types";
 
+// Safety limit to prevent browser freeze on huge combinations
+export const MAX_COMBINATIONS = 1000;
+
+export interface CartesianResult<T> {
+  combinations: T[][];
+  totalCount: number;
+  isTruncated: boolean;
+}
+
 /**
  * Computes the Cartesian product of multiple arrays.
  * Example: cartesian([[a,b], [1,2]]) => [[a,1], [a,2], [b,1], [b,2]]
+ * Stops early if result exceeds MAX_COMBINATIONS to prevent browser freeze.
+ * Returns metadata about truncation so UI can inform users.
  */
-export function cartesianProduct<T>(arrays: T[][]): T[][] {
+export function cartesianProduct<T>(arrays: T[][]): CartesianResult<T> {
   if (arrays.length === 0) {
-    return [[]];
+    return { combinations: [[]], totalCount: 1, isTruncated: false };
   }
 
-  return arrays.reduce<T[][]>(
+  // Calculate total combinations upfront
+  const totalCount = arrays.reduce((acc, arr) => acc * arr.length, 1);
+  const isTruncated = totalCount > MAX_COMBINATIONS;
+
+  if (isTruncated) {
+    // Return truncated result - compute only up to limit
+    let result: T[][] = [[]];
+
+    for (const arr of arrays) {
+      const newResult: T[][] = [];
+
+      for (const combo of result) {
+        for (const item of arr) {
+          newResult.push([...combo, item]);
+
+          if (newResult.length >= MAX_COMBINATIONS) {
+            return { combinations: newResult, totalCount, isTruncated: true };
+          }
+        }
+      }
+
+      result = newResult;
+    }
+
+    return { combinations: result, totalCount, isTruncated: true };
+  }
+
+  const combinations = arrays.reduce<T[][]>(
     (acc, arr) => acc.flatMap(combo => arr.map(item => [...combo, item])),
     [[]],
   );
+
+  return { combinations, totalCount, isTruncated: false };
 }
 
 /**
@@ -54,26 +94,33 @@ function isCombinationExisting(
   );
 }
 
+export interface VariantPreviewResult {
+  previews: GeneratedVariantPreview[];
+  totalCount: number;
+  isTruncated: boolean;
+}
+
 /**
  * Generates a preview of all variant combinations that would be created.
+ * Prioritizes new variants over existing ones when truncated.
  */
 export function generateVariantPreviews(
   attributes: AttributeData[],
   selections: SelectionState,
   existingCombinations: ExistingVariantCombination[][],
-): GeneratedVariantPreview[] {
+): VariantPreviewResult {
   const selected = getSelectedValues(attributes, selections);
 
   // If any attribute has no selections, return empty
   const hasEmptySelection = selected.some(s => s.values.length === 0);
 
   if (hasEmptySelection) {
-    return [];
+    return { previews: [], totalCount: 0, isTruncated: false };
   }
 
-  const valueCombinations = cartesianProduct(selected.map(s => s.values));
+  const { combinations, totalCount, isTruncated } = cartesianProduct(selected.map(s => s.values));
 
-  return valueCombinations.map(combo => {
+  const previews = combinations.map(combo => {
     const attributeValues = combo.map((value, index) => ({
       attributeName: selected[index].attributeName ?? "",
       valueName: value.name ?? "",
@@ -87,6 +134,15 @@ export function generateVariantPreviews(
       isExisting,
     };
   });
+
+  // Sort to show new variants first (more useful when truncated)
+  const sortedPreviews = [...previews].sort((a, b) => {
+    if (a.isExisting === b.isExisting) return 0;
+
+    return a.isExisting ? 1 : -1; // New first
+  });
+
+  return { previews: sortedPreviews, totalCount, isTruncated };
 }
 
 /**
@@ -122,10 +178,10 @@ export function toBulkCreateInputs(
     return [];
   }
 
-  const valueCombinations = cartesianProduct(selected.map(s => s.values));
+  const { combinations } = cartesianProduct(selected.map(s => s.values));
 
   // Filter out existing combinations
-  const newCombinations = valueCombinations.filter(
+  const newCombinations = combinations.filter(
     combo => !isCombinationExisting(combo, selected, existingCombinations),
   );
 

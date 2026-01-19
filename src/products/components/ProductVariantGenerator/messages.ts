@@ -103,6 +103,12 @@ export const messages = defineMessages({
       "Maximum {limit} variants can be generated at once. Please reduce your selection.",
     description: "limit reached warning",
   },
+  previewTruncated: {
+    id: "m7EwFg",
+    defaultMessage:
+      "Your selection would create {total} variants. You can generate up to {limit} at a time.",
+    description: "warning when preview is truncated due to too many combinations",
+  },
   allAlreadyExist: {
     id: "1qukRr",
     defaultMessage: "All selected combinations already exist as variants",
