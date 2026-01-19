@@ -561,7 +561,7 @@ const findProductVariantReference = (
   return null;
 };
 
-export const findReferenceByEntityType = (
+const findReferenceByEntityType = (
   valueId: string,
   entityType: AttributeEntityTypeEnum | undefined,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
