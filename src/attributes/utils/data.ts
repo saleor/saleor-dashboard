@@ -347,14 +347,18 @@ export function handleMetadataReferenceAssignment(
       firstValue ? [firstValue] : [],
     );
   } else {
+    console.log(
+      "🟣 handleMetadataReferenceAssignment - attributeValues from modal:",
+      attributeValues,
+    );
+
     const finalValues = mergeAttributeValues(
       assignReferencesAttributeId,
       attributeValues.map(({ value }) => value),
       attributes as FormsetData<AttributeInputData, string[]>,
     );
 
-    // Set the reference values in useFormset hook
-    handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
+    console.log("🟣 handleMetadataReferenceAssignment - finalValues after merge:", finalValues);
 
     /* We will store attribute selection display values in useFormset "additionalData" field
      * This has to be done, because when user chooses new references in the modal,
@@ -362,6 +366,10 @@ export function handleMetadataReferenceAssignment(
     const existingMetadata = attribute?.additionalData || [];
     const newMetadata = attributeValues;
     const allMetadata = [...existingMetadata, ...newMetadata];
+
+    console.log("🟣 handleMetadataReferenceAssignment - existingMetadata:", existingMetadata);
+    console.log("🟣 handleMetadataReferenceAssignment - newMetadata:", newMetadata);
+    console.log("🟣 handleMetadataReferenceAssignment - allMetadata:", allMetadata);
 
     // Remove duplicate entries, happens when user deletes and adds value before saving the form
     const uniqueMetadata = allMetadata.reduce((acc, meta) => {
@@ -372,7 +380,17 @@ export function handleMetadataReferenceAssignment(
       return acc;
     }, [] as AttributeValuesMetadata[]);
 
+    console.log(
+      "🟣 handleMetadataReferenceAssignment - uniqueMetadata after dedup:",
+      uniqueMetadata,
+    );
+
+    // IMPORTANT: Set metadata BEFORE updating values to prevent race condition
+    // where selectAttributeReference filters out metadata that hasn't been saved yet
     handlers.selectAttributeReferenceAdditionalData(assignReferencesAttributeId, uniqueMetadata);
+
+    // Set the reference values in useFormset hook AFTER metadata is saved
+    handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
   }
 }
 
@@ -563,7 +581,7 @@ const findProductVariantReference = (
   return null;
 };
 
-const findReferenceByEntityType = (
+export const findReferenceByEntityType = (
   valueId: string,
   entityType: AttributeEntityTypeEnum | undefined,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
@@ -587,50 +605,85 @@ const findReferenceByEntityType = (
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      attribute.value && attribute.value.length > 0
-        ? attribute.value.map(valueId => {
-            /* "additionalData" is the cache for newly selected values from useFormset hook.
-             * It is populated from the initial GraphQL payload
-             * and whenever the user assigns references in the dialog into useFormset data. */
-            const meta = attribute.additionalData?.find(m => m.value === valueId);
+) => {
+  console.log("getReferenceAttributeDisplayData called", {
+    attributeId: attribute.id,
+    attributeLabel: attribute.label,
+    attributeValue: attribute.value,
+    additionalData: attribute.additionalData,
+    entityType: attribute.data.entityType,
+  });
 
-            if (meta) {
+  return {
+    ...attribute,
+    data: {
+      ...attribute.data,
+      references:
+        attribute.value && attribute.value.length > 0
+          ? attribute.value.map(valueId => {
+              console.log(`Processing reference valueId: ${valueId}`);
+
+              /* "additionalData" is the cache for newly selected values from useFormset hook.
+               * It is populated from the initial GraphQL payload
+               * and whenever the user assigns references in the dialog into useFormset data. */
+              const meta = attribute.additionalData?.find(m => m.value === valueId);
+
+              if (meta) {
+                console.log("✅ Found in additionalData (meta):", meta);
+
+                return {
+                  label: meta.label,
+                  value: meta.value,
+                };
+              }
+
+              console.log("⚠️ Not found in additionalData, checking search results...");
+
+              /* As a fallback, look at the latest referenced entity search results.
+               * This should cover scenarios where the user has just added a reference in modal
+               * and metadata has not been updated yet.
+               *
+               * It's not default, because it can fail:
+               * search query filters out references based on `referenceType` and use search query for filtering */
+              const searchResult = findReferenceByEntityType(
+                valueId,
+                attribute.data.entityType,
+                referencesEntitiesSearchResult,
+              );
+
+              if (searchResult) {
+                console.log("✅ Found in search results:", searchResult);
+
+                return searchResult;
+              }
+
+              console.log("❌ FALLBACK TRIGGERED - Looking up in attribute.data.values");
+
+              // Fallback: Look up the name from attribute.data.values
+              // This array contains the correct mapping of reference ID to entity name
+              const valueWithName = attribute.data.values.find(val => val.reference === valueId);
+
+              if (valueWithName) {
+                console.log("✅ Found name in attribute.data.values:", valueWithName.name);
+
+                return {
+                  label: valueWithName.name,
+                  value: valueId,
+                };
+              }
+
+              console.log("❌ ULTIMATE FALLBACK - Using valueId as label:", valueId);
+
+              // Ultimate fallback if not found anywhere
               return {
-                label: meta.label,
-                value: meta.value,
+                label: valueId,
+                value: valueId,
               };
-            }
-
-            /* As a fallback, look at the latest referenced entity search results.
-             * This should cover scenarios where the user has just added a reference in modal
-             * and metadata has not been updated yet.
-             *
-             * It's not default, because it can fail:
-             * search query filters out references based on `referenceType` and use search query for filtering */
-            const searchResult = findReferenceByEntityType(
-              valueId,
-              attribute.data.entityType,
-              referencesEntitiesSearchResult,
-            );
-
-            if (searchResult) {
-              return searchResult;
-            }
-
-            // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
-            return {
-              label: valueId,
-              value: valueId,
-            };
-          })
-        : [],
-  },
-});
+            })
+          : [],
+    },
+  };
+};
 
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
