@@ -41,7 +41,11 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
 }
 
 export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
-  if (!attribute.value) {
+  if (!attribute.value || attribute.value.length === 0) {
+    return [];
+  }
+
+  if (!attribute.data.references || attribute.data.references.length === 0) {
     return [];
   }
 
