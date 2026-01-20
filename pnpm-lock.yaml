@@ -11,6 +11,7 @@ overrides:
   js-yaml@>=4.0.0 <4.1.1: ">=4.1.1"
   js-yaml@<3.14.2: ">=3.14.2"
   preact@>=10.28.0 <10.28.2: ">=10.28.2"
+  read-yaml-file@<2.0.0: ">=2.1.0"
   tmp@<0.2.4: ">=0.2.4"
   vite@>=6.0.0 <6.4.1: ">=6.4.1"
   ws@>=8.0.0 <8.17.1: ">=8.17.1"
@@ -269,7 +270,7 @@ importers:
         specifier: ^0.5.1
         version: 0.5.2
       "@changesets/cli":
-        specifier: ^2.29.7
+        specifier: ^2.29.8
         version: 2.29.8(@types/node@20.19.25)
       "@editorjs/embed":
         specifier: 2.7.6
@@ -10590,13 +10591,6 @@ packages:
       }
     engines: { node: ">=12" }
 
-  pify@4.0.1:
-    resolution:
-      {
-        integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==,
-      }
-    engines: { node: ">=6" }
-
   pirates@4.0.7:
     resolution:
       {
@@ -11161,12 +11155,12 @@ packages:
       }
     engines: { node: ">=0.10.0" }
 
-  read-yaml-file@1.1.0:
+  read-yaml-file@2.1.0:
     resolution:
       {
-        integrity: sha512-VIMnQi/Z4HT2Fxuwg5KrY174U1VdUIASQVWXXyqtNRtxSr9IYkn1rsI6Tb6HsrHCmB7gVpNwX6JxPTHcH6IoTA==,
+        integrity: sha512-UkRNRIwnhG+y7hpqnycCL/xbTk7+ia9VuVTC0S+zVbwd65DI9eUpRMfsWIGrCWxTU/mi+JW8cHQCrv+zfCbEPQ==,
       }
-    engines: { node: ">=6" }
+    engines: { node: ">=10.13" }
 
   readable-stream@3.6.2:
     resolution:
@@ -15286,7 +15280,7 @@ snapshots:
       "@manypkg/find-root": 1.1.0
       fs-extra: 8.1.0
       globby: 11.1.0
-      read-yaml-file: 1.1.0
+      read-yaml-file: 2.1.0
 
   "@marijn/find-cluster-break@1.0.2": {}
 
@@ -20782,8 +20776,6 @@ snapshots:
 
   picomatch@4.0.3: {}
 
-  pify@4.0.1: {}
-
   pirates@4.0.7:
     optional: true
 
@@ -21191,12 +21183,10 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  read-yaml-file@1.1.0:
+  read-yaml-file@2.1.0:
     dependencies:
-      graceful-fs: 4.2.11
       js-yaml: 4.1.1
-      pify: 4.0.1
-      strip-bom: 3.0.0
+      strip-bom: 4.0.0
 
   readable-stream@3.6.2:
     dependencies:
@@ -21683,8 +21673,7 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
-  strip-bom@4.0.0:
-    optional: true
+  strip-bom@4.0.0: {}
 
   strip-final-newline@2.0.0: {}
 
