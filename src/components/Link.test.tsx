@@ -1,15 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 
 import { Link } from "./Link";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  return (
-    // @ts-expect-error - legacy provider
-    <BrowserRouter>{children}</BrowserRouter>
-  );
+  return <MemoryRouter>{children}</MemoryRouter>;
 };
 
 const renderWithRouter = (component: React.ReactElement) => {
@@ -75,6 +72,7 @@ describe("Link component", () => {
 
       // RouterLink with to="#" resolves to "/" in test environment
       expect(link).toHaveAttribute("href", "/");
+      expect(link).toHaveAttribute("aria-disabled", "true");
     });
 
     it("should prevent navigation when disabled internal link is clicked", async () => {
@@ -125,7 +123,7 @@ describe("Link component", () => {
       // Assert
       const link = screen.getByRole("link", { name: "External Link" });
 
-      expect(link).toHaveAttribute("rel", "noopener noreferer");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
 
     it("should not set rel for external links without target=_blank", () => {
@@ -202,10 +200,7 @@ describe("Link component", () => {
   });
 
   describe("rel attribute", () => {
-    // Note: There's a bug in Link.tsx:73 where custom rel gets overridden to "noopener noreferer"
-    // The ternary logic: (rel ?? condition) ? "noopener noreferer" : ""
-    // evaluates to "noopener noreferer" whenever rel is truthy, instead of using the rel value
-    it("should override custom rel with security rel for internal link", () => {
+    it("should accept rel attribute and discards default one", () => {
       // Arrange & Act
       renderWithRouter(
         <Link href="/products" rel="nofollow">
@@ -216,11 +211,10 @@ describe("Link component", () => {
       // Assert
       const link = screen.getByRole("link", { name: "Custom Rel" });
 
-      // BUG: Custom rel is overridden by the ternary logic
-      expect(link).toHaveAttribute("rel", "noopener noreferer");
+      expect(link).toHaveAttribute("rel", "nofollow");
     });
 
-    it("should override custom rel with security rel for external link", () => {
+    it("should accept rel attribute and discards default one - external link", () => {
       // Arrange & Act
       renderWithRouter(
         <Link href="https://example.com" rel="nofollow" target="_blank">
@@ -231,8 +225,7 @@ describe("Link component", () => {
       // Assert
       const link = screen.getByRole("link", { name: "Custom Rel External" });
 
-      // BUG: Custom rel is overridden by the ternary logic
-      expect(link).toHaveAttribute("rel", "noopener noreferer");
+      expect(link).toHaveAttribute("rel", "nofollow");
     });
   });
 

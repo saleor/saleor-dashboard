@@ -67,11 +67,13 @@ export const Link = (props: LinkProps): JSX.Element => {
     ...style,
   } as const;
 
+  const applySafeRelAttributes = opensNewTab && href && isExternalURL(href);
+
   const commonLinkProps = {
     className: linkClassName,
     onClick: handleClick,
     target,
-    rel: (rel ?? (opensNewTab && href && isExternalURL(href))) ? "noopener noreferrer" : "",
+    rel: rel ?? (applySafeRelAttributes ? "noopener noreferrer" : ""),
     style: inlineStyle,
     ...linkProps,
   } as const;
@@ -87,8 +89,9 @@ export const Link = (props: LinkProps): JSX.Element => {
 
     return (
       <RouterLink<LinkState>
-        to={disabled ? "#" : routerLinkToParams}
+        to={disabled ? "" : routerLinkToParams}
         {...commonLinkProps}
+        aria-disabled={disabled}
         onClick={e => {
           // Router Link can't be natively disabled so just kill the event
           if (disabled) {
