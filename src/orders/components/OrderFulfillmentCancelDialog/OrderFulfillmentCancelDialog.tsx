@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { FulfillmentStatus, OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,7 +45,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
     props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [displayValue, setDisplayValue] = useState("");
+  const [selectedWarehouse, setSelectedWarehouse] = useState<Option | null>(null);
   const choices = warehouses?.map(warehouse => ({
     label: warehouse.name,
     value: warehouse.id,
@@ -58,11 +56,15 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
     <DashboardModal onChange={onClose} open={open}>
       <Form initial={{ warehouseId: null }} onSubmit={onConfirm}>
         {({ change, data: formData, submit }) => {
-          const handleChange = createSingleAutocompleteSelectHandler(
-            change,
-            setDisplayValue,
-            choices,
-          );
+          const handleWarehouseChange = (option: Option | null) => {
+            setSelectedWarehouse(option);
+            change({
+              target: {
+                name: "warehouseId",
+                value: option?.value ?? null,
+              },
+            });
+          };
 
           return (
             <DashboardModal.Content size="sm">
@@ -92,20 +94,17 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
                   className={classes.selectCcontainer}
                   data-test-id="cancel-fulfillment-select-field"
                 >
-                  <Combobox
+                  <DynamicCombobox
                     label={intl.formatMessage({
                       id: "aHc89n",
                       defaultMessage: "Select Warehouse",
                       description: "select warehouse to restock items",
                     })}
                     options={choices}
-                    fetchOptions={() => undefined}
                     name="warehouseId"
-                    value={{
-                      label: displayValue,
-                      value: formData.warehouseId,
-                    }}
-                    onChange={handleChange}
+                    size="small"
+                    value={selectedWarehouse}
+                    onChange={handleWarehouseChange}
                   />
                 </div>
               )}
