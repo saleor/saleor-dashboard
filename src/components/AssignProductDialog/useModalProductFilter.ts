@@ -183,13 +183,14 @@ export const useModalProductFilter = ({
   const filterWindow = useFilterWindow();
 
   // Create constraint element if productTypes are provided
+  const productTypes = initialConstraints?.productTypes;
   const constraintElement = useMemo(() => {
-    if (!initialConstraints?.productTypes?.length) {
+    if (!productTypes?.length) {
       return null;
     }
 
-    return createProductTypeConstraintElement(initialConstraints.productTypes);
-  }, [initialConstraints?.productTypes]);
+    return createProductTypeConstraintElement(productTypes);
+  }, [productTypes]);
 
   const wrappedValueProvider = useMemo(
     () => createWrappedValueProvider(valueProvider, constraintElement),
