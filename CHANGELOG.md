@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.26
+
+### Patch Changes
+
+- [#6256](https://github.com/saleor/saleor-dashboard/pull/6256) [`8bed1a4`](https://github.com/saleor/saleor-dashboard/commit/8bed1a4f9ae61019b30eb3d4eae902a3de59f402) Thanks [@lkostrowski](https://github.com/lkostrowski)! - When reference-type attribute is being selected in product variant page, selected references should now properly display label instead of ID
+
+- [#6262](https://github.com/saleor/saleor-dashboard/pull/6262) [`2934387`](https://github.com/saleor/saleor-dashboard/commit/2934387578c62d563a0c769b6c5a9716975f80ad) Thanks [@mirekm](https://github.com/mirekm)! - Fixed bug introduced in Chromium 144, where some of custom Comboboxes were broken and their value was reset to empty. Components were replaced with Combobox from Macaw UI
+
 ## 3.22.25
 
 ### Patch Changes
