@@ -15,7 +15,6 @@ export interface INotification {
 }
 
 export interface INotificationContext {
-  show: (notification: INotification, timeout?: number | null) => void;
   remove: (notificationId: number) => void;
   clearErrorNotifications: () => void;
 }
