@@ -53,12 +53,18 @@ export const Link = (props: LinkProps): JSX.Element => {
   );
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-    if (disabled || !onClick) {
+    if (disabled) {
       return;
     }
 
-    event.preventDefault();
-    onClick(event);
+    if (onClick) {
+      // Only prevent default navigation for non-external links.
+      if (href && !isExternalURL(href)) {
+        event.preventDefault();
+      }
+
+      onClick(event);
+    }
   };
 
   // Sprinkles doesn't support display: "inline", so we use inline styles for this
