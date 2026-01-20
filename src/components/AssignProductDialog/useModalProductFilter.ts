@@ -196,7 +196,7 @@ export const useModalProductFilter = ({
     [constraintElement, valueProvider],
   );
 
-  const containerState = useContainerState(wrappedValueProvider, { syncOnce: true });
+  const containerState = useContainerState(wrappedValueProvider);
 
   const filterContext = useMemo(
     () => ({

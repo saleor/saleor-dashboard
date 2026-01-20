@@ -64,12 +64,14 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        <ModalProductFilterProvider
-          excludedFilters={excludedFilters}
-          initialConstraints={initialConstraints}
-        >
-          {dialogContent}
-        </ModalProductFilterProvider>
+        {open && (
+          <ModalProductFilterProvider
+            excludedFilters={excludedFilters}
+            initialConstraints={initialConstraints}
+          >
+            {dialogContent}
+          </ModalProductFilterProvider>
+        )}
       </DashboardModal.Content>
     </DashboardModal>
   );
