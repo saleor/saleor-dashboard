@@ -49,23 +49,25 @@ export const VariantPreviewList = ({ previews }: VariantPreviewListProps) => {
   }
 
   return (
-    <Box className={styles.container}>
-      <Box className={styles.list}>
-        {sortedPreviews.map((variant, index) => (
-          <Box key={`${variant.name}-${index}`} className={styles.item}>
-            {variant.isExisting ? (
-              <Text size={2} color="default2" className={styles.badge}>
-                {intl.formatMessage(messages.existsBadge)}
+    <div className={styles.wrapper}>
+      <Box className={styles.container}>
+        <Box className={styles.list}>
+          {sortedPreviews.map((variant, index) => (
+            <Box key={`${variant.name}-${index}`} className={styles.item}>
+              {variant.isExisting ? (
+                <Text size={2} color="default2" className={styles.badge}>
+                  {intl.formatMessage(messages.existsBadge)}
+                </Text>
+              ) : (
+                <span className={styles.newBadge}>{intl.formatMessage(messages.newBadge)}</span>
+              )}
+              <Text size={2} color={variant.isExisting ? "default2" : "default1"}>
+                {variant.name}
               </Text>
-            ) : (
-              <span className={styles.newBadge}>{intl.formatMessage(messages.newBadge)}</span>
-            )}
-            <Text size={2} color={variant.isExisting ? "default2" : "default1"}>
-              {variant.name}
-            </Text>
-          </Box>
-        ))}
+            </Box>
+          ))}
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 };

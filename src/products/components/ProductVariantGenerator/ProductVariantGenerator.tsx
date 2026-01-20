@@ -46,6 +46,7 @@ export const ProductVariantGenerator = ({
   const intl = useIntl();
   const [confirmState, setConfirmState] = useState<ConfirmButtonTransitionState>("default");
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showMissingDefaultsWarning, setShowMissingDefaultsWarning] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   // Fetch warehouses for stock defaults
@@ -141,15 +142,29 @@ export const ProductVariantGenerator = ({
     }
   }, [attributes, selections, defaults, warehouses, existingCombinations, onSubmit]);
 
-  const handleGenerate = useCallback(() => {
-    if (!canGenerate || isOverLimit) return;
+  const isMissingDefaults = !defaults.skuEnabled && !defaults.stockEnabled;
+
+  const proceedWithGeneration = useCallback(() => {
+    setShowMissingDefaultsWarning(false);
 
     if (needsConfirmation) {
       setShowConfirmation(true);
     } else {
       executeGenerate();
     }
-  }, [canGenerate, isOverLimit, needsConfirmation, executeGenerate]);
+  }, [needsConfirmation, executeGenerate]);
+
+  const handleGenerate = useCallback(() => {
+    if (!canGenerate || isOverLimit) return;
+
+    if (isMissingDefaults) {
+      setShowMissingDefaultsWarning(true);
+    } else if (needsConfirmation) {
+      setShowConfirmation(true);
+    } else {
+      executeGenerate();
+    }
+  }, [canGenerate, isOverLimit, isMissingDefaults, needsConfirmation, executeGenerate]);
 
   const handleClose = useCallback(() => {
     if (confirmState !== "loading") {
@@ -175,19 +190,27 @@ export const ProductVariantGenerator = ({
           ) : (
             <>
               {/* Attribute selectors */}
-              <Box className={styles.attributesSection}>
-                {attributes.map(attr => (
-                  <AttributeValueChips
-                    key={attr.id}
-                    attribute={attr}
-                    selectedIds={selections[attr.id] ?? new Set()}
-                    onToggleValue={valueId => toggleValue(attr.id, valueId)}
-                    onSelectAll={() => selectAllValues(attr.id)}
-                    onDeselectAll={() => deselectAllValues(attr.id)}
-                    onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
-                  />
-                ))}
-              </Box>
+              <div className={styles.attributesSectionWrapper}>
+                <Box
+                  className={styles.attributesSection}
+                  borderStyle="solid"
+                  borderColor="default1"
+                  borderWidth={1}
+                  borderRadius={4}
+                >
+                  {attributes.map(attr => (
+                    <AttributeValueChips
+                      key={attr.id}
+                      attribute={attr}
+                      selectedIds={selections[attr.id] ?? new Set()}
+                      onToggleValue={valueId => toggleValue(attr.id, valueId)}
+                      onSelectAll={() => selectAllValues(attr.id)}
+                      onDeselectAll={() => deselectAllValues(attr.id)}
+                      onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
+                    />
+                  ))}
+                </Box>
+              </div>
 
               {/* Defaults row with view toggle */}
               <Box className={styles.controlsRow}>
@@ -242,43 +265,43 @@ export const ProductVariantGenerator = ({
                 )}
               </Box>
 
-              {/* Warning banner */}
-              {existingCount > 0 && (
-                <Callout
-                  type="warning"
-                  title={
-                    <Text size={2}>
-                      {intl.formatMessage(messages.existingSkipped, { count: existingCount })}
-                    </Text>
-                  }
-                />
-              )}
-
-              {/* Truncation warning */}
-              {isTruncated && (
-                <Callout
-                  type="warning"
-                  title={
-                    <Text size={2}>
-                      {intl.formatMessage(messages.previewTruncated, {
-                        total: totalCount.toLocaleString(),
-                        limit: VARIANT_LIMIT,
-                      })}
-                    </Text>
-                  }
-                />
-              )}
-
-              {/* Limit error */}
-              {isOverLimit && (
-                <Callout
-                  type="error"
-                  title={
-                    <Text size={2}>
-                      {intl.formatMessage(messages.limitReached, { limit: VARIANT_LIMIT })}
-                    </Text>
-                  }
-                />
+              {/* Warnings and errors */}
+              {(existingCount > 0 || isTruncated || isOverLimit) && (
+                <Box className={styles.callouts}>
+                  {existingCount > 0 && (
+                    <Callout
+                      type="warning"
+                      title={
+                        <Text size={2}>
+                          {intl.formatMessage(messages.existingSkipped, { count: existingCount })}
+                        </Text>
+                      }
+                    />
+                  )}
+                  {isTruncated && (
+                    <Callout
+                      type="warning"
+                      title={
+                        <Text size={2}>
+                          {intl.formatMessage(messages.previewTruncated, {
+                            total: totalCount.toLocaleString(),
+                            limit: VARIANT_LIMIT,
+                          })}
+                        </Text>
+                      }
+                    />
+                  )}
+                  {isOverLimit && (
+                    <Callout
+                      type="error"
+                      title={
+                        <Text size={2}>
+                          {intl.formatMessage(messages.limitReached, { limit: VARIANT_LIMIT })}
+                        </Text>
+                      }
+                    />
+                  )}
+                </Box>
               )}
             </>
           )}
@@ -297,6 +320,17 @@ export const ProductVariantGenerator = ({
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
+
+      {/* Warning dialog for missing SKU/stock */}
+      <ActionDialog
+        open={showMissingDefaultsWarning}
+        onClose={() => setShowMissingDefaultsWarning(false)}
+        onConfirm={proceedWithGeneration}
+        title={intl.formatMessage(messages.missingDefaultsTitle)}
+        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
+      >
+        <Text>{intl.formatMessage(messages.missingDefaultsDescription)}</Text>
+      </ActionDialog>
 
       {/* Confirmation dialog for large batches */}
       <ActionDialog

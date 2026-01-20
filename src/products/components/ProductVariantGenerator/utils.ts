@@ -85,12 +85,14 @@ function isCombinationExisting(
   selectedAttrs: Array<{ attributeId: string; values: AttributeValue[] }>,
   existingCombinations: ExistingVariantCombination[][],
 ): boolean {
-  return existingCombinations.some(existing =>
-    combo.every((value, index) => {
-      const attrId = selectedAttrs[index].attributeId;
+  return existingCombinations.some(
+    existing =>
+      existing.length === combo.length &&
+      combo.every((value, index) => {
+        const attrId = selectedAttrs[index].attributeId;
 
-      return existing.some(e => e.attributeId === attrId && e.valueSlug === value.slug);
-    }),
+        return existing.some(e => e.attributeId === attrId && e.valueSlug === value.slug);
+      }),
   );
 }
 

@@ -1099,6 +1099,10 @@
     "context": "product stock, section header",
     "string": "Inventory"
   },
+  "4sYqlg": {
+    "context": "error message when bulk variant creation fails completely",
+    "string": "All variants failed to create"
+  },
   "4v5gfh": {
     "context": "account information, header",
     "string": "Account Information"
@@ -3882,6 +3886,10 @@
   "LwU0Vy": {
     "context": "datagrid title label",
     "string": "Select quantities to refund"
+  },
+  "LwWT6O": {
+    "context": "dialog description when opening generator with unsaved changes",
+    "string": "You have unsaved changes to variants. Please save your changes before generating new variants."
   },
   "Lx1ima": {
     "context": "button",
@@ -7979,6 +7987,10 @@
     "context": "product label",
     "string": "Product bought to get gift card"
   },
+  "kdK1YM": {
+    "context": "placeholder for SKU prefix input",
+    "string": "e.g. SHIRT"
+  },
   "kdRcqU": {
     "string": "Search customers..."
   },
@@ -8214,6 +8226,10 @@
   "m6IBe5": {
     "context": "invoice number prefix",
     "string": "Invoice"
+  },
+  "m7EwFg": {
+    "context": "warning when preview is truncated due to too many combinations",
+    "string": "Your selection would create {total} variants. You can generate up to {limit} at a time."
   },
   "m8cjcK": {
     "context": "add authorization key error",
@@ -10129,6 +10145,10 @@
   "y8E0iG": {
     "context": "seo incomplete text",
     "string": "Incomplete"
+  },
+  "y93ihJ": {
+    "context": "dialog title when opening generator with unsaved changes",
+    "string": "Unsaved changes"
   },
   "yAFaVK": {
     "context": "Webhook details synchronous events",

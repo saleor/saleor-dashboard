@@ -129,4 +129,15 @@ export const messages = defineMessages({
     defaultMessage: "{count} options available",
     description: "hint text showing number of available options in multiselect",
   },
+  missingDefaultsTitle: {
+    id: "PUVq0k",
+    defaultMessage: "Create without SKU and stock?",
+    description: "warning dialog title when SKU and stock are not set",
+  },
+  missingDefaultsDescription: {
+    id: "JwICkk",
+    defaultMessage:
+      "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants.",
+    description: "warning dialog description when SKU and stock are not set",
+  },
 });

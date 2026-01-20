@@ -89,8 +89,8 @@ export const SelectableChip = ({
             className={styles.swatch}
             style={
               swatch.file?.url
-                ? { backgroundImage: `url(${swatch.file.url})`, borderColor: "transparent" }
-                : { backgroundColor: swatch.value ?? undefined, borderColor: "transparent" }
+                ? { backgroundImage: `url(${swatch.file.url})` }
+                : { backgroundColor: swatch.value ?? undefined }
             }
           />
         )}

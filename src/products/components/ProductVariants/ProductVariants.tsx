@@ -1,8 +1,12 @@
 import { ChannelData } from "@dashboard/channels/utils";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import {
+  DatagridChangeOpts,
+  DatagridChangeStateContext,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   AttributeInputTypeEnum,
@@ -19,9 +23,9 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { Option } from "@saleor/macaw-ui-next";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantGenerator } from "../ProductVariantGenerator/ProductVariantGenerator";
@@ -64,6 +68,12 @@ export const ProductVariants = ({
 }: ProductVariantsProps) => {
   const intl = useIntl();
   const [generatorOpen, setGeneratorOpen] = useState(false);
+  const [showUnsavedWarning, setShowUnsavedWarning] = useState(false);
+
+  // Access datagrid state to check for unsaved changes
+  const datagridState = useContext(DatagridChangeStateContext);
+  const hasUnsavedChanges =
+    datagridState && (datagridState.removed.length > 0 || datagridState.added.length > 0);
 
   // https://github.com/saleor/saleor-dashboard/issues/4165
   const { data: warehousesData } = useWarehouseListQuery({
@@ -74,11 +84,19 @@ export const ProductVariants = ({
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
   const handleOpenGenerator = useCallback(() => {
-    setGeneratorOpen(true);
-  }, []);
+    if (hasUnsavedChanges) {
+      setShowUnsavedWarning(true);
+    } else {
+      setGeneratorOpen(true);
+    }
+  }, [hasUnsavedChanges]);
 
   const handleCloseGenerator = useCallback(() => {
     setGeneratorOpen(false);
+  }, []);
+
+  const handleCloseUnsavedWarning = useCallback(() => {
+    setShowUnsavedWarning(false);
   }, []);
 
   const handleGenerateVariants = useCallback(
@@ -271,6 +289,18 @@ export const ProductVariants = ({
           onSubmit={handleGenerateVariants}
         />
       )}
+
+      {/* Warning dialog when trying to open generator with unsaved changes */}
+      <ActionDialog
+        open={showUnsavedWarning}
+        onClose={handleCloseUnsavedWarning}
+        onConfirm={handleCloseUnsavedWarning}
+        title={intl.formatMessage(messages.unsavedChangesTitle)}
+        confirmButtonLabel={intl.formatMessage(buttonMessages.ok)}
+        variant="default"
+      >
+        <Text>{intl.formatMessage(messages.unsavedChangesDescription)}</Text>
+      </ActionDialog>
     </>
   );
 };

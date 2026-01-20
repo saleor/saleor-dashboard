@@ -1,4 +1,5 @@
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
+import { Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
@@ -23,9 +24,7 @@ export const AttributeHeader = ({
 
   return (
     <div className={styles.header}>
-      <Text size={3} fontWeight="medium">
-        {name}
-      </Text>
+      <ModalSectionHeader>{name}</ModalSectionHeader>
       <div className={styles.actions}>
         <Button variant="tertiary" size="small" onClick={onSelectAll} disabled={allSelected}>
           {intl.formatMessage(messages.selectAll)}

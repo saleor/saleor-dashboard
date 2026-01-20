@@ -1,14 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--macaw-color-border-default1);
-}
-
-.container:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+  gap: 8px;
 }
 
 .chips {

@@ -49,6 +49,7 @@ function combinationExists(
 ): boolean {
   return existingCombinations.some(
     combo =>
+      combo.length === 2 &&
       combo.some(c => c.attributeId === rowAttrId && c.valueSlug === rowValueSlug) &&
       combo.some(c => c.attributeId === colAttrId && c.valueSlug === colValueSlug),
   );
@@ -85,68 +86,70 @@ export const VariantMatrix = ({
   const columnCount = colAttr.values.length + 1; // +1 for row label column
 
   return (
-    <div className={styles.matrixContainer}>
-      <GridTable className={styles.table}>
-        <GridTable.Colgroup>
-          {/* All columns equal width */}
-          {Array.from({ length: columnCount }).map((_, i) => (
-            <GridTable.Col key={i} className={styles.equalCol} />
-          ))}
-        </GridTable.Colgroup>
-
-        <GridTable.Body>
-          {/* Header row */}
-          <GridTable.Row className={styles.headerRow}>
-            <GridTable.Cell className={styles.cornerCell}>
-              <span className={styles.cornerText}>
-                {rowAttr.name} / {colAttr.name}
-              </span>
-            </GridTable.Cell>
-            {colAttr.values.map(value => (
-              <GridTable.Cell key={value.id} className={styles.columnHeaderCell}>
-                <Box className={styles.columnHeaderContent} title={value.name ?? undefined}>
-                  {colAttr.inputType === AttributeInputTypeEnum.SWATCH && (
-                    <ColorDot value={value} />
-                  )}
-                  <span className={styles.columnHeaderText}>{value.name}</span>
-                </Box>
-              </GridTable.Cell>
+    <div className={styles.wrapper}>
+      <div className={styles.matrixContainer}>
+        <GridTable className={styles.table} borderTopStyle="none" borderBottomStyle="none">
+          <GridTable.Colgroup>
+            {/* All columns equal width */}
+            {Array.from({ length: columnCount }).map((_, i) => (
+              <GridTable.Col key={i} className={styles.equalCol} />
             ))}
-          </GridTable.Row>
+          </GridTable.Colgroup>
 
-          {/* Data rows */}
-          {rowAttr.values.map(rowValue => (
-            <GridTable.Row key={rowValue.id}>
-              <GridTable.Cell className={styles.rowLabelCell} title={rowValue.name ?? undefined}>
-                <span className={styles.rowLabelText}>{rowValue.name}</span>
-              </GridTable.Cell>
-              {colAttr.values.map(colValue => {
-                const exists = combinationExists(
-                  rowAttr.id,
-                  rowValue.slug,
-                  colAttr.id,
-                  colValue.slug,
-                  existingCombinations,
-                );
-
-                return (
-                  <GridTable.Cell key={colValue.id} className={styles.dataCell}>
-                    {exists ? (
-                      <Text size={2} color="default2">
-                        {intl.formatMessage(messages.existsBadge)}
-                      </Text>
-                    ) : (
-                      <span className={styles.newBadge}>
-                        {intl.formatMessage(messages.newBadge)}
-                      </span>
+          <GridTable.Body>
+            {/* Header row */}
+            <GridTable.Row className={styles.headerRow}>
+              <GridTable.Cell className={styles.cornerCell} borderTopStyle="none" />
+              {colAttr.values.map(value => (
+                <GridTable.Cell
+                  key={value.id}
+                  className={styles.columnHeaderCell}
+                  borderTopStyle="none"
+                >
+                  <Box className={styles.columnHeaderContent} title={value.name ?? undefined}>
+                    {colAttr.inputType === AttributeInputTypeEnum.SWATCH && (
+                      <ColorDot value={value} />
                     )}
-                  </GridTable.Cell>
-                );
-              })}
+                    <span className={styles.columnHeaderText}>{value.name}</span>
+                  </Box>
+                </GridTable.Cell>
+              ))}
             </GridTable.Row>
-          ))}
-        </GridTable.Body>
-      </GridTable>
+
+            {/* Data rows */}
+            {rowAttr.values.map(rowValue => (
+              <GridTable.Row key={rowValue.id}>
+                <GridTable.Cell className={styles.rowLabelCell} title={rowValue.name ?? undefined}>
+                  <span className={styles.rowLabelText}>{rowValue.name}</span>
+                </GridTable.Cell>
+                {colAttr.values.map(colValue => {
+                  const exists = combinationExists(
+                    rowAttr.id,
+                    rowValue.slug,
+                    colAttr.id,
+                    colValue.slug,
+                    existingCombinations,
+                  );
+
+                  return (
+                    <GridTable.Cell key={colValue.id} className={styles.dataCell}>
+                      {exists ? (
+                        <Text size={2} color="default2">
+                          {intl.formatMessage(messages.existsBadge)}
+                        </Text>
+                      ) : (
+                        <span className={styles.newBadge}>
+                          {intl.formatMessage(messages.newBadge)}
+                        </span>
+                      )}
+                    </GridTable.Cell>
+                  );
+                })}
+              </GridTable.Row>
+            ))}
+          </GridTable.Body>
+        </GridTable>
+      </div>
     </div>
   );
 };
