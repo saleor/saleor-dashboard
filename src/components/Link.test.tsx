@@ -109,7 +109,7 @@ describe("Link component", () => {
       expect(link).toHaveAttribute("href", href);
     });
 
-    it("should set rel='noopener noreferer' for external links with target=_blank", () => {
+    it("should set rel='noopener noreferrer' for external links with target=_blank", () => {
       // Arrange
       const href = "https://example.com";
 
@@ -337,7 +337,7 @@ describe("Link component", () => {
   describe("onClick handler", () => {
     // Note: There's a bug in Link.tsx where RouterLink's inline onClick overrides handleClick
     // causing onClick prop to not be called for internal links when not disabled
-    it("should not call onClick for internal RouterLink (bug)", async () => {
+    it("should call onClick for internal RouterLink (bug)", async () => {
       // Arrange
       const onClick = jest.fn();
       const user = userEvent.setup();
@@ -353,8 +353,7 @@ describe("Link component", () => {
 
       await user.click(link);
 
-      // Assert - BUG: onClick is not called because RouterLink's inline onClick overrides it
-      expect(onClick).not.toHaveBeenCalled();
+      expect(onClick).toHaveBeenCalled();
     });
 
     it("should not call onClick when disabled link is clicked", async () => {

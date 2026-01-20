@@ -78,7 +78,7 @@ export const Link = (props: LinkProps): JSX.Element => {
     ...linkProps,
   } as const;
 
-  if (!!href && !isExternalURL(href)) {
+  if (href && !isExternalURL(href)) {
     const urlObject = new URL(href, window.location.origin);
     const routerLinkToParams = {
       pathname: urlObject.pathname,
@@ -92,13 +92,6 @@ export const Link = (props: LinkProps): JSX.Element => {
         to={disabled ? "" : routerLinkToParams}
         {...commonLinkProps}
         aria-disabled={disabled}
-        onClick={e => {
-          // Router Link can't be natively disabled so just kill the event
-          if (disabled) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        }}
       >
         {children}
       </RouterLink>
