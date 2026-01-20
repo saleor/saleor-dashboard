@@ -6,7 +6,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useWarehouseListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { LayoutGrid, List } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -196,28 +196,37 @@ export const ProductVariantGenerator = ({
                   onChange={setDefaults}
                   skuPreviewExample={skuPreviewExample}
                 />
-                <Box className={styles.viewToggle}>
-                  <Button
-                    variant={viewMode === "grid" ? "primary" : "secondary"}
-                    size="small"
-                    onClick={() => setViewMode("grid")}
-                    disabled={!canShowMatrix}
-                    aria-label={intl.formatMessage(messages.gridView)}
-                    data-test-id="view-toggle-grid"
-                  >
-                    <LayoutGrid size={16} />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "primary" : "secondary"}
-                    size="small"
-                    onClick={() => setViewMode("list")}
-                    disabled={previews.length === 0}
-                    aria-label={intl.formatMessage(messages.listView)}
-                    data-test-id="view-toggle-list"
-                  >
-                    <List size={16} />
-                  </Button>
-                </Box>
+                {previews.length > 0 && (
+                  <Box className={styles.viewToggle}>
+                    <Tooltip open={canShowMatrix ? false : undefined}>
+                      <Tooltip.Trigger>
+                        <Button
+                          variant={viewMode === "grid" ? "primary" : "secondary"}
+                          size="small"
+                          onClick={() => setViewMode("grid")}
+                          disabled={!canShowMatrix}
+                          aria-label={intl.formatMessage(messages.gridView)}
+                          data-test-id="view-toggle-grid"
+                        >
+                          <LayoutGrid size={16} />
+                        </Button>
+                      </Tooltip.Trigger>
+                      <Tooltip.Content side="bottom">
+                        <Tooltip.Arrow />
+                        {intl.formatMessage(messages.matrixRequiresTwoAttributes)}
+                      </Tooltip.Content>
+                    </Tooltip>
+                    <Button
+                      variant={viewMode === "list" ? "primary" : "secondary"}
+                      size="small"
+                      onClick={() => setViewMode("list")}
+                      aria-label={intl.formatMessage(messages.listView)}
+                      data-test-id="view-toggle-list"
+                    >
+                      <List size={16} />
+                    </Button>
+                  </Box>
+                )}
               </Box>
 
               {/* Preview */}
