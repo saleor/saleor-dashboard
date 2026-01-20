@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
 Added support for [devcontainers] to facilitate local development.
