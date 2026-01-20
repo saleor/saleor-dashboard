@@ -15,6 +15,7 @@ import {
   getOrderUnfulfilledLines,
   getParsedLineData,
   getParsedLineDataForFulfillmentStatus,
+  getParsedLines,
 } from "./utils";
 
 export interface LineItemOptions<T> {
@@ -157,8 +158,13 @@ function useOrderReturnForm(
       fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
         ? waitingItemsQuantities
         : fulfiledItemsQuatities;
+
+    // Use getParsedLines to properly transform FulfillmentLine -> ParsedFulfillmentLine
+    // This ensures orderLineId is correctly set from orderLine.id
+    const parsedLines = getParsedLines(fulfillment.lines);
+
     const newQuantities: FormsetQuantityData = quantities.data.map(item => {
-      const line = fulfillment.lines.find(getById(item.id));
+      const line = parsedLines.find(getById(item.id));
 
       if (!line) {
         return item;
@@ -167,6 +173,7 @@ function useOrderReturnForm(
       return getLineItem(line, {
         initialValue: line.quantity,
         isRefunded: item.data.isRefunded,
+        isFulfillment: true,
       });
     });
 
