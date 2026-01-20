@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { MenuErrorFragment } from "@dashboard/graphql";
@@ -10,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,7 +128,7 @@ const MenuItemDialog = ({
                   control={control}
                   render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
                     return (
-                      <Combobox
+                      <DynamicCombobox
                         {...field}
                         disabled={disabled}
                         label={intl.formatMessage({
@@ -138,16 +137,16 @@ const MenuItemDialog = ({
                           description: "label",
                         })}
                         options={linkTypeOptions}
-                        onChange={e => {
-                          onChange(e);
+                        onChange={option => {
+                          onChange(option?.value ?? null);
                           setValue("linkValue", "");
                           clearErrors("linkValue");
                         }}
                         value={linkTypeOptions.find(o => o.value === value) || null}
                         name="linkType"
+                        size="small"
                         error={!!idError || !!error}
                         helperText={getMenuErrorMessage(idError, intl) || error?.message}
-                        fetchOptions={() => undefined}
                         data-test-id="menu-item-link-type-input"
                       />
                     );
