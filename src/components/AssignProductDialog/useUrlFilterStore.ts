@@ -15,8 +15,10 @@ export interface FilterUrlState {
   filterQueryString: string;
 }
 
-export const parseUrlSearch = (search: string): FilterUrlState => {
-  const cleanSearch = stripLeadingQuestionMark(search);
+/** Removes non-filter related query variables from queryString
+ * this is used so that we can operate on filter state and leave other query variables unchanged */
+const parseUrlSearch = (rawSearch: string): FilterUrlState => {
+  const cleanSearch = stripLeadingQuestionMark(rawSearch);
   const parsed = parseQs(cleanSearch) as Record<string, unknown>;
   const filterParams: Record<string, unknown> = {};
   const preservedParams: Record<string, unknown> = {};
@@ -37,6 +39,7 @@ export const parseUrlSearch = (search: string): FilterUrlState => {
   };
 };
 
+/** Handles filter value changes in URL for ConditionalFilter used in modals */
 export const useUrlFilterStore = (): {
   state: FilterUrlState;
   updateFilters: (filterParams: Record<string, unknown>) => void;

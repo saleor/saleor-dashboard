@@ -33,18 +33,12 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   initialConstraints?: InitialConstraints;
 }
 
-const AssignProductDialog = (props: AssignProductDialogProps) => {
-  const {
-    selectionMode = "multiple",
-    excludedFilters,
-    onFilterChange,
-    initialConstraints,
-    ...restProps
-  } = props;
+export const AssignProductDialog = (props: AssignProductDialogProps): JSX.Element => {
+  const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
 
   const { open, onClose } = props;
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     onClose();
   };
 
@@ -54,9 +48,9 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
         <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DashboardModal.Header>
       {selectionMode === "single" ? (
-        <AssignProductDialogSingle {...restProps} onFilterChange={onFilterChange} />
+        <AssignProductDialogSingle {...restProps} />
       ) : (
-        <AssignProductDialogMulti {...restProps} onFilterChange={onFilterChange} />
+        <AssignProductDialogMulti {...restProps} />
       )}
     </>
   );
@@ -78,4 +72,5 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
 };
 
 AssignProductDialog.displayName = "AssignProductDialog";
+
 export default AssignProductDialog;
