@@ -28,7 +28,6 @@ describe("Link component", () => {
       expect(link).toHaveAttribute("href", href);
     });
 
-    // todo should assert if state is passed on click
     it("should pass state to RouterLink", () => {
       // Arrange
       const state = { from: "/previous-page" };
@@ -335,9 +334,7 @@ describe("Link component", () => {
   });
 
   describe("onClick handler", () => {
-    // Note: There's a bug in Link.tsx where RouterLink's inline onClick overrides handleClick
-    // causing onClick prop to not be called for internal links when not disabled
-    it("should call onClick for internal RouterLink (bug)", async () => {
+    it("should call onClick for internal RouterLink", async () => {
       // Arrange
       const onClick = jest.fn();
       const user = userEvent.setup();
