@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 import { IntlProvider } from "react-intl";
 import { toast } from "sonner";
 
-import useNotifier from "./useNotifier";
+import { useNotifier } from "./useNotifier";
 
 jest.mock("sonner", () => ({
   toast: {

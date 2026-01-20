@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { INotificationCallback } from "@dashboard/components/notifications";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ReactNode, useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 

@@ -67,4 +67,4 @@ function useNotifier(): UseNotifierResult {
   return notify;
 }
 
-export default useNotifier;
+export { useNotifier };

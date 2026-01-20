@@ -28,7 +28,7 @@ import {
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import {
   getOrderTransactionErrorMessage,

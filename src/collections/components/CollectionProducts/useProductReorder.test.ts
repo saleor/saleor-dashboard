@@ -1,6 +1,6 @@
 import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { Product } from "./types";

@@ -2,7 +2,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { INotification } from "@dashboard/components/notifications";
 import { GiftCardBulkCreateInput, useGiftCardBulkCreateMutation } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useEffect, useState } from "react";
