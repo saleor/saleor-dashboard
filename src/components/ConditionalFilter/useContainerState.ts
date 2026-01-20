@@ -6,7 +6,7 @@ import { FilterValueProvider } from "./FilterValueProvider";
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
-const removeConstraint = (container: FilterContainer) => {
+const removeConstraint = (container: FilterContainer): FilterContainer => {
   return container.map(el => {
     if (!FilterElement.isFilterElement(el)) return el;
 
@@ -17,7 +17,7 @@ const removeConstraint = (container: FilterContainer) => {
     return el;
   });
 };
-const calculateIndexesToRemove = (container: FilterContainer, position: number) => {
+const calculateIndexesToRemove = (container: FilterContainer, position: number): number[] => {
   const next = position + 1;
   const previous = position - 1;
   const indexTuple = [position];
@@ -34,12 +34,14 @@ const calculateIndexesToRemove = (container: FilterContainer, position: number) 
 
   return indexTuple;
 };
-const removeElement = (container: FilterContainer, position: number) => {
+
+const removeElement = (container: FilterContainer, position: number): FilterContainer => {
   const indexTuple = calculateIndexesToRemove(container, position);
   const newContainer = container.filter((_, elIndex) => !indexTuple.includes(elIndex));
 
   return removeConstraint(newContainer);
 };
+
 const removeEmptyElements = (
   container: FilterContainer,
   provider: FilterValueProvider,
@@ -69,15 +71,17 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   ): el is FilterElement => {
     return elIndex === index && FilterElement.isFilterElement(el);
   };
+
   const updateFilterElement =
-    (index: number, cb: StateCallback) => (el: Element, elIndex: number) => {
+    (index: number, cb: StateCallback) =>
+    (el: Element, elIndex: number): Element => {
       if (isFilterElementAtIndex(elIndex, index, el)) {
         cb(el);
       }
 
       return el;
     };
-  const updateAt = (position: string, cb: StateCallback) => {
+  const updateAt = (position: string, cb: StateCallback): void => {
     const index = parseInt(position, 10);
     const element = value[index];
 
@@ -94,12 +98,12 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
 
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
-  const getAt = (position: string) => {
+  const getAt = (position: string): string | FilterElement | FilterContainer => {
     const index = parseInt(position, 10);
 
     return value[index];
   };
-  const updateBySlug = (slug: string, cb: StateCallback) => {
+  const updateBySlug = (slug: string, cb: StateCallback): void => {
     setValue(v =>
       v.map(el => {
         if (FilterElement.isFilterElement(el) && el.value.value === slug) {
@@ -110,7 +114,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
       }),
     );
   };
-  const removeAt = (position: string) => {
+  const removeAt = (position: string): void => {
     const index = parseInt(position, 10);
     const element = value[index];
 
@@ -121,7 +125,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue(v => removeElement(v, index));
   };
 
-  const createNewValue = (value: FilterContainer, element: FilterElement) => {
+  const createNewValue = (value: FilterContainer, element: FilterElement): FilterContainer => {
     const newValue: FilterContainer = [];
 
     if (value.length > 0) {
@@ -133,29 +137,32 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     return newValue;
   };
 
-  const create = (element: FilterElement) => {
+  const create = (element: FilterElement): void => {
     const newValue = createNewValue(value, element);
 
     setValue(v => v.concat(newValue));
   };
 
-  const createAndRemoveEmpty = (element: FilterElement) => {
+  const createAndRemoveEmpty = (element: FilterElement): void => {
     const filteredValue = removeEmptyElements(value, valueProvider);
     const newValue = createNewValue(filteredValue, element);
 
     setValue(() => filteredValue.concat(newValue));
   };
 
-  const exist = (slug: string) => {
+  const exist = (slug: string): boolean => {
     return value.some(entry => FilterElement.isFilterElement(entry) && entry.value.value === slug);
   };
-  const createEmpty = () => {
+
+  const createEmpty = (): void => {
     create(FilterElement.createEmpty());
   };
-  const clear = () => {
+
+  const clear = (): void => {
     setValue([]);
   };
-  const clearEmpty = () => {
+
+  const clearEmpty = (): void => {
     setValue(v => removeEmptyElements(v, valueProvider));
   };
 
