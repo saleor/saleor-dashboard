@@ -1,20 +1,22 @@
 import { Ripple } from "@dashboard/ripples/types";
+import { defineMessage } from "react-intl";
 
 import { getRipplesSortedAndGroupedByMonths } from "./AllRipplesModal";
 
-describe("getRipplesSortedAndGroupedByMonths", () => {
-  // Arrange
-  const createMockRipple = (id: string, dateAdded: Date): Ripple => ({
-    ID: id,
-    dateAdded,
-    content: {
-      oneLiner: `One liner for ${id}`,
-      global: `Global content for ${id}`,
-      contextual: `Contextual content for ${id}`,
-    },
-    TTL_seconds: 30,
-  });
+const createMockRipple = (id: string, dateAdded: Date, overrides?: Partial<Ripple>): Ripple => ({
+  type: "feature",
+  ID: id,
+  dateAdded,
+  content: {
+    oneLiner: `One liner for ${id}`,
+    global: `Global content for ${id}`,
+    contextual: `Contextual content for ${id}`,
+  },
+  TTL_seconds: 30,
+  ...overrides,
+});
 
+describe("getRipplesSortedAndGroupedByMonths", () => {
   it("should return empty object for empty array", () => {
     // Arrange
     const ripples: Ripple[] = [];
@@ -76,8 +78,8 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(result["2024 January"]).toBeDefined();
     expect(result["2023 December"]).toBeDefined();
 
-    expect(result["2024 January"][0].dateDisplay).toBe("January 2024");
-    expect(result["2023 December"][0].dateDisplay).toBe("December 2023");
+    expect(result["2024 January"][0].dateDisplay).toBe("Jan 2024");
+    expect(result["2023 December"][0].dateDisplay).toBe("Dec 2023");
   });
 
   it("should handle ripples from different years correctly", () => {
@@ -127,7 +129,7 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(Object.keys(result)).toHaveLength(1);
     expect(result["2024 April"]).toHaveLength(1);
     expect(result["2024 April"][0].ripple.ID).toBe("single-ripple");
-    expect(result["2024 April"][0].dateDisplay).toBe("April 2024");
+    expect(result["2024 April"][0].dateDisplay).toBe("Apr 2024");
   });
 
   it("should handle ripples with same date correctly", () => {
@@ -146,7 +148,94 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     expect(Object.keys(result)).toHaveLength(1);
     expect(result["2024 March"]).toHaveLength(3);
     result["2024 March"].forEach(item => {
-      expect(item.dateDisplay).toBe("March 2024");
+      expect(item.dateDisplay).toBe("Mar 2024");
     });
+  });
+});
+
+describe("Ripple actions", () => {
+  const mockLabel = defineMessage({
+    defaultMessage: "Test Action",
+    id: "MH1qA1",
+  });
+
+  it("should support actions with href for external links", () => {
+    // Arrange
+    const ripple = createMockRipple("ripple-with-href", new Date(2024, 0, 15), {
+      actions: [
+        {
+          label: mockLabel,
+          href: "https://example.com/docs",
+        },
+      ],
+    });
+
+    // Assert
+    expect(ripple.actions).toHaveLength(1);
+    expect(ripple.actions![0].href).toBe("https://example.com/docs");
+    expect(ripple.actions![0].onClick).toBeUndefined();
+  });
+
+  it("should support actions with onClick for in-app actions", () => {
+    // Arrange
+    const mockOnClick = jest.fn();
+    const ripple = createMockRipple("ripple-with-onclick", new Date(2024, 0, 15), {
+      actions: [
+        {
+          label: mockLabel,
+          onClick: mockOnClick,
+        },
+      ],
+    });
+
+    // Assert
+    expect(ripple.actions).toHaveLength(1);
+    expect(ripple.actions![0].onClick).toBe(mockOnClick);
+    expect(ripple.actions![0].href).toBeUndefined();
+  });
+
+  it("should support hideInModal flag to filter actions in global modal", () => {
+    // Arrange
+    const ripple = createMockRipple("ripple-with-hidden-action", new Date(2024, 0, 15), {
+      actions: [
+        {
+          label: mockLabel,
+          onClick: jest.fn(),
+          hideInModal: true,
+        },
+        {
+          label: defineMessage({
+            defaultMessage: "Visible Action",
+            id: "NJ9ngY",
+          }),
+          href: "https://example.com",
+        },
+      ],
+    });
+
+    // Act
+    const visibleActions = ripple.actions!.filter(action => !action.hideInModal);
+
+    // Assert
+    expect(ripple.actions).toHaveLength(2);
+    expect(visibleActions).toHaveLength(1);
+    expect(visibleActions[0].href).toBe("https://example.com");
+  });
+
+  it("should enforce that action has either href or onClick (mutually exclusive)", () => {
+    // Arrange
+    const rippleWithHref = createMockRipple("with-href", new Date(2024, 0, 15), {
+      actions: [{ label: mockLabel, href: "https://example.com" }],
+    });
+    const rippleWithOnClick = createMockRipple("with-onclick", new Date(2024, 0, 15), {
+      actions: [{ label: mockLabel, onClick: jest.fn() }],
+    });
+
+    // Assert - each action type has its required property
+    expect(rippleWithHref.actions![0]).toHaveProperty("href");
+    expect(rippleWithOnClick.actions![0]).toHaveProperty("onClick");
+
+    // Note: TypeScript enforces that actions cannot have both href and onClick,
+    // and cannot have neither. This is enforced at compile time via the RippleAction union type.
   });
 });

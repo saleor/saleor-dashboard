@@ -169,7 +169,10 @@ export const OrderUnconfirmedDetails = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = useState("");
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
-  const defaultZeroMoney = { amount: 0, currency: "USD" };
+  const defaultZeroMoney = {
+    amount: 0,
+    currency: order?.total?.gross?.currency ?? order?.totalBalance?.currency ?? "USD",
+  };
   const selectedTransaction = useMemo(
     () => order?.transactions?.find(t => t.id === params.id),
     [order?.transactions, params.id],
@@ -383,14 +386,13 @@ export const OrderUnconfirmedDetails = ({
       {/* Transaction Capture Dialog - for CHARGE action */}
       {params.action === "transaction-charge-action" && (
         <OrderCaptureDialog
+          key={params.id}
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
           orderTotal={order?.total.gross ?? defaultZeroMoney}
           authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
           chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
           orderBalance={order?.totalBalance ?? defaultZeroMoney}
-          isTransaction
-          open={true}
           onClose={closeModal}
           onSubmit={amount =>
             orderTransactionAction
@@ -436,20 +438,21 @@ export const OrderUnconfirmedDetails = ({
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
-      <OrderCaptureDialog
-        confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-        orderTotal={order?.total.gross ?? defaultZeroMoney}
-        authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
-        open={params.action === "capture"}
-        onClose={closeModal}
-        onSubmit={amount =>
-          orderPaymentCapture.mutate({
-            amount,
-            id,
-          })
-        }
-      />
+      {params.action === "capture" && (
+        <OrderCaptureDialog
+          confirmButtonState={orderPaymentCapture.opts.status}
+          errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
+          orderTotal={order?.total.gross ?? defaultZeroMoney}
+          authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
+          onClose={closeModal}
+          onSubmit={amount =>
+            orderPaymentCapture.mutate({
+              amount,
+              id,
+            })
+          }
+        />
+      )}
       <OrderFulfillmentApproveDialog
         confirmButtonState={orderFulfillmentApprove.opts.status}
         errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}

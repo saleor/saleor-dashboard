@@ -12,8 +12,8 @@ export const messages = defineMessages({
     description: "status pill for fully authorized payment",
   },
   statusPartial: {
-    id: "ZUYQ+C",
-    defaultMessage: "Partial authorisation",
+    id: "ayylzh",
+    defaultMessage: "Partial Authorisation",
     description: "status pill for partial authorization",
   },
   statusNoAuthorization: {
@@ -35,11 +35,6 @@ export const messages = defineMessages({
     id: "U0IK0G",
     defaultMessage: "Authorized",
     description: "label for authorized amount",
-  },
-  transactionAuthorized: {
-    id: "H0eCbU",
-    defaultMessage: "Transaction authorized",
-    description: "label for transaction authorized amount",
   },
   capturedSoFar: {
     id: "0YOedO",

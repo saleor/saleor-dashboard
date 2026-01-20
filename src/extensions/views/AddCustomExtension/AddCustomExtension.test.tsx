@@ -30,6 +30,11 @@ class ResizeObserverMock {
 
 global.ResizeObserver = ResizeObserverMock;
 
+jest.mock("@saleor/macaw-ui-next", () => ({
+  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
+  useTheme: () => ({ theme: "default" }),
+}));
+
 jest.mock("react-router-dom", () => ({
   Link: ({ children, to, ...props }: { children: React.ReactNode; to: string }) => (
     <a href={to} {...props}>

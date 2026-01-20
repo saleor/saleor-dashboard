@@ -1,5 +1,55 @@
 # Changelog
 
+## 3.22.26
+
+### Patch Changes
+
+- [#6256](https://github.com/saleor/saleor-dashboard/pull/6256) [`8bed1a4`](https://github.com/saleor/saleor-dashboard/commit/8bed1a4f9ae61019b30eb3d4eae902a3de59f402) Thanks [@lkostrowski](https://github.com/lkostrowski)! - When reference-type attribute is being selected in product variant page, selected references should now properly display label instead of ID
+
+- [#6262](https://github.com/saleor/saleor-dashboard/pull/6262) [`2934387`](https://github.com/saleor/saleor-dashboard/commit/2934387578c62d563a0c769b6c5a9716975f80ad) Thanks [@mirekm](https://github.com/mirekm)! - Fixed bug introduced in Chromium 144, where some of custom Comboboxes were broken and their value was reset to empty. Components were replaced with Combobox from Macaw UI
+
+## 3.22.25
+
+### Patch Changes
+
+- [#6243](https://github.com/saleor/saleor-dashboard/pull/6243) [`1a04311`](https://github.com/saleor/saleor-dashboard/commit/1a043114383f657839a441e7a40b9c5f3a1e0965) Thanks [@NyanKiyoshi](https://github.com/NyanKiyoshi)! - Added support for [devcontainers] to facilitate local development.
+
+  [devcontainers]: https://containers.dev/
+
+- [#6226](https://github.com/saleor/saleor-dashboard/pull/6226) [`1486e12`](https://github.com/saleor/saleor-dashboard/commit/1486e1207176b6cf571a22c0c8b7c7146c9755c6) Thanks [@mirekm](https://github.com/mirekm)! - Prevent accidental variant metadata edits from order context
+
+  Previously, users could edit product variant metadata directly from the Order Line Metadata dialog. This could be misleading because variant metadata is shared across all orders—changes made here would affect the variant globally, not just this order.
+
+  Variant metadata is now displayed as read-only in the order context, with a direct link to the variant page for intentional edits.
+
+- [#6242](https://github.com/saleor/saleor-dashboard/pull/6242) [`8a48470`](https://github.com/saleor/saleor-dashboard/commit/8a484705dbc85d93cc9aa05ba6924865c8b203cb) Thanks [@mirekm](https://github.com/mirekm)! - Redesigned "What's New" modal with timeline layout, type badges, and improved visual hierarchy for better readability.
+
+- [#6255](https://github.com/saleor/saleor-dashboard/pull/6255) [`02197fd`](https://github.com/saleor/saleor-dashboard/commit/02197fd8a0eb6d9efbd0c904cb93c0a87ee0a557) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed a bug that prevented creating refunds when clicked "Set maximal quantities" button on Order Return & replace page
+
+- [#6251](https://github.com/saleor/saleor-dashboard/pull/6251) [`ce04007`](https://github.com/saleor/saleor-dashboard/commit/ce040077c57bf067e67132048d23387cde2a4d6d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bold border in configuration page cards
+
+- [#6200](https://github.com/saleor/saleor-dashboard/pull/6200) [`f824411`](https://github.com/saleor/saleor-dashboard/commit/f8244119445e5c969c91480893559cc19fe65cba) Thanks [@mirekm](https://github.com/mirekm)! - New capture dialog for capturing payments with support for:
+  - Full and partial authorization status indicators
+  - Custom capture amount input with currency-aware decimal validation
+  - Order balance and transaction-level capture tracking
+  - Outcome prediction showing resulting order status
+
+- [#6245](https://github.com/saleor/saleor-dashboard/pull/6245) [`bc27812`](https://github.com/saleor/saleor-dashboard/commit/bc278122cb81f6303cdee816e35c929043209254) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `qs`, and patched `posthog` to use packages without security warnings
+
+## 3.22.24
+
+### Patch Changes
+
+- [#6238](https://github.com/saleor/saleor-dashboard/pull/6238) [`2b2311e`](https://github.com/saleor/saleor-dashboard/commit/2b2311eb2a0a98567efbbe5eef5c3daf66eeeb92) Thanks [@mirekm](https://github.com/mirekm)! - - Fixed broken question mark icons in Product Type variant attributes view
+
+- [#6233](https://github.com/saleor/saleor-dashboard/pull/6233) [`e5b2c3c`](https://github.com/saleor/saleor-dashboard/commit/e5b2c3c634c2ea46a31b31d5291e03231e7ade1e) Thanks [@mirekm](https://github.com/mirekm)! - Fixed info icon sizing and alignment in Product details view attributes. Info icons are now consistently small (16px) and properly aligned with text labels.
+
+- [#6225](https://github.com/saleor/saleor-dashboard/pull/6225) [`f7ef997`](https://github.com/saleor/saleor-dashboard/commit/f7ef9972d9f9ca69681aee68a4967ec5450958b7) Thanks [@mirekm](https://github.com/mirekm)! - Move Cloud env link to the Saleor Dashboard top-left logo hover state
+
+- [#6165](https://github.com/saleor/saleor-dashboard/pull/6165) [`f5d17f8`](https://github.com/saleor/saleor-dashboard/commit/f5d17f8dc869e4925bd804a7c2ab8fae2e95f96c) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Modals for assigning Products will now show Filter button.
+  This means that list in the modal can now be filtered based on the same conditions available on the Product list page.
+  This new UI will also display constraints based on context (e.g. limited Product type filter, based on Reference Types config when assigning attribute).
+
 ## 3.22.23
 
 ### Patch Changes

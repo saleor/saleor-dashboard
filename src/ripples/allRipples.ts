@@ -1,4 +1,5 @@
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
+import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -26,6 +27,9 @@ export const allRipples: Ripple[] = [
 
   // Channels
   checkoutAutocompleteSettings,
+
+  // Sidebar
+  rippleCloudEnvLink,
 ];
 
 /**

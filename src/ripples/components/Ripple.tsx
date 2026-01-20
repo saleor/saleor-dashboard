@@ -31,6 +31,24 @@ export const Ripple = (props: { model: RippleModel }) => {
         <Box marginBottom={4}>{isPlainString ? <Text>{content}</Text> : content}</Box>
         <Box display="flex" justifyContent="flex-end" gap={2}>
           {props.model.actions?.map((rippleAction, index) => {
+            if (rippleAction.href) {
+              return (
+                <Button
+                  key={index}
+                  size="small"
+                  variant="tertiary"
+                  onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setManuallyHidden(props.model);
+                    window.open(rippleAction.href, "_blank", "noopener,noreferrer");
+                  }}
+                >
+                  {intl.formatMessage(rippleAction.label)}
+                </Button>
+              );
+            }
+
             return (
               <Button
                 size="small"
@@ -42,7 +60,7 @@ export const Ripple = (props: { model: RippleModel }) => {
 
                   setManuallyHidden(props.model);
 
-                  rippleAction.onClick();
+                  rippleAction.onClick?.();
                 }}
               >
                 {intl.formatMessage(rippleAction.label)}

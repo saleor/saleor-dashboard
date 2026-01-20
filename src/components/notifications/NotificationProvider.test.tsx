@@ -27,7 +27,6 @@ describe("NotificationProvider", () => {
 
     // Assert
     expect(result.current).toBeTruthy();
-    expect(typeof result.current?.show).toBe("function");
     expect(typeof result.current?.remove).toBe("function");
     expect(typeof result.current?.clearErrorNotifications).toBe("function");
   });

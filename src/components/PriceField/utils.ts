@@ -35,9 +35,44 @@ export const findPriceSeparator = (input: string) =>
 
 /**
  * Normalizes decimal separator to JavaScript standard (dot).
- * Converts comma to dot for locales that use comma as decimal separator.
+ * Handles different locale formats:
+ * - European: "1.234,56" → "1234.56" (comma decimal, dot thousand)
+ * - US: "1,234.56" → "1234.56" (dot decimal, comma thousand)
+ * - Simple: "10,50" or "10.50" → "10.50"
+ * - US thousands only: "1,234,567" → "1234567"
+ * - European thousands only: "1.234.567" → "1234567"
  */
-export const normalizeDecimalSeparator = (value: string): string => value.replace(",", ".");
+export const normalizeDecimalSeparator = (value: string): string => {
+  const commaCount = (value.match(/,/g) || []).length;
+  const dotCount = (value.match(/\./g) || []).length;
+
+  if (commaCount > 0 && dotCount > 0) {
+    // Both separators present - last one is decimal, other is thousand
+    const lastComma = value.lastIndexOf(",");
+    const lastDot = value.lastIndexOf(".");
+
+    if (lastComma > lastDot) {
+      // European format: 1.234,56 → remove dots, convert comma to dot
+      return value.replace(/\./g, "").replace(",", ".");
+    } else {
+      // US format: 1,234.56 → remove commas
+      return value.replace(/,/g, "");
+    }
+  }
+
+  // Multiple commas = US thousands separators (e.g., "1,234,567")
+  if (commaCount > 1) {
+    return value.replace(/,/g, "");
+  }
+
+  // Multiple dots = European thousands separators (e.g., "1.234.567")
+  if (dotCount > 1) {
+    return value.replace(/\./g, "");
+  }
+
+  // Single comma (European decimal) or single dot (US decimal) or no separator
+  return value.replace(",", ".");
+};
 
 /**
  * Parses a decimal string value to a number, handling locale-specific separators.

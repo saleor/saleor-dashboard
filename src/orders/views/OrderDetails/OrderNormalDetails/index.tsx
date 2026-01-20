@@ -47,7 +47,7 @@ import {
   OpenModalFunction,
 } from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -174,6 +174,11 @@ export const OrderNormalDetails = ({
   }, [approvalErrors]);
 
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
+
+  const selectedTransaction = useMemo(
+    () => order?.transactions?.find(t => t.id === params.id),
+    [order?.transactions, params.id],
+  );
 
   const hasOrderFulfillmentsFulfilled = order?.fulfillments.some(
     fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
@@ -313,26 +318,15 @@ export const OrderNormalDetails = ({
         }
       />
       {/* Transaction Capture Dialog - for CHARGE action */}
-      {params.action === "transaction-charge-action" && (
+      {params.action === "transaction-charge-action" && order && selectedTransaction && (
         <OrderCaptureDialog
+          key={params.id}
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
-          orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
-          authorizedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
-          }
-          chargedAmount={
-            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? {
-              amount: 0,
-              currency: "USD",
-            }
-          }
-          orderBalance={order?.totalBalance ?? { amount: 0, currency: "USD" }}
-          isTransaction
-          open={true}
+          orderTotal={order.total.gross}
+          authorizedAmount={selectedTransaction.authorizedAmount}
+          chargedAmount={selectedTransaction.chargedAmount}
+          orderBalance={order.totalBalance}
           onClose={closeModal}
           onSubmit={amount =>
             orderTransactionAction
@@ -397,20 +391,21 @@ export const OrderNormalDetails = ({
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
-      <OrderCaptureDialog
-        confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-        orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
-        authorizedAmount={order?.totalAuthorized ?? { amount: 0, currency: "USD" }}
-        open={params.action === "capture"}
-        onClose={closeModal}
-        onSubmit={amount =>
-          orderPaymentCapture.mutate({
-            amount,
-            id,
-          })
-        }
-      />
+      {params.action === "capture" && order && (
+        <OrderCaptureDialog
+          confirmButtonState={orderPaymentCapture.opts.status}
+          errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
+          orderTotal={order.total.gross}
+          authorizedAmount={order.totalAuthorized}
+          onClose={closeModal}
+          onSubmit={amount =>
+            orderPaymentCapture.mutate({
+              amount,
+              id,
+            })
+          }
+        />
+      )}
       <OrderFulfillmentApproveDialog
         confirmButtonState={orderFulfillmentApprove.opts.status}
         errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}
