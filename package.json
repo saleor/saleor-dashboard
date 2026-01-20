@@ -212,16 +212,6 @@
     "vite-plugin-html": "^3.2.2"
   },
   "optionalDependencies": {
-    "@swc/core-darwin-arm64": "1.3.40",
-    "@swc/core-darwin-x64": "1.3.40",
-    "@swc/core-linux-arm-gnueabihf": "1.3.40",
-    "@swc/core-linux-arm64-gnu": "1.3.40",
-    "@swc/core-linux-arm64-musl": "1.3.40",
-    "@swc/core-linux-x64-gnu": "1.3.40",
-    "@swc/core-linux-x64-musl": "1.3.40",
-    "@swc/core-win32-arm64-msvc": "1.3.40",
-    "@swc/core-win32-ia32-msvc": "1.3.40",
-    "@swc/core-win32-x64-msvc": "1.3.40",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
@@ -244,6 +234,5 @@
   "engines": {
     "node": "^20 || ^22",
     "pnpm": ">=10"
-  },
-  "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed"
+  }
 }
