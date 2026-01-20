@@ -5,7 +5,7 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { FetchMoreProps } from "@dashboard/types";
 import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -32,12 +32,7 @@ const ProductTypePickerDialog = ({
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const debouncedFetchProductTypes = useCallback(
-    useDebounce((value: string) => {
-      fetchProductTypes(value);
-    }, 500),
-    [fetchProductTypes],
-  );
+  const debouncedFetchProductTypes = useDebounce(fetchProductTypes, 500);
 
   useModalDialogOpen(open, {
     onClose: () => {

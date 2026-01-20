@@ -5,7 +5,7 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import { Button, DynamicCombobox, Option } from "@saleor/macaw-ui-next";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -32,12 +32,7 @@ const PageTypePickerDialog = ({
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-  const debouncedFetchPageTypes = useCallback(
-    useDebounce((value: string) => {
-      fetchPageTypes(value);
-    }, 500),
-    [fetchPageTypes],
-  );
+  const debouncedFetchPageTypes = useDebounce(fetchPageTypes, 500);
 
   useModalDialogOpen(open, {
     onClose: () => {

@@ -1,6 +1,5 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { DynamicCombobox } from "@saleor/macaw-ui-next";
-import { useCallback } from "react";
 import { Control, Controller } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -25,12 +24,7 @@ export const MenuItemDialogLinkValue = ({
   const intl = useIntl();
   const { fetchMoreProps, loading, options, onQueryChange } = useLinkValue(linkType);
 
-  const debouncedQueryChange = useCallback(
-    useDebounce((value: string) => {
-      onQueryChange(value);
-    }, 500),
-    [onQueryChange],
-  );
+  const debouncedQueryChange = useDebounce(onQueryChange, 500);
 
   const handleScrollEnd = () => {
     if (fetchMoreProps?.hasMore) {
