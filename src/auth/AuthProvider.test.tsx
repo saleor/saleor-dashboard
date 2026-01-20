@@ -71,8 +71,7 @@ jest.mock("@dashboard/graphql", () => ({
   })),
 }));
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: jest.fn(() => () => undefined),
+  useNotifier: jest.fn(() => () => undefined),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
