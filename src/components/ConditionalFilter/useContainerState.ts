@@ -98,7 +98,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
 
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
-  const getAt = (position: string): string | FilterElement | FilterContainer => {
+  const getAt = (position: string): Element | undefined => {
     const index = parseInt(position, 10);
 
     return value[index];
