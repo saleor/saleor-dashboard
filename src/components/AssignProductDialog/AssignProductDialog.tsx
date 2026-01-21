@@ -61,14 +61,12 @@ export const AssignProductDialog = (props: AssignProductDialogProps): JSX.Elemen
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        {open && (
-          <ModalProductFilterProvider
-            excludedFilters={excludedFilters}
-            initialConstraints={initialConstraints}
-          >
-            {dialogContent}
-          </ModalProductFilterProvider>
-        )}
+        <ModalProductFilterProvider
+          excludedFilters={excludedFilters}
+          initialConstraints={initialConstraints}
+        >
+          {dialogContent}
+        </ModalProductFilterProvider>
       </DashboardModal.Content>
     </DashboardModal>
   );
