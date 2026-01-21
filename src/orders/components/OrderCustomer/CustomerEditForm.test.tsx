@@ -11,8 +11,8 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-jest.mock("@dashboard/components/Combobox", () => ({
-  Combobox: ({ label, onChange, value, name, "data-test-id": testId }: any) => (
+jest.mock("@saleor/macaw-ui-next", () => ({
+  DynamicCombobox: ({ label, onChange, value, name, "data-test-id": testId }: any) => (
     <div>
       <label>{label}</label>
       <input
@@ -20,7 +20,7 @@ jest.mock("@dashboard/components/Combobox", () => ({
         data-testid={testId}
         name={name}
         value={value.value}
-        onChange={e => onChange({ target: { name, value: e.target.value } })}
+        onChange={e => onChange({ value: e.target.value, label: e.target.value })}
       />
     </div>
   ),
