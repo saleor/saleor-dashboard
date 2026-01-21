@@ -13,7 +13,7 @@ import {
 import { UseFilterPresets, useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings, { UseListSettings } from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import { createPaginationState, PageInfo, PaginationState } from "@dashboard/hooks/usePaginator";
 import { UseRowSelection, useRowSelection } from "@dashboard/hooks/useRowSelection";

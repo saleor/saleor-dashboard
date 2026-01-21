@@ -11,7 +11,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import createMetadataCreateHandler, {
   CreateMetadataHandlerFunctionResult,

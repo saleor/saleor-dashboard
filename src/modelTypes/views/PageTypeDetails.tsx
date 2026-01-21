@@ -20,7 +20,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { ReorderEvent } from "@dashboard/types";

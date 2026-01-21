@@ -1,4 +1,4 @@
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import {
   OrderGrantRefundEditMutation,
   OrderGrantRefundUpdateErrorCode,
@@ -16,7 +16,7 @@ export const handleRefundEditComplete = ({
   intl,
 }: {
   submitData: OrderGrantRefundEditMutation;
-  notify: (message: IMessage) => void;
+  notify: (notification: INotification) => void;
   setLinesErrors: (value: React.SetStateAction<OrderTransactionRefundError[]>) => void;
   intl: IntlShape;
   orderId: string;

@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";

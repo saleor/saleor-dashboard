@@ -8,7 +8,7 @@ import {
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";

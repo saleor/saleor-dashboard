@@ -1,7 +1,7 @@
 import { DocumentNode, useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useMemo, useRef } from "react";

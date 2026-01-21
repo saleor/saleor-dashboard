@@ -18,7 +18,7 @@ import {
 } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import {

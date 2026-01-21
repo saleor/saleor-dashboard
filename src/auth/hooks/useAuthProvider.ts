@@ -1,5 +1,5 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
+import { INotificationCallback } from "@dashboard/components/notifications";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -29,7 +29,7 @@ import { useLastLoginMethod } from "./useLastLoginMethod";
 
 interface UseAuthProviderOpts {
   intl: IntlShape;
-  notify: IMessageContext;
+  notify: INotificationCallback;
   apolloClient: ApolloClient<any>;
 }
 type AuthErrorCodes = `${AccountErrorCode}`;

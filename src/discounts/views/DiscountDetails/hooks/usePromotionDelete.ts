@@ -1,7 +1,7 @@
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { usePromotionDeleteMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
 export const usePromotionDelete = () => {
