@@ -143,6 +143,9 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue(v => v.concat(newValue));
   };
 
+  /* This function was created to cover a case when on click outside filter handler
+   * fire state update, but applied of those state change happened after create function call,
+   * so we have not removed empty values in container */
   const createAndRemoveEmpty = (element: FilterElement): void => {
     const filteredValue = removeEmptyElements(value, valueProvider);
     const newValue = createNewValue(filteredValue, element);
