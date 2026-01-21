@@ -18,10 +18,10 @@ import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { Combobox, Multiselect } from "../Combobox";
+import { Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { AttributeRowProps } from "./types";
@@ -97,9 +97,7 @@ const AttributeRow = ({
     case AttributeInputTypeEnum.DROPDOWN:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <Combobox
-            allowCustomValues
-            alwaysFetchOnFocus
+          <DynamicCombobox
             size="small"
             disabled={disabled}
             options={getSingleChoices(attributeValues)}
@@ -116,12 +114,16 @@ const AttributeRow = ({
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             label=""
-            onChange={e => onChange(attribute.id, e.target.value)}
-            fetchOptions={query => {
-              fetchAttributeValues(query, attribute.id);
+            onChange={option => onChange(attribute.id, option?.value ?? "")}
+            onFocus={() => {
+              fetchAttributeValues("", attribute.id);
             }}
             onBlur={onAttributeSelectBlur}
-            fetchMore={fetchMoreAttributeValues}
+            onScrollEnd={() => {
+              if (fetchMoreAttributeValues?.hasMore) {
+                fetchMoreAttributeValues.onFetchMore();
+              }
+            }}
           />
         </BasicAttributeRow>
       );

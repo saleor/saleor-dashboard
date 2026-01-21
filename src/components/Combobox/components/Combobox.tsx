@@ -22,6 +22,9 @@ type ComboboxProps = Omit<DynamicComboboxProps<Option | null>, "value" | "onChan
   onChange: (event: ChangeEvent) => void;
 };
 
+/**
+ * @deprecated use DynamicCombobox from MacawUI
+ */
 const ComboboxRoot = ({
   value,
   fetchOptions,
@@ -90,6 +93,9 @@ const ComboboxRoot = ({
   );
 };
 
+/**
+ * @deprecated use DynamicCombobox from MacawUI
+ */
 export const Combobox = Object.assign(ComboboxRoot, {
   NoOptions: DynamicCombobox.NoOptions,
 });
