@@ -196,6 +196,11 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "Image" as const,
         url: "test-thumb.jpg",
       },
+      productType: {
+        __typename: "ProductType" as const,
+        id: "product-type-1",
+        name: "Default Product Type",
+      },
       channelListings: [
         {
           __typename: "ProductChannelListing" as const,

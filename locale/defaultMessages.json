@@ -1838,6 +1838,10 @@
     "context": "cancel button",
     "string": "Cancel order"
   },
+  "9an+9R": {
+    "context": "info message about attribute exclusivity in product type",
+    "string": "Product attributes and variant attributes are mutually exclusive. An attribute cannot be assigned to both sections within this product type."
+  },
   "9d24PR": {
     "string": "Create rule"
   },
@@ -9171,6 +9175,10 @@
   },
   "sy+pv5": {
     "string": "Email"
+  },
+  "sz/RJq": {
+    "context": "subtitle for variant attributes section",
+    "string": "Variant-specific attributes can be adjusted in the {productTypeLink} settings."
   },
   "szXISP": {
     "context": "permission group name",

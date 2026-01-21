@@ -36,6 +36,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
@@ -63,6 +64,7 @@ import {
   ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData,
 } from "./form";
+import { VariantAttributesSection } from "./VariantAttributesSection";
 
 const messages = defineMessages({
   nonSelectionAttributes: {
@@ -279,14 +281,16 @@ export const ProductVariantPage = ({
                       disabled={loading}
                       onManageClick={toggleManageChannels}
                     />
-                    {nonSelectionAttributes.length > 0 && (
+                    <CardSpacer />
+                    {variant?.product?.productType && (
                       <>
-                        <Attributes
+                        <VariantAttributesSection
                           title={intl.formatMessage(messages.nonSelectionAttributes)}
                           attributes={nonSelectionAttributes}
                           attributeValues={attributeValues}
+                          productTypeName={variant.product.productType.name}
+                          productTypeUrl={productTypeUrl(variant.product.productType.id)}
                           loading={loading}
-                          disabled={loading}
                           errors={errors}
                           onChange={handlers.selectAttribute}
                           onMultiChange={handlers.selectAttributeMultiple}
@@ -299,7 +303,6 @@ export const ProductVariantPage = ({
                           onAttributeSelectBlur={onAttributeSelectBlur}
                           richTextGetters={attributeRichTextGetters}
                         />
-                        <CardSpacer />
                       </>
                     )}
                     {selectionAttributes.length > 0 && (
