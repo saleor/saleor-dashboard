@@ -1,11 +1,10 @@
-import { createContext, FC, ReactNode, useContext } from "react";
+import { ProductWhereInput } from "@dashboard/graphql";
+import { createContext, FC, ReactNode, useContext, useMemo } from "react";
 
 import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
-import { useModalProductFilter, UseModalProductFilterResult } from "./useModalProductFilter";
-
-type ModalProductFilterContextValue = UseModalProductFilterResult;
-
-const ModalProductFilterContext = createContext<ModalProductFilterContextValue | null>(null);
+import { productFilterConfig } from "../ModalFilters/entityConfigs";
+import { LockedFilter, ModalFilterResult } from "../ModalFilters/types";
+import { useModalFilters } from "../ModalFilters/useModalFilters";
 
 export interface ProductTypeConstraint {
   id: string;
@@ -13,8 +12,12 @@ export interface ProductTypeConstraint {
 }
 
 export interface InitialConstraints {
-  productTypes?: ProductTypeConstraint[]; // ProductType constraints from reference attribute
+  productTypes?: ProductTypeConstraint[];
 }
+
+type ModalProductFilterContextValue = ModalFilterResult<ProductWhereInput>;
+
+const ModalProductFilterContext = createContext<ModalProductFilterContextValue | null>(null);
 
 export interface ModalProductFilterProviderProps {
   children: ReactNode;
@@ -27,10 +30,21 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
   excludedFilters,
   initialConstraints,
 }) => {
+  const lockedFilter: LockedFilter | undefined = useMemo(() => {
+    if (!initialConstraints?.productTypes?.length) {
+      return undefined;
+    }
+
+    return {
+      field: "productType",
+      values: initialConstraints.productTypes,
+    };
+  }, [initialConstraints?.productTypes]);
+
   const { filterContext, filterVariables, filterChannel, clearFilters, hasActiveFilters } =
-    useModalProductFilter({
+    useModalFilters(productFilterConfig, {
       excludedFilters,
-      initialConstraints,
+      lockedFilter,
     });
 
   return (
