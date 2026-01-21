@@ -13,7 +13,9 @@ import { useHandleMetadataSubmit } from "./useHandleMetadataSubmit";
 // Mocks
 const mockNotify = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => () => mockNotify);
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: () => mockNotify,
+}));
 
 jest.mock("@apollo/client", () => ({
   ...(jest.requireActual("@apollo/client") as {}),

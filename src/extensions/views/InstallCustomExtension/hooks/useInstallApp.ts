@@ -2,7 +2,7 @@ import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import { useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import { UseFormGetValues } from "react-hook-form";
 import { useIntl } from "react-intl";

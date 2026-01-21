@@ -6,7 +6,7 @@ import {
   PromotionRuleDetailsFragment,
   usePromotionRuleCreateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 

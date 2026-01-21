@@ -1,7 +1,7 @@
 import { ChannelWarehouse } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { calculateItemsOrderMoves } from "@dashboard/channels/views/ChannelDetails/handlers";
 import { useChannelReorderWarehousesMutation, WarehouseFragment } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { useIntl } from "react-intl";
 

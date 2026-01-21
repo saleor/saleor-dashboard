@@ -1,4 +1,4 @@
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";

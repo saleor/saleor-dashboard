@@ -6,7 +6,7 @@ import {
   useOrderGrantRefundEditMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage";
 import { OrderGrantRefundFormData } from "@dashboard/orders/components/OrderGrantRefundPage/form";
