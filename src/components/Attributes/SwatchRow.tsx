@@ -79,7 +79,11 @@ export const SwatchRow = ({
         onFocus={() => {
           fetchAttributeValues("", attribute.id);
         }}
-        fetchMore={fetchMoreAttributeValues}
+        onScrollEnd={() => {
+          if (fetchMoreAttributeValues?.hasMore) {
+            fetchMoreAttributeValues.onFetchMore();
+          }
+        }}
       />
     </BasicAttributeRow>
   );
