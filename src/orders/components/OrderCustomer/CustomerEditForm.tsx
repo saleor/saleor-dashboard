@@ -1,9 +1,9 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import Form from "@dashboard/components/Form";
 import { OrderDetailsFragment, SearchCustomersQuery } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -67,26 +67,36 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
         );
 
         return (
-          <Combobox
+          <DynamicCombobox
             data-test-id="select-customer"
-            allowCustomValues={true}
             label={intl.formatMessage({
               id: "hkSkNx",
               defaultMessage: "Search Customers",
             })}
             options={userChoices}
-            fetchMore={{
-              onFetchMore: onFetchMore,
-              hasMore: hasMore,
-              loading: loading,
+            onScrollEnd={() => {
+              if (hasMore && !loading) {
+                onFetchMore();
+              }
             }}
-            fetchOptions={fetchUsers || (() => {})}
+            onFocus={() => {
+              if (fetchUsers) {
+                fetchUsers("");
+              }
+            }}
             name="query"
             value={{
               label: userDisplayName,
               value: data.query,
             }}
-            onChange={handleUserChange}
+            onChange={v =>
+              handleUserChange({
+                target: {
+                  value: v?.value,
+                  name: "query",
+                },
+              })
+            }
           />
         );
       }}
