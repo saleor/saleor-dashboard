@@ -1,10 +1,10 @@
 import { ProductWhereInput } from "@dashboard/graphql";
 import { createContext, FC, ReactNode, useContext, useMemo } from "react";
 
-import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
-import { productFilterConfig } from "../ModalFilters/entityConfigs";
-import { LockedFilter, ModalFilterResult } from "../ModalFilters/types";
-import { useModalFilters } from "../ModalFilters/useModalFilters";
+import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
+import { LockedFilter, ModalFilterResult } from "../types";
+import { useModalFilters } from "../useModalFilters";
+import { productFilterConfig } from "./productFilterConfig";
 
 export interface ProductTypeConstraint {
   id: string;

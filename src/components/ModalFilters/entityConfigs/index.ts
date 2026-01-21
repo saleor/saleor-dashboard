@@ -1,1 +1,0 @@
-export { productFilterConfig } from "./productFilterConfig";

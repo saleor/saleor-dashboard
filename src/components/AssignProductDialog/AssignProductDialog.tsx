@@ -4,10 +4,13 @@ import { ProductWhereInput } from "@dashboard/graphql";
 import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
+import {
+  InitialConstraints,
+  ModalProductFilterProvider,
+} from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignProductDialogMulti } from "./AssignProductDialogMulti";
 import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
 import { messages } from "./messages";
-import { InitialConstraints, ModalProductFilterProvider } from "./ModalProductFilterProvider";
 import { Products, SelectedChannel } from "./types";
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {

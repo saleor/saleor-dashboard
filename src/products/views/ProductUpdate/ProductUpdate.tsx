@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
