@@ -60,7 +60,12 @@ const GiftCardUpdatePageHeader = () => {
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
         {canResendCode && (
-          <Button variant="primary" onClick={openResendCodeDialog} data-test-id="resend-code">
+          <Button
+            marginLeft={2}
+            variant="primary"
+            onClick={openResendCodeDialog}
+            data-test-id="resend-code"
+          >
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}
