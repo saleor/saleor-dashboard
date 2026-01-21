@@ -179,11 +179,31 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                 />
               </TableCell>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="4k9rMQ"
-                  defaultMessage="Variant Selection"
-                  description="variant attribute checkbox"
-                />
+                <Box display="flex" alignItems="center" gap={1}>
+                  <FormattedMessage
+                    id="4k9rMQ"
+                    defaultMessage="Variant Selection"
+                    description="variant attribute checkbox"
+                  />
+                  <Tooltip>
+                    <Tooltip.Trigger>
+                      <Box color="default2" display="flex" alignItems="center">
+                        <CircleQuestionMark
+                          size={iconSize.small}
+                          strokeWidth={iconStrokeWidthBySize.small}
+                        />
+                      </Box>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content side="bottom">
+                      <Tooltip.Arrow />
+                      <FormattedMessage
+                        id="xfypNP"
+                        defaultMessage="When enabled, this attribute will be used to distinguish variants on the storefront."
+                        description="tooltip for variant selection column header"
+                      />
+                    </Tooltip.Content>
+                  </Tooltip>
+                </Box>
               </TableCell>
               <TableCell />
             </TableHead>

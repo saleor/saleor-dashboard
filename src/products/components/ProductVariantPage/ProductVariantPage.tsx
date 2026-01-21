@@ -17,7 +17,9 @@ import {
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -42,9 +44,10 @@ import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { CircleHelp } from "lucide-react";
 import { useState } from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
@@ -281,34 +284,65 @@ export const ProductVariantPage = ({
                       disabled={loading}
                       onManageClick={toggleManageChannels}
                     />
-                    <CardSpacer />
                     {variant?.product?.productType && (
-                      <>
-                        <VariantAttributesSection
-                          title={intl.formatMessage(messages.nonSelectionAttributes)}
-                          attributes={nonSelectionAttributes}
-                          attributeValues={attributeValues}
-                          productTypeName={variant.product.productType.name}
-                          productTypeUrl={productTypeUrl(variant.product.productType.id)}
-                          loading={loading}
-                          errors={errors}
-                          onChange={handlers.selectAttribute}
-                          onMultiChange={handlers.selectAttributeMultiple}
-                          onFileChange={handlers.selectAttributeFile}
-                          onReferencesRemove={handlers.selectAttributeReference}
-                          onReferencesAddClick={onAssignReferencesClick}
-                          onReferencesReorder={handlers.reorderAttributeValue}
-                          fetchAttributeValues={fetchAttributeValues}
-                          fetchMoreAttributeValues={fetchMoreAttributeValues}
-                          onAttributeSelectBlur={onAttributeSelectBlur}
-                          richTextGetters={attributeRichTextGetters}
-                        />
-                      </>
+                      <VariantAttributesSection
+                        title={intl.formatMessage(messages.nonSelectionAttributes)}
+                        attributes={nonSelectionAttributes}
+                        selectionAttributesExist={selectionAttributes.length > 0}
+                        attributeValues={attributeValues}
+                        productTypeName={variant.product.productType.name}
+                        productTypeUrl={productTypeUrl(variant.product.productType.id)}
+                        loading={loading}
+                        errors={errors}
+                        onChange={handlers.selectAttribute}
+                        onMultiChange={handlers.selectAttributeMultiple}
+                        onFileChange={handlers.selectAttributeFile}
+                        onReferencesRemove={handlers.selectAttributeReference}
+                        onReferencesAddClick={onAssignReferencesClick}
+                        onReferencesReorder={handlers.reorderAttributeValue}
+                        fetchAttributeValues={fetchAttributeValues}
+                        fetchMoreAttributeValues={fetchMoreAttributeValues}
+                        onAttributeSelectBlur={onAttributeSelectBlur}
+                        richTextGetters={attributeRichTextGetters}
+                      />
                     )}
                     {selectionAttributes.length > 0 && (
                       <>
+                        <CardSpacer />
                         <Attributes
-                          title={intl.formatMessage(messages.selectionAttributesHeader)}
+                          title={
+                            <Box display="flex" alignItems="center" gap={2}>
+                              <Text size={5} fontWeight="bold">
+                                {intl.formatMessage(messages.selectionAttributesHeader)}
+                              </Text>
+                              <Tooltip>
+                                <Tooltip.Trigger>
+                                  <Box color="default2" display="flex" alignItems="center">
+                                    <CircleHelp
+                                      size={iconSize.small}
+                                      strokeWidth={iconStrokeWidthBySize.small}
+                                    />
+                                  </Box>
+                                </Tooltip.Trigger>
+                                <Tooltip.Content side="bottom">
+                                  <Tooltip.Arrow />
+                                  <FormattedMessage
+                                    id="LhGd2m"
+                                    defaultMessage="Attributes that define variant options customers can choose from on the storefront.{br}Can be adjusted in the {productTypeLink} settings."
+                                    description="tooltip for variant selection attributes"
+                                    values={{
+                                      br: <br />,
+                                      productTypeLink: variant?.product?.productType ? (
+                                        <Link href={productTypeUrl(variant.product.productType.id)}>
+                                          {variant.product.productType.name}
+                                        </Link>
+                                      ) : null,
+                                    }}
+                                  />
+                                </Tooltip.Content>
+                              </Tooltip>
+                            </Box>
+                          }
                           attributes={selectionAttributes}
                           attributeValues={attributeValues}
                           loading={loading}
