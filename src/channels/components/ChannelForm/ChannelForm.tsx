@@ -4,7 +4,6 @@ import {
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
@@ -20,7 +19,7 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Input, Option, Text } from "@saleor/macaw-ui-next";
 import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -157,21 +156,26 @@ export const ChannelForm = ({
         </Text>
         <Box paddingX={6}>
           {renderCurrencySelection ? (
-            <Combobox
+            <DynamicCombobox
               data-test-id="channel-currency-select-input"
-              allowCustomValues
               disabled={disabled}
               error={!!formErrors.currencyCode}
               label={intl.formatMessage(messages.channelCurrency)}
               helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
               options={currencyCodes}
-              fetchOptions={() => undefined}
               name="currencyCode"
               value={{
                 label: selectedCurrencyCode ?? "",
                 value: selectedCurrencyCode ?? "",
               }}
-              onChange={onCurrencyCodeChange}
+              onChange={e =>
+                onCurrencyCodeChange({
+                  target: {
+                    value: e?.value ?? "",
+                    name: "currencyCode",
+                  },
+                })
+              }
             />
           ) : (
             <Box display="flex" flexDirection="column">
@@ -186,20 +190,26 @@ export const ChannelForm = ({
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>
-          <Combobox
+          <DynamicCombobox
             data-test-id="country-select-input"
             disabled={disabled}
             error={!!formErrors.defaultCountry}
             label={intl.formatMessage(messages.defaultCountry)}
             helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
             options={countries}
-            fetchOptions={() => undefined}
             name="defaultCountry"
             value={{
               label: selectedCountryDisplayName,
               value: data.defaultCountry,
             }}
-            onChange={onDefaultCountryChange}
+            onChange={v =>
+              onDefaultCountryChange({
+                target: {
+                  value: v?.value ?? "",
+                  name: "defaultCountry",
+                },
+              })
+            }
           />
         </Box>
         <Box paddingX={6}>
