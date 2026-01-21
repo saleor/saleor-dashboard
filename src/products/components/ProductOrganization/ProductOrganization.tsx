@@ -11,7 +11,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -101,7 +101,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
             data-test-id="product-type"
             options={productTypes}
@@ -111,18 +111,48 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                     value: data.productType.id,
                     label: productTypeInputDisplayValue,
                   }
-                : null
+                : /**
+                   * This hack creates a blink, so it should be fixed
+                   * 1. When value is changed, URL is updated
+                   * 2. For a moment data.productType is not provided
+                   * 3. Select resets value
+                   *
+                   * This component should preserve previous value without race condition with URL
+                   */
+                  {
+                    value: "",
+                    label: "",
+                  }
             }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
-            onChange={onProductTypeChange}
-            fetchOptions={fetchProductTypes}
-            fetchMore={fetchMoreProductTypes}
+            onChange={o => {
+              onProductTypeChange({
+                /**
+                 * Fake change event
+                 * 1. Upper handlers rely on event, not values
+                 * 2. Macaw's select doesn't expose inner event
+                 *
+                 * TODO: Expose native events from Macaw for interoperability
+                 */
+                target: {
+                  value: o?.value ?? "",
+                  name: "productType",
+                },
+              });
+            }}
             name="productType"
+            onScrollEnd={() => {
+              if (fetchMoreProductTypes.hasMore) {
+                fetchMoreProductTypes.onFetchMore();
+              }
+            }}
+            onFocus={() => fetchProductTypes("")}
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
+            loading={fetchMoreProductTypes?.loading}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>

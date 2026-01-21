@@ -279,6 +279,7 @@ const AttributeRow = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
+          {/* TODO It works, but replace it with Macaw Multiselect */}
           <Multiselect
             allowCustomValues
             alwaysFetchOnFocus
