@@ -6,7 +6,7 @@ import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import AssignmentList from "../AssignmentList";
+import { AssignmentList } from "../AssignmentList/AssignmentList";
 import { messages } from "./messages";
 
 interface WarehousesProps {
