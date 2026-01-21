@@ -4,7 +4,7 @@ import {
   useCreateManualTransactionRefundMutation,
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import OrderSendRefundPage from "@dashboard/orders/components/OrderSendRefundPage";
 import { getTransactionCreateErrorMessage } from "@dashboard/utils/errors/transaction";
 import { defineMessages, useIntl } from "react-intl";

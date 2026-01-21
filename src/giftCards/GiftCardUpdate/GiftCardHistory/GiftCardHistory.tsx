@@ -6,7 +6,7 @@ import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
 import { toActor } from "@dashboard/components/Timeline/utils";
 import { useGiftCardDetails } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
 import { FormattedMessage, useIntl } from "react-intl";
 

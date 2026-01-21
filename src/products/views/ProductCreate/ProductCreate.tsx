@@ -21,7 +21,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {

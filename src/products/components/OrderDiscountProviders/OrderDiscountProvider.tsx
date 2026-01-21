@@ -7,7 +7,7 @@ import {
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { createContext } from "react";

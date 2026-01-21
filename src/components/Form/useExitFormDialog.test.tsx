@@ -8,7 +8,9 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
 import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
-jest.mock("../../hooks/useNotifier", () => undefined);
+jest.mock("../../hooks/useNotifier", () => ({
+  useNotifier: () => jest.fn(),
+}));
 
 const MockExitFormDialogProvider = ({ children }) => {
   const { providerData } = useExitFormDialogProvider();

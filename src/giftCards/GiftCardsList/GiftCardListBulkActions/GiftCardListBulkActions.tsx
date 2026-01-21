@@ -1,10 +1,10 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { useIntl } from "react-intl";
 
@@ -30,7 +30,7 @@ export const GiftCardListBulkActions = () => {
     .every(({ isActive }) => !isActive);
   const [activateGiftCards, activateGiftCardsOpts] = useGiftCardBulkActivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = data?.giftCardBulkActivate?.errors?.length
+      const notifierData: INotification = data?.giftCardBulkActivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorActivateAlertText, {
@@ -54,7 +54,7 @@ export const GiftCardListBulkActions = () => {
   });
   const [deactivateGiftCards, deactivateGiftCardsOpts] = useGiftCardBulkDeactivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = data?.giftCardBulkDeactivate?.errors?.length
+      const notifierData: INotification = data?.giftCardBulkDeactivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorDeactivateAlertText, {

@@ -14,7 +14,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";

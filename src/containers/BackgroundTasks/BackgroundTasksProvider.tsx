@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { INotificationCallback } from "@dashboard/components/notifications";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ReactNode, useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -14,7 +14,7 @@ export const backgroundTasksRefreshTime = 15 * 1000;
 
 export function useBackgroundTasks(
   apolloClient: Pick<ApolloClient<any>, "query">,
-  notify: IMessageContext,
+  notify: INotificationCallback,
   intl: IntlShape,
 ) {
   const idCounter = useRef(0);

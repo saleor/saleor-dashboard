@@ -1,5 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

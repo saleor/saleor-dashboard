@@ -12,7 +12,7 @@ import {
   useRefundSettingsUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { pageCreateUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";

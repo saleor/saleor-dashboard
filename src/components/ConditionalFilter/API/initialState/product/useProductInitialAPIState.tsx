@@ -26,7 +26,7 @@ import {
   _SearchProductVariantOperandsQueryVariables,
   AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 

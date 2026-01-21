@@ -2,7 +2,7 @@ import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import {
   DashboardEventFactory,
   DispatchResponseEvent,

@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useGiftCardUpdateMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { Input, Text } from "@saleor/macaw-ui-next";
@@ -37,7 +37,7 @@ const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   const [updateGiftCardBalance, updateGiftCardBalanceOpts] = useGiftCardUpdateMutation({
     onCompleted: data => {
       const errors = data?.giftCardUpdate?.errors;
-      const notifierData: IMessage = errors?.length
+      const notifierData: INotification = errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),
