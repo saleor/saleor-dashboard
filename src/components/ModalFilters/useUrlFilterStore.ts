@@ -1,4 +1,5 @@
 import { parseQs } from "@dashboard/url-utils";
+import * as Sentry from "@sentry/react";
 import { stringify } from "qs";
 import { useCallback, useMemo } from "react";
 import useRouter from "use-react-router";
@@ -19,7 +20,24 @@ export interface FilterUrlState {
  * this is used so that we can operate on filter state and leave other query variables unchanged */
 const parseUrlSearch = (rawSearch: string): FilterUrlState => {
   const cleanSearch = stripLeadingQuestionMark(rawSearch);
-  const parsed = parseQs(cleanSearch) as Record<string, unknown>;
+
+  let parsed: Record<string, unknown>;
+
+  try {
+    parsed = parseQs(cleanSearch) as Record<string, unknown>;
+  } catch {
+    const errorMessage = "[useUrlFilterStore] Failed to parse URL search params, using empty state";
+
+    Sentry.captureException(new Error(errorMessage));
+
+    return {
+      search: cleanSearch,
+      filterParams: {},
+      preservedParams: {},
+      filterQueryString: "",
+    };
+  }
+
   const filterParams: Record<string, unknown> = {};
   const preservedParams: Record<string, unknown> = {};
 

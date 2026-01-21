@@ -35,10 +35,10 @@ export const createLockedFilterElement = (lockedFilter: LockedFilter): FilterEle
   const inOption = STATIC_CONDITIONS[lockedFilter.field as keyof typeof STATIC_CONDITIONS]?.[1];
 
   if (!inOption) {
-    const errorMessage = `No 'in' condition found for field: ${lockedFilter.field}`;
+    const error = new Error(`No 'in' condition found for field: ${lockedFilter.field}`);
 
-    Sentry.captureException(errorMessage);
-    throw new Error(errorMessage);
+    Sentry.captureException(error);
+    throw error;
   }
 
   const conditionSelected = ConditionSelected.fromConditionItemAndValue(inOption, itemOptions);

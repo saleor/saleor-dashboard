@@ -1,3 +1,4 @@
+import { stringify } from "qs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
@@ -103,12 +104,8 @@ export const useModalUrlValueProvider = <
 
       updateFilters(filterStructureParams);
 
-      const newUrlSnapshot = Object.entries(filterStructureParams)
-        .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`)
-        .join("&");
-
       setUserOverride({
-        urlSnapshot: newUrlSnapshot,
+        urlSnapshot: stringify(filterStructureParams),
         value: filterValue,
       });
     },
