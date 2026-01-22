@@ -188,6 +188,7 @@ const ShippingZoneRatesCreatePage = ({
               onPostalCodeRangeAdd={onPostalCodeAssign}
               postalCodes={postalCodes}
             />
+            <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
@@ -216,6 +217,14 @@ const ShippingZoneRatesCreatePage = ({
               transitionState={saveButtonBarState}
               onClick={handleSubmit}
               disabled={isSaveDisabled}
+              tooltip={
+                !isValid &&
+                intl.formatMessage({
+                  id: "lCEp2/",
+                  defaultMessage: "Set prices for all channels to save",
+                  description: "save button disabled tooltip",
+                })
+              }
             />
           </Savebar>
         </DetailPageLayout>

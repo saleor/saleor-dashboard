@@ -7959,6 +7959,10 @@
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
   },
+  "lCEp2/": {
+    "context": "save button disabled tooltip",
+    "string": "Set prices for all channels to save"
+  },
   "lCPxtT": {
     "context": "resend code label",
     "string": "Resend code"
@@ -9635,6 +9639,9 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "vaFjs6": {
+    "string": "No warehouses available to add"
   },
   "vbop3G": {
     "string": "Create new model"

@@ -9,11 +9,10 @@ export const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0,
     },
-    table: {
-      border: "1px solid " + theme.palette.grey[200],
-    },
     wideCell: {
       width: "100%",
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
     },
   }),
   { name: "ShippingZoneCountriesAssignDialog" },

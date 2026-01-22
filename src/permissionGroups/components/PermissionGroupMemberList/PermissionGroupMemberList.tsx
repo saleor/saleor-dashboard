@@ -2,7 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -127,123 +127,127 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
           </Text>
         </DashboardCard.Content>
       ) : (
-        <ResponsiveTable>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={members}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCellHeader
-              className={classes.colName}
-              arrowPosition="right"
-              onClick={() => onSort(MembersListUrlSortField.name)}
-              direction={
-                sort?.sort === MembersListUrlSortField.name
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
+        <DashboardCard.Content>
+          <ResponsiveTable>
+            <TableHead
+              colSpan={numberOfColumns}
+              selected={selected}
+              disabled={disabled}
+              items={members}
+              toggleAll={toggleAll}
+              toolbar={toolbar}
             >
-              <FormattedMessage
-                id="W32xfN"
-                defaultMessage="Name"
-                description="staff member full name"
-              />
-            </TableCellHeader>
-            <TableCellHeader
-              className={classes.colEmail}
-              arrowPosition="right"
-              onClick={() => onSort(MembersListUrlSortField.email)}
-              direction={
-                sort?.sort === MembersListUrlSortField.email
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-            >
-              <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
-            </TableCellHeader>
-            <TableCellHeader textAlign="right">
-              <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-            </TableCellHeader>
-          </TableHead>
-          <TableBody data-test-id="assigned-members-table">
-            {renderCollection(
-              members,
-              user => {
-                const isSelected = user ? isChecked(user.id) : false;
+              <TableCellHeader
+                className={classes.colName}
+                arrowPosition="right"
+                onClick={() => onSort(MembersListUrlSortField.name)}
+                direction={
+                  sort?.sort === MembersListUrlSortField.name
+                    ? getArrowDirection(sort.asc)
+                    : undefined
+                }
+              >
+                <FormattedMessage
+                  id="W32xfN"
+                  defaultMessage="Name"
+                  description="staff member full name"
+                />
+              </TableCellHeader>
+              <TableCellHeader
+                className={classes.colEmail}
+                arrowPosition="right"
+                onClick={() => onSort(MembersListUrlSortField.email)}
+                direction={
+                  sort?.sort === MembersListUrlSortField.email
+                    ? getArrowDirection(sort.asc)
+                    : undefined
+                }
+              >
+                <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
+              </TableCellHeader>
+              <TableCellHeader textAlign="right">
+                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
+              </TableCellHeader>
+            </TableHead>
+            <TableBody data-test-id="assigned-members-table">
+              {renderCollection(
+                members,
+                user => {
+                  const isSelected = user ? isChecked(user.id) : false;
 
-                return (
-                  <TableRowLink
-                    data-test-id="assigned-member-row"
-                    className={clsx({
-                      [classes.tableRow]: !!user,
-                    })}
-                    hover={!!user}
-                    selected={isSelected}
-                    key={user ? user.id : "skeleton"}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(user.id)}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colName}>
-                      <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
-                      <Box display="flex" flexDirection="column">
-                        <Text data-test-id="member-name">{getUserName(user) || <Skeleton />}</Text>
-                        <Text size={2} color="default2">
-                          {!user ? (
-                            <Skeleton />
-                          ) : user.isActive ? (
-                            intl.formatMessage(commonStatusMessages.active)
-                          ) : (
-                            intl.formatMessage(commonStatusMessages.notActive)
-                          )}
-                        </Text>
-                      </Box>
-                    </TableCell>
-                    <TableCell className={classes.colEmail}>
-                      {user?.email || <Skeleton />}
-                    </TableCell>
-                    <TableCell className={classes.colActions}>
-                      {user ? (
-                        <>
-                          <Button
-                            icon={
-                              <Trash2
-                                size={iconSize.small}
-                                strokeWidth={iconStrokeWidthBySize.small}
-                              />
-                            }
-                            variant="secondary"
-                            data-test-id="remove-user"
-                            disabled={disabled}
-                            onClick={stopPropagation(() => onUnassign([user.id]))}
-                            marginLeft="auto"
-                          />
-                        </>
-                      ) : (
-                        <Skeleton />
-                      )}
+                  return (
+                    <TableRowLink
+                      data-test-id="assigned-member-row"
+                      className={clsx({
+                        [classes.tableRow]: !!user,
+                      })}
+                      hover={!!user}
+                      selected={isSelected}
+                      key={user ? user.id : "skeleton"}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isSelected}
+                          disabled={disabled}
+                          disableClickPropagation
+                          onChange={() => toggle(user.id)}
+                        />
+                      </TableCell>
+                      <TableCell className={classes.colName}>
+                        <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
+                        <Box display="flex" flexDirection="column">
+                          <Text data-test-id="member-name">
+                            {getUserName(user) || <Skeleton />}
+                          </Text>
+                          <Text size={2} color="default2">
+                            {!user ? (
+                              <Skeleton />
+                            ) : user.isActive ? (
+                              intl.formatMessage(commonStatusMessages.active)
+                            ) : (
+                              intl.formatMessage(commonStatusMessages.notActive)
+                            )}
+                          </Text>
+                        </Box>
+                      </TableCell>
+                      <TableCell className={classes.colEmail}>
+                        {user?.email || <Skeleton />}
+                      </TableCell>
+                      <TableCell className={classes.colActions}>
+                        {user ? (
+                          <>
+                            <Button
+                              icon={
+                                <Trash2
+                                  size={iconSize.small}
+                                  strokeWidth={iconStrokeWidthBySize.small}
+                                />
+                              }
+                              variant="secondary"
+                              data-test-id="remove-user"
+                              disabled={disabled}
+                              onClick={stopPropagation(() => onUnassign([user.id]))}
+                              marginLeft="auto"
+                            />
+                          </>
+                        ) : (
+                          <Skeleton />
+                        )}
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                },
+                () => (
+                  <TableRowLink>
+                    <TableCell colSpan={numberOfColumns}>
+                      <FormattedMessage id="qrWOxx" defaultMessage="No members found" />
                     </TableCell>
                   </TableRowLink>
-                );
-              },
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage id="qrWOxx" defaultMessage="No members found" />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+                ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </DashboardCard.Content>
       )}
     </DashboardCard>
   );

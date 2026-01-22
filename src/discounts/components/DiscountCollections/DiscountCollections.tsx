@@ -3,7 +3,7 @@ import { collectionUrl } from "@dashboard/collections/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -58,90 +58,92 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <ResponsiveTable>
-        <colgroup>
-          <col />
-          <col className={classes.colName} />
-          <col className={classes.colProducts} />
-          <col className={classes.colActions} />
-        </colgroup>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={collections}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colName}>
-            <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
-          </TableCell>
-          <TableCell className={classes.colProducts}>
-            <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
-          </TableCell>
-          <TableCell />
-        </TableHead>
-        <TableFooter>
-          <TableRowLink>
-            <TablePaginationWithContext colSpan={numberOfColumns} />
-          </TableRowLink>
-        </TableFooter>
-        <TableBody data-test-id="assigned-specific-products-table">
-          {renderCollection(
-            collections,
-            collection => {
-              const isSelected = collection ? isChecked(collection.id) : false;
+      <DashboardCard.Content>
+        <ResponsiveTable>
+          <colgroup>
+            <col />
+            <col className={classes.colName} />
+            <col className={classes.colProducts} />
+            <col className={classes.colActions} />
+          </colgroup>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={collections}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colName}>
+              <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
+            </TableCell>
+            <TableCell className={classes.colProducts}>
+              <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
+            </TableCell>
+            <TableCell />
+          </TableHead>
+          <TableFooter>
+            <TableRowLink>
+              <TablePaginationWithContext colSpan={numberOfColumns} />
+            </TableRowLink>
+          </TableFooter>
+          <TableBody data-test-id="assigned-specific-products-table">
+            {renderCollection(
+              collections,
+              collection => {
+                const isSelected = collection ? isChecked(collection.id) : false;
 
-              return (
-                <TableRowLink
-                  data-test-id="assigned-specific-product"
-                  selected={isSelected}
-                  hover={!!collection}
-                  key={collection ? collection.id : "skeleton"}
-                  href={collection && collectionUrl(collection.id)}
-                  className={classes.tableRow}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(collection.id)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.colName}>
-                    {collection ? collection.name : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={classes.colProducts}>
-                    {collection ? collection?.products.totalCount : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={classes.colActions}>
-                    <TableButtonWrapper>
-                      <IconButton
-                        variant="secondary"
-                        disabled={!collection || disabled}
-                        onClick={event => {
-                          event.stopPropagation();
-                          onCollectionUnassign(collection.id);
-                        }}
-                      >
-                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                      </IconButton>
-                    </TableButtonWrapper>
+                return (
+                  <TableRowLink
+                    data-test-id="assigned-specific-product"
+                    selected={isSelected}
+                    hover={!!collection}
+                    key={collection ? collection.id : "skeleton"}
+                    href={collection && collectionUrl(collection.id)}
+                    className={classes.tableRow}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(collection.id)}
+                      />
+                    </TableCell>
+                    <TableCell className={classes.colName}>
+                      {collection ? collection.name : <Skeleton />}
+                    </TableCell>
+                    <TableCell className={classes.colProducts}>
+                      {collection ? collection?.products.totalCount : <Skeleton />}
+                    </TableCell>
+                    <TableCell className={classes.colActions}>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          disabled={!collection || disabled}
+                          onClick={event => {
+                            event.stopPropagation();
+                            onCollectionUnassign(collection.id);
+                          }}
+                        >
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        </IconButton>
+                      </TableButtonWrapper>
+                    </TableCell>
+                  </TableRowLink>
+                );
+              },
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage {...messages.discountCollectionsNotFound} />
                   </TableCell>
                 </TableRowLink>
-              );
-            },
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage {...messages.discountCollectionsNotFound} />
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

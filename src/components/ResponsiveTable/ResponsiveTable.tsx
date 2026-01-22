@@ -1,25 +1,8 @@
 import { Table } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import * as React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      overflowX: "auto",
-      width: "100%",
-    },
-    table: {
-      [theme.breakpoints.up("md")]: {
-        tableLayout: "fixed",
-      },
-      tableLayout: "auto",
-    },
-  }),
-  {
-    name: "ResponsiveTable",
-  },
-);
+import styles from "./ResponsiveTable.module.css";
 
 interface ResponsiveTableProps {
   children: React.ReactNode | React.ReactNodeArray;
@@ -28,13 +11,12 @@ interface ResponsiveTableProps {
   key?: string;
 }
 
-const ResponsiveTable = (props: ResponsiveTableProps) => {
+export const ResponsiveTable = (props: ResponsiveTableProps) => {
   const { children, className, onMouseLeave } = props;
-  const classes = useStyles(props);
 
   return (
-    <div className={classes.root}>
-      <Table className={clsx(classes.table, className)} onMouseLeave={onMouseLeave}>
+    <div className={styles.wrapper}>
+      <Table className={clsx(styles.table, className)} onMouseLeave={onMouseLeave}>
         {children}
       </Table>
     </div>
@@ -42,4 +24,3 @@ const ResponsiveTable = (props: ResponsiveTableProps) => {
 };
 
 ResponsiveTable.displayName = "ResponsiveTable";
-export default ResponsiveTable;

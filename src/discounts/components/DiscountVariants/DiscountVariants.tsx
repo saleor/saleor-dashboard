@@ -2,7 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
@@ -58,101 +58,103 @@ const DiscountVariants = (props: SaleVariantsProps) => {
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <ResponsiveTable>
-        <colgroup>
-          <col />
-          <col className={classes.colProductName} />
-          <col className={classes.colVariantName} />
-          <col className={classes.colType} />
-          <col className={classes.colActions} />
-        </colgroup>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={selected}
-          disabled={disabled}
-          items={variants}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-        >
-          <TableCell className={classes.colProductName}>
-            <span className={variants?.length > 0 && classes.colNameLabel}>
+      <DashboardCard.Content>
+        <ResponsiveTable>
+          <colgroup>
+            <col />
+            <col className={classes.colProductName} />
+            <col className={classes.colVariantName} />
+            <col className={classes.colType} />
+            <col className={classes.colActions} />
+          </colgroup>
+          <TableHead
+            colSpan={numberOfColumns}
+            selected={selected}
+            disabled={disabled}
+            items={variants}
+            toggleAll={toggleAll}
+            toolbar={toolbar}
+          >
+            <TableCell className={classes.colProductName}>
+              <span className={variants?.length > 0 && classes.colNameLabel}>
+                <FormattedMessage {...messages.discountVariantsTableProductHeader} />
+              </span>
+            </TableCell>
+            <TableCell className={classes.colVariantName}>
+              <FormattedMessage {...messages.discountVariantsTableVariantHeader} />
+            </TableCell>
+            <TableCell className={classes.colType}>
               <FormattedMessage {...messages.discountVariantsTableProductHeader} />
-            </span>
-          </TableCell>
-          <TableCell className={classes.colVariantName}>
-            <FormattedMessage {...messages.discountVariantsTableVariantHeader} />
-          </TableCell>
-          <TableCell className={classes.colType}>
-            <FormattedMessage {...messages.discountVariantsTableProductHeader} />
-          </TableCell>
-          <TableCell className={classes.colActions} />
-        </TableHead>
-        <TableFooter>
-          <TableRowLink>
-            <TablePaginationWithContext colSpan={numberOfColumns} />
-          </TableRowLink>
-        </TableFooter>
-        <TableBody>
-          {renderCollection(
-            getLoadableList(discountVariants),
-            variant => {
-              const isSelected = variant ? isChecked(variant.id) : false;
+            </TableCell>
+            <TableCell className={classes.colActions} />
+          </TableHead>
+          <TableFooter>
+            <TableRowLink>
+              <TablePaginationWithContext colSpan={numberOfColumns} />
+            </TableRowLink>
+          </TableFooter>
+          <TableBody>
+            {renderCollection(
+              getLoadableList(discountVariants),
+              variant => {
+                const isSelected = variant ? isChecked(variant.id) : false;
 
-              return (
-                <TableRowLink
-                  hover={!!variant}
-                  key={variant ? variant.id : "skeleton"}
-                  href={variant && productVariantEditPath(variant.id)}
-                  className={classes.tableRow}
-                  selected={isSelected}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(variant.id)}
-                    />
-                  </TableCell>
-                  <TableCellAvatar
-                    className={classes.colProductName}
-                    thumbnail={maybe(() => variant.product.thumbnail.url)}
+                return (
+                  <TableRowLink
+                    hover={!!variant}
+                    key={variant ? variant.id : "skeleton"}
+                    href={variant && productVariantEditPath(variant.id)}
+                    className={classes.tableRow}
+                    selected={isSelected}
                   >
-                    {maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)}
-                  </TableCellAvatar>
-                  <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.name, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)}
-                  </TableCell>
-                  <TableCell className={classes.colActions}>
-                    <TableButtonWrapper>
-                      <IconButton
-                        variant="secondary"
-                        disabled={!variant || disabled}
-                        onClick={event => {
-                          event.stopPropagation();
-                          onVariantUnassign(variant.id);
-                        }}
-                      >
-                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                      </IconButton>
-                    </TableButtonWrapper>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(variant.id)}
+                      />
+                    </TableCell>
+                    <TableCellAvatar
+                      className={classes.colProductName}
+                      thumbnail={maybe(() => variant.product.thumbnail.url)}
+                    >
+                      {maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)}
+                    </TableCellAvatar>
+                    <TableCell className={classes.colType}>
+                      {maybe<React.ReactNode>(() => variant.name, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colType}>
+                      {maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)}
+                    </TableCell>
+                    <TableCell className={classes.colActions}>
+                      <TableButtonWrapper>
+                        <IconButton
+                          variant="secondary"
+                          disabled={!variant || disabled}
+                          onClick={event => {
+                            event.stopPropagation();
+                            onVariantUnassign(variant.id);
+                          }}
+                        >
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        </IconButton>
+                      </TableButtonWrapper>
+                    </TableCell>
+                  </TableRowLink>
+                );
+              },
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    <FormattedMessage {...messages.discountVariantsNotFound} />
                   </TableCell>
                 </TableRowLink>
-              );
-            },
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage {...messages.discountVariantsNotFound} />
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

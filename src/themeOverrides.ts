@@ -38,11 +38,16 @@ export const themeOverrides: Partial<Theme> = {
     MuiOutlinedInput: {
       root: {
         backgroundColor: vars.colors.background.default1,
-        borderColor: vars.colors.border.default1,
         color: vars.colors.text.default1,
+        "&:hover $notchedOutline": {
+          borderColor: vars.colors.border.default1,
+        },
         "&:hover": {
           boxShadow: "none !important",
         },
+      },
+      notchedOutline: {
+        borderColor: vars.colors.border.default1,
       },
     },
     MuiInputLabel: {

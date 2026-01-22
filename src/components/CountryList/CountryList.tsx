@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { Placeholder } from "@dashboard/components/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
@@ -42,7 +43,7 @@ const useStyles = makeStyles(
     },
     offsetCell: {
       "&:first-child": {
-        paddingLeft: theme.spacing(3),
+        paddingLeft: theme.spacing(6),
       },
       position: "relative",
     },
@@ -101,66 +102,76 @@ const CountryList = (props: CountryListProps) => {
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <ResponsiveTable>
-        <TableBody>
-          <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
-            <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
-              <FormattedMessage
-                id="62Ywh2"
-                defaultMessage="{number} Countries"
-                description="number of countries"
-                values={{
-                  number: getStringOrPlaceholder(countries?.length.toString()),
-                }}
-              />
-            </TableCell>
-            <TableCell className={clsx(classes.textRight, classes.iconCell)}>
-              <IconButton variant="secondary">
-                <ChevronDownIcon
-                  data-test-id="countries-drop-down-icon"
-                  className={clsx({
-                    [classes.rotate]: !isCollapsed,
-                  })}
+      <DashboardCard.Content>
+        <ResponsiveTable>
+          <TableBody>
+            <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
+              <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
+                <FormattedMessage
+                  id="62Ywh2"
+                  defaultMessage="{number} Countries"
+                  description="number of countries"
+                  values={{
+                    number: getStringOrPlaceholder(countries?.length.toString()),
+                  }}
                 />
-              </IconButton>
-            </TableCell>
-          </TableRowLink>
-          {!isCollapsed && hasCountriesToRender ? (
-            Object.keys(groupedCountries).map(letter => {
-              const countries = groupedCountries[letter];
-
-              return countries.map((country, countryIndex) => (
-                <TableRowLink key={country ? country.code : "skeleton"}>
-                  <TableCell className={classes.offsetCell}>
-                    {countryIndex === 0 && (
-                      <Text color="default2" display="inline-block" left={2} position="absolute">
-                        {country.country[0]}
-                      </Text>
-                    )}
-                    {country.country}
-                  </TableCell>
-                  <TableCell className={clsx(classes.textRight, classes.iconCell)}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      variant="secondary"
-                      disabled={!country || disabled}
-                      onClick={() => onCountryUnassign(country.code)}
-                    >
-                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    </IconButton>
-                  </TableCell>
-                </TableRowLink>
-              ));
-            })
-          ) : (
-            <TableRowLink>
-              <TableCell className={classes.toLeft} colSpan={2}>
-                {emptyText}
+              </TableCell>
+              <TableCell className={clsx(classes.textRight, classes.iconCell)}>
+                <IconButton variant="secondary">
+                  <ChevronDownIcon
+                    data-test-id="countries-drop-down-icon"
+                    size={iconSize.small}
+                    strokeWidth={iconStrokeWidthBySize.small}
+                    className={clsx({
+                      [classes.rotate]: !isCollapsed,
+                    })}
+                  />
+                </IconButton>
               </TableCell>
             </TableRowLink>
-          )}
-        </TableBody>
-      </ResponsiveTable>
+            {!isCollapsed &&
+              (hasCountriesToRender ? (
+                Object.keys(groupedCountries).map(letter => {
+                  const countries = groupedCountries[letter];
+
+                  return countries.map((country, countryIndex) => (
+                    <TableRowLink key={country ? country.code : "skeleton"}>
+                      <TableCell className={classes.offsetCell}>
+                        {countryIndex === 0 && (
+                          <Text
+                            color="default2"
+                            display="inline-block"
+                            left={4}
+                            position="absolute"
+                          >
+                            {country.country[0]}
+                          </Text>
+                        )}
+                        <Text marginLeft={4}>{country.country}</Text>
+                      </TableCell>
+                      <TableCell className={clsx(classes.textRight, classes.iconCell)}>
+                        <IconButton
+                          data-test-id="delete-icon"
+                          variant="secondary"
+                          disabled={!country || disabled}
+                          onClick={() => onCountryUnassign(country.code)}
+                        >
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRowLink>
+                  ));
+                })
+              ) : (
+                <TableRowLink>
+                  <TableCell className={classes.toLeft} colSpan={2}>
+                    <Placeholder>{emptyText}</Placeholder>
+                  </TableCell>
+                </TableRowLink>
+              ))}
+          </TableBody>
+        </ResponsiveTable>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

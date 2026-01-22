@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";

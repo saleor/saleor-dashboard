@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import Money from "@dashboard/components/Money";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomerDetailsQuery } from "@dashboard/graphql";
 import { OrderPaymentStatusPill } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
@@ -45,73 +45,75 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
           </Link>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <ResponsiveTable>
-        <TableHead>
-          <TableRowLink>
-            <TableCell>
-              <FormattedMessage
-                id="nTF6tG"
-                defaultMessage="No. of Order"
-                description="number of order"
-              />
-            </TableCell>
-            <TableCell>
-              <FormattedMessage
-                id="ri3kK9"
-                defaultMessage="Date"
-                description="order placement date"
-              />
-            </TableCell>
-            <TableCell>
-              <FormattedMessage id="pURrk1" defaultMessage="Status" description="order status" />
-            </TableCell>
-            <TableCell className={textRightStyle}>
-              <FormattedMessage
-                id="taX/V3"
-                defaultMessage="Total"
-                description="order total amount"
-              />
-            </TableCell>
-          </TableRowLink>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            orders,
-            order => (
-              <TableRowLink
-                hover={!!order}
-                className={
-                  order
-                    ? sprinkles({
-                        cursor: "pointer",
-                      })
-                    : undefined
-                }
-                href={order && orderUrl(order.id)}
-                key={order ? order.id : "skeleton"}
-              >
-                <TableCell>{order?.number ? "#" + order.number : <Skeleton />}</TableCell>
-                <TableCell>
-                  {order?.created ? <DateTime date={order.created} plain /> : <Skeleton />}
-                </TableCell>
-                <TableCell>
-                  {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
-                </TableCell>
-                <TableCell className={textRightStyle} align="right">
-                  {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
-                </TableCell>
-              </TableRowLink>
-            ),
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={6}>
-                  <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+      <DashboardCard.Content>
+        <ResponsiveTable>
+          <TableHead>
+            <TableRowLink>
+              <TableCell>
+                <FormattedMessage
+                  id="nTF6tG"
+                  defaultMessage="No. of Order"
+                  description="number of order"
+                />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage
+                  id="ri3kK9"
+                  defaultMessage="Date"
+                  description="order placement date"
+                />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage id="pURrk1" defaultMessage="Status" description="order status" />
+              </TableCell>
+              <TableCell className={textRightStyle}>
+                <FormattedMessage
+                  id="taX/V3"
+                  defaultMessage="Total"
+                  description="order total amount"
+                />
+              </TableCell>
+            </TableRowLink>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              orders,
+              order => (
+                <TableRowLink
+                  hover={!!order}
+                  className={
+                    order
+                      ? sprinkles({
+                          cursor: "pointer",
+                        })
+                      : undefined
+                  }
+                  href={order && orderUrl(order.id)}
+                  key={order ? order.id : "skeleton"}
+                >
+                  <TableCell>{order?.number ? "#" + order.number : <Skeleton />}</TableCell>
+                  <TableCell>
+                    {order?.created ? <DateTime date={order.created} plain /> : <Skeleton />}
+                  </TableCell>
+                  <TableCell>
+                    {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
+                  </TableCell>
+                  <TableCell className={textRightStyle} align="right">
+                    {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
+                  </TableCell>
+                </TableRowLink>
+              ),
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={6}>
+                    <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
+                  </TableCell>
+                </TableRowLink>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };
