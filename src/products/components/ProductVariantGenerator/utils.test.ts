@@ -249,6 +249,29 @@ describe("ProductVariantGenerator utils", () => {
       expect(result.previews[0].isExisting).toBe(false); // Medium / Red is new (sorted first)
       expect(result.previews[1].isExisting).toBe(true); // Small / Red exists (sorted last)
     });
+
+    it("does not mark as existing when existing combination has different attribute count", () => {
+      // Arrange - existing variant has 3 attributes, we're generating with 2
+      const attributes = createAttributes();
+      const selections: SelectionState = {
+        size: new Set(["s"]),
+        color: new Set(["r"]),
+      };
+      const existingCombinations = [
+        [
+          { attributeId: "size", valueSlug: "small" },
+          { attributeId: "color", valueSlug: "red" },
+          { attributeId: "material", valueSlug: "cotton" }, // Extra attribute
+        ],
+      ];
+
+      // Act
+      const result = generateVariantPreviews(attributes, selections, existingCombinations);
+
+      // Assert - should NOT match due to different attribute count
+      expect(result.previews).toHaveLength(1);
+      expect(result.previews[0].isExisting).toBe(false);
+    });
   });
 
   describe("toBulkCreateInputs", () => {
@@ -324,6 +347,35 @@ describe("ProductVariantGenerator utils", () => {
       // Assert - Small/Red is skipped because it exists
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe("Medium / Red");
+    });
+
+    it("does not skip combinations when existing has different attribute count", () => {
+      // Arrange - existing variant has 3 attributes, we're generating with 2
+      const attributes = createAttributes();
+      const selections: SelectionState = {
+        size: new Set(["s"]),
+        color: new Set(["r"]),
+      };
+      const existingCombinations = [
+        [
+          { attributeId: "size", valueSlug: "small" },
+          { attributeId: "color", valueSlug: "red" },
+          { attributeId: "material", valueSlug: "cotton" }, // Extra attribute
+        ],
+      ];
+
+      // Act
+      const result = toBulkCreateInputs(
+        attributes,
+        selections,
+        createDefaults(),
+        [],
+        existingCombinations,
+      );
+
+      // Assert - should create the variant because attribute count differs
+      expect(result).toHaveLength(1);
+      expect(result[0].name).toBe("Small / Red");
     });
 
     it("includes stock when stockEnabled and quantity provided", () => {

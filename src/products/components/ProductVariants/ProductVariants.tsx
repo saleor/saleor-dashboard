@@ -297,6 +297,7 @@ export const ProductVariants = ({
         onConfirm={handleCloseUnsavedWarning}
         title={intl.formatMessage(messages.unsavedChangesTitle)}
         confirmButtonLabel={intl.formatMessage(buttonMessages.ok)}
+        confirmButtonState="default"
         variant="default"
       >
         <Text>{intl.formatMessage(messages.unsavedChangesDescription)}</Text>

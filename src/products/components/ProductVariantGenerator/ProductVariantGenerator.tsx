@@ -2,6 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useWarehouseListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -231,7 +232,10 @@ export const ProductVariantGenerator = ({
                           aria-label={intl.formatMessage(messages.gridView)}
                           data-test-id="view-toggle-grid"
                         >
-                          <LayoutGrid size={16} />
+                          <LayoutGrid
+                            size={iconSize.small}
+                            strokeWidth={iconStrokeWidthBySize.small}
+                          />
                         </Button>
                       </Tooltip.Trigger>
                       <Tooltip.Content side="bottom">
@@ -246,7 +250,7 @@ export const ProductVariantGenerator = ({
                       aria-label={intl.formatMessage(messages.listView)}
                       data-test-id="view-toggle-list"
                     >
-                      <List size={16} />
+                      <List size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </Button>
                   </Box>
                 )}
@@ -328,6 +332,7 @@ export const ProductVariantGenerator = ({
         onConfirm={proceedWithGeneration}
         title={intl.formatMessage(messages.missingDefaultsTitle)}
         confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
+        confirmButtonState="default"
       >
         <Text>{intl.formatMessage(messages.missingDefaultsDescription)}</Text>
       </ActionDialog>

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Check } from "lucide-react";
@@ -95,7 +96,13 @@ export const SelectableChip = ({
           />
         )}
         <span className={styles.label}>{label}</span>
-        {selected && <Check size={14} className={styles.checkIcon} />}
+        {selected && (
+          <Check
+            size={iconSize.small}
+            strokeWidth={iconStrokeWidthBySize.small}
+            className={styles.checkIcon}
+          />
+        )}
       </Box>
     </Box>
   );
