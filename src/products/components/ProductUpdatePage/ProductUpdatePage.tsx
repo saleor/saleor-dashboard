@@ -69,7 +69,7 @@ import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
-import ProductTaxes from "../ProductTaxes";
+import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";

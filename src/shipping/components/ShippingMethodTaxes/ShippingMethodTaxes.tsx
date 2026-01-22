@@ -1,11 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ShippingMethodTaxesProps {
@@ -25,7 +25,8 @@ const useStyles = makeStyles(
   },
   { name: "ShippingMethodTaxes" },
 );
-const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
+
+export const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -36,8 +37,7 @@ const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
         <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Combobox
-          allowEmptyValue
+        <DynamicCombobox
           autoComplete="off"
           data-test-id="taxes"
           disabled={disabled}
@@ -46,14 +46,27 @@ const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
             label: choice.name,
             value: choice.id,
           }))}
-          fetchOptions={() => undefined}
-          fetchMore={onFetchMore}
+          /**
+           * Combobox without "Dynamic" doesnt expose onScrollEnd, when its added to Macaw, we can use simple version of this component (Combobox)
+           */
+          onScrollEnd={() => {
+            if (onFetchMore.hasMore) {
+              onFetchMore.onFetchMore();
+            }
+          }}
           name="taxClassId"
           value={{
             label: taxClassDisplayName,
             value,
           }}
-          onChange={onChange}
+          onChange={v =>
+            onChange({
+              target: {
+                value: v?.value ?? "",
+                name: "taxClassId",
+              },
+            })
+          }
         />
       </DashboardCard.Content>
     </DashboardCard>
@@ -61,4 +74,3 @@ const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
 };
 
 ShippingMethodTaxes.displayName = "ShippingMethodTaxes";
-export default ShippingMethodTaxes;

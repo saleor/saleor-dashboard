@@ -45,7 +45,7 @@ import { FetchMoreProps, RelayToFlat } from "../../../types";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
-import ProductTaxes from "../ProductTaxes";
+import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import ProductCreateForm, {
   ProductCreateData,
   ProductCreateFormData,
