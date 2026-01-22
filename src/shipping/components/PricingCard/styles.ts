@@ -8,7 +8,6 @@ export const useStyles = makeStyles(
     },
     colName: {
       fontSize: 14,
-      paddingLeft: 0,
       width: "auto",
     },
     colType: {

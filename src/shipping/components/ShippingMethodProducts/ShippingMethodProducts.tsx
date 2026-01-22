@@ -11,7 +11,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingZoneQuery } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -91,7 +91,10 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
             <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
           </Placeholder>
         ) : (
-          <ResponsiveTable className={classes.table}>
+          <ResponsiveTable
+            className={classes.table}
+            footer={<TablePaginationWithContext disabled={disabled} />}
+          >
             <TableHead
               colSpan={numberOfColumns}
               selected={selected}
@@ -107,11 +110,6 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
                 <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
               </TableCell>
             </TableHead>
-            <TableFooter>
-              <TableRowLink>
-                <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
-              </TableRowLink>
-            </TableFooter>
             <TableBody>
               {renderCollection(products, product => {
                 const isSelected = product ? isChecked(product.id) : false;

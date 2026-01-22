@@ -121,7 +121,7 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
-      <DashboardCard.Content paddingX={0}>
+      <DashboardCard.Content>
         <ResponsiveTable>
           {hasManagedAppsPermission && (
             <TableHead>

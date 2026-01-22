@@ -6,9 +6,7 @@ export const useStyles = makeStyles(
       cursor: "pointer",
       userSelect: "none",
     },
-    checkboxCell: {
-      paddingLeft: 0,
-    },
+    checkboxCell: {},
     wideCell: {
       width: "100%",
       paddingTop: theme.spacing(2),

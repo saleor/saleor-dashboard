@@ -11,7 +11,7 @@ import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
-import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -47,16 +47,33 @@ const useStyles = makeStyles(
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
+  /** Optional search configuration */
+  search?: {
+    placeholder?: string;
+    initialValue?: string;
+    onSearchChange?: (query: string) => void;
+  };
 }
 
 const numberOfColumns = 3;
 const WarehouseList = (props: WarehouseListProps) => {
-  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
+  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort, search } =
+    props;
   const classes = useStyles(props);
   const location = useLocation();
 
   return (
-    <ResponsiveTable data-test-id="warehouse-list">
+    <ResponsiveTable
+      data-test-id="warehouse-list"
+      search={search}
+      footer={
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      }
+    >
       <TableHead>
         <TableRowLink>
           <TableCellHeader
@@ -79,16 +96,6 @@ const WarehouseList = (props: WarehouseListProps) => {
           </TableCell>
         </TableRowLink>
       </TableHead>
-      <TableFooter>
-        <TableRowLink>
-          <TablePaginationWithContext
-            colSpan={numberOfColumns}
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        </TableRowLink>
-      </TableFooter>
       <TableBody data-test-id="warehouses-list">
         {renderCollection(
           warehouses,

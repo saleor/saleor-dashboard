@@ -3,6 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -10,15 +11,15 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SearchProductFragment } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { ListActions, ListProps } from "@dashboard/types";
+import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -57,44 +58,42 @@ const DiscountProducts = (props: SaleProductsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable>
-          <colgroup>
-            <col />
-            <col className={classes.colName} />
-            <col className={classes.colType} />
-            <col className={classes.colPublished} />
-            <col className={classes.colActions} />
-          </colgroup>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={products}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <span className={products?.length > 0 && classes.colNameLabel}>
-                <FormattedMessage {...messages.discountProductsTableProductHeader} />
-              </span>
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <FormattedMessage {...messages.discountProductsTableTypeHeader} />
-            </TableCell>
-            <TableCell className={classes.colPublished}>
-              <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />
-            </TableCell>
-            <TableCell className={classes.colActions} />
-          </TableHead>
-          <TableFooter>
-            <TableRowLink>
-              <TablePaginationWithContext colSpan={numberOfColumns} />
-            </TableRowLink>
-          </TableFooter>
-          <TableBody data-test-id="assigned-specific-products-table">
-            {renderCollection(
-              products,
-              product => {
+        {products?.length === 0 ? (
+          <Placeholder>
+            <FormattedMessage {...messages.discountProductsNotFound} />
+          </Placeholder>
+        ) : (
+          <ResponsiveTable footer={<TablePaginationWithContext />}>
+            <colgroup>
+              <col />
+              <col className={classes.colName} />
+              <col className={classes.colType} />
+              <col className={classes.colPublished} />
+              <col className={classes.colActions} />
+            </colgroup>
+            <TableHead
+              colSpan={numberOfColumns}
+              selected={selected}
+              disabled={disabled}
+              items={products}
+              toggleAll={toggleAll}
+              toolbar={toolbar}
+            >
+              <TableCell className={classes.colName}>
+                <span className={products?.length > 0 && classes.colNameLabel}>
+                  <FormattedMessage {...messages.discountProductsTableProductHeader} />
+                </span>
+              </TableCell>
+              <TableCell className={classes.colType}>
+                <FormattedMessage {...messages.discountProductsTableTypeHeader} />
+              </TableCell>
+              <TableCell className={classes.colPublished}>
+                <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />
+              </TableCell>
+              <TableCell className={classes.colActions} />
+            </TableHead>
+            <TableBody data-test-id="assigned-specific-products-table">
+              {renderCollection(products, product => {
                 const isSelected = product ? isChecked(product.id) : false;
 
                 return (
@@ -148,17 +147,10 @@ const DiscountProducts = (props: SaleProductsProps) => {
                     </TableCell>
                   </TableRowLink>
                 );
-              },
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage {...messages.discountProductsNotFound} />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+              })}
+            </TableBody>
+          </ResponsiveTable>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

@@ -1,9 +1,17 @@
+.container {
+  width: 100%;
+}
+
 .wrapper {
   overflow-x: auto;
   width: 100%;
   border: 1px solid var(--mu-colors-border-default1);
   border-radius: 8px;
   background-color: var(--mu-colors-background-default1);
+}
+
+.searchBar {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
 .table {
@@ -21,9 +29,9 @@
   border-bottom: none;
 }
 
-/* Add border to last row of thead when followed by tbody */
-.table thead:has(+ tbody) tr:last-child th,
-.table thead:has(+ tbody) tr:last-child td {
+/* Add border to last row of thead when table has tbody */
+.table thead:has(~ tbody) tr:last-child th,
+.table thead:has(~ tbody) tr:last-child td {
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
@@ -52,9 +60,17 @@
   border-bottom: none;
 }
 
-/* Remove border from footer cells (pagination) */
-.table tfoot td {
-  border-bottom: none;
+/* Action column styles - use for consistent action button columns */
+/* Single action button (e.g., trash icon) */
+.colAction {
+  width: 48px;
+  text-align: right;
+}
+
+/* Multiple action buttons */
+.colActionWide {
+  width: 120px;
+  text-align: right;
 }
 
 @media (min-width: 960px) {

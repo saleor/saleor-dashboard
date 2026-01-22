@@ -11,7 +11,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Checkbox, Input, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -174,7 +174,7 @@ export const ProductStocks = ({
             <ResponsiveTable>
               <TableHead>
                 <TableRowLink>
-                  <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+                  <TableCell>
                     <Text size={2} color="default2">
                       <FormattedMessage {...messages.warehouseName} />
                     </Text>
@@ -189,7 +189,7 @@ export const ProductStocks = ({
                       <FormattedMessage {...messages.quantity} />
                     </Text>
                   </TableCell>
-                  <TableCell />
+                  <TableCell style={{ width: 48 }} />
                 </TableRowLink>
               </TableHead>
               <TableBody>
@@ -203,7 +203,7 @@ export const ProductStocks = ({
                       data-test-id={stock.label}
                       key={`product-stocks-${stock.id}-${index}`}
                     >
-                      <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+                      <TableCell>
                         <Text>{stock.label}</Text>
                       </TableCell>
                       <TableCell>

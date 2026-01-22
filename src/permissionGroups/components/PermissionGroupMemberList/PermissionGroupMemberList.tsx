@@ -2,6 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
@@ -52,9 +53,6 @@ const useStyles = makeStyles(
     },
     colActions: {
       textAlign: "right",
-    },
-    helperText: {
-      textAlign: "center",
     },
     tableRow: {},
   }),
@@ -110,21 +108,14 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       {members?.length === 0 ? (
-        <DashboardCard.Content className={classes.helperText} data-test-id="no-members-text">
-          <Text color="default2">
+        <DashboardCard.Content data-test-id="no-members-text">
+          <Placeholder>
             <FormattedMessage
-              id="gVD1os"
-              defaultMessage="You haven’t assigned any member to this permission group yet."
+              id="t84lbb"
+              defaultMessage="You haven't assigned any member to this permission group yet."
               description="empty list message"
             />
-          </Text>
-          <Text color="default2">
-            <FormattedMessage
-              id="zD7/M6"
-              defaultMessage="Please use Assign Members button to do so."
-              description="empty list message"
-            />
-          </Text>
+          </Placeholder>
         </DashboardCard.Content>
       ) : (
         <DashboardCard.Content>

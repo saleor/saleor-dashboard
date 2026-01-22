@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
@@ -14,7 +14,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { MenuListUrlSortField, menuUrl } from "@dashboard/structures/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -31,16 +31,9 @@ const useStyles = makeStyles(
       colItems: {
         width: 200,
       },
-      colTitle: {},
-    },
-    colAction: {
-      width: 84,
     },
     colItems: {
       textAlign: "right",
-    },
-    colTitle: {
-      paddingLeft: 0,
     },
     row: {
       cursor: "pointer",
@@ -69,7 +62,14 @@ const MenuList = (props: MenuListProps) => {
   return (
     <DashboardCard>
       <DashboardCard.Content>
-        <ResponsiveTable>
+        <ResponsiveTable
+          footer={
+            <TablePaginationWithContext
+              settings={settings}
+              onUpdateListSettings={onUpdateListSettings}
+            />
+          }
+        >
           <TableHead
             colSpan={numberOfColumns}
             selected={selected}
@@ -84,7 +84,6 @@ const MenuList = (props: MenuListProps) => {
               }
               arrowPosition="right"
               onClick={() => onSort(MenuListUrlSortField.name)}
-              className={classes.colTitle}
             >
               <FormattedMessage id="qL9Oi9" defaultMessage="Structure Title" />
             </TableCellHeader>
@@ -102,17 +101,8 @@ const MenuList = (props: MenuListProps) => {
                 description="number of structures"
               />
             </TableCellHeader>
-            <TableCell className={classes.colAction} />
+            <TableCell className={tableStyles.colAction} />
           </TableHead>
-          <TableFooter>
-            <TableRowLink>
-              <TablePaginationWithContext
-                colSpan={numberOfColumns}
-                settings={settings}
-                onUpdateListSettings={onUpdateListSettings}
-              />
-            </TableRowLink>
-          </TableFooter>
           <TableBody data-test-id="navigation-menu-list">
             {renderCollection(
               menus,
@@ -136,7 +126,7 @@ const MenuList = (props: MenuListProps) => {
                         onChange={() => toggle(menu.id)}
                       />
                     </TableCell>
-                    <TableCell className={classes.colTitle} data-test-id="menu-name">
+                    <TableCell data-test-id="menu-name">
                       {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
                     </TableCell>
                     <TableCell className={classes.colItems}>
@@ -144,7 +134,7 @@ const MenuList = (props: MenuListProps) => {
                     </TableCell>
                     <TableButtonWrapper>
                       <IconButtonTableCell
-                        className={classes.colAction}
+                        className={tableStyles.colAction}
                         disabled={disabled}
                         onClick={() => onDelete(menu.id)}
                       >

@@ -57,7 +57,7 @@ export const WebhooksList = ({
           )}
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <DashboardCard.Content paddingX={0}>
+      <DashboardCard.Content>
         <ResponsiveTable className={classes.table}>
           {hasManagedAppsPermission && (
             <TableHead>

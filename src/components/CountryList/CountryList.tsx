@@ -62,11 +62,7 @@ const useStyles = makeStyles(
     textRight: {
       textAlign: "right",
     },
-    toLeft: {
-      "&:first-child": {
-        paddingLeft: 0,
-      },
-    },
+    toLeft: {},
     wideColumn: {
       width: "100%",
     },
@@ -103,34 +99,34 @@ const CountryList = (props: CountryListProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable>
-          <TableBody>
-            <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
-              <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
-                <FormattedMessage
-                  id="62Ywh2"
-                  defaultMessage="{number} Countries"
-                  description="number of countries"
-                  values={{
-                    number: getStringOrPlaceholder(countries?.length.toString()),
-                  }}
-                />
-              </TableCell>
-              <TableCell className={clsx(classes.textRight, classes.iconCell)}>
-                <IconButton variant="secondary">
-                  <ChevronDownIcon
-                    data-test-id="countries-drop-down-icon"
-                    size={iconSize.small}
-                    strokeWidth={iconStrokeWidthBySize.small}
-                    className={clsx({
-                      [classes.rotate]: !isCollapsed,
-                    })}
+        {hasCountriesToRender ? (
+          <ResponsiveTable>
+            <TableBody>
+              <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
+                <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
+                  <FormattedMessage
+                    id="62Ywh2"
+                    defaultMessage="{number} Countries"
+                    description="number of countries"
+                    values={{
+                      number: getStringOrPlaceholder(countries?.length.toString()),
+                    }}
                   />
-                </IconButton>
-              </TableCell>
-            </TableRowLink>
-            {!isCollapsed &&
-              (hasCountriesToRender ? (
+                </TableCell>
+                <TableCell className={clsx(classes.textRight, classes.iconCell)}>
+                  <IconButton variant="secondary">
+                    <ChevronDownIcon
+                      data-test-id="countries-drop-down-icon"
+                      size={iconSize.small}
+                      strokeWidth={iconStrokeWidthBySize.small}
+                      className={clsx({
+                        [classes.rotate]: !isCollapsed,
+                      })}
+                    />
+                  </IconButton>
+                </TableCell>
+              </TableRowLink>
+              {!isCollapsed &&
                 Object.keys(groupedCountries).map(letter => {
                   const countries = groupedCountries[letter];
 
@@ -161,16 +157,12 @@ const CountryList = (props: CountryListProps) => {
                       </TableCell>
                     </TableRowLink>
                   ));
-                })
-              ) : (
-                <TableRowLink>
-                  <TableCell className={classes.toLeft} colSpan={2}>
-                    <Placeholder>{emptyText}</Placeholder>
-                  </TableCell>
-                </TableRowLink>
-              ))}
-          </TableBody>
-        </ResponsiveTable>
+                })}
+            </TableBody>
+          </ResponsiveTable>
+        ) : (
+          <Placeholder>{emptyText}</Placeholder>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

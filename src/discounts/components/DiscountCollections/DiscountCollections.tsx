@@ -3,20 +3,21 @@ import { collectionUrl } from "@dashboard/collections/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CollectionWithTotalProductsFragment } from "@dashboard/graphql";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { renderCollection } from "@dashboard/misc";
+import { ListActions, ListProps } from "@dashboard/types";
+import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { renderCollection } from "../../../misc";
-import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -59,38 +60,36 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable>
-          <colgroup>
-            <col />
-            <col className={classes.colName} />
-            <col className={classes.colProducts} />
-            <col className={classes.colActions} />
-          </colgroup>
-          <TableHead
-            colSpan={numberOfColumns}
-            selected={selected}
-            disabled={disabled}
-            items={collections}
-            toggleAll={toggleAll}
-            toolbar={toolbar}
-          >
-            <TableCell className={classes.colName}>
-              <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
-            </TableCell>
-            <TableCell className={classes.colProducts}>
-              <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
-            </TableCell>
-            <TableCell />
-          </TableHead>
-          <TableFooter>
-            <TableRowLink>
-              <TablePaginationWithContext colSpan={numberOfColumns} />
-            </TableRowLink>
-          </TableFooter>
-          <TableBody data-test-id="assigned-specific-products-table">
-            {renderCollection(
-              collections,
-              collection => {
+        {collections?.length === 0 ? (
+          <Placeholder>
+            <FormattedMessage {...messages.discountCollectionsNotFound} />
+          </Placeholder>
+        ) : (
+          <ResponsiveTable footer={<TablePaginationWithContext />}>
+            <colgroup>
+              <col />
+              <col className={classes.colName} />
+              <col className={classes.colProducts} />
+              <col className={classes.colActions} />
+            </colgroup>
+            <TableHead
+              colSpan={numberOfColumns}
+              selected={selected}
+              disabled={disabled}
+              items={collections}
+              toggleAll={toggleAll}
+              toolbar={toolbar}
+            >
+              <TableCell className={classes.colName}>
+                <FormattedMessage {...messages.discountCollectionsTableProductHeader} />
+              </TableCell>
+              <TableCell className={classes.colProducts}>
+                <FormattedMessage {...messages.discountCollectionsTableProductNumber} />
+              </TableCell>
+              <TableCell />
+            </TableHead>
+            <TableBody data-test-id="assigned-specific-products-table">
+              {renderCollection(collections, collection => {
                 const isSelected = collection ? isChecked(collection.id) : false;
 
                 return (
@@ -132,17 +131,10 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
                     </TableCell>
                   </TableRowLink>
                 );
-              },
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage {...messages.discountCollectionsNotFound} />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+              })}
+            </TableBody>
+          </ResponsiveTable>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

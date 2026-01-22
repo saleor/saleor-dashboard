@@ -59,40 +59,47 @@ export const TablePagination = ({
     onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
   };
 
-  return (
-    <Wrapper colSpan={colSpan || 1000}>
-      <Box display="flex" justifyContent="space-between" paddingY={4}>
-        {settings?.rowNumber && (
-          <PaginationRowNumberSelect
-            choices={choices}
-            disabled={disabled}
-            labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
-            rowNumber={settings?.rowNumber}
-            onChange={
-              onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
-            }
-          />
-        )}
+  const content = (
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      {settings?.rowNumber ? (
+        <PaginationRowNumberSelect
+          choices={choices}
+          disabled={disabled}
+          labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
+          rowNumber={settings?.rowNumber}
+          onChange={
+            onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
+          }
+        />
+      ) : (
+        <Box />
+      )}
 
-        <Box display="flex" flexDirection="row" alignItems="center" gap={2} marginLeft="auto">
-          <Button
-            variant="secondary"
-            disabled={!hasPreviousPage || disabled}
-            onClick={handlers.onPreviousPage}
-            icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-            data-test-id="button-pagination-back"
-          />
-          <Button
-            variant="secondary"
-            disabled={!hasNextPage || disabled}
-            onClick={handlers.onNextPage}
-            icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-            data-test-id="button-pagination-next"
-          />
-        </Box>
+      <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
+        <Button
+          variant="secondary"
+          disabled={!hasPreviousPage || disabled}
+          onClick={handlers.onPreviousPage}
+          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-back"
+        />
+        <Button
+          variant="secondary"
+          disabled={!hasNextPage || disabled}
+          onClick={handlers.onNextPage}
+          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-next"
+        />
       </Box>
-    </Wrapper>
+    </Box>
   );
+
+  // If no wrapper component specified, return content directly (for use with ResponsiveTable footer)
+  if (!component && !colSpan) {
+    return content;
+  }
+
+  return <Wrapper colSpan={colSpan || 1000}>{content}</Wrapper>;
 };
 
 TablePagination.displayName = "TablePagination";
