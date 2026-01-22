@@ -263,6 +263,10 @@
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
+  "/W3dtv": {
+    "context": "tooltip when generate variants is disabled",
+    "string": "No variant attributes — nothing to generate"
+  },
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"
@@ -3610,6 +3614,10 @@
     "context": "product type is digital or physical",
     "string": "Type"
   },
+  "JwICkk": {
+    "context": "warning dialog description when SKU and stock are not set",
+    "string": "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants."
+  },
   "Jwuu4X": {
     "context": "select product informations to be exported",
     "string": "Information exported:"
@@ -4483,6 +4491,10 @@
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
+  },
+  "PUVq0k": {
+    "context": "warning dialog title when SKU and stock are not set",
+    "string": "Create without SKU and stock?"
   },
   "PV0SQd": {
     "context": "WarehousesSection select field label",
@@ -6221,10 +6233,6 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
-  },
-  "ZcbW+/": {
-    "context": "generate variants menu item",
-    "string": "Generate variants"
   },
   "Zd3Eew": {
     "context": "subsection header",
@@ -9833,6 +9841,10 @@
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vyVVAW": {
+    "context": "generate variants button",
+    "string": "Generate variants"
   },
   "vz3yxp": {
     "string": "Channels permissions"
