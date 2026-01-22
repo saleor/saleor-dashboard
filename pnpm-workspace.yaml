@@ -1,6 +1,6 @@
 blockExoticSubdeps: true
 
-minimumReleaseAge: 1440 # 24h
+minimumReleaseAge: 720 # 12h
 
 trustPolicy: no-downgrade
 
@@ -15,6 +15,7 @@ onlyBuiltDependencies:
 
 overrides:
   "@babel/runtime@<7.26.10": ">=7.26.10"
+  "lodash@<4.17.23": ">=4.17.23"
   "dompurify@<3.2.4": ">=3.2.4"
   "glob@>=10.3.7 <=11.0.3": ">=11.1.0"
   "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1"
