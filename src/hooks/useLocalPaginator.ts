@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useEffect, useState } from "react";
 
 interface PageInfo {
@@ -99,14 +98,14 @@ function useLocalPaginator(setPaginationState: (paginationState: PaginationState
     const loadNextPage = () =>
       setPaginationState({
         ...paginationState,
-        after: pageInfo?.endCursor,
+        after: pageInfo?.endCursor ?? undefined,
         before: undefined,
       });
     const loadPreviousPage = () =>
       setPaginationState({
         ...paginationState,
         after: undefined,
-        before: pageInfo?.startCursor,
+        before: pageInfo?.startCursor ?? undefined,
       });
     const newPageInfo = pageInfo
       ? {
