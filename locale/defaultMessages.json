@@ -2159,10 +2159,6 @@
   "Bl6896": {
     "string": "Refund amount"
   },
-  "BnB/7Y": {
-    "context": "callout, title",
-    "string": "Info"
-  },
   "Bphmwe": {
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
@@ -5275,10 +5271,6 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
-  },
-  "UUVUyy": {
-    "context": "callout, title",
-    "string": "Warning"
   },
   "UVDfTs": {
     "context": "discount type shipping",
@@ -9058,10 +9050,6 @@
     "context": "search label",
     "string": "Search products"
   },
-  "s8FlDW": {
-    "context": "hide error log label in notification",
-    "string": "Hide log"
-  },
   "s9sOcC": {
     "context": "button",
     "string": "OK"
@@ -9759,10 +9747,6 @@
   "w7jT4W": {
     "string": "No channels selected"
   },
-  "w9xgN9": {
-    "context": "see error log label in notification",
-    "string": "See error log"
-  },
   "wAGThK": {
     "context": "dialog header",
     "string": "Delete structures"
@@ -9825,6 +9809,9 @@
   },
   "wbsq7O": {
     "string": "Usage"
+  },
+  "we4Lby": {
+    "string": "Info"
   },
   "werrDz": {
     "context": "refunded event title",

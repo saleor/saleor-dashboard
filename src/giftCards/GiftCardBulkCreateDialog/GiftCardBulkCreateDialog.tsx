@@ -1,8 +1,8 @@
-import { IMessage } from "@dashboard/components/messages";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { INotification } from "@dashboard/components/notifications";
 import { GiftCardBulkCreateInput, useGiftCardBulkCreateMutation } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { useEffect, useState } from "react";
@@ -54,7 +54,7 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
     onCompleted: data => {
       const errors = data?.giftCardBulkCreate?.errors;
       const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
-      const giftCardsBulkIssueSuccessMessage: IMessage = {
+      const giftCardsBulkIssueSuccessMessage: INotification = {
         status: "success",
         title: intl.formatMessage(messages.createdSuccessAlertTitle),
         text: intl.formatMessage(messages.createdSuccessAlertDescription, {

@@ -17,7 +17,7 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import useAppState from "./useAppState";
-import useNotifier from "./useNotifier";
+import { useNotifier } from "./useNotifier";
 
 export { useLazyQuery } from "@apollo/client";
 
