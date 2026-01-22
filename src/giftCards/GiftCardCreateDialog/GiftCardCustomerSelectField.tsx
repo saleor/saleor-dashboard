@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
@@ -30,7 +29,7 @@ export const GiftCardCustomerSelectField = ({
     label: getFullName({ firstName, lastName }) || email,
   }));
   const handleSelect = (option: { value: string; label: string }): void => {
-    const label = choices?.find(o => o.value === option.value)?.label;
+    const label = choices?.find(o => o.value === option.value)?.label ?? option.value;
 
     setSelectedCustomer({ email: option.value, name: label });
   };
@@ -44,7 +43,7 @@ export const GiftCardCustomerSelectField = ({
       onFocus={() => search("")}
       options={choices || []}
       onScrollEnd={() => {
-        if (!result?.loading && result.data.search.pageInfo.hasNextPage) {
+        if (!result?.loading && result?.data?.search?.pageInfo?.hasNextPage) {
           loadMore();
         }
       }}
@@ -55,8 +54,8 @@ export const GiftCardCustomerSelectField = ({
       }}
       onChange={v =>
         handleSelect({
-          value: v.value,
-          label: v.label,
+          value: v?.value ?? "",
+          label: v?.label ?? "",
         })
       }
     />
