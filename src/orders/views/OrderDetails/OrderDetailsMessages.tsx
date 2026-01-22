@@ -88,8 +88,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "9RCuN3",
-          defaultMessage: "Payment successfully captured",
+          id: "t1Bd7E",
+          defaultMessage: "Payment captured",
         }),
       });
       closeModal();
@@ -116,8 +116,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled",
+          id: "0ix6PR",
+          defaultMessage: "Order cancelled",
         }),
       });
       closeModal();
@@ -130,8 +130,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled",
+          id: "0ix6PR",
+          defaultMessage: "Order cancelled",
         }),
       });
       closeModal();
@@ -144,8 +144,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "L87bp7",
-          defaultMessage: "Order payment successfully voided",
+          id: "S6zKcD",
+          defaultMessage: "Payment voided",
         }),
       });
       closeModal();
@@ -158,8 +158,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "KmPicj",
-          defaultMessage: "Note successfully added",
+          id: "hwYzY9",
+          defaultMessage: "Note added",
         }),
       });
     }
@@ -171,8 +171,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "9Th87u",
-          defaultMessage: "Note successfully updated",
+          id: "gfRbEV",
+          defaultMessage: "Note updated",
         }),
       });
     }
@@ -184,8 +184,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "j2fPVo",
-          defaultMessage: "Order successfully updated",
+          id: "hASogc",
+          defaultMessage: "Order updated",
         }),
       });
       closeModal();
@@ -198,8 +198,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "j2fPVo",
-          defaultMessage: "Order successfully updated",
+          id: "hASogc",
+          defaultMessage: "Order updated",
         }),
       });
       closeModal();
@@ -212,8 +212,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "7U8GRy",
-          defaultMessage: "Shipping method successfully updated",
+          id: "e61nVn",
+          defaultMessage: "Shipping updated",
         }),
       });
       closeModal();
@@ -273,8 +273,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "+sX7yS",
-          defaultMessage: "Fulfillment successfully approved",
+          id: "spjKeI",
+          defaultMessage: "Fulfillment approved",
         }),
       });
       closeModal();
@@ -291,8 +291,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "uMpv1v",
-          defaultMessage: "Fulfillment successfully cancelled",
+          id: "cNXv4f",
+          defaultMessage: "Fulfillment cancelled",
         }),
       });
       closeModal();
@@ -305,8 +305,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "CZmloB",
-          defaultMessage: "Fulfillment successfully updated",
+          id: "w3gxER",
+          defaultMessage: "Tracking updated",
         }),
       });
       closeModal();
@@ -319,8 +319,8 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "c4gbXr",
-          defaultMessage: "Draft order successfully finalized",
+          id: "Hwp65F",
+          defaultMessage: "Draft finalized",
         }),
       });
     }

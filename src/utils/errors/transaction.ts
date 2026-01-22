@@ -19,8 +19,8 @@ export const transactionRequestMessages = defineMessages({
     id: "B06DG8",
   },
   success: {
-    defaultMessage: "Transaction action requested successfully",
-    id: "gr1BBC",
+    defaultMessage: "Transaction action requested",
+    id: "BVNS8Y",
   },
 });
 

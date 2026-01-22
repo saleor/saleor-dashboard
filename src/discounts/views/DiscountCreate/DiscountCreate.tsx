@@ -23,8 +23,8 @@ export const DiscountCreate = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "5dOOAB",
-            defaultMessage: "Successfully created discount",
+            id: "qC6HKe",
+            defaultMessage: "Discount created",
           }),
         });
         navigate(discountUrl(data?.promotionCreate?.promotion?.id ?? ""), {

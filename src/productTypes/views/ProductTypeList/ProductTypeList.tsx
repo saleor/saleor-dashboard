@@ -14,7 +14,6 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -123,7 +122,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
       if (data?.productTypeBulkDelete?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "mkBgDe", defaultMessage: "Product types deleted" }),
         });
         reset();
         refetch();

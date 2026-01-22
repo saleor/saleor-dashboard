@@ -132,6 +132,13 @@ const PageList = ({ params }: PageListProps) => {
         closeModal();
         clearRowSelection();
         refetch();
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "7JPV5U",
+            defaultMessage: "Pages published",
+          }),
+        });
       }
     },
   });
