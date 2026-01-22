@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
@@ -8,6 +7,7 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  PageDetailsFragment,
   PageErrorWithAttributesFragment,
   useFileUploadMutation,
   usePageCreateMutation,
@@ -85,16 +85,17 @@ const PageCreate = ({ params }: PageCreateProps) => {
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
-      id: selectedPageTypeId,
+      id: selectedPageTypeId ?? "",
       firstValues: VALUES_PAGINATE_BY,
     },
     skip: !selectedPageTypeId,
   });
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [pageCreate, pageCreateOpts] = usePageCreateMutation({
     onCompleted: data => {
-      if (data.pageCreate.errors.length === 0) {
+      if (data.pageCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -102,7 +103,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
             defaultMessage: "Successfully created new page",
           }),
         });
-        navigate(pageUrl(data.pageCreate.page.id));
+        navigate(pageUrl(data.pageCreate?.page?.id ?? ""));
       }
     },
   });
@@ -138,7 +139,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
     });
 
     return {
-      id: result.data.pageCreate.page?.id || null,
+      id: result.data?.pageCreate?.page?.id ?? undefined,
       errors: getMutationErrors(result),
     };
   };
@@ -157,10 +158,10 @@ const PageCreate = ({ params }: PageCreateProps) => {
     );
   const refAttr =
     params.action === "assign-attribute-value" && params.id
-      ? selectedPageType?.pageType.attributes?.find(a => a.id === params.id)
+      ? selectedPageType?.pageType?.attributes?.find(a => a.id === params.id)
       : undefined;
   const fetchMorePageTypes = {
-    hasMore: searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: !!searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPageTypesOpts.loading,
     onFetchMore: loadMorePageTypes,
   };
@@ -176,12 +177,12 @@ const PageCreate = ({ params }: PageCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
   const fetchMoreReferenceCategories = {
-    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: !!searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCategoriesOpts.loading,
     onFetchMore: loadMoreCategories,
   };
   const fetchMoreReferenceCollections = {
-    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: !!searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
@@ -190,8 +191,11 @@ const PageCreate = ({ params }: PageCreateProps) => {
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
-  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
-  const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
+  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts as any, loadMorePages);
+  const fetchMoreReferenceProducts = getSearchFetchMoreProps(
+    searchProductsOpts as any,
+    loadMoreProducts,
+  );
   const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];
 
   return (
@@ -207,14 +211,16 @@ const PageCreate = ({ params }: PageCreateProps) => {
         loading={pageCreateOpts.loading || uploadFileOpts.loading}
         errors={errors}
         saveButtonBarState={pageCreateOpts.status}
-        page={null}
+        page={null as any as PageDetailsFragment}
         attributeValues={attributeValues}
         pageTypes={mapEdgesToItems(searchPageTypesOpts?.data?.search) || []}
         onRemove={() => undefined}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit as any}
         fetchPageTypes={searchPageTypes}
         fetchMorePageTypes={fetchMorePageTypes}
-        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" && params.id ? params.id : undefined
+        }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
@@ -231,7 +237,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageCreateUrl({ ...params, action: undefined }))}
-        selectedPageType={selectedPageType?.pageType}
+        selectedPageType={selectedPageType?.pageType as PageDetailsFragment["pageType"]}
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
       />
