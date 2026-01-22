@@ -2,7 +2,7 @@ import { ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
-import AssignmentListFooter from "./AssignmentListFooter";
+import { AssignmentListFooter } from "./AssignmentListFooter";
 import Item from "./Item";
 import SortableContainer from "./SortableContainer";
 import { useStyles } from "./styles";
@@ -15,7 +15,8 @@ const messages = defineMessages({
     description: "all selected items message",
   },
 });
-const AssignmentList = (props: AssignmentListProps) => {
+
+export const AssignmentList = (props: AssignmentListProps) => {
   const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -88,5 +89,3 @@ const AssignmentList = (props: AssignmentListProps) => {
     </Accordion>
   );
 };
-
-export default AssignmentList;

@@ -30,7 +30,7 @@ import { FormattedMessage } from "react-intl";
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
-import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
+import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
 
 interface ChoiceType {
