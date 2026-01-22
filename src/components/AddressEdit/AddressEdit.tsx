@@ -243,7 +243,7 @@ export const AddressEdit = (props: AddressEditProps) => {
                     name: "countryArea",
                     value: v?.value ?? "",
                   },
-                  // must assert, we use fake event because Combobox doesn't expose inner event, and upper handlers require it
+                  // must cast, we use fake event because Combobox doesn't expose inner event, and upper handlers require it
                 } as ChangeEvent<any>)
               }
             />

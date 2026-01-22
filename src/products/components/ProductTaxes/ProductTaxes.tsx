@@ -59,7 +59,11 @@ export const ProductTaxes = (props: ProductTaxesProps) => {
                 },
               })
             }
-            onScrollEnd={() => onFetchMore.onFetchMore()}
+            onScrollEnd={() => {
+              if (onFetchMore.hasMore) {
+                onFetchMore.onFetchMore();
+              }
+            }}
             loading={onFetchMore.loading}
           />
         </Box>
