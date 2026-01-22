@@ -1,6 +1,9 @@
 blockExoticSubdeps: true
 
-minimumReleaseAge: 720 # 12h
+minimumReleaseAge: 1440 # 24h
+
+minimumReleaseAgeExclude:
+  - "lodash@4.17.23"
 
 trustPolicy: no-downgrade
 
