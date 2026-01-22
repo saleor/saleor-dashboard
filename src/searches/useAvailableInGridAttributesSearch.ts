@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
   SearchAvailableInGridAttributesDocument,
@@ -32,10 +31,16 @@ export default makeSearch<
   SearchAvailableInGridAttributesQuery,
   SearchAvailableInGridAttributesQueryVariables
 >(SearchAvailableInGridAttributesDocument, result => {
-  if (result.data?.availableInGrid.pageInfo.hasNextPage) {
+  if (result.data?.availableInGrid?.pageInfo?.hasNextPage) {
     result.loadMore(
       (prev, next) => {
-        if (prev.availableInGrid.pageInfo.endCursor === next.availableInGrid.pageInfo.endCursor) {
+        if (
+          prev.availableInGrid?.pageInfo?.endCursor === next.availableInGrid?.pageInfo?.endCursor
+        ) {
+          return prev;
+        }
+
+        if (!next.availableInGrid || !prev.availableInGrid) {
           return prev;
         }
 
@@ -43,7 +48,7 @@ export default makeSearch<
           ...prev,
           availableInGrid: {
             ...prev.availableInGrid,
-            edges: [...prev.availableInGrid.edges, ...next.availableInGrid.edges],
+            edges: [...(prev.availableInGrid.edges ?? []), ...(next.availableInGrid.edges ?? [])],
             pageInfo: next.availableInGrid.pageInfo,
           },
         } as SearchAvailableInGridAttributesQuery;
@@ -51,7 +56,7 @@ export default makeSearch<
       {
         ...result.variables,
         after: result.data.availableInGrid.pageInfo.endCursor,
-      },
+      } as Partial<SearchAvailableInGridAttributesQueryVariables>,
     );
   }
 });
