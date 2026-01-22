@@ -21,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";

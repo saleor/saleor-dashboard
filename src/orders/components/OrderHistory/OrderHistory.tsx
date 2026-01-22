@@ -121,7 +121,7 @@ const OrderHistory = ({
                 <Box
                   as="a"
                   target="_blank"
-                  rel="noopener noreferer"
+                  rel="noopener noreferrer"
                   textDecoration="underline"
                   style={{
                     textUnderlineOffset: vars.spacing[1],

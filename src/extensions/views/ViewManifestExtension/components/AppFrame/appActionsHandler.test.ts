@@ -1,5 +1,4 @@
 import * as dashboardConfig from "@dashboard/config";
-import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
 import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
 import { IntlShape } from "react-intl";
@@ -20,7 +19,9 @@ jest.mock("../ExternalAppContext/ExternalAppContext");
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", (): UseNotifierResult => () => mockNotify);
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: () => mockNotify,
+}));
 jest.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
   close: mockCloseExternalApp,
   openApp: jest.fn(),

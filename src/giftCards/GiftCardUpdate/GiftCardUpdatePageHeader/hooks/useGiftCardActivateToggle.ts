@@ -1,5 +1,5 @@
 import { useGiftCardActivateMutation, useGiftCardDeactivateMutation } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 

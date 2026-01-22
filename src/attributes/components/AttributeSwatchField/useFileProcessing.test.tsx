@@ -14,7 +14,9 @@ jest.mock("@dashboard/intl", () => ({
   },
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => () => jest.fn());
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: () => jest.fn(),
+}));
 
 describe("useFileProcessing", () => {
   const mockUploadFile = jest.fn();

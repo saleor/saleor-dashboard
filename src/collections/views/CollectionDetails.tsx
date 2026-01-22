@@ -18,7 +18,7 @@ import {
 import useChannels from "@dashboard/hooks/useChannels";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

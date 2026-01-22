@@ -8,7 +8,7 @@ import {
   useTaxCountryConfigurationUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
