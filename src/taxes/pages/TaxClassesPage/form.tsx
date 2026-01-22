@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { TaxClassFragment } from "@dashboard/graphql";
 import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
@@ -34,7 +33,7 @@ interface TaxClassesFormProps {
 }
 
 function useTaxClassesForm(
-  taxClass: TaxClassFragment,
+  taxClass: TaxClassFragment | undefined,
   onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
   onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
   disabled: boolean,

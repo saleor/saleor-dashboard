@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   TaxClassCreateErrorFragment,
   TaxClassFragment,
@@ -58,7 +57,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
     onCompleted: data => {
       const errors = data?.taxClassDelete?.errors;
 
-      if (errors.length === 0) {
+      if (errors && errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -70,7 +69,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
     onCompleted: data => {
       const errors = data?.taxClassUpdate?.errors;
 
-      if (errors.length === 0) {
+      if (errors && errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -82,7 +81,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
     onCompleted: data => {
       const errors = data?.taxClassCreate?.errors;
 
-      if (errors.length === 0) {
+      if (errors && errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -141,10 +140,10 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
       return undefined;
     }
 
-    const apiTaxClasses = mapEdgesToItems(data?.taxClasses);
+    const apiTaxClasses = mapEdgesToItems(data?.taxClasses) ?? [];
     const connectedTaxClasses = isNewTaxClass ? [newTaxClass, ...apiTaxClasses] : apiTaxClasses;
     const taxClasses = mapUndefinedCountriesToTaxClasses(
-      countryRatesData.taxCountryConfigurations,
+      countryRatesData.taxCountryConfigurations ?? [],
       connectedTaxClasses,
     );
 
@@ -167,7 +166,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
     },
   );
   const handleUpdateTaxClass = createMetadataUpdateHandler(
-    selectedTaxClass,
+    selectedTaxClass!,
     updateTaxClass,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -186,8 +185,8 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
   return (
     <TaxClassesPage
       taxClasses={taxClasses}
-      handleTabChange={handleTabChange}
-      selectedTaxClassId={id}
+      handleTabChange={(tab: string) => handleTabChange(tab as TaxTab)}
+      selectedTaxClassId={id ?? ""}
       savebarState={savebarState}
       disabled={false}
       onCreateNewButtonClick={() => {

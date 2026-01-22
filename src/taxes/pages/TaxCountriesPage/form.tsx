@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { TaxClassRateInput, TaxCountryConfigurationFragment } from "@dashboard/graphql";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -23,8 +22,8 @@ interface TaxCountriesFormProps {
 
 function useTaxCountriesForm(
   country: TaxCountryConfigurationFragment,
-  onSubmit,
-  disabled,
+  onSubmit: (data: TaxClassRateInput[]) => SubmitPromise,
+  disabled: boolean,
 ): UseTaxCountriesFormResult {
   // Initial
   const intl = useIntl();
@@ -32,12 +31,12 @@ function useTaxCountriesForm(
     id: item.taxClass?.id ?? null,
     label: item.taxClass?.name ?? intl.formatMessage(taxesMessages.countryDefaultRate),
     value: item.rate?.toString() ?? "",
-    data: null,
+    data: null as any,
   }));
   const { formId, triggerChange } = useForm({}, undefined, {
     confirmLeave: true,
   });
-  const formset = useFormset(initialFormsetData);
+  const formset = useFormset(initialFormsetData as any);
   // Handlers
   const handleRateChange = (id: string, value: string) => {
     triggerChange();

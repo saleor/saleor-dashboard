@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -68,11 +67,15 @@ const TaxCountriesPage = (props: TaxCountriesPageProps) => {
     [selectedCountryId, countryTaxesData],
   );
 
+  if (!currentCountry) {
+    return null;
+  }
+
   return (
     <TaxCountriesForm country={currentCountry} onSubmit={onSubmit} disabled={disabled}>
       {({ data, handlers, submit }) => {
         const filteredRates = data?.filter(
-          rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
+          (rate: { label: string }) => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
 
         return (
@@ -102,7 +105,9 @@ const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                   <TaxCountriesMenu
                     configurations={countryTaxesData}
                     selectedCountryId={selectedCountryId}
-                    onCountryDelete={onDeleteConfiguration}
+                    onCountryDelete={(countryId: string) => {
+                      onDeleteConfiguration(countryId as CountryCode);
+                    }}
                     onCountryAdd={() => openDialog("add-country")}
                   />
                   <Card>
@@ -156,25 +161,32 @@ const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                             </ListItem>
                           </ListHeader>
                           <Divider />
-                          {filteredRates?.map((rate, rateIndex) => (
-                            <Fragment key={rate.id}>
-                              <ListItem
-                                hover={false}
-                                className={classes.noDivider}
-                                data-test-id={rate.label}
-                              >
-                                <ListItemCell>{rate.label}</ListItemCell>
-                                <ListItemCell>
-                                  <TaxInput
-                                    placeholder={data[0]?.rate}
-                                    value={rate?.value}
-                                    change={e => handlers.handleRateChange(rate.id, e.target.value)}
-                                  />
-                                </ListItemCell>
-                              </ListItem>
-                              {!isLastElement(filteredRates, rateIndex) && <Divider />}
-                            </Fragment>
-                          )) ?? <Skeleton />}
+                          {filteredRates?.map(
+                            (
+                              rate: { id: string; label: string; value?: string },
+                              rateIndex: number,
+                            ) => (
+                              <Fragment key={rate.id}>
+                                <ListItem
+                                  hover={false}
+                                  className={classes.noDivider}
+                                  data-test-id={rate.label}
+                                >
+                                  <ListItemCell>{rate.label}</ListItemCell>
+                                  <ListItemCell>
+                                    <TaxInput
+                                      placeholder={data[0]?.rate}
+                                      value={rate?.value}
+                                      change={e =>
+                                        handlers.handleRateChange(rate.id, e.target.value)
+                                      }
+                                    />
+                                  </ListItemCell>
+                                </ListItem>
+                                {!isLastElement(filteredRates, rateIndex) && <Divider />}
+                              </Fragment>
+                            ),
+                          ) ?? <Skeleton />}
                         </List>
                       </>
                     )}

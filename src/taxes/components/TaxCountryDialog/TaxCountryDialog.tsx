@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardModal } from "@dashboard/components/Modal";
 import { CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
@@ -70,7 +69,7 @@ const TaxCountryDialog = ({ open, countries, onConfirm, onClose }: TaxCountryDia
           __marginLeft={-15}
           __paddingLeft={15}
         >
-          {filteredCountries.map(country => (
+          {filteredCountries?.map(country => (
             <Fragment key={country.code}>
               <FormControlLabel
                 data-test-id="country-row"
@@ -89,7 +88,9 @@ const TaxCountryDialog = ({ open, countries, onConfirm, onClose }: TaxCountryDia
             data-test-id="add-button"
             variant="primary"
             onClick={() => {
-              onConfirm(selectedCountry);
+              if (selectedCountry) {
+                onConfirm(selectedCountry);
+              }
             }}
             disabled={!selectedCountry}
           >

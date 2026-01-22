@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Select } from "@dashboard/components/Select";
@@ -31,6 +30,10 @@ const TaxCountryExceptionListItem = ({
   strategyChoicesLoading,
 }: TaxCountryExceptionListItemProps) => {
   const classes = useStyles();
+
+  if (!country) {
+    return null;
+  }
 
   return (
     <>
