@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.26",
+  "version": "3.22.27",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
