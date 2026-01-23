@@ -55,7 +55,7 @@ export const OrderManualTransactionRefundForm = ({
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(transactionRequestMessages.success),
+          text: intl.formatMessage(transactionRequestMessages.refundSuccess),
         });
         navigate(orderUrl(orderId));
       }

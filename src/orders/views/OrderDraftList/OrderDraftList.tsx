@@ -71,8 +71,8 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "6udlH+",
-          defaultMessage: "Order draft successfully created",
+          id: "AQDJ1d",
+          defaultMessage: "Draft order created",
         }),
       });
       navigate(orderUrl(data.draftOrderCreate.order.id));

@@ -92,8 +92,8 @@ const AttributeList = ({ params }: AttributeListProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "z3GGbZ",
-            defaultMessage: "Attributes successfully deleted",
+            id: "fpafCx",
+            defaultMessage: "Attributes deleted",
             description: "deleted multiple attributes",
           }),
         });

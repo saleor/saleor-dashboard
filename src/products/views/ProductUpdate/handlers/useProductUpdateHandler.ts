@@ -27,7 +27,6 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -206,7 +205,10 @@ export function useProductUpdateHandler(
     if (errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "Ad9EZ1",
+          defaultMessage: "Product updated",
+        }),
       });
     }
 

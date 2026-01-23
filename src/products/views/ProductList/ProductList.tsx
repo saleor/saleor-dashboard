@@ -169,7 +169,10 @@ const ProductList = ({ params }: ProductListProps) => {
         closeModal();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "wUWSv2",
+            defaultMessage: "Products deleted",
+          }),
         });
         refetch();
         limitOpts.refetch();

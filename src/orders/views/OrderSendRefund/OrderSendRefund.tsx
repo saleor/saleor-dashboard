@@ -15,8 +15,8 @@ interface OrderSendRefund {
 
 const messages = defineMessages({
   successAddTransaction: {
-    defaultMessage: "Manual refund was created successfully",
-    id: "p1D4Ok",
+    defaultMessage: "Manual refund created",
+    id: "8MSYNw",
     description: "order send refund, manual transaction refund was created",
   },
 });

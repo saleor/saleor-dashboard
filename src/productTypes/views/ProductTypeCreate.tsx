@@ -44,8 +44,8 @@ const ProductTypeCreate = ({ params }: ProductTypeCreateProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "paa4m0",
-            defaultMessage: "Successfully created product type",
+            id: "SZyphU",
+            defaultMessage: "Product type created",
           }),
         });
         navigate(productTypeUrl(data.productTypeCreate.productType.id));

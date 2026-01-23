@@ -15,7 +15,6 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -76,7 +75,10 @@ const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
         if (data.shopSettingsUpdate?.errors.length === 0) {
           notify({
             status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
+            text: intl.formatMessage({
+              id: "2qHTHI",
+              defaultMessage: "Default weight unit updated",
+            }),
           });
           closeModal();
         }
@@ -88,7 +90,10 @@ const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
       if (data.shippingZoneBulkDelete?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "LCmiky",
+            defaultMessage: "Shipping zones deleted",
+          }),
         });
         closeModal();
         clearRowSelection();
