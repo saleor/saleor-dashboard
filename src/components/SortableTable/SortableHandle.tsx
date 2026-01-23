@@ -8,11 +8,11 @@ const useStyles = makeStyles(
   theme => ({
     columnDrag: {
       "&&&": {
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(1),
       },
       cursor: "grab",
-      width: `calc(48px + ${theme.spacing(1.5)})`,
+      width: 40,
     },
   }),
   { name: "SortableHandle" },

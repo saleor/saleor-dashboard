@@ -106,9 +106,7 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
               <TableCell className={classes.colProductName}>
                 <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
               </TableCell>
-              <TableCell className={classes.colAction}>
-                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-              </TableCell>
+              <TableCell />
             </TableHead>
             <TableBody>
               {renderCollection(products, product => {

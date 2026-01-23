@@ -77,7 +77,7 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
           />
         </LimitReachedAlert>
       )}
-      <DashboardCard>
+      <DashboardCard marginTop={6}>
         <DashboardCard.Content>
           <ResponsiveTable>
             <TableHead>
@@ -89,13 +89,7 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
                     description="channel name"
                   />
                 </TableCellHeader>
-                <TableCell className={classes.colRight}>
-                  <FormattedMessage
-                    id="VHuzgq"
-                    defaultMessage="Actions"
-                    description="table actions"
-                  />
-                </TableCell>
+                <TableCell />
               </TableRowLink>
             </TableHead>
             <TableBody data-test-id="channel-list">

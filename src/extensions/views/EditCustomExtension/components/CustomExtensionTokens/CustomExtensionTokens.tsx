@@ -136,13 +136,7 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
                     description="custom app token key"
                   />
                 </TableCell>
-                <TableCell className={classes.colActions}>
-                  <FormattedMessage
-                    id="VHuzgq"
-                    defaultMessage="Actions"
-                    description="table actions"
-                  />
-                </TableCell>
+                <TableCell />
               </TableRowLink>
             </TableHead>
           )}

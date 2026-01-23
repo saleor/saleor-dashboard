@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
@@ -18,14 +18,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   {
-    colAction: {
-      "&:last-child": {
-        paddingRight: 0,
-      },
-      width: 80,
-    },
     colGrab: {
-      width: 60,
+      width: 40,
     },
     colName: {},
     colSlug: {
@@ -33,9 +27,6 @@ const useStyles = makeStyles(
     },
     link: {
       cursor: "pointer",
-    },
-    textLeft: {
-      textAlign: "left",
     },
   },
   { name: "PageTypeAttributes" },
@@ -100,7 +91,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
               <col />
               <col className={classes.colName} />
               <col className={classes.colSlug} />
-              <col className={classes.colAction} />
+              <col className={tableStyles.colAction} />
             </colgroup>
             <TableHead
               colSpan={numberOfColumns}
@@ -151,7 +142,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                     <TableCell className={classes.colSlug} data-test-id="slug">
                       {attribute?.slug || <Skeleton />}
                     </TableCell>
-                    <TableCell className={classes.colAction}>
+                    <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>
                         <Button
                           icon={

@@ -129,7 +129,6 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
               toolbar={toolbar}
             >
               <TableCellHeader
-                className={classes.colName}
                 arrowPosition="right"
                 onClick={() => onSort(MembersListUrlSortField.name)}
                 direction={
@@ -156,9 +155,7 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
               >
                 <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
               </TableCellHeader>
-              <TableCellHeader textAlign="right">
-                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-              </TableCellHeader>
+              <TableCellHeader />
             </TableHead>
             <TableBody data-test-id="assigned-members-table">
               {renderCollection(

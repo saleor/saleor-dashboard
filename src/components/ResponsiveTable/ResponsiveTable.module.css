@@ -40,8 +40,7 @@
 .table td,
 .table th {
   vertical-align: middle;
-  padding-left: 8px !important;
-  padding-right: 8px !important;
+  padding: 6px 8px !important;
 }
 
 /* First and last cells get equal edge padding */

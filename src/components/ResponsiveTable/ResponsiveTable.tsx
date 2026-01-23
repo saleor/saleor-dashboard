@@ -1,9 +1,10 @@
 import { Table } from "@material-ui/core";
-import { Box, SearchInput } from "@saleor/macaw-ui-next";
+import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import * as React from "react";
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { iconSize, iconStrokeWidthBySize } from "../icons";
 import styles from "./ResponsiveTable.module.css";
@@ -26,11 +27,19 @@ interface ResponsiveTableProps {
   };
   /** Optional footer content (e.g., pagination) rendered below the table */
   footer?: React.ReactNode;
+  /**
+   * Number of filtered items - when 0 and search is active, shows "no results" state.
+   * When undefined, the table content is rendered as-is.
+   */
+  filteredItemsCount?: number;
 }
 
 export const ResponsiveTable = (props: ResponsiveTableProps) => {
-  const { children, className, onMouseLeave, search, footer } = props;
+  const { children, className, onMouseLeave, search, footer, filteredItemsCount } = props;
   const [searchValue, setSearchValue] = useState(search?.initialValue ?? "");
+
+  const isSearchActive = searchValue.length > 0;
+  const showFilteredEmptyState = isSearchActive && filteredItemsCount === 0;
   const debounceRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,9 +130,21 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
             {search.toolbar && <Box>{search.toolbar}</Box>}
           </Box>
         )}
-        <Table className={clsx(styles.table, className)} onMouseLeave={onMouseLeave}>
-          {children}
-        </Table>
+        {showFilteredEmptyState ? (
+          <Box paddingY={6} paddingX={4}>
+            <Text color="default2">
+              <FormattedMessage
+                id="0xMUfd"
+                defaultMessage='No results found for "{query}"'
+                values={{ query: searchValue }}
+              />
+            </Text>
+          </Box>
+        ) : (
+          <Table className={clsx(styles.table, className)} onMouseLeave={onMouseLeave}>
+            {children}
+          </Table>
+        )}
       </div>
       {footer && <Box padding={4}>{footer}</Box>}
     </div>

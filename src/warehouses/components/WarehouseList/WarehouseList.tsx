@@ -91,9 +91,7 @@ const WarehouseList = (props: WarehouseListProps) => {
           <TableCell className={classes.colZones}>
             <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
           </TableCell>
-          <TableCell className={classes.colActions}>
-            <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-          </TableCell>
+          <TableCell />
         </TableRowLink>
       </TableHead>
       <TableBody data-test-id="warehouses-list">

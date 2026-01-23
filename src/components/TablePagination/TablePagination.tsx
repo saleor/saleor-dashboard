@@ -26,8 +26,14 @@ export interface PaginationProps
   > {
   component?: React.ElementType;
   colSpan?: number;
+  /** Settings object (for context-based pagination) */
   settings?: ListSettings;
+  /** Callback to update settings (for context-based pagination) */
   onUpdateListSettings?: ListSettingsUpdate;
+  /** Direct row number value (for client-side pagination) */
+  rowNumber?: number;
+  /** Callback when row number changes (for client-side pagination) */
+  onRowNumberChange?: (rowNumber: number) => void;
   prevHref?: string;
   nextHref?: string;
   disabled?: boolean;
@@ -41,6 +47,8 @@ export const TablePagination = ({
   colSpan,
   settings,
   onUpdateListSettings,
+  rowNumber: directRowNumber,
+  onRowNumberChange,
   nextHref,
   prevHref,
   hasNextPage,
@@ -59,17 +67,21 @@ export const TablePagination = ({
     onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
   };
 
+  // Support both settings-based and direct props for row number
+  const currentRowNumber = settings?.rowNumber ?? directRowNumber;
+  const handleRowNumberChange = onUpdateListSettings
+    ? (value: number) => onUpdateListSettings("rowNumber", value)
+    : onRowNumberChange;
+
   const content = (
     <Box display="flex" justifyContent="space-between" alignItems="center">
-      {settings?.rowNumber ? (
+      {currentRowNumber ? (
         <PaginationRowNumberSelect
           choices={choices}
           disabled={disabled}
           labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
-          rowNumber={settings?.rowNumber}
-          onChange={
-            onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
-          }
+          rowNumber={currentRowNumber}
+          onChange={handleRowNumberChange}
         />
       ) : (
         <Box />
