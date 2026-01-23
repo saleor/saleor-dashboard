@@ -25,6 +25,7 @@ import {
   OrderTransactionRequestActionMutation,
   OrderUpdateMutation,
   OrderVoidMutation,
+  TransactionActionEnum,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -380,9 +381,17 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
         text: getOrderTransactionErrorMessage(errors[0], intl),
       });
     } else {
+      const actionType = "type" in params ? params.type : undefined;
+      const successMessage =
+        {
+          [TransactionActionEnum.REFUND]: transactionMessages.refundSuccess,
+          [TransactionActionEnum.CHARGE]: transactionMessages.chargeSuccess,
+          [TransactionActionEnum.CANCEL]: transactionMessages.cancelSuccess,
+        }[actionType as TransactionActionEnum] ?? transactionMessages.refundSuccess;
+
       notify({
         status: "success",
-        text: intl.formatMessage(transactionMessages.success),
+        text: intl.formatMessage(successMessage),
       });
       closeModal();
     }

@@ -1258,6 +1258,9 @@
     "context": "Filter where element text",
     "string": "Where"
   },
+  "5oVmhu": {
+    "string": "Cancel request sent to payment provider"
+  },
   "5pHBSU": {
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
@@ -2138,9 +2141,6 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
-  "BVNS8Y": {
-    "string": "Transaction action requested"
-  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -2299,6 +2299,9 @@
   "CQKgD/": {
     "context": "bulk actions button label",
     "string": "Delete model"
+  },
+  "CQTTke": {
+    "string": "Refund request sent to payment provider"
   },
   "CRAfpd": {
     "context": "gift card export dialog confirm button label",
@@ -7212,6 +7215,9 @@
   "fqJXzO": {
     "context": "order history message",
     "string": "Transaction refund requested"
+  },
+  "fqXQq6": {
+    "string": "Capture request sent to payment provider"
   },
   "fsBsMy": {
     "context": "button, form submit, grant refund create",
