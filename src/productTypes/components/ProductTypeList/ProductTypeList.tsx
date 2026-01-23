@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
@@ -16,7 +15,7 @@ import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListActions, ListProps, SortPage } from "../../../types";
+import { ListActions, ListProps, Node, SortPage } from "../../../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -69,7 +68,7 @@ const ProductTypeList = ({
         colSpan={numberOfColumns}
         selected={selected}
         disabled={disabled}
-        items={productTypes}
+        items={productTypes as Node[]}
         toggleAll={toggleAll}
         toolbar={toolbar}
       >

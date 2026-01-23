@@ -3,7 +3,7 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 
 export const makeProductTypeKindChangeHandler =
   (onChange: FormChange, onKindChange: (kind: ProductTypeKindEnum) => void) =>
-  (event: React.ChangeEvent<any>) => {
+  (event: ChangeEvent) => {
     const kind = event.target.value as ProductTypeKindEnum;
 
     onKindChange(kind);

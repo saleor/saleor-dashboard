@@ -27,6 +27,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
+import { ProductTypeFragment } from "../../../graphql";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
@@ -110,7 +111,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
-  const productTypesData = mapEdgesToItems(data?.productTypes) ?? [];
+  const productTypesData: ProductTypeFragment[] = mapEdgesToItems(data?.productTypes) ?? [];
 
   const productTypeDeleteData = useProductTypeDelete({
     selectedTypes: selectedProductTypes,

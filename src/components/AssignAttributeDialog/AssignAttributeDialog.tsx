@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import * as React from "react";
+
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
@@ -53,7 +55,7 @@ interface AssignAttributeDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "assignAttributeScrollableDialog";
-const AssignAttributeDialog = ({
+const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   attributes,
   confirmButtonState,
   errors: apiErrors,

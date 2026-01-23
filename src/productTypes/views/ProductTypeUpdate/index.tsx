@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
@@ -354,7 +353,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
         <>
           {Object.keys(ProductAttributeType).map(key => (
             <AssignAttributeDialog
-              attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
+              key={key}
+              attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes) ?? []}
               confirmButtonState={assignAttribute.opts.status}
               errors={maybe(
                 () =>
@@ -379,7 +379,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
               }
               selected={assignAttributesActions.selectedItems}
               onToggle={assignAttributesActions.toggleSelectItem}
-              key={key}
             />
           ))}
           {productType && (
