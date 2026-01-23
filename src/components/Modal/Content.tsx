@@ -6,6 +6,7 @@ export type ContentSize = "xs" | "sm" | "md" | "lg" | "xl";
 type ContentProps = PropsWithBox<{
   children: ReactNode;
   disableAutofocus?: boolean;
+  disableEscapeKeyDown?: boolean;
   size: ContentSize;
 }>;
 
@@ -17,7 +18,13 @@ const sizes: Record<ContentSize, number> = {
   xl: 1920,
 };
 
-export const Content = ({ children, disableAutofocus, size, ...rest }: ContentProps) => {
+export const Content = ({
+  children,
+  disableAutofocus,
+  disableEscapeKeyDown,
+  size,
+  ...rest
+}: ContentProps) => {
   return (
     <Modal.Content
       disableAutofocus={disableAutofocus}
@@ -36,6 +43,7 @@ export const Content = ({ children, disableAutofocus, size, ...rest }: ContentPr
             e.preventDefault();
           }
         },
+        onEscapeKeyDown: disableEscapeKeyDown ? e => e.preventDefault() : undefined,
       }}
     >
       <Box

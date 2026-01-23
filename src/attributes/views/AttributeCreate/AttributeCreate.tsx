@@ -64,8 +64,8 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "jTifz+",
-            defaultMessage: "Successfully created attribute",
+            id: "c0hLoI",
+            defaultMessage: "Attribute created",
           }),
         });
         navigate(attributeUrl(data?.attributeCreate?.attribute?.id ?? ""));

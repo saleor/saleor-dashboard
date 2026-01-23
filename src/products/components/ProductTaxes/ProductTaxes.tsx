@@ -1,11 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductTaxesProps {
@@ -17,7 +16,7 @@ interface ProductTaxesProps {
   onFetchMore: FetchMoreProps;
 }
 
-const ProductTaxes = (props: ProductTaxesProps) => {
+export const ProductTaxes = (props: ProductTaxesProps) => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 
@@ -28,13 +27,13 @@ const ProductTaxes = (props: ProductTaxesProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
-          <Combobox
+          {/* Maybe this should normal Combobox, not Dynamic? */}
+          <DynamicCombobox
             disabled={disabled}
             options={taxClasses.map(choice => ({
               label: choice.name,
               value: choice.id,
             }))}
-            fetchOptions={() => undefined}
             value={
               value
                 ? {
@@ -45,8 +44,27 @@ const ProductTaxes = (props: ProductTaxesProps) => {
             }
             name="taxClassId"
             label={intl.formatMessage(taxesMessages.taxClass)}
-            onChange={onChange}
-            fetchMore={onFetchMore}
+            onChange={v =>
+              onChange({
+                /**
+                 * Fake change event
+                 * 1. Upper handlers rely on event, not values
+                 * 2. Macaw's select doesn't expose inner event
+                 *
+                 * TODO: Expose native events from Macaw for interoperability
+                 */
+                target: {
+                  value: v?.value ?? "",
+                  name: "taxClassId",
+                },
+              })
+            }
+            onScrollEnd={() => {
+              if (onFetchMore.hasMore) {
+                onFetchMore.onFetchMore();
+              }
+            }}
+            loading={onFetchMore.loading}
           />
         </Box>
       </DashboardCard.Content>
@@ -55,4 +73,3 @@ const ProductTaxes = (props: ProductTaxesProps) => {
 };
 
 ProductTaxes.displayName = "ProductTaxes";
-export default ProductTaxes;

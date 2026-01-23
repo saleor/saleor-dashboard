@@ -12,7 +12,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { getById, getMutationStatus } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -71,7 +71,7 @@ const WarehouseList = ({ params }: WarehouseListProps) => {
       if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "MzXzjL", defaultMessage: "Warehouse deleted" }),
         });
         refetch();
         limitOpts.refetch();

@@ -77,8 +77,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "Q8mpW3",
-            defaultMessage: "Successfully created voucher",
+            id: "HoBGng",
+            defaultMessage: "Voucher created",
           }),
         });
         navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });

@@ -12,7 +12,6 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import createMetadataCreateHandler, {
   CreateMetadataHandlerFunctionResult,
 } from "@dashboard/utils/handlers/metadataCreateHandler";
@@ -61,7 +60,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "4oWCm4", defaultMessage: "Tax class updated" }),
         });
       }
     },
@@ -73,7 +72,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "4oWCm4", defaultMessage: "Tax class updated" }),
         });
       }
     },
@@ -85,7 +84,7 @@ const TaxClassesList = ({ id }: TaxClassesListProps) => {
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "4oWCm4", defaultMessage: "Tax class updated" }),
         });
         navigate(taxClassesListUrl(data?.taxClassCreate?.taxClass?.id));
       }

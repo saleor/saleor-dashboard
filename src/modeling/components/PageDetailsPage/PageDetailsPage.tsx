@@ -43,7 +43,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import PageInfo from "../PageInfo";
-import PageOrganizeContent from "../PageOrganizeContent";
+import { PageOrganizeContent } from "../PageOrganizeContent/PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
 

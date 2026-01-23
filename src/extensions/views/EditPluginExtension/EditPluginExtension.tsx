@@ -11,7 +11,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -69,7 +68,7 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
       if (data.pluginUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "m9Q2yf", defaultMessage: "Plugin settings updated" }),
         });
         closeModal();
       }

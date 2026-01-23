@@ -16,7 +16,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { getById, getStringOrPlaceholder, maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -104,7 +104,7 @@ const MenuList = ({ params }: MenuListProps) => {
       if (data.menuBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "v20Mra", defaultMessage: "Menus deleted" }),
         });
         closeModal();
         reset();

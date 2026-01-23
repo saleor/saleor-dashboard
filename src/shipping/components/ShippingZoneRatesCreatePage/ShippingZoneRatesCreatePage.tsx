@@ -32,7 +32,7 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { FormEventHandler, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ShippingMethodTaxes from "../ShippingMethodTaxes";
+import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 

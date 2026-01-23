@@ -7,7 +7,6 @@ import {
   WebhookEventTypeAsyncEnum,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
@@ -36,7 +35,7 @@ export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookPro
       if (errors?.length === 0 && webhook) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "OeIWeD", defaultMessage: "Webhook updated" }),
         });
       }
     },

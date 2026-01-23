@@ -19,7 +19,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -123,7 +123,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     onCompleted: () =>
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "Gi8zwc",
+          defaultMessage: "Image deleted",
+        }),
       }),
   });
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -146,7 +149,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "lUvX5F",
+            defaultMessage: "Image added",
+          }),
         });
       }
     },

@@ -14,7 +14,6 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
 import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -107,7 +106,7 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
       if (data.pageTypeBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "53W0OD", defaultMessage: "Model types deleted" }),
         });
         reset();
         refetch();

@@ -24,8 +24,8 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Password reset link has been sent to the provided email address",
-            id: "ABSQ9z",
+            defaultMessage: "Reset link sent",
+            id: "E+nSVG",
           }),
         });
 

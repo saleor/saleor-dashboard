@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.22.27
+
+### Patch Changes
+
+- [#6268](https://github.com/saleor/saleor-dashboard/pull/6268) [`6c31454`](https://github.com/saleor/saleor-dashboard/commit/6c31454b9433ac9dd040472e1fa911e30c98407d) Thanks [@mirekm](https://github.com/mirekm)! - Fix accidental exiting of GraphQL Playground by pressing Esc
+
+- [#6267](https://github.com/saleor/saleor-dashboard/pull/6267) [`7eb3eaf`](https://github.com/saleor/saleor-dashboard/commit/7eb3eafb8731f90092df758809c2cad4d668eeb5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replaced custom Combobox component with one provided by MacawUI library. This solves bug with incorrect value rendering in Chromium 144
+
+- [#6250](https://github.com/saleor/saleor-dashboard/pull/6250) [`472d0cd`](https://github.com/saleor/saleor-dashboard/commit/472d0cda9657aae75f017f4c0284d9e2b3473327) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Improved display of Links. Now they inherit size of the parent element, usually paragraph. Links should no longer looks strange within text blocks
+
+- [#6265](https://github.com/saleor/saleor-dashboard/pull/6265) [`813da60`](https://github.com/saleor/saleor-dashboard/commit/813da6060d72e1a03cd3c832bc0c31568e32c0d0) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated pnpm settings to be more strict about installed packages: minimum age 24h, cannot use downgraded security (e.g. trusted publisher -> untrusted), dependencies resolving to git repo or tarball
+
+- [#6207](https://github.com/saleor/saleor-dashboard/pull/6207) [`6b89f21`](https://github.com/saleor/saleor-dashboard/commit/6b89f217e19167b2e39befe11c3cf0990b5f6f79) Thanks [@mirekm](https://github.com/mirekm)! - Redesigned toast notifications for better user experience:
+  - **Notifications now stack compactly** instead of flooding the screen
+  - **Refined visual design** that's less disruptive and better aligned with the dashboard aesthetic
+  - **Long messages expand on hover** with "Show more/less" toggle instead of being truncated
+  - **Error notifications persist** until manually dismissed
+
+  **Next up:** Refining notification message copy for clarity and consistency across the dashboard.
+
 ## 3.22.26
 
 ### Patch Changes
