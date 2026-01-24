@@ -41,7 +41,7 @@ import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -199,7 +199,30 @@ export const ProductVariantPage = ({
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={productUrl(productId)} title={header}>
+      <TopNav
+        href={productUrl(productId)}
+        title={
+          loading ? (
+            <Skeleton __width="200px" />
+          ) : (
+            <Box display="flex" alignItems="center" gap={1}>
+              <Text
+                size={6}
+                color="default2"
+                ellipsis
+                __maxWidth="200px"
+                title={variant?.product?.name}
+              >
+                {variant?.product?.name}
+              </Text>
+              <Text size={6} color="default2">
+                /
+              </Text>
+              <Text size={6}>{header}</Text>
+            </Box>
+          )
+        }
+      >
         {variant?.product?.defaultVariant?.id !== variant?.id && (
           <Box marginRight={3}>
             <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
@@ -262,6 +285,7 @@ export const ProductVariantPage = ({
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
                       variants={variant?.product.variants}
+                      loading={loading}
                       onReorder={onVariantReorder}
                     />
                   </div>
