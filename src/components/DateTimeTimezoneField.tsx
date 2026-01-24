@@ -2,7 +2,7 @@
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -48,8 +48,17 @@ export const DateTimeTimezoneField = ({
   const [value, setValue] = useState<string>(
     initialValue ? convertToDateTimeLocal(initialValue) : "",
   );
+  // Track if this is the initial mount - skip onChange to avoid triggering
+  // dirty state with the converted (timezone-transformed) value
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+
+      return;
+    }
+
     onChange(value === "" ? null : value);
   }, [value]);
 
