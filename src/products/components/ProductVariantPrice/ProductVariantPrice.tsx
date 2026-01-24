@@ -13,7 +13,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Skeleton, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
@@ -26,8 +26,6 @@ interface ProductVariantPriceProps {
 }
 
 const numberOfColumns = 2;
-
-const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
 
 export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const {
@@ -88,7 +86,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
         <ResponsiveTable>
           <TableHead>
             <TableRowLink>
-              <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+              <TableCell>
                 <Text size={2} color="default2">
                   <FormattedMessage
                     id="c8UT0c"
@@ -97,7 +95,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                   />
                 </Text>
               </TableCell>
-              <TableCell style={{ width: 200, verticalAlign: "middle" }}>
+              <TableCell style={{ width: 200 }}>
                 <Text size={2} color="default2">
                   <FormattedMessage
                     id="JFtFgc"
@@ -106,7 +104,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                   />
                 </Text>
               </TableCell>
-              <TableCell style={{ width: 200, verticalAlign: "middle" }}>
+              <TableCell style={{ width: 200 }}>
                 <Text size={2} color="default2">
                   <FormattedMessage
                     id="2zCmiR"
@@ -133,19 +131,12 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                     key={listing?.id || `skeleton-${index}`}
                     data-test-id={listing?.name}
                   >
-                    <TableCell
-                      style={{
-                        paddingLeft: vars.spacing[6],
-                      }}
-                    >
+                    <TableCell>
                       <Text>{listing?.name || <Skeleton />}</Text>
                     </TableCell>
-                    <TableCell style={COMMON_CELL_STYLES}>
+                    <TableCell>
                       {listing ? (
                         <PriceField
-                          className={sprinkles({
-                            [priceApiError ? "marginTop" : "marginY"]: 2,
-                          })}
                           error={!!priceApiError}
                           helperText={
                             priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
@@ -168,12 +159,9 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                         <Skeleton />
                       )}
                     </TableCell>
-                    <TableCell style={COMMON_CELL_STYLES}>
+                    <TableCell>
                       {listing ? (
                         <PriceField
-                          className={sprinkles({
-                            marginY: 2,
-                          })}
                           error={!!costPriceError}
                           name={`${listing.id}-channel-costPrice`}
                           value={listing.costPrice ?? ""}

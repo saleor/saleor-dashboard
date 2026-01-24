@@ -23,50 +23,52 @@
   background-color: var(--mu-colors-background-default2);
 }
 
-/* Remove default border from header cells */
 .table thead th,
 .table thead td {
   border-bottom: none;
 }
 
-/* Add border to last row of thead when table has tbody */
 .table thead:has(~ tbody) tr:last-child th,
 .table thead:has(~ tbody) tr:last-child td {
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
-/* Vertically center content in table cells and set consistent padding */
-/* Using !important to override MUI's TableCell default padding */
-.table td,
+/* !important overrides MUI TableCell defaults */
 .table th {
   vertical-align: middle;
-  padding: 6px 8px !important;
+  padding: 0 8px !important;
 }
 
-/* First and last cells get equal edge padding */
-.table td:first-child,
+.table td {
+  vertical-align: middle;
+  padding: 0 8px !important;
+}
+
 .table th:first-child {
   padding-left: 16px !important;
 }
 
-.table td:last-child,
 .table th:last-child {
   padding-right: 16px !important;
 }
 
-/* Remove bottom border from last row to avoid double border with wrapper */
+.table td:first-child {
+  padding-left: 16px !important;
+}
+
+.table td:last-child {
+  padding-right: 16px !important;
+}
+
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* Action column styles - use for consistent action button columns */
-/* Single action button (e.g., trash icon) */
 .colAction {
   width: 48px;
   text-align: right;
 }
 
-/* Multiple action buttons */
 .colActionWide {
   width: 120px;
   text-align: right;

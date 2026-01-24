@@ -2,8 +2,7 @@ import { Table } from "@material-ui/core";
 import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import * as React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { iconSize, iconStrokeWidthBySize } from "../icons";
@@ -14,23 +13,14 @@ interface ResponsiveTableProps {
   className?: string;
   onMouseLeave?: () => void;
   key?: string;
-  /** Optional search configuration */
   search?: {
-    /** Placeholder text for search input */
     placeholder?: string;
-    /** Initial search value */
     initialValue?: string;
-    /** Callback when search value changes (debounced) */
     onSearchChange?: (query: string) => void;
-    /** Optional toolbar content (e.g., filter button) rendered on the right */
     toolbar?: React.ReactNode;
   };
-  /** Optional footer content (e.g., pagination) rendered below the table */
   footer?: React.ReactNode;
-  /**
-   * Number of filtered items - when 0 and search is active, shows "no results" state.
-   * When undefined, the table content is rendered as-is.
-   */
+  /** When 0 and search is active, shows "no results" state */
   filteredItemsCount?: number;
 }
 
@@ -40,7 +30,7 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
 
   const isSearchActive = searchValue.length > 0;
   const showFilteredEmptyState = isSearchActive && filteredItemsCount === 0;
-  const debounceRef = React.useRef<NodeJS.Timeout | null>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -73,7 +63,7 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);
@@ -153,10 +143,6 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
 
 ResponsiveTable.displayName = "ResponsiveTable";
 
-/** Exported styles for consistent table column styling */
 export const tableStyles = {
-  /** Single action button column (48px, right-aligned) */
   colAction: styles.colAction,
-  /** Multiple action buttons column (120px, right-aligned) */
-  colActionWide: styles.colActionWide,
 };
