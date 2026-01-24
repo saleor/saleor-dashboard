@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Update lodash version to `4.17.23`
+Improve table design consistency across the dashboard with unified styling for ResponsiveTable components, better loading states, and improved scroll behavior for variant navigation
