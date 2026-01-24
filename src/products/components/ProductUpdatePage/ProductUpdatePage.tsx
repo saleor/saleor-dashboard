@@ -68,10 +68,9 @@ import { ProductDetailsForm } from "../ProductDetailsForm";
 import {
   AvailabilityCard,
   mapProductToDiagnosticData,
-  ProductDoctor,
   useProductAvailabilityDiagnostics,
 } from "../ProductDoctor";
-import { AvailabilityDoctorDevPanel } from "../ProductDoctor/testing";
+import { AvailabilityDoctorDevPanel, DevDiagnosticsProvider } from "../ProductDoctor/testing";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
@@ -369,7 +368,8 @@ const ProductUpdatePage = ({
     }
   }, [active, product, productId]);
 
-  return (
+  // Wrap with DevDiagnosticsProvider in development for issue injection testing
+  const content = (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
       onSubmit={onSubmit}
@@ -548,7 +548,6 @@ const ProductUpdatePage = ({
                   formChannelData={data.channels.updateChannels}
                   errors={channelsErrors}
                 />
-                <ProductDoctor product={productDiagnosticData} />
                 <Box paddingBottom={52}>
                   <ProductTaxes
                     value={data.taxClassId}
@@ -651,6 +650,13 @@ const ProductUpdatePage = ({
       }}
     </ProductUpdateForm>
   );
+
+  // In development, wrap with DevDiagnosticsProvider for testing
+  if (process.env.NODE_ENV === "development") {
+    return <DevDiagnosticsProvider>{content}</DevDiagnosticsProvider>;
+  }
+
+  return content;
 };
 
 ProductUpdatePage.displayName = "ProductUpdatePage";

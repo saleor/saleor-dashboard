@@ -154,6 +154,10 @@
   "+pGERa": {
     "string": "Provide details manually"
   },
+  "+q4WRK": {
+    "context": "Badge shown when channel has validation errors",
+    "string": "error"
+  },
   "+qDoi0": {
     "context": "button",
     "string": "Create model type"
@@ -624,6 +628,10 @@
   },
   "1n1tOR": {
     "string": "Group is out of your permission scope"
+  },
+  "1ncKJy": {
+    "context": "Warning when no warehouses configured",
+    "string": "No warehouses"
   },
   "1oYjZc": {
     "context": "sum of all granted refunds for an order",
@@ -3516,6 +3524,10 @@
     "context": "currency code select",
     "string": "{code} - {countries}"
   },
+  "J9z6wD": {
+    "context": "Number of shipping zones configured",
+    "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
+  },
   "JDz5h8": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -3917,10 +3929,6 @@
     "context": "name placeholder",
     "string": "Unnamed webhook"
   },
-  "Lm4xYp": {
-    "context": "Description when product is not visible in listings",
-    "string": "Customers can still access it via direct link."
-  },
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
@@ -3970,6 +3978,10 @@
   "MAsLIT": {
     "context": "custom app token key",
     "string": "Key"
+  },
+  "MFC20a": {
+    "context": "Number of warehouses configured",
+    "string": "{count, plural, one {# warehouse} other {# warehouses}}"
   },
   "MFUQrr": {
     "context": "Placeholder for date picker",
@@ -4116,6 +4128,10 @@
   "MzXBdd": {
     "context": "Refund failure status",
     "string": "Failure"
+  },
+  "N1Z/Er": {
+    "context": "Title when product is not visible in listings",
+    "string": "Hidden from browsing."
   },
   "N2IrpM": {
     "string": "Confirm"
@@ -4763,6 +4779,10 @@
   "QfK+5Q": {
     "context": "Description for warehouse not in zone warning",
     "string": "Warehouses with stock are not assigned to any shipping zone in this channel."
+  },
+  "Qhb89u": {
+    "context": "Warning when no countries covered",
+    "string": "No countries covered"
   },
   "QiN4hv": {
     "context": "active",
@@ -6529,6 +6549,10 @@
     "context": "status pill for partial authorization",
     "string": "Partial Authorisation"
   },
+  "azych5": {
+    "context": "Message when no diagnostic issues found",
+    "string": "All channels configured correctly"
+  },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
@@ -7165,6 +7189,10 @@
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
   },
+  "f71A+Y": {
+    "context": "Title for delivery configuration section in channel",
+    "string": "Delivery configuration"
+  },
   "fDc5ys": {
     "context": "order transaction refund summary label",
     "string": "Selected products"
@@ -7350,6 +7378,10 @@
   "gG4YAW": {
     "context": "Number of shipping zones",
     "string": "{count, plural, =0 {No shipping zones} one {# shipping zone} other {# shipping zones}}"
+  },
+  "gHB1Wx": {
+    "context": "Number of countries covered by shipping",
+    "string": "{count, plural, one {# country} other {# countries}} covered"
   },
   "gKary4": {
     "context": "Description for inactive channel error",
@@ -8001,10 +8033,6 @@
   "kN6SLs": {
     "string": "Min Value"
   },
-  "kP9mZT": {
-    "context": "Description when product is visible in listings",
-    "string": "Appears in category pages, collections, and search results."
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -8397,6 +8425,10 @@
     "context": "Description for no variants error",
     "string": "At least one variant is required for customers to purchase this product."
   },
+  "mvDujQ": {
+    "context": "Description when product is visible in listings",
+    "string": "Appears in category pages, collections, and search results."
+  },
   "mvVmbJ": {
     "string": "Install extension from manifest"
   },
@@ -8500,10 +8532,6 @@
   },
   "nQQVdc": {
     "string": "Go to vouchers"
-  },
-  "nR8vWq": {
-    "context": "Title when product is not visible in listings",
-    "string": "Hidden from browsing."
   },
   "nRiOg+": {
     "string": "Sorry, the page was not found"
@@ -8623,6 +8651,10 @@
   "oB0y5Y": {
     "context": "order status",
     "string": "Unfulfilled"
+  },
+  "oEFc87": {
+    "context": "Warning when no shipping zones configured",
+    "string": "No shipping zones"
   },
   "oHbgcK": {
     "context": "PageTypeDeleteWarningDialog title",
@@ -9054,6 +9086,10 @@
   "qgQeVW": {
     "string": "Generate Voucher Codes"
   },
+  "qiCqVU": {
+    "context": "Summary of diagnostic issues found",
+    "string": "{errorCount, plural, =0 {} one {# error} other {# errors}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
+  },
   "qkRuT0": {
     "context": "attribute type",
     "string": "Product Attribute"
@@ -9210,6 +9246,10 @@
   "rl1t+o": {
     "context": "expires in label",
     "string": "Expires in"
+  },
+  "roQH8c": {
+    "context": "Description when product is not visible in listings",
+    "string": "Customers can still access it via direct link."
   },
   "rqiCWU": {
     "string": "Saved changes"
@@ -9722,6 +9762,10 @@
     "context": "column picker section header",
     "string": "Columns"
   },
+  "usjqAQ": {
+    "context": "Badge showing number of issues in a channel",
+    "string": "{count, plural, one {# issue} other {# issues}}"
+  },
   "utaSh3": {
     "context": "staff member's account",
     "string": "Status"
@@ -9984,10 +10028,6 @@
   "w4ZVcj": {
     "context": "Status when product is not visible",
     "string": "Hidden"
-  },
-  "w5F4GH": {
-    "context": "Badge shown when channel has validation errors",
-    "string": "error"
   },
   "w6kcxY": {
     "string": "What happens if I approve?"
