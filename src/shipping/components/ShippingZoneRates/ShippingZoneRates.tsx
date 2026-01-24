@@ -90,7 +90,9 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {rates?.length === 0 ? (
+        {rates === undefined ? (
+          <Skeleton />
+        ) : rates.length === 0 ? (
           <Placeholder>
             <FormattedMessage id="RUzdUH" defaultMessage="No shipping rates found" />
           </Placeholder>

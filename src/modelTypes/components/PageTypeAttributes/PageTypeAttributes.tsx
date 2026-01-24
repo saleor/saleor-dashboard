@@ -80,7 +80,9 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {attributes?.length === 0 ? (
+        {attributes === undefined ? (
+          <Skeleton />
+        ) : attributes.length === 0 ? (
           <Placeholder>
             <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
           </Placeholder>

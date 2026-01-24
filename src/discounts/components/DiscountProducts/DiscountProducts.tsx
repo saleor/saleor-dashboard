@@ -58,7 +58,9 @@ const DiscountProducts = (props: SaleProductsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {products?.length === 0 ? (
+        {products === undefined ? (
+          <Skeleton />
+        ) : products.length === 0 ? (
           <Placeholder>
             <FormattedMessage {...messages.discountProductsNotFound} />
           </Placeholder>

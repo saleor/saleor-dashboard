@@ -107,7 +107,11 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      {members?.length === 0 ? (
+      {members === undefined ? (
+        <DashboardCard.Content>
+          <Skeleton />
+        </DashboardCard.Content>
+      ) : members.length === 0 ? (
         <DashboardCard.Content data-test-id="no-members-text">
           <Placeholder>
             <FormattedMessage

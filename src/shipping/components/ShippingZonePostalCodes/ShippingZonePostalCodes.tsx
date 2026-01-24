@@ -171,7 +171,9 @@ const ShippingZonePostalCodes = ({
         />
       </DashboardCard.Content>
       <DashboardCard.Content>
-        {postalCodes?.length === 0 ? (
+        {postalCodes === undefined ? (
+          <Skeleton />
+        ) : postalCodes.length === 0 ? (
           <Placeholder>
             <FormattedMessage
               id="Pyjarj"

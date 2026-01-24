@@ -46,7 +46,9 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {orders?.length === 0 ? (
+        {orders === undefined ? (
+          <Skeleton />
+        ) : orders.length === 0 ? (
           <Placeholder>
             <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
           </Placeholder>

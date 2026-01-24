@@ -60,7 +60,9 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {categories?.length === 0 ? (
+        {categories === undefined ? (
+          <Skeleton />
+        ) : categories.length === 0 ? (
           <Placeholder>
             <FormattedMessage {...messages.discountCategoriesNotFound} />
           </Placeholder>

@@ -86,7 +86,9 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {products?.length === 0 ? (
+        {products === undefined ? (
+          <Skeleton />
+        ) : products.length === 0 ? (
           <Placeholder>
             <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
           </Placeholder>

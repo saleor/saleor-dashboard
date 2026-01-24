@@ -60,7 +60,9 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {collections?.length === 0 ? (
+        {collections === undefined ? (
+          <Skeleton />
+        ) : collections.length === 0 ? (
           <Placeholder>
             <FormattedMessage {...messages.discountCollectionsNotFound} />
           </Placeholder>

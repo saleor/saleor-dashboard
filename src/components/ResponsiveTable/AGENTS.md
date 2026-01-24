@@ -24,13 +24,15 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 </ResponsiveTable>;
 ```
 
-## Empty States
+## Handling Loading, Empty, and Data States
 
-**No initial data** - Replace the entire table with `Placeholder`:
+When `data` can be `undefined` (loading), always handle three states explicitly:
 
 ```tsx
 {
-  data.length === 0 ? (
+  data === undefined ? (
+    <Skeleton />
+  ) : data.length === 0 ? (
     <Placeholder>
       <FormattedMessage {...messages.noItemsFound} />
     </Placeholder>
@@ -39,6 +41,8 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
   );
 }
 ```
+
+**WARNING:** Never use `data?.length === 0` - this evaluates to `false` when `data` is `undefined`, showing an empty table instead of a loading state.
 
 **No results from filtering/search** - Use `filteredItemsCount={0}` (built-in "no results" state):
 

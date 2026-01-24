@@ -116,7 +116,9 @@ const AttributeValues = ({
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {values?.length === 0 ? (
+        {values === undefined ? (
+          <Skeleton />
+        ) : values.length === 0 ? (
           <Placeholder>
             <FormattedMessage
               id="g5zIpS"

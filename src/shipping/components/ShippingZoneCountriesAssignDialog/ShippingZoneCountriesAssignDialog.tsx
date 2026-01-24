@@ -97,12 +97,14 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                           onClick={() => handleRestOfTheWorldChange(!isRestOfTheWorldSelected)}
                         >
                           <TableCell className={classes.wideCell}>
-                            <Text size={3} display="block">
-                              <FormattedMessage {...messages.restOfTheWorldCheckbox} />
-                            </Text>
-                            <Text size={2} fontWeight="light">
-                              <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
-                            </Text>
+                            <Box paddingY={2}>
+                              <Text size={3} display="block">
+                                <FormattedMessage {...messages.restOfTheWorldCheckbox} />
+                              </Text>
+                              <Text size={2} fontWeight="light">
+                                <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
+                              </Text>
+                            </Box>
                           </TableCell>
                           <TableCell padding="checkbox" className={classes.checkboxCell}>
                             <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />

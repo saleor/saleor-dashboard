@@ -60,7 +60,9 @@ const DiscountVariants = (props: SaleVariantsProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {variants?.length === 0 ? (
+        {variants === undefined ? (
+          <Skeleton />
+        ) : variants.length === 0 ? (
           <Placeholder>
             <FormattedMessage {...messages.discountVariantsNotFound} />
           </Placeholder>
