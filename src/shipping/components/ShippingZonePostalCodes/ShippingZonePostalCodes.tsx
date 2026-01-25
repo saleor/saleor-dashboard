@@ -189,20 +189,16 @@ const ShippingZonePostalCodes = ({
             <TableHead>
               <TableRowLink>
                 <TableCell>
-                  {postalCodes === undefined ? (
-                    <Skeleton className={classes.skeleton} />
-                  ) : (
-                    <Text size={2} fontWeight="light">
-                      <FormattedMessage
-                        id="ud0w8h"
-                        defaultMessage="{number} postal code ranges"
-                        description="number of postal code ranges"
-                        values={{
-                          number: postalCodes.length,
-                        }}
-                      />
-                    </Text>
-                  )}
+                  <Text size={2} fontWeight="light">
+                    <FormattedMessage
+                      id="ud0w8h"
+                      defaultMessage="{number} postal code ranges"
+                      description="number of postal code ranges"
+                      values={{
+                        number: postalCodes.length,
+                      }}
+                    />
+                  </Text>
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton variant="secondary" onClick={() => setExpanded(!expanded)}>
