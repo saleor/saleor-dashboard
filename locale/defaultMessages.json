@@ -97,6 +97,10 @@
     "context": "discount type percentage",
     "string": "Percentage"
   },
+  "+ZwF+1": {
+    "context": "Description for live status when product is visible but purchase is scheduled",
+    "string": "Visible but not purchasable"
+  },
   "+a+2ug": {
     "string": "Members"
   },
@@ -395,10 +399,6 @@
     "context": "swatch attribute color picker label",
     "string": "Picker"
   },
-  "0FOB3B": {
-    "context": "Number of countries covered",
-    "string": "{count, plural, =0 {No countries} one {# country} other {# countries}}"
-  },
   "0FexL7": {
     "context": "min price in channel",
     "string": "Min. value"
@@ -426,6 +426,10 @@
   "0OfZJA": {
     "context": "button",
     "string": "Back"
+  },
+  "0QE6RR": {
+    "context": "Message when all countries are covered",
+    "string": "All countries covered"
   },
   "0ReyKr": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
@@ -691,6 +695,10 @@
   "2CBcub": {
     "context": "CreateVariantTitle manage",
     "string": "Manage"
+  },
+  "2FQ5xn": {
+    "context": "Status when product is currently available for purchase",
+    "string": "Available now"
   },
   "2FQsYj": {
     "context": "button",
@@ -1308,6 +1316,10 @@
     "context": "voucher is active from date",
     "string": "Starts"
   },
+  "5wktck": {
+    "context": "Description for no variant in channel error",
+    "string": "Variants exist but none are available in this channel. Add variant channel listings."
+  },
   "5x6yT9": {
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
@@ -1416,6 +1428,10 @@
     "context": "header",
     "string": "Discount Type"
   },
+  "6fAGSm": {
+    "context": "Product is not visible via public API",
+    "string": "Not visible"
+  },
   "6fxdUO": {
     "context": "section header",
     "string": "Create New Shipping Zone"
@@ -1499,6 +1515,10 @@
   "7FL+WZ": {
     "context": "export products to csv file, button",
     "string": "Export Products"
+  },
+  "7G7tg3": {
+    "context": "Number of variants that have stock available",
+    "string": "{count, plural, one {# variant in stock} other {# variants in stock}}"
   },
   "7H2D5m": {
     "context": "attribute value deleted",
@@ -1610,6 +1630,10 @@
     "context": "section header",
     "string": "User Status"
   },
+  "7yfkyB": {
+    "context": "No variants have stock available",
+    "string": "No variants in stock"
+  },
   "8/PQ07": {
     "context": "delete custom app",
     "string": "By deleting this extension, you will delete all the data and webhooks regarding this extension."
@@ -1668,6 +1692,10 @@
     "context": "warning when authorized is less than total",
     "string": "The remaining authorization doesn't cover the balance. {shortfall} will need a separate payment."
   },
+  "8Kk3r9": {
+    "context": "Status when product availability is scheduled for future date",
+    "string": "Scheduled for {date}"
+  },
   "8LWaFr": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
@@ -1725,6 +1753,10 @@
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
   },
+  "8sOnqE": {
+    "context": "Warning when scheduling an available product for the future",
+    "string": "Product will not be purchasable until this date."
+  },
   "8uLHBY": {
     "context": "unassign attribute from object",
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
@@ -1750,10 +1782,6 @@
   },
   "91vQMc": {
     "string": "order management"
-  },
-  "923O+u": {
-    "context": "Error when product has no variants",
-    "string": "Product has no variants"
   },
   "945a4a": {
     "context": "column header",
@@ -1952,10 +1980,6 @@
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
   },
-  "A0QvEz": {
-    "context": "Error when no variant is in channel",
-    "string": "No variant available in \"{channelName}\""
-  },
   "A7W4KO": {
     "string": "Catalog rule"
   },
@@ -1969,6 +1993,10 @@
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
+  },
+  "ADvpV/": {
+    "context": "Product can be purchased by customers",
+    "string": "Purchasable"
   },
   "AHK0K9": {
     "context": "dialog content",
@@ -2296,10 +2324,6 @@
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
   },
-  "CGgCSc": {
-    "context": "Description for no variant in channel error",
-    "string": "Add at least one variant to this channel for customers to purchase."
-  },
   "CJEIRC": {
     "string": "Product export has finished and was sent to your email address."
   },
@@ -2361,6 +2385,10 @@
   "Cc3Z40": {
     "string": "Learn Saleor checkout process flow"
   },
+  "Cf7i/g": {
+    "context": "Info box title when product is not published",
+    "string": "Hidden from public API."
+  },
   "ChAjJu": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
@@ -2382,6 +2410,10 @@
   },
   "Cm2/+V": {
     "string": "Read the docs"
+  },
+  "Cmu1M8": {
+    "context": "Product cannot be purchased by customers",
+    "string": "Not purchasable"
   },
   "CmxKIg": {
     "context": "window title",
@@ -2550,6 +2582,10 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "Duik8x": {
+    "context": "Link to publish the product immediately instead of scheduling",
+    "string": "Publish immediately instead"
+  },
   "DyGpz4": {
     "context": "unapproved fulfillment, section header",
     "string": "Waiting for approval"
@@ -2626,6 +2662,10 @@
   "EQfaUv": {
     "context": "onboarding step title",
     "string": "Check our GraphQL playground & make an API call"
+  },
+  "EQjp7M": {
+    "context": "Shown when country count cannot be determined",
+    "string": "Countries: Unknown"
   },
   "ER/yBq": {
     "context": "max price in channel",
@@ -3667,6 +3707,10 @@
   "JqiqNj": {
     "string": "Something went wrong"
   },
+  "JsLWyc": {
+    "context": "Error occurred during public API verification",
+    "string": "Verification failed"
+  },
   "Jsh6+U": {
     "context": "product type is digital or physical",
     "string": "Type"
@@ -3892,12 +3936,20 @@
   "LVtwcF": {
     "string": "Create new warehouse"
   },
+  "LWc61W": {
+    "context": "Title when diagnostics are limited due to permissions",
+    "string": "Limited diagnostics"
+  },
   "LWmYSU": {
     "string": "Completed Translations"
   },
   "LY5dS9": {
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
+  },
+  "La3xKC": {
+    "context": "Description of public API verification feature",
+    "string": "Check if customers can actually purchase this product"
   },
   "LdNCP/": {
     "context": "Filter or element text",
@@ -4255,6 +4307,10 @@
   "Nj9iSB": {
     "context": "table header column",
     "string": "Tax rate"
+  },
+  "NjORiU": {
+    "context": "Warning when scheduled publication date is in the past",
+    "string": "Scheduled date passed ({date})"
   },
   "NlEVVT": {
     "context": "label for button",
@@ -5349,6 +5405,10 @@
     "context": "button",
     "string": "Save variant"
   },
+  "U9TPGD": {
+    "context": "Link to revert date change",
+    "string": "Revert to previous date"
+  },
   "UBuKZ9": {
     "context": "searchbar placeholder",
     "string": "Country"
@@ -5412,6 +5472,10 @@
     "context": "collection filter published",
     "string": "Published"
   },
+  "UcrXYE": {
+    "context": "Description for scheduled status when publication date is in the future",
+    "string": "Publication scheduled"
+  },
   "UgCuqX": {
     "context": "tab name",
     "string": "All models"
@@ -5450,6 +5514,10 @@
   },
   "Uqf8Ny": {
     "string": "Create new category"
+  },
+  "Ur9yW3": {
+    "context": "Description explaining which permissions are needed",
+    "string": "Full availability diagnostics require additional permissions: {permissions}"
   },
   "Us9cA1": {
     "context": "profit margin",
@@ -5735,6 +5803,10 @@
     "context": "dialog title item discount",
     "string": "Discount Item"
   },
+  "WUKB5Z": {
+    "context": "Shown after verification with relative time",
+    "string": "Verified {time}"
+  },
   "WUf3Iu": {
     "context": "percentage option",
     "string": "Percentage"
@@ -5879,6 +5951,10 @@
   "XJm60a": {
     "string": "Manually change permission for the extension."
   },
+  "XLBNT0": {
+    "context": "Header description when product is hidden",
+    "string": "Invisible via public API"
+  },
   "XLYssG": {
     "context": "assign categories to sale and save",
     "string": "Assign and save"
@@ -5950,6 +6026,10 @@
   "Xb6BJ9": {
     "context": "error message",
     "string": "Manual payments can not be refunded"
+  },
+  "XbX2Ta": {
+    "context": "Checkbox label for scheduling publication for a future date",
+    "string": "Schedule for later"
   },
   "XgsXQv": {
     "context": "order transaction refund summary label",
@@ -6154,6 +6234,10 @@
     "context": "action",
     "string": "Exclude postal codes"
   },
+  "YpnjMB": {
+    "context": "Button to test public API availability",
+    "string": "Test"
+  },
   "YpukUN": {
     "context": "label",
     "string": "Shipping zone name"
@@ -6338,10 +6422,6 @@
   },
   "Zvo5iu": {
     "string": "API reference"
-  },
-  "ZwSuCt": {
-    "context": "Info box title when product is not published",
-    "string": "Hidden from storefront."
   },
   "Zx1w1e": {
     "string": "edited"
@@ -6789,6 +6869,10 @@
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
+  },
+  "cErw9O": {
+    "context": "Shown when warehouse count cannot be determined",
+    "string": "Warehouses: Unknown"
   },
   "cFA9vl": {
     "context": "link",
@@ -7316,6 +7400,10 @@
     "context": "product's sku",
     "string": "SKU"
   },
+  "fxbjge": {
+    "context": "Status when product is currently visible on storefront",
+    "string": "Visible now"
+  },
   "fzk04H": {
     "context": "dialog title",
     "string": "Delete image"
@@ -7620,6 +7708,10 @@
     "context": "heading, sum of all completed refunds from transactions in order",
     "string": "Refunded"
   },
+  "hpBWnU": {
+    "context": "Warning when scheduling a visible product for the future",
+    "string": "Product will be hidden until {date}."
+  },
   "hptDxW": {
     "context": "money",
     "string": "to {money}"
@@ -7660,6 +7752,10 @@
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
   },
+  "i0ou1B": {
+    "context": "Description for no variants error",
+    "string": "This product has no variants. Create at least one variant before customers can purchase."
+  },
   "i3Hquc": {
     "context": "tooltip for discount amount",
     "string": "Discount amount"
@@ -7667,6 +7763,10 @@
   "i3Mvj8": {
     "context": "product attribute error",
     "string": "This variant already exists"
+  },
+  "i3r9KP": {
+    "context": "Checkbox label for scheduling availability for a future date",
+    "string": "Schedule for later"
   },
   "i56GGQ": {
     "context": "order refund amount",
@@ -7791,6 +7891,10 @@
   "j/Oo0B": {
     "context": "bulk actions button label",
     "string": "Publish"
+  },
+  "j/shmR": {
+    "context": "Shown when shipping zone count cannot be determined",
+    "string": "Shipping zones: Unknown"
   },
   "j/vV0n": {
     "context": "channel name",
@@ -7984,6 +8088,10 @@
   "kAPaN6": {
     "context": "empty metadata text",
     "string": "Empty"
+  },
+  "kBCNfL": {
+    "context": "Button to verify product availability via public API",
+    "string": "Verify via public API"
   },
   "kEAjZV": {
     "context": "rich text attribute type",
@@ -8417,13 +8525,13 @@
   "mr9jbO": {
     "string": "Preferred Language"
   },
+  "msbMCT": {
+    "context": "Error when no variant is in channel",
+    "string": "No variant listed in this channel"
+  },
   "mslSpp": {
     "context": "resend code to customer title",
     "string": "Resend code to customer"
-  },
-  "muNmaF": {
-    "context": "Description for no variants error",
-    "string": "At least one variant is required for customers to purchase this product."
   },
   "mvDujQ": {
     "context": "Description when product is visible in listings",
@@ -8561,6 +8669,10 @@
   "nf3XSt": {
     "context": "attribute internal name",
     "string": "Slug"
+  },
+  "nfgSR+": {
+    "context": "Error when product has no variants",
+    "string": "No variants created"
   },
   "ng0ZDW": {
     "context": "label, input for amount to refund in transaction",
@@ -8813,6 +8925,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pMAlSC": {
+    "context": "Shown when a value cannot be determined due to permissions",
+    "string": "Unknown"
+  },
   "pMXWrd": {
     "context": "Label for available for purchase toggle",
     "string": "Available for purchase"
@@ -8997,6 +9113,10 @@
     "context": "dialog header",
     "string": "Delete Address"
   },
+  "qLaeSH": {
+    "context": "Number of countries and territories covered by shipping",
+    "string": "{count} countries/territories covered"
+  },
   "qLbse5": {
     "context": "button",
     "string": "Log out"
@@ -9060,10 +9180,6 @@
   "qank7+": {
     "string": "Continue with SSO"
   },
-  "qbE2cv": {
-    "context": "Header description when product is hidden",
-    "string": "Invisible to storefront"
-  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
@@ -9085,10 +9201,6 @@
   },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
-  },
-  "qiCqVU": {
-    "context": "Summary of diagnostic issues found",
-    "string": "{errorCount, plural, =0 {} one {# error} other {# errors}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
   },
   "qkRuT0": {
     "context": "attribute type",
@@ -9455,6 +9567,10 @@
     "context": "section header",
     "string": "Excluded Products"
   },
+  "t4hWFu": {
+    "context": "Shown while verification is in progress",
+    "string": "Verifying..."
+  },
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
@@ -9687,10 +9803,6 @@
     "context": "order payment",
     "string": "Preauthorized amount"
   },
-  "uY7oYV": {
-    "context": "Description for scheduled status",
-    "string": "Visible but not purchasable"
-  },
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
@@ -9726,6 +9838,10 @@
   "ufmuTp": {
     "context": "button",
     "string": "Delete"
+  },
+  "uiZoY3": {
+    "context": "Status when product is scheduled for future publication",
+    "string": "Scheduled for {date}"
   },
   "uilt7q": {
     "context": "issued cards amount label",
@@ -9792,6 +9908,10 @@
     "context": "add order note, button",
     "string": "Send"
   },
+  "v/tz3W": {
+    "context": "Summary of diagnostic issues found",
+    "string": "{errorCount, plural, =0 {} one {# problem} other {# problems}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
+  },
   "v01/tY": {
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
@@ -9850,6 +9970,10 @@
   "vGfmv8": {
     "context": "card title, app install page, about privacy",
     "string": "Info"
+  },
+  "vLc9Td": {
+    "context": "Title for public API verification section",
+    "string": "Public API verification"
   },
   "vMo6/3": {
     "string": "Tracking: {trackingNumber}"
@@ -9958,6 +10082,10 @@
   },
   "vlLyvk": {
     "string": "{inputType} attributes cannot be used as variant selection attributes."
+  },
+  "vlRrLz": {
+    "context": "Warning when user moves publication date to the future",
+    "string": "This will unpublish the product until {date}."
   },
   "vlVTmY": {
     "string": "Product removed"
@@ -10282,6 +10410,10 @@
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"
+  },
+  "xvKNkf": {
+    "context": "Info message when user sets a past publication date",
+    "string": "This date is in the past. The product will be visible immediately when you save."
   },
   "xxQxLE": {
     "string": "Email Address"

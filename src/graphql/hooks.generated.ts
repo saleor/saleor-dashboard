@@ -417,6 +417,7 @@ export const ChannelListingProductWithoutPricingFragmentDoc = gql`
   channel {
     id
     name
+    slug
     currencyCode
   }
 }
@@ -15301,9 +15302,16 @@ export const ProductChannelListingUpdateDocument = gql`
     errors {
       ...ProductChannelListingError
     }
+    product {
+      id
+      channelListings {
+        ...ChannelListingProductWithoutPricing
+      }
+    }
   }
 }
-    ${ProductChannelListingErrorFragmentDoc}`;
+    ${ProductChannelListingErrorFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
 
 /**

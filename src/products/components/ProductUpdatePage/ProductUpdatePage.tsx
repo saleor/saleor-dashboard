@@ -547,6 +547,7 @@ const ProductUpdatePage = ({
                   disabled={disabled}
                   formChannelData={data.channels.updateChannels}
                   errors={channelsErrors}
+                  productId={product?.id}
                 />
                 <Box paddingBottom={52}>
                   <ProductTaxes
