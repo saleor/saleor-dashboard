@@ -70,7 +70,6 @@ import {
   mapProductToDiagnosticData,
   useProductAvailabilityDiagnostics,
 } from "../ProductDoctor";
-import { AvailabilityDoctorDevPanel, DevDiagnosticsProvider } from "../ProductDoctor/testing";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
@@ -368,8 +367,7 @@ const ProductUpdatePage = ({
     }
   }, [active, product, productId]);
 
-  // Wrap with DevDiagnosticsProvider in development for issue injection testing
-  const content = (
+  return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
       onSubmit={onSubmit}
@@ -628,36 +626,11 @@ const ProductUpdatePage = ({
                 onConfirm={handlers.updateChannelList}
               />
             </DetailPageLayout>
-            {process.env.NODE_ENV === "development" && product && (
-              <AvailabilityDoctorDevPanel
-                productId={product.id}
-                product={mapProductToDiagnosticData(product)}
-                channels={
-                  product.channelListings
-                    ?.map(l => {
-                      const channel = channels.find(c => c.id === l.channel.id);
-
-                      return channel
-                        ? { id: channel.id, slug: channel.slug, name: channel.name }
-                        : null;
-                    })
-                    .filter((c): c is { id: string; slug: string; name: string } => c !== null) ||
-                  []
-                }
-              />
-            )}
           </>
         );
       }}
     </ProductUpdateForm>
   );
-
-  // In development, wrap with DevDiagnosticsProvider for testing
-  if (process.env.NODE_ENV === "development") {
-    return <DevDiagnosticsProvider>{content}</DevDiagnosticsProvider>;
-  }
-
-  return content;
 };
 
 ProductUpdatePage.displayName = "ProductUpdatePage";

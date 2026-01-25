@@ -5,8 +5,8 @@ import {
   ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 import { areChannelFieldsDifferent } from "@dashboard/products/components/ProductUpdatePage/formChannels";
-import { Accordion, Box, Button, Skeleton, Spinner, Text } from "@saleor/macaw-ui-next";
-import { CheckCircle, XCircle } from "lucide-react";
+import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { CheckCircle, Info, XCircle } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -16,8 +16,12 @@ import {
   usePublicApiVerification,
 } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
-import { useApplyDevOverrides } from "./testing/DevDiagnosticsContext";
-import { AvailabilityIssue, ChannelSummary, DiagnosticsResult } from "./utils/types";
+import {
+  AvailabilityIssue,
+  ChannelSummary,
+  DiagnosticsPermissions,
+  DiagnosticsResult,
+} from "./utils/types";
 
 interface AvailabilityCardProps {
   diagnostics: DiagnosticsResult;
@@ -46,9 +50,7 @@ export const AvailabilityCard = ({
   const intl = useIntl();
   const [expandedChannel, setExpandedChannel] = useState<string | undefined>(undefined);
 
-  const effectiveDiagnostics = useApplyDevOverrides(diagnostics);
-  const { channelSummaries, issues, hasErrors, hasWarnings, isLoading, permissions } =
-    effectiveDiagnostics;
+  const { channelSummaries, issues, hasErrors, hasWarnings, isLoading, permissions } = diagnostics;
 
   const verification = usePublicApiVerification(productId || "");
 
@@ -186,6 +188,7 @@ export const AvailabilityCard = ({
               hasWarnings={hasWarnings}
               errorCount={errorCount}
               warningCount={warningCount}
+              permissions={permissions}
             />
 
             <Box
@@ -218,7 +221,6 @@ export const AvailabilityCard = ({
                       issues={channelIssues}
                       isExpanded={expandedChannel === summary.id}
                       verificationResult={verification.getChannelResult(summary.id)}
-                      permissions={permissions}
                       onVerify={
                         productId
                           ? () => verification.verifyChannel(summary.id, summary.slug)
@@ -278,6 +280,7 @@ interface DiagnosticSummaryBannerProps {
   hasWarnings: boolean;
   errorCount: number;
   warningCount: number;
+  permissions: DiagnosticsPermissions;
 }
 
 const DiagnosticSummaryBanner = ({
@@ -285,8 +288,12 @@ const DiagnosticSummaryBanner = ({
   hasWarnings,
   errorCount,
   warningCount,
+  permissions,
 }: DiagnosticSummaryBannerProps) => {
   const intl = useIntl();
+
+  const hasMissingPermissions = permissions.missingPermissions.length > 0;
+  const hasIssues = hasErrors || hasWarnings;
 
   const getStatusColor = () => {
     if (hasErrors) {
@@ -300,7 +307,7 @@ const DiagnosticSummaryBanner = ({
     return "var(--mu-colors-background-success1)";
   };
 
-  const getTextColor = (): "critical1" | "warning1" | "success1" | "default2" => {
+  const getTextColor = (): "critical1" | "warning1" | "default2" => {
     if (hasErrors) {
       return "critical1";
     }
@@ -312,19 +319,51 @@ const DiagnosticSummaryBanner = ({
     return "default2";
   };
 
-  const getMessage = () => {
-    if (!hasErrors && !hasWarnings) {
-      return intl.formatMessage(messages.allChannelsHealthy);
-    }
+  // When no issues but missing permissions, show "Limited" with tooltip
+  if (!hasIssues && hasMissingPermissions) {
+    return (
+      <Tooltip>
+        <Tooltip.Trigger>
+          <Box display="flex" alignItems="center" gap={2} __cursor="help">
+            <Info size={14} color="var(--mu-colors-text-default2)" />
+            <Text size={2} color="default2">
+              {intl.formatMessage(messages.limitedDiagnostics)}
+            </Text>
+          </Box>
+        </Tooltip.Trigger>
+        <Tooltip.Content>
+          <Tooltip.Arrow />
+          <Box padding={2} __maxWidth="350px">
+            <Text size={2}>
+              {intl.formatMessage(messages.limitedDiagnosticsDescription, {
+                permissions: permissions.missingPermissions.join(", "),
+              })}
+            </Text>
+          </Box>
+        </Tooltip.Content>
+      </Tooltip>
+    );
+  }
 
-    return intl.formatMessage(messages.issuesSummary, {
-      errorCount,
-      warningCount,
-      hasErrors: hasErrors ? "true" : "false",
-      hasWarnings: hasWarnings ? "true" : "false",
-    });
-  };
+  // When no issues and full permissions, show success
+  if (!hasIssues) {
+    return (
+      <Box display="flex" alignItems="center" gap={2}>
+        <Box
+          borderRadius="100%"
+          __width="8px"
+          __height="8px"
+          __backgroundColor={getStatusColor()}
+          flexShrink="0"
+        />
+        <Text size={2} color={getTextColor()}>
+          {intl.formatMessage(messages.allChannelsHealthy)}
+        </Text>
+      </Box>
+    );
+  }
 
+  // When there are issues, show the summary
   return (
     <Box display="flex" alignItems="center" gap={2}>
       <Box
@@ -335,7 +374,12 @@ const DiagnosticSummaryBanner = ({
         flexShrink="0"
       />
       <Text size={2} color={getTextColor()}>
-        {getMessage()}
+        {intl.formatMessage(messages.issuesSummary, {
+          errorCount,
+          warningCount,
+          hasErrors: hasErrors ? "true" : "false",
+          hasWarnings: hasWarnings ? "true" : "false",
+        })}
       </Text>
     </Box>
   );

@@ -1,20 +1,15 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
+
+/** Violet color for scheduled states - distinct from link color (accent1) */
+const SCHEDULED_COLOR = "oklch(60.6% 0.25 292.717)";
+
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
 import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import {
-  Accordion,
-  Box,
-  Button,
-  Checkbox,
-  Spinner,
-  Text,
-  Toggle,
-  Tooltip,
-} from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Checkbox, Spinner, Text, Toggle } from "@saleor/macaw-ui-next";
 import {
   AlertTriangle,
   Ban,
@@ -23,12 +18,8 @@ import {
   Clock,
   Eye,
   EyeOff,
-  Globe,
-  Info,
   Search,
   ShoppingCart,
-  Truck,
-  Warehouse,
 } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
@@ -42,7 +33,7 @@ import {
 import { ChannelVerificationResult } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
 import { isFutureDate } from "./utils/dateUtils";
-import { AvailabilityIssue, ChannelSummary, DiagnosticsPermissions } from "./utils/types";
+import { AvailabilityIssue, ChannelSummary } from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
@@ -57,7 +48,6 @@ interface AvailabilityChannelItemProps {
   isExpanded?: boolean;
   /** Public API verification result for this channel */
   verificationResult?: ChannelVerificationResult;
-  permissions?: DiagnosticsPermissions;
   onVerify?: () => void;
 }
 
@@ -72,7 +62,6 @@ export const AvailabilityChannelItem = ({
   issues = [],
   isExpanded = false,
   verificationResult,
-  permissions,
   onVerify,
 }: AvailabilityChannelItemProps) => {
   const intl = useIntl();
@@ -249,11 +238,7 @@ export const AvailabilityChannelItem = ({
             }
           />
 
-          <DeliveryConfigurationSection
-            summary={summary}
-            issues={issues}
-            permissions={permissions}
-          />
+          <DeliveryConfigurationSection issues={issues} />
 
           {/* Public API verification section */}
           <PublicApiVerificationSection
@@ -348,7 +333,7 @@ const PublishedSection = ({
           <Box display="flex" alignItems="center">
             {summary.isPublished ? (
               isScheduleMode ? (
-                <Clock size={18} color="var(--mu-colors-text-accent1)" strokeWidth={2} />
+                <Clock size={18} color={SCHEDULED_COLOR} strokeWidth={2} />
               ) : (
                 <Eye size={18} color={SUCCESS_ICON_COLOR} strokeWidth={2} />
               )
@@ -378,7 +363,11 @@ const PublishedSection = ({
               </Text>
             )}
             {isScheduleMode && summary.publishedAt && (
-              <Text size={2} color={publishedInPast ? "warning1" : "accent1"}>
+              <Text
+                size={2}
+                color={publishedInPast ? "warning1" : undefined}
+                __color={publishedInPast ? undefined : SCHEDULED_COLOR}
+              >
                 {publishedInPast
                   ? intl.formatMessage(messages.scheduledDatePassed, {
                       date: localizeDate(summary.publishedAt, "lll"),
@@ -471,12 +460,12 @@ const PublishedSection = ({
                   paddingX={2}
                   paddingY={1.5}
                   borderRadius={2}
-                  backgroundColor="accent1Pressed"
+                  __backgroundColor="oklch(95% 0.03 292.717)"
                 >
                   <Box __minWidth="14px" paddingTop={0.5}>
-                    <AlertTriangle size={14} color="var(--mu-colors-text-accent1)" />
+                    <AlertTriangle size={14} color={SCHEDULED_COLOR} />
                   </Box>
-                  <Text size={1} color="accent1">
+                  <Text size={1} __color={SCHEDULED_COLOR}>
                     {intl.formatMessage(messages.pastDateInfo)}
                   </Text>
                 </Box>
@@ -568,7 +557,7 @@ const AvailableForPurchaseSection = ({
           <Box display="flex" alignItems="center">
             {hasDate ? (
               isScheduleMode ? (
-                <Clock size={18} color="var(--mu-colors-text-accent1)" strokeWidth={2} />
+                <Clock size={18} color={SCHEDULED_COLOR} strokeWidth={2} />
               ) : (
                 <ShoppingCart size={18} color={SUCCESS_ICON_COLOR} strokeWidth={2} />
               )
@@ -596,7 +585,11 @@ const AvailableForPurchaseSection = ({
               </Text>
             )}
             {isScheduleMode && summary.availableForPurchaseAt && (
-              <Text size={2} color={dateInPast ? "warning1" : "accent1"}>
+              <Text
+                size={2}
+                color={dateInPast ? "warning1" : undefined}
+                __color={dateInPast ? undefined : SCHEDULED_COLOR}
+              >
                 {dateInPast
                   ? intl.formatMessage(messages.scheduledDatePassed, {
                       date: localizeDate(summary.availableForPurchaseAt, "lll"),
@@ -775,7 +768,7 @@ const StatusDot = ({
       case "live":
         return "var(--mu-colors-background-success1)";
       case "scheduled":
-        return "var(--mu-colors-background-warning1)";
+        return SCHEDULED_COLOR;
       case "hidden":
         return "var(--mu-colors-text-default2)";
     }
@@ -897,28 +890,16 @@ const IssueBadge = ({ count, type }: IssueBadgeProps) => {
 };
 
 interface DeliveryConfigurationSectionProps {
-  summary: ChannelSummary;
   issues: AvailabilityIssue[];
-  permissions?: DiagnosticsPermissions;
 }
 
-const DeliveryConfigurationSection = ({
-  summary,
-  issues,
-  permissions,
-}: DeliveryConfigurationSectionProps) => {
+const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionProps) => {
   const intl = useIntl();
 
-  const isActiveInChannel = summary.isPublished || summary.isAvailableForPurchase;
-
-  if (!isActiveInChannel && issues.length === 0) {
+  // Only show when there are issues to display
+  if (issues.length === 0) {
     return null;
   }
-
-  const warehouseUnknown = summary.warehouseCount === "unknown";
-  const shippingUnknown = summary.shippingZoneCount === "unknown";
-  const countryUnknown = summary.countryCount === "unknown";
-  const hasMissingPermissions = permissions && permissions.missingPermissions.length > 0;
 
   return (
     <Box
@@ -931,106 +912,15 @@ const DeliveryConfigurationSection = ({
       borderTopStyle="solid"
       borderColor="default1"
     >
-      <Box display="flex" alignItems="center" gap={2}>
-        <Text size={2} fontWeight="medium" color="default2">
-          {intl.formatMessage(messages.configurationTitle)}
-        </Text>
-        {hasMissingPermissions && (
-          <Tooltip>
-            <Tooltip.Trigger>
-              <Box display="flex" alignItems="center" gap={1} __cursor="help">
-                <Info size={14} color="var(--mu-colors-text-default2)" />
-                <Text size={2} color="default2">
-                  {intl.formatMessage(messages.limitedDiagnostics)}
-                </Text>
-              </Box>
-            </Tooltip.Trigger>
-            <Tooltip.Content>
-              <Tooltip.Arrow />
-              <Box padding={2} __maxWidth="350px">
-                <Text size={2}>
-                  {intl.formatMessage(messages.limitedDiagnosticsDescription, {
-                    permissions: permissions.missingPermissions.join(", "),
-                  })}
-                </Text>
-              </Box>
-            </Tooltip.Content>
-          </Tooltip>
-        )}
+      <Text size={2} fontWeight="medium" color="default2">
+        {intl.formatMessage(messages.configurationTitle)}
+      </Text>
+
+      <Box display="flex" flexDirection="column" gap={2}>
+        {issues.map(issue => (
+          <IssueCallout key={issue.id} issue={issue} />
+        ))}
       </Box>
-
-      {issues.length > 0 ? (
-        <Box display="flex" flexDirection="column" gap={2}>
-          {issues.map(issue => (
-            <IssueCallout key={issue.id} issue={issue} />
-          ))}
-        </Box>
-      ) : (
-        <Box display="flex" flexDirection="column" gap={2}>
-          {/* Warehouses */}
-          <Box display="flex" alignItems="center" gap={2}>
-            <Box color="default2" display="flex" alignItems="center">
-              <Warehouse size={14} />
-            </Box>
-            <Text size={2} color="default2" __opacity={warehouseUnknown ? 0.6 : 1}>
-              {warehouseUnknown ? (
-                intl.formatMessage(messages.warehousesUnknown)
-              ) : (
-                <>
-                  {intl.formatMessage(messages.warehousesConfigured, {
-                    count: summary.warehouseCount as number,
-                  })}
-                  {(summary.warehouseCount as number) > 0 && summary.warehouseNames.length <= 3 && (
-                    <> ({summary.warehouseNames.join(", ")})</>
-                  )}
-                </>
-              )}
-            </Text>
-          </Box>
-
-          {/* Shipping zones */}
-          <Box display="flex" alignItems="center" gap={2}>
-            <Box color="default2" display="flex" alignItems="center">
-              <Truck size={14} />
-            </Box>
-            <Text size={2} color="default2" __opacity={shippingUnknown ? 0.6 : 1}>
-              {shippingUnknown ? (
-                intl.formatMessage(messages.shippingZonesUnknown)
-              ) : (
-                <>
-                  {intl.formatMessage(messages.shippingZonesConfigured, {
-                    count: summary.shippingZoneCount as number,
-                  })}
-                  {(summary.shippingZoneCount as number) > 0 &&
-                    summary.shippingZoneNames.length <= 3 && (
-                      <> ({summary.shippingZoneNames.join(", ")})</>
-                    )}
-                </>
-              )}
-            </Text>
-          </Box>
-
-          {/* Countries */}
-          <Box display="flex" alignItems="center" gap={2}>
-            <Box color="default2" display="flex" alignItems="center">
-              <Globe size={14} />
-            </Box>
-            <Text size={2} color="default2" __opacity={countryUnknown ? 0.6 : 1}>
-              {countryUnknown
-                ? intl.formatMessage(messages.countriesUnknown)
-                : (summary.countryCount as number) >= 240
-                  ? intl.formatMessage(messages.allCountriesCovered)
-                  : (summary.countryCount as number) > 195
-                    ? intl.formatMessage(messages.countriesAndTerritoriesCovered, {
-                        count: summary.countryCount as number,
-                      })
-                    : intl.formatMessage(messages.countriesCovered, {
-                        count: summary.countryCount as number,
-                      })}
-            </Text>
-          </Box>
-        </Box>
-      )}
     </Box>
   );
 };
