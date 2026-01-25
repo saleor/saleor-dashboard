@@ -7,7 +7,6 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
@@ -36,7 +35,7 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
       if (webhook && data?.webhookCreate?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "yAgKyi", defaultMessage: "Webhook created" }),
         });
         navigate(ExtensionsUrls.resolveEditCustomExtensionWebhookUrl(appId, webhook.id));
       }

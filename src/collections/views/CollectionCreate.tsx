@@ -99,7 +99,7 @@ const CollectionCreate = ({ params }: CollectionCreateProps) => {
     if (result.data.collectionCreate.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "6LqbaB", defaultMessage: "Collection created" }),
       });
       navigate(collectionUrl(id));
     } else {

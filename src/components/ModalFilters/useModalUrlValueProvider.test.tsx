@@ -9,7 +9,17 @@ import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../ConditionalFilter/FilterElement/FilterElement";
+import { FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
+
+const emptyProductFetchingParams: FetchingParams = {
+  category: [],
+  collection: [],
+  channel: [],
+  productType: [],
+  attribute: {},
+  attributeReference: {},
+};
 
 const createCategoryFilterElement = (): FilterElement => {
   return new FilterElement(
@@ -75,10 +85,14 @@ describe("useModalUrlValueProvider", () => {
       const hook = renderHook<
         { initialState: InitialProductAPIState },
         ReturnType<typeof useModalUrlValueProvider>
-      >(({ initialState }) => useModalUrlValueProvider(initialState), {
-        wrapper,
-        initialProps: { initialState: initialStateFirst },
-      });
+      >(
+        ({ initialState }) =>
+          useModalUrlValueProvider(initialState, emptyProductFetchingParams, "product"),
+        {
+          wrapper,
+          initialProps: { initialState: initialStateFirst },
+        },
+      );
 
       act(() => {
         hook.rerender({ initialState: initialStateSecond });
@@ -102,7 +116,10 @@ describe("useModalUrlValueProvider", () => {
       };
 
       // Act
-      const { result } = renderHook(() => useModalUrlValueProvider(initialState), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(initialState, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Assert
       expect(result.current.loading).toBe(true);
@@ -113,7 +130,10 @@ describe("useModalUrlValueProvider", () => {
       const wrapper = createWrapper("/?action=assign");
 
       // Act
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Assert
       expect(result.current.loading).toBe(false);
@@ -130,7 +150,10 @@ describe("useModalUrlValueProvider", () => {
       };
 
       // Act
-      const { result } = renderHook(() => useModalUrlValueProvider(initialState), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(initialState, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Assert
       expect(result.current.loading).toBe(false);
@@ -143,7 +166,10 @@ describe("useModalUrlValueProvider", () => {
       const wrapper = createWrapper("/?action=assign");
 
       // Act
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Assert
       expect(result.current.value).toEqual([]);
@@ -154,7 +180,10 @@ describe("useModalUrlValueProvider", () => {
       const wrapper = createWrapper("/?action=assign");
 
       // Act
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Assert
       expect(result.current.count).toBe(0);
@@ -163,7 +192,10 @@ describe("useModalUrlValueProvider", () => {
     it("should update value when persist is called", () => {
       // Arrange
       const wrapper = createWrapper("/?action=assign");
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Create a simple mock filter container
       const mockFilterValue: any[] = [];
@@ -180,7 +212,10 @@ describe("useModalUrlValueProvider", () => {
     it("should reset value to empty array when clear is called", () => {
       // Arrange
       const wrapper = createWrapper("/?action=assign");
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // First set some value
       act(() => {
@@ -201,7 +236,10 @@ describe("useModalUrlValueProvider", () => {
     it("should return false for elements not in current value", () => {
       // Arrange
       const wrapper = createWrapper("/?action=assign");
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       const mockElement = {
         equals: jest.fn().mockReturnValue(false),
@@ -219,7 +257,10 @@ describe("useModalUrlValueProvider", () => {
     it("should return undefined when URL has no filter params", () => {
       // Arrange
       const wrapper = createWrapper("/products?action=assign&id=attr-1");
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Act
       const token = result.current.getTokenByName("category");
@@ -233,7 +274,10 @@ describe("useModalUrlValueProvider", () => {
       const wrapper = createWrapper(
         "/products?0%5Bs0.category%5D=cat-1&1=AND&2%5Bs0.channel%5D=channel-usd",
       );
-      const { result } = renderHook(() => useModalUrlValueProvider(), { wrapper });
+      const { result } = renderHook(
+        () => useModalUrlValueProvider(undefined, emptyProductFetchingParams, "product"),
+        { wrapper },
+      );
 
       // Act
       const categoryToken = result.current.getTokenByName("category");
@@ -253,7 +297,11 @@ describe("useModalUrlValueProvider", () => {
 
       const { result } = renderHook(
         () => {
-          const valueProvider = useModalUrlValueProvider();
+          const valueProvider = useModalUrlValueProvider(
+            undefined,
+            emptyProductFetchingParams,
+            "product",
+          );
           const history = useHistory();
 
           return { valueProvider, history };
@@ -280,7 +328,11 @@ describe("useModalUrlValueProvider", () => {
 
       const { result } = renderHook(
         () => {
-          const valueProvider = useModalUrlValueProvider();
+          const valueProvider = useModalUrlValueProvider(
+            undefined,
+            emptyProductFetchingParams,
+            "product",
+          );
           const history = useHistory();
 
           return { valueProvider, history };
@@ -306,7 +358,11 @@ describe("useModalUrlValueProvider", () => {
 
       const { result } = renderHook(
         () => {
-          const valueProvider = useModalUrlValueProvider();
+          const valueProvider = useModalUrlValueProvider(
+            undefined,
+            emptyProductFetchingParams,
+            "product",
+          );
           const history = useHistory();
 
           return { valueProvider, history };
@@ -332,7 +388,11 @@ describe("useModalUrlValueProvider", () => {
 
       const { result } = renderHook(
         () => {
-          const valueProvider = useModalUrlValueProvider();
+          const valueProvider = useModalUrlValueProvider(
+            undefined,
+            emptyProductFetchingParams,
+            "product",
+          );
           const history = useHistory();
 
           return { valueProvider, history };
@@ -357,7 +417,11 @@ describe("useModalUrlValueProvider", () => {
 
       const { result } = renderHook(
         () => {
-          const valueProvider = useModalUrlValueProvider();
+          const valueProvider = useModalUrlValueProvider(
+            undefined,
+            emptyProductFetchingParams,
+            "product",
+          );
           const history = useHistory();
 
           return { valueProvider, history };

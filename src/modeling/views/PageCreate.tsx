@@ -98,8 +98,8 @@ const PageCreate = ({ params }: PageCreateProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "JMbFNo",
-            defaultMessage: "Successfully created new page",
+            id: "ZwtDkP",
+            defaultMessage: "Page created",
           }),
         });
         navigate(pageUrl(data.pageCreate.page.id));

@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   appRemoved: {
-    id: "5MUqqs",
-    defaultMessage: "Extension successfully removed",
+    id: "C2N30x",
+    defaultMessage: "Extension removed",
     description: "app has been removed",
   },
   failedDeliveriesLogsNoLongerAvailable: {

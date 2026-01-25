@@ -26,8 +26,8 @@ const PageTypeCreate = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "TKQiDp",
-            defaultMessage: "Successfully created model type",
+            id: "pNxrLQ",
+            defaultMessage: "Model type created",
           }),
         });
         navigate(pageTypeUrl(updateData.pageTypeCreate.pageType.id));

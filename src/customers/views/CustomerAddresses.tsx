@@ -11,7 +11,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,7 +45,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         closeModal();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "bIAY+o", defaultMessage: "Address updated" }),
         });
       }
     },
@@ -56,6 +55,13 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
     onCompleted: data => {
       if (data.addressCreate.errors.length === 0) {
         closeModal();
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            id: "sWvBZa",
+            defaultMessage: "Address created",
+          }),
+        });
       }
     },
   });
@@ -66,7 +72,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         closeModal();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "bIAY+o", defaultMessage: "Address updated" }),
         });
       }
     },
@@ -78,7 +84,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         closeModal();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "bIAY+o", defaultMessage: "Address updated" }),
         });
       }
     },

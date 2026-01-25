@@ -15,7 +15,6 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -83,7 +82,7 @@ const StaffList = ({ params }: StaffListProps) => {
         markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "8a7vg2", defaultMessage: "Staff member invited" }),
         });
         navigate(staffMemberDetailsUrl(data?.staffCreate?.user?.id ?? ""));
       }

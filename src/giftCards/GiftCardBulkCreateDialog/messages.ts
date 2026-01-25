@@ -12,8 +12,8 @@ export const giftCardBulkCreateDialogMessages = defineMessages({
     description: "bulk issue gift cards success alert title",
   },
   createdSuccessAlertDescription: {
-    id: "mbj1J5",
-    defaultMessage: "Requested {cardsAmount} were successfully issued",
+    id: "a/x3DZ",
+    defaultMessage: "{cardsAmount} gift cards issued",
     description: "bulk issue gift cards success alert description",
   },
 });

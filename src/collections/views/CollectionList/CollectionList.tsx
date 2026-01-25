@@ -16,7 +16,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -111,7 +110,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
       if (data.collectionBulkDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "tV5QlB", defaultMessage: "Collections deleted" }),
         });
         refetch();
         clearRowSelection();
