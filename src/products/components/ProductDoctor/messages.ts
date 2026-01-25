@@ -582,4 +582,31 @@ export const messages = defineMessages({
     defaultMessage: "Variants with stock: {count}/{total}",
     description: "Health check showing variants with stock count",
   },
+
+  // Search and pagination
+  searchChannelsPlaceholder: {
+    id: "Nsbu46",
+    defaultMessage: "Search channels...",
+    description: "Placeholder for channel search input",
+  },
+  noChannelsMatchSearch: {
+    id: "OrEUr6",
+    defaultMessage: "No channels match your search",
+    description: "Message when search returns no results",
+  },
+  paginationShowing: {
+    id: "iPg/Z+",
+    defaultMessage: "Showing {start}-{end} of {total}",
+    description: "Pagination info showing current range",
+  },
+  paginationPrevious: {
+    id: "hwSDOP",
+    defaultMessage: "Previous",
+    description: "Previous page button",
+  },
+  paginationNext: {
+    id: "wDyvFZ",
+    defaultMessage: "Next",
+    description: "Next page button",
+  },
 });

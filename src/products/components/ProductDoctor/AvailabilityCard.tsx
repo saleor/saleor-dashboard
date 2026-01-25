@@ -1,13 +1,14 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   ProductChannelListingAddInput,
   ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 import { areChannelFieldsDifferent } from "@dashboard/products/components/ProductUpdatePage/formChannels";
 import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { CheckCircle, Info, XCircle } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { CheckCircle, ChevronLeft, ChevronRight, Info, Search, X, XCircle } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AvailabilityChannelItem } from "./AvailabilityChannelItem";
@@ -49,6 +50,10 @@ export const AvailabilityCard = ({
 }: AvailabilityCardProps) => {
   const intl = useIntl();
   const [expandedChannel, setExpandedChannel] = useState<string | undefined>(undefined);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const PAGE_SIZE = 10;
 
   const { channelSummaries, issues, hasErrors, hasWarnings, isLoading, permissions } = diagnostics;
 
@@ -144,6 +149,41 @@ export const AvailabilityCard = ({
       .map(summary => summary.id);
   }, [channelSummaries, formChannelData]);
 
+  // Filter channels by search query
+  const filteredSummaries = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return mergedSummaries;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+
+    return mergedSummaries.filter(
+      summary =>
+        summary.name.toLowerCase().includes(query) ||
+        summary.currencyCode.toLowerCase().includes(query),
+    );
+  }, [mergedSummaries, searchQuery]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredSummaries.length / PAGE_SIZE);
+  const paginatedSummaries = filteredSummaries.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
+  const showPagination = filteredSummaries.length > PAGE_SIZE;
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+
+  // Reset expanded channel if it's no longer in the visible list
+  useEffect(() => {
+    if (expandedChannel && !paginatedSummaries.find(s => s.id === expandedChannel)) {
+      setExpandedChannel(undefined);
+    }
+  }, [paginatedSummaries, expandedChannel]);
+
   const listedChannelsCount = mergedSummaries.length;
 
   return (
@@ -191,46 +231,81 @@ export const AvailabilityCard = ({
               permissions={permissions}
             />
 
-            <Box
-              borderWidth={1}
-              borderStyle="solid"
-              borderColor="default1"
-              borderRadius={4}
-              overflow="hidden"
-            >
-              <Accordion
-                value={expandedChannel}
-                onValueChange={(value: string) => setExpandedChannel(value)}
-              >
-                {mergedSummaries.map((summary, index) => {
-                  const channelErrors = errors.filter(error =>
-                    error.channels?.includes(summary.id),
-                  );
-                  const channelIssues = issuesByChannel.get(summary.id) || [];
+            {/* Search input - always visible when there are channels */}
+            <ChannelSearchInput
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder={intl.formatMessage(messages.searchChannelsPlaceholder)}
+            />
 
-                  return (
-                    <AvailabilityChannelItem
-                      key={summary.id}
-                      summary={summary}
-                      originalSummary={channelSummaries.find(s => s.id === summary.id)}
-                      isLast={index === mergedSummaries.length - 1}
-                      isDirty={dirtyChannels.includes(summary.id)}
-                      onChange={onChannelChange}
-                      disabled={disabled}
-                      errors={channelErrors}
-                      issues={channelIssues}
-                      isExpanded={expandedChannel === summary.id}
-                      verificationResult={verification.getChannelResult(summary.id)}
-                      onVerify={
-                        productId
-                          ? () => verification.verifyChannel(summary.id, summary.slug)
-                          : undefined
-                      }
-                    />
-                  );
-                })}
-              </Accordion>
-            </Box>
+            {/* No results message */}
+            {filteredSummaries.length === 0 ? (
+              <Box
+                padding={4}
+                borderWidth={1}
+                borderStyle="solid"
+                borderColor="default1"
+                borderRadius={4}
+              >
+                <Text size={2} color="default2">
+                  {intl.formatMessage(messages.noChannelsMatchSearch)}
+                </Text>
+              </Box>
+            ) : (
+              <>
+                <Box
+                  borderWidth={1}
+                  borderStyle="solid"
+                  borderColor="default1"
+                  borderRadius={4}
+                  overflow="hidden"
+                >
+                  <Accordion
+                    value={expandedChannel}
+                    onValueChange={(value: string) => setExpandedChannel(value)}
+                  >
+                    {paginatedSummaries.map((summary, index) => {
+                      const channelErrors = errors.filter(error =>
+                        error.channels?.includes(summary.id),
+                      );
+                      const channelIssues = issuesByChannel.get(summary.id) || [];
+
+                      return (
+                        <AvailabilityChannelItem
+                          key={summary.id}
+                          summary={summary}
+                          originalSummary={channelSummaries.find(s => s.id === summary.id)}
+                          isLast={index === paginatedSummaries.length - 1}
+                          isDirty={dirtyChannels.includes(summary.id)}
+                          onChange={onChannelChange}
+                          disabled={disabled}
+                          errors={channelErrors}
+                          issues={channelIssues}
+                          isExpanded={expandedChannel === summary.id}
+                          verificationResult={verification.getChannelResult(summary.id)}
+                          onVerify={
+                            productId
+                              ? () => verification.verifyChannel(summary.id, summary.slug)
+                              : undefined
+                          }
+                        />
+                      );
+                    })}
+                  </Accordion>
+                </Box>
+
+                {/* Pagination controls - only when needed */}
+                {showPagination && (
+                  <ChannelPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalItems={filteredSummaries.length}
+                    pageSize={PAGE_SIZE}
+                    onPageChange={setCurrentPage}
+                  />
+                )}
+              </>
+            )}
           </Box>
         )}
       </DashboardCard.Content>
@@ -458,6 +533,122 @@ export const PublicApiVerificationBadge = ({ result }: PublicApiVerificationBadg
           · {intl.formatMessage(messages.publicApiNoVariantsInStock)}
         </Text>
       )}
+    </Box>
+  );
+};
+
+interface ChannelSearchInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+}
+
+const ChannelSearchInput = ({ value, onChange, placeholder }: ChannelSearchInputProps) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  return (
+    <Box
+      display="flex"
+      alignItems="center"
+      gap={2}
+      paddingX={3}
+      paddingY={2}
+      borderWidth={1}
+      borderStyle="solid"
+      borderColor="default1"
+      borderRadius={3}
+      backgroundColor="default1"
+    >
+      <Box display="flex" alignItems="center" flexShrink="0">
+        <Search size={16} color="var(--mu-colors-text-default2)" />
+      </Box>
+      <input
+        ref={inputRef}
+        type="text"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        onKeyDown={e => {
+          if (e.key === "Escape") {
+            onChange("");
+            inputRef.current?.blur();
+          }
+        }}
+        placeholder={placeholder}
+        data-test-id="channel-search-input"
+        style={{
+          flex: 1,
+          border: "none",
+          outline: "none",
+          backgroundColor: "transparent",
+          fontSize: "14px",
+          color: "var(--mu-colors-text-default1)",
+          minWidth: 0,
+        }}
+      />
+      {value && (
+        <Box
+          as="button"
+          type="button"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          padding={0}
+          borderWidth={0}
+          backgroundColor="transparent"
+          cursor="pointer"
+          onClick={() => {
+            onChange("");
+            inputRef.current?.focus();
+          }}
+          data-test-id="channel-search-clear"
+        >
+          <X size={16} color="var(--mu-colors-text-default2)" />
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+interface ChannelPaginationProps {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+}
+
+const ChannelPagination = ({
+  currentPage,
+  totalPages,
+  totalItems,
+  pageSize,
+  onPageChange,
+}: ChannelPaginationProps) => {
+  const intl = useIntl();
+  const start = (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, totalItems);
+
+  return (
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Text size={2} color="default2">
+        {intl.formatMessage(messages.paginationShowing, { start, end, total: totalItems })}
+      </Text>
+      <Box display="flex" alignItems="center" gap={2}>
+        <Button
+          variant="secondary"
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="pagination-prev"
+        />
+        <Button
+          variant="secondary"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="pagination-next"
+        />
+      </Box>
     </Box>
   );
 };
