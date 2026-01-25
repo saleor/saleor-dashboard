@@ -4342,6 +4342,10 @@
     "context": "Product types search input placeholder",
     "string": "Search product types..."
   },
+  "Nsbu46": {
+    "context": "Placeholder for channel search input",
+    "string": "Search channels..."
+  },
   "Nsk5WL": {
     "context": "link",
     "string": "Get support"
@@ -4483,6 +4487,10 @@
   "OqYCQ4": {
     "context": "allow legacy gift card use description",
     "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
+  },
+  "OrEUr6": {
+    "context": "Message when search returns no results",
+    "string": "No channels match your search"
   },
   "OrMr/k": {
     "context": "window title",
@@ -7734,6 +7742,10 @@
     "context": "button",
     "string": "Send invite"
   },
+  "hwSDOP": {
+    "context": "Previous page button",
+    "string": "Previous"
+  },
   "hyAOPB": {
     "string": "Use Avalara plugin"
   },
@@ -7806,6 +7818,10 @@
   },
   "iOOPMd": {
     "string": "A summary of all payments from registered transactions"
+  },
+  "iPg/Z+": {
+    "context": "Pagination info showing current range",
+    "string": "Showing {start}-{end} of {total}"
   },
   "iPk640": {
     "context": "dialog header",
@@ -10170,6 +10186,10 @@
   "wDUBLR": {
     "context": "order refund amount",
     "string": "Proposed refund amount"
+  },
+  "wDyvFZ": {
+    "context": "Next page button",
+    "string": "Next"
   },
   "wFVOKJ": {
     "string": "Go to warehouses"
