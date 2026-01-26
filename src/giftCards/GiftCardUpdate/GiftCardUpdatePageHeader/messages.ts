@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const giftCardEnableDisableSectionMessages = defineMessages({
   successfullyEnabledTitle: {
-    id: "bDO9DN",
-    defaultMessage: "Successfully enabled gift card",
+    id: "9B5R2I",
+    defaultMessage: "Gift card enabled",
     description: "success gift card enable message",
   },
   successfullyDisabledTitle: {
-    id: "GibKGn",
-    defaultMessage: "Successfully disabled gift card",
+    id: "pr/aHj",
+    defaultMessage: "Gift card disabled",
     description: "success gift card disable message",
   },
 });

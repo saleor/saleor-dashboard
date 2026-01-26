@@ -4,7 +4,6 @@ import {
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 export const usePromotionUpdate = (id: string) => {
@@ -41,7 +40,10 @@ export const usePromotionUpdate = (id: string) => {
       if (data?.promotionUpdate?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "/4/nYx",
+            defaultMessage: "Discount updated",
+          }),
         });
       }
     },

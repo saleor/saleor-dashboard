@@ -28,8 +28,8 @@ export const giftCardResendCodeDialogMessages = defineMessages({
     description: "provided email input placeholder",
   },
   successResendAlertText: {
-    id: "JQH+Iy",
-    defaultMessage: "Successfully resent code to customer!",
+    id: "jL3caQ",
+    defaultMessage: "Code resent to customer",
     description: "resent code success message",
   },
   sendToChannelSelectLabel: {

@@ -6,7 +6,7 @@ import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import AssignmentList from "../AssignmentList";
+import { AssignmentList } from "../AssignmentList/AssignmentList";
 import { messages } from "./messages";
 
 interface ShippingZonesProps {
@@ -20,7 +20,7 @@ interface ShippingZonesProps {
   shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
 }
 
-const ShippingZones = (props: ShippingZonesProps) => {
+export const ShippingZones = (props: ShippingZonesProps) => {
   const {
     addShippingZone,
     removeShippingZone,
@@ -57,5 +57,3 @@ const ShippingZones = (props: ShippingZonesProps) => {
     </DashboardCard>
   );
 };
-
-export default ShippingZones;

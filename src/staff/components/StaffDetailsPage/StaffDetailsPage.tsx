@@ -25,7 +25,7 @@ import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { Button, Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import StaffPreferences from "../StaffPreferences";
+import { StaffPreferences } from "../StaffPreferences/StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
 

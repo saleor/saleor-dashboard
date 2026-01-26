@@ -13,8 +13,8 @@ export const giftCardUpdateBalanceDialogMessages = defineMessages({
     description: "set balance dialog subtitle",
   },
   updatedSuccessAlertTitle: {
-    id: "XAPFHP",
-    defaultMessage: "Successfully updated card balance",
+    id: "vG57x5",
+    defaultMessage: "Card balance updated",
     description: "card update success alert title",
   },
   changeButtonLabel: {

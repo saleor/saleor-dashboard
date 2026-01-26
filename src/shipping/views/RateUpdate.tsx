@@ -28,7 +28,7 @@ import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/use
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
@@ -143,7 +143,10 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const handleSuccess = () => {
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges),
+      text: intl.formatMessage({
+        id: "84VEY1",
+        defaultMessage: "Shipping rate updated",
+      }),
     });
   };
   const [deleteShippingRate, deleteShippingRateOpts] = useDeleteShippingRateMutation({

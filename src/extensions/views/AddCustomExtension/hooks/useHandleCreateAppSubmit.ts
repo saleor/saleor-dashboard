@@ -25,7 +25,7 @@ export const useHandleCreateAppSubmit = ({
       if (data?.appCreate?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "GyXEWS", defaultMessage: "App created" }),
         });
 
         if (data.appCreate?.authToken) {

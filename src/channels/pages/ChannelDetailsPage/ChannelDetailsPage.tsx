@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
-import ShippingZones from "@dashboard/channels/components/ShippingZones";
+import { ShippingZones } from "@dashboard/channels/components/ShippingZones/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";

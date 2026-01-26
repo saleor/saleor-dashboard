@@ -8,7 +8,6 @@ import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
@@ -16,6 +15,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
+import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
@@ -32,6 +32,7 @@ import {
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
+  ProductVariantBulkCreateInput,
   ProductWhereInput,
   RefreshLimitsQuery,
   SearchAttributeValuesQuery,
@@ -68,8 +69,8 @@ import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
-import ProductTaxes from "../ProductTaxes";
-import ProductVariants from "../ProductVariants";
+import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
+import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
@@ -132,6 +133,7 @@ interface ProductUpdatePageProps {
     channel: string | undefined,
     query: string,
   ) => void;
+  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<void>;
   initialConstraints?: InitialConstraints;
 }
 
@@ -188,6 +190,7 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onProductFilterChange,
+  onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
@@ -507,6 +510,7 @@ const ProductUpdatePage = ({
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
+                onBulkCreate={onBulkCreateVariants}
               />
               <CardSpacer />
               <SeoForm

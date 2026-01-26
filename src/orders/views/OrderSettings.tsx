@@ -19,7 +19,10 @@ const OrderSettings = () => {
       if (!errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "lL57q7",
+            defaultMessage: "Order settings updated",
+          }),
         });
 
         return;
