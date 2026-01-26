@@ -54,16 +54,9 @@ export const AvailableForPurchaseSection = ({
   const originalWasScheduled = isFutureDate(originalSummary?.availableForPurchaseAt);
   const originalWasAvailable = !!originalSummary?.availableForPurchaseAt && !originalWasScheduled;
 
+  // Initialize from original data - component should be keyed by originalSummary?.availableForPurchaseAt
+  // to reset state when the underlying data changes
   const [isScheduleMode, setScheduleMode] = React.useState(originalWasScheduled);
-
-  const prevOriginalDateRef = React.useRef(originalSummary?.availableForPurchaseAt);
-
-  React.useEffect(() => {
-    if (prevOriginalDateRef.current !== originalSummary?.availableForPurchaseAt) {
-      prevOriginalDateRef.current = originalSummary?.availableForPurchaseAt;
-      setScheduleMode(isFutureDate(originalSummary?.availableForPurchaseAt));
-    }
-  }, [originalSummary?.availableForPurchaseAt]);
 
   const hasDate = !!summary.availableForPurchaseAt;
   const dateInPast = hasDate && !isFutureDate(summary.availableForPurchaseAt);

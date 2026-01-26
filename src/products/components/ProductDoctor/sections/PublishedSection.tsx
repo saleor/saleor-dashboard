@@ -54,18 +54,9 @@ export const PublishedSection = ({
   const originalWasVisible =
     originalSummary?.isPublished && !isFutureDate(originalSummary.publishedAt);
 
+  // Initialize from original data - component should be keyed by originalSummary?.publishedAt
+  // to reset state when the underlying data changes
   const [showDatePicker, setShowDatePicker] = React.useState(originalWasScheduled);
-
-  const prevOriginalDateRef = React.useRef(originalSummary?.publishedAt);
-
-  React.useEffect(() => {
-    if (prevOriginalDateRef.current !== originalSummary?.publishedAt) {
-      prevOriginalDateRef.current = originalSummary?.publishedAt;
-      setShowDatePicker(
-        originalSummary?.isPublished && isFutureDate(originalSummary?.publishedAt ?? null),
-      );
-    }
-  }, [originalSummary?.publishedAt, originalSummary?.isPublished]);
 
   // Derived UI state based on user's checkbox choice
   const isScheduleMode = summary.isPublished && showDatePicker;

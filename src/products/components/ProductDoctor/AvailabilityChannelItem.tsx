@@ -1,7 +1,7 @@
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { Accordion, Box, Button, Spinner, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { AlertTriangle, ChevronDown, CircleAlert, Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
@@ -57,22 +57,45 @@ export const AvailabilityChannelItem = ({
   const hasIssues = issues.length > 0;
   const issueErrorCount = issues.filter(i => i.severity === "error").length;
 
-  const getCurrentOpts = (): ChannelOpts => ({
-    isPublished: summary.isPublished,
-    publishedAt: summary.publishedAt,
-    isAvailableForPurchase: summary.isAvailableForPurchase ?? undefined,
-    availableForPurchase: summary.availableForPurchaseAt ?? undefined,
-    visibleInListings: summary.visibleInListings,
-  });
+  const handleChange = React.useCallback(
+    (updates: Partial<ChannelOpts>) => {
+      if (onChange) {
+        onChange(summary.id, {
+          isPublished: summary.isPublished,
+          publishedAt: summary.publishedAt,
+          isAvailableForPurchase: summary.isAvailableForPurchase ?? undefined,
+          availableForPurchase: summary.availableForPurchaseAt ?? undefined,
+          visibleInListings: summary.visibleInListings,
+          ...updates,
+        });
+      }
+    },
+    [onChange, summary],
+  );
 
-  const handleChange = (updates: Partial<ChannelOpts>) => {
-    if (onChange) {
-      onChange(summary.id, {
-        ...getCurrentOpts(),
-        ...updates,
+  const handlePublishedChange = React.useCallback(
+    (isPublished: boolean, publishedAt: string | null) => {
+      handleChange({ isPublished, publishedAt });
+    },
+    [handleChange],
+  );
+
+  const handleAvailableForPurchaseChange = React.useCallback(
+    (isAvailable: boolean, availableAt: string | null) => {
+      handleChange({
+        isAvailableForPurchase: isAvailable,
+        availableForPurchase: availableAt,
       });
-    }
-  };
+    },
+    [handleChange],
+  );
+
+  const handleVisibleInListingsChange = React.useCallback(
+    (visible: boolean) => {
+      handleChange({ visibleInListings: visible });
+    },
+    [handleChange],
+  );
 
   const getStatusLabel = () => {
     switch (status) {
@@ -120,11 +143,33 @@ export const AvailabilityChannelItem = ({
           __transition="background-color 0.2s ease"
         >
           <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">
-            <StatusDot
-              status={status}
-              hasIssues={hasIssues}
-              issueType={issueErrorCount > 0 ? "error" : "warning"}
-            />
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Box>
+                  <StatusDot
+                    status={status}
+                    hasIssues={hasIssues}
+                    issueType={issueErrorCount > 0 ? "error" : "warning"}
+                  />
+                </Box>
+              </Tooltip.Trigger>
+              <Tooltip.Content side="right">
+                <Tooltip.Arrow />
+                <Box display="flex" flexDirection="column" gap={1}>
+                  <Text size={2} fontWeight="medium">
+                    {getStatusLabel()}
+                  </Text>
+                  <Text size={1} color="default2">
+                    {getStatusDescription()}
+                  </Text>
+                  {hasIssues && (
+                    <Text size={1} color={issueErrorCount > 0 ? "critical1" : "warning1"}>
+                      {intl.formatMessage(messages.channelHasIssues, { count: issues.length })}
+                    </Text>
+                  )}
+                </Box>
+              </Tooltip.Content>
+            </Tooltip>
             <Text
               size={3}
               fontWeight="medium"
@@ -189,40 +234,26 @@ export const AvailabilityChannelItem = ({
           marginBottom={6}
         >
           <PublishedSection
+            key={`published-${originalSummary?.isPublished}-${originalSummary?.publishedAt ?? "new"}`}
             summary={summary}
             originalSummary={originalSummary}
-            onChange={
-              onChange
-                ? (isPublished, publishedAt) => handleChange({ isPublished, publishedAt })
-                : undefined
-            }
+            onChange={onChange ? handlePublishedChange : undefined}
             errors={errors}
             disabled={disabled}
           />
 
           <AvailableForPurchaseSection
+            key={`available-${originalSummary?.availableForPurchaseAt ?? "new"}`}
             summary={summary}
             originalSummary={originalSummary}
-            onChange={
-              onChange
-                ? (isAvailable, availableAt) =>
-                    handleChange({
-                      isAvailableForPurchase: isAvailable,
-                      availableForPurchase: availableAt,
-                    })
-                : undefined
-            }
+            onChange={onChange ? handleAvailableForPurchaseChange : undefined}
             errors={errors}
             disabled={disabled}
           />
 
           <VisibleInListingsSection
             summary={summary}
-            onChange={
-              onChange && !disabled
-                ? visible => handleChange({ visibleInListings: visible })
-                : undefined
-            }
+            onChange={onChange && !disabled ? handleVisibleInListingsChange : undefined}
           />
 
           <DeliveryConfigurationSection issues={issues} />

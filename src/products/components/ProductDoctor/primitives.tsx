@@ -38,7 +38,7 @@ export const StatusDot = ({
 
     switch (status) {
       case "live":
-        return "var(--mu-colors-background-success1)";
+        return SUCCESS_ICON_COLOR;
       case "scheduled":
         return SCHEDULED_COLOR;
       case "hidden":
