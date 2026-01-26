@@ -205,6 +205,21 @@ export const usePublicApiVerification = (productId: string) => {
         }));
 
         return errorResult;
+      } finally {
+        // Reset isVerifying when this channel completes (if called standalone)
+        // Note: verifyAllChannels will also reset it, but this ensures it's reset
+        // even when verifyChannel is called directly
+        setState(prev => {
+          // Only reset if no channels are still loading
+          const hasLoadingChannels = Array.from(prev.results.values()).some(
+            r => r.status === "loading",
+          );
+
+          return {
+            ...prev,
+            isVerifying: hasLoadingChannels,
+          };
+        });
       }
     },
     [productId],
