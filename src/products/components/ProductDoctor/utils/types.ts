@@ -77,7 +77,8 @@ export interface ChannelSummary {
   isActive: boolean;
   isPublished: boolean;
   publishedAt: string | null;
-  isAvailableForPurchase: boolean;
+  /** Note: This is COMPUTED by Saleor, not stored. Use availableForPurchaseAt !== null to check if enabled. */
+  isAvailableForPurchase: boolean | null;
   availableForPurchaseAt: string | null;
   visibleInListings: boolean;
   // These can be "unknown" when user lacks permissions to view the data

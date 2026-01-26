@@ -1,4 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { ChannelDiagnosticsQuery } from "@dashboard/graphql";
+import { channelDiagnosticsQuery } from "@dashboard/products/queries";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -10,69 +12,6 @@ import {
   DiagnosticsResult,
   ProductDiagnosticData,
 } from "../utils/types";
-
-// Query to fetch channel diagnostics with shipping zones
-// Note: The channels query doesn't support filtering, so we fetch all and filter client-side
-const CHANNEL_DIAGNOSTICS_QUERY = gql`
-  query ChannelDiagnostics {
-    channels {
-      id
-      name
-      slug
-      currencyCode
-      isActive
-      warehouses {
-        id
-        name
-      }
-    }
-    shippingZones(first: 100) {
-      edges {
-        node {
-          id
-          name
-          channels {
-            id
-          }
-          warehouses {
-            id
-            name
-          }
-          countries {
-            code
-            country
-          }
-        }
-      }
-    }
-  }
-`;
-
-// Types for the query response (until codegen generates them)
-interface ChannelDiagnosticsQueryData {
-  channels: Array<{
-    id: string;
-    name: string;
-    slug: string;
-    currencyCode: string;
-    isActive: boolean;
-    warehouses: Array<{
-      id: string;
-      name: string;
-    }>;
-  }> | null;
-  shippingZones: {
-    edges: Array<{
-      node: {
-        id: string;
-        name: string;
-        channels: Array<{ id: string }>;
-        warehouses: Array<{ id: string; name: string }>;
-        countries: Array<{ code: string; country: string }>;
-      };
-    }>;
-  } | null;
-}
 
 interface UseProductAvailabilityDiagnosticsProps {
   product: ProductDiagnosticData | null | undefined;
@@ -103,8 +42,8 @@ export function useProductAvailabilityDiagnostics({
 
   // Fetch channel diagnostic data
   // Note: channels query doesn't support filtering, so we fetch all and filter client-side
-  const { data: channelData, loading } = useQuery<ChannelDiagnosticsQueryData>(
-    CHANNEL_DIAGNOSTICS_QUERY,
+  const { data: channelData, loading } = useQuery<ChannelDiagnosticsQuery>(
+    channelDiagnosticsQuery,
     {
       skip: !enabled || channelIds.length === 0,
     },

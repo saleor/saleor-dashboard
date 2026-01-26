@@ -11765,6 +11765,11 @@ export type GridWarehousesQueryVariables = Exact<{
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
 
+export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelDiagnosticsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
+
 export type SetRefundReasonTypeMutationVariables = Exact<{
   modelTypeId: Scalars['ID'];
 }>;
