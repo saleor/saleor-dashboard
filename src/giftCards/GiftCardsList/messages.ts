@@ -91,13 +91,13 @@ export const bulkEnableDisableSectionMessages = defineMessages({
     description: "bulk delete label",
   },
   successActivateAlertText: {
-    id: "IwEQvz",
-    defaultMessage: "Successfully activated gift {count,plural,one{card} other{cards}}",
+    id: "5/BH83",
+    defaultMessage: "{count,plural,one{Gift card} other{{count} gift cards}} activated",
     description: "success activate alert message",
   },
   successDeactivateAlertText: {
-    id: "SO56cv",
-    defaultMessage: "Successfully deactivated gift {count,plural,one{card} other{cards}}",
+    id: "NOwJdG",
+    defaultMessage: "{count,plural,one{Gift card} other{{count} gift cards}} deactivated",
     description: "success deactivate alert message",
   },
   errorActivateAlertText: {

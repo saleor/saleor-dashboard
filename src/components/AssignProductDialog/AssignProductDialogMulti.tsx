@@ -18,9 +18,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
+import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
-import { ModalFilters } from "./ModalFilters";
-import { useModalProductFilterContext } from "./ModalProductFilterProvider";
 import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";

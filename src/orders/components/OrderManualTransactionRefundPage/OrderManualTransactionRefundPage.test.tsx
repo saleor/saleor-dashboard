@@ -112,7 +112,7 @@ describe("OrderManualTransactionRefundPage", () => {
     // Assert
     expect(mockNofitication).toHaveBeenCalledWith({
       status: "success",
-      text: "Transaction action requested successfully",
+      text: "Refund request sent to payment provider",
     });
   });
   it("should fail validation when refund amount is higher than transaction charged amount", async () => {

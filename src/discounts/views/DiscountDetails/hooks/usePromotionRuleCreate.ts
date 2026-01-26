@@ -7,7 +7,6 @@ import {
   usePromotionRuleCreateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 export const usePromotionRuleCreate = (id: string) => {
@@ -44,7 +43,10 @@ export const usePromotionRuleCreate = (id: string) => {
       if (data?.promotionRuleCreate?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "RaQzn2",
+            defaultMessage: "Rule created",
+          }),
         });
       }
     },

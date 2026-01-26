@@ -253,7 +253,10 @@ export function useShippingRateCreator(
     } else {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "nXGVlP",
+          defaultMessage: "Shipping rate created",
+        }),
       });
       navigate(shippingRateEditUrl(shippingZoneId, rateId));
 
