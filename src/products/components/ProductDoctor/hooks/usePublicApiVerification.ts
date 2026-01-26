@@ -1,4 +1,4 @@
-import { getApiUrl } from "@dashboard/config";
+import { getAbsoluteApiUrl } from "@dashboard/config";
 import { useCallback, useMemo, useState } from "react";
 
 /**
@@ -86,7 +86,7 @@ async function fetchUnauthenticated(
   query: string,
   variables: Record<string, unknown>,
 ): Promise<QueryResult> {
-  const apiUrl = getApiUrl();
+  const apiUrl = getAbsoluteApiUrl();
 
   const response = await fetch(apiUrl, {
     method: "POST",
@@ -94,6 +94,7 @@ async function fetchUnauthenticated(
       "Content-Type": "application/json",
       // Explicitly NOT including Authorization header
     },
+    credentials: "omit", // Ensure no cookies are sent, guaranteeing unauthenticated request
     body: JSON.stringify({
       query,
       variables,
