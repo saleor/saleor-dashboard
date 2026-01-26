@@ -157,7 +157,7 @@ export const AvailabilityChannelItem = ({
             default: "transparent",
             hover: isEffectivelyDisabled ? "transparent" : "default2",
           }}
-          opacity={isMarkedForRemoval ? 0.6 : 1}
+          opacity={isMarkedForRemoval ? "0.6" : "1"}
           __transition="background-color 0.2s ease, opacity 0.2s ease"
         >
           <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">

@@ -155,7 +155,7 @@ export const AvailabilityCard = ({
                 return null;
               }
 
-              return {
+              const newSummary: ChannelSummary = {
                 id: channel.id,
                 name: channel.name,
                 slug: channel.slug,
@@ -166,12 +166,14 @@ export const AvailabilityCard = ({
                 isAvailableForPurchase: formData.isAvailableForPurchase ?? false,
                 availableForPurchaseAt: formData.availableForPurchaseAt ?? null,
                 visibleInListings: formData.visibleInListings ?? false,
-                warehouseCount: "unknown" as const,
+                warehouseCount: "unknown",
                 warehouseNames: [],
-                shippingZoneCount: "unknown" as const,
+                shippingZoneCount: "unknown",
                 shippingZoneNames: [],
-                countryCount: "unknown" as const,
+                countryCount: "unknown",
               };
+
+              return newSummary;
             })
             .filter((summary): summary is ChannelSummary => summary !== null)
         : [];
