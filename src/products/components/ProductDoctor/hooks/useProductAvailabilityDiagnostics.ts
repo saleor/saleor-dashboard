@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { ChannelDiagnosticsQuery } from "@dashboard/graphql";
 import { channelDiagnosticsQuery } from "@dashboard/products/queries";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
@@ -42,33 +42,63 @@ export function useProductAvailabilityDiagnostics({
 
   // Fetch channel diagnostic data
   // Note: channels query doesn't support filtering, so we fetch all and filter client-side
-  const { data: channelData, loading } = useQuery<ChannelDiagnosticsQuery>(
-    channelDiagnosticsQuery,
-    {
-      skip: !enabled || channelIds.length === 0,
-    },
-  );
+  const {
+    data: channelData,
+    loading,
+    error,
+  } = useQuery<ChannelDiagnosticsQuery>(channelDiagnosticsQuery, {
+    skip: !enabled || channelIds.length === 0,
+  });
+
+  // Use state to persist permission errors - Apollo may clear the error on subsequent renders
+  // but we want to remember that a permission error occurred
+  const [detectedPermissionError, setDetectedPermissionError] = useState<{
+    canViewChannelWarehouses: boolean;
+    canViewShippingZones: boolean;
+  } | null>(null);
+
+  // Detect and persist permission errors when they occur
+  useEffect(() => {
+    if (error?.message?.includes("permission")) {
+      const errorMentionsShipping = error.message.includes("MANAGE_SHIPPING");
+      const errorMentionsChannels = error.message.includes("MANAGE_CHANNELS");
+
+      setDetectedPermissionError({
+        canViewChannelWarehouses: !errorMentionsChannels,
+        canViewShippingZones: !errorMentionsShipping,
+      });
+    }
+  }, [error]);
 
   // Determine permission status based on what data is available
-  // If channels query returns data but warehouses are missing, user likely lacks permission
-  // Base permission checks from query data
-  // These will be enhanced in the result calculation when we know if channels are accessible
+  // If the query fails with a permission error, or returns null for specific fields,
+  // the user lacks the required permissions
   const basePermissions = useMemo(() => {
-    // Check if we can view channel warehouses
-    // If channels exist but all have empty/null warehouses array, it might be permission issue
-    // However, empty warehouses could also be legitimate - we check if the field is null vs empty
-    const canViewChannelWarehouses =
-      channelData?.channels?.some(c => c.warehouses !== null) ?? true;
+    // If we've detected a permission error (persisted in state), use that
+    if (detectedPermissionError) {
+      return detectedPermissionError;
+    }
 
-    // Check if shipping zones data is available
-    // null means no permission, empty edges means no zones configured
-    const canViewShippingZones = channelData?.shippingZones !== null;
+    // If query succeeded, check if specific fields are null (permission denied for sub-fields)
+    // Only check if we actually have data (not loading and no error)
+    if (!loading && channelData) {
+      const canViewChannelWarehouses =
+        channelData.channels?.some(c => c.warehouses !== null) ?? false;
+      const canViewShippingZones = channelData.shippingZones !== null;
 
+      return {
+        canViewChannelWarehouses,
+        canViewShippingZones,
+      };
+    }
+
+    // Still loading or no data yet - assume we don't know permissions
+    // Return true to avoid showing "Limited" message prematurely
     return {
-      canViewChannelWarehouses,
-      canViewShippingZones,
+      canViewChannelWarehouses: true,
+      canViewShippingZones: true,
     };
-  }, [channelData]);
+  }, [channelData, loading, detectedPermissionError]);
 
   // Compute issues and summaries
   const result = useMemo((): DiagnosticsResult => {

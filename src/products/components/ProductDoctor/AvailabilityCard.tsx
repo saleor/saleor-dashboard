@@ -490,7 +490,7 @@ const DiagnosticSummaryBanner = ({
     );
   }
 
-  // When there are issues, show the summary
+  // When there are issues, show the summary (with limited permissions indicator if applicable)
   return (
     <Box display="flex" alignItems="center" gap={2}>
       <Box
@@ -508,6 +508,25 @@ const DiagnosticSummaryBanner = ({
           hasWarnings: hasWarnings ? "true" : "false",
         })}
       </Text>
+      {hasMissingPermissions && (
+        <Tooltip>
+          <Tooltip.Trigger>
+            <Box display="flex" alignItems="center" __cursor="help">
+              <Info size={14} color="var(--mu-colors-text-default2)" />
+            </Box>
+          </Tooltip.Trigger>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            <Box padding={2} __maxWidth="350px">
+              <Text size={2}>
+                {intl.formatMessage(messages.limitedDiagnosticsDescription, {
+                  permissions: permissions.missingPermissions.join(", "),
+                })}
+              </Text>
+            </Box>
+          </Tooltip.Content>
+        </Tooltip>
+      )}
     </Box>
   );
 };
