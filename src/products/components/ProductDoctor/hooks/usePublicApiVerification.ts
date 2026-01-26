@@ -157,8 +157,11 @@ export const usePublicApiVerification = (productId: string) => {
         const product = result.data?.product;
         // With unauthenticated request, product will be null if not published
         const variants = product?.variants || [];
+        // quantityAvailable returns null when stocks are not tracked or limitQuantityPerCheckout is not set
+        // In that case, we should still consider the variant as available (null means "unlimited" or "not tracked")
+        // Only variants with quantityAvailable === 0 should be considered as out of stock
         const variantsWithStock = variants.filter(
-          v => v.quantityAvailable !== null && v.quantityAvailable > 0,
+          v => v.quantityAvailable === null || v.quantityAvailable > 0,
         ).length;
 
         const checkResult: PublicApiCheckResult = {
