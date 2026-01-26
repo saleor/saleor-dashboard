@@ -151,9 +151,9 @@ export const notifyMessages = defineMessages({
     id: "43b+ts",
   },
   extensionRemoved: {
-    defaultMessage: "Extension successfully removed",
+    defaultMessage: "Extension removed",
     description: "extensions list has been removed",
-    id: "EGzGed",
+    id: "q3IT3J",
   },
   extensionInstallError: {
     id: "TPJeJF",

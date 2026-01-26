@@ -9,7 +9,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
@@ -47,7 +46,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       if (data?.updateWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "arT1bu", defaultMessage: "Warehouse updated" }),
         });
       }
     },
@@ -58,7 +57,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "arT1bu", defaultMessage: "Warehouse updated" }),
         });
         navigate(warehouseListUrl());
       }

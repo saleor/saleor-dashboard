@@ -10,18 +10,20 @@ import {
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
-import { InitialConstraints, ProductTypeConstraint } from "./ModalProductFilterProvider";
 import {
-  createProductTypeConstraintElement,
+  createLockedFilterElement,
   createWrappedValueProvider,
-  getFilteredProductOptions,
+  getFilteredOptions,
   stripGlobalConstraints,
-} from "./useModalProductFilter";
+} from "./lockedFilters";
+import { LockedFilter } from "./types";
 
-const createProductTypeConstraints = (
+// Helper to create a LockedFilter for productType (for test compatibility)
+const createProductTypeLockedFilter = (
   productTypes: Array<{ id: string; name: string }>,
-): InitialConstraints => ({
-  productTypes,
+): LockedFilter => ({
+  field: "productType",
+  values: productTypes,
 });
 
 const createStaticPriceElement = (): FilterElement => {
@@ -79,10 +81,10 @@ const createGlobalConstraintElement = (): FilterElement => {
   return element;
 };
 
-describe("useModalProductFilter / getFilteredProductOptions", () => {
+describe("getFilteredOptions", () => {
   it("should return all options when no filters are excluded", () => {
     // Arrange & Act
-    const options = getFilteredProductOptions();
+    const options = getFilteredOptions(STATIC_PRODUCT_OPTIONS);
 
     // Assert
     expect(options).toEqual(STATIC_PRODUCT_OPTIONS);
@@ -94,7 +96,7 @@ describe("useModalProductFilter / getFilteredProductOptions", () => {
     const excludedFilters = ["price", "channel"];
 
     // Act
-    const options = getFilteredProductOptions(excludedFilters);
+    const options = getFilteredOptions(STATIC_PRODUCT_OPTIONS, excludedFilters);
 
     // Assert
     expect(options.find(o => o.value === "price")).toBeUndefined();
@@ -103,25 +105,25 @@ describe("useModalProductFilter / getFilteredProductOptions", () => {
     expect(options.length).toBe(STATIC_PRODUCT_OPTIONS.length - 2);
   });
 
-  it("should exclude productType when constraints are provided", () => {
+  it("should exclude locked filter field when lockedFilter is provided", () => {
     // Arrange
-    const initialConstraints = createProductTypeConstraints([{ id: "pt-1", name: "Simple" }]);
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
 
     // Act
-    const options = getFilteredProductOptions(undefined, initialConstraints);
+    const options = getFilteredOptions(STATIC_PRODUCT_OPTIONS, undefined, lockedFilter);
 
     // Assert
     expect(options.find(o => o.value === "productType")).toBeUndefined();
     expect(options.find(o => o.value === "category")).toBeDefined();
   });
 
-  it("should combine excluded filters and constraints", () => {
+  it("should combine excluded filters and lockedFilter", () => {
     // Arrange
     const excludedFilters = ["price"];
-    const initialConstraints = createProductTypeConstraints([{ id: "pt-1", name: "Simple" }]);
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
 
     // Act
-    const options = getFilteredProductOptions(excludedFilters, initialConstraints);
+    const options = getFilteredOptions(STATIC_PRODUCT_OPTIONS, excludedFilters, lockedFilter);
 
     // Assert
     expect(options.find(o => o.value === "price")).toBeUndefined();
@@ -129,26 +131,26 @@ describe("useModalProductFilter / getFilteredProductOptions", () => {
     expect(options.find(o => o.value === "category")).toBeDefined();
   });
 
-  it("should return all options when constraints have empty productTypes", () => {
+  it("should return all options when lockedFilter has empty values", () => {
     // Arrange
-    const initialConstraints: InitialConstraints = { productTypes: [] };
+    const lockedFilter: LockedFilter = { field: "productType", values: [] };
 
     // Act
-    const options = getFilteredProductOptions(undefined, initialConstraints);
+    const options = getFilteredOptions(STATIC_PRODUCT_OPTIONS, undefined, lockedFilter);
 
     // Assert
-    expect(options.find(o => o.value === "productType")).toBeDefined();
-    expect(options.length).toBe(STATIC_PRODUCT_OPTIONS.length);
+    expect(options.find(o => o.value === "productType")).toBeUndefined();
+    expect(options.length).toBe(STATIC_PRODUCT_OPTIONS.length - 1);
   });
 });
 
-describe("useModalProductFilter / createProductTypeConstraintElement", () => {
+describe("createLockedFilterElement", () => {
   it("should create element with correct ExpressionValue", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple Product" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
     expect(element.value.value).toBe("productType");
@@ -158,10 +160,10 @@ describe("useModalProductFilter / createProductTypeConstraintElement", () => {
 
   it("should create element with GLOBAL constraint", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple Product" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
     expect(element.constraint).toBeDefined();
@@ -171,10 +173,10 @@ describe("useModalProductFilter / createProductTypeConstraintElement", () => {
 
   it("should create element with all controls disabled", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple Product" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
     expect(element.constraint?.disabled).toEqual(["left", "right", "condition"]);
@@ -182,42 +184,40 @@ describe("useModalProductFilter / createProductTypeConstraintElement", () => {
 
   it("should create element with removable set to false", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple Product" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
     expect(element.constraint?.removable).toBe(false);
   });
 
-  it("should create condition with correct productType values for single productType", () => {
+  it("should create condition with correct values for single value", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple Product" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
-    // selected.value holds the actual values (array of ItemOption)
     expect(element.condition.selected.value).toEqual([
       { label: "Simple Product", value: "pt-1", slug: "pt-1" },
     ]);
   });
 
-  it("should create condition with correct productType values for multiple productTypes", () => {
+  it("should create condition with correct values for multiple values", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [
+    const lockedFilter = createProductTypeLockedFilter([
       { id: "pt-1", name: "Simple" },
       { id: "pt-2", name: "Configurable" },
       { id: "pt-3", name: "Bundle" },
-    ];
+    ]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
-    // selected.value holds the actual values (array of ItemOption)
     expect(element.condition.selected.value).toEqual([
       { label: "Simple", value: "pt-1", slug: "pt-1" },
       { label: "Configurable", value: "pt-2", slug: "pt-2" },
@@ -227,13 +227,12 @@ describe("useModalProductFilter / createProductTypeConstraintElement", () => {
 
   it("should use 'in' condition operator", () => {
     // Arrange
-    const productTypes: ProductTypeConstraint[] = [{ id: "pt-1", name: "Simple" }];
+    const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
 
     // Act
-    const element = createProductTypeConstraintElement(productTypes);
+    const element = createLockedFilterElement(lockedFilter);
 
     // Assert
-    // selected.conditionValue holds the condition item with label "in"
     expect(element.condition.selected.conditionValue?.label).toBe("in");
   });
 });
@@ -356,9 +355,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
     it("should inject constraint element at beginning when value is empty", () => {
       // Arrange
       const mockProvider = createMockValueProvider([]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -371,9 +369,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       // Arrange
       const priceElement = createStaticPriceElement();
       const mockProvider = createMockValueProvider([priceElement]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -387,9 +384,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       const priceElement = createStaticPriceElement();
       const categoryElement = createStaticCategoryElement();
       const mockProvider = createMockValueProvider([priceElement, "AND", categoryElement]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -402,9 +398,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
     it("should return 0 count when only constraint exists", () => {
       // Arrange
       const mockProvider = createMockValueProvider([]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -418,9 +413,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       const mockPersist = jest.fn();
       const priceElement = createStaticPriceElement();
       const mockProvider = createMockValueProvider([priceElement], { persist: mockPersist });
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -431,16 +425,15 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       expect(mockPersist).toHaveBeenCalledWith([priceElement]);
     });
 
-    it("should return undefined for productType GLOBAL constraint in getTokenByName", () => {
+    it("should return undefined for locked field in getTokenByName", () => {
       // Arrange
       const mockGetTokenByName = jest.fn().mockReturnValue({ name: "productType" } as UrlToken);
       const mockProvider = createMockValueProvider([], { getTokenByName: mockGetTokenByName });
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
-      const result = createWrappedValueProvider(mockProvider, constraintElement);
+      const result = createWrappedValueProvider(mockProvider, constraintElement, "productType");
       const token = result.getTokenByName("productType");
 
       // Assert
@@ -448,17 +441,16 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       expect(mockGetTokenByName).not.toHaveBeenCalled();
     });
 
-    it("should not change getTokenByName for non-productType fields", () => {
+    it("should not change getTokenByName for non-locked fields", () => {
       // Arrange
       const mockToken = { name: "price" } as UrlToken;
       const mockGetTokenByName = jest.fn().mockReturnValue(mockToken);
       const mockProvider = createMockValueProvider([], { getTokenByName: mockGetTokenByName });
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
-      const result = createWrappedValueProvider(mockProvider, constraintElement);
+      const result = createWrappedValueProvider(mockProvider, constraintElement, "productType");
       const token = result.getTokenByName("price");
 
       // Assert
@@ -470,9 +462,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       // Arrange
       const mockIsPersisted = jest.fn().mockReturnValue(false);
       const mockProvider = createMockValueProvider([], { isPersisted: mockIsPersisted });
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -487,9 +478,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       // Arrange
       const priceElement = createStaticPriceElement();
       const mockProvider = createMockValueProvider([priceElement]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);
@@ -504,9 +494,8 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       const priceElement = createStaticPriceElement();
       const categoryElement = createStaticCategoryElement();
       const mockProvider = createMockValueProvider([priceElement]);
-      const constraintElement = createProductTypeConstraintElement([
-        { id: "pt-1", name: "Simple" },
-      ]);
+      const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]);
+      const constraintElement = createLockedFilterElement(lockedFilter);
 
       // Act
       const result = createWrappedValueProvider(mockProvider, constraintElement);

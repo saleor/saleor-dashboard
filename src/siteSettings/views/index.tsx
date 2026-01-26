@@ -5,7 +5,7 @@ import {
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
@@ -28,7 +28,7 @@ const SiteSettings = () => {
       ) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
         });
       }
     },
