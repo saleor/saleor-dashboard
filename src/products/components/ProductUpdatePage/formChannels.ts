@@ -195,8 +195,8 @@ export function useProductChannelListingsForm(
       setChannels(prevData => {
         const originalChannelIds = new Set(product?.channelListings?.map(l => l.channel.id) ?? []);
 
-        // Separate removed channels into: original channels (should go to removeChannels)
-        // and newly added channels (should just be removed from updateChannels)
+        // Separate removed channels: original channels go to removeChannels,
+        // newly added channels are just removed from updateChannels
         const removedOriginalChannels = removed.filter(id => originalChannelIds.has(id));
         const removedNewChannels = removed.filter(id => !originalChannelIds.has(id));
 

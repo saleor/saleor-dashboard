@@ -110,8 +110,7 @@ export const AvailabilityCard = ({
     return map;
   }, [issues]);
 
-  // Merge form data with diagnostic summaries to show pending changes
-  // Also include newly added channels that don't exist in diagnostics yet
+  // Merge form data with diagnostic summaries and include newly added channels
   const mergedSummaries = useMemo((): ChannelSummary[] => {
     const existingChannelIds = new Set(channelSummaries.map(s => s.id));
     const summariesWithFormData = channelSummaries.map(summary => {
