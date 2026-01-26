@@ -15184,17 +15184,32 @@ export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBu
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
 export const ProductVariantBulkCreateDocument = gql`
-    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
-  productVariantBulkCreate(product: $id, variants: $inputs) {
+    mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!, $errorPolicy: ErrorPolicyEnum) {
+  productVariantBulkCreate(
+    product: $id
+    variants: $inputs
+    errorPolicy: $errorPolicy
+  ) {
     errors {
       ...BulkProductError
     }
+    results {
+      errors {
+        ...ProductVariantBulkError
+      }
+      productVariant {
+        id
+        name
+      }
+    }
     productVariants {
       id
+      name
     }
   }
 }
-    ${BulkProductErrorFragmentDoc}`;
+    ${BulkProductErrorFragmentDoc}
+${ProductVariantBulkErrorFragmentDoc}`;
 export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
 
 /**
@@ -15212,6 +15227,7 @@ export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.P
  *   variables: {
  *      id: // value for 'id'
  *      inputs: // value for 'inputs'
+ *      errorPolicy: // value for 'errorPolicy'
  *   },
  * });
  */
