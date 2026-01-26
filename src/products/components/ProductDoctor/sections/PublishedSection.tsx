@@ -75,9 +75,9 @@ export const PublishedSection = ({
   const handleToggle = (checked: boolean) => {
     if (onChange) {
       if (checked) {
-        // Restore original publishedAt if it existed (and wasn't scheduled)
-        // This allows toggling off→on to return to original state (clean form)
-        const dateToRestore = originalWasVisible ? (originalSummary?.publishedAt ?? null) : null;
+        // Always restore original publishedAt to return to original state (clean form)
+        // This works for both visible products (past/null date) and scheduled products (future date)
+        const dateToRestore = originalSummary?.publishedAt ?? null;
 
         onChange(true, dateToRestore);
         setShowDatePicker(originalWasScheduled);

@@ -7,10 +7,14 @@ import { ProductDiagnosticData } from "../utils/types";
 import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagnostics";
 
 // Mock Apollo's useQuery
-jest.mock("@apollo/client", () => ({
-  ...jest.requireActual("@apollo/client"),
-  useQuery: jest.fn(),
-}));
+jest.mock("@apollo/client", () => {
+  const actual = jest.requireActual("@apollo/client");
+
+  return {
+    ...actual,
+    useQuery: jest.fn(),
+  };
+});
 
 // Mock the availability checks to isolate hook logic
 jest.mock("../utils/availabilityChecks", () => ({

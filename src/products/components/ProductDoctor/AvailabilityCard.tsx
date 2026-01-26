@@ -6,7 +6,6 @@ import {
   ProductChannelListingAddInput,
   ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
-import { areChannelFieldsDifferent } from "@dashboard/products/components/ProductUpdatePage/formChannels";
 import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CheckCircle, ChevronLeft, ChevronRight, Info, Search, X, XCircle } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
@@ -19,11 +18,14 @@ import {
 } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
 import {
-  AvailabilityIssue,
-  ChannelSummary,
-  DiagnosticsPermissions,
-  DiagnosticsResult,
-} from "./utils/types";
+  countIssuesBySeverity,
+  filterChannelsBySearch,
+  getDirtyChannelIds,
+  groupIssuesByChannel,
+  paginateItems,
+} from "./utils/channelUtils";
+import { mergeFormDataWithChannelSummaries } from "./utils/mergeChannelSummaries";
+import { DiagnosticsPermissions, DiagnosticsResult } from "./utils/types";
 
 interface AvailabilityCardProps {
   diagnostics: DiagnosticsResult;
@@ -95,131 +97,30 @@ export const AvailabilityCard = ({
     return () => clearTimeout(timeoutId);
   }, [expandedChannelSummary, productId, verifyChannel, expandedChannelAvailabilityKey]);
 
-  const errorCount = issues.filter(i => i.severity === "error").length;
-  const warningCount = issues.filter(i => i.severity === "warning").length;
+  const { errorCount, warningCount } = useMemo(() => countIssuesBySeverity(issues), [issues]);
 
-  const issuesByChannel = useMemo(() => {
-    const map = new Map<string, AvailabilityIssue[]>();
-
-    issues.forEach(issue => {
-      const existing = map.get(issue.channelId) || [];
-
-      map.set(issue.channelId, [...existing, issue]);
-    });
-
-    return map;
-  }, [issues]);
+  const issuesByChannel = useMemo(() => groupIssuesByChannel(issues), [issues]);
 
   // Merge form data with diagnostic summaries and include newly added channels
-  const mergedSummaries = useMemo((): ChannelSummary[] => {
-    const existingChannelIds = new Set(channelSummaries.map(s => s.id));
-    const summariesWithFormData = channelSummaries.map(summary => {
-      const formData = formChannelData?.find(fc => fc.channelId === summary.id);
+  const mergedSummaries = useMemo(
+    () => mergeFormDataWithChannelSummaries(channelSummaries, formChannelData, channels),
+    [channelSummaries, formChannelData, channels],
+  );
 
-      if (!formData) {
-        return summary;
-      }
-
-      return {
-        ...summary,
-        isPublished:
-          formData.isPublished !== undefined && formData.isPublished !== null
-            ? formData.isPublished
-            : summary.isPublished,
-        publishedAt:
-          formData.publishedAt !== undefined ? formData.publishedAt : summary.publishedAt,
-        isAvailableForPurchase:
-          formData.isAvailableForPurchase !== undefined && formData.isAvailableForPurchase !== null
-            ? formData.isAvailableForPurchase
-            : summary.isAvailableForPurchase,
-        availableForPurchaseAt:
-          formData.availableForPurchaseAt !== undefined
-            ? formData.availableForPurchaseAt
-            : summary.availableForPurchaseAt,
-        visibleInListings:
-          formData.visibleInListings !== undefined && formData.visibleInListings !== null
-            ? formData.visibleInListings
-            : summary.visibleInListings,
-      };
-    });
-
-    // Add newly added channels that aren't in diagnostics yet
-    const newChannelSummaries: ChannelSummary[] =
-      formChannelData && channels
-        ? formChannelData
-            .filter(formData => !existingChannelIds.has(formData.channelId))
-            .map(formData => {
-              const channel = channels.find(c => c.id === formData.channelId);
-
-              if (!channel) {
-                return null;
-              }
-
-              const newSummary: ChannelSummary = {
-                id: channel.id,
-                name: channel.name,
-                slug: channel.slug,
-                currencyCode: channel.currencyCode,
-                isActive: channel.isActive,
-                isPublished: formData.isPublished ?? false,
-                publishedAt: formData.publishedAt ?? null,
-                isAvailableForPurchase: formData.isAvailableForPurchase ?? false,
-                availableForPurchaseAt: formData.availableForPurchaseAt ?? null,
-                visibleInListings: formData.visibleInListings ?? false,
-                warehouseCount: "unknown",
-                warehouseNames: [],
-                shippingZoneCount: "unknown",
-                shippingZoneNames: [],
-                countryCount: "unknown",
-              };
-
-              return newSummary;
-            })
-            .filter((summary): summary is ChannelSummary => summary !== null)
-        : [];
-
-    return [...summariesWithFormData, ...newChannelSummaries];
-  }, [channelSummaries, formChannelData, channels]);
-
-  const dirtyChannels = useMemo((): string[] => {
-    if (!formChannelData) {
-      return [];
-    }
-
-    return channelSummaries
-      .filter(summary => {
-        const formData = formChannelData.find(fc => fc.channelId === summary.id);
-
-        if (!formData) {
-          return false;
-        }
-
-        return areChannelFieldsDifferent(formData, summary);
-      })
-      .map(summary => summary.id);
-  }, [channelSummaries, formChannelData]);
+  const dirtyChannels = useMemo(
+    () => getDirtyChannelIds(channelSummaries, formChannelData),
+    [channelSummaries, formChannelData],
+  );
 
   // Filter channels by search query
-  const filteredSummaries = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return mergedSummaries;
-    }
-
-    const query = searchQuery.toLowerCase().trim();
-
-    return mergedSummaries.filter(
-      summary =>
-        summary.name.toLowerCase().includes(query) ||
-        summary.currencyCode.toLowerCase().includes(query),
-    );
-  }, [mergedSummaries, searchQuery]);
+  const filteredSummaries = useMemo(
+    () => filterChannelsBySearch(mergedSummaries, searchQuery),
+    [mergedSummaries, searchQuery],
+  );
 
   // Pagination logic
   const totalPages = Math.ceil(filteredSummaries.length / PAGE_SIZE);
-  const paginatedSummaries = filteredSummaries.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
+  const paginatedSummaries = paginateItems(filteredSummaries, currentPage, PAGE_SIZE);
   const showPagination = filteredSummaries.length > PAGE_SIZE;
 
   // Reset to page 1 when search changes
@@ -365,42 +266,8 @@ export const AvailabilityCard = ({
   );
 };
 
-export const getAvailabilityStatus = (
-  summary: ChannelSummary,
-  dateNow: number,
-): "live" | "scheduled" | "hidden" => {
-  // Product is not published - hidden from public API
-  if (!summary.isPublished) {
-    return "hidden";
-  }
-
-  // Check if publication date is in the future (scheduled)
-  // Note: Saleor auto-sets publishedAt to current server time when publishing without a date
-  // We add a small tolerance (2 seconds) to avoid "scheduled" flash due to clock differences
-  const CLOCK_TOLERANCE_MS = 2000;
-  const publishedAtTime = summary.publishedAt ? Date.parse(summary.publishedAt) : null;
-  const isScheduledForFuture =
-    publishedAtTime !== null && publishedAtTime > dateNow + CLOCK_TOLERANCE_MS;
-
-  if (isScheduledForFuture) {
-    return "scheduled"; // Will become visible when date arrives
-  }
-
-  // Product is visible (published with past/no date)
-  return "live";
-};
-
-export const isPurchasable = (summary: ChannelSummary, dateNow: number): boolean => {
-  const availableAtTime = summary.availableForPurchaseAt
-    ? Date.parse(summary.availableForPurchaseAt)
-    : null;
-
-  if (availableAtTime === null) {
-    return false;
-  }
-
-  return availableAtTime <= dateNow;
-};
+// Re-export utilities for external consumers
+export { getAvailabilityStatus, isPurchasable } from "./utils/availabilityStatus";
 
 interface DiagnosticSummaryBannerProps {
   hasErrors: boolean;

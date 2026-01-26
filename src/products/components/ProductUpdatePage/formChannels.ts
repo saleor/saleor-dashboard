@@ -89,22 +89,17 @@ export const areChannelFieldsDifferent = (
     return true;
   }
 
-  // isAvailableForPurchase: Boolean (nullable)
-  // null and false both mean "not available" - normalize BOTH sides
-  const currentIsAvailable = current.isAvailableForPurchase ?? false;
-  const originalIsAvailable = original.isAvailableForPurchase ?? false;
-
-  if (currentIsAvailable !== originalIsAvailable) {
+  // availableForPurchaseAt: DateTime - this is the SOURCE OF TRUTH for availability
+  // IMPORTANT: Do NOT compare isAvailableForPurchase because it's COMPUTED by Saleor:
+  // - date is null → isAvailableForPurchase = false/null
+  // - date is in past → isAvailableForPurchase = true
+  // - date is in future → isAvailableForPurchase = false (scheduled!)
+  //
+  // The form sends isAvailableForPurchase as user intent (true = "set a date", false = "clear date")
+  // but the original from server is the COMPUTED value. These won't match for scheduled products.
+  // So we only compare the actual date - if dates match, the availability state matches.
+  if ((current.availableForPurchaseAt ?? null) !== (original.availableForPurchaseAt ?? null)) {
     return true;
-  }
-
-  // availableForPurchaseAt: DateTime - only compare if product is available for purchase
-  // When unavailable, the date is irrelevant, so toggling on/off shouldn't mark as dirty
-  // just because the date was cleared
-  if (currentIsAvailable || originalIsAvailable) {
-    if ((current.availableForPurchaseAt ?? null) !== (original.availableForPurchaseAt ?? null)) {
-      return true;
-    }
   }
 
   // visibleInListings: Boolean! - direct comparison (always boolean)
