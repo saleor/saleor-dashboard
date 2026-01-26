@@ -322,6 +322,10 @@
     "context": "window title",
     "string": "Grant refund #{orderNumber}"
   },
+  "/rsk2X": {
+    "context": "Badge shown when channel is newly added",
+    "string": "new"
+  },
   "/vCXIP": {
     "string": "Translation"
   },
@@ -10182,6 +10186,10 @@
   "wAGThK": {
     "context": "dialog header",
     "string": "Delete structures"
+  },
+  "wBGCR1": {
+    "context": "Badge shown when channel is marked for removal",
+    "string": "to remove"
   },
   "wDUBLR": {
     "context": "order refund amount",
