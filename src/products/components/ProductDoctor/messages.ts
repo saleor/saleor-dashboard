@@ -491,6 +491,16 @@ export const messages = defineMessages({
     defaultMessage: "edited",
     description: "Badge shown when channel has unsaved changes",
   },
+  toRemoveBadge: {
+    id: "wBGCR1",
+    defaultMessage: "to remove",
+    description: "Badge shown when channel is marked for removal",
+  },
+  newBadge: {
+    id: "/rsk2X",
+    defaultMessage: "new",
+    description: "Badge shown when channel is newly added",
+  },
   errorBadge: {
     id: "+q4WRK",
     defaultMessage: "error",

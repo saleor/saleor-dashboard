@@ -2,6 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
+  ChannelFragment,
   ProductChannelListingAddInput,
   ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
@@ -32,6 +33,10 @@ interface AvailabilityCardProps {
   disabled?: boolean;
   /** Form's current channel data - used to display pending (unsaved) changes */
   formChannelData?: ProductChannelListingAddInput[];
+  /** Channel IDs marked for removal */
+  removeChannels?: string[];
+  /** All available channels - needed to create summaries for newly added channels */
+  channels?: ChannelFragment[];
   /** Validation errors for channel listings */
   errors?: ProductChannelListingErrorFragment[];
   /** Product ID - needed for public API verification */
@@ -45,6 +50,8 @@ export const AvailabilityCard = ({
   onChannelChange,
   disabled = false,
   formChannelData,
+  removeChannels = [],
+  channels = [],
   errors = [],
   productId,
 }: AvailabilityCardProps) => {
@@ -104,13 +111,11 @@ export const AvailabilityCard = ({
   }, [issues]);
 
   // Merge form data with diagnostic summaries to show pending changes
+  // Also include newly added channels that don't exist in diagnostics yet
   const mergedSummaries = useMemo((): ChannelSummary[] => {
-    if (!formChannelData) {
-      return channelSummaries;
-    }
-
-    return channelSummaries.map(summary => {
-      const formData = formChannelData.find(fc => fc.channelId === summary.id);
+    const existingChannelIds = new Set(channelSummaries.map(s => s.id));
+    const summariesWithFormData = channelSummaries.map(summary => {
+      const formData = formChannelData?.find(fc => fc.channelId === summary.id);
 
       if (!formData) {
         return summary;
@@ -138,7 +143,42 @@ export const AvailabilityCard = ({
             : summary.visibleInListings,
       };
     });
-  }, [channelSummaries, formChannelData]);
+
+    // Add newly added channels that aren't in diagnostics yet
+    const newChannelSummaries: ChannelSummary[] =
+      formChannelData && channels
+        ? formChannelData
+            .filter(formData => !existingChannelIds.has(formData.channelId))
+            .map(formData => {
+              const channel = channels.find(c => c.id === formData.channelId);
+
+              if (!channel) {
+                return null;
+              }
+
+              return {
+                id: channel.id,
+                name: channel.name,
+                slug: channel.slug,
+                currencyCode: channel.currencyCode,
+                isActive: channel.isActive,
+                isPublished: formData.isPublished ?? false,
+                publishedAt: formData.publishedAt ?? null,
+                isAvailableForPurchase: formData.isAvailableForPurchase ?? false,
+                availableForPurchaseAt: formData.availableForPurchaseAt ?? null,
+                visibleInListings: formData.visibleInListings ?? false,
+                warehouseCount: "unknown" as const,
+                warehouseNames: [],
+                shippingZoneCount: "unknown" as const,
+                shippingZoneNames: [],
+                countryCount: "unknown" as const,
+              };
+            })
+            .filter((summary): summary is ChannelSummary => summary !== null)
+        : [];
+
+    return [...summariesWithFormData, ...newChannelSummaries];
+  }, [channelSummaries, formChannelData, channels]);
 
   const dirtyChannels = useMemo((): string[] => {
     if (!formChannelData) {
@@ -286,6 +326,8 @@ export const AvailabilityCard = ({
                           originalSummary={channelSummaries.find(s => s.id === summary.id)}
                           isLast={index === paginatedSummaries.length - 1}
                           isDirty={dirtyChannels.includes(summary.id)}
+                          isMarkedForRemoval={removeChannels.includes(summary.id)}
+                          isNew={!channelSummaries.find(s => s.id === summary.id)}
                           onChange={onChannelChange}
                           disabled={disabled}
                           errors={channelErrors}

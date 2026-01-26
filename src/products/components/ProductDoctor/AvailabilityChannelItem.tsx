@@ -14,7 +14,15 @@ import {
 } from "./AvailabilityCard";
 import { ChannelVerificationResult } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
-import { CurrencyBadge, DirtyBadge, ErrorBadge, IssueBadge, StatusDot } from "./primitives";
+import {
+  CurrencyBadge,
+  DirtyBadge,
+  ErrorBadge,
+  IssueBadge,
+  NewBadge,
+  StatusDot,
+  ToRemoveBadge,
+} from "./primitives";
 import {
   AvailableForPurchaseSection,
   PublishedSection,
@@ -27,6 +35,8 @@ interface AvailabilityChannelItemProps {
   originalSummary?: ChannelSummary;
   isLast: boolean;
   isDirty?: boolean;
+  isMarkedForRemoval?: boolean;
+  isNew?: boolean;
   onChange?: (channelId: string, data: ChannelOpts) => void;
   disabled?: boolean;
   errors?: ProductChannelListingErrorFragment[];
@@ -43,6 +53,8 @@ export const AvailabilityChannelItem = ({
   originalSummary,
   isLast,
   isDirty = false,
+  isMarkedForRemoval = false,
+  isNew = false,
   onChange,
   disabled = false,
   errors = [],
@@ -56,6 +68,8 @@ export const AvailabilityChannelItem = ({
   const status = getAvailabilityStatus(originalSummary ?? summary, dateNow);
   const hasIssues = issues.length > 0;
   const issueErrorCount = issues.filter(i => i.severity === "error").length;
+  // Channel is effectively disabled if marked for removal or explicitly disabled
+  const isEffectivelyDisabled = disabled || isMarkedForRemoval;
 
   const handleChange = React.useCallback(
     (updates: Partial<ChannelOpts>) => {
@@ -138,9 +152,13 @@ export const AvailabilityChannelItem = ({
           paddingX={4}
           paddingY={3}
           width="100%"
-          cursor="pointer"
-          backgroundColor={{ default: "transparent", hover: "default2" }}
-          __transition="background-color 0.2s ease"
+          cursor={isEffectivelyDisabled ? "not-allowed" : "pointer"}
+          backgroundColor={{
+            default: "transparent",
+            hover: isEffectivelyDisabled ? "transparent" : "default2",
+          }}
+          opacity={isMarkedForRemoval ? 0.6 : 1}
+          __transition="background-color 0.2s ease, opacity 0.2s ease"
         >
           <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">
             <Tooltip>
@@ -186,6 +204,8 @@ export const AvailabilityChannelItem = ({
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             {errors.length > 0 && <ErrorBadge />}
+            {isNew && <NewBadge />}
+            {isMarkedForRemoval && <ToRemoveBadge />}
             {isDirty && <DirtyBadge />}
             <CurrencyBadge currency={summary.currencyCode} />
             <Box display="flex" alignItems="center" transition="ease" className="accordion-chevron">
@@ -239,7 +259,7 @@ export const AvailabilityChannelItem = ({
             originalSummary={originalSummary}
             onChange={onChange ? handlePublishedChange : undefined}
             errors={errors}
-            disabled={disabled}
+            disabled={isEffectivelyDisabled}
           />
 
           <AvailableForPurchaseSection
@@ -248,12 +268,14 @@ export const AvailabilityChannelItem = ({
             originalSummary={originalSummary}
             onChange={onChange ? handleAvailableForPurchaseChange : undefined}
             errors={errors}
-            disabled={disabled}
+            disabled={isEffectivelyDisabled}
           />
 
           <VisibleInListingsSection
             summary={summary}
-            onChange={onChange && !disabled ? handleVisibleInListingsChange : undefined}
+            onChange={
+              onChange && !isEffectivelyDisabled ? handleVisibleInListingsChange : undefined
+            }
           />
 
           <DeliveryConfigurationSection issues={issues} />

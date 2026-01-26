@@ -89,6 +89,45 @@ export const DirtyBadge = () => {
   );
 };
 
+export const ToRemoveBadge = () => {
+  const intl = useIntl();
+
+  return (
+    <Box
+      backgroundColor="default1"
+      paddingX={2}
+      paddingY={0}
+      borderRadius={8}
+      borderWidth={1}
+      borderStyle="solid"
+      borderColor="default1"
+    >
+      <Text size={1} color="default2" fontWeight="medium" __fontSize="10px" __lineHeight="16px">
+        {intl.formatMessage(messages.toRemoveBadge)}
+      </Text>
+    </Box>
+  );
+};
+
+export const NewBadge = () => {
+  const intl = useIntl();
+
+  return (
+    <Box
+      paddingX={2}
+      paddingY={0}
+      borderRadius={8}
+      borderWidth={1}
+      borderStyle="solid"
+      borderColor="success1"
+    >
+      <Text size={1} color="success1" fontWeight="medium" __fontSize="10px" __lineHeight="16px">
+        {intl.formatMessage(messages.newBadge)}
+      </Text>
+    </Box>
+  );
+};
+
 export const ErrorBadge = () => {
   const intl = useIntl();
 

@@ -544,6 +544,8 @@ const ProductUpdatePage = ({
                   onChannelChange={handlers.changeChannels}
                   disabled={disabled}
                   formChannelData={data.channels.updateChannels}
+                  removeChannels={data.channels.removeChannels}
+                  channels={channels}
                   errors={channelsErrors}
                   productId={product?.id}
                 />
