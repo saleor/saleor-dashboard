@@ -1,0 +1,134 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.matrixContainer {
+  overflow: auto;
+  max-width: 100%;
+  height: 100%;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+}
+
+.wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  height: 32px;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--mu-colors-background-default1) 70%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  border-radius: 0 0 7px 7px;
+}
+
+.table {
+  overflow: hidden;
+  width: 100%;
+}
+
+.equalCol {
+  width: 1%;
+  min-width: 70px;
+}
+
+/* Header row with bottom border to separate from data */
+.headerRow {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+/* Corner cell - empty top-left cell */
+.cornerCell {
+  padding: 12px;
+  vertical-align: middle;
+  border-right: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+/* Column headers (X axis - 1 line with ellipsis) */
+.columnHeaderCell {
+  padding: 12px 8px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.columnHeaderContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.columnHeaderText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Row labels (Y axis - 1 line max) */
+.rowLabelCell {
+  padding: 12px;
+  vertical-align: middle;
+  background-color: var(--mu-colors-background-default1);
+  border-right: 1px solid var(--mu-colors-border-default1);
+}
+
+.rowLabelText {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Data cells */
+.dataCell {
+  padding: 12px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Color dot for swatches - double ring for visibility on any background */
+.colorDot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* New variant badge - green text only */
+.newBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  color: var(--mu-colors-text-success1);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}

@@ -32,6 +32,7 @@ import {
   ProductErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductFragment,
+  ProductVariantBulkCreateInput,
   ProductWhereInput,
   RefreshLimitsQuery,
   SearchAttributeValuesQuery,
@@ -69,7 +70,7 @@ import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
-import ProductVariants from "../ProductVariants";
+import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
@@ -132,6 +133,7 @@ interface ProductUpdatePageProps {
     channel: string | undefined,
     query: string,
   ) => void;
+  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<void>;
   initialConstraints?: InitialConstraints;
 }
 
@@ -188,6 +190,7 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onProductFilterChange,
+  onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
@@ -507,6 +510,7 @@ const ProductUpdatePage = ({
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
+                onBulkCreate={onBulkCreateVariants}
               />
               <CardSpacer />
               <SeoForm

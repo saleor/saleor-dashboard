@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkboxLabel {
+  min-width: 200px;
+}
+
+.inputWithPreview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
