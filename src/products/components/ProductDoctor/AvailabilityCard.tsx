@@ -73,10 +73,19 @@ export const AvailabilityCard = ({
     ? `${expandedChannelSummary.isPublished}-${expandedChannelSummary.publishedAt}-${expandedChannelSummary.isAvailableForPurchase}-${expandedChannelSummary.availableForPurchaseAt}-${expandedChannelSummary.visibleInListings}`
     : "";
 
+  // Debounce public API verification to avoid rapid calls when user is changing settings
+  const VERIFICATION_DEBOUNCE_MS = 800;
+
   useEffect(() => {
-    if (expandedChannelSummary && productId) {
-      verifyChannel(expandedChannelSummary.id, expandedChannelSummary.slug);
+    if (!expandedChannelSummary || !productId) {
+      return;
     }
+
+    const timeoutId = setTimeout(() => {
+      verifyChannel(expandedChannelSummary.id, expandedChannelSummary.slug);
+    }, VERIFICATION_DEBOUNCE_MS);
+
+    return () => clearTimeout(timeoutId);
   }, [expandedChannelSummary, productId, verifyChannel, expandedChannelAvailabilityKey]);
 
   const errorCount = issues.filter(i => i.severity === "error").length;

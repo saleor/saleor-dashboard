@@ -310,12 +310,28 @@ interface PublicApiVerificationSectionProps {
   onVerify?: () => void;
 }
 
+const VERIFICATION_COOLDOWN_MS = 1500;
+
 const PublicApiVerificationSection = ({
   verificationResult,
   onVerify,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
+  const [isInCooldown, setIsInCooldown] = React.useState(false);
+
+  // Start cooldown after verification completes (success or error)
+  React.useEffect(() => {
+    if (verificationResult?.status === "success" || verificationResult?.status === "error") {
+      setIsInCooldown(true);
+
+      const timeoutId = setTimeout(() => setIsInCooldown(false), VERIFICATION_COOLDOWN_MS);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [verificationResult?.status]);
+
+  const isButtonDisabled = isVerifying || isInCooldown;
 
   return (
     <Box
@@ -337,7 +353,7 @@ const PublicApiVerificationSection = ({
             variant="secondary"
             size="small"
             onClick={onVerify}
-            disabled={isVerifying}
+            disabled={isButtonDisabled}
             data-test-id="verify-public-api-button"
           >
             {isVerifying ? (
