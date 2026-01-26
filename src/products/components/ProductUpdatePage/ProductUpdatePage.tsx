@@ -66,11 +66,9 @@ import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
-import {
-  AvailabilityCard,
-  mapProductToDiagnosticData,
-  useProductAvailabilityDiagnostics,
-} from "../ProductDoctor";
+import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
+import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
+import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";

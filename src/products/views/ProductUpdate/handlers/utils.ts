@@ -145,9 +145,10 @@ export function getProductChannelsUpdateVariables(
       return {
         ...data,
         // Only force isAvailableForPurchase=true when there's an actual date set
-        // Use loose equality (!=) to treat both null and undefined as "no date"
         isAvailableForPurchase:
-          data.availableForPurchaseAt != null ? true : data.isAvailableForPurchase,
+          data.availableForPurchaseAt !== null && data.availableForPurchaseAt !== undefined
+            ? true
+            : data.isAvailableForPurchase,
       };
     });
 

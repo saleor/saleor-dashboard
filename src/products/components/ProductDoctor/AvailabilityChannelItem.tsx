@@ -23,11 +23,9 @@ import {
   StatusDot,
   ToRemoveBadge,
 } from "./primitives";
-import {
-  AvailableForPurchaseSection,
-  PublishedSection,
-  VisibleInListingsSection,
-} from "./sections";
+import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSection";
+import { PublishedSection } from "./sections/PublishedSection";
+import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
 import { AvailabilityIssue, ChannelSummary } from "./utils/types";
 
 interface AvailabilityChannelItemProps {
