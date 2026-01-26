@@ -80,6 +80,8 @@ export const DateTimeTimezoneField = ({
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
+      // Reset external update flag on initial mount to ensure user changes aren't skipped
+      isExternalUpdate.current = false;
 
       return;
     }
