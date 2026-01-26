@@ -70,12 +70,17 @@ export const AvailableForPurchaseSection = ({
 
   const handleToggle = (checked: boolean) => {
     if (checked) {
-      onChange?.(true, new Date().toISOString());
+      // Restore original date if it existed, otherwise use current time
+      // This allows toggling off→on to return to original state (clean form)
+      const dateToUse = originalSummary?.availableForPurchaseAt ?? new Date().toISOString();
+
+      onChange?.(true, dateToUse);
+      // Restore schedule mode based on original state
+      setScheduleMode(originalWasScheduled);
     } else {
       onChange?.(false, null);
+      setScheduleMode(false);
     }
-
-    setScheduleMode(false);
   };
 
   return (

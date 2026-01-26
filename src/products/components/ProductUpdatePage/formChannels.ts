@@ -30,7 +30,10 @@ export const updateChannelsInput = (
       return {
         ...listing,
         ...data,
-        availableForPurchaseAt: data.availableForPurchase,
+        // Only update availableForPurchaseAt if availableForPurchase was explicitly passed
+        ...(data.availableForPurchase !== undefined
+          ? { availableForPurchaseAt: data.availableForPurchase }
+          : {}),
       };
     }
 
@@ -88,13 +91,20 @@ export const areChannelFieldsDifferent = (
 
   // isAvailableForPurchase: Boolean (nullable)
   // null and false both mean "not available" - normalize BOTH sides
-  if ((current.isAvailableForPurchase ?? false) !== (original.isAvailableForPurchase ?? false)) {
+  const currentIsAvailable = current.isAvailableForPurchase ?? false;
+  const originalIsAvailable = original.isAvailableForPurchase ?? false;
+
+  if (currentIsAvailable !== originalIsAvailable) {
     return true;
   }
 
-  // availableForPurchaseAt: DateTime - normalize null/undefined
-  if ((current.availableForPurchaseAt ?? null) !== (original.availableForPurchaseAt ?? null)) {
-    return true;
+  // availableForPurchaseAt: DateTime - only compare if product is available for purchase
+  // When unavailable, the date is irrelevant, so toggling on/off shouldn't mark as dirty
+  // just because the date was cleared
+  if (currentIsAvailable || originalIsAvailable) {
+    if ((current.availableForPurchaseAt ?? null) !== (original.availableForPurchaseAt ?? null)) {
+      return true;
+    }
   }
 
   // visibleInListings: Boolean! - direct comparison (always boolean)
@@ -179,7 +189,12 @@ export function useProductChannelListingsForm(
       setChannels(input => {
         const newInput = updateChannelsInput(input, data, id);
 
-        // Check if the new state has any actual changes from original
+        // Check dirty state and trigger change synchronously within the updater.
+        // This ensures we have the correct new state for comparison.
+        // Note: While side effects in updaters are generally discouraged,
+        // this is acceptable here because:
+        // 1. triggerChange is idempotent - multiple calls with same value are safe
+        // 2. We need atomic dirty state tracking with state computation
         const isDirty = hasChannelChanges(newInput, product?.channelListings);
 
         triggerChange(isDirty);
@@ -218,7 +233,12 @@ export function useProductChannelListingsForm(
           ]).filter(id => !added.includes(id)),
         };
 
-        // Check if the new state has any actual changes from original
+        // Check dirty state and trigger change synchronously within the updater.
+        // This ensures we have the correct new state for comparison.
+        // Note: While side effects in updaters are generally discouraged,
+        // this is acceptable here because:
+        // 1. triggerChange is idempotent - multiple calls with same value are safe
+        // 2. We need atomic dirty state tracking with state computation
         const isDirty = hasChannelChanges(newData, product?.channelListings);
 
         triggerChange(isDirty);

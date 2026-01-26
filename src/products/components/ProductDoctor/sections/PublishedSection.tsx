@@ -74,8 +74,17 @@ export const PublishedSection = ({
 
   const handleToggle = (checked: boolean) => {
     if (onChange) {
-      onChange(checked, null);
-      setShowDatePicker(false);
+      if (checked) {
+        // Restore original publishedAt if it existed (and wasn't scheduled)
+        // This allows toggling off→on to return to original state (clean form)
+        const dateToRestore = originalWasVisible ? (originalSummary?.publishedAt ?? null) : null;
+
+        onChange(true, dateToRestore);
+        setShowDatePicker(originalWasScheduled);
+      } else {
+        onChange(false, null);
+        setShowDatePicker(false);
+      }
     }
   };
 
