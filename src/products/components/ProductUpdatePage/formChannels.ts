@@ -123,8 +123,12 @@ const hasChannelChanges = (
   channels: ProductChannelListingUpdateInput,
   originalListings: ProductFragment["channelListings"],
 ): boolean => {
-  // Check if any channels were removed
-  if (channels.removeChannels.length > 0) {
+  const originalIds = new Set(originalListings?.map(l => l.channel.id) ?? []);
+
+  // Check if any original channels were removed (ignore removals of channels that weren't in original)
+  const removedOriginalChannels = channels.removeChannels.filter(id => originalIds.has(id));
+
+  if (removedOriginalChannels.length > 0) {
     return true;
   }
 
@@ -138,8 +142,6 @@ const hasChannelChanges = (
   }
 
   // Check if any new channels were added
-  const originalIds = new Set(originalListings?.map(l => l.channel.id) ?? []);
-
   for (const current of channels.updateChannels) {
     if (!originalIds.has(current.channelId)) {
       return true;
@@ -191,6 +193,13 @@ export function useProductChannelListingsForm(
   const handleChannelListUpdate: ProductChannelsListingDialogSubmit = useCallback(
     ({ added, removed }) => {
       setChannels(prevData => {
+        const originalChannelIds = new Set(product?.channelListings?.map(l => l.channel.id) ?? []);
+
+        // Separate removed channels into: original channels (should go to removeChannels)
+        // and newly added channels (should just be removed from updateChannels)
+        const removedOriginalChannels = removed.filter(id => originalChannelIds.has(id));
+        const removedNewChannels = removed.filter(id => !originalChannelIds.has(id));
+
         const newData = {
           ...prevData,
           updateChannels: uniqBy(
@@ -203,9 +212,10 @@ export function useProductChannelListingsForm(
             ],
             "channelId",
           ).filter(({ channelId }) => !removed.includes(channelId)),
-          removeChannels: uniq([...prevData.removeChannels, ...removed]).filter(
-            id => !added.includes(id),
-          ),
+          removeChannels: uniq([
+            ...prevData.removeChannels.filter(id => !removedNewChannels.includes(id)),
+            ...removedOriginalChannels,
+          ]).filter(id => !added.includes(id)),
         };
 
         // Check if the new state has any actual changes from original
