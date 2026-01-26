@@ -281,10 +281,10 @@ describe("Sending only changed attributes", () => {
   describe("works with select attributes", () => {
     test.each`
       newAttr       | oldAttr       | expected
-      ${null}       | ${null}       | ${null}
-      ${"my value"} | ${"my value"} | ${null}
-      ${"my value"} | ${null}       | ${["my value"]}
-      ${null}       | ${"my value"} | ${[]}
+      ${null}       | ${null}       | ${"skip"}
+      ${"my value"} | ${"my value"} | ${"skip"}
+      ${"my value"} | ${null}       | ${{ value: "my value" }}
+      ${null}       | ${"my value"} | ${null}
     `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
       const attribute = createSelectAttribute(newAttr);
       const prevAttribute = createSelectAttribute(oldAttr);
@@ -293,7 +293,7 @@ describe("Sending only changed attributes", () => {
         prevAttributes: [prevAttribute],
         updatedFileAttributes: [],
       });
-      const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
+      const expectedResult = expected !== "skip" ? [{ id: ATTR_ID, dropdown: expected }] : [];
 
       expect(result).toEqual(expectedResult);
     });
@@ -302,10 +302,10 @@ describe("Sending only changed attributes", () => {
   describe("works with required select attributes", () => {
     test.each`
       newAttr       | oldAttr       | expected
-      ${null}       | ${null}       | ${[]}
-      ${"my value"} | ${"my value"} | ${["my value"]}
-      ${"my value"} | ${null}       | ${["my value"]}
-      ${null}       | ${"my value"} | ${[]}
+      ${null}       | ${null}       | ${null}
+      ${"my value"} | ${"my value"} | ${{ value: "my value" }}
+      ${"my value"} | ${null}       | ${{ value: "my value" }}
+      ${null}       | ${"my value"} | ${null}
     `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
       const attribute = createSelectAttribute(newAttr, true);
       const prevAttribute = createSelectAttribute(oldAttr, true);
@@ -314,7 +314,7 @@ describe("Sending only changed attributes", () => {
         prevAttributes: [prevAttribute],
         updatedFileAttributes: [],
       });
-      const expectedResult = expected !== null ? [{ id: ATTR_ID, values: expected }] : [];
+      const expectedResult = [{ id: ATTR_ID, dropdown: expected }];
 
       expect(result).toEqual(expectedResult);
     });
@@ -925,10 +925,10 @@ describe("prepareAttributesInput", () => {
     });
 
     // Assert
-    expect(result).toEqual([{ id: ATTR_ID, values: ["val-1"] }]);
+    expect(result).toEqual([{ id: ATTR_ID, dropdown: { value: "val-1" } }]);
   });
 
-  it("should create input without null values for dropdowns", () => {
+  it("should create input with null dropdown for empty dropdowns", () => {
     // Arrange & Act
     const attribute = createDropdownAttribute(null);
     const prevAttribute = createDropdownAttribute("val-1");
@@ -939,7 +939,7 @@ describe("prepareAttributesInput", () => {
     });
 
     // Assert
-    expect(result).toEqual([{ id: ATTR_ID, values: [] }]);
+    expect(result).toEqual([{ id: ATTR_ID, dropdown: null }]);
   });
 });
 
