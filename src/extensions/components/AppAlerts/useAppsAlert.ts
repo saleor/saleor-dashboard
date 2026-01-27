@@ -35,6 +35,13 @@ export const useAppsAlert = () => {
     }
   };
 
+  // Fetch immediately on mount
+  useEffect(() => {
+    if (hasManagedAppsPermission) {
+      fetchAll();
+    }
+  }, [hasManagedAppsPermission]);
+
   useIntervalActionWithState({
     action: fetchAll,
     interval: DELIVERIES_FETCHING_INTERVAL,

@@ -90,6 +90,35 @@ const ProblemGroupSection = ({ typename, problems, appId }: ProblemGroupSectionP
   );
 };
 
+/** Build an ordered flat list following group priority, then slice to limit */
+const getVisibleGroups = (
+  allGroups: ProblemGroups,
+  limit: number,
+): Array<{ typename: AppProblem["__typename"]; items: AppProblem[] }> => {
+  const orderedGroups: Array<{ typename: AppProblem["__typename"]; items: AppProblem[] }> = [
+    { typename: "AppProblemCircuitBreaker", items: allGroups.circuitBreaker },
+    { typename: "WebhookDeliveryError", items: allGroups.webhook },
+    { typename: "AppProblemCustom", items: allGroups.custom },
+  ];
+
+  let remaining = limit;
+  const result: Array<{ typename: AppProblem["__typename"]; items: AppProblem[] }> = [];
+
+  for (const group of orderedGroups) {
+    if (remaining <= 0 || group.items.length === 0) {
+      continue;
+    }
+
+    result.push({
+      typename: group.typename,
+      items: group.items.slice(0, remaining),
+    });
+    remaining -= group.items.length;
+  }
+
+  return result;
+};
+
 export const ProblemsList = ({ problems, appId }: ProblemsListProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
@@ -100,19 +129,18 @@ export const ProblemsList = ({ problems, appId }: ProblemsListProps) => {
     return null;
   }
 
-  const visibleProblems = expanded ? problems : problems.slice(0, MAX_VISIBLE_PROBLEMS);
   const hiddenCount = problems.length - MAX_VISIBLE_PROBLEMS;
   const hasMore = hiddenCount > 0;
 
-  const visibleGroups = expanded ? allGroups : groupProblems(visibleProblems);
-
-  const groupEntries: Array<{ typename: AppProblem["__typename"]; items: AppProblem[] }> = [
-    { typename: "AppProblemCircuitBreaker", items: visibleGroups.circuitBreaker },
-    { typename: "WebhookDeliveryError", items: visibleGroups.webhook },
-    { typename: "AppProblemCustom", items: visibleGroups.custom },
+  const allGroupEntries: Array<{ typename: AppProblem["__typename"]; items: AppProblem[] }> = [
+    { typename: "AppProblemCircuitBreaker", items: allGroups.circuitBreaker },
+    { typename: "WebhookDeliveryError", items: allGroups.webhook },
+    { typename: "AppProblemCustom", items: allGroups.custom },
   ];
 
-  const nonEmptyGroups = groupEntries.filter(g => g.items.length > 0);
+  const nonEmptyGroups = expanded
+    ? allGroupEntries.filter(g => g.items.length > 0)
+    : getVisibleGroups(allGroups, MAX_VISIBLE_PROBLEMS);
 
   return (
     <div className={styles.problemsContainer}>
