@@ -984,6 +984,10 @@
     "context": "Dialog title",
     "string": "Transaction {actionType}"
   },
+  "3zoKGn": {
+    "context": "subtitle for variant attributes section",
+    "string": "Additional attributes for variant-specific information.{br}Can be adjusted in the {productTypeLink} settings."
+  },
   "408KSO": {
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
@@ -4073,6 +4077,10 @@
   "LgbKvU": {
     "string": "Comment"
   },
+  "LhGd2m": {
+    "context": "tooltip for variant selection attributes",
+    "string": "Attributes that define variant options customers can choose from on the storefront.{br}Can be adjusted in the {productTypeLink} settings."
+  },
   "Ljtqmt": {
     "context": "page header, order id unknown",
     "string": "Order"
@@ -5713,6 +5721,10 @@
   "UxdBmI": {
     "context": "collection availability",
     "string": "Availability"
+  },
+  "Uxhquh": {
+    "context": "info message about attribute exclusivity in product type",
+    "string": "Product attributes and variant attributes are mutually exclusive. An attribute cannot be assigned to both sections within the same product type."
   },
   "UycVMp": {
     "context": "button",
@@ -10713,6 +10725,10 @@
   "xfGZsi": {
     "context": "configuration section name",
     "string": "Configuration"
+  },
+  "xfypNP": {
+    "context": "tooltip for variant selection column header",
+    "string": "When enabled, this attribute will be used to distinguish variants on the storefront."
   },
   "xgPXGD": {
     "string": "Customers deleted"

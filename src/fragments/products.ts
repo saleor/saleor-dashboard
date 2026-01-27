@@ -300,6 +300,10 @@ export const fragmentVariant = gql`
       thumbnail {
         url
       }
+      productType {
+        id
+        name
+      }
       channelListings {
         id
         publishedAt

@@ -2997,6 +2997,10 @@ export const ProductVariantFragmentDoc = gql`
     thumbnail {
       url
     }
+    productType {
+      id
+      name
+    }
     channelListings {
       id
       publishedAt

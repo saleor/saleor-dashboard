@@ -3789,6 +3789,11 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
       id: "var1",
     },
     id: "prod1",
+    productType: {
+      __typename: "ProductType",
+      id: "UHJvZHVjdFR5cGU6MQ==",
+      name: "Default Product Type",
+    },
     media: [
       {
         __typename: "ProductMedia",
