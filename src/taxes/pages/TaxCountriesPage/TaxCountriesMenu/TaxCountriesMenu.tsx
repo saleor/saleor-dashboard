@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TaxCountryConfigurationFragment } from "@dashboard/graphql";
-import { TaxMenu } from "@dashboard/taxes/components/TaxMenu";
+import { TaxMenu } from "@dashboard/taxes/components/TaxMenu/TaxMenu";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxCountriesListUrl } from "@dashboard/taxes/urls";
 import { Button } from "@saleor/macaw-ui-next";

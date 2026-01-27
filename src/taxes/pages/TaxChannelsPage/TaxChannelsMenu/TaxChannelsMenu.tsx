@@ -1,5 +1,5 @@
 import { TaxConfigurationFragment } from "@dashboard/graphql";
-import { TaxMenu } from "@dashboard/taxes/components/TaxMenu";
+import { TaxMenu } from "@dashboard/taxes/components/TaxMenu/TaxMenu";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -9,7 +9,10 @@ interface TaxChannelsMenuProps {
   selectedConfigurationId: string;
 }
 
-const TaxChannelsMenu = ({ configurations, selectedConfigurationId }: TaxChannelsMenuProps) => {
+export const TaxChannelsMenu = ({
+  configurations,
+  selectedConfigurationId,
+}: TaxChannelsMenuProps) => {
   const intl = useIntl();
 
   const items =
@@ -29,5 +32,3 @@ const TaxChannelsMenu = ({ configurations, selectedConfigurationId }: TaxChannel
     />
   );
 };
-
-export { TaxChannelsMenu };
