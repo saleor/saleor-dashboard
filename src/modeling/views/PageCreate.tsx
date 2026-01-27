@@ -17,7 +17,7 @@ import {
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -98,8 +98,8 @@ const PageCreate = ({ params }: PageCreateProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "JMbFNo",
-            defaultMessage: "Successfully created new page",
+            id: "ZwtDkP",
+            defaultMessage: "Page created",
           }),
         });
         navigate(pageUrl(data.pageCreate.page.id));

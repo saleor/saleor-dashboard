@@ -12,7 +12,7 @@ import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -82,8 +82,8 @@ const OrderList = ({ params }: OrderListProps) => {
       notify({
         status: "success",
         text: intl.formatMessage({
-          id: "6udlH+",
-          defaultMessage: "Order draft successfully created",
+          id: "AQDJ1d",
+          defaultMessage: "Draft order created",
         }),
       });
       navigate(orderUrl(data.draftOrderCreate.order.id));

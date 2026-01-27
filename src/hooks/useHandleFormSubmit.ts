@@ -1,5 +1,5 @@
 import { FormId, useExitFormDialog } from "@dashboard/components/Form";
-import { MessageContext } from "@dashboard/components/messages";
+import { NotificationContext } from "@dashboard/components/notifications";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { useContext } from "react";
 
@@ -15,13 +15,13 @@ function useHandleFormSubmit<TData, TErrors>({
   const { setIsSubmitting, setIsDirty } = useExitFormDialog({
     formId,
   });
-  const messageContext = useContext(MessageContext);
+  const notificationContext = useContext(NotificationContext);
 
   async function handleFormSubmit(data: TData): Promise<TErrors[]> {
     setIsSubmitting(true);
 
-    if (messageContext?.clearErrorNotifications) {
-      messageContext.clearErrorNotifications();
+    if (notificationContext?.clearErrorNotifications) {
+      notificationContext.clearErrorNotifications();
     }
 
     const result = onSubmit ? onSubmit(data) : null;

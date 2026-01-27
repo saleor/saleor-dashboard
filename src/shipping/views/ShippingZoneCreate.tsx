@@ -1,9 +1,8 @@
 // @ts-strict-ignore
 import { useCreateShippingZoneMutation, useShopCountriesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
@@ -30,7 +29,10 @@ const ShippingZoneCreate = () => {
       if (data.shippingZoneCreate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "ICq8u7",
+            defaultMessage: "Shipping zone created",
+          }),
         });
         navigate(shippingZoneUrl(data.shippingZoneCreate.shippingZone.id));
       }

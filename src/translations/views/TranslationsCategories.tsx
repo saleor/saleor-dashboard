@@ -5,9 +5,8 @@ import {
   useUpdateCategoryTranslationsMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
@@ -42,7 +41,7 @@ const TranslationsCategories = ({ id, languageCode, params }: TranslationsCatego
         categoryTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
         });
         navigate("?", { replace: true });
       }

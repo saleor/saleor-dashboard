@@ -20,7 +20,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
-import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
+import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 
 export interface ProductTypeForm extends MetadataFormData {
   name: string;

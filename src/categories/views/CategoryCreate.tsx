@@ -6,7 +6,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";

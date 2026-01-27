@@ -19,10 +19,10 @@ import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { errorMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -121,7 +121,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     } else {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
       });
     }
   };
@@ -135,7 +135,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
       });
     }
   };
@@ -150,7 +150,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         closeModal();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
         });
         refetch();
       }

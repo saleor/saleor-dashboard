@@ -4,8 +4,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRemoveCustomerMutation, useUpdateCustomerMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -50,7 +49,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
       if (data.customerUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "PeEood", defaultMessage: "Customer updated" }),
         });
       }
     },

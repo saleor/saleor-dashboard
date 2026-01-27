@@ -48,8 +48,8 @@ export const giftCardCreateMessages = defineMessages({
     description: "copied to clipboard alert title",
   },
   createdSuccessAlertTitle: {
-    id: "WzHfj8",
-    defaultMessage: "Successfully created gift card",
+    id: "HFo3Qe",
+    defaultMessage: "Gift card created",
     description: "successfully created gift card alert title",
   },
   requiresActivationLabel: {

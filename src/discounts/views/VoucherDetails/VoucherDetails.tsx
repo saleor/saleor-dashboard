@@ -48,10 +48,10 @@ import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -196,7 +196,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const notifySaved = () =>
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges),
+      text: intl.formatMessage({
+        id: "uX+Vg7",
+        defaultMessage: "Voucher updated",
+      }),
     });
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
     onCompleted: data => {

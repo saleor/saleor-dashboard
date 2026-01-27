@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
+import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";

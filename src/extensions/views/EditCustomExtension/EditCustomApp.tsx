@@ -24,9 +24,8 @@ import {
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder, parseLogMessage } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useEffect } from "react";
@@ -143,7 +142,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
     if (data?.webhookDelete?.errors?.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "gOiREw", defaultMessage: "App settings updated" }),
       });
       navigate(ExtensionsUrls.editCustomExtensionUrl(id));
       closeModal();
@@ -164,7 +163,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
     if (data?.appUpdate?.errors?.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "gOiREw", defaultMessage: "App settings updated" }),
       });
     } else {
       const error = data?.appUpdate?.errors[0];
@@ -190,7 +189,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
     if (data?.appTokenDelete?.errors?.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "gOiREw", defaultMessage: "App settings updated" }),
       });
       refetch();
       closeModal();

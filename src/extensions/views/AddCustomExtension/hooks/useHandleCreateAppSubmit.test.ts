@@ -19,7 +19,9 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 
 const mockNotify = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => () => mockNotify);
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: () => mockNotify,
+}));
 
 const mockUseAppCreateMutation = useAppCreateMutation as jest.MockedFunction<
   typeof useAppCreateMutation

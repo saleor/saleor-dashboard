@@ -4,8 +4,7 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
@@ -85,7 +84,10 @@ export const useHandleOrderLineMetadataSubmit = ({
     if (allErrors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "gelco+",
+          defaultMessage: "Metadata updated",
+        }),
       });
       onClose();
     }

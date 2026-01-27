@@ -63,6 +63,7 @@ export const channelListingProductWithoutPricingFragment = gql`
     channel {
       id
       name
+      slug
       currencyCode
     }
   }
@@ -298,6 +299,10 @@ export const fragmentVariant = gql`
       name
       thumbnail {
         url
+      }
+      productType {
+        id
+        name
       }
       channelListings {
         id

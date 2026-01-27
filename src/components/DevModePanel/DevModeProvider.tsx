@@ -19,11 +19,7 @@ export function DevModeProvider({ children }) {
     setDevModeVisibility(!isDevModeVisible);
   };
 
-  const handleClose = () => {
-    setDevModeVisibility(false);
-  };
-
-  useDevModeKeyTrigger(handleOpen, handleClose);
+  useDevModeKeyTrigger(handleOpen);
 
   return (
     <DevModeContext.Provider

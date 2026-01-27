@@ -1,9 +1,8 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CountryCode, useWarehouseCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import WarehouseCreatePage, {
   WarehouseCreatePageFormData,
@@ -27,7 +26,7 @@ const WarehouseCreate = () => {
 
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "xeMcID", defaultMessage: "Warehouse created" }),
         });
       }
     },

@@ -6,8 +6,7 @@ import {
   PromotionRuleUpdateMutation,
   usePromotionRuleUpdateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
 export const usePromotionRuleUpdate = (id: string) => {
@@ -44,7 +43,10 @@ export const usePromotionRuleUpdate = (id: string) => {
       if (data?.promotionRuleUpdate?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "zKgsu9",
+            defaultMessage: "Rule updated",
+          }),
         });
       }
     },

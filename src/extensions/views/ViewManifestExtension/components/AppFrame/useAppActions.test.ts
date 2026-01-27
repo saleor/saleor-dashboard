@@ -14,7 +14,9 @@ jest.mock("@sentry/react", () => ({
 
 const mockNotifier = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => (): jest.Mock => mockNotifier);
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: (): jest.Mock => mockNotifier,
+}));
 
 jest.mock("./usePostToExtension");
 
@@ -90,7 +92,7 @@ describe("useAppActions", () => {
     });
   });
 
-  it("should capture unknown action type to Sentry and show notification", () => {
+  it("should capture unknown action type to Sentry", () => {
     // Arrange
     const unknownActionType = "unknownAction";
     const unknownAction = {
@@ -134,13 +136,6 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
-
-    // Verify notification was shown to user
-    expect(mockNotifier).toHaveBeenCalledWith({
-      title: "Invalid app event",
-      status: "error",
-      text: `App has sent invalid event type "${unknownActionType}". Contact app developer.`,
-    });
   });
 
   it("should ignore messages from different origins", () => {

@@ -6,7 +6,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -20,8 +20,7 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn);
 jest.mock("@dashboard/components/Savebar");
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: jest.fn(() => () => undefined),
+  useNotifier: jest.fn(() => () => undefined),
 }));
 mockResizeObserver();
 
@@ -113,7 +112,7 @@ describe("OrderManualTransactionRefundPage", () => {
     // Assert
     expect(mockNofitication).toHaveBeenCalledWith({
       status: "success",
-      text: "Transaction action requested successfully",
+      text: "Refund request sent to payment provider",
     });
   });
   it("should fail validation when refund amount is higher than transaction charged amount", async () => {

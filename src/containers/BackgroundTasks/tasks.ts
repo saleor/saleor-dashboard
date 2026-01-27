@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { ApolloQueryResult } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
+import { INotificationCallback } from "@dashboard/components/notifications";
 import {
   CheckExportFileStatusQuery,
   CheckOrderInvoicesStatusQuery,
@@ -76,7 +76,7 @@ export function queueInvoiceGenerate(
   generateInvoice: InvoiceGenerateParams,
   tasks: React.MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckOrderInvoicesStatusQuery>>,
-  notify: IMessageContext,
+  notify: INotificationCallback,
   intl: IntlShape,
 ) {
   if (!generateInvoice) {
@@ -117,7 +117,7 @@ export function queueExport(
   id: number,
   tasks: React.MutableRefObject<QueuedTask[]>,
   fetch: () => Promise<ApolloQueryResult<CheckExportFileStatusQuery>>,
-  notify: IMessageContext,
+  notify: INotificationCallback,
   intl: IntlShape,
 ) {
   tasks.current = [

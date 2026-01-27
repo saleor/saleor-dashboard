@@ -11,7 +11,7 @@ import { useAttributeBulkDeleteMutation, useAttributeListQuery } from "@dashboar
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -92,8 +92,8 @@ const AttributeList = ({ params }: AttributeListProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "z3GGbZ",
-            defaultMessage: "Attributes successfully deleted",
+            id: "fpafCx",
+            defaultMessage: "Attributes deleted",
             description: "deleted multiple attributes",
           }),
         });

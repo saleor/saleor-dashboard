@@ -7,8 +7,7 @@ import {
   useProductMediaUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductMediaPage from "../components/ProductMediaPage";
@@ -37,7 +36,10 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
       if (data.productMediaUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "uOC/uQ",
+            defaultMessage: "Image updated",
+          }),
         });
       }
     },

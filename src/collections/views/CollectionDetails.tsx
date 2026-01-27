@@ -18,8 +18,8 @@ import {
 import useChannels from "@dashboard/hooks/useChannels";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { errorMessages } from "@dashboard/intl";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -58,7 +58,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     if (data.collectionUpdate.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "E2uiWk", defaultMessage: "Collection updated" }),
       });
       navigate(collectionUrl(id));
     } else {

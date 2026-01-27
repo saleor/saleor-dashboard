@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import moment from "moment-timezone";
@@ -34,7 +34,7 @@ export const getExpiryPeriodTerminationDate = (
   }
 };
 
-const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
+const getGiftCardExpiryError = (intl: IntlShape): INotification => ({
   title: intl.formatMessage(giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader),
   text: intl.formatMessage(giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent),
   status: "error",
@@ -43,8 +43,8 @@ const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
 export const getGiftCardCreateOnCompletedMessage = (
   errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
   intl: IntlShape,
-  successMessage?: IMessage,
-): IMessage => {
+  successMessage?: INotification,
+): INotification => {
   const hasExpiryError = errors.some(error => error.field === "expiryDate");
   const successGiftCardMessage = successMessage || {
     status: "success",

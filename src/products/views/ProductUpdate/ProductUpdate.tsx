@@ -1,25 +1,28 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  ErrorPolicyEnum,
   ProductMediaCreateMutationVariables,
+  ProductVariantBulkCreateInput,
   ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
+  useProductVariantBulkCreateMutation,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -123,8 +126,57 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     onCompleted: () =>
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "Gi8zwc",
+          defaultMessage: "Image deleted",
+        }),
       }),
+  });
+  const [bulkCreateVariants] = useProductVariantBulkCreateMutation({
+    onCompleted: data => {
+      const bulkErrors = data.productVariantBulkCreate.errors;
+      const results = data.productVariantBulkCreate.results ?? [];
+      const successCount = results.filter(
+        r => r.productVariant && (!r.errors || r.errors.length === 0),
+      ).length;
+      const failedCount = results.filter(r => r.errors && r.errors.length > 0).length;
+
+      if (bulkErrors.length === 0 && failedCount === 0) {
+        // All succeeded
+        notify({
+          status: "success",
+          text: intl.formatMessage(
+            {
+              id: "f8jN6/",
+              defaultMessage: "{count} variants created successfully",
+            },
+            { count: successCount },
+          ),
+        });
+        refetch();
+      } else if (successCount > 0 && failedCount > 0) {
+        // Partial success
+        notify({
+          status: "warning",
+          text: intl.formatMessage(
+            {
+              id: "EkdOXh",
+              defaultMessage: "{success} variants created, {failed} failed",
+            },
+            { success: successCount, failed: failedCount },
+          ),
+        });
+        refetch();
+      } else {
+        // All failed
+        bulkErrors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+      }
+    },
   });
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
@@ -146,7 +198,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "lUvX5F",
+            defaultMessage: "Image added",
+          }),
         });
       }
     },
@@ -163,6 +218,28 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     });
   };
   const handleBack = () => navigate(productListUrl());
+  const handleBulkCreateVariants = useCallback(
+    async (inputs: ProductVariantBulkCreateInput[]) => {
+      const result = await bulkCreateVariants({
+        variables: {
+          id,
+          inputs,
+          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+        },
+      });
+
+      // Throw if all variants failed so the generator shows error state
+      const results = result.data?.productVariantBulkCreate.results ?? [];
+      const successCount = results.filter(
+        r => r.productVariant && (!r.errors || r.errors.length === 0),
+      ).length;
+
+      if (successCount === 0 && inputs.length > 0) {
+        throw new Error(intl.formatMessage(messages.variantBulkCreateAllFailed));
+      }
+    },
+    [bulkCreateVariants, id, intl],
+  );
   const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
   const [submit, submitOpts] = useProductUpdateHandler(product);
   const handleImageUpload = createImageUploadHandler(id, variables =>
@@ -319,6 +396,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onProductFilterChange={handleProductFilterChange}
+        onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />
       <ActionDialog

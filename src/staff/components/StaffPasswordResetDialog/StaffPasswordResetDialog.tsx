@@ -5,7 +5,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useRequestPasswordResetMutation } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
 import { Box, Input, Paragraph } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -24,8 +24,8 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
         notify({
           status: "success",
           text: intl.formatMessage({
-            defaultMessage: "Password reset link has been sent to the provided email address",
-            id: "ABSQ9z",
+            defaultMessage: "Reset link sent",
+            id: "E+nSVG",
           }),
         });
 

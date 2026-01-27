@@ -20,8 +20,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
@@ -48,7 +47,7 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
   const notifySaved = () =>
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges),
+      text: intl.formatMessage({ id: "GVGaij", defaultMessage: "Model type updated" }),
     });
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
     onCompleted: updateData => {
@@ -84,7 +83,7 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
       if (data.pageAttributeUnassign.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "GVGaij", defaultMessage: "Model type updated" }),
         });
         closeModal();
         attributeListActions.reset();

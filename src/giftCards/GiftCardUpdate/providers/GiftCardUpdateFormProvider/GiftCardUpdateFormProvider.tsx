@@ -12,7 +12,7 @@ import {
 import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getFormErrors } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";

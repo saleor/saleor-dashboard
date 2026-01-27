@@ -8,14 +8,14 @@ import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboar
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -107,7 +107,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
       if (data.customerBulkDelete?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "xgPXGD", defaultMessage: "Customers deleted" }),
         });
         refetch();
         clearRowSelection();

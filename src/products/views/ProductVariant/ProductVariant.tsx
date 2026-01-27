@@ -30,10 +30,9 @@ import {
   useVariantUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { weight } from "@dashboard/misc";
 import {
   getAttributeInputFromVariant,
@@ -118,7 +117,10 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       if (data.productVariantUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "9uqfGj",
+            defaultMessage: "Variant updated",
+          }),
         });
       }
 
