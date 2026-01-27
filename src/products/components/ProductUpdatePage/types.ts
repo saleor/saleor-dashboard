@@ -90,6 +90,7 @@ export interface UseProductUpdateFormOutput
     RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
+  touchedChannels: string[];
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;
