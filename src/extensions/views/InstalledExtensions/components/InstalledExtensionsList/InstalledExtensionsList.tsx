@@ -9,6 +9,9 @@ import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ProblemsBadge } from "../AppProblems/ProblemsBadge";
+import { ProblemsList } from "../AppProblems/ProblemsList";
+
 interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
   loading: boolean;
@@ -99,33 +102,53 @@ export const InstalledExtensionsList = ({
               </Text>
             </GridTable.Cell>
           </GridTable.Row>
-          {installedExtensions.map(extension => (
-            <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
-              <GridTable.Cell padding={0}>
-                <ExtensionLink href={extension.href} name={extension.name}>
-                  <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-                    <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
-                    <Text
-                      size={4}
-                      fontWeight="bold"
-                      __maxWidth="400px"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
-                      whiteSpace="nowrap"
-                    >
-                      {extension.name}
-                    </Text>
-                  </Box>
-                  <Box marginLeft="auto" marginRight={4} display="flex" alignItems="center" gap={4}>
-                    {extension.info}
-                    {/* Actions are here only for failed installation case,
-                        type InstalledExtension should be refactored. More info in its definition */}
-                    {extension.actions}
-                  </Box>
-                </ExtensionLink>
-              </GridTable.Cell>
-            </GridTable.Row>
-          ))}
+          {installedExtensions.map(extension => {
+            const problemCount = extension.problems?.length ?? 0;
+
+            return (
+              <React.Fragment key={extension.id}>
+                <GridTable.Row data-test-id="installed-extension-row">
+                  <GridTable.Cell padding={0}>
+                    <ExtensionLink href={extension.href} name={extension.name}>
+                      <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+                        <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
+                        <Text
+                          size={4}
+                          fontWeight="bold"
+                          __maxWidth="400px"
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          whiteSpace="nowrap"
+                        >
+                          {extension.name}
+                        </Text>
+                        {problemCount > 0 && <ProblemsBadge count={problemCount} />}
+                      </Box>
+                      <Box
+                        marginLeft="auto"
+                        marginRight={4}
+                        display="flex"
+                        alignItems="center"
+                        gap={4}
+                      >
+                        {extension.info}
+                        {/* Actions are here only for failed installation case,
+                            type InstalledExtension should be refactored. More info in its definition */}
+                        {extension.actions}
+                      </Box>
+                    </ExtensionLink>
+                  </GridTable.Cell>
+                </GridTable.Row>
+                {problemCount > 0 && (
+                  <GridTable.Row data-test-id="installed-extension-problems-row">
+                    <GridTable.Cell padding={0}>
+                      <ProblemsList problems={extension.problems!} />
+                    </GridTable.Cell>
+                  </GridTable.Row>
+                )}
+              </React.Fragment>
+            );
+          })}
         </GridTable.Body>
       </GridTable>
     </Box>

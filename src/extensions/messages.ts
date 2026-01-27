@@ -338,6 +338,29 @@ export const messages = defineMessages({
   },
 });
 
+export const problemMessages = defineMessages({
+  problemCount: {
+    defaultMessage: "{count, plural, one {{count} problem} other {{count} problems}}",
+    id: "QKrtDC",
+  },
+  showMoreProblems: {
+    defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",
+    id: "tdcGPK",
+  },
+  showLessProblems: {
+    defaultMessage: "Show less",
+    id: "qyJtWy",
+  },
+  circuitBreakerType: {
+    defaultMessage: "CircuitBreaker",
+    id: "OYWn0V",
+  },
+  customType: {
+    defaultMessage: "custom",
+    id: "EAiv4D",
+  },
+});
+
 export const appManifestErrorMessages = defineMessages({
   invalidManifest: {
     // AppErrorCode.INVALID

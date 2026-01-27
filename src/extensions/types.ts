@@ -1,10 +1,16 @@
 import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
+import {
+  ExtensionListQuery,
+  InstalledAppDetailsFragment,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { ReactNode } from "react";
 
 import { AppDetailsUrlMountQueryParams } from "./urls";
+
+export type AppProblem = InstalledAppDetailsFragment["problems"][number];
 
 interface CommonExtensionData {
   id: string;
@@ -63,6 +69,7 @@ export type InstalledExtension = {
   info: ReactNode;
   href?: string;
   actions?: ReactNode;
+  problems?: AppProblem[];
 };
 
 export interface Extension {

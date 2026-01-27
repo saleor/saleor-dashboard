@@ -142,7 +142,7 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type }) => {
+      installedAppsData.map(({ id, name, isActive, brand, type, problems }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
@@ -161,6 +161,7 @@ export const useInstalledExtensions = () => {
             lastFailedAttempt,
           }),
           href: resolveExtensionHref({ id, type, isActive }),
+          problems,
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData],

@@ -1,0 +1,94 @@
+.problemCard {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.problemCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.warningIcon {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.circuitBreakerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.customBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.problemsBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.timestamp {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.problemMessage {
+  font-size: 14px;
+  color: #111827;
+}
+
+.showMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.showMoreButton:hover {
+  color: #374151;
+}
+
+.problemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 20px 12px;
+}
