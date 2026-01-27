@@ -134,7 +134,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
                 (product, productIndex) => (
                   <Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink data-test-id="product">
-                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
+                      <TableCell padding="checkbox">
                         <Checkbox
                           checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
@@ -153,11 +153,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
                       />
-                      <TableCell
-                        className={classes.colName}
-                        colSpan={2}
-                        data-test-id="product-name"
-                      >
+                      <TableCell colSpan={2} data-test-id="product-name">
                         {maybe(() => product.name)}
                       </TableCell>
                     </TableRowLink>
@@ -183,7 +179,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
                               }
                             />
                           </TableCell>
-                          <TableCell className={classes.colName}>
+                          <TableCell>
                             <div>{variant.name}</div>
                             {variant.sku && (
                               <Box color="default2">

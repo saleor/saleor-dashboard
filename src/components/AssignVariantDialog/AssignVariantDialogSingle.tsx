@@ -137,16 +137,14 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                 <Fragment key={product ? product.id : "skeleton"}>
                   {/* Product header row (non-selectable) */}
                   <TableRowLink>
-                    <TableCell padding="checkbox" className={classes.productCheckboxCell}>
+                    <TableCell padding="checkbox">
                       {/* No checkbox for products in single mode */}
                     </TableCell>
                     <TableCellAvatar
                       className={classes.avatar}
                       thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
                     />
-                    <TableCell className={classes.colName} colSpan={2}>
-                      {product ? maybe(() => product.name) : null}
-                    </TableCell>
+                    <TableCell colSpan={2}>{product ? maybe(() => product.name) : null}</TableCell>
                   </TableRowLink>
                   {/* Variant rows (selectable) */}
                   {(product?.variants || [])
@@ -171,7 +169,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                               name="variant-selection"
                             />
                           </TableCell>
-                          <TableCell className={classes.colName}>
+                          <TableCell>
                             <div>{variant.name}</div>
                             <div className={classes.grayText}>
                               <FormattedMessage

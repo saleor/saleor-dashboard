@@ -114,7 +114,7 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
 
               return (
                 <TableRowLink key={container.id} data-test-id="dialog-row">
-                  <TableCell padding="checkbox" className={classes.checkboxCell}>
+                  <TableCell padding="checkbox">
                     <Checkbox
                       checked={isSelected}
                       onChange={() =>

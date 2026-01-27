@@ -5,7 +5,6 @@ export const useStyles = makeStyles(
     avatar: {
       width: 64,
     },
-    colName: {},
     colVariantCheckbox: {
       padding: 0,
     },
@@ -30,7 +29,6 @@ export const useStyles = makeStyles(
     overflow: {
       overflowY: "hidden",
     },
-    productCheckboxCell: {},
     textRight: {
       textAlign: "right",
     },

@@ -179,7 +179,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                         opacity: !isProductAvailable ? 0.5 : 1,
                       }}
                     />
-                    <TableCell className={classes.colName}>
+                    <TableCell>
                       {product.name}
                       {!isProductAvailable && productUnavailableText && (
                         <Text display="block" size={1} color="default2">

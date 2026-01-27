@@ -8,7 +8,6 @@ export const useStyles = makeStyles(
     checkboxCell: {
       width: 88,
     },
-    colName: {},
   },
   { name: "AssignProductDialog" },
 );

@@ -2,8 +2,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   {
-    avatar: {},
-    checkboxCell: {},
     wideCell: {
       width: "100%",
     },

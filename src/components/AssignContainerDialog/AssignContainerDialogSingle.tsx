@@ -112,7 +112,7 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
                   data-test-id="dialog-row"
                   onClick={() => handleContainerSelect(container.id)}
                 >
-                  <TableCell padding="checkbox" className={classes.checkboxCell}>
+                  <TableCell padding="checkbox">
                     <Radio
                       checked={isSelected}
                       onChange={() => handleContainerSelect(container.id)}

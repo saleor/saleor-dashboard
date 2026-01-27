@@ -57,7 +57,7 @@
 }
 
 .table td:last-child {
-  padding-right: 16px !important;
+  padding-right: 4px !important;
 }
 
 .table tbody tr:last-child td {
