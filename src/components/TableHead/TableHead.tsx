@@ -85,8 +85,8 @@ const TableHead = (props: TableHeadProps) => {
             <div className={classes.container}>
               <Text data-test-id="SelectedText">
                 <FormattedMessage
-                  id="qu/hXD"
-                  defaultMessage="Selected {number} items"
+                  id="imYtnq"
+                  defaultMessage="Selected {number, plural, one {# item} other {# items}}"
                   values={{
                     number: selected,
                   }}
