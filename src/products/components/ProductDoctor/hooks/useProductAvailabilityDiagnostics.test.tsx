@@ -8,7 +8,7 @@ import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagn
 
 // Mock Apollo's useQuery
 jest.mock("@apollo/client", () => ({
-  ...jest.requireActual("@apollo/client"),
+  ...(jest.requireActual("@apollo/client") as object),
   useQuery: jest.fn(),
 }));
 
