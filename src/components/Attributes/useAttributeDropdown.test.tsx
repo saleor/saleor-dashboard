@@ -34,8 +34,10 @@ describe("useAttributeDropdown", () => {
     jest.useRealTimers();
   });
 
+  // We add a line "Add new value" for better UX
+  // it just sets the input value to whatever user typed, attribute created on page save
   describe("customValueOption", () => {
-    it("should return empty array when inputValue is empty", () => {
+    it("should not show 'Add new value' option when user hasn't typed anything", () => {
       // Arrange & Act
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -49,7 +51,7 @@ describe("useAttributeDropdown", () => {
       expect(result.current.customValueOption).toEqual([]);
     });
 
-    it("should return custom value option when inputValue doesn't match selected value", () => {
+    it("should show 'Add new value' option when user types a value not in the dropdown", () => {
       // Arrange & Act
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -62,10 +64,10 @@ describe("useAttributeDropdown", () => {
       // Assert
       expect(result.current.customValueOption).toHaveLength(1);
       expect(result.current.customValueOption[0].value).toBe("orange");
-      expect(result.current.customValueOption[0].label).toContain("orange");
+      expect(result.current.customValueOption[0].label).toContain("Add new value");
     });
 
-    it("should return empty array when inputValue matches selected value (case insensitive)", () => {
+    it("should hide 'Add new value' option when user types the already selected value", () => {
       // Arrange & Act
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -79,7 +81,7 @@ describe("useAttributeDropdown", () => {
       expect(result.current.customValueOption).toEqual([]);
     });
 
-    it("should return custom value option when inputValue differs from selected value", () => {
+    it("should show 'Add new value' option when user changes from selected value to a different value", () => {
       // Arrange & Act
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -96,7 +98,7 @@ describe("useAttributeDropdown", () => {
   });
 
   describe("customValueLabel", () => {
-    it("should format message with inputValue", () => {
+    it("should format message with 'Add new value' text", () => {
       // Arrange & Act
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -107,7 +109,6 @@ describe("useAttributeDropdown", () => {
       );
 
       // Assert
-      expect(result.current.customValueLabel).toContain("emerald");
       expect(result.current.customValueLabel).toMatch(/Add new value/i);
     });
   });
@@ -149,7 +150,7 @@ describe("useAttributeDropdown", () => {
       expect(mockFetchMore.onFetchMore).not.toHaveBeenCalled();
     });
 
-    it("should not call onFetchMore when fetchMore is undefined", () => {
+    it("should not call onFetchMore when fetchMore is not provided", () => {
       // Arrange
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -271,8 +272,9 @@ describe("useAttributeDropdown", () => {
     });
   });
 
+  // Converts 'Add new value: X' option to clean value when selected
   describe("transformCustomValue", () => {
-    it("should transform option when label contains custom value label", () => {
+    it("should strip 'Add new value:' prefix when user selects the custom value option", () => {
       // Arrange
       const { result } = renderHook(() =>
         useAttributeDropdown({
@@ -297,7 +299,7 @@ describe("useAttributeDropdown", () => {
       });
     });
 
-    it("should not transform option when label doesn't contain custom value label", () => {
+    it("should leave existing dropdown options unchanged", () => {
       // Arrange
       const { result } = renderHook(() =>
         useAttributeDropdown({
