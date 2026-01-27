@@ -5,7 +5,7 @@ description: >
   Use when refactoring components that have inlined data transformations, mapping,
   filtering, sorting, formatting, validation, conditional logic, or computations
   mixed into JSX markup. Also use when asked to improve testability of a component
-  or move logic out of a React component.
+  or move logic out of a React component. Also use when asked to create new React components.
 ---
 
 # Separate Business Logic
