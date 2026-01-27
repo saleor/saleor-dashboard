@@ -3,10 +3,11 @@ import { productVariantEditUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { useScrollIntoView } from "../hooks/useScrollIntoView";
 import { messages } from "../messages";
 import { ProductVariantItem, ProductVariantItemThumbnail } from "../types";
 import { ImagePlaceholder } from "./ImagePlaceholder";
@@ -28,21 +29,17 @@ export const VariantItem = ({
   draggable,
 }: VariantItemProps) => {
   const intl = useIntl();
-  const scrolledRef = useRef(false);
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: variant.id,
   });
+  const { scrollRef } = useScrollIntoView<HTMLDivElement>({ isActive });
 
   const handleRef = useCallback(
     (node: HTMLDivElement | null) => {
       setNodeRef(node);
-
-      if (isActive && node && !scrolledRef.current) {
-        node.scrollIntoView({ block: "nearest" });
-        scrolledRef.current = true;
-      }
+      scrollRef(node);
     },
-    [isActive, setNodeRef],
+    [setNodeRef, scrollRef],
   );
 
   const style = {
