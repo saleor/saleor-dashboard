@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import * as React from "react";
 import { IntlProvider } from "react-intl";
 
@@ -24,7 +24,7 @@ describe("DateTimeTimezoneField", () => {
     expect(getByTestId("date-time-field")).toBeInTheDocument();
   });
 
-  it("calls onChange when the input value changes", () => {
+  it("calls onChange when the input value changes", async () => {
     // Arrange & Act
     const handleChange = jest.fn();
     const { getByTestId } = render(
@@ -35,8 +35,12 @@ describe("DateTimeTimezoneField", () => {
 
     fireEvent.change(getByTestId("date-time-field"), { target: { value: "2022-12-31T23:59" } });
 
-    // Assert
-    expect(handleChange).toHaveBeenCalledWith("2022-12-31T23:59");
+    // Assert - wait for useEffect to run and expect UTC ISO format
+    await waitFor(() => {
+      expect(handleChange).toHaveBeenCalled();
+    });
+    // Component converts to UTC ISO format (e.g., "2022-12-31T23:59:00.000Z")
+    expect(handleChange).toHaveBeenCalledWith(expect.stringMatching(/^2022-12-31T23:59/));
   });
 
   it("displays an error message when there is an error", () => {

@@ -354,6 +354,12 @@ export const ProductChannelListingUpdateMutation = gql`
       errors {
         ...ProductChannelListingError
       }
+      product {
+        id
+        channelListings {
+          ...ChannelListingProductWithoutPricing
+        }
+      }
     }
   }
 `;
