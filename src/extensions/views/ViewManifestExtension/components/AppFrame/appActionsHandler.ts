@@ -1,3 +1,4 @@
+import { ContentSize } from "@dashboard/components/Modal/Content";
 import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
@@ -13,6 +14,7 @@ import {
   RequestPermissions,
   UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
+import { ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -267,6 +269,65 @@ const useHandleAppFormUpdate = () => {
   };
 };
 
+export interface ModalAction {
+  type: "modal";
+  payload: {
+    actionId: string;
+    title: string;
+    content: ReactNode;
+    size?: ContentSize;
+  };
+}
+
+export interface ModalState {
+  open: boolean;
+  title: string;
+  content: ReactNode;
+  size?: ContentSize;
+}
+
+const useHandleModalAction = () => {
+  const [modalState, setModalState] = useState<ModalState>({
+    open: false,
+    title: "",
+    content: "",
+    size: "sm",
+  });
+
+  return {
+    modalState,
+    openModal: (title: string, content: ReactNode, size?: ContentSize) => {
+      setModalState({
+        open: true,
+        title,
+        content,
+        size: size || "sm",
+      });
+    },
+    closeModal: () => {
+      setModalState(prev => ({
+        ...prev,
+        open: false,
+      }));
+    },
+    handle: (action: ModalAction) => {
+      const { actionId, title, content, size } = action.payload;
+
+      debug(`Handling Modal action with ID: %s`, actionId);
+      debug(`Modal title: %s, size: %s`, title, size);
+
+      setModalState({
+        open: true,
+        title,
+        content,
+        size: size || "sm",
+      });
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
@@ -275,4 +336,5 @@ export const AppActionsHandler = {
   createResponseStatus,
   useHandlePermissionRequest,
   useHandleAppFormUpdate,
+  useHandleModalAction,
 };

@@ -1,8 +1,10 @@
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useState } from "react";
 
-import { AppActionsHandler } from "./appActionsHandler";
+import { AppActionsHandler, ModalAction } from "./appActionsHandler";
 import { usePostToExtension } from "./usePostToExtension";
+
+type ExtendedActions = Actions | ModalAction;
 
 /**
  * TODO Refactor to named attributes
@@ -29,11 +31,17 @@ export const useAppActions = (
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
   const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
+  const {
+    handle: handleModal,
+    modalState,
+    openModal,
+    closeModal,
+  } = AppActionsHandler.useHandleModalAction();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
   const [handshakeDone, setHandshakeDone] = useState(false);
-  const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
+  const handleAction = (action: ExtendedActions | undefined): DispatchResponseEvent => {
     switch (action?.type) {
       case "notification": {
         return handleNotification(action);
@@ -60,6 +68,9 @@ export const useAppActions = (
       case "formPayloadUpdate": {
         return handleAppFormUpdate(action);
       }
+      case "modal": {
+        return handleModal(action);
+      }
       default: {
         throw new Error("Unknown action type");
       }
@@ -67,7 +78,7 @@ export const useAppActions = (
   };
 
   useEffect(() => {
-    const handler = (event: MessageEvent<Actions>) => {
+    const handler = (event: MessageEvent<ExtendedActions>) => {
       if (event.origin === appOrigin) {
         const response = handleAction(event.data);
 
@@ -86,5 +97,8 @@ export const useAppActions = (
     handshakeDone,
     postToExtension,
     setHandshakeDone,
+    modalState,
+    openModal,
+    closeModal,
   };
 };

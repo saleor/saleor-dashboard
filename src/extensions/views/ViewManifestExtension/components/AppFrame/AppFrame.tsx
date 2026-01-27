@@ -1,3 +1,4 @@
+import { DashboardModal } from "@dashboard/components/Modal";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
@@ -48,16 +49,11 @@ export const AppFrame = ({
   /**
    * React on messages from App
    */
-  const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
-    frameRef.current,
-    appOrigin,
-    appId,
-    appToken,
-    {
+  const { postToExtension, handshakeDone, setHandshakeDone, modalState, closeModal } =
+    useAppActions(frameRef.current, appOrigin, appId, appToken, {
       core: coreVersion,
       dashboard: dashboardVersion,
-    },
-  );
+    });
 
   /**
    * Listen to Dashboard context like theme or locale and inform app about it
@@ -113,6 +109,12 @@ export const AppFrame = ({
           [classes.iframeHidden]: !handshakeDone,
         })}
       />
+      <DashboardModal open={modalState.open} onChange={closeModal}>
+        <DashboardModal.Content size={modalState.size}>
+          <DashboardModal.Header>{modalState.title}</DashboardModal.Header>
+          {modalState.content}
+        </DashboardModal.Content>
+      </DashboardModal>
     </>
   );
 };
