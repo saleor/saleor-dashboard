@@ -43,6 +43,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         channel: {
           id: "1",
           name: "Default",
+          slug: "default",
           currencyCode: "USD",
           __typename: "Channel" as const,
         },
@@ -75,6 +76,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         channel: {
           id: "1",
           name: "Default",
+          slug: "default",
           currencyCode: "USD",
           __typename: "Channel" as const,
         },
@@ -195,6 +197,11 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       thumbnail: {
         __typename: "Image" as const,
         url: "test-thumb.jpg",
+      },
+      productType: {
+        __typename: "ProductType" as const,
+        id: "product-type-1",
+        name: "Default Product Type",
       },
       channelListings: [
         {

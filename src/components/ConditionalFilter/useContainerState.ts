@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
 import { FilterValueProvider } from "./FilterValueProvider";
@@ -6,19 +6,7 @@ import { FilterValueProvider } from "./FilterValueProvider";
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
-export interface UseContainerStateOptions {
-  /**
-   * Only sync with valueProvider on first mount, not on subsequent changes.
-   *
-   * Use this for modals where `valueProvider.value` is wrapped/computed
-   * (e.g., with injected constraints). The wrapping creates new array
-   * references on each render, causing unwanted resyncs that overwrite
-   * user's unsaved edits.
-   */
-  syncOnce?: boolean;
-}
-
-const removeConstraint = (container: FilterContainer) => {
+const removeConstraint = (container: FilterContainer): FilterContainer => {
   return container.map(el => {
     if (!FilterElement.isFilterElement(el)) return el;
 
@@ -29,7 +17,7 @@ const removeConstraint = (container: FilterContainer) => {
     return el;
   });
 };
-const calculateIndexesToRemove = (container: FilterContainer, position: number) => {
+const calculateIndexesToRemove = (container: FilterContainer, position: number): number[] => {
   const next = position + 1;
   const previous = position - 1;
   const indexTuple = [position];
@@ -46,12 +34,14 @@ const calculateIndexesToRemove = (container: FilterContainer, position: number) 
 
   return indexTuple;
 };
-const removeElement = (container: FilterContainer, position: number) => {
+
+const removeElement = (container: FilterContainer, position: number): FilterContainer => {
   const indexTuple = calculateIndexesToRemove(container, position);
   const newContainer = container.filter((_, elIndex) => !indexTuple.includes(elIndex));
 
   return removeConstraint(newContainer);
 };
+
 const removeEmptyElements = (
   container: FilterContainer,
   provider: FilterValueProvider,
@@ -65,24 +55,14 @@ const removeEmptyElements = (
   return removeEmptyElements(removeElement(container, emptyIndex), provider);
 };
 
-export const useContainerState = (
-  valueProvider: FilterValueProvider,
-  options?: UseContainerStateOptions,
-) => {
+export const useContainerState = (valueProvider: FilterValueProvider) => {
   const [value, setValue] = useState<FilterContainer>([]);
-  const initializedRef = useRef(false);
 
   useEffect(() => {
     if (!valueProvider.loading) {
-      // Skip resync if syncOnce is enabled and already initialized
-      if (options?.syncOnce && initializedRef.current) {
-        return;
-      }
-
       setValue(valueProvider.value);
-      initializedRef.current = true;
     }
-  }, [valueProvider.loading, valueProvider.value, options?.syncOnce]);
+  }, [valueProvider.loading, valueProvider.value]);
 
   const isFilterElementAtIndex = (
     elIndex: number,
@@ -91,19 +71,20 @@ export const useContainerState = (
   ): el is FilterElement => {
     return elIndex === index && FilterElement.isFilterElement(el);
   };
+
   const updateFilterElement =
-    (index: number, cb: StateCallback) => (el: Element, elIndex: number) => {
+    (index: number, cb: StateCallback) =>
+    (el: Element, elIndex: number): Element => {
       if (isFilterElementAtIndex(elIndex, index, el)) {
         cb(el);
       }
 
       return el;
     };
-  const updateAt = (position: string, cb: StateCallback) => {
+  const updateAt = (position: string, cb: StateCallback): void => {
     const index = parseInt(position, 10);
     const element = value[index];
 
-    // Respect fully disabled constraints (all controls disabled) - element cannot be modified
     if (FilterElement.isFilterElement(element)) {
       const isFullyDisabled =
         element.constraint?.disabled?.includes("left") &&
@@ -117,12 +98,12 @@ export const useContainerState = (
 
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
-  const getAt = (position: string) => {
+  const getAt = (position: string): Element | undefined => {
     const index = parseInt(position, 10);
 
     return value[index];
   };
-  const updateBySlug = (slug: string, cb: StateCallback) => {
+  const updateBySlug = (slug: string, cb: StateCallback): void => {
     setValue(v =>
       v.map(el => {
         if (FilterElement.isFilterElement(el) && el.value.value === slug) {
@@ -133,11 +114,10 @@ export const useContainerState = (
       }),
     );
   };
-  const removeAt = (position: string) => {
+  const removeAt = (position: string): void => {
     const index = parseInt(position, 10);
     const element = value[index];
 
-    // Respect constraint.removable === false - element cannot be removed
     if (FilterElement.isFilterElement(element) && element.constraint?.removable === false) {
       return;
     }
@@ -145,7 +125,7 @@ export const useContainerState = (
     setValue(v => removeElement(v, index));
   };
 
-  const createNewValue = (value: FilterContainer, element: FilterElement) => {
+  const createNewValue = (value: FilterContainer, element: FilterElement): FilterContainer => {
     const newValue: FilterContainer = [];
 
     if (value.length > 0) {
@@ -157,36 +137,35 @@ export const useContainerState = (
     return newValue;
   };
 
-  const create = (element: FilterElement) => {
+  const create = (element: FilterElement): void => {
     const newValue = createNewValue(value, element);
 
     setValue(v => v.concat(newValue));
   };
 
-  // This function was created to cover a case when on click outside filter handler
-  // fire state update, but applied of those state change happened after create function call,
-  // so we have not removed empty values in container
-  const createAndRemoveEmpty = (element: FilterElement) => {
+  /* This function was created to cover a case when on click outside filter handler
+   * fire state update, but applied of those state change happened after create function call,
+   * so we have not removed empty values in container */
+  const createAndRemoveEmpty = (element: FilterElement): void => {
     const filteredValue = removeEmptyElements(value, valueProvider);
     const newValue = createNewValue(filteredValue, element);
 
     setValue(() => filteredValue.concat(newValue));
   };
 
-  const exist = (slug: string) => {
+  const exist = (slug: string): boolean => {
     return value.some(entry => FilterElement.isFilterElement(entry) && entry.value.value === slug);
   };
-  const createEmpty = () => {
+
+  const createEmpty = (): void => {
     create(FilterElement.createEmpty());
   };
-  const clear = () => {
-    setValue([]);
 
-    if (options?.syncOnce) {
-      initializedRef.current = false; // Allow re-initialization after clear
-    }
+  const clear = (): void => {
+    setValue([]);
   };
-  const clearEmpty = () => {
+
+  const clearEmpty = (): void => {
     setValue(v => removeEmptyElements(v, valueProvider));
   };
 

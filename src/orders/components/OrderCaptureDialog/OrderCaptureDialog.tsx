@@ -3,6 +3,7 @@ import { Callout } from "@dashboard/components/Callout/Callout";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import {
@@ -347,9 +348,9 @@ export const OrderCaptureDialog = ({
 
           {/* Radio options - primary section */}
           <Box display="flex" flexDirection="column" gap={4}>
-            <Text size={5} fontWeight="bold">
+            <ModalSectionHeader>
               <FormattedMessage {...messages.selectAmount} />
-            </Text>
+            </ModalSectionHeader>
 
             <RadioGroup
               value={selectedOption}
