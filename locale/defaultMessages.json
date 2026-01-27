@@ -333,10 +333,6 @@
   "/vCXIP": {
     "string": "Translation"
   },
-  "/vFLiw": {
-    "context": "description for unsupported required attributes error",
-    "string": "Required attributes ({attributes}) are not supported.{newline}{newline}To proceed:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
-  },
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
@@ -4287,6 +4283,10 @@
     "context": "section subheader",
     "string": "Active member since {date}"
   },
+  "Ml19/F": {
+    "context": "description for unsupported required attributes error",
+    "string": "Required attributes ({attributes}) are not supported.{newline}{newline}To proceed:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
+  },
   "Mm/Stj": {
     "context": "hint showing maximum allowed custom amount",
     "string": "Max: {amount}"
@@ -7751,10 +7751,6 @@
     "context": "Refunded transaction amount, data display header",
     "string": "Refunded"
   },
-  "gO38iV": {
-    "context": "tooltip when generate variants is disabled due to no selection attributes",
-    "string": "No selection attributes defined for this product type."
-  },
   "gOiREw": {
     "string": "App settings updated"
   },
@@ -8601,6 +8597,10 @@
   "lEG/12": {
     "context": "Webhook subscription query card title",
     "string": "Subscription Query"
+  },
+  "lEx2zw": {
+    "context": "tooltip when generate variants is disabled due to no selection attributes",
+    "string": "No selection attributes defined for this product type."
   },
   "lF+VJQ": {
     "context": "Shipment information card header",
