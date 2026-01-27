@@ -9,12 +9,9 @@ jest.mock("react-intl", () => {
   return {
     ...actual,
     useIntl: () => ({
-      formatMessage: (
-        { defaultMessage }: { defaultMessage: string },
-        values?: Record<string, string>,
-      ) => defaultMessage.replace(/{(\w+)}/g, (_, key) => values?.[key] || `{${key}}`),
+      formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
     }),
-    defineMessages: (messages: any) => messages,
+    defineMessages: (messages: unknown): unknown => messages,
   };
 });
 
