@@ -33,7 +33,7 @@ export const DropdownRow = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
-}: DropdownRowProps) => {
+}: DropdownRowProps): JSX.Element => {
   const intl = useIntl();
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState<Option | null>(
@@ -45,13 +45,19 @@ export const DropdownRow = ({
       : null,
   );
 
-  const { customValueOption, customValueLabel, handleFetchMore, handleInputChange, handleFocus } =
-    useAttributeDropdown({
-      inputValue,
-      selectedValue,
-      fetchOptions: query => fetchAttributeValues(query, attribute.id),
-      fetchMore: fetchMoreAttributeValues,
-    });
+  const {
+    customValueOption,
+    customValueLabel,
+    handleFetchMore,
+    handleInputChange,
+    handleFocus,
+    transformCustomValue,
+  } = useAttributeDropdown({
+    inputValue,
+    selectedValue,
+    fetchOptions: query => fetchAttributeValues(query, attribute.id),
+    fetchMore: fetchMoreAttributeValues,
+  });
 
   const options: Option[] = attributeValues
     .filter(value => value.slug !== null)
@@ -68,17 +74,13 @@ export const DropdownRow = ({
       return;
     }
 
-    const isCustomValue = option.label.includes(customValueLabel);
+    const transformedOption = transformCustomValue(option);
 
-    if (isCustomValue) {
-      const newOption = { label: option.value, value: option.value };
+    setSelectedValue(transformedOption);
+    onChange(attribute.id, transformedOption.value);
 
-      setSelectedValue(newOption);
-      onChange(attribute.id, option.value);
+    if (option.label.includes(customValueLabel)) {
       setInputValue("");
-    } else {
-      setSelectedValue(option);
-      onChange(attribute.id, option.value);
     }
   };
 
