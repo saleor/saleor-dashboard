@@ -1,5 +1,6 @@
 import { problemMessages } from "@dashboard/extensions/messages";
 import { AppProblem } from "@dashboard/extensions/types";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import { Info, Zap } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -22,9 +23,17 @@ export const ProblemTypeBadge = ({ typename }: ProblemTypeBadgeProps) => {
   }
 
   return (
-    <span className={styles.customBadge}>
-      <Info size={12} />
-      {intl.formatMessage(problemMessages.customType)}
-    </span>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <span className={styles.customBadge}>
+          <Info size={12} />
+          {intl.formatMessage(problemMessages.customType)}
+        </span>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        {intl.formatMessage(problemMessages.customTypeTooltip)}
+      </Tooltip.Content>
+    </Tooltip>
   );
 };

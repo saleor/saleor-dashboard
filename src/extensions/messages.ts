@@ -359,6 +359,14 @@ export const problemMessages = defineMessages({
     defaultMessage: "custom",
     id: "EAiv4D",
   },
+  customTypeTooltip: {
+    defaultMessage: "This message comes from the app",
+    id: "lRtZ2L",
+  },
+  hideProblems: {
+    defaultMessage: "Hide problems",
+    id: "jr3WzZ",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({
