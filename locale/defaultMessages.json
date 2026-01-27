@@ -11092,6 +11092,9 @@
     "context": "product available for purchase date",
     "string": "Will become available on {date}"
   },
+  "zo5aT3": {
+    "string": "Warehouse Metadata"
+  },
   "zoUlyR": {
     "string": "Go to product types"
   },
