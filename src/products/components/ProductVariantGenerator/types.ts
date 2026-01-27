@@ -74,6 +74,21 @@ export const GENERATOR_SUPPORTED_INPUT_TYPES = new Set([
   AttributeInputTypeEnum.DATE_TIME,
 ]);
 
+/** Checks if an attribute input type is supported by the generator */
+export const isGeneratorSupportedType = (
+  inputType: AttributeInputTypeEnum | null | undefined,
+): boolean => !!inputType && GENERATOR_SUPPORTED_INPUT_TYPES.has(inputType);
+
+/** Filters required attributes that have unsupported types (these block the generator) */
+export const getUnsupportedRequiredAttributes = <
+  T extends { valueRequired: boolean; inputType: AttributeInputTypeEnum | null },
+>(
+  attributes: T[] | null | undefined,
+): T[] =>
+  (attributes ?? []).filter(
+    attr => attr.valueRequired && !isGeneratorSupportedType(attr.inputType),
+  );
+
 /** Error details for a specific attribute from the bulk create mutation */
 export interface AttributeError {
   attributeId: string;

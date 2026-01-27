@@ -31,7 +31,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ProductVariantGenerator } from "../ProductVariantGenerator/ProductVariantGenerator";
 import {
   BulkCreateResult,
-  GENERATOR_SUPPORTED_INPUT_TYPES,
+  getUnsupportedRequiredAttributes,
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
 import {
@@ -159,12 +159,7 @@ export const ProductVariants = ({
   // Check for required non-selection attributes with unsupported types
   // These block the generator entirely
   const unsupportedRequiredAttributes = useMemo(
-    () =>
-      (nonSelectionVariantAttributes ?? []).filter(
-        attr =>
-          attr.valueRequired &&
-          (!attr.inputType || !GENERATOR_SUPPORTED_INPUT_TYPES.has(attr.inputType)),
-      ),
+    () => getUnsupportedRequiredAttributes(nonSelectionVariantAttributes),
     [nonSelectionVariantAttributes],
   );
 

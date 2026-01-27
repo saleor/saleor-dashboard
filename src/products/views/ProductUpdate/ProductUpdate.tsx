@@ -173,6 +173,19 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     });
   };
   const handleBack = () => navigate(productListUrl());
+
+  /**
+   * Handles bulk variant creation with two-tier error handling:
+   *
+   * 1. Attribute errors (e.g., missing required attribute) → returned in `attributeErrors`
+   *    and displayed INLINE next to the field in the generator modal. No notification shown.
+   *
+   * 2. Other errors (e.g., duplicate SKU, network) → shown as NOTIFICATIONS.
+   *    Only the first unique error is shown to avoid notification spam.
+   *
+   * This split ensures users see actionable errors where they can fix them (inline),
+   * while general failures are communicated via notifications.
+   */
   const handleBulkCreateVariants = useCallback(
     async (inputs: ProductVariantBulkCreateInput[]) => {
       const result = await bulkCreateVariants({
@@ -190,7 +203,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ).length;
       const failedCount = results.filter(r => r.errors && r.errors.length > 0).length;
 
-      // Collect attribute-specific errors (for inline display in generator)
+      // Categorize errors: attribute-specific (inline) vs other (notifications)
       const attributeErrors: Array<{
         attributeId: string;
         code: string;
@@ -198,12 +211,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       }> = [];
       const otherErrors: Array<{ message: string | null }> = [];
 
-      // Process per-variant errors
       results
         .flatMap(r => r.errors ?? [])
         .forEach(error => {
           if (error.attributes && error.attributes.length > 0) {
-            // Attribute-specific error
             error.attributes.forEach(attrId => {
               attributeErrors.push({
                 attributeId: attrId,
@@ -212,56 +223,40 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
               });
             });
           } else {
-            // Non-attribute error
             otherErrors.push({ message: error.message });
           }
         });
 
-      // Process top-level errors
       bulkErrors.forEach(error => {
         otherErrors.push({ message: getProductErrorMessage(error, intl) });
       });
 
-      // Show notifications only for non-attribute errors and success/partial success
+      // Show notifications based on outcome (skip if attribute errors will be shown inline)
       if (successCount > 0 && failedCount === 0) {
-        // All succeeded
         notify({
           status: "success",
-          text: intl.formatMessage(
-            {
-              id: "f8jN6/",
-              defaultMessage: "{count} variants created successfully",
-            },
-            { count: successCount },
-          ),
+          text: intl.formatMessage(messages.variantBulkCreateSuccess, { count: successCount }),
         });
         refetch();
       } else if (successCount > 0 && failedCount > 0) {
-        // Partial success
         notify({
           status: "warning",
-          text: intl.formatMessage(
-            {
-              id: "EkdOXh",
-              defaultMessage: "{success} variants created, {failed} failed",
-            },
-            { success: successCount, failed: failedCount },
-          ),
+          text: intl.formatMessage(messages.variantBulkCreatePartial, {
+            success: successCount,
+            failed: failedCount,
+          }),
         });
         refetch();
       } else if (attributeErrors.length === 0 && otherErrors.length > 0) {
-        // All failed with non-attribute errors - show single notification with first unique error
         const uniqueMessages = [...new Set(otherErrors.map(e => e.message).filter(Boolean))];
-        const firstError = uniqueMessages[0];
 
-        if (firstError) {
+        if (uniqueMessages[0]) {
           notify({
             status: "error",
-            text: firstError,
+            text: uniqueMessages[0],
           });
         }
       }
-      // If there are attribute errors, don't show notifications - they'll be shown inline
 
       return {
         success: successCount > 0,

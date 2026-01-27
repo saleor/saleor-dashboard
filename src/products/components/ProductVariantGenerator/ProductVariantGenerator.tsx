@@ -22,7 +22,8 @@ import { messages } from "./messages";
 import styles from "./ProductVariantGenerator.module.css";
 import {
   AttributeError,
-  GENERATOR_SUPPORTED_INPUT_TYPES,
+  getUnsupportedRequiredAttributes,
+  isGeneratorSupportedType,
   NonSelectionAttributeValues,
   ProductVariantGeneratorProps,
 } from "./types";
@@ -78,10 +79,7 @@ export const ProductVariantGenerator = ({
 
   // Check for required attributes with unsupported types - these BLOCK generation entirely
   const unsupportedRequiredAttributes = useMemo(
-    () =>
-      requiredNonSelectionAttributes.filter(
-        attr => !attr.inputType || !GENERATOR_SUPPORTED_INPUT_TYPES.has(attr.inputType),
-      ),
+    () => getUnsupportedRequiredAttributes(requiredNonSelectionAttributes),
     [requiredNonSelectionAttributes],
   );
 
@@ -89,10 +87,7 @@ export const ProductVariantGenerator = ({
 
   // Get only the supported required attributes (these are the ones user can fill)
   const supportedRequiredAttributes = useMemo(
-    () =>
-      requiredNonSelectionAttributes.filter(
-        attr => attr.inputType && GENERATOR_SUPPORTED_INPUT_TYPES.has(attr.inputType),
-      ),
+    () => requiredNonSelectionAttributes.filter(attr => isGeneratorSupportedType(attr.inputType)),
     [requiredNonSelectionAttributes],
   );
 
@@ -488,8 +483,8 @@ export const ProductVariantGenerator = ({
           </BackButton>
           <Tooltip open={disabledTooltipMessage ? undefined : false}>
             <Tooltip.Trigger>
-              {/* Wrapper span enables hover events on disabled button */}
-              <span style={{ display: "inline-block" }}>
+              {/* Box wrapper enables hover events on disabled button */}
+              <Box display="inline-block">
                 <ConfirmButton
                   transitionState={confirmState}
                   onClick={handleGenerate}
@@ -497,7 +492,7 @@ export const ProductVariantGenerator = ({
                 >
                   {intl.formatMessage(messages.generate, { count: newVariantsCount })}
                 </ConfirmButton>
-              </span>
+              </Box>
             </Tooltip.Trigger>
             <Tooltip.Content side="top">
               <Tooltip.Arrow />

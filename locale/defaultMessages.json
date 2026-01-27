@@ -1372,6 +1372,10 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "5ye4Ik": {
+    "context": "warning message when some variants failed to create",
+    "string": "{success} variants created, {failed} failed"
+  },
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
   },
@@ -2796,9 +2800,6 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
-  },
-  "EkdOXh": {
-    "string": "{success} variants created, {failed} failed"
   },
   "EoNN9v": {
     "context": "Label for visible in listings toggle",
@@ -7531,9 +7532,6 @@
     "context": "Title for delivery configuration section in channel",
     "string": "Delivery configuration"
   },
-  "f8jN6/": {
-    "string": "{count} variants created successfully"
-  },
   "fDc5ys": {
     "context": "order transaction refund summary label",
     "string": "Selected products"
@@ -9923,6 +9921,10 @@
   },
   "t1Bd7E": {
     "string": "Payment captured"
+  },
+  "t1XcOo": {
+    "context": "success message when all variants are created",
+    "string": "{count} variants created successfully"
   },
   "t1scMK": {
     "string": "Refunds settings"
