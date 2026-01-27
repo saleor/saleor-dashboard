@@ -363,10 +363,6 @@ export const problemMessages = defineMessages({
     defaultMessage: "This message comes from the app",
     id: "lRtZ2L",
   },
-  hideProblems: {
-    defaultMessage: "Hide problems",
-    id: "jr3WzZ",
-  },
 });
 
 export const appManifestErrorMessages = defineMessages({

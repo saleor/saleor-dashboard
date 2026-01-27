@@ -15,30 +15,10 @@ interface ProblemsListProps {
 
 export const ProblemsList = ({ problems }: ProblemsListProps) => {
   const intl = useIntl();
-  const [collapsed, setCollapsed] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   if (problems.length === 0) {
     return null;
-  }
-
-  if (collapsed) {
-    return (
-      <div className={styles.problemsList}>
-        <button
-          className={styles.showMoreButton}
-          onClick={e => {
-            e.preventDefault();
-            setCollapsed(false);
-          }}
-        >
-          <ChevronDown size={16} />
-          {intl.formatMessage(problemMessages.showMoreProblems, {
-            count: problems.length,
-          })}
-        </button>
-      </div>
-    );
   }
 
   const visibleProblems = expanded ? problems : problems.slice(0, MAX_VISIBLE_PROBLEMS);
@@ -47,17 +27,6 @@ export const ProblemsList = ({ problems }: ProblemsListProps) => {
 
   return (
     <div className={styles.problemsList}>
-      <button
-        className={styles.showMoreButton}
-        onClick={e => {
-          e.preventDefault();
-          setCollapsed(true);
-          setExpanded(false);
-        }}
-      >
-        <ChevronUp size={16} />
-        {intl.formatMessage(problemMessages.hideProblems)}
-      </button>
       {visibleProblems.map((problem, index) => (
         <ProblemCard key={index} problem={problem} />
       ))}

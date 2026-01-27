@@ -48,6 +48,7 @@
 .problemsBadge {
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   background-color: #dc2626;
   color: #ffffff;
   font-size: 12px;
@@ -56,6 +57,9 @@
   border-radius: 12px;
   line-height: 1.4;
   white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .timestamp {
