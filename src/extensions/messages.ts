@@ -363,6 +363,18 @@ export const problemMessages = defineMessages({
     defaultMessage: "This message comes from the app",
     id: "lRtZ2L",
   },
+  webhookDeliveryType: {
+    defaultMessage: "Webhook delivery",
+    id: "MGxwn/",
+  },
+  checkWebhooks: {
+    defaultMessage: "Check webhooks",
+    id: "Pv6Tq8",
+  },
+  openTheApp: {
+    defaultMessage: "Open the app",
+    id: "lN6B54",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({

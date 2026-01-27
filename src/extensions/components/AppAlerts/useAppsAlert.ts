@@ -1,7 +1,9 @@
+import { useInstalledAppsListLazyQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useIntervalActionWithState } from "@dashboard/hooks/useIntervalActionWithState";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import moment from "moment-timezone";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 import { useSidebarDotState } from "./useSidebarDotState";
@@ -15,8 +17,26 @@ export const useAppsAlert = () => {
     useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
+  const [fetchInstalledApps, { data: installedAppsData }] = useInstalledAppsListLazyQuery({
+    fetchPolicy: "no-cache",
+  });
+
+  const hasAppProblems = useMemo(() => {
+    const apps = mapEdgesToItems(installedAppsData?.apps) ?? [];
+
+    return apps.some(app => app.problems.length > 0);
+  }, [installedAppsData?.apps]);
+
+  const fetchAll = () => {
+    fetchAppsWebhooks();
+
+    if (hasManagedAppsPermission) {
+      fetchInstalledApps({ variables: { first: 100 } });
+    }
+  };
+
   useIntervalActionWithState({
-    action: fetchAppsWebhooks,
+    action: fetchAll,
     interval: DELIVERIES_FETCHING_INTERVAL,
     key: "webhook_deliveries_last_fetched",
     skip: !hasManagedAppsPermission,
@@ -28,8 +48,14 @@ export const useAppsAlert = () => {
     }
   }, [lastFailedWebhookDate]);
 
+  useEffect(() => {
+    if (hasAppProblems) {
+      handleFailedAttempt(new Date().toISOString());
+    }
+  }, [hasAppProblems]);
+
   return {
-    hasNewFailedAttempts,
+    hasNewFailedAttempts: hasNewFailedAttempts || hasAppProblems,
     handleAppsListItemClick,
   };
 };

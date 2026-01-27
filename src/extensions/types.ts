@@ -10,7 +10,15 @@ import { ReactNode } from "react";
 
 import { AppDetailsUrlMountQueryParams } from "./urls";
 
-export type AppProblem = InstalledAppDetailsFragment["problems"][number];
+export type GraphQLAppProblem = InstalledAppDetailsFragment["problems"][number];
+
+export interface WebhookDeliveryProblem {
+  __typename: "WebhookDeliveryError";
+  message: string;
+  createdAt: string;
+}
+
+export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
 
 interface CommonExtensionData {
   id: string;

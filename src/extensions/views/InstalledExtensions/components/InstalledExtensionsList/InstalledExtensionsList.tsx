@@ -103,7 +103,7 @@ const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
       {problemsVisible && problemCount > 0 && (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
-            <ProblemsList problems={extension.problems!} />
+            <ProblemsList problems={extension.problems!} appId={extension.id} />
           </GridTable.Cell>
         </GridTable.Row>
       )}
