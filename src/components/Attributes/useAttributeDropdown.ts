@@ -20,10 +20,10 @@ interface UseAttributeDropdownProps {
   fetchMore?: FetchMoreProps;
 }
 
-/** Enchances DynamicCombobox from macaw to add features for selecting attribute values:
+/** Enhances DynamicCombobox from macaw to add features for selecting attribute values:
  * - displays "Add new value" line (it just sets value to whatever user entered - value is created on save)
  * - fetches more options if scrolled to bottom
- * - fetches options using user input (via `query` parameter in fetch query) if no options are found */
+ * - fetches options using user input (via `query` parameter in fetch query) on every input change (debounced) */
 export const useAttributeDropdown = ({
   inputValue,
   selectedValue,
@@ -33,13 +33,14 @@ export const useAttributeDropdown = ({
   const intl = useIntl();
   const mounted = useRef(false);
 
-  const debouncedFetchOptions = useCallback(
-    useDebounce(async (value: string) => {
+  const fetchOptionsCallback = useCallback(
+    (value: string) => {
       fetchOptions(value);
-    }, 500),
+    },
     [fetchOptions],
   );
 
+  const debouncedFetchOptions = useDebounce(fetchOptionsCallback, 500);
   const handleFetchMore = () => {
     if (fetchMore?.hasMore) {
       fetchMore.onFetchMore();
