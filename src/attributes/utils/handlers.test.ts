@@ -279,10 +279,12 @@ describe("Sending only changed attributes", () => {
   });
 
   describe("works with select attributes", () => {
+    const SKIP_SUBMIT = Symbol("SKIP_SUBMIT");
+
     test.each`
       newAttr       | oldAttr       | expected
-      ${null}       | ${null}       | ${"skip"}
-      ${"my value"} | ${"my value"} | ${"skip"}
+      ${null}       | ${null}       | ${SKIP_SUBMIT}
+      ${"my value"} | ${"my value"} | ${SKIP_SUBMIT}
       ${"my value"} | ${null}       | ${{ value: "my value" }}
       ${null}       | ${"my value"} | ${null}
     `("$oldAttr -> $newAttr returns $expected", ({ newAttr, oldAttr, expected }) => {
@@ -293,7 +295,8 @@ describe("Sending only changed attributes", () => {
         prevAttributes: [prevAttribute],
         updatedFileAttributes: [],
       });
-      const expectedResult = expected !== "skip" ? [{ id: ATTR_ID, dropdown: expected }] : [];
+      // "skip" means the attribute hasn't changed, and won't be included in mutation
+      const expectedResult = expected !== SKIP_SUBMIT ? [{ id: ATTR_ID, dropdown: expected }] : [];
 
       expect(result).toEqual(expectedResult);
     });
