@@ -12,8 +12,8 @@ import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphq
 import { maybe } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import { CircleQuestionMark, Trash2 } from "lucide-react";
 import { useEffect } from "react";
@@ -128,6 +128,15 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
+      <Box paddingX={6}>
+        <DashboardCard.Subtitle fontSize={3} color="default2">
+          <FormattedMessage
+            id="Uxhquh"
+            defaultMessage="Product attributes and variant attributes are mutually exclusive. An attribute cannot be assigned to both sections within the same product type."
+            description="info message about attribute exclusivity in product type"
+          />
+        </DashboardCard.Subtitle>
+      </Box>
       <DashboardCard.Content>
         {!assignedVariantAttributes?.length ? (
           <Placeholder>
@@ -165,11 +174,31 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                 />
               </TableCell>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="4k9rMQ"
-                  defaultMessage="Variant Selection"
-                  description="variant attribute checkbox"
-                />
+                <Box display="flex" alignItems="center" gap={1}>
+                  <FormattedMessage
+                    id="4k9rMQ"
+                    defaultMessage="Variant Selection"
+                    description="variant attribute checkbox"
+                  />
+                  <Tooltip>
+                    <Tooltip.Trigger>
+                      <Box color="default2" display="flex" alignItems="center">
+                        <CircleQuestionMark
+                          size={iconSize.small}
+                          strokeWidth={iconStrokeWidthBySize.small}
+                        />
+                      </Box>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content side="bottom">
+                      <Tooltip.Arrow />
+                      <FormattedMessage
+                        id="xfypNP"
+                        defaultMessage="When enabled, this attribute will be used to distinguish variants on the storefront."
+                        description="tooltip for variant selection column header"
+                      />
+                    </Tooltip.Content>
+                  </Tooltip>
+                </Box>
               </TableCell>
               <TableCell />
             </TableHead>
@@ -257,13 +286,18 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                     </TableCell>
                     <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>
-                        <IconButton
+                        <Button
                           data-test-id="delete-icon"
-                          onClick={() => onAttributeUnassign(attribute.id)}
+                          disabled={disabled}
                           variant="secondary"
-                        >
-                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                        </IconButton>
+                          onClick={() => onAttributeUnassign(attribute.id)}
+                          icon={
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
+                            />
+                          }
+                        />
                       </TableButtonWrapper>
                     </TableCell>
                   </SortableTableRow>
