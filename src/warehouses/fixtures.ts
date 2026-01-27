@@ -66,6 +66,8 @@ export const warehouse: WarehouseDetailsFragment = {
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
   address,
   email,
+  metadata: [],
+  privateMetadata: [],
 };
 
 export const warehouseForPickup: WarehouseDetailsFragment = {
@@ -74,4 +76,6 @@ export const warehouseForPickup: WarehouseDetailsFragment = {
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
   address,
   email,
+  metadata: [],
+  privateMetadata: [],
 };

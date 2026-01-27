@@ -6,6 +6,7 @@ import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReaso
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { Ripple } from "@dashboard/ripples/types";
+import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
   // ... register ripples here
@@ -18,6 +19,10 @@ export const allRipples: Ripple[] = [
   rippleNewRefundReasons,
   rippleOrderMetadata,
   rippleRefreshedOrderSections,
+
+  // Warehouses
+  rippleWarehouseMetadata,
+
   // Products
 
   // ...
