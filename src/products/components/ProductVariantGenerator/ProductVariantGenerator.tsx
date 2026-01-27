@@ -4,6 +4,7 @@ import { Callout } from "@dashboard/components/Callout/Callout";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
+import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { useWarehouseListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -14,11 +15,17 @@ import { useIntl } from "react-intl";
 
 import { AttributeValueChips } from "./components/AttributeValueChips";
 import { DefaultsSection } from "./components/DefaultsSection";
+import { RequiredAttributesSection } from "./components/RequiredAttributesSection";
 import { VariantMatrix } from "./components/VariantMatrix";
 import { VariantPreviewList } from "./components/VariantPreviewList";
 import { messages } from "./messages";
 import styles from "./ProductVariantGenerator.module.css";
-import { ProductVariantGeneratorProps } from "./types";
+import {
+  AttributeError,
+  GENERATOR_SUPPORTED_INPUT_TYPES,
+  NonSelectionAttributeValues,
+  ProductVariantGeneratorProps,
+} from "./types";
 import { useVariantGenerator } from "./useVariantGenerator";
 import { toBulkCreateInputs } from "./utils";
 
@@ -28,6 +35,10 @@ const VARIANT_LIMIT = 100;
 const CONFIRMATION_THRESHOLD = 30;
 
 type ViewMode = "grid" | "list";
+
+// Tab indices
+const TAB_SELECTION = 0;
+const TAB_REQUIRED = 1;
 
 // Convert product name to a URL-safe SKU prefix (uppercase, no spaces, max 20 chars)
 const toSkuPrefix = (name: string): string =>
@@ -41,7 +52,9 @@ export const ProductVariantGenerator = ({
   onClose,
   productName,
   variantAttributes,
+  nonSelectionVariantAttributes,
   existingVariants,
+  onAttributeValuesSearch,
   onSubmit,
 }: ProductVariantGeneratorProps) => {
   const intl = useIntl();
@@ -49,6 +62,56 @@ export const ProductVariantGenerator = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showMissingDefaultsWarning, setShowMissingDefaultsWarning] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [activeTab, setActiveTab] = useState(TAB_SELECTION);
+
+  // State for non-selection required attribute values
+  const [nonSelectionValues, setNonSelectionValues] = useState<NonSelectionAttributeValues>({});
+
+  // State for attribute errors from API (for inline display)
+  const [attributeErrors, setAttributeErrors] = useState<AttributeError[]>([]);
+
+  // Get required non-selection attributes
+  const requiredNonSelectionAttributes = useMemo(
+    () => (nonSelectionVariantAttributes ?? []).filter(attr => attr.valueRequired),
+    [nonSelectionVariantAttributes],
+  );
+
+  // Check for required attributes with unsupported types - these BLOCK generation entirely
+  const unsupportedRequiredAttributes = useMemo(
+    () =>
+      requiredNonSelectionAttributes.filter(
+        attr => !attr.inputType || !GENERATOR_SUPPORTED_INPUT_TYPES.has(attr.inputType),
+      ),
+    [requiredNonSelectionAttributes],
+  );
+
+  const hasUnsupportedRequiredAttributes = unsupportedRequiredAttributes.length > 0;
+
+  // Get only the supported required attributes (these are the ones user can fill)
+  const supportedRequiredAttributes = useMemo(
+    () =>
+      requiredNonSelectionAttributes.filter(
+        attr => attr.inputType && GENERATOR_SUPPORTED_INPUT_TYPES.has(attr.inputType),
+      ),
+    [requiredNonSelectionAttributes],
+  );
+
+  // Check if all supported required attributes have values
+  // Note: unsupported attributes block generation via hasUnsupportedRequiredAttributes
+  const hasAllRequiredAttributes = useMemo(() => {
+    if (hasUnsupportedRequiredAttributes) {
+      return false; // Can never generate if there are unsupported required attributes
+    }
+
+    return supportedRequiredAttributes.every(attr => nonSelectionValues[attr.id]?.length > 0);
+  }, [supportedRequiredAttributes, nonSelectionValues, hasUnsupportedRequiredAttributes]);
+
+  const handleNonSelectionAttributeChange = useCallback((attributeId: string, values: string[]) => {
+    setNonSelectionValues(prev => ({
+      ...prev,
+      [attributeId]: values,
+    }));
+  }, []);
 
   // Fetch warehouses for stock defaults
   const { data: warehousesData } = useWarehouseListQuery({
@@ -78,6 +141,7 @@ export const ProductVariantGenerator = ({
     isTruncated,
     existingCombinations,
     canGenerate,
+    hasSelectionPerAttribute,
     canShowMatrix,
     reset,
   } = useVariantGenerator({
@@ -86,11 +150,17 @@ export const ProductVariantGenerator = ({
     defaultSkuPrefix,
   });
 
+  // Check if we should show the Required tab
+  const hasRequiredTab = supportedRequiredAttributes.length > 0;
+
   // Reset state when modal opens
   useEffect(() => {
     if (open) {
       reset();
       setConfirmState("default");
+      setNonSelectionValues({});
+      setAttributeErrors([]);
+      setActiveTab(TAB_SELECTION);
       // Default to grid view if 2 attributes, otherwise list
       setViewMode(variantAttributes.length === 2 ? "grid" : "list");
     }
@@ -126,6 +196,7 @@ export const ProductVariantGenerator = ({
   const executeGenerate = useCallback(async () => {
     setConfirmState("loading");
     setShowConfirmation(false);
+    setAttributeErrors([]); // Clear previous errors
 
     try {
       const inputs = toBulkCreateInputs(
@@ -134,14 +205,41 @@ export const ProductVariantGenerator = ({
         defaults,
         warehouses,
         existingCombinations,
+        nonSelectionValues,
+        nonSelectionVariantAttributes ?? [],
       );
 
-      await onSubmit(inputs);
-      setConfirmState("success");
+      const result = await onSubmit(inputs);
+
+      if (result.attributeErrors.length > 0) {
+        // Has attribute-specific errors - show them inline
+        setAttributeErrors(result.attributeErrors);
+        setConfirmState("error");
+
+        // Switch to Required tab if it has errors
+        if (hasRequiredTab) {
+          setActiveTab(TAB_REQUIRED);
+        }
+      } else if (result.success) {
+        setConfirmState("success");
+      } else {
+        // Failed with non-attribute errors (notifications already shown)
+        setConfirmState("error");
+      }
     } catch {
       setConfirmState("error");
     }
-  }, [attributes, selections, defaults, warehouses, existingCombinations, onSubmit]);
+  }, [
+    attributes,
+    selections,
+    defaults,
+    warehouses,
+    existingCombinations,
+    nonSelectionValues,
+    nonSelectionVariantAttributes,
+    onSubmit,
+    hasRequiredTab,
+  ]);
 
   const isMissingDefaults = !defaults.skuEnabled && !defaults.stockEnabled;
 
@@ -155,8 +253,11 @@ export const ProductVariantGenerator = ({
     }
   }, [needsConfirmation, executeGenerate]);
 
+  // Combined generation readiness check
+  const canGenerateVariants = canGenerate && hasAllRequiredAttributes;
+
   const handleGenerate = useCallback(() => {
-    if (!canGenerate || isOverLimit) return;
+    if (!canGenerateVariants || isOverLimit) return;
 
     if (isMissingDefaults) {
       setShowMissingDefaultsWarning(true);
@@ -165,7 +266,7 @@ export const ProductVariantGenerator = ({
     } else {
       executeGenerate();
     }
-  }, [canGenerate, isOverLimit, isMissingDefaults, needsConfirmation, executeGenerate]);
+  }, [canGenerateVariants, isOverLimit, isMissingDefaults, needsConfirmation, executeGenerate]);
 
   const handleClose = useCallback(() => {
     if (confirmState !== "loading") {
@@ -174,6 +275,50 @@ export const ProductVariantGenerator = ({
   }, [confirmState, onClose]);
 
   const hasVariantAttributes = variantAttributes.length > 0;
+
+  // Compute tooltip message for disabled generate button
+  const disabledTooltipMessage = useMemo(() => {
+    const isDisabled = !canGenerateVariants || isOverLimit;
+
+    if (!isDisabled) {
+      return null;
+    }
+
+    // Check conditions in order of priority
+    if (hasUnsupportedRequiredAttributes) {
+      return intl.formatMessage(messages.unsupportedRequiredAttributesDescription, {
+        attributes: unsupportedRequiredAttributes.map(a => a.name).join(", "),
+        newline: "\n",
+      });
+    }
+
+    if (isOverLimit) {
+      return intl.formatMessage(messages.disabledOverLimit, { limit: VARIANT_LIMIT });
+    }
+
+    if (!hasSelectionPerAttribute) {
+      return intl.formatMessage(messages.disabledNoSelections);
+    }
+
+    if (newVariantsCount === 0) {
+      return intl.formatMessage(messages.disabledNoNewVariants);
+    }
+
+    if (!hasAllRequiredAttributes) {
+      return intl.formatMessage(messages.disabledRequiredNotFilled);
+    }
+
+    return null;
+  }, [
+    canGenerateVariants,
+    isOverLimit,
+    hasUnsupportedRequiredAttributes,
+    unsupportedRequiredAttributes,
+    hasSelectionPerAttribute,
+    newVariantsCount,
+    hasAllRequiredAttributes,
+    intl,
+  ]);
 
   return (
     <DashboardModal open={open} onChange={handleClose}>
@@ -190,30 +335,56 @@ export const ProductVariantGenerator = ({
             <Text className={styles.noAttributes}>{intl.formatMessage(messages.noAttributes)}</Text>
           ) : (
             <>
-              {/* Attribute selectors */}
-              <div className={styles.attributesSectionWrapper}>
-                <Box
-                  className={styles.attributesSection}
-                  borderStyle="solid"
-                  borderColor="default1"
-                  borderWidth={1}
-                  borderRadius={4}
-                >
-                  {attributes.map(attr => (
-                    <AttributeValueChips
-                      key={attr.id}
-                      attribute={attr}
-                      selectedIds={selections[attr.id] ?? new Set()}
-                      onToggleValue={valueId => toggleValue(attr.id, valueId)}
-                      onSelectAll={() => selectAllValues(attr.id)}
-                      onDeselectAll={() => deselectAllValues(attr.id)}
-                      onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
-                    />
-                  ))}
-                </Box>
-              </div>
+              {/* Tab bar - only show if there are required attributes */}
+              {hasRequiredTab && (
+                <FilterTabs currentTab={activeTab}>
+                  <FilterTab
+                    label={intl.formatMessage(messages.tabSelection)}
+                    onClick={() => setActiveTab(TAB_SELECTION)}
+                  />
+                  <FilterTab
+                    label={intl.formatMessage(messages.tabRequired)}
+                    onClick={() => setActiveTab(TAB_REQUIRED)}
+                  />
+                </FilterTabs>
+              )}
 
-              {/* Defaults row with view toggle */}
+              {/* Tab content */}
+              {activeTab === TAB_SELECTION && (
+                <div className={styles.attributesSectionWrapper}>
+                  <Box
+                    className={styles.attributesSection}
+                    borderStyle="solid"
+                    borderColor="default1"
+                    borderWidth={1}
+                    borderRadius={4}
+                  >
+                    {attributes.map(attr => (
+                      <AttributeValueChips
+                        key={attr.id}
+                        attribute={attr}
+                        selectedIds={selections[attr.id] ?? new Set()}
+                        onToggleValue={valueId => toggleValue(attr.id, valueId)}
+                        onSelectAll={() => selectAllValues(attr.id)}
+                        onDeselectAll={() => deselectAllValues(attr.id)}
+                        onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
+                      />
+                    ))}
+                  </Box>
+                </div>
+              )}
+
+              {activeTab === TAB_REQUIRED && hasRequiredTab && (
+                <RequiredAttributesSection
+                  attributes={supportedRequiredAttributes}
+                  values={nonSelectionValues}
+                  errors={attributeErrors}
+                  onChange={handleNonSelectionAttributeChange}
+                  onAttributeValuesSearch={onAttributeValuesSearch}
+                />
+              )}
+
+              {/* Defaults row with view toggle - always visible */}
               <Box className={styles.controlsRow}>
                 <DefaultsSection
                   defaults={defaults}
@@ -256,7 +427,7 @@ export const ProductVariantGenerator = ({
                 )}
               </Box>
 
-              {/* Preview */}
+              {/* Preview - always visible */}
               <Box className={styles.previewContent}>
                 {viewMode === "grid" && canShowMatrix ? (
                   <VariantMatrix
@@ -269,7 +440,7 @@ export const ProductVariantGenerator = ({
                 )}
               </Box>
 
-              {/* Warnings and errors */}
+              {/* Warnings */}
               {(existingCount > 0 || isTruncated || isOverLimit) && (
                 <Box className={styles.callouts}>
                   {existingCount > 0 && (
@@ -315,13 +486,24 @@ export const ProductVariantGenerator = ({
           <BackButton onClick={handleClose} disabled={confirmState === "loading"}>
             {intl.formatMessage(buttonMessages.cancel)}
           </BackButton>
-          <ConfirmButton
-            transitionState={confirmState}
-            onClick={handleGenerate}
-            disabled={!canGenerate || isOverLimit}
-          >
-            {intl.formatMessage(messages.generate, { count: newVariantsCount })}
-          </ConfirmButton>
+          <Tooltip open={disabledTooltipMessage ? undefined : false}>
+            <Tooltip.Trigger>
+              {/* Wrapper span enables hover events on disabled button */}
+              <span style={{ display: "inline-block" }}>
+                <ConfirmButton
+                  transitionState={confirmState}
+                  onClick={handleGenerate}
+                  disabled={!canGenerateVariants || isOverLimit}
+                >
+                  {intl.formatMessage(messages.generate, { count: newVariantsCount })}
+                </ConfirmButton>
+              </span>
+            </Tooltip.Trigger>
+            <Tooltip.Content side="top">
+              <Tooltip.Arrow />
+              <span style={{ whiteSpace: "pre-line" }}>{disabledTooltipMessage}</span>
+            </Tooltip.Content>
+          </Tooltip>
         </DashboardModal.Actions>
       </DashboardModal.Content>
 

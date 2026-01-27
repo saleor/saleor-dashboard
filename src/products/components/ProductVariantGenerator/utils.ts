@@ -1,4 +1,9 @@
-import { ProductVariantBulkCreateInput } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  BulkAttributeValueInput,
+  ProductVariantBulkCreateInput,
+  VariantAttributeFragment,
+} from "@dashboard/graphql";
 import slugify from "slugify";
 
 import {
@@ -8,6 +13,7 @@ import {
   ExistingVariantData,
   GeneratedVariantPreview,
   GeneratorDefaults,
+  NonSelectionAttributeValues,
   SelectionState,
 } from "./types";
 
@@ -164,6 +170,58 @@ export function extractExistingCombinations(
 }
 
 /**
+ * Builds the proper BulkAttributeValueInput based on attribute type.
+ * Uses the dedicated field for each type instead of the deprecated 'values' field.
+ */
+function buildAttributeInput(
+  attributeId: string,
+  inputType: AttributeInputTypeEnum | null | undefined,
+  values: string[],
+): BulkAttributeValueInput {
+  const value = values[0];
+
+  // Handle each input type with its dedicated field
+  switch (inputType) {
+    case AttributeInputTypeEnum.BOOLEAN:
+      // "true" → true, "false" → false, "unset" → null
+      if (value === "true") {
+        return { id: attributeId, boolean: true };
+      }
+
+      if (value === "false") {
+        return { id: attributeId, boolean: false };
+      }
+
+      // "unset" or empty - explicitly set to null
+      return { id: attributeId, boolean: null };
+
+    case AttributeInputTypeEnum.DATE:
+      return { id: attributeId, date: value || null };
+
+    case AttributeInputTypeEnum.DATE_TIME:
+      return { id: attributeId, dateTime: value || null };
+
+    case AttributeInputTypeEnum.NUMERIC:
+      return { id: attributeId, numeric: value || null };
+
+    case AttributeInputTypeEnum.PLAIN_TEXT:
+      return { id: attributeId, plainText: value || null };
+
+    case AttributeInputTypeEnum.DROPDOWN:
+      // Use 'value' field for slug-based resolution
+      return { id: attributeId, dropdown: value ? { value } : undefined };
+
+    case AttributeInputTypeEnum.SWATCH:
+      // Use 'value' field for slug-based resolution
+      return { id: attributeId, swatch: value ? { value } : undefined };
+
+    default:
+      // Fallback to deprecated 'values' field for unknown types
+      return { id: attributeId, values: values.length > 0 ? values : undefined };
+  }
+}
+
+/**
  * Converts the selected attribute combinations into bulk create input format.
  */
 export function toBulkCreateInputs(
@@ -172,6 +230,8 @@ export function toBulkCreateInputs(
   defaults: GeneratorDefaults,
   warehouses: Array<{ id: string }>,
   existingCombinations: ExistingVariantCombination[][],
+  nonSelectionAttributeValues: NonSelectionAttributeValues = {},
+  nonSelectionAttributes: VariantAttributeFragment[] = [],
 ): ProductVariantBulkCreateInput[] {
   const selected = getSelectedValues(attributes, selections);
 
@@ -196,6 +256,18 @@ export function toBulkCreateInputs(
   const skuPrefix = defaults.skuPrefix.trim();
   const shouldGenerateSku = defaults.skuEnabled && skuPrefix !== "";
 
+  // Create a lookup map for non-selection attribute types
+  const nonSelectionAttrTypeMap = new Map(
+    nonSelectionAttributes.map(attr => [attr.id, attr.inputType]),
+  );
+
+  // Build non-selection attribute inputs using proper field for each type
+  const nonSelectionAttributeInputs = Object.entries(nonSelectionAttributeValues)
+    .filter(([, values]) => values.length > 0)
+    .map(([attributeId, values]) =>
+      buildAttributeInput(attributeId, nonSelectionAttrTypeMap.get(attributeId), values),
+    );
+
   return newCombinations.map(combo => {
     const variantName = combo.map(v => v.name ?? "").join(" / ");
 
@@ -210,11 +282,14 @@ export function toBulkCreateInputs(
       sku = [skuPrefix, ...skuParts].join("-");
     }
 
+    // Combine selection attributes (from combinations) with non-selection attributes (defaults)
+    const selectionAttributeInputs = combo.map((value, attrIndex) => ({
+      id: selected[attrIndex].attributeId,
+      values: value.slug ? [value.slug] : [],
+    }));
+
     const input: ProductVariantBulkCreateInput = {
-      attributes: combo.map((value, attrIndex) => ({
-        id: selected[attrIndex].attributeId,
-        values: value.slug ? [value.slug] : [],
-      })),
+      attributes: [...selectionAttributeInputs, ...nonSelectionAttributeInputs],
       name: variantName,
       // Only include SKU if enabled
       ...(sku && { sku }),

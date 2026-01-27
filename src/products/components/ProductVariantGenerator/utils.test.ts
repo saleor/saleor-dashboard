@@ -1,6 +1,12 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeInputTypeEnum, VariantAttributeFragment } from "@dashboard/graphql";
 
-import { AttributeData, ExistingVariantData, GeneratorDefaults, SelectionState } from "./types";
+import {
+  AttributeData,
+  ExistingVariantData,
+  GeneratorDefaults,
+  NonSelectionAttributeValues,
+  SelectionState,
+} from "./types";
 import {
   cartesianProduct,
   extractExistingCombinations,
@@ -572,6 +578,339 @@ describe("ProductVariantGenerator utils", () => {
         { id: "size", values: ["small"] },
         { id: "color", values: ["red"] },
       ]);
+    });
+
+    describe("non-selection attributes (required attributes)", () => {
+      const createNonSelectionAttributes = (): VariantAttributeFragment[] =>
+        [
+          {
+            id: "material",
+            name: "Material",
+            slug: "material",
+            inputType: AttributeInputTypeEnum.DROPDOWN,
+            valueRequired: true,
+            choices: { edges: [], pageInfo: { hasNextPage: false, endCursor: null } },
+          },
+          {
+            id: "weight",
+            name: "Weight",
+            slug: "weight",
+            inputType: AttributeInputTypeEnum.NUMERIC,
+            valueRequired: true,
+            choices: null,
+          },
+          {
+            id: "is-organic",
+            name: "Is Organic",
+            slug: "is-organic",
+            inputType: AttributeInputTypeEnum.BOOLEAN,
+            valueRequired: true,
+            choices: null,
+          },
+          {
+            id: "description",
+            name: "Description",
+            slug: "description",
+            inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+            valueRequired: true,
+            choices: null,
+          },
+          {
+            id: "manufacture-date",
+            name: "Manufacture Date",
+            slug: "manufacture-date",
+            inputType: AttributeInputTypeEnum.DATE,
+            valueRequired: true,
+            choices: null,
+          },
+          {
+            id: "timestamp",
+            name: "Timestamp",
+            slug: "timestamp",
+            inputType: AttributeInputTypeEnum.DATE_TIME,
+            valueRequired: true,
+            choices: null,
+          },
+        ] as VariantAttributeFragment[];
+
+      it("includes non-selection attributes with DROPDOWN type using dropdown field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          material: ["cotton"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(a => a.id === "material");
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "material",
+          dropdown: { value: "cotton" },
+        });
+      });
+
+      it("includes non-selection attributes with NUMERIC type using numeric field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          weight: ["150"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(a => a.id === "weight");
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "weight",
+          numeric: "150",
+        });
+      });
+
+      it("includes non-selection attributes with BOOLEAN type using boolean field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          "is-organic": ["true"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(a => a.id === "is-organic");
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "is-organic",
+          boolean: true,
+        });
+      });
+
+      it("handles BOOLEAN false value correctly", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          "is-organic": ["false"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(a => a.id === "is-organic");
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "is-organic",
+          boolean: false,
+        });
+      });
+
+      it("includes non-selection attributes with PLAIN_TEXT type using plainText field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          description: ["Premium quality cotton"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(
+          a => a.id === "description",
+        );
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "description",
+          plainText: "Premium quality cotton",
+        });
+      });
+
+      it("includes non-selection attributes with DATE type using date field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          "manufacture-date": ["2024-01-15"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(
+          a => a.id === "manufacture-date",
+        );
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "manufacture-date",
+          date: "2024-01-15",
+        });
+      });
+
+      it("includes non-selection attributes with DATE_TIME type using dateTime field", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          timestamp: ["2024-01-15T10:30:00"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(a => a.id === "timestamp");
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert
+        expect(result[0].attributes).toContainEqual({
+          id: "timestamp",
+          dateTime: "2024-01-15T10:30:00",
+        });
+      });
+
+      it("combines selection and non-selection attributes in output", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          weight: ["150"],
+          "is-organic": ["true"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(
+          a => a.id === "weight" || a.id === "is-organic",
+        );
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert - should have 2 selection attrs + 2 non-selection attrs
+        expect(result[0].attributes).toHaveLength(4);
+        expect(result[0].attributes).toContainEqual({ id: "size", values: ["small"] });
+        expect(result[0].attributes).toContainEqual({ id: "color", values: ["red"] });
+        expect(result[0].attributes).toContainEqual({ id: "weight", numeric: "150" });
+        expect(result[0].attributes).toContainEqual({ id: "is-organic", boolean: true });
+      });
+
+      it("ignores non-selection attributes with empty values", () => {
+        // Arrange
+        const attributes = createAttributes();
+        const selections: SelectionState = {
+          size: new Set(["s"]),
+          color: new Set(["r"]),
+        };
+        const nonSelectionValues: NonSelectionAttributeValues = {
+          weight: [], // Empty - should be ignored
+          "is-organic": ["true"],
+        };
+        const nonSelectionAttrs = createNonSelectionAttributes().filter(
+          a => a.id === "weight" || a.id === "is-organic",
+        );
+
+        // Act
+        const result = toBulkCreateInputs(
+          attributes,
+          selections,
+          createDefaults(),
+          [],
+          [],
+          nonSelectionValues,
+          nonSelectionAttrs,
+        );
+
+        // Assert - only 2 selection attrs + 1 non-selection attr (weight is ignored)
+        expect(result[0].attributes).toHaveLength(3);
+        expect(result[0].attributes).not.toContainEqual(expect.objectContaining({ id: "weight" }));
+      });
     });
   });
 });

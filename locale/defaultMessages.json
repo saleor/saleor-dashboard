@@ -267,10 +267,6 @@
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
-  "/W3dtv": {
-    "context": "tooltip when generate variants is disabled",
-    "string": "No variant attributes — nothing to generate"
-  },
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"
@@ -310,6 +306,10 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/ly15q": {
+    "context": "tab label for required attributes",
+    "string": "Required Attributes"
+  },
   "/nZy6A": {
     "context": "page subtitle",
     "string": "Issue refund"
@@ -332,6 +332,10 @@
   },
   "/vCXIP": {
     "string": "Translation"
+  },
+  "/vFLiw": {
+    "context": "description for unsupported required attributes error",
+    "string": "Required attributes ({attributes}) are not supported.{newline}{newline}To proceed:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
   },
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
@@ -743,6 +747,10 @@
     "context": "checkbox label",
     "string": "Allow fulfillment without payment"
   },
+  "2NdGVf": {
+    "context": "description for required non-selection attributes section",
+    "string": "These values will be applied to all generated variants."
+  },
   "2NgTCJ": {
     "string": "A product with this SKU already exists"
   },
@@ -1096,6 +1104,10 @@
   "4YJHut": {
     "string": "Clear search"
   },
+  "4YtpqB": {
+    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
+    "string": "Required attributes ({attributes}) are not currently supported by Generator.{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
+  },
   "4YyeCx": {
     "context": "label for order total amount",
     "string": "Order total"
@@ -1270,6 +1282,10 @@
   "5W3qxG": {
     "context": "edit refund title",
     "string": "Edit refund with line items"
+  },
+  "5WhtoK": {
+    "context": "tooltip when generate button is disabled because no selections made",
+    "string": "Select at least one value for each selection attribute"
   },
   "5XG1CO": {
     "context": "acre-ft unit",
@@ -2374,6 +2390,10 @@
   "CB7xpk": {
     "context": "subheader on extension install page",
     "string": "You are about to install {extensionName}"
+  },
+  "CD1NDm": {
+    "context": "placeholder for required attribute dropdown",
+    "string": "Select a value"
   },
   "CFG1Ix": {
     "context": "shipping zone",
@@ -3758,6 +3778,10 @@
     "context": "button",
     "string": "Edit"
   },
+  "JaZh3+": {
+    "context": "title for required non-selection attributes section",
+    "string": "Required attributes"
+  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -4555,6 +4579,10 @@
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
+  },
+  "OCQLYd": {
+    "context": "title for unsupported required attributes error",
+    "string": "Cannot use generator"
   },
   "OFTsI1": {
     "string": "Attempts:"
@@ -7239,6 +7267,10 @@
   "d+qgix": {
     "string": "Next step"
   },
+  "d12NWZ": {
+    "context": "tooltip when generate button is disabled because no new variants can be created",
+    "string": "All possible variant combinations already exist"
+  },
   "d1AzfC": {
     "context": "hint text showing number of available options in multiselect",
     "string": "{count} options available"
@@ -7718,6 +7750,10 @@
   "gNm1li": {
     "context": "Refunded transaction amount, data display header",
     "string": "Refunded"
+  },
+  "gO38iV": {
+    "context": "tooltip when generate variants is disabled due to no selection attributes",
+    "string": "No selection attributes defined for this product type."
   },
   "gOiREw": {
     "string": "App settings updated"
@@ -8700,6 +8736,10 @@
   "lwjzVj": {
     "string": "Edit order"
   },
+  "lz7o8y": {
+    "context": "tooltip when generate button is disabled because over variant limit",
+    "string": "Cannot create more than {limit} variants at once"
+  },
   "lzdvwp": {
     "context": "field is optional",
     "string": "Optional"
@@ -8938,6 +8978,10 @@
     "context": "number of order",
     "string": "No. of Order"
   },
+  "nUp0Lp": {
+    "context": "tab label for variant selection attributes",
+    "string": "Selection Attributes"
+  },
   "nX2pCU": {
     "context": "window title",
     "string": "Create customer"
@@ -9102,6 +9146,10 @@
   "oYV+Ru": {
     "context": "staff members status deactivated",
     "string": "Inactive"
+  },
+  "oZFssJ": {
+    "context": "tooltip when generate button is disabled because required attributes are not filled",
+    "string": "Fill in all required attributes in the Required Attributes tab"
   },
   "obHpf0": {
     "string": "No extensions found"
@@ -10984,6 +11032,10 @@
   "zJpP1T": {
     "context": "create new structure, header",
     "string": "Add Item"
+  },
+  "zKEVOg": {
+    "context": "error message when required attributes are not filled",
+    "string": "Please fill in all required attributes before generating variants."
   },
   "zKOGkU": {
     "context": "time during discount is active, header",
