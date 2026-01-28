@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.22.28
+
+### Patch Changes
+
+- [#6266](https://github.com/saleor/saleor-dashboard/pull/6266) [`2983f07`](https://github.com/saleor/saleor-dashboard/commit/2983f07a934e00bdadfc535e6cf199f331a06b82) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Refactored filtering logic in Product selection modal, shouldn't introduce any changes for users
+
+- [#6273](https://github.com/saleor/saleor-dashboard/pull/6273) [`c16e37a`](https://github.com/saleor/saleor-dashboard/commit/c16e37acfd15488b2b5be10d23dfc024021e9f92) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Update lodash version to `4.17.23`
+
+- [#6257](https://github.com/saleor/saleor-dashboard/pull/6257) [`57cef53`](https://github.com/saleor/saleor-dashboard/commit/57cef5304ea96f4d178a790833998dd5d2e2ba8e) Thanks [@mirekm](https://github.com/mirekm)! - Added bulk variant generator - Quickly create all product variant combinations by selecting attribute values, with live preview, optional SKU/stock defaults, and automatic skipping of existing variants.
+
+- [#6270](https://github.com/saleor/saleor-dashboard/pull/6270) [`a38274b`](https://github.com/saleor/saleor-dashboard/commit/a38274b84aca391954fef6eff3dea159ffa9a6a6) Thanks [@mirekm](https://github.com/mirekm)! - Improve variant attributes discoverability
+
+  Added better messaging for variant attributes in both Product Type and Variant views.
+
+- [#6278](https://github.com/saleor/saleor-dashboard/pull/6278) [`21eacd7`](https://github.com/saleor/saleor-dashboard/commit/21eacd7b71cc4a55db630b3a41d0d5fd9aaff719) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fix combobox components in Attribute selection. "Add new value" option was added again for clear UX. New values are added when clicked "Save" in the form, like previously. Fixed fetching more items in the combobox: now when user enters a value in the input, we fetch options using input from user as `query` parameter.
+
+- [#6274](https://github.com/saleor/saleor-dashboard/pull/6274) [`3b0ec28`](https://github.com/saleor/saleor-dashboard/commit/3b0ec2836a26c62bb4506da00e480059dee21e2f) Thanks [@mirekm](https://github.com/mirekm)! - Unify success notification messages
+  - Pattern: {Entity} {action} - e.g., "Product updated", "Order cancelled"
+  - Past tense - the action is complete
+  - No filler words - avoid "successfully", "has been", "was"
+  - Specific over generic - avoid commonMessages.savedChanges, use contextual messages
+  - Compound actions use comma - "Products returned, refund granted"
+
+- [#6277](https://github.com/saleor/saleor-dashboard/pull/6277) [`ace3e01`](https://github.com/saleor/saleor-dashboard/commit/ace3e019d06f3969963e9ffe5c5528258a630081) Thanks [@mirekm](https://github.com/mirekm)! - Redesigned product availability panel with built-in diagnostics. The new panel identifies configuration issues preventing purchase (missing prices, no stock, inactive channels) and includes a "Test" button to verify actual storefront visibility via the public API. Scheduling for publication and availability dates is now supported directly in the panel.
+
+- [#6280](https://github.com/saleor/saleor-dashboard/pull/6280) [`b193657`](https://github.com/saleor/saleor-dashboard/commit/b193657a7314069805724da28ff5bcfbd4cfde70) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove intrusive error on app invalid action and rely on console logs for better debugging.
+
 ## 3.22.27
 
 ### Patch Changes
