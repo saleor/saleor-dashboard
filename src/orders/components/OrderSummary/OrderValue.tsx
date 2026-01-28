@@ -3,6 +3,7 @@ import {
   DiscountValueTypeEnum,
   OrderDetailsFragment,
   OrderErrorFragment,
+  OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
 import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
@@ -107,16 +108,27 @@ const messages = defineMessages({
   },
 });
 
-type BaseProps = {
-  orderSubtotal: OrderDetailsFragment["subtotal"];
-  shippingMethodName: OrderDetailsFragment["shippingMethodName"];
-  shippingPrice: OrderDetailsFragment["shippingPrice"];
-  orderTotal: OrderDetailsFragment["total"];
-  discounts: OrderDetailsFragment["discounts"];
+// Fields that can change when order lines are modified (from OrderLinesUpdateFragment)
+type LineUpdateFields = {
+  orderSubtotal: OrderLinesUpdateFragment["subtotal"];
+  shippingMethodName: OrderLinesUpdateFragment["shippingMethodName"];
+  shippingPrice: OrderLinesUpdateFragment["shippingPrice"];
+  orderTotal: OrderLinesUpdateFragment["total"];
+  discounts: OrderLinesUpdateFragment["discounts"];
+  isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
+  shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
+  // shippingMethod is reset to null when isShippingRequired becomes false
+  shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
+};
+
+// Fields that don't change on line mutations (from OrderDetailsFragment)
+type StaticFields = {
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
 };
+
+type BaseProps = LineUpdateFields & StaticFields;
 
 type EditableProps = {
   isEditable: true;
@@ -130,10 +142,7 @@ type EditableProps = {
   orderDiscountRemoveStatus: OrderDiscountContextConsumerProps["orderDiscountRemoveStatus"];
   undiscountedPrice: OrderDiscountContextConsumerProps["undiscountedPrice"];
   onShippingMethodEdit: () => void;
-  shippingMethods: OrderDetailsFragment["shippingMethods"];
-  shippingMethod: OrderDetailsFragment["shippingMethod"];
   shippingAddress: OrderDetailsFragment["shippingAddress"];
-  isShippingRequired: OrderDetailsFragment["isShippingRequired"];
   errors?: OrderErrorFragment[];
 };
 

@@ -1692,6 +1692,9 @@ export const OrderLinesUpdateFragmentDoc = gql`
     }
   }
   isShippingRequired
+  shippingMethod {
+    id
+  }
   shippingPrice {
     gross {
       amount

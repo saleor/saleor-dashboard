@@ -188,7 +188,11 @@ export const fragmentOrderLinesUpdate = gql`
       }
     }
     # Shipping can change when lines are deleted/added
+    # (shippingMethod, shippingPrice, shippingMethodName are reset when isShippingRequired becomes false)
     isShippingRequired
+    shippingMethod {
+      id
+    }
     shippingPrice {
       gross {
         amount
@@ -197,7 +201,7 @@ export const fragmentOrderLinesUpdate = gql`
     }
     shippingMethodName
     collectionPointName
-    # Available shipping methods can change based on order contents
+    # Available shipping methods can change based on order contents (weight, items)
     shippingMethods {
       id
       name
