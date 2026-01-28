@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -70,12 +69,12 @@ const DiscountVariants = (props: SaleVariantsProps) => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={variants}
+          items={variants ?? []}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colProductName}>
-            <span className={variants?.length > 0 && classes.colNameLabel}>
+            <span className={(variants?.length ?? 0) > 0 ? classes.colNameLabel : undefined}>
               <FormattedMessage {...messages.discountVariantsTableProductHeader} />
             </span>
           </TableCell>
@@ -111,20 +110,32 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(variant.id)}
+                      onChange={() => variant && toggle(variant.id)}
                     />
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colProductName}
-                    thumbnail={maybe(() => variant.product.thumbnail.url)}
+                    thumbnail={variant ? maybe(() => variant.product.thumbnail?.url) : undefined}
                   >
-                    {maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)}
+                    {variant ? (
+                      maybe<React.ReactNode>(() => variant.product.name, <Skeleton />)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.name, <Skeleton />)}
+                    {variant ? (
+                      maybe<React.ReactNode>(() => variant.name, <Skeleton />)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCell>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)}
+                    {variant ? (
+                      maybe<React.ReactNode>(() => variant.product.productType.name, <Skeleton />)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
@@ -133,7 +144,10 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                         disabled={!variant || disabled}
                         onClick={event => {
                           event.stopPropagation();
-                          onVariantUnassign(variant.id);
+
+                          if (variant) {
+                            onVariantUnassign(variant.id);
+                          }
                         }}
                       >
                         <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />

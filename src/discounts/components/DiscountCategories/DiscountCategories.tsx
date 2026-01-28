@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -108,7 +107,7 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(category.id)}
+                      onChange={() => category && toggle(category.id)}
                     />
                   </TableCell>
                   <TableCell>{category ? category.name : <Skeleton />}</TableCell>
@@ -120,7 +119,10 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
                         disabled={!category || disabled}
                         onClick={event => {
                           event.stopPropagation();
-                          onCategoryUnassign(category.id);
+
+                          if (category) {
+                            onCategoryUnassign(category.id);
+                          }
                         }}
                       >
                         <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />

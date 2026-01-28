@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
@@ -365,7 +364,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCategoryAssign={onCategoryAssign}
                       onCategoryUnassign={onCategoryUnassign}
-                      categories={mapEdgesToItems(voucher?.categories)}
+                      categories={mapEdgesToItems(voucher?.categories) ?? []}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
@@ -377,7 +376,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCollectionAssign={onCollectionAssign}
                       onCollectionUnassign={onCollectionUnassign}
-                      collections={mapEdgesToItems(voucher?.collections)}
+                      collections={mapEdgesToItems(voucher?.collections) ?? []}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
@@ -415,7 +414,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
               ) : null}
               {data.discountType.toString() === "SHIPPING" ? (
                 <CountryList
-                  countries={voucher?.countries}
+                  countries={voucher?.countries ?? []}
                   disabled={disabled}
                   emptyText={intl.formatMessage({
                     id: "jd/LWa",

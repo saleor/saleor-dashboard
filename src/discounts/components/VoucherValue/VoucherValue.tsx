@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
@@ -80,7 +79,9 @@ const VoucherValue = (props: VoucherValueProps) => {
               {renderCollection(
                 data.channelListings,
                 (listing, index) => {
-                  const error = formErrors.discountValue?.channels?.find(id => id === listing.id);
+                  const error = listing
+                    ? formErrors.discountValue?.channels?.find(id => id === listing.id)
+                    : undefined;
 
                   return (
                     <TableRowLink
