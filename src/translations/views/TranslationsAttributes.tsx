@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
@@ -63,7 +62,7 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
   const [updateAttributeTranslations, updateAttributeTranslationsOpts] =
     useUpdateAttributeTranslationsMutation({
       onCompleted: data => {
-        if (data.attributeTranslate.errors.length === 0) {
+        if (data.attributeTranslate?.errors.length === 0) {
           attributeTranslations.refetch();
           notify({
             status: "success",
@@ -76,7 +75,7 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
   const [updateAttributeValueTranslations, updateAttributeValueTranslationsOpts] =
     useUpdateAttributeValueTranslationsMutation({
       onCompleted: data => {
-        if (data.attributeValueTranslate.errors.length === 0) {
+        if (data.attributeValueTranslate?.errors.length === 0) {
           attributeTranslations.refetch();
           notify({
             status: "success",
@@ -125,8 +124,11 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
   const saveButtonState = getMutationState(
     updateAttributeTranslationsOpts.called || updateAttributeValueTranslationsOpts.called,
     updateAttributeTranslationsOpts.loading || updateAttributeValueTranslationsOpts.loading,
-    maybe(() => updateAttributeTranslationsOpts.data.attributeTranslate.errors, []),
-    maybe(() => updateAttributeValueTranslationsOpts.data.attributeValueTranslate.errors, []),
+    maybe(() => updateAttributeTranslationsOpts.data?.attributeTranslate?.errors ?? [], []),
+    maybe(
+      () => updateAttributeValueTranslationsOpts.data?.attributeValueTranslate?.errors ?? [],
+      [],
+    ),
   );
 
   return (
@@ -142,10 +144,10 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
         languageCode={languageCode}
         languages={maybe(() => shop.languages, [])}
         saveButtonState={saveButtonState}
-        onEdit={onEdit}
+        onEdit={onEdit as (field: string | string[]) => void}
         onDiscard={onDiscard}
-        onSubmit={handleSubmit}
-        data={translation}
+        onSubmit={handleSubmit as any}
+        data={translation!}
         settings={settings}
         onUpdateListSettings={updateListSettings}
       />

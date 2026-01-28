@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useCollectionTranslationDetailsQuery,
@@ -34,7 +33,7 @@ const TranslationsCollections = ({ id, languageCode, params }: TranslationsColle
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateCollectionTranslationsMutation({
     onCompleted: data => {
-      if (data.collectionTranslate.errors.length === 0) {
+      if (data.collectionTranslate?.errors.length === 0) {
         collectionTranslations.refetch();
         notify({
           status: "success",
@@ -81,10 +80,10 @@ const TranslationsCollections = ({ id, languageCode, params }: TranslationsColle
       languageCode={languageCode}
       languages={maybe(() => shop.languages, [])}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "CollectionTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={(translation?.__typename === "CollectionTranslatableContent" ? translation : null)!}
     />
   );
 };
