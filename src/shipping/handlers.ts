@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import {
   CountryFragment,
@@ -48,7 +47,7 @@ export const createChannelsChangeHandler =
   };
 
 const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment["postalCodeRules"]) =>
-  rules
+  (rules || [])
     .filter(code => !code.id || code.id === "0")
     .map(
       code =>
@@ -77,7 +76,7 @@ function getCreateShippingPriceRateVariables(
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
-      description: getParsedDataForJsonStringField(data.description),
+      description: data.description ? getParsedDataForJsonStringField(data.description) : null,
       taxClass: data.taxClassId,
     },
   };
@@ -107,7 +106,7 @@ function getCreateShippingWeightRateVariables(
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
-      description: getParsedDataForJsonStringField(data.description),
+      description: data.description ? getParsedDataForJsonStringField(data.description) : null,
       taxClass: data.taxClassId,
     },
   };
@@ -130,13 +129,14 @@ export function getUpdateShippingPriceRateVariables(
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
       inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+        (addPostalCodeRules && addPostalCodeRules[0]?.inclusionType) ||
+        PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
-      description: getParsedDataForJsonStringField(data.description),
+      description: data.description ? getParsedDataForJsonStringField(data.description) : null,
       taxClass: data.taxClassId,
     },
   };
@@ -162,7 +162,8 @@ export function getUpdateShippingWeightRateVariables(
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
       inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+        (addPostalCodeRules && addPostalCodeRules[0]?.inclusionType) ||
+        PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
       minimumDeliveryDays: parsedMinDays,
@@ -170,7 +171,7 @@ export function getUpdateShippingWeightRateVariables(
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
-      description: getParsedDataForJsonStringField(data.description),
+      description: data.description ? getParsedDataForJsonStringField(data.description) : null,
       taxClass: data.taxClassId,
     },
   };
@@ -221,10 +222,19 @@ export function useShippingRateCreator(
     const response = await createBaseShippingRate({
       variables: getVariables(data, shippingZoneId, postalCodes, inclusionType),
     });
+
+    if (!response.data?.shippingPriceCreate) {
+      throw new Error("Failed to create shipping rate");
+    }
+
     const createErrors = response.data.shippingPriceCreate.errors;
 
     if (createErrors.length > 0) {
       return createErrors;
+    }
+
+    if (!response.data.shippingPriceCreate.shippingMethod) {
+      throw new Error("Failed to create shipping method");
     }
 
     const rateId = response.data.shippingPriceCreate.shippingMethod.id;
@@ -266,9 +276,9 @@ export function useShippingRateCreator(
   const called = createBaseShippingRateOpts.called || updateShippingMethodChannelListingOpts.called;
   const loading =
     createBaseShippingRateOpts.loading || updateShippingMethodChannelListingOpts.loading;
-  const errors = [...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || [])];
+  const errors = [...(createBaseShippingRateOpts.data?.shippingPriceCreate?.errors || [])];
   const channelErrors =
-    updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate.errors || [];
+    updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate?.errors || [];
 
   return {
     channelErrors,

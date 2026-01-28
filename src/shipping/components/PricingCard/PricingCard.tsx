@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
@@ -32,7 +31,10 @@ const numberOfColumns = 2;
 const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const formErrors = getFormChannelErrors(["price"], errors);
+  const formErrors = getFormChannelErrors(
+    ["price"],
+    errors.map(err => ({ ...err, channels: err.channels || [] })),
+  );
 
   return (
     <DashboardCard>

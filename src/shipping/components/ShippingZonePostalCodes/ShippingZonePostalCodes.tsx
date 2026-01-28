@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -21,7 +20,9 @@ interface ShippingZonePostalCodesProps {
   initialExpanded?: boolean;
   postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
   onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
-  onPostalCodeDelete: (code: ShippingMethodTypeFragment["postalCodeRules"][0]) => void;
+  onPostalCodeDelete: (
+    code: NonNullable<ShippingMethodTypeFragment["postalCodeRules"]>[number],
+  ) => void;
   onPostalCodeRangeAdd: () => void;
 }
 
@@ -61,7 +62,7 @@ const ShippingZonePostalCodes = ({
   onPostalCodeRangeAdd,
 }: ShippingZonePostalCodesProps) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
-  const [inclusionType, setInclusionType] = React.useState(null);
+  const [inclusionType, setInclusionType] = React.useState<string | null>(null);
   const intl = useIntl();
   const classes = useStyles({});
   const getInclusionType = () => {
@@ -69,7 +70,9 @@ const ShippingZonePostalCodes = ({
       return inclusionType;
     }
 
-    return postalCodes[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE;
+    return (
+      (postalCodes && postalCodes[0]?.inclusionType) || PostalCodeRuleInclusionTypeEnum.EXCLUDE
+    );
   };
   const onInclusionRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -82,7 +85,15 @@ const ShippingZonePostalCodes = ({
     onPostalCodeInclusionChange(postalType);
   };
   const getPostalCodeRangeLabel = (
-    postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0],
+    postalCodeRange:
+      | {
+          __typename: "ShippingMethodPostalCodeRule";
+          id: string;
+          inclusionType: PostalCodeRuleInclusionTypeEnum | null;
+          start: string | null;
+          end: string | null;
+        }
+      | undefined,
   ) => {
     if (!postalCodeRange?.start) {
       return <Skeleton />;
@@ -173,7 +184,7 @@ const ShippingZonePostalCodes = ({
         <TableHead>
           <TableRowLink>
             <TableCell>
-              {postalCodes === undefined ? (
+              {postalCodes == null ? (
                 <Skeleton className={classes.skeleton} />
               ) : (
                 <Text size={2} fontWeight="light">
@@ -202,7 +213,7 @@ const ShippingZonePostalCodes = ({
         {expanded && (
           <TableBody>
             {renderCollection(
-              postalCodes,
+              postalCodes || undefined,
               postalCodeRange => (
                 <TableRowLink key={postalCodeRange?.id} data-test-id="assigned-postal-codes-rows">
                   <TableCell>{getPostalCodeRangeLabel(postalCodeRange)}</TableCell>
@@ -211,7 +222,7 @@ const ShippingZonePostalCodes = ({
                       disabled={disabled}
                       color="primary"
                       variant="secondary"
-                      onClick={() => onPostalCodeDelete(postalCodeRange)}
+                      onClick={() => postalCodeRange && onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
                       <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />

@@ -268,7 +268,10 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     } else {
       dispatch({
         havePostalCodesChanged: true,
-        postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
+        postalCodeRules: filterPostalCodes(
+          state.postalCodeRules!,
+          code as NonNullable<ShippingMethodWithPostalCodesFragment["postalCodeRules"]>[number],
+        ),
       });
     }
   };

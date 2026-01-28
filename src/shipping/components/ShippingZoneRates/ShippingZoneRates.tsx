@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -192,7 +191,7 @@ const ShippingZoneRatesCreatePage = ({
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
               managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
-              allChannelsCount={allChannelsCount}
+              allChannelsCount={allChannelsCount || 0}
               channelsList={data.channelListings}
               openModal={openChannelsModal}
             />

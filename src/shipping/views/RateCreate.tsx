@@ -1,8 +1,11 @@
-// @ts-strict-ignore
 import { createSortedShippingChannels } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { PostalCodeRuleInclusionTypeEnum, useShippingZoneChannelsQuery } from "@dashboard/graphql";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodWithPostalCodesFragment,
+  useShippingZoneChannelsQuery,
+} from "@dashboard/graphql";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -68,22 +71,24 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   });
   const { channelErrors, createShippingRate, errors, status } = useShippingRateCreator(
     id,
-    params.type,
-    state.postalCodeRules,
-    state.inclusionType,
+    params.type!,
+    state.postalCodeRules || [],
+    state.inclusionType!,
   );
   const onPostalCodeAssign = (rule: MinMax) => {
-    if (state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
+    const postalCodeRules = state.postalCodeRules || [];
+
+    if (postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
       closeModal();
 
       return;
     }
 
-    const newCode = getRuleObject(rule, state.inclusionType);
+    const newCode = getRuleObject(rule, state.inclusionType!);
 
     dispatch({
       havePostalCodesChanged: true,
-      postalCodeRules: [...state.postalCodeRules, newCode],
+      postalCodeRules: [...postalCodeRules, newCode],
     });
     closeModal();
   };
@@ -93,10 +98,12 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
       postalCodeRules: [],
     });
   };
-  const onPostalCodeUnassign = code => {
+  const onPostalCodeUnassign = (
+    code: NonNullable<ShippingMethodWithPostalCodesFragment["postalCodeRules"]>[number],
+  ) => {
     dispatch({
       havePostalCodesChanged: true,
-      postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
+      postalCodeRules: filterPostalCodes(state.postalCodeRules || [], code),
     });
   };
 
