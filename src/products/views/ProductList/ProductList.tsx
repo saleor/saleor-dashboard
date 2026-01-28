@@ -14,6 +14,7 @@ import {
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   AttributeTypeEnum,
+  ExportScope,
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
@@ -61,7 +62,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
 import { ProductsExportParameters } from "./export";
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import {
+  createProductQueryVariablesLegacyInput,
+  getFilterQueryParam,
+  getFilterVariables,
+  storageUtils,
+} from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { obtainChannelFromFilter } from "./utils";
 
@@ -369,11 +375,24 @@ const ProductList = ({ params }: ProductListProps) => {
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data => {
-          const productsExportParams = new ProductsExportParameters({
+          const exportInput = {
             ...data,
-            ...filterVariables,
             ids: selectedRowIds,
-          });
+          };
+
+          // Include filter when exporting filtered products
+          if (data.scope === ExportScope.FILTER) {
+            const filter = createProductQueryVariablesLegacyInput(valueProvider.value);
+
+            if (!filter || (typeof filter === "object" && Object.keys(filter).length === 0)) {
+              // Fall back to exporting all when no filters are applied
+              exportInput.scope = ExportScope.ALL;
+            } else {
+              exportInput.filter = filter;
+            }
+          }
+
+          const productsExportParams = new ProductsExportParameters(exportInput);
 
           exportProducts({
             variables: {

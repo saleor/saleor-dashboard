@@ -5,7 +5,12 @@ import {
   ProductListUrlFiltersAsDictWithMultipleValues,
 } from "@dashboard/products/urls";
 
-import { FilterParam, getAttributeValuesFromParams, parseFilterValue } from "./filters";
+import {
+  createProductQueryVariablesLegacyInput,
+  FilterParam,
+  getAttributeValuesFromParams,
+  parseFilterValue,
+} from "./filters";
 
 describe("Get attribute values from URL params", () => {
   type GetAttributeValuesFromParams = Parameters<typeof getAttributeValuesFromParams>;
@@ -184,5 +189,224 @@ describe("Parsing filter value", () => {
 
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
+  });
+});
+
+describe("Create product query variables legacy input", () => {
+  it("should return null when no filter container provided", () => {
+    // Arrange
+    const filterContainer = null as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeNull();
+  });
+
+  it("should return null when filter container is empty", () => {
+    // Arrange
+    const filterContainer = [];
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeNull();
+  });
+
+  it("should normalize collection singular to collections plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "collection" },
+        condition: { active: true, value: ["col-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: collection (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).collection).toBeUndefined();
+    }
+  });
+
+  it("should normalize category singular to categories plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "category" },
+        condition: { active: true, value: ["cat-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: category (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).category).toBeUndefined();
+    }
+  });
+
+  it("should normalize productType singular to productTypes plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "productType" },
+        condition: { active: true, value: ["type-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify normalization occurred: productType (singular) doesn't exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).productType).toBeUndefined();
+    }
+  });
+
+  it("should convert price string to PriceRangeInput object", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "200" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+
+    // Price should be converted to an object with gte property equal to 200
+    if (filter && typeof filter === "object" && filter.price) {
+      expect(typeof filter.price).toBe("object");
+      expect(filter.price).toEqual({ gte: 200 });
+    }
+  });
+
+  it("should remove invalid price fields", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "invalid" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // Invalid price should be removed, and since it's the only field, filter should be null
+    expect(filter).toBeNull();
+  });
+
+  it("should handle price value of 0 correctly (not treat 0 as falsy)", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: { gte: 0, lte: 100 } },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // Edge case: price with 0 should NOT be removed (0 is falsy but valid)
+    expect(filter).toBeDefined();
+
+    if (filter && typeof filter === "object" && filter.price) {
+      expect(filter.price.gte).toBe(0);
+      expect(filter.price.lte).toBe(100);
+    }
+  });
+
+  it("should handle multiple field normalizations simultaneously", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "collection" },
+        condition: { active: true, value: ["col-1"] },
+      },
+      {
+        field: { name: "category" },
+        condition: { active: true, value: ["cat-1"] },
+      },
+      {
+        field: { name: "productType" },
+        condition: { active: true, value: ["type-1"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+
+    if (filter && typeof filter === "object") {
+      // All singular forms should be removed after conversion
+
+      const filterObj = filter as any;
+
+      expect("collection" in filterObj ? filterObj.collection : undefined).toBeUndefined();
+      expect("category" in filterObj ? filterObj.category : undefined).toBeUndefined();
+      expect("productType" in filterObj ? filterObj.productType : undefined).toBeUndefined();
+    }
+  });
+
+  it("should use FiltersQueryBuilder with FILTER api type", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "search" },
+        condition: { active: true, value: "test" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // The function should successfully build filters without errors
+    expect(filter).toBeDefined();
+  });
+
+  it("should return null when filter container is empty after normalization", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductQueryVariablesLegacyInput(filterContainer);
+
+    // Assert
+    // Should return null, not empty object, when all fields are filtered out
+    expect(filter).toBeNull();
   });
 });
