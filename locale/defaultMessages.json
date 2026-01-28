@@ -2705,6 +2705,9 @@
     "context": "Description for no shipping zones warning",
     "string": "Customers cannot checkout without shipping methods. Add shipping zones to this channel."
   },
+  "EAiv4D": {
+    "string": "custom"
+  },
   "EDihQs": {
     "string": "Staff member updated"
   },
@@ -4159,6 +4162,9 @@
     "context": "Placeholder for date picker",
     "string": "dd/mm/yyyy, --:--"
   },
+  "MGxwn/": {
+    "string": "Webhook delivery"
+  },
   "MH1qA1": {
     "string": "Test Action"
   },
@@ -4596,6 +4602,9 @@
     "context": "input label",
     "string": "Model type"
   },
+  "OYWn0V": {
+    "string": "CircuitBreaker"
+  },
   "OZc365": {
     "context": "single reference attribute type",
     "string": "Single Reference"
@@ -4845,6 +4854,9 @@
   "PuQb0P": {
     "string": "Reward"
   },
+  "Pv6Tq8": {
+    "string": "Check webhooks"
+  },
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
@@ -4936,6 +4948,9 @@
   "QJJke/": {
     "context": "dialog header",
     "string": "Select a model type"
+  },
+  "QKrtDC": {
+    "string": "{count, plural, one {{count} problem} other {{count} problems}}"
   },
   "QL4a0Z": {
     "context": "alert message",
@@ -8602,12 +8617,18 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lN6B54": {
+    "string": "Open the app"
+  },
   "lNZuWl": {
     "string": "All orders"
   },
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lRtZ2L": {
+    "string": "This message comes from the app"
   },
   "lSOmbK": {
     "context": "fulfillment status fulfilled",
@@ -9957,6 +9978,9 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "tdcGPK": {
+    "string": "Show {count} more {count, plural, one {problem} other {problems}}"
   },
   "tf+OkY": {
     "context": "link to edit variant metadata",

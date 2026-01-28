@@ -1,0 +1,151 @@
+.problemsContainer {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  margin: 18px 63px 18px;
+  max-width: 700px;
+  overflow: hidden;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
+}
+
+.warningIcon {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.circuitBreakerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.customBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.webhookBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.problemsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.problemRow {
+  padding: 6px 16px 6px 40px;
+}
+
+.problemRow:last-child {
+  padding-bottom: 12px;
+}
+
+.timestamp {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.problemMessage {
+  font-size: 14px;
+  color: #111827;
+}
+
+.showMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  border-top: 1px solid #fecaca;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 8px 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.showMoreButton:hover {
+  color: #374151;
+}
+
+.groupDivider {
+  border: none;
+  border-top: 1px solid #fecaca;
+  margin: 4px 16px;
+}
+
+.groupActionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.groupActionLink:hover {
+  text-decoration: underline;
+}
+
+.headerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  line-height: 1.4;
+  white-space: nowrap;
+}
