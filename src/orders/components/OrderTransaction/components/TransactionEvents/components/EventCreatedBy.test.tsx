@@ -3,7 +3,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 import { EventCreatedBy } from "./EventCreatedBy";
 
@@ -18,7 +18,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the app if app is passed", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <EventCreatedBy createdBy={appAvatarFixture} />
       </MemoryRouter>,
     );
@@ -34,7 +34,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the user settings if user is passed", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,
     );
