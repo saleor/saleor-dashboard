@@ -141,3 +141,13 @@ a.command-menu-item {
 .MuiSelect-select.MuiSelect-select:focus {
   background-color: var(--mu-colors-background-default1-hovered) !important;
 }
+
+/* Ensure toast notifications appear above modals */
+#toast-portal {
+  z-index: 2147483647;
+  pointer-events: none;
+}
+
+#toast-portal > * {
+  pointer-events: auto;
+}

@@ -147,6 +147,12 @@ export const productVariantAttributesFragment = gql`
       variantAttributes {
         ...VariantAttribute
       }
+      selectionVariantAttributes: variantAttributes(variantSelection: VARIANT_SELECTION) {
+        ...VariantAttribute
+      }
+      nonSelectionVariantAttributes: variantAttributes(variantSelection: NOT_VARIANT_SELECTION) {
+        ...VariantAttribute
+      }
     }
     channelListings {
       channel {

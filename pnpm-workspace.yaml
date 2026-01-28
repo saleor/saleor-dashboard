@@ -4,6 +4,14 @@ minimumReleaseAge: 720 # 12h
 
 trustPolicy: no-downgrade
 
+packages:
+  - "."
+
+# Keeps src/ and .github/workflows directories separated
+# as they are independent from one to another.
+recursiveInstall: false
+sharedWorkspaceLockfile: false
+
 onlyBuiltDependencies:
   - "@sentry/cli"
   - "@swc/core"
