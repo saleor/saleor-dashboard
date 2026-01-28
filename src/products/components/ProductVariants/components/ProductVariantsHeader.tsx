@@ -3,8 +3,10 @@ import { DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagr
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -140,11 +142,14 @@ export const ProductVariantsHeader = ({
           )}
         </DatagridHeader.ButtonFullScreen>
         {!isFullscreenOpen && (
-          <GenerateVariantsButton
-            hasVariantAttributes={hasVariantAttributes}
-            unsupportedRequiredAttributes={unsupportedRequiredAttributes}
-            onGenerateVariants={onGenerateVariants}
-          />
+          <Box display="flex" alignItems="center" gap={2}>
+            <GenerateVariantsButton
+              hasVariantAttributes={hasVariantAttributes}
+              unsupportedRequiredAttributes={unsupportedRequiredAttributes}
+              onGenerateVariants={onGenerateVariants}
+            />
+            <Ripple model={rippleVariantGenerator} />
+          </Box>
         )}
         <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
           <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
