@@ -110,6 +110,11 @@ export const AvailabilityChannelItem = ({
   );
 
   const getStatusLabel = () => {
+    // When there are issues, show "Issues" status regardless of publication status
+    if (hasIssues) {
+      return intl.formatMessage(messages.status_issues);
+    }
+
     switch (status) {
       case "live":
         return intl.formatMessage(messages.status_live);
@@ -121,6 +126,11 @@ export const AvailabilityChannelItem = ({
   };
 
   const getStatusDescription = () => {
+    // When there are issues, show issues description regardless of publication status
+    if (hasIssues) {
+      return intl.formatMessage(messages.statusDescription_issues);
+    }
+
     switch (status) {
       case "live":
         if (isPurchasable(originalSummary ?? summary, dateNow)) {

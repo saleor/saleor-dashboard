@@ -4755,6 +4755,10 @@
     "context": "open new window button",
     "string": "Open this product in GraphiQL"
   },
+  "PF7Zsp": {
+    "context": "Status when product has availability issues",
+    "string": "Issues"
+  },
   "PFXGaR": {
     "string": "Shipping Zones"
   },
@@ -10487,6 +10491,10 @@
   "vqu+23": {
     "context": "success notifier message",
     "string": "Saved draft"
+  },
+  "vsSdHA": {
+    "context": "Description for status when product has availability issues",
+    "string": "Has availability issues"
   },
   "vuKrlW": {
     "string": "Stock"

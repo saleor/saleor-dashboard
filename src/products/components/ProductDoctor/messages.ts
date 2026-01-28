@@ -340,6 +340,16 @@ export const messages = defineMessages({
     defaultMessage: "Not visible to customers",
     description: "Description for hidden status",
   },
+  status_issues: {
+    id: "PF7Zsp",
+    defaultMessage: "Issues",
+    description: "Status when product has availability issues",
+  },
+  statusDescription_issues: {
+    id: "vsSdHA",
+    defaultMessage: "Has availability issues",
+    description: "Description for status when product has availability issues",
+  },
   channelControlsPlaceholder: {
     id: "KE/G/G",
     defaultMessage: "Channel controls will be displayed here",
