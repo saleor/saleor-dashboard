@@ -1,12 +1,13 @@
 // @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import useDebounce from "@dashboard/hooks/useDebounce";
+import { commonMessages } from "@dashboard/intl";
 import { getBySlug } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { Box, DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import React, { useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox } from "../Combobox";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -30,7 +31,13 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const mounted = useRef(false);
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+
+  const debouncedFetch = useDebounce((query: string) => {
+    fetchAttributeValues(query, attribute.id);
+  }, 500);
+
   const options = useMemo(
     () =>
       attributeValues.map(({ file, value, slug, name }) => ({
@@ -47,9 +54,26 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
     [attributeValues],
   );
 
+  const handleFocus = () => {
+    if (!mounted.current) {
+      mounted.current = true;
+      fetchAttributeValues("", attribute.id);
+    }
+  };
+
+  const handleScrollEnd = () => {
+    if (fetchMoreAttributeValues?.hasMore) {
+      fetchMoreAttributeValues.onFetchMore();
+    }
+  };
+
+  const handleChange = (option: Option | null) => {
+    onChange(attribute.id, option?.value ?? null);
+  };
+
   return (
     <BasicAttributeRow label={attribute.label}>
-      <Combobox
+      <DynamicCombobox
         disabled={disabled}
         options={options}
         value={
@@ -57,28 +81,30 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
             ? {
                 value: attribute.value[0],
                 label: getSingleDisplayValue(attribute, attributeValues),
+                startAdornment: value ? (
+                  <SwatchPreviewBox
+                    isFile={!!value?.file}
+                    backgroundImageUrl={value?.file?.url}
+                    backgroundColor={value?.value}
+                  />
+                ) : undefined,
               }
             : null
-        }
-        startAdornment={() =>
-          value ? (
-            <SwatchPreviewBox
-              isFile={!!value?.file}
-              backgroundImageUrl={value?.file?.url}
-              backgroundColor={value?.value}
-            />
-          ) : null
         }
         error={!!error}
         label=""
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        onChange={e => onChange(attribute.id, e.target.value)}
-        fetchOptions={query => {
-          fetchAttributeValues(query, attribute.id);
+        onChange={handleChange}
+        onInputValueChange={debouncedFetch}
+        onFocus={handleFocus}
+        onScrollEnd={handleScrollEnd}
+        loading={fetchMoreAttributeValues?.loading || fetchMoreAttributeValues?.hasMore}
+        locale={{
+          loadingText: intl.formatMessage(commonMessages.loading),
         }}
-        fetchMore={fetchMoreAttributeValues}
+        size="small"
       />
     </BasicAttributeRow>
   );

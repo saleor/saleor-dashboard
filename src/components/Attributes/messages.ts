@@ -20,4 +20,9 @@ export const attributeRowMessages = defineMessages({
     id: "fLCV/w",
     defaultMessage: "Add new value",
   },
+  addNewValueWithLabel: {
+    id: "4c9H2f",
+    defaultMessage: "Add new value: {value}",
+    description: "option to add a custom attribute value",
+  },
 });

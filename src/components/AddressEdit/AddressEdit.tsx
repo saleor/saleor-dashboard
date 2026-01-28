@@ -5,11 +5,10 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox } from "../Combobox";
 import { getErrorMessage } from "./getErrorMessage";
 import { useAddressValidation } from "./useAddressValidation";
 
@@ -222,7 +221,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
 
       <div className={classes.root}>
         <div>
-          <Combobox
+          <DynamicCombobox
             data-test-id="address-edit-country-select-field"
             autoComplete="off"
             spellCheck={false}
@@ -233,19 +232,30 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
               id: "vONi+O",
               defaultMessage: "Country",
             })}
-            options={countries}
-            fetchOptions={() => undefined}
+            options={countries ?? []}
             name="country"
-            value={{
-              label: countryDisplayValue,
-              value: data.country,
+            value={
+              data.country
+                ? {
+                    label: countryDisplayValue,
+                    value: data.country,
+                  }
+                : null
+            }
+            onChange={(option: Option | null) => {
+              onCountryChange({
+                target: { name: "country", value: option?.value ?? "" },
+              } as React.ChangeEvent<any>);
             }}
-            onChange={onCountryChange}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
+            size="small"
           />
         </div>
         <div>
           {isFieldAllowed(PossibleFormFields.COUNTRY_AREA) && (
-            <Combobox
+            <DynamicCombobox
               data-test-id="address-edit-country-area-field"
               autoComplete="off"
               spellCheck={false}
@@ -256,14 +266,25 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
                 id: "AuwpCm",
                 defaultMessage: "Country area",
               })}
-              options={areas}
-              fetchOptions={() => undefined}
+              options={areas.map(a => ({ label: a.label, value: a.value })) ?? []}
               name="countryArea"
-              value={{
-                label: getDisplayValue(data.countryArea),
-                value: data.countryArea,
+              value={
+                data.countryArea
+                  ? {
+                      label: getDisplayValue(data.countryArea),
+                      value: data.countryArea,
+                    }
+                  : null
+              }
+              onChange={(option: Option | null) => {
+                onChange({
+                  target: { name: "countryArea", value: option?.value ?? "" },
+                } as React.ChangeEvent<any>);
               }}
-              onChange={onChange}
+              locale={{
+                loadingText: intl.formatMessage(commonMessages.loading),
+              }}
+              size="small"
             />
           )}
         </div>

@@ -1,14 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
 import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@dashboard/graphql";
 import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { commonMessages } from "@dashboard/intl";
 import { getProductVariantAttributeErrorMessage } from "@dashboard/utils/errors/product";
-import { Option, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { DynamicCombobox, Option, Skeleton, Text } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
@@ -63,6 +62,27 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
+  const [inputValues, setInputValues] = useState<Record<string, string>>({});
+
+  const buildOptionsWithCustomValue = (attributeId: string) => {
+    const baseOptions = getAttributeValueChoices(attributeId, attributes);
+    const inputValue = inputValues[attributeId]?.trim();
+
+    if (!inputValue) {
+      return baseOptions;
+    }
+
+    const hasExactMatch = baseOptions.some(
+      opt => opt.label.toLowerCase() === inputValue.toLowerCase(),
+    );
+
+    if (hasExactMatch) {
+      return baseOptions;
+    }
+
+    // Add custom value option
+    return [{ label: `Add: ${inputValue}`, value: inputValue }, ...baseOptions];
+  };
 
   return (
     <DashboardCard>
@@ -78,24 +98,44 @@ const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
           ) : (
             attributes.map(attribute => {
               const error = errors.find(err => err.attributes?.includes(attribute.id));
+              const currentValue = getAttributeValue(attribute.id, attributes);
 
               return (
-                <Combobox
+                <DynamicCombobox
                   key={attribute.id}
-                  allowCustomValues
                   disabled={disabled}
                   data-test-id="variant-attribute-input"
                   error={!!error}
                   helperText={getProductVariantAttributeErrorMessage(error, intl)}
                   label={attribute.label}
-                  options={getAttributeValueChoices(attribute.id, attributes)}
-                  fetchOptions={() => undefined}
+                  options={buildOptionsWithCustomValue(attribute.id)}
                   name={`attribute:${attribute.id}`}
-                  value={{
-                    label: getAttributeDisplayValue(attribute.id, attribute.value, attributes),
-                    value: getAttributeValue(attribute.id, attributes),
+                  value={
+                    currentValue
+                      ? {
+                          label: getAttributeDisplayValue(
+                            attribute.id,
+                            attribute.value,
+                            attributes,
+                          ),
+                          value: currentValue,
+                        }
+                      : null
+                  }
+                  onChange={(option: Option | null) => {
+                    (onChange as unknown as FormsetChange<string>)(
+                      attribute.id,
+                      option?.value ?? null,
+                    );
+                    setInputValues(prev => ({ ...prev, [attribute.id]: "" }));
                   }}
-                  onChange={event => onChange(attribute.id, event.target.value)}
+                  onInputValueChange={value => {
+                    setInputValues(prev => ({ ...prev, [attribute.id]: value }));
+                  }}
+                  locale={{
+                    loadingText: intl.formatMessage(commonMessages.loading),
+                  }}
+                  size="small"
                 />
               );
             })

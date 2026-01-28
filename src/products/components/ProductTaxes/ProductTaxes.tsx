@@ -1,11 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { sectionNames } from "@dashboard/intl";
+import { commonMessages, sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,6 +21,11 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 
+  const options = taxClasses.map(choice => ({
+    label: choice.name,
+    value: choice.id,
+  }));
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -29,13 +33,9 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
-            options={taxClasses.map(choice => ({
-              label: choice.name,
-              value: choice.id,
-            }))}
-            fetchOptions={() => undefined}
+            options={options}
             value={
               value
                 ? {
@@ -46,8 +46,21 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
             }
             name="taxClassId"
             label={intl.formatMessage(taxesMessages.taxClass)}
-            onChange={onChange}
-            fetchMore={onFetchMore}
+            onChange={(option: Option | null) => {
+              onChange({
+                target: { name: "taxClassId", value: option?.value ?? null },
+              });
+            }}
+            onScrollEnd={() => {
+              if (onFetchMore?.hasMore) {
+                onFetchMore.onFetchMore();
+              }
+            }}
+            loading={onFetchMore?.loading || onFetchMore?.hasMore}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
+            size="small"
           />
         </Box>
       </DashboardCard.Content>
