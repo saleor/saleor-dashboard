@@ -1,7 +1,7 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -112,7 +112,7 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
                   data-test-id="dialog-row"
                   onClick={() => handleContainerSelect(container.id)}
                 >
-                  <TableCell padding="checkbox" className={classes.checkboxCell}>
+                  <TableCell padding="checkbox">
                     <Radio
                       checked={isSelected}
                       onChange={() => handleContainerSelect(container.id)}

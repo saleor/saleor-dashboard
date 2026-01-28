@@ -2,7 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FulfillmentFragment, OrderFulfillLineFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";

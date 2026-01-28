@@ -8,7 +8,6 @@ export const useStyles = makeStyles(
     },
     colName: {
       fontSize: 14,
-      paddingLeft: 0,
       width: "auto",
     },
     colType: {
@@ -20,8 +19,6 @@ export const useStyles = makeStyles(
       "&:last-child": {
         paddingBottom: 0,
       },
-      paddingLeft: 0,
-      paddingRight: 0,
     },
     table: {
       tableLayout: "fixed",

@@ -43,7 +43,13 @@ export const Root = ({
             {title}
           </Text>
         </Box>
-        <Box display="flex" flexWrap="nowrap" height="100%" __flex={isAlignToRight ? "initial" : 1}>
+        <Box
+          display="flex"
+          flexWrap="nowrap"
+          height="100%"
+          gap={2}
+          __flex={isAlignToRight ? "initial" : 1}
+        >
           {isPickerActive && channels.length > 0 && (
             <AppChannelSelect
               channels={channels}

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Date } from "@dashboard/components/Date/Date";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";

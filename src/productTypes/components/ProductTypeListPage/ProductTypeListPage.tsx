@@ -101,8 +101,9 @@ const ProductTypeListPage = ({
             description: "Product types search input placeholder",
           })}
         />
-
-        <ProductTypeList {...listProps} disabled={disabled} />
+        <DashboardCard.Content>
+          <ProductTypeList {...listProps} disabled={disabled} />
+        </DashboardCard.Content>
       </DashboardCard>
     </ListPageLayout>
   );

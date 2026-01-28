@@ -326,14 +326,14 @@ const OrderTransactionRefundPage = ({
                   <Box marginTop={2}>
                     {canManageSettings && modelForRefundReasonRefId && (
                       <Link href={pageListUrl()}>
-                        <Text color="inherit">
+                        <Text color="inherit" size={2}>
                           {intl.formatMessage(refundReasonSelectHelperMessages.manageReasons)}
                         </Text>
                       </Link>
                     )}
                     {canManageSettings && !modelForRefundReasonRefId && (
                       <Link href={refundsSettingsPath}>
-                        <Text color="inherit">
+                        <Text color="inherit" size={2}>
                           {intl.formatMessage(
                             refundReasonSelectHelperMessages.enableReasonsInSettings,
                           )}
@@ -341,7 +341,7 @@ const OrderTransactionRefundPage = ({
                       </Link>
                     )}
                     {!canManageSettings && (
-                      <Text color="default2">
+                      <Text color="default2" size={2}>
                         {intl.formatMessage(refundReasonSelectHelperMessages.noPermissionsHint)}
                       </Text>
                     )}

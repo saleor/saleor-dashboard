@@ -1,10 +1,12 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -17,25 +19,15 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
 import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import { isLastElement } from "@dashboard/taxes/utils/utils";
-import { Card, CardContent, Divider, InputAdornment, TextField } from "@material-ui/core";
-import {
-  List,
-  ListHeader,
-  ListItem,
-  ListItemCell,
-  PageTab,
-  PageTabs,
-  SearchIcon,
-} from "@saleor/macaw-ui";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import { Fragment, useMemo, useState } from "react";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { PageTab, PageTabs } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
 import TaxCountriesForm from "./form";
-import { useStyles } from "./styles";
-import TaxCountriesMenu from "./TaxCountriesMenu";
+import { TaxCountriesMenu } from "./TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[] | undefined;
@@ -60,7 +52,6 @@ const TaxCountriesPage = (props: TaxCountriesPageProps) => {
     disabled,
   } = props;
   const intl = useIntl();
-  const classes = useStyles();
   const navigate = useNavigator();
   const [query, setQuery] = useState("");
   const currentCountry = useMemo(
@@ -105,80 +96,52 @@ const TaxCountriesPage = (props: TaxCountriesPageProps) => {
                     onCountryDelete={onDeleteConfiguration}
                     onCountryAdd={() => openDialog("add-country")}
                   />
-                  <Card>
-                    <CardTitle
-                      title={
-                        currentCountry ? (
-                          intl.formatMessage(taxesMessages.taxClassRatesHeader, {
+                  {currentCountry && (
+                    <DashboardCard>
+                      <DashboardCard.Header paddingX={4}>
+                        <DashboardCard.Title>
+                          {intl.formatMessage(taxesMessages.taxClassRatesHeader, {
                             country: currentCountry?.country?.country,
-                          })
-                        ) : (
-                          <Skeleton />
-                        )
-                      }
-                    />
-                    {countryTaxesData?.length === 0 ? (
-                      <CardContent className={classes.greyText}>
-                        <FormattedMessage {...taxesMessages.addCountryToAccessClass} />
-                      </CardContent>
-                    ) : (
-                      <>
-                        <CardContent>
-                          <TextField
-                            data-test-id="search-tax-class-input"
-                            value={query}
-                            variant="outlined"
-                            onChange={e => setQuery(e.target.value)}
-                            placeholder={intl.formatMessage(taxesMessages.searchTaxClasses)}
-                            fullWidth
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <SearchIcon
-                                    onPointerEnterCapture={undefined}
-                                    onPointerLeaveCapture={undefined}
-                                  />
-                                </InputAdornment>
-                              ),
-                            }}
-                            inputProps={{ className: classes.inputPadding }}
-                          />
-                        </CardContent>
-                        <List gridTemplate={["5fr 2fr"]}>
-                          <ListHeader>
-                            <ListItem>
-                              <ListItemCell>
+                          })}
+                        </DashboardCard.Title>
+                      </DashboardCard.Header>
+                      <DashboardCard.Content paddingX={0}>
+                        <ResponsiveTable
+                          search={{
+                            placeholder: intl.formatMessage(taxesMessages.searchTaxClasses),
+                            initialValue: query,
+                            onSearchChange: setQuery,
+                          }}
+                          filteredItemsCount={filteredRates?.length}
+                        >
+                          <TableHead>
+                            <TableRowLink>
+                              <TableCell>
                                 <FormattedMessage {...taxesMessages.taxNameHeader} />
-                              </ListItemCell>
-                              <ListItemCell className={classes.right}>
+                              </TableCell>
+                              <TableCell>
                                 <FormattedMessage {...taxesMessages.taxRateHeader} />
-                              </ListItemCell>
-                            </ListItem>
-                          </ListHeader>
-                          <Divider />
-                          {filteredRates?.map((rate, rateIndex) => (
-                            <Fragment key={rate.id}>
-                              <ListItem
-                                hover={false}
-                                className={classes.noDivider}
-                                data-test-id={rate.label}
-                              >
-                                <ListItemCell>{rate.label}</ListItemCell>
-                                <ListItemCell>
+                              </TableCell>
+                            </TableRowLink>
+                          </TableHead>
+                          <TableBody>
+                            {filteredRates?.map(rate => (
+                              <TableRowLink key={rate.id} data-test-id={rate.label}>
+                                <TableCell>{rate.label}</TableCell>
+                                <TableCell>
                                   <TaxInput
                                     placeholder={data[0]?.rate}
                                     value={rate?.value}
                                     change={e => handlers.handleRateChange(rate.id, e.target.value)}
                                   />
-                                </ListItemCell>
-                              </ListItem>
-                              {!isLastElement(filteredRates, rateIndex) && <Divider />}
-                            </Fragment>
-                          )) ?? <Skeleton />}
-                        </List>
-                      </>
-                    )}
-                  </Card>
+                                </TableCell>
+                              </TableRowLink>
+                            ))}
+                          </TableBody>
+                        </ResponsiveTable>
+                      </DashboardCard.Content>
+                    </DashboardCard>
+                  )}
                 </Grid>
               </Box>
               <Savebar>

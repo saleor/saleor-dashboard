@@ -1,8 +1,7 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
-import { Check, CircleAlert } from "lucide-react";
+import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -114,12 +113,7 @@ export const ConfirmButton = ({
   };
   const getByLabelText = () => {
     if (isError) {
-      return (
-        <>
-          <CircleAlert size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-          {componentLabels.error}
-        </>
-      );
+      return componentLabels.error;
     }
 
     return children || componentLabels.confirm;

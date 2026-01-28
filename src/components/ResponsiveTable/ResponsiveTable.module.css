@@ -1,0 +1,81 @@
+.container {
+  width: 100%;
+}
+
+.wrapper {
+  overflow-x: auto;
+  width: 100%;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.searchBar {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.table {
+  width: 100%;
+  table-layout: auto;
+}
+
+.table thead {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.table thead th,
+.table thead td {
+  border-bottom: none;
+}
+
+.table thead:has(~ tbody) tr:last-child th,
+.table thead:has(~ tbody) tr:last-child td {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+/* !important overrides MUI TableCell defaults */
+.table th {
+  vertical-align: middle;
+  padding: 0 8px !important;
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 0 8px !important;
+}
+
+.table th:first-child {
+  padding-left: 16px !important;
+}
+
+.table th:last-child {
+  padding-right: 16px !important;
+}
+
+.table td:first-child {
+  padding-left: 16px !important;
+}
+
+.table td:last-child {
+  padding-right: 4px !important;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.colAction {
+  width: 48px;
+  text-align: right;
+}
+
+.colActionWide {
+  width: 120px;
+  text-align: right;
+}
+
+@media (min-width: 960px) {
+  .table {
+    table-layout: fixed;
+  }
+}

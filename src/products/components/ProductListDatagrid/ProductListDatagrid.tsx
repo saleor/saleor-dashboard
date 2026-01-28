@@ -7,7 +7,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
 import {
@@ -282,15 +282,13 @@ export const ProductListDatagrid = ({
           navigatorOpts={{ state: getPrevLocationState(location) }}
         />
 
-        <Box paddingX={6}>
-          <TablePaginationWithContext
-            component="div"
-            colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        </Box>
+        <DatagridPagination
+          component="div"
+          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
       </DatagridChangeStateContext.Provider>
     </Box>
   );

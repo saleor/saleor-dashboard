@@ -127,6 +127,21 @@ The codebase follows a feature-based architecture with shared components:
 - Implement proper form validation with React Hook Form
 - Add internationalization support for user-facing text
 
+### UI Design Guidelines
+
+**Before redesigning any component that displays a list, ask: "What happens with 50+ items?"**
+
+If the list could be long:
+
+- Add scrollable container with `max-height`
+- Keep headers outside the scroll area
+- Auto-scroll to active item on load
+
+Other considerations:
+
+- Loading states: Show skeletons
+- Empty states: Handle zero items gracefully
+
 ### Testing Requirements
 
 - Write unit tests for utility functions and complex components

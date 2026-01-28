@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
@@ -66,21 +66,19 @@ export const ProductListTiles = ({
   return (
     <>
       {renderContent()}
-      <Box paddingX={6}>
-        <TablePaginationWithContext
-          component="div"
-          settings={settings}
-          disabled={disabled}
-          labels={{
-            noOfRows: intl.formatMessage({
-              id: "9B2mOB",
-              defaultMessage: "No. of products",
-              description: "tile view pagination label",
-            }),
-          }}
-          onUpdateListSettings={onUpdateListSettings}
-        />
-      </Box>
+      <DatagridPagination
+        component="div"
+        settings={settings}
+        disabled={disabled}
+        labels={{
+          noOfRows: intl.formatMessage({
+            id: "9B2mOB",
+            defaultMessage: "No. of products",
+            description: "tile view pagination label",
+          }),
+        }}
+        onUpdateListSettings={onUpdateListSettings}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -9,9 +9,10 @@ import { PageTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -20,9 +21,7 @@ import { ListActions, ListProps, SortPage } from "../../../types";
 
 const useStyles = makeStyles(
   {
-    colName: {
-      paddingLeft: 0,
-    },
+    colName: {},
     link: {
       cursor: "pointer",
     },
@@ -32,17 +31,34 @@ const useStyles = makeStyles(
 
 interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeListUrlSortField> {
   pageTypes: PageTypeFragment[];
+  /** Optional search configuration */
+  search?: {
+    placeholder?: string;
+    initialValue?: string;
+    onSearchChange?: (query: string) => void;
+    toolbar?: React.ReactNode;
+  };
 }
 
 const PageTypeList = (props: PageTypeListProps) => {
-  const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
-    props;
+  const {
+    disabled,
+    pageTypes,
+    onSort,
+    isChecked,
+    selected,
+    sort,
+    toggle,
+    toggleAll,
+    toolbar,
+    search,
+  } = props;
   const location = useLocation();
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable search={search} footer={<TablePaginationWithContext disabled={disabled} />}>
       <TableHead
         colSpan={numberOfColumns}
         selected={selected}
@@ -66,11 +82,6 @@ const PageTypeList = (props: PageTypeListProps) => {
           />
         </TableCellHeader>
       </TableHead>
-      <TableFooter>
-        <TableRowLink>
-          <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
-        </TableRowLink>
-      </TableFooter>
       <TableBody data-test-id="page-types-list">
         {renderCollection(
           pageTypes,

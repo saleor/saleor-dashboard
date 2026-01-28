@@ -3,9 +3,11 @@ import { productVariantEditUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { useScrollIntoView } from "../hooks/useScrollIntoView";
 import { messages } from "../messages";
 import { ProductVariantItem, ProductVariantItemThumbnail } from "../types";
 import { ImagePlaceholder } from "./ImagePlaceholder";
@@ -30,6 +32,15 @@ export const VariantItem = ({
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: variant.id,
   });
+  const { scrollRef } = useScrollIntoView<HTMLDivElement>({ isActive });
+
+  const handleRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      setNodeRef(node);
+      scrollRef(node);
+    },
+    [setNodeRef, scrollRef],
+  );
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -38,7 +49,7 @@ export const VariantItem = ({
 
   return (
     <Box
-      ref={setNodeRef}
+      ref={handleRef}
       style={style}
       display="block"
       borderLeftStyle="solid"

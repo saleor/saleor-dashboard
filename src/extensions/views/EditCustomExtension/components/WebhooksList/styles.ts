@@ -16,7 +16,6 @@ export const useStyles = makeStyles(
       },
     },
     colName: {
-      paddingLeft: 0,
       width: 250,
     },
     colNameUnnamed: {

@@ -4,7 +4,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
@@ -89,7 +89,7 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                       <FormattedMessage {...messages.quickPickSubtitle} />
                     </Text>
 
-                    <ResponsiveTable className={classes.table}>
+                    <ResponsiveTable>
                       <TableBody>
                         <TableRowLink
                           data-test-id="rest-of-the-world-row"
@@ -97,10 +97,14 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                           onClick={() => handleRestOfTheWorldChange(!isRestOfTheWorldSelected)}
                         >
                           <TableCell className={classes.wideCell}>
-                            <FormattedMessage {...messages.restOfTheWorldCheckbox} />
-                            <Text size={2} fontWeight="light">
-                              <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
-                            </Text>
+                            <Box paddingY={2}>
+                              <Text size={3} display="block">
+                                <FormattedMessage {...messages.restOfTheWorldCheckbox} />
+                              </Text>
+                              <Text size={2} fontWeight="light">
+                                <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
+                              </Text>
+                            </Box>
                           </TableCell>
                           <TableCell padding="checkbox" className={classes.checkboxCell}>
                             <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
@@ -115,8 +119,8 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                   <FormattedMessage {...messages.countriesSubtitle} />
                 </Text>
 
-                <Box overflowY="auto" __maxHeight={400}>
-                  <ResponsiveTable className={classes.table}>
+                <Box overflowY="auto" __maxHeight={300}>
+                  <ResponsiveTable>
                     <TableBody>
                       {displayCountries.map(country => {
                         const isChecked = countrySelectionMap[country.code];

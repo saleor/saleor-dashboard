@@ -1,5 +1,5 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Button, ButtonProps } from "@saleor/macaw-ui-next";
+import { Box, Button, ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -17,20 +17,43 @@ export const DeleteButton = ({
 export const ConfirmButton = ({
   children,
   transitionState,
+  tooltip,
+  disabled,
   ...props
 }: {
   children?: React.ReactNode;
   transitionState: ConfirmButtonProps["transitionState"];
-} & ButtonProps) => (
-  <ConfirmButtonComponent
-    size="large"
-    transitionState={transitionState}
-    data-test-id="button-bar-confirm"
-    {...props}
-  >
-    {children || <FormattedMessage {...buttonMessages.save} />}
-  </ConfirmButtonComponent>
-);
+  tooltip?: React.ReactNode;
+} & ButtonProps) => {
+  const button = (
+    <ConfirmButtonComponent
+      size="large"
+      transitionState={transitionState}
+      data-test-id="button-bar-confirm"
+      disabled={disabled}
+      {...props}
+    >
+      {children || <FormattedMessage {...buttonMessages.save} />}
+    </ConfirmButtonComponent>
+  );
+
+  if (tooltip && disabled) {
+    return (
+      <Tooltip>
+        <Tooltip.Trigger>
+          {/* Box wrapper needed to capture hover events on disabled button */}
+          <Box display="inline-block">{button}</Box>
+        </Tooltip.Trigger>
+        <Tooltip.Content side="top">
+          <Tooltip.Arrow />
+          {tooltip}
+        </Tooltip.Content>
+      </Tooltip>
+    );
+  }
+
+  return button;
+};
 
 export const CancelButton = ({
   children,

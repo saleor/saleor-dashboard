@@ -1,7 +1,7 @@
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -44,7 +44,7 @@ const TranslationsEntitiesList = (props: TranslationsEntitiesListProps) => {
   const intl = useIntl();
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable footer={<TablePaginationWithContext disabled={disabled} />}>
       <TableHead>
         <TableRowLink>
           <TableCell className={classes.wideColumn}>
@@ -59,11 +59,6 @@ const TranslationsEntitiesList = (props: TranslationsEntitiesListProps) => {
           </TableCell>
         </TableRowLink>
       </TableHead>
-      <TableFooter>
-        <TableRowLink>
-          <TablePaginationWithContext colSpan={2} disabled={disabled} />
-        </TableRowLink>
-      </TableFooter>
       <TableBody>
         {renderCollection(
           entities,

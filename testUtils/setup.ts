@@ -11,6 +11,9 @@ jest.mock("react-hotkeys-hook", () => ({
 
 document.getElementById = () => document.createElement("div");
 
+// Mock scrollIntoView which is not implemented in JSDOM
+Element.prototype.scrollIntoView = jest.fn();
+
 // workaround for `jsdom`
 // https://github.com/jsdom/jsdom/issues/3002
 document.createRange = () => {

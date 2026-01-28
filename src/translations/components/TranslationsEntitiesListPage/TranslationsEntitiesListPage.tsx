@@ -3,6 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
+import { Box } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -127,8 +128,9 @@ const TranslationsEntitiesListPage = (props: TranslationsEntitiesListPageProps) 
             onClick={filters.onMenuItemsTabClick}
           />
         </FilterTabs>
-        {children}
+        <DashboardCard.Content>{children}</DashboardCard.Content>
       </DashboardCard>
+      <Box paddingBottom={6} />
     </>
   );
 };

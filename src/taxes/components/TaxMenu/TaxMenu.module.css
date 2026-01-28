@@ -1,0 +1,42 @@
+/* Only styles that can't be done with Box props */
+
+.menu {
+  height: fit-content;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  background-color: var(--mu-colors-background-default2);
+}
+
+/* Selection indicator - requires pseudo-element */
+.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--mu-colors-background-accent1);
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

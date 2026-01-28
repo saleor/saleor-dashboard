@@ -3,13 +3,12 @@ import { attributeUrl } from "@dashboard/attributes/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { Placeholder } from "@dashboard/components/Placeholder";
+import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,14 +18,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   {
-    colAction: {
-      "&:last-child": {
-        paddingRight: 0,
-      },
-      width: 80,
-    },
     colGrab: {
-      width: 60,
+      width: 40,
     },
     colName: {},
     colSlug: {
@@ -34,9 +27,6 @@ const useStyles = makeStyles(
     },
     link: {
       cursor: "pointer",
-    },
-    textLeft: {
-      textAlign: "left",
     },
   },
   { name: "PageTypeAttributes" },
@@ -90,15 +80,21 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable>
-          <colgroup>
-            <col className={classes.colGrab} />
-            <col />
-            <col className={classes.colName} />
-            <col className={classes.colSlug} />
-            <col className={classes.colAction} />
-          </colgroup>
-          {attributes?.length > 0 && (
+        {attributes === undefined ? (
+          <Skeleton />
+        ) : attributes.length === 0 ? (
+          <Placeholder>
+            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
+          </Placeholder>
+        ) : (
+          <ResponsiveTable>
+            <colgroup>
+              <col className={classes.colGrab} />
+              <col />
+              <col className={classes.colName} />
+              <col className={classes.colSlug} />
+              <col className={tableStyles.colAction} />
+            </colgroup>
             <TableHead
               colSpan={numberOfColumns}
               disabled={disabled}
@@ -120,11 +116,8 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
               </TableCell>
               <TableCell />
             </TableHead>
-          )}
-          <SortableTableBody onSortEnd={onAttributeReorder}>
-            {renderCollection(
-              attributes,
-              (attribute, attributeIndex) => {
+            <SortableTableBody onSortEnd={onAttributeReorder}>
+              {attributes?.map((attribute, attributeIndex) => {
                 const isSelected = attribute ? isChecked(attribute.id) : false;
 
                 return (
@@ -151,7 +144,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                     <TableCell className={classes.colSlug} data-test-id="slug">
                       {attribute?.slug || <Skeleton />}
                     </TableCell>
-                    <TableCell className={classes.colAction}>
+                    <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>
                         <Button
                           icon={
@@ -167,17 +160,10 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                     </TableCell>
                   </SortableTableRow>
                 );
-              },
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </SortableTableBody>
-        </ResponsiveTable>
+              })}
+            </SortableTableBody>
+          </ResponsiveTable>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

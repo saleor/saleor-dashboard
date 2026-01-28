@@ -5,7 +5,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -190,47 +190,51 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                   </DashboardCard.Title>
                 </DashboardCard.Header>
                 {order ? (
-                  <ResponsiveTable className={classes.table}>
-                    <TableHead>
-                      <TableRowLink>
-                        <TableCell className={classes.colName}>
-                          <FormattedMessage {...messages.productName} />
-                        </TableCell>
-                        <TableCell className={classes.colSku}>
-                          <FormattedMessage {...messages.sku} />
-                        </TableCell>
-                        <TableCell className={clsx(classes.colQuantity, classes.colQuantityHeader)}>
-                          <FormattedMessage {...messages.quantity} />
-                        </TableCell>
-                        <TableCell className={classes.colStock}>
-                          <FormattedMessage {...messages.stock} />
-                        </TableCell>
-                        <TableCell className={classes.colWarehouse}>
-                          <FormattedMessage {...messages.warehouse} />
-                        </TableCell>
-                      </TableRowLink>
-                    </TableHead>
-                    <TableBody>
-                      {renderCollection(
-                        getToFulfillOrderLines(order.lines),
-                        (line: OrderFulfillLineFragment, lineIndex) => (
-                          <OrderFulfillLine
-                            key={line.id}
-                            line={line}
-                            lineIndex={lineIndex}
-                            formsetData={formsetData}
-                            formsetChange={formsetChange}
-                            onWarehouseChange={() =>
-                              openModal("change-warehouse", {
-                                lineId: line.id,
-                                warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
-                              })
-                            }
-                          />
-                        ),
-                      )}
-                    </TableBody>
-                  </ResponsiveTable>
+                  <DashboardCard.Content>
+                    <ResponsiveTable className={classes.table}>
+                      <TableHead>
+                        <TableRowLink>
+                          <TableCell className={classes.colName}>
+                            <FormattedMessage {...messages.productName} />
+                          </TableCell>
+                          <TableCell className={classes.colSku}>
+                            <FormattedMessage {...messages.sku} />
+                          </TableCell>
+                          <TableCell
+                            className={clsx(classes.colQuantity, classes.colQuantityHeader)}
+                          >
+                            <FormattedMessage {...messages.quantity} />
+                          </TableCell>
+                          <TableCell className={classes.colStock}>
+                            <FormattedMessage {...messages.stock} />
+                          </TableCell>
+                          <TableCell className={classes.colWarehouse}>
+                            <FormattedMessage {...messages.warehouse} />
+                          </TableCell>
+                        </TableRowLink>
+                      </TableHead>
+                      <TableBody>
+                        {renderCollection(
+                          getToFulfillOrderLines(order.lines),
+                          (line: OrderFulfillLineFragment, lineIndex) => (
+                            <OrderFulfillLine
+                              key={line.id}
+                              line={line}
+                              lineIndex={lineIndex}
+                              formsetData={formsetData}
+                              formsetChange={formsetChange}
+                              onWarehouseChange={() =>
+                                openModal("change-warehouse", {
+                                  lineId: line.id,
+                                  warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
+                                })
+                              }
+                            />
+                          ),
+                        )}
+                      </TableBody>
+                    </ResponsiveTable>
+                  </DashboardCard.Content>
                 ) : (
                   <DashboardCard.Content>
                     <Skeleton />

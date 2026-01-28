@@ -22,9 +22,14 @@ export const taxesMessages = defineMessages({
     description: "Taxes section title",
   },
   channelList: {
-    id: "yLfbSh",
+    id: "AWyKB7",
+    defaultMessage: "Channel list",
+    description: "card header title",
+  },
+  channelNameHeader: {
+    id: "Hd3E1g",
     defaultMessage: "Channel name",
-    description: "support label",
+    description: "table header column",
   },
   defaultSettings: {
     id: "pWClYm",
@@ -87,8 +92,8 @@ export const taxesMessages = defineMessages({
     description: "card header title",
   },
   taxClassRatesHeader: {
-    id: "WIxSDm",
-    defaultMessage: "{country} class rates",
+    id: "eS8xZ6",
+    defaultMessage: "Tax class rates: {country}",
     description: "card header",
   },
   searchTaxClasses: {

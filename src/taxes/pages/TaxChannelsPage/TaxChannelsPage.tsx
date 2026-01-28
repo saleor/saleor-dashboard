@@ -27,7 +27,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { getSelectedTaxStrategy, getTaxAppId, getTaxCalculationStrategy } from "./helpers";
 import { useStyles } from "./styles";
-import TaxChannelsMenu from "./TaxChannelsMenu";
+import { TaxChannelsMenu } from "./TaxChannelsMenu";
 import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
 import { useTaxStrategyChoices } from "./useTaxStrategyChoices";

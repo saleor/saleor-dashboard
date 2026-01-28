@@ -26,8 +26,14 @@ export interface PaginationProps
   > {
   component?: React.ElementType;
   colSpan?: number;
+  /** Settings object (for context-based pagination) */
   settings?: ListSettings;
+  /** Callback to update settings (for context-based pagination) */
   onUpdateListSettings?: ListSettingsUpdate;
+  /** Direct row number value (for client-side pagination) */
+  rowNumber?: number;
+  /** Callback when row number changes (for client-side pagination) */
+  onRowNumberChange?: (rowNumber: number) => void;
   prevHref?: string;
   nextHref?: string;
   disabled?: boolean;
@@ -41,6 +47,8 @@ export const TablePagination = ({
   colSpan,
   settings,
   onUpdateListSettings,
+  rowNumber: directRowNumber,
+  onRowNumberChange,
   nextHref,
   prevHref,
   hasNextPage,
@@ -59,40 +67,51 @@ export const TablePagination = ({
     onNextPage: nextHref ? () => navigate(nextHref) : onNextPage,
   };
 
-  return (
-    <Wrapper colSpan={colSpan || 1000}>
-      <Box display="flex" justifyContent="space-between" paddingY={4}>
-        {settings?.rowNumber && (
-          <PaginationRowNumberSelect
-            choices={choices}
-            disabled={disabled}
-            labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
-            rowNumber={settings?.rowNumber}
-            onChange={
-              onUpdateListSettings ? value => onUpdateListSettings("rowNumber", value) : undefined
-            }
-          />
-        )}
+  // Support both settings-based and direct props for row number
+  const currentRowNumber = settings?.rowNumber ?? directRowNumber;
+  const handleRowNumberChange = onUpdateListSettings
+    ? (value: number) => onUpdateListSettings("rowNumber", value)
+    : onRowNumberChange;
 
-        <Box display="flex" flexDirection="row" alignItems="center" gap={2} marginLeft="auto">
-          <Button
-            variant="secondary"
-            disabled={!hasPreviousPage || disabled}
-            onClick={handlers.onPreviousPage}
-            icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-            data-test-id="button-pagination-back"
-          />
-          <Button
-            variant="secondary"
-            disabled={!hasNextPage || disabled}
-            onClick={handlers.onNextPage}
-            icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-            data-test-id="button-pagination-next"
-          />
-        </Box>
+  const content = (
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      {currentRowNumber ? (
+        <PaginationRowNumberSelect
+          choices={choices}
+          disabled={disabled}
+          labels={labels || { noOfRows: intl.formatMessage(commonMessages.noOfRows) }}
+          rowNumber={currentRowNumber}
+          onChange={handleRowNumberChange}
+        />
+      ) : (
+        <Box />
+      )}
+
+      <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
+        <Button
+          variant="secondary"
+          disabled={!hasPreviousPage || disabled}
+          onClick={handlers.onPreviousPage}
+          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-back"
+        />
+        <Button
+          variant="secondary"
+          disabled={!hasNextPage || disabled}
+          onClick={handlers.onNextPage}
+          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-next"
+        />
       </Box>
-    </Wrapper>
+    </Box>
   );
+
+  // If no wrapper component specified, return content directly (for use with ResponsiveTable footer)
+  if (!component && !colSpan) {
+    return content;
+  }
+
+  return <Wrapper colSpan={colSpan || 1000}>{content}</Wrapper>;
 };
 
 TablePagination.displayName = "TablePagination";

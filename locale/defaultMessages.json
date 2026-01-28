@@ -528,6 +528,9 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
+  "0xMUfd": {
+    "string": "No results found for \"{query}\""
+  },
   "1+ROfp": {
     "string": "Transaction"
   },
@@ -2100,6 +2103,10 @@
     "context": "replaced event title",
     "string": "Products were replaced"
   },
+  "AWyKB7": {
+    "context": "card header title",
+    "string": "Channel list"
+  },
   "AY7Tuz": {
     "string": "The same object cannot be in both lists"
   },
@@ -3408,6 +3415,10 @@
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
     "string": "Sold units"
+  },
+  "Hd3E1g": {
+    "context": "table header column",
+    "string": "Channel name"
   },
   "Hebup2": {
     "context": "Health check subtitle when product is not published",
@@ -5806,10 +5817,6 @@
   "VEext+": {
     "string": "Are you sure you want to delete this image?"
   },
-  "VHuzgq": {
-    "context": "table actions",
-    "string": "Actions"
-  },
   "VIABHy": {
     "context": "error message",
     "string": "Default shipping zone already exists"
@@ -5978,10 +5985,6 @@
   },
   "WHgdsk": {
     "string": "Out of stock"
-  },
-  "WIxSDm": {
-    "context": "card header",
-    "string": "{country} class rates"
   },
   "WK62MN": {
     "string": "Fulfillment"
@@ -7445,6 +7448,10 @@
   "eRqx44": {
     "string": "Search collections..."
   },
+  "eS8xZ6": {
+    "context": "card header",
+    "string": "Tax class rates: {country}"
+  },
   "eUjFjW": {
     "string": "Permission group created"
   },
@@ -7765,10 +7772,6 @@
   },
   "gTr0qE": {
     "string": "Shipping Settings"
-  },
-  "gVD1os": {
-    "context": "empty list message",
-    "string": "You haven’t assigned any member to this permission group yet."
   },
   "gVqSnA": {
     "string": "Assign and save"
@@ -8576,6 +8579,10 @@
   "l9Lwjh": {
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
+  },
+  "lCEp2/": {
+    "context": "save button disabled tooltip",
+    "string": "Set prices for all channels to save"
   },
   "lCPxtT": {
     "context": "resend code label",
@@ -9941,6 +9948,10 @@
     "context": "voucher status",
     "string": "Expired"
   },
+  "t84lbb": {
+    "context": "empty list message",
+    "string": "You haven't assigned any member to this permission group yet."
+  },
   "tCLTCb": {
     "context": "tab name",
     "string": "All products"
@@ -10312,6 +10323,9 @@
   "v3WWK+": {
     "string": "Status is invalid"
   },
+  "v8UngX": {
+    "string": "Search warehouses..."
+  },
   "v8e93p": {
     "context": "hint for order total option",
     "string": "Matches what customer owes"
@@ -10426,6 +10440,9 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "vaFjs6": {
+    "string": "No warehouses available to add"
   },
   "vbop3G": {
     "string": "Create new model"
@@ -10575,9 +10592,6 @@
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
-  },
-  "wL7VAE": {
-    "string": "Actions"
   },
   "wL850U": {
     "context": "draft order lines, section header",
@@ -10879,10 +10893,6 @@
     "context": "discount value",
     "string": "discount"
   },
-  "yLfbSh": {
-    "context": "support label",
-    "string": "Channel name"
-  },
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
@@ -11015,10 +11025,6 @@
   },
   "zCb8fX": {
     "string": "Weight"
-  },
-  "zD7/M6": {
-    "context": "empty list message",
-    "string": "Please use Assign Members button to do so."
   },
   "zDvDnG": {
     "context": "modal header",

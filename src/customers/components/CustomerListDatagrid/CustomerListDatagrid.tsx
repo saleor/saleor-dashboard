@@ -6,14 +6,13 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { Customer, Customers } from "@dashboard/customers/types";
 import { CustomerListUrlSortField } from "@dashboard/customers/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -141,14 +140,12 @@ export const CustomerListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingX={6}>
-        <TablePaginationWithContext
-          component="div"
-          settings={settings}
-          disabled={disabled}
-          onUpdateListSettings={onUpdateListSettings}
-        />
-      </Box>
+      <DatagridPagination
+        component="div"
+        settings={settings}
+        disabled={disabled}
+        onUpdateListSettings={onUpdateListSettings}
+      />
     </DatagridChangeStateContext.Provider>
   );
 };

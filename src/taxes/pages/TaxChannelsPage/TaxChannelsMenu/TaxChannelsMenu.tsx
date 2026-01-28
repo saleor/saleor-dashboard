@@ -1,53 +1,34 @@
-import ListItemLink from "@dashboard/components/ListItemLink";
 import { TaxConfigurationFragment } from "@dashboard/graphql";
+import { TaxMenu } from "@dashboard/taxes/components/TaxMenu/TaxMenu";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
-import { isLastElement } from "@dashboard/taxes/utils/utils";
-import { Card, Divider } from "@material-ui/core";
-import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import { Fragment } from "react";
-import { FormattedMessage } from "react-intl";
-
-import { useStyles } from "./styles";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface TaxChannelsMenuProps {
   configurations: TaxConfigurationFragment[] | undefined;
   selectedConfigurationId: string;
 }
 
-const TaxChannelsMenu = ({ configurations, selectedConfigurationId }: TaxChannelsMenuProps) => {
-  const classes = useStyles();
+export const TaxChannelsMenu = ({
+  configurations,
+  selectedConfigurationId,
+}: TaxChannelsMenuProps) => {
+  const intl = useIntl();
+
+  const items =
+    configurations?.map(configuration => ({
+      id: configuration.id,
+      label: configuration.channel.name,
+      href: taxConfigurationListUrl(configuration.id),
+      isSelected: configuration.id === selectedConfigurationId,
+      "data-test-id": "channels-list-rows",
+    })) ?? [];
 
   return (
-    <Card>
-      <List gridTemplate={["1fr"]}>
-        <ListHeader>
-          <ListItem className={classes.tableRow}>
-            <ListItemCell>
-              <FormattedMessage {...taxesMessages.channelList} />
-            </ListItemCell>
-          </ListItem>
-        </ListHeader>
-        <Divider />
-        {configurations?.map((configuration, confIndex) => (
-          <Fragment key={configuration.id}>
-            <ListItemLink
-              data-test-id="channels-list-rows"
-              className={clsx(classes.clickable, classes.tableRow, {
-                [classes.selected]: configuration.id === selectedConfigurationId,
-              })}
-              href={taxConfigurationListUrl(configuration.id)}
-            >
-              <ListItemCell className={classes.ellipsis}>{configuration.channel.name}</ListItemCell>
-            </ListItemLink>
-            {!isLastElement(configurations, confIndex) && <Divider />}
-          </Fragment>
-        )) ?? <Skeleton />}
-      </List>
-    </Card>
+    <TaxMenu
+      title={intl.formatMessage(taxesMessages.channelList)}
+      columnHeader={<FormattedMessage {...taxesMessages.channelNameHeader} />}
+      items={items}
+    />
   );
 };
-
-export default TaxChannelsMenu;
