@@ -1,7 +1,8 @@
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import Wrapper from "@test/wrapper";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import * as React from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import LoginPage from "./LoginPage";
 
@@ -22,16 +23,59 @@ const defaultProps = {
   onSubmit: jest.fn(),
 };
 
-jest.mock("react-router-dom", () => ({
-  MemoryRouter: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  Link: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-}));
+const renderLoginPage = (props = {}) =>
+  render(
+    <Wrapper>
+      <MemoryRouter>
+        <LoginPage lastLoginMethod={null} {...defaultProps} {...props} />
+      </MemoryRouter>
+    </Wrapper>,
+  );
 
 describe("LoginPage", () => {
   describe("External Authentication", () => {
+    it("renders external authentication buttons when provided", () => {
+      // Arrange & Act
+      renderLoginPage();
+
+      // Assert
+      expect(screen.getByTestId("external-authentication")).toBeInTheDocument();
+    });
+
+    it("does not render external authentication buttons when empty array", () => {
+      // Arrange & Act
+      renderLoginPage({ externalAuthentications: [] });
+
+      // Assert
+      expect(screen.queryByTestId("external-authentication")).not.toBeInTheDocument();
+    });
+
+    it("does not render external authentication buttons when undefined", () => {
+      // Arrange & Act
+      renderLoginPage({ externalAuthentications: undefined });
+
+      // Assert
+      expect(screen.queryByTestId("external-authentication")).not.toBeInTheDocument();
+    });
+
+    it("renders 'Continue with Saleor Cloud' for cloud auth plugin", () => {
+      // Arrange
+      const cloudAuth = {
+        id: "cloud_auth.CloudAuthorizationPlugin",
+        name: "Cloud Auth",
+        __typename: "ExternalAuthentication",
+      } as AuthType[0];
+
+      // Act
+      renderLoginPage({ externalAuthentications: [cloudAuth] });
+
+      // Assert
+      expect(screen.getByText("Continue with Saleor Cloud")).toBeInTheDocument();
+    });
+
     it("sets optimisticLoaderAuthId when clicking external auth button", async () => {
       // Arrange & Act
-      render(<LoginPage lastLoginMethod={null} {...defaultProps} />);
+      renderLoginPage();
 
       const authButton = screen.getByRole("button", { name: "Cloud" });
 
@@ -52,9 +96,7 @@ describe("LoginPage", () => {
       ] as AuthType;
 
       // Act
-      render(
-        <LoginPage lastLoginMethod={null} {...defaultProps} externalAuthentications={twoAuths} />,
-      );
+      renderLoginPage({ externalAuthentications: twoAuths });
 
       const oidcButton = screen.getByRole("button", { name: "OIDC" });
       const cloudButton = screen.getByRole("button", { name: "Cloud" });
