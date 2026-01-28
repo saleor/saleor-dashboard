@@ -5,6 +5,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -19,9 +20,13 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
+import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import WarehouseInfo from "../WarehouseInfo";
@@ -40,6 +45,7 @@ interface WarehouseDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouse: WarehouseDetailsFragment | undefined;
   onDelete: () => void;
+  onShowMetadata: () => void;
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
@@ -50,6 +56,7 @@ const WarehouseDetailsPage = ({
   saveButtonBarState,
   warehouse,
   onDelete,
+  onShowMetadata,
   onSubmit,
 }: WarehouseDetailsPageProps) => {
   const intl = useIntl();
@@ -91,7 +98,20 @@ const WarehouseDetailsPage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={warehouseListBackLink} title={warehouse?.name} />
+            <TopNav href={warehouseListBackLink} title={warehouse?.name}>
+              <Box position="relative">
+                <Button
+                  variant="secondary"
+                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                  onClick={onShowMetadata}
+                  data-test-id="show-warehouse-metadata"
+                  title="Edit warehouse metadata"
+                />
+                <Box position="absolute" __top="-4px" __right="-4px">
+                  <Ripple model={rippleWarehouseMetadata} />
+                </Box>
+              </Box>
+            </TopNav>
             <DetailPageLayout.Content>
               <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />

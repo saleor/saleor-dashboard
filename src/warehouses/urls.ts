@@ -33,7 +33,7 @@ export const warehouseListUrl = (params?: WarehouseListUrlQueryParams) =>
   warehouseListPath + "?" + stringifyQs(params);
 
 export const warehousePath = (id: string) => urlJoin(warehouseSection, id);
-type WarehouseUrlDialog = "delete";
+type WarehouseUrlDialog = "delete" | "view-warehouse-metadata";
 export type WarehouseUrlQueryParams = Dialog<WarehouseUrlDialog> & SingleAction;
 export const warehouseUrl = (id: string, params?: WarehouseUrlQueryParams) =>
   warehousePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
