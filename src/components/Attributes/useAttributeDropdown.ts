@@ -1,98 +1,94 @@
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { FetchMoreProps } from "@dashboard/types";
 import { Option } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+import { useCallback, useMemo, useRef } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import { attributeRowMessages } from "./messages";
+const messages = defineMessages({
+  addNewValue: {
+    id: "U2WgwW",
+    defaultMessage: "Add new value: {value}",
+    description: "add custom select input option",
+  },
+});
 
 interface UseAttributeDropdownProps {
-  attributeId: string;
-  options: Option[];
-  fetchAttributeValues: (query: string, attributeId: string) => void;
-  fetchMoreAttributeValues?: FetchMoreProps;
-}
-
-interface UseAttributeDropdownResult {
   inputValue: string;
-  setInputValue: (value: string) => void;
-  displayOptions: Option[];
-  handleInputChange: (value: string) => void;
-  handleFocus: () => void;
-  handleScrollEnd: () => void;
-  loading: boolean;
+  selectedValue: Option | null;
+  fetchOptions: (query: string) => void;
+  fetchMore?: FetchMoreProps;
 }
 
 export const useAttributeDropdown = ({
-  attributeId,
-  options,
-  fetchAttributeValues,
-  fetchMoreAttributeValues,
-}: UseAttributeDropdownProps): UseAttributeDropdownResult => {
+  inputValue,
+  selectedValue,
+  fetchOptions,
+  fetchMore,
+}: UseAttributeDropdownProps) => {
   const intl = useIntl();
-  const [inputValue, setInputValue] = useState("");
   const mounted = useRef(false);
 
-  const debouncedFetch = useDebounce((query: string) => {
-    fetchAttributeValues(query, attributeId);
-  }, 500);
-
-  const handleInputChange = useCallback(
+  const fetchOptionsCallback = useCallback(
     (value: string) => {
-      setInputValue(value);
-      debouncedFetch(value);
+      fetchOptions(value);
     },
-    [debouncedFetch],
+    [fetchOptions],
   );
 
-  const handleFocus = useCallback(() => {
+  const debouncedFetchOptions = useDebounce(fetchOptionsCallback, 500);
+  const handleFetchMore = () => {
+    if (fetchMore?.hasMore) {
+      fetchMore.onFetchMore();
+    }
+  };
+
+  const handleInputChange = (value: string) => {
+    debouncedFetchOptions(value);
+  };
+
+  const handleFocus = () => {
     if (!mounted.current) {
       mounted.current = true;
-      fetchAttributeValues("", attributeId);
+      fetchOptions(DEFAULT_INITIAL_SEARCH_DATA.query);
     }
-  }, [fetchAttributeValues, attributeId]);
+  };
 
-  const handleScrollEnd = useCallback(() => {
-    if (fetchMoreAttributeValues?.hasMore) {
-      fetchMoreAttributeValues.onFetchMore();
-    }
-  }, [fetchMoreAttributeValues]);
+  const customValueLabel = intl.formatMessage(messages.addNewValue, {
+    value: inputValue,
+  });
 
-  // Add "Add new value" option when user types a custom value
-  const displayOptions = useMemo(() => {
-    const trimmedInput = inputValue.trim();
-
-    if (!trimmedInput) {
-      return options;
+  const shouldShowCustomValue = useMemo(() => {
+    if (!inputValue) {
+      return false;
     }
 
-    // Check if the input exactly matches an existing option
-    const hasExactMatch = options.some(
-      opt => opt.label.toLowerCase() === trimmedInput.toLowerCase(),
-    );
+    return selectedValue?.label?.toLocaleLowerCase() !== inputValue.toLocaleLowerCase();
+  }, [inputValue, selectedValue]);
 
-    if (hasExactMatch) {
-      return options;
+  const customValueOption: Option[] = shouldShowCustomValue
+    ? [
+        {
+          label: customValueLabel,
+          value: inputValue,
+        },
+      ]
+    : [];
+
+  const transformCustomValue = (option: Option): Option => {
+    if (option.label.includes(customValueLabel)) {
+      return { label: option.value, value: option.value };
     }
 
-    // Add "Add new value" option at the top
-    const addNewValueOption: Option = {
-      label: intl.formatMessage(attributeRowMessages.addNewValueWithLabel, { value: trimmedInput }),
-      value: trimmedInput,
-    };
-
-    return [addNewValueOption, ...options];
-  }, [options, inputValue, intl]);
-
-  const loading = fetchMoreAttributeValues?.loading || fetchMoreAttributeValues?.hasMore || false;
+    return option;
+  };
 
   return {
-    inputValue,
-    setInputValue,
-    displayOptions,
+    customValueOption,
+    customValueLabel,
+    handleFetchMore,
     handleInputChange,
     handleFocus,
-    handleScrollEnd,
-    loading,
+    transformCustomValue,
   };
 };

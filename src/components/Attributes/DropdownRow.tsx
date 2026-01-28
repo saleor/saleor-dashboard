@@ -1,26 +1,30 @@
-import { commonMessages } from "@dashboard/intl";
+import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
+import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import {
+  AttributeValueFragment,
+  PageErrorWithAttributesFragment,
+  ProductErrorWithAttributesFragment,
+} from "@dashboard/graphql";
 import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { BasicAttributeRow } from "./BasicAttributeRow";
-import { AttributeRowProps } from "./types";
+import { AttributeInput } from "./Attributes";
+import { AttributeRowHandlers } from "./types";
 import { useAttributeDropdown } from "./useAttributeDropdown";
-import { getErrorMessage, getSingleChoices, getSingleDisplayValue } from "./utils";
 
 type DropdownRowProps = Pick<
-  AttributeRowProps,
-  | "attribute"
-  | "attributeValues"
-  | "disabled"
-  | "error"
-  | "onChange"
-  | "fetchAttributeValues"
-  | "fetchMoreAttributeValues"
-  | "onAttributeSelectBlur"
->;
+  AttributeRowHandlers,
+  "onChange" | "fetchAttributeValues" | "fetchMoreAttributeValues"
+> & {
+  attribute: AttributeInput;
+  attributeValues: AttributeValueFragment[];
+  disabled: boolean;
+  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
+  onAttributeSelectBlur?: () => void;
+};
 
-export const DropdownRow: React.FC<DropdownRowProps> = ({
+export const DropdownRow = ({
   attribute,
   attributeValues,
   disabled,
@@ -29,57 +33,78 @@ export const DropdownRow: React.FC<DropdownRowProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
-}) => {
+}: DropdownRowProps): JSX.Element => {
   const intl = useIntl();
-  const options = getSingleChoices(attributeValues);
+  const [inputValue, setInputValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState<Option | null>(
+    attribute.value[0]
+      ? {
+          value: attribute.value[0],
+          label: getSingleDisplayValue(attribute, attributeValues),
+        }
+      : null,
+  );
 
   const {
-    displayOptions,
+    customValueOption,
+    customValueLabel,
+    handleFetchMore,
     handleInputChange,
     handleFocus,
-    handleScrollEnd,
-    loading,
-    setInputValue,
+    transformCustomValue,
   } = useAttributeDropdown({
-    attributeId: attribute.id,
-    options,
-    fetchAttributeValues,
-    fetchMoreAttributeValues,
+    inputValue,
+    selectedValue,
+    fetchOptions: query => fetchAttributeValues(query, attribute.id),
+    fetchMore: fetchMoreAttributeValues,
   });
 
-  const handleChange = (option: Option | null) => {
-    onChange(attribute.id, option?.value ?? null);
-    setInputValue("");
-  };
+  const options: Option[] = attributeValues
+    .filter(value => value.slug !== null)
+    .map(value => ({
+      value: value.slug as string,
+      label: value.name ?? value.slug ?? "",
+    }));
 
-  const currentValue = attribute.value[0]
-    ? {
-        value: attribute.value[0],
-        label: getSingleDisplayValue(attribute, attributeValues),
-      }
-    : null;
+  const handleOnChange = (option: Option | null) => {
+    if (!option) {
+      setSelectedValue(null);
+      onChange(attribute.id, "");
+
+      return;
+    }
+
+    const transformedOption = transformCustomValue(option);
+
+    setSelectedValue(transformedOption);
+    onChange(attribute.id, transformedOption.value);
+
+    if (option.label.includes(customValueLabel)) {
+      setInputValue("");
+    }
+  };
 
   return (
     <BasicAttributeRow label={attribute.label}>
       <DynamicCombobox
+        size="small"
         disabled={disabled}
-        options={displayOptions}
-        value={currentValue}
+        options={[...customValueOption, ...options]}
+        value={selectedValue}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
         label=""
-        onChange={handleChange}
-        onInputValueChange={handleInputChange}
-        onFocus={handleFocus}
-        onScrollEnd={handleScrollEnd}
-        onBlur={onAttributeSelectBlur}
-        loading={loading}
-        locale={{
-          loadingText: intl.formatMessage(commonMessages.loading),
+        onChange={handleOnChange}
+        onInputValueChange={value => {
+          setInputValue(value);
+          handleInputChange(value);
         }}
-        size="small"
+        onFocus={handleFocus}
+        onBlur={onAttributeSelectBlur}
+        onScrollEnd={handleFetchMore}
+        loading={fetchMoreAttributeValues?.hasMore || fetchMoreAttributeValues?.loading}
       />
     </BasicAttributeRow>
   );
