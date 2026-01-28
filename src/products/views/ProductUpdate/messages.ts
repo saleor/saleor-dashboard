@@ -27,4 +27,14 @@ export const productUpdatePageMessages = defineMessages({
     defaultMessage: "All variants failed to create",
     description: "error message when bulk variant creation fails completely",
   },
+  variantBulkCreateSuccess: {
+    id: "t1XcOo",
+    defaultMessage: "{count} variants created successfully",
+    description: "success message when all variants are created",
+  },
+  variantBulkCreatePartial: {
+    id: "5ye4Ik",
+    defaultMessage: "{success} variants created, {failed} failed",
+    description: "warning message when some variants failed to create",
+  },
 });

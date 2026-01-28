@@ -118,6 +118,7 @@ export function useVariantGenerator({
     [attributes, selections],
   );
 
+  // canGenerate: true when there are new variants to create and all attributes have selections
   const canGenerate = newVariantsCount > 0 && hasSelectionPerAttribute;
 
   // Matrix view requires exactly 2 attributes with selections
@@ -154,6 +155,7 @@ export function useVariantGenerator({
     isTruncated,
     existingCombinations,
     canGenerate,
+    hasSelectionPerAttribute,
     canShowMatrix,
     reset,
   };

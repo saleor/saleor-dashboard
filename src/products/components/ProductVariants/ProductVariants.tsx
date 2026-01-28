@@ -29,6 +29,10 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantGenerator } from "../ProductVariantGenerator/ProductVariantGenerator";
+import {
+  BulkCreateResult,
+  getUnsupportedRequiredAttributes,
+} from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
 import {
   useAttributesAdapter,
@@ -45,13 +49,17 @@ interface ProductVariantsProps {
   errors: ProductVariantListError[];
   limits: RefreshLimitsQuery["shop"]["limits"];
   variantAttributes: ProductFragment["productType"]["variantAttributes"];
+  /** Attributes that can be used for variant selection (DROPDOWN, BOOLEAN, SWATCH, NUMERIC types with variantSelection enabled) */
+  selectionVariantAttributes: ProductFragment["productType"]["selectionVariantAttributes"];
+  /** Attributes that are NOT used for variant selection but may still be required on variants */
+  nonSelectionVariantAttributes: ProductFragment["productType"]["nonSelectionVariantAttributes"];
   variants: ProductDetailsVariantFragment[];
   productName: string;
   productId: string;
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
-  onBulkCreate?: (inputs: ProductVariantBulkCreateInput[]) => Promise<void>;
+  onBulkCreate?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
 }
 
 export const ProductVariants = ({
@@ -59,6 +67,8 @@ export const ProductVariants = ({
   errors,
   variants,
   variantAttributes,
+  selectionVariantAttributes,
+  nonSelectionVariantAttributes,
   productName,
   productId,
   onAttributeValuesSearch,
@@ -100,28 +110,58 @@ export const ProductVariants = ({
   }, []);
 
   const handleGenerateVariants = useCallback(
-    async (inputs: ProductVariantBulkCreateInput[]) => {
+    async (inputs: ProductVariantBulkCreateInput[]): Promise<BulkCreateResult> => {
       if (onBulkCreate) {
-        await onBulkCreate(inputs);
-        setGeneratorOpen(false);
+        const result = await onBulkCreate(inputs);
+
+        // Only close if successful (no attribute errors)
+        if (result.success && result.attributeErrors.length === 0) {
+          setGeneratorOpen(false);
+        }
+
+        return result;
       }
+
+      // Fallback if no handler
+      return {
+        success: false,
+        successCount: 0,
+        failedCount: inputs.length,
+        attributeErrors: [],
+        otherErrors: [],
+      };
     },
     [onBulkCreate],
   );
 
-  // Transform variants for the generator (only need attributes for comparison)
+  // Transform variants for the generator (only SELECTION attributes matter for uniqueness)
+  // Non-selection attributes don't determine variant uniqueness in Saleor
+  const selectionAttributeIds = useMemo(
+    () => new Set((selectionVariantAttributes ?? []).map(attr => attr.id)),
+    [selectionVariantAttributes],
+  );
+
   const existingVariantsForGenerator = useMemo(
     () =>
       (variants ?? []).map(variant => ({
-        attributes: variant.attributes.map(attr => ({
-          attribute: { id: attr.attribute.id },
-          values: attr.values.map(v => ({ slug: v.slug })),
-        })),
+        attributes: variant.attributes
+          .filter(attr => selectionAttributeIds.has(attr.attribute.id))
+          .map(attr => ({
+            attribute: { id: attr.attribute.id },
+            values: attr.values.map(v => ({ slug: v.slug })),
+          })),
       })),
-    [variants],
+    [variants, selectionAttributeIds],
   );
 
-  const hasVariantAttributes = (variantAttributes?.length ?? 0) > 0;
+  const hasSelectionVariantAttributes = (selectionVariantAttributes?.length ?? 0) > 0;
+
+  // Check for required non-selection attributes with unsupported types
+  // These block the generator entirely
+  const unsupportedRequiredAttributes = useMemo(
+    () => getUnsupportedRequiredAttributes(nonSelectionVariantAttributes),
+    [nonSelectionVariantAttributes],
+  );
 
   // Normally this should be in LS handled by useListSettings hook
   // https://github.com/saleor/saleor-dashboard/issues/4164
@@ -239,7 +279,8 @@ export const ProductVariants = ({
             {...props}
             productId={productId}
             productName={productName}
-            hasVariantAttributes={hasVariantAttributes}
+            hasVariantAttributes={hasSelectionVariantAttributes}
+            unsupportedRequiredAttributes={unsupportedRequiredAttributes}
             onGenerateVariants={handleOpenGenerator}
           />
         )}
@@ -279,13 +320,17 @@ export const ProductVariants = ({
         onChange={onChange}
         recentlyAddedColumn={recentlyAddedColumn}
       />
-      {hasVariantAttributes && onBulkCreate && (
+      {hasSelectionVariantAttributes && onBulkCreate && (
         <ProductVariantGenerator
           open={generatorOpen}
           onClose={handleCloseGenerator}
           productName={productName}
-          variantAttributes={variantAttributes as VariantAttributeFragment[]}
+          variantAttributes={selectionVariantAttributes as VariantAttributeFragment[]}
+          nonSelectionVariantAttributes={
+            nonSelectionVariantAttributes as VariantAttributeFragment[]
+          }
           existingVariants={existingVariantsForGenerator}
+          onAttributeValuesSearch={onAttributeValuesSearch}
           onSubmit={handleGenerateVariants}
         />
       )}
