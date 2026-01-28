@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
@@ -10,7 +9,7 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MenuFragment } from "@dashboard/graphql";
-import { maybe, renderCollection } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { MenuListUrlSortField, menuUrl } from "@dashboard/structures/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
@@ -79,7 +78,9 @@ const MenuList = (props: MenuListProps) => {
         >
           <TableCellHeader
             direction={
-              sort.sort === MenuListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
+              sort.sort === MenuListUrlSortField.name && sort.asc !== undefined
+                ? getArrowDirection(sort.asc)
+                : undefined
             }
             arrowPosition="right"
             onClick={() => onSort(MenuListUrlSortField.name)}
@@ -89,7 +90,9 @@ const MenuList = (props: MenuListProps) => {
           </TableCellHeader>
           <TableCellHeader
             direction={
-              sort.sort === MenuListUrlSortField.items ? getArrowDirection(sort.asc) : undefined
+              sort.sort === MenuListUrlSortField.items && sort.asc !== undefined
+                ? getArrowDirection(sort.asc)
+                : undefined
             }
             textAlign="right"
             onClick={() => onSort(MenuListUrlSortField.items)}
@@ -132,20 +135,20 @@ const MenuList = (props: MenuListProps) => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(menu.id)}
+                      onChange={() => toggle(menu?.id ?? "")}
                     />
                   </TableCell>
                   <TableCell className={classes.colTitle} data-test-id="menu-name">
-                    {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
+                    {menu?.name ?? <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colItems}>
-                    {maybe<React.ReactNode>(() => menu.items.length, <Skeleton />)}
+                    {menu?.items?.length ?? <Skeleton />}
                   </TableCell>
                   <TableButtonWrapper>
                     <IconButtonTableCell
                       className={classes.colAction}
                       disabled={disabled}
-                      onClick={() => onDelete(menu.id)}
+                      onClick={() => onDelete(menu?.id ?? "")}
                     >
                       <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </IconButtonTableCell>

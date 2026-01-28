@@ -1,7 +1,7 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { Button } from "@dashboard/components/Button";
 import {
+  MenuFragment,
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
   useMenuDeleteMutation,
@@ -66,13 +66,13 @@ const MenuList = ({ params }: MenuListProps) => {
     variables: queryVariables,
   });
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.menus.pageInfo),
+    pageInfo: data?.menus?.pageInfo,
     paginationState,
     queryString: params,
   });
   const [menuCreate, menuCreateOpts] = useMenuCreateMutation({
     onCompleted: data => {
-      if (data.menuCreate.errors.length === 0) {
+      if (data.menuCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -80,13 +80,13 @@ const MenuList = ({ params }: MenuListProps) => {
             defaultMessage: "Created structure",
           }),
         });
-        navigate(menuUrl(data.menuCreate.menu.id));
+        navigate(menuUrl(data.menuCreate?.menu?.id ?? ""));
       }
     },
   });
   const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
     onCompleted: data => {
-      if (data.menuDelete.errors.length === 0) {
+      if (data.menuDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -101,7 +101,7 @@ const MenuList = ({ params }: MenuListProps) => {
   });
   const [menuBulkDelete, menuBulkDeleteOpts] = useMenuBulkDeleteMutation({
     onCompleted: data => {
-      if (data.menuBulkDelete.errors.length === 0) {
+      if (data.menuBulkDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({ id: "v20Mra", defaultMessage: "Menus deleted" }),
@@ -118,7 +118,7 @@ const MenuList = ({ params }: MenuListProps) => {
     <PaginatorContext.Provider value={paginationValues}>
       <MenuListPage
         disabled={loading}
-        menus={mapEdgesToItems(data?.menus)}
+        menus={mapEdgesToItems(data?.menus) ?? []}
         settings={settings}
         onDelete={id =>
           navigate(
@@ -187,13 +187,14 @@ const MenuList = ({ params }: MenuListProps) => {
           defaultMessage="Are you sure you want to delete {menuName}?"
           values={{
             menuName: getStringOrPlaceholder(
-              mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
+              (mapEdgesToItems(data?.menus)?.find(getById(params.id)) as MenuFragment | undefined)
+                ?.name,
             ),
           }}
         />
       </ActionDialog>
       <ActionDialog
-        open={params.action === "remove-many" && maybe(() => params.ids.length > 0)}
+        open={params.action === "remove-many" && (params.ids?.length ?? 0) > 0}
         onClose={closeModal}
         confirmButtonState={menuBulkDeleteOpts.status}
         onConfirm={() =>

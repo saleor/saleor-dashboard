@@ -1,9 +1,21 @@
-// @ts-strict-ignore
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { TreeOperation } from "../MenuItems";
 
-export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
+// Normalizes GraphQL menu items to ensure children is always an array
+
+export function normalizeMenuItems(items: any): RecursiveMenuItem[] {
+  if (!items) return [];
+
+  return items.map(
+    (item: any): RecursiveMenuItem => ({
+      ...item,
+      children: normalizeMenuItems(item.children),
+    }),
+  );
+}
+
+export function findNode(tree: RecursiveMenuItem[], id: string): (number | null)[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
 
   if (tree.length === 0) {
@@ -14,21 +26,31 @@ export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
     return [foundNodeIndex];
   }
 
-  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children, id)]);
+  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children ?? [], id)]);
 
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
-export function getNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem {
-  if (path.length === 1) {
-    return tree[path[0]];
+export function getNode(tree: RecursiveMenuItem[], path: (number | null)[]): RecursiveMenuItem {
+  const index = path[0];
+
+  if (index === null) {
+    throw new Error("Cannot get node with null path");
   }
 
-  return getNode([...tree[path[0]].children], path.slice(1));
+  if (path.length === 1) {
+    return tree[index];
+  }
+
+  return getNode(tree[index].children ?? [], path.slice(1));
 }
 
-function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem[] {
+function removeNode(tree: RecursiveMenuItem[], path: (number | null)[]): RecursiveMenuItem[] {
   const removeIndex = path[0];
+
+  if (removeIndex === null) {
+    throw new Error("Cannot remove node with null path");
+  }
 
   if (path.length === 1) {
     return [...tree.slice(0, removeIndex), ...tree.slice(removeIndex + 1)];
@@ -37,8 +59,8 @@ function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuIte
   const newTree = [...tree];
 
   newTree[removeIndex] = {
-    ...tree[path[0]],
-    children: removeNode(tree[path[0]].children, path.slice(1)),
+    ...tree[removeIndex],
+    children: removeNode(tree[removeIndex].children ?? [], path.slice(1)),
   };
 
   return newTree;
@@ -46,7 +68,7 @@ function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuIte
 
 interface InsertNodeInput {
   tree: RecursiveMenuItem[];
-  path: number[];
+  path: (number | null)[];
   node: RecursiveMenuItem;
   position: number;
 }
@@ -56,9 +78,15 @@ function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveM
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
 
-  if (path[0] in tree) {
-    tree[path[0]].children = insertNode({
-      tree: tree[path[0]].children,
+  const index = path[0];
+
+  if (index === null) {
+    throw new Error("Cannot insert node with null path");
+  }
+
+  if (index in tree) {
+    tree[index].children = insertNode({
+      tree: tree[index].children ?? [],
       path: path.slice(1),
       node,
       position,
@@ -99,13 +127,18 @@ function permuteRelativeNode(
   const node = getNode(tree, sourcePath);
   const hasParent = !!permutation.parentId;
   const treeAfterRemoval = removeNode(tree, sourcePath);
-  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId) : [];
+  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId ?? "") : [];
   const position = sourcePath[sourcePath.length - 1];
+
+  if (position === null) {
+    throw new Error("Cannot permute node with null position");
+  }
+
   const treeAfterInsertion = insertNode({
     tree: treeAfterRemoval,
     path: targetPath,
     node,
-    position: position + permutation.sortOrder,
+    position: position + (permutation.sortOrder ?? 0),
   });
 
   return treeAfterInsertion;
