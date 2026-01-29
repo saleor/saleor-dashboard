@@ -222,12 +222,11 @@ test("TC: SALEOR_207 Issue a new gift card for the customer #e2e #customer", asy
   await customersPage.issueGiftCardDialog.typeCustomTag(faker.lorem.word());
   await customersPage.issueGiftCardDialog.typeNote(faker.lorem.sentences(3));
   await customersPage.issueGiftCardDialog.clickIssueButton();
-  await customersPage.expectSuccessBanner();
+  await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
   await giftCardsPage.issueGiftCardDialog.clickCopyCodeButton();
-  await giftCardsPage.expectSuccessBanner();
+  await giftCardsPage.expectSuccessBanner({ message: "Copied to clipboard" });
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.expectElementIsHidden(giftCardsPage.giftCardDialog);
-  await giftCardsPage.expectSuccessBanner({ message: "Successfully created gift card" });
 });
