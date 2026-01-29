@@ -1731,6 +1731,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8FDx9i": {
+    "context": "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
+    "string": "To use the Generator, this product type needs:{newline}{newline}• 'Product type uses Variant Attributes' enabled{newline}• Selection variant attributes defined"
+  },
   "8GC/ah": {
     "context": "variants section name",
     "string": "Variants"
@@ -1847,6 +1851,10 @@
   "8y4+0a": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
+  },
+  "9+iLpf": {
+    "context": "link text to product type settings",
+    "string": "Configure in product type settings"
   },
   "91vQMc": {
     "string": "order management"
@@ -8599,10 +8607,6 @@
   "lEG/12": {
     "context": "Webhook subscription query card title",
     "string": "Subscription Query"
-  },
-  "lEx2zw": {
-    "context": "tooltip when generate variants is disabled due to no selection attributes",
-    "string": "No selection attributes defined for this product type."
   },
   "lF+VJQ": {
     "context": "Shipment information card header",

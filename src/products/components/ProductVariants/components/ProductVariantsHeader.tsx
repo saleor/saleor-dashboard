@@ -5,16 +5,30 @@ import { VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import messages from "../messages";
 import styles from "./ProductVariantsHeader.module.css";
 
 const localMessages = defineMessages({
+  generatorRequiresConfig: {
+    id: "8FDx9i",
+    defaultMessage:
+      "To use the Generator, this product type needs:{newline}{newline}• 'Product type uses Variant Attributes' enabled{newline}• Selection variant attributes defined",
+    description:
+      "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
+  },
+  configureInProductType: {
+    id: "9+iLpf",
+    defaultMessage: "Configure in product type settings",
+    description: "link text to product type settings",
+  },
   unsupportedRequiredAttributes: {
     id: "4YtpqB",
     defaultMessage:
@@ -22,20 +36,19 @@ const localMessages = defineMessages({
     description:
       "tooltip when generate variants is disabled due to unsupported required attributes",
   },
-  noSelectionAttributes: {
-    id: "lEx2zw",
-    defaultMessage: "No selection attributes defined for this product type.",
-    description: "tooltip when generate variants is disabled due to no selection attributes",
-  },
 });
 
 interface GenerateVariantsButtonProps {
+  productTypeId: string;
+  hasVariants: boolean;
   hasVariantAttributes: boolean;
   unsupportedRequiredAttributes: VariantAttributeFragment[];
   onGenerateVariants: () => void;
 }
 
 const GenerateVariantsButton = ({
+  productTypeId,
+  hasVariants,
   hasVariantAttributes,
   unsupportedRequiredAttributes,
   onGenerateVariants,
@@ -43,28 +56,48 @@ const GenerateVariantsButton = ({
   const intl = useIntl();
 
   const hasUnsupportedRequired = unsupportedRequiredAttributes.length > 0;
-  const isDisabled = !hasVariantAttributes || hasUnsupportedRequired;
+  const needsProductTypeConfig = !hasVariants || !hasVariantAttributes;
+  const isDisabled = needsProductTypeConfig || hasUnsupportedRequired;
 
-  // Determine which tooltip to show (check unsupported required first - more specific)
-  const getTooltipMessage = () => {
-    if (hasUnsupportedRequired) {
-      return intl.formatMessage(localMessages.unsupportedRequiredAttributes, {
-        attributes: unsupportedRequiredAttributes.map(a => a.name).join(", "),
-        newline: "\n",
-      });
+  // Render tooltip content based on the reason for being disabled
+  const renderTooltipContent = () => {
+    // Product type configuration issues (hasVariants=false or no selection attributes)
+    if (needsProductTypeConfig) {
+      return (
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Text size={2} color="default1" style={{ whiteSpace: "pre-line" }}>
+            {intl.formatMessage(localMessages.generatorRequiresConfig, {
+              newline: "\n",
+            })}
+          </Text>
+          <Link to={productTypeUrl(productTypeId)} style={{ color: "inherit" }}>
+            <Text size={2} color="accent1" textDecoration="underline">
+              {intl.formatMessage(localMessages.configureInProductType)}
+            </Text>
+          </Link>
+        </Box>
+      );
     }
 
-    if (!hasVariantAttributes) {
-      return intl.formatMessage(localMessages.noSelectionAttributes);
+    // Unsupported required attributes
+    if (hasUnsupportedRequired) {
+      return (
+        <Text size={2} color="default1" style={{ whiteSpace: "pre-line" }}>
+          {intl.formatMessage(localMessages.unsupportedRequiredAttributes, {
+            attributes: unsupportedRequiredAttributes.map(a => a.name).join(", "),
+            newline: "\n",
+          })}
+        </Text>
+      );
     }
 
     return null;
   };
 
-  const tooltipMessage = getTooltipMessage();
+  const tooltipContent = renderTooltipContent();
 
   return (
-    <Tooltip open={tooltipMessage ? undefined : false}>
+    <Tooltip open={tooltipContent ? undefined : false}>
       <Tooltip.Trigger>
         <Button
           variant="secondary"
@@ -82,7 +115,7 @@ const GenerateVariantsButton = ({
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">
         <Tooltip.Arrow />
-        <span style={{ whiteSpace: "pre-line" }}>{tooltipMessage}</span>
+        {tooltipContent}
       </Tooltip.Content>
     </Tooltip>
   );
@@ -90,7 +123,10 @@ const GenerateVariantsButton = ({
 
 interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   productId: string;
+  productTypeId: string;
   productName: string;
+  /** Whether the product type supports multiple variants with attributes */
+  hasVariants: boolean;
   hasVariantAttributes: boolean;
   /** Required non-selection attributes with unsupported types that block the generator */
   unsupportedRequiredAttributes: VariantAttributeFragment[];
@@ -103,7 +139,9 @@ export const ProductVariantsHeader = ({
   isFullscreenOpen,
   toggleFullscreen,
   productId,
+  productTypeId,
   productName,
+  hasVariants,
   hasVariantAttributes,
   unsupportedRequiredAttributes,
   onGenerateVariants,
@@ -141,9 +179,14 @@ export const ProductVariantsHeader = ({
             />
           )}
         </DatagridHeader.ButtonFullScreen>
+        <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
+          <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
+        </DatagridHeader.ButtonAddRow>
         {!isFullscreenOpen && (
           <Box display="flex" alignItems="center" gap={2}>
             <GenerateVariantsButton
+              productTypeId={productTypeId}
+              hasVariants={hasVariants}
               hasVariantAttributes={hasVariantAttributes}
               unsupportedRequiredAttributes={unsupportedRequiredAttributes}
               onGenerateVariants={onGenerateVariants}
@@ -151,9 +194,6 @@ export const ProductVariantsHeader = ({
             <Ripple model={rippleVariantGenerator} />
           </Box>
         )}
-        <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
-          <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
-        </DatagridHeader.ButtonAddRow>
       </DatagridHeader>
     </div>
   );

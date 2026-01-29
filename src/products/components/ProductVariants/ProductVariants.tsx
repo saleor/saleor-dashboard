@@ -56,6 +56,9 @@ interface ProductVariantsProps {
   variants: ProductDetailsVariantFragment[];
   productName: string;
   productId: string;
+  productTypeId: string;
+  /** Whether the product type supports multiple variants with attributes */
+  hasVariants: boolean;
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
@@ -71,6 +74,8 @@ export const ProductVariants = ({
   nonSelectionVariantAttributes,
   productName,
   productId,
+  productTypeId,
+  hasVariants,
   onAttributeValuesSearch,
   onChange,
   onRowClick,
@@ -278,7 +283,9 @@ export const ProductVariants = ({
           <ProductVariantsHeader
             {...props}
             productId={productId}
+            productTypeId={productTypeId}
             productName={productName}
+            hasVariants={hasVariants}
             hasVariantAttributes={hasSelectionVariantAttributes}
             unsupportedRequiredAttributes={unsupportedRequiredAttributes}
             onGenerateVariants={handleOpenGenerator}
@@ -320,7 +327,7 @@ export const ProductVariants = ({
         onChange={onChange}
         recentlyAddedColumn={recentlyAddedColumn}
       />
-      {hasSelectionVariantAttributes && onBulkCreate && (
+      {hasVariants && hasSelectionVariantAttributes && onBulkCreate && (
         <ProductVariantGenerator
           open={generatorOpen}
           onClose={handleCloseGenerator}
