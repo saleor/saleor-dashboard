@@ -72,7 +72,15 @@ export const OrderTransactionSummary = ({
         <Text as="p">
           <FormattedMessage {...messages.amountDescription} />
         </Text>
-        <Box backgroundColor="default2" borderRadius={3} padding={4} paddingLeft={3}>
+        <Box
+          backgroundColor="default2"
+          borderRadius={3}
+          padding={4}
+          paddingLeft={3}
+          borderWidth={1}
+          borderStyle="solid"
+          borderColor="default1"
+        >
           <Box
             display="grid"
             columnGap={2}

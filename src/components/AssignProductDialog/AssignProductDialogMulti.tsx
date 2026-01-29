@@ -2,7 +2,7 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -196,7 +196,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
                         opacity: !isProductAvailable ? 0.5 : 1,
                       }}
                     />
-                    <TableCell className={classes.colName}>
+                    <TableCell>
                       {product.name}
                       {!isProductAvailable && productUnavailableText && (
                         <Text display="block" size={1} color="default2">
