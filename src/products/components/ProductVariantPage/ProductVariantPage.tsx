@@ -95,6 +95,8 @@ interface ProductVariantPageProps {
   header: string;
   channels: ChannelPriceData[];
   channelErrors: ProductChannelListingErrorFragment[];
+  /** Whether the product type supports variant attributes */
+  hasVariants: boolean;
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -136,6 +138,7 @@ export const ProductVariantPage = ({
   defaultVariantId,
   defaultWeightUnit,
   errors: apiErrors,
+  hasVariants,
   header,
   loading,
   placeholderImage,
@@ -288,7 +291,9 @@ export const ProductVariantPage = ({
                       <VariantAttributesSection
                         title={intl.formatMessage(messages.nonSelectionAttributes)}
                         attributes={nonSelectionAttributes}
+                        totalAttributesCount={data.attributes.length}
                         selectionAttributesExist={selectionAttributes.length > 0}
+                        hasVariants={hasVariants}
                         attributeValues={attributeValues}
                         productTypeName={variant.product.productType.name}
                         productTypeUrl={productTypeUrl(variant.product.productType.id)}
@@ -306,7 +311,7 @@ export const ProductVariantPage = ({
                         richTextGetters={attributeRichTextGetters}
                       />
                     )}
-                    {selectionAttributes.length > 0 && (
+                    {hasVariants && selectionAttributes.length > 0 && (
                       <>
                         <CardSpacer />
                         <Attributes
