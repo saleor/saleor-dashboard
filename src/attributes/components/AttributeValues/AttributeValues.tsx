@@ -16,7 +16,7 @@ import { TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Search, Trash2, X } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface AttributeValuesProps
@@ -29,6 +29,8 @@ interface AttributeValuesProps
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
   inputType: AttributeInputTypeEnum;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -146,21 +148,6 @@ const SearchInput = ({ value, onChange, placeholder }: SearchInputProps) => {
   );
 };
 
-function filterAttributeValues(
-  values: RelayToFlat<AttributeValueListFragment> | undefined,
-  searchQuery: string,
-): RelayToFlat<AttributeValueListFragment> | undefined {
-  if (!values || !searchQuery.trim()) {
-    return values;
-  }
-
-  const query = searchQuery.toLowerCase().trim();
-
-  return values.filter(
-    value => value.slug?.toLowerCase().includes(query) || value.name?.toLowerCase().includes(query),
-  );
-}
-
 const AttributeValues = ({
   disabled,
   onValueAdd,
@@ -174,23 +161,15 @@ const AttributeValues = ({
   onNextPage,
   onPreviousPage,
   inputType,
+  searchQuery = "",
+  onSearchChange,
 }: AttributeValuesProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
-  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredValues = useMemo(
-    () => filterAttributeValues(values, searchQuery),
-    [values, searchQuery],
-  );
-
-  const SEARCH_THRESHOLD = 5;
-  const showSearch = values && values.length > SEARCH_THRESHOLD;
-
-  // Only apply filtering when search is visible
-  const displayedValues = showSearch ? filteredValues : values;
-  const hasDisplayedValues = displayedValues && displayedValues.length > 0;
+  // Show search when callback is provided (controlled by parent)
+  const showSearch = Boolean(onSearchChange);
 
   return (
     <DashboardCard data-test-id="attribute-values-section">
@@ -220,20 +199,13 @@ const AttributeValues = ({
       <DashboardCard.Content>
         {values === undefined ? (
           <Skeleton />
-        ) : values.length === 0 ? (
-          <Placeholder>
-            <FormattedMessage
-              id="dAst+b"
-              defaultMessage="No values found"
-              description="attribute values list: no attribute values found"
-            />
-          </Placeholder>
         ) : (
           <Box display="flex" flexDirection="column" gap={4}>
-            {showSearch && (
+            {/* Search input - always visible when search is enabled */}
+            {showSearch && onSearchChange && (
               <SearchInput
                 value={searchQuery}
-                onChange={setSearchQuery}
+                onChange={onSearchChange}
                 placeholder={intl.formatMessage({
                   id: "9seX5T",
                   defaultMessage: "Search attribute values...",
@@ -241,7 +213,17 @@ const AttributeValues = ({
                 })}
               />
             )}
-            {!hasDisplayedValues && searchQuery ? (
+            {/* No values at all (not searching) */}
+            {values.length === 0 && !searchQuery ? (
+              <Placeholder>
+                <FormattedMessage
+                  id="dAst+b"
+                  defaultMessage="No values found"
+                  description="attribute values list: no attribute values found"
+                />
+              </Placeholder>
+            ) : /* Search returned no results */
+            values.length === 0 && searchQuery ? (
               <Placeholder>
                 <FormattedMessage
                   id="oegjWf"
@@ -292,7 +274,7 @@ const AttributeValues = ({
                   </TableRowLink>
                 </TableHead>
                 <SortableTableBody onSortEnd={onValueReorder}>
-                  {renderCollection(displayedValues, (value, valueIndex) => (
+                  {renderCollection(values, (value, valueIndex) => (
                     <SortableTableRow<"row">
                       data-test-id="attributes-rows"
                       className={value ? classes.link : undefined}

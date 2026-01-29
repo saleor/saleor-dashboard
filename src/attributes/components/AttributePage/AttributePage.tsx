@@ -80,6 +80,8 @@ interface AttributePageProps {
   };
   onNextPage: () => void;
   onPreviousPage: () => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
   children: (data: AttributePageFormData) => React.ReactNode;
 }
 
@@ -119,6 +121,8 @@ const AttributePage = ({
   pageInfo,
   onNextPage,
   onPreviousPage,
+  searchQuery,
+  onSearchChange,
   children,
 }: AttributePageProps) => {
   const intl = useIntl();
@@ -291,6 +295,8 @@ const AttributePage = ({
                       pageInfo={pageInfo}
                       onNextPage={onNextPage}
                       onPreviousPage={onPreviousPage}
+                      searchQuery={searchQuery}
+                      onSearchChange={onSearchChange}
                     />
                   </>
                 )}

@@ -21,6 +21,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
@@ -53,16 +54,74 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(
     settings?.rowNumber,
   );
-  const { data, loading } = useAttributeDetailsQuery({
+
+  // Separate state for input value (immediate) and API query (debounced)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const debounceTimerRef = useRef<number | null>(null);
+  const previousSearchRef = useRef<string>("");
+
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+
+    // Debounce the API call
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = window.setTimeout(() => {
+      setDebouncedSearchQuery(query);
+    }, 300);
+  }, []);
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Reset pagination only when debounced search actually changes (skip initial mount)
+  useEffect(() => {
+    if (previousSearchRef.current !== debouncedSearchQuery) {
+      // Only reset if the search value actually changed (not on initial mount with empty string)
+      if (previousSearchRef.current !== "" || debouncedSearchQuery !== "") {
+        setValuesPaginationState({
+          first: settings?.rowNumber,
+          after: undefined,
+          last: undefined,
+          before: undefined,
+        });
+      }
+
+      previousSearchRef.current = debouncedSearchQuery;
+    }
+  }, [debouncedSearchQuery, settings?.rowNumber, setValuesPaginationState]);
+
+  const {
+    data: currentData,
+    previousData,
+    loading,
+  } = useAttributeDetailsQuery({
     variables: {
       id,
       firstValues: valuesPaginationState.first,
       lastValues: valuesPaginationState.last,
       afterValues: valuesPaginationState.after,
       beforeValues: valuesPaginationState.before,
+      searchValues: debouncedSearchQuery || undefined,
     },
     skip: !settings,
   });
+
+  // Use previous data while loading to prevent UI flicker during search/pagination
+  const data = currentData ?? previousData;
+
+  // Only show as "loading" for initial load, not for search refetches
+  const isInitialLoading = loading && !data;
+
   const paginateValues = useLocalPaginator(setValuesPaginationState);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
     data?.attribute?.choices?.pageInfo,
@@ -203,7 +262,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   return (
     <AttributePage
       attribute={data?.attribute}
-      disabled={loading}
+      disabled={isInitialLoading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       params={params}
       onDelete={() => openModal("remove")}
@@ -229,6 +288,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       pageInfo={pageInfo ?? { hasNextPage: false, hasPreviousPage: false }}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
+      searchQuery={searchQuery}
+      onSearchChange={handleSearchChange}
     >
       {attributeFormData => (
         <>
@@ -271,7 +332,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
             inputType={attributeFormData.inputType}
             attributeValue={null}
             confirmButtonState={attributeValueCreateOpts.status}
-            disabled={loading}
+            disabled={isInitialLoading}
             errors={attributeValueCreateOpts.data?.attributeValueCreate?.errors || []}
             open={params.action === "add-value"}
             onClose={closeModal}
@@ -295,7 +356,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
                 null,
             )}
             confirmButtonState={attributeValueUpdateOpts.status}
-            disabled={loading}
+            disabled={isInitialLoading}
             errors={attributeValueUpdateOpts.data?.attributeValueUpdate?.errors || []}
             open={params.action === "edit-value"}
             onClose={closeModal}
