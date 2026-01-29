@@ -142,13 +142,15 @@ export const ProductVariantsHeader = ({
           )}
         </DatagridHeader.ButtonFullScreen>
         {!isFullscreenOpen && (
-          <Box display="flex" alignItems="center" gap={2}>
+          <Box position="relative">
             <GenerateVariantsButton
               hasVariantAttributes={hasVariantAttributes}
               unsupportedRequiredAttributes={unsupportedRequiredAttributes}
               onGenerateVariants={onGenerateVariants}
             />
-            <Ripple model={rippleVariantGenerator} />
+            <Box position="absolute" __top="-4px" __right="-4px">
+              <Ripple model={rippleVariantGenerator} />
+            </Box>
           </Box>
         )}
         <DatagridHeader.ButtonAddRow onAddRow={handleAddNewRow}>
