@@ -198,7 +198,7 @@ export const ProductVariantsHeader = ({
           <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
         </DatagridHeader.ButtonAddRow>
         {!isFullscreenOpen && (
-          <Box display="flex" alignItems="center" gap={2}>
+          <Box position="relative">
             <GenerateVariantsButton
               productTypeId={productTypeId}
               hasVariants={hasVariants}
@@ -206,7 +206,9 @@ export const ProductVariantsHeader = ({
               unsupportedRequiredAttributes={unsupportedRequiredAttributes}
               onGenerateVariants={onGenerateVariants}
             />
-            <Ripple model={rippleVariantGenerator} />
+            <Box position="absolute" __top="-4px" __right="-4px">
+              <Ripple model={rippleVariantGenerator} />
+            </Box>
           </Box>
         )}
       </DatagridHeader>
