@@ -60,6 +60,7 @@ describe("SearchInput", () => {
 
   it("should call onChange with empty string when clear button is clicked", async () => {
     // Arrange
+
     const onChange = jest.fn();
 
     render(
