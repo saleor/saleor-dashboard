@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.29
+
+### Patch Changes
+
+- [#6285](https://github.com/saleor/saleor-dashboard/pull/6285) [`d65d066`](https://github.com/saleor/saleor-dashboard/commit/d65d06657d599c7a638c5b164acd3cb32fdee68f) Thanks [@mirekm](https://github.com/mirekm)! - Improved Variants Generator to support required non-selection attributes with a dedicated tab. Also added contextual tooltips explaining why generation is disabled.
+
 ## 3.22.28
 
 ### Patch Changes
