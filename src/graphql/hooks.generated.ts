@@ -417,6 +417,7 @@ export const ChannelListingProductWithoutPricingFragmentDoc = gql`
   channel {
     id
     name
+    slug
     currencyCode
   }
 }
@@ -2818,6 +2819,16 @@ export const ProductVariantAttributesFragmentDoc = gql`
     variantAttributes {
       ...VariantAttribute
     }
+    selectionVariantAttributes: variantAttributes(
+      variantSelection: VARIANT_SELECTION
+    ) {
+      ...VariantAttribute
+    }
+    nonSelectionVariantAttributes: variantAttributes(
+      variantSelection: NOT_VARIANT_SELECTION
+    ) {
+      ...VariantAttribute
+    }
   }
   channelListings {
     channel {
@@ -2995,6 +3006,10 @@ export const ProductVariantFragmentDoc = gql`
     name
     thumbnail {
       url
+    }
+    productType {
+      id
+      name
     }
     channelListings {
       id
@@ -15317,9 +15332,16 @@ export const ProductChannelListingUpdateDocument = gql`
     errors {
       ...ProductChannelListingError
     }
+    product {
+      id
+      channelListings {
+        ...ChannelListingProductWithoutPricing
+      }
+    }
   }
 }
-    ${ProductChannelListingErrorFragmentDoc}`;
+    ${ProductChannelListingErrorFragmentDoc}
+${ChannelListingProductWithoutPricingFragmentDoc}`;
 export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
 
 /**
@@ -16060,6 +16082,67 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const ChannelDiagnosticsDocument = gql`
+    query ChannelDiagnostics {
+  channels {
+    id
+    name
+    slug
+    currencyCode
+    isActive
+    warehouses {
+      id
+      name
+    }
+  }
+  shippingZones(first: 100) {
+    edges {
+      node {
+        id
+        name
+        channels {
+          id
+        }
+        warehouses {
+          id
+          name
+        }
+        countries {
+          code
+          country
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelDiagnosticsQuery__
+ *
+ * To run a query within a React component, call `useChannelDiagnosticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelDiagnosticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelDiagnosticsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelDiagnosticsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>(ChannelDiagnosticsDocument, options);
+      }
+export function useChannelDiagnosticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>(ChannelDiagnosticsDocument, options);
+        }
+export type ChannelDiagnosticsQueryHookResult = ReturnType<typeof useChannelDiagnosticsQuery>;
+export type ChannelDiagnosticsLazyQueryHookResult = ReturnType<typeof useChannelDiagnosticsLazyQuery>;
+export type ChannelDiagnosticsQueryResult = Apollo.QueryResult<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>;
 export const SetRefundReasonTypeDocument = gql`
     mutation SetRefundReasonType($modelTypeId: ID!) {
   refundSettingsUpdate(input: {refundReasonReferenceType: $modelTypeId}) {

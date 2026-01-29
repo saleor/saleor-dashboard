@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "node": ">=14"
-  },
   "dependencies": {
     "@actions/core": "^1.9.1",
     "@octokit/core": "^4.0.4",
@@ -10,5 +7,9 @@
     "graphql-request": "^5.0.0",
     "node-fetch": "^2.6.7",
     "octokit": "^4.1.1"
+  },
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=22"
   }
 }

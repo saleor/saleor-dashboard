@@ -64,7 +64,7 @@ export const DefaultsSection = ({
             onCheckedChange={handleSkuEnabledChange}
             name="skuEnabled"
           />
-          <Text size={2} color={defaults.skuEnabled ? "default1" : "default2"}>
+          <Text size={2} color="default1" fontWeight="medium">
             {intl.formatMessage(messages.skuPrefix)}
           </Text>
         </Box>
@@ -101,7 +101,7 @@ export const DefaultsSection = ({
             onCheckedChange={handleStockEnabledChange}
             name="stockEnabled"
           />
-          <Text size={2} color={defaults.stockEnabled ? "default1" : "default2"}>
+          <Text size={2} color="default1" fontWeight="medium">
             {intl.formatMessage(messages.initialStock)}
           </Text>
         </Box>

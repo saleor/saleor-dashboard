@@ -1,4 +1,3 @@
-import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";
@@ -19,8 +18,6 @@ export const useAppActions = (
     dashboard: string;
   },
 ) => {
-  const notifier = useNotifier();
-
   const postToExtension = usePostToExtension(frameEl, appOrigin);
   const { handle: handleNotification } = AppActionsHandler.useHandleNotificationAction();
   const { handle: handleUpdateRouting } = AppActionsHandler.useHandleUpdateRoutingAction(appId);
@@ -82,13 +79,7 @@ export const useAppActions = (
         console.warn(
           `${actionType} action is invalid. Check docs: https://docs.saleor.io/developer/extending/apps/developing-apps/app-sdk/app-bridge#actions`,
         );
-        console.warn(`Dashboard received action from app:`, action);
-
-        notifier({
-          title: "Invalid app event",
-          status: "error",
-          text: `App has sent invalid event type "${actionType}". Contact app developer.`,
-        });
+        console.warn(`Dashboard received action from app:`, { action, appId });
       }
     }
   };

@@ -300,6 +300,7 @@ export function useProductUpdateForm(
     isSaveDisabled,
     richText,
     attributeRichTextGetters,
+    touchedChannels: touchedChannels.current,
   };
 }
 
