@@ -1,10 +1,9 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  theme => ({
+  () => ({
     colName: {
       fontSize: 14,
-      paddingLeft: 0,
       width: "auto",
     },
     colPrice: {
@@ -20,9 +19,7 @@ export const useStyles = makeStyles(
     table: {
       tableLayout: "fixed",
     },
-    tableContainer: {
-      margin: theme.spacing(0, -4),
-    },
+    tableContainer: {},
   }),
   {
     name: "VoucherValue",
