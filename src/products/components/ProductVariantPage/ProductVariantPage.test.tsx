@@ -202,6 +202,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "ProductType" as const,
         id: "product-type-1",
         name: "Default Product Type",
+        hasVariants: true,
       },
       channelListings: [
         {
@@ -237,6 +238,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
     defaultVariantId: "default-variant-id",
     defaultWeightUnit: "kg",
     errors: [],
+    hasVariants: true,
     channelErrors: [],
     header: "Edit Variant",
     variant: mockVariant,

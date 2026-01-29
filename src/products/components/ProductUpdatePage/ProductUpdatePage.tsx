@@ -490,6 +490,7 @@ const ProductUpdatePage = ({
                 )}
                 <ProductVariants
                   productId={productId}
+                  productTypeId={product?.productType.id ?? ""}
                   productName={product?.name}
                   errors={variantListErrors}
                   channels={listings}
@@ -498,6 +499,7 @@ const ProductUpdatePage = ({
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
+                  hasVariants={hasVariants ?? false}
                   onAttributeValuesSearch={onAttributeValuesSearch}
                   onChange={handlers.changeVariants}
                   onRowClick={onVariantShow}
