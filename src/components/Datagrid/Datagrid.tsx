@@ -482,7 +482,7 @@ const Datagrid = ({
                 {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
                   <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
                 )}
-                <div className={classes.editorContainer} data-testid="data-grid-canvas">
+                <div className={classes.editorContainer}>
                   <Box
                     backgroundColor="default1"
                     borderTopWidth={showTopBorder ? 1 : 0}
