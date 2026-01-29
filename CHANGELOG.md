@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.19
+
+### Patch Changes
+
+- 3874cc0: Fix combobox rendering bug in Chromium 144+ by replacing custom Combobox wrapper with MacawUI DynamicCombobox
+
 ## 3.21.18
 
 ### Patch Changes
