@@ -71,11 +71,28 @@
   line-height: 1.4;
 }
 
-.problemsBadge {
+.problemsBadgeError {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.problemsBadgeWarning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #d97706;
   color: #ffffff;
   font-size: 12px;
   font-weight: 600;

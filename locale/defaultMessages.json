@@ -826,6 +826,9 @@
   "2qfU+C": {
     "string": "The extension identifier is already in use."
   },
+  "2rUVsU": {
+    "string": "App"
+  },
   "2x9ZgK": {
     "context": "card title",
     "string": "Refund balance"
@@ -2725,9 +2728,6 @@
     "context": "Description for no shipping zones warning",
     "string": "Customers cannot checkout without shipping methods. Add shipping zones to this channel."
   },
-  "EAiv4D": {
-    "string": "custom"
-  },
   "EDihQs": {
     "string": "Staff member updated"
   },
@@ -3769,6 +3769,9 @@
   "JVaz1C": {
     "context": "window title",
     "string": "Create Webhook"
+  },
+  "JVdGDR": {
+    "string": "{count, plural, one {{count} warning} other {{count} warnings}}"
   },
   "JYfMRO": {
     "context": "order discount was updated event title",
@@ -7486,6 +7489,9 @@
   "ecM5eL": {
     "context": "page title - creating custom app",
     "string": "Add extension manually"
+  },
+  "ectAk7": {
+    "string": "{count, plural, one {{count} error} other {{count} errors}}"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",

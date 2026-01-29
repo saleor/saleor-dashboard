@@ -3,8 +3,9 @@ import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { getProblemSeverity, InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
+import { AppProblemSeverityEnum } from "@dashboard/graphql";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
@@ -63,8 +64,15 @@ const ExtensionLink = ({
 };
 
 const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
-  const problemCount = extension.problems?.length ?? 0;
-  const [problemsVisible, setProblemsVisible] = useState(problemCount > 0);
+  const problems = extension.problems ?? [];
+  const errorCount = problems.filter(
+    p => getProblemSeverity(p) === AppProblemSeverityEnum.ERROR,
+  ).length;
+  const warningCount = problems.filter(
+    p => getProblemSeverity(p) === AppProblemSeverityEnum.WARNING,
+  ).length;
+  const totalCount = errorCount + warningCount;
+  const [problemsVisible, setProblemsVisible] = useState(totalCount > 0);
 
   return (
     <>
@@ -83,9 +91,10 @@ const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
               >
                 {extension.name}
               </Text>
-              {problemCount > 0 && (
+              {totalCount > 0 && (
                 <ProblemsBadge
-                  count={problemCount}
+                  errorCount={errorCount}
+                  warningCount={warningCount}
                   expanded={problemsVisible}
                   onToggle={() => setProblemsVisible(prev => !prev)}
                 />
@@ -100,7 +109,7 @@ const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
           </ExtensionLink>
         </GridTable.Cell>
       </GridTable.Row>
-      {problemsVisible && problemCount > 0 && (
+      {problemsVisible && totalCount > 0 && (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
             <ProblemsList problems={extension.problems!} appId={extension.id} />

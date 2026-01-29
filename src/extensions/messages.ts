@@ -364,8 +364,8 @@ export const problemMessages = defineMessages({
     id: "OYWn0V",
   },
   customType: {
-    defaultMessage: "custom",
-    id: "EAiv4D",
+    defaultMessage: "App",
+    id: "2rUVsU",
   },
   customTypeTooltip: {
     defaultMessage: "This message comes from the app",

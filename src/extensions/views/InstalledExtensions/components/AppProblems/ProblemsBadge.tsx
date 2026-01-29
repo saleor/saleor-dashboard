@@ -5,27 +5,47 @@ import { useIntl } from "react-intl";
 import styles from "./AppProblems.module.css";
 
 interface ProblemsBadgeProps {
-  count: number;
+  errorCount: number;
+  warningCount: number;
   expanded: boolean;
   onToggle: () => void;
 }
 
-export const ProblemsBadge = ({ count, expanded, onToggle }: ProblemsBadgeProps) => {
+export const ProblemsBadge = ({
+  errorCount,
+  warningCount,
+  expanded,
+  onToggle,
+}: ProblemsBadgeProps) => {
   const intl = useIntl();
+  const total = errorCount + warningCount;
 
-  if (count === 0) {
+  if (total === 0) {
     return null;
+  }
+
+  const hasErrors = errorCount > 0;
+  const hasWarnings = warningCount > 0;
+
+  const parts: string[] = [];
+
+  if (hasErrors) {
+    parts.push(intl.formatMessage(problemMessages.errorCount, { count: errorCount }));
+  }
+
+  if (hasWarnings) {
+    parts.push(intl.formatMessage(problemMessages.warningCount, { count: warningCount }));
   }
 
   return (
     <button
-      className={styles.problemsBadge}
+      className={hasErrors ? styles.problemsBadgeError : styles.problemsBadgeWarning}
       onClick={e => {
         e.preventDefault();
         onToggle();
       }}
     >
-      {intl.formatMessage(problemMessages.problemCount, { count })}
+      {parts.join(", ")}
       {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
     </button>
   );
