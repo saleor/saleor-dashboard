@@ -152,7 +152,7 @@
 .groupActionLink {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   margin-left: auto;
   font-size: 12px;
   font-weight: 600;

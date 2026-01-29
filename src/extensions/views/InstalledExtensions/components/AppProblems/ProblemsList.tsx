@@ -100,11 +100,7 @@ const ProblemGroupSection = ({ typename, severity, problems, appId }: ProblemGro
         <SeverityIcon size={16} className={iconClass} />
         <ProblemTypeBadge typename={typename} />
         {actionLink && (
-          <Link
-            href={actionLink.href}
-            className={styles.groupActionLink}
-            onClick={e => e.stopPropagation()}
-          >
+          <Link href={actionLink.href} className={styles.groupActionLink} inline={false}>
             {intl.formatMessage(problemMessages[actionLink.label])}
             <ExternalLink size={12} />
           </Link>
