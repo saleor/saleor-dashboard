@@ -2,6 +2,7 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -9,8 +10,8 @@ import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
-import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Checkbox, Input, Text, vars } from "@saleor/macaw-ui-next";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Box, Button, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -71,6 +72,7 @@ export const ProductStocks = ({
 }: ProductStocksProps) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
+  const [isAssignWarehousesOpen, setIsAssignWarehousesOpen] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
   const stocksIds = React.useMemo(() => stocks.map(stock => stock.id), [stocks]);
@@ -91,6 +93,8 @@ export const ProductStocks = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFormDataChange(e);
   };
+
+  const showAssignWarehousesButton = !isCreate && productVariantChannelListings?.length > 0;
 
   return (
     <DashboardCard>
@@ -134,14 +138,27 @@ export const ProductStocks = ({
             </Text>
           </Box>
           <Box display="grid" gap={2} marginTop={5}>
-            <Box display="flex" flexDirection="column">
-              <Text size={4} fontWeight="bold">
-                <FormattedMessage {...messages.stock} />
-              </Text>
-              {!productVariantChannelListings?.length && (
-                <Text size={2} color="default2">
-                  <FormattedMessage {...messages.noChannelWarehousesAllocation} />
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box display="flex" flexDirection="column">
+                <Text size={4} fontWeight="bold">
+                  <FormattedMessage {...messages.stock} />
                 </Text>
+                {!productVariantChannelListings?.length && (
+                  <Text size={2} color="default2">
+                    <FormattedMessage {...messages.noChannelWarehousesAllocation} />
+                  </Text>
+                )}
+              </Box>
+              {showAssignWarehousesButton && (
+                <Button
+                  onClick={() => setIsAssignWarehousesOpen(true)}
+                  disabled={loading}
+                  type="button"
+                  variant="secondary"
+                  data-test-id="assign-warehouse-button"
+                >
+                  <FormattedMessage defaultMessage="Assign Warehouses" id="mFC5Rq" />
+                </Button>
               )}
             </Box>
             <WarehouseInformationMessage
@@ -153,71 +170,76 @@ export const ProductStocks = ({
           </Box>
         </Box>
         {productVariantChannelListings?.length > 0 && stocks?.length > 0 && (
-          <Table>
-            <TableHead>
-              <TableRowLink>
-                <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                  <Text size={2} color="default2">
-                    <FormattedMessage {...messages.warehouseName} />
-                  </Text>
-                </TableCell>
-                <TableCell style={{ width: 100, verticalAlign: "middle" }}>
-                  <Text size={2} color="default2">
-                    <FormattedMessage {...messages.allocated} />
-                  </Text>
-                </TableCell>
-                <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                  <Text size={2} color="default2">
-                    <FormattedMessage {...messages.quantity} />
-                  </Text>
-                </TableCell>
-                <TableCell />
-              </TableRowLink>
-            </TableHead>
-            <TableBody>
-              {renderCollection(stocks, (stock, index) => {
-                const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
-                  onChange(stock.id, event.target.value),
-                );
+          <Box marginTop={5}>
+            <ResponsiveTable>
+              <TableHead>
+                <TableRowLink>
+                  <TableCell>
+                    <Text size={2} color="default2">
+                      <FormattedMessage {...messages.warehouseName} />
+                    </Text>
+                  </TableCell>
+                  <TableCell style={{ width: 100, verticalAlign: "middle" }}>
+                    <Text size={2} color="default2">
+                      <FormattedMessage {...messages.allocated} />
+                    </Text>
+                  </TableCell>
+                  <TableCell style={{ width: 200, verticalAlign: "middle" }}>
+                    <Text size={2} color="default2">
+                      <FormattedMessage {...messages.quantity} />
+                    </Text>
+                  </TableCell>
+                  <TableCell style={{ width: 48 }} />
+                </TableRowLink>
+              </TableHead>
+              <TableBody>
+                {renderCollection(stocks, (stock, index) => {
+                  const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
+                    onChange(stock.id, event.target.value),
+                  );
 
-                return (
-                  <TableRowLink
-                    data-test-id={stock.label}
-                    key={`product-stocks-${stock.id}-${index}`}
-                  >
-                    <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-                      <Text>{stock.label}</Text>
-                    </TableCell>
-                    <TableCell>
-                      <Text>{stock.data?.quantityAllocated || 0}</Text>
-                    </TableCell>
-                    <TableCell>
-                      <Input
-                        data-test-id="stock-input"
-                        disabled={loading}
-                        onChange={handleQuantityChange}
-                        value={stock.value}
-                        size="small"
-                        type="number"
-                        min={0}
-                        ref={input => stocks.length === index + 1 && handleStockInputFocus(input)}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        icon={
-                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                        }
-                        onClick={() => onWarehouseStockDelete(stock.id)}
-                      />
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-            </TableBody>
-          </Table>
+                  return (
+                    <TableRowLink
+                      data-test-id={stock.label}
+                      key={`product-stocks-${stock.id}-${index}`}
+                    >
+                      <TableCell>
+                        <Text>{stock.label}</Text>
+                      </TableCell>
+                      <TableCell>
+                        <Text>{stock.data?.quantityAllocated || 0}</Text>
+                      </TableCell>
+                      <TableCell>
+                        <Input
+                          data-test-id="stock-input"
+                          disabled={loading}
+                          onChange={handleQuantityChange}
+                          value={stock.value}
+                          size="small"
+                          type="number"
+                          min={0}
+                          ref={input => stocks.length === index + 1 && handleStockInputFocus(input)}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          icon={
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
+                            />
+                          }
+                          onClick={() => onWarehouseStockDelete(stock.id)}
+                        />
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                })}
+              </TableBody>
+            </ResponsiveTable>
+          </Box>
         )}
 
         <ProductStocksAssignWarehouses
@@ -227,7 +249,8 @@ export const ProductStocks = ({
           onWarehouseSelect={handleWarehouseStockAdd}
           loading={loading}
           searchWarehouses={searchWarehouses}
-          showAssignWarehousesButton={!isCreate}
+          open={isAssignWarehousesOpen}
+          onClose={() => setIsAssignWarehousesOpen(false)}
         />
       </DashboardCard.Content>
     </DashboardCard>

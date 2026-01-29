@@ -2,9 +2,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   {
-    checkboxCell: {
-      paddingLeft: 0,
-    },
+    checkboxCell: {},
     wideCell: {
       width: "100%",
     },

@@ -10945,6 +10945,7 @@ export const PageTypeListDocument = gql`
     pageInfo {
       ...PageInfo
     }
+    totalCount
   }
 }
     ${PageTypeFragmentDoc}
