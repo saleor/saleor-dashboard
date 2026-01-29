@@ -223,6 +223,7 @@ export const ProductVariantPage = ({
       </TopNav>
       <DetailPageLayout.Content>
         <ProductVariantUpdateForm
+          key={variant?.id}
           variant={variant}
           onSubmit={onSubmit}
           currentChannels={channels}
