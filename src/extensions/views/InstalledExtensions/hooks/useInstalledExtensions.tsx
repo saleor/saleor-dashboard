@@ -5,10 +5,15 @@ import {
   LatestWebhookDeliveryWithMoment,
 } from "@dashboard/extensions/components/AppAlerts/utils";
 import { infoMessages } from "@dashboard/extensions/messages";
-import { InstalledExtension, WebhookDeliveryProblem } from "@dashboard/extensions/types";
+import {
+  getProblemSeverity,
+  InstalledExtension,
+  WebhookDeliveryProblem,
+} from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
+  AppProblemSeverityEnum,
   AppTypeEnum,
   PermissionEnum,
   useEventDeliveryQuery,
@@ -184,8 +189,19 @@ export const useInstalledExtensions = () => {
     [installedPluginsData],
   );
 
-  const totalProblemsCount = installedApps.reduce(
-    (sum, app) => sum + (app.problems?.length ?? 0),
+  const errorCount = installedApps.reduce(
+    (sum, app) =>
+      sum +
+      (app.problems?.filter(p => getProblemSeverity(p) === AppProblemSeverityEnum.ERROR).length ??
+        0),
+    0,
+  );
+
+  const warningCount = installedApps.reduce(
+    (sum, app) =>
+      sum +
+      (app.problems?.filter(p => getProblemSeverity(p) === AppProblemSeverityEnum.WARNING).length ??
+        0),
     0,
   );
 
@@ -193,6 +209,7 @@ export const useInstalledExtensions = () => {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
     installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
-    totalProblemsCount,
+    errorCount,
+    warningCount,
   };
 };

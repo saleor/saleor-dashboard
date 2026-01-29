@@ -49,8 +49,13 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedExtensions, installedAppsLoading, refetchInstalledApps, totalProblemsCount } =
-    useInstalledExtensions();
+  const {
+    installedExtensions,
+    installedAppsLoading,
+    refetchInstalledApps,
+    errorCount,
+    warningCount,
+  } = useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
 
@@ -79,7 +84,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
             <Text size={6} fontWeight="regular">
               {intl.formatMessage(headerTitles.installedExtensions)}
             </Text>
-            <ProblemsHeaderBadge count={totalProblemsCount} />
+            <ProblemsHeaderBadge errorCount={errorCount} warningCount={warningCount} />
           </Box>
         </Box>
         <Box display="flex" gap={4} alignItems="center">
