@@ -200,13 +200,10 @@ export const InstalledAppDetailsFragmentDoc = gql`
   type
   problems {
     __typename
-    ... on AppProblemCircuitBreaker {
-      message
-      createdAt
-    }
     ... on AppProblemCustom {
       createdAt
       message
+      severity
     }
   }
   brand {
@@ -2828,6 +2825,16 @@ export const ProductVariantAttributesFragmentDoc = gql`
   productType {
     id
     variantAttributes {
+      ...VariantAttribute
+    }
+    selectionVariantAttributes: variantAttributes(
+      variantSelection: VARIANT_SELECTION
+    ) {
+      ...VariantAttribute
+    }
+    nonSelectionVariantAttributes: variantAttributes(
+      variantSelection: NOT_VARIANT_SELECTION
+    ) {
       ...VariantAttribute
     }
   }

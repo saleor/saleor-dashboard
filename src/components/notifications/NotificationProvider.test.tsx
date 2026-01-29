@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { PropsWithChildren, useContext } from "react";
 
 import { NotificationContext } from ".";
-import NotificationProvider from "./NotificationProvider";
+import { NotificationProvider } from "./NotificationProvider";
 
 // Mock sonner
 jest.mock("sonner", () => ({

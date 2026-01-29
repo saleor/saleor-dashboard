@@ -72,6 +72,7 @@ import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToD
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
+import { BulkCreateResult } from "../ProductVariantGenerator/types";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
@@ -135,7 +136,7 @@ interface ProductUpdatePageProps {
     channel: string | undefined,
     query: string,
   ) => void;
-  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<void>;
+  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints;
 }
 
@@ -495,6 +496,8 @@ const ProductUpdatePage = ({
                   limits={limits}
                   variants={variants}
                   variantAttributes={product?.productType.variantAttributes}
+                  selectionVariantAttributes={product?.productType.selectionVariantAttributes}
+                  nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
                   onAttributeValuesSearch={onAttributeValuesSearch}
                   onChange={handlers.changeVariants}
                   onRowClick={onVariantShow}

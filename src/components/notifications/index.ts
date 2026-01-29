@@ -22,7 +22,6 @@ export interface INotificationContext {
 export type INotificationCallback = (notification: INotification) => void;
 export const NotificationContext = createContext<INotificationContext | null>(null);
 
-export * from "./NotificationProvider";
-export { default } from "./NotificationProvider";
+export { NotificationProvider } from "./NotificationProvider";
 export type { ToastProps } from "./Toast";
 export { Toast } from "./Toast";

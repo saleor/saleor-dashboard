@@ -426,11 +426,6 @@ export type AppManifestWebhookFieldPolicy = {
 	syncEvents?: FieldPolicy<any> | FieldReadFunction<any>,
 	targetUrl?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemCircuitBreakerKeySpecifier = ('createdAt' | 'message' | AppProblemCircuitBreakerKeySpecifier)[];
-export type AppProblemCircuitBreakerFieldPolicy = {
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type AppProblemClearKeySpecifier = ('app' | 'appErrors' | 'errors' | AppProblemClearKeySpecifier)[];
 export type AppProblemClearFieldPolicy = {
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -443,11 +438,12 @@ export type AppProblemCreateFieldPolicy = {
 	appErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemCustomKeySpecifier = ('aggregate' | 'createdAt' | 'message' | AppProblemCustomKeySpecifier)[];
+export type AppProblemCustomKeySpecifier = ('aggregate' | 'createdAt' | 'message' | 'severity' | AppProblemCustomKeySpecifier)[];
 export type AppProblemCustomFieldPolicy = {
 	aggregate?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	severity?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppReenableSyncWebhooksKeySpecifier = ('app' | 'appErrors' | 'errors' | AppReenableSyncWebhooksKeySpecifier)[];
 export type AppReenableSyncWebhooksFieldPolicy = {
@@ -7429,10 +7425,6 @@ export type StrictTypedTypePolicies = {
 	AppManifestWebhook?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppManifestWebhookKeySpecifier | (() => undefined | AppManifestWebhookKeySpecifier),
 		fields?: AppManifestWebhookFieldPolicy,
-	},
-	AppProblemCircuitBreaker?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | AppProblemCircuitBreakerKeySpecifier | (() => undefined | AppProblemCircuitBreakerKeySpecifier),
-		fields?: AppProblemCircuitBreakerFieldPolicy,
 	},
 	AppProblemClear?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppProblemClearKeySpecifier | (() => undefined | AppProblemClearKeySpecifier),

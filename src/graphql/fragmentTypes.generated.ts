@@ -7,7 +7,6 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "AppProblem": [
-      "AppProblemCircuitBreaker",
       "AppProblemCustom"
     ],
     "AssignedAttribute": [
