@@ -2819,6 +2819,16 @@ export const ProductVariantAttributesFragmentDoc = gql`
     variantAttributes {
       ...VariantAttribute
     }
+    selectionVariantAttributes: variantAttributes(
+      variantSelection: VARIANT_SELECTION
+    ) {
+      ...VariantAttribute
+    }
+    nonSelectionVariantAttributes: variantAttributes(
+      variantSelection: NOT_VARIANT_SELECTION
+    ) {
+      ...VariantAttribute
+    }
   }
   channelListings {
     channel {
@@ -3000,6 +3010,7 @@ export const ProductVariantFragmentDoc = gql`
     productType {
       id
       name
+      hasVariants
     }
     channelListings {
       id
@@ -15801,6 +15812,8 @@ export const ProductVariantCreateDataDocument = gql`
     name
     productType {
       id
+      name
+      hasVariants
       selectionVariantAttributes: variantAttributes(
         variantSelection: VARIANT_SELECTION
       ) {
