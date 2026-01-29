@@ -11,10 +11,12 @@ import {
   Attributes,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -31,9 +33,11 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { defineMessages, useIntl } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
@@ -228,51 +232,84 @@ export const ProductVariantCreatePage = ({
                     product={product}
                     onManageClick={toggleManageChannels}
                   />
-                  <Attributes
-                    title={intl.formatMessage(messages.attributesHeader)}
-                    attributes={data.attributes.filter(
-                      attribute =>
-                        attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.NOT_VARIANT_SELECTION,
-                    )}
-                    attributeValues={attributeValues}
-                    loading={disabled}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
-                  />
                   <CardSpacer />
-                  <Attributes
-                    title={intl.formatMessage(messages.attributesSelectionHeader)}
-                    attributes={data.attributes.filter(
-                      attribute =>
-                        attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.VARIANT_SELECTION,
-                    )}
-                    attributeValues={attributeValues}
-                    loading={disabled}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={handlers.selectAttribute}
-                    onMultiChange={handlers.selectAttributeMultiple}
-                    onFileChange={handlers.selectAttributeFile}
-                    onReferencesRemove={handlers.selectAttributeReference}
-                    onReferencesAddClick={onAssignReferencesClick}
-                    onReferencesReorder={handlers.reorderAttributeValue}
-                    fetchAttributeValues={fetchAttributeValues}
-                    fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelectBlur={onAttributeSelectBlur}
-                    richTextGetters={attributeRichTextGetters}
-                  />
+                  {product?.productType?.hasVariants && (
+                    <Attributes
+                      title={intl.formatMessage(messages.attributesHeader)}
+                      attributes={data.attributes.filter(
+                        attribute =>
+                          attribute.data.variantAttributeScope ===
+                          VariantAttributeScope.NOT_VARIANT_SELECTION,
+                      )}
+                      attributeValues={attributeValues}
+                      loading={disabled}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={handlers.selectAttribute}
+                      onMultiChange={handlers.selectAttributeMultiple}
+                      onFileChange={handlers.selectAttributeFile}
+                      onReferencesRemove={handlers.selectAttributeReference}
+                      onReferencesAddClick={onAssignReferencesClick}
+                      onReferencesReorder={handlers.reorderAttributeValue}
+                      fetchAttributeValues={fetchAttributeValues}
+                      fetchMoreAttributeValues={fetchMoreAttributeValues}
+                      onAttributeSelectBlur={onAttributeSelectBlur}
+                      richTextGetters={attributeRichTextGetters}
+                    />
+                  )}
+                  {product?.productType?.hasVariants && (
+                    <>
+                      <CardSpacer />
+                      <Attributes
+                        title={intl.formatMessage(messages.attributesSelectionHeader)}
+                        attributes={data.attributes.filter(
+                          attribute =>
+                            attribute.data.variantAttributeScope ===
+                            VariantAttributeScope.VARIANT_SELECTION,
+                        )}
+                        attributeValues={attributeValues}
+                        loading={disabled}
+                        disabled={disabled}
+                        errors={errors}
+                        onChange={handlers.selectAttribute}
+                        onMultiChange={handlers.selectAttributeMultiple}
+                        onFileChange={handlers.selectAttributeFile}
+                        onReferencesRemove={handlers.selectAttributeReference}
+                        onReferencesAddClick={onAssignReferencesClick}
+                        onReferencesReorder={handlers.reorderAttributeValue}
+                        fetchAttributeValues={fetchAttributeValues}
+                        fetchMoreAttributeValues={fetchMoreAttributeValues}
+                        onAttributeSelectBlur={onAttributeSelectBlur}
+                        richTextGetters={attributeRichTextGetters}
+                      />
+                    </>
+                  )}
+                  {!product?.productType?.hasVariants && data.attributes.length > 0 && (
+                    <DashboardCard paddingTop={6}>
+                      <DashboardCard.Content>
+                        <Box display="flex" flexDirection="column" gap={4} paddingBottom={4}>
+                          <Text size={5} fontWeight="bold">
+                            {intl.formatMessage(messages.attributesHeader)}
+                          </Text>
+                          <Text size={2} color="default2">
+                            <FormattedMessage
+                              id="zN0Eub"
+                              defaultMessage="This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
+                              description="info message when hasVariants is false but variant attributes exist"
+                              values={{
+                                count: data.attributes.length,
+                                productTypeLink: product?.productType ? (
+                                  <Link href={productTypeUrl(product.productType.id)} underline>
+                                    {product.productType.name}
+                                  </Link>
+                                ) : null,
+                              }}
+                            />
+                          </Text>
+                        </Box>
+                      </DashboardCard.Content>
+                    </DashboardCard>
+                  )}
                   <CardSpacer />
                   <ProductVariantCheckoutSettings
                     data={data}

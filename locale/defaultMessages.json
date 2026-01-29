@@ -1100,10 +1100,6 @@
   "4YJHut": {
     "string": "Clear search"
   },
-  "4YtpqB": {
-    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
-    "string": "Required attributes ({attributes}) are not currently supported by Generator.{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
-  },
   "4YyeCx": {
     "context": "label for order total amount",
     "string": "Order total"
@@ -1731,6 +1727,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8FDx9i": {
+    "context": "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
+    "string": "To use the Generator, this product type needs:{newline}{newline}• 'Product type uses Variant Attributes' enabled{newline}• Selection variant attributes defined"
+  },
   "8GC/ah": {
     "context": "variants section name",
     "string": "Variants"
@@ -1847,6 +1847,10 @@
   "8y4+0a": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
+  },
+  "9+iLpf": {
+    "context": "link text to product type settings",
+    "string": "Configure in product type settings"
   },
   "91vQMc": {
     "string": "order management"
@@ -7725,6 +7729,10 @@
     "context": "tooltip shown when shipping method is selected but no other options exist",
     "string": "No alternative shipping methods available"
   },
+  "gDvd3v": {
+    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
+    "string": "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
+  },
   "gE6aiQ": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created models."
@@ -8599,10 +8607,6 @@
   "lEG/12": {
     "context": "Webhook subscription query card title",
     "string": "Subscription Query"
-  },
-  "lEx2zw": {
-    "context": "tooltip when generate variants is disabled due to no selection attributes",
-    "string": "No selection attributes defined for this product type."
   },
   "lF+VJQ": {
     "context": "Shipment information card header",
@@ -11057,6 +11061,10 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
+  },
+  "zN0Eub": {
+    "context": "info message when hasVariants is false but variant attributes exist",
+    "string": "This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
   },
   "zQvVDJ": {
     "string": "All"
