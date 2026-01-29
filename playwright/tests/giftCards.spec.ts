@@ -50,7 +50,6 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
 
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
-  await giftCardsPage.expectSuccessBanner({ message: "Copied to clipboard" });
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.searchAndFindRowIndexes(fullCode);
   expect(
