@@ -1375,16 +1375,8 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
-  "5ye4Ik": {
-    "context": "warning message when some variants failed to create",
-    "string": "{success} variants created, {failed} failed"
-  },
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
-  },
-  "62Ywh2": {
-    "context": "number of countries",
-    "string": "{count, plural, one {# Country} other {# Countries}}"
   },
   "62nsdy": {
     "string": "Retry"
@@ -3243,6 +3235,10 @@
   "GiJm1v": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+  },
+  "GjEdSd": {
+    "context": "number of postal code ranges",
+    "string": "{number, plural, one {# postal code range} other {# postal code ranges}}"
   },
   "Gkip05": {
     "context": "button",
@@ -6949,6 +6945,10 @@
     "context": "button",
     "string": "Create permission group"
   },
+  "bRQeJp": {
+    "context": "success message when all variants are created",
+    "string": "{count, plural, one {# variant created successfully} other {# variants created successfully}}"
+  },
   "bRXgSC": {
     "context": "capture button with amount",
     "string": "Capture {amount}"
@@ -7293,6 +7293,10 @@
   "d9UqaJ": {
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
+  },
+  "dAst+b": {
+    "context": "attribute values list: no attribute values found",
+    "string": "No values found"
   },
   "dDCLFW": {
     "context": "alert message",
@@ -7697,10 +7701,6 @@
   "g3qjSf": {
     "context": "button",
     "string": "Assign categories"
-  },
-  "g5zIpS": {
-    "context": "attribute values list: no attribute values found",
-    "string": "No values found"
   },
   "g6yuk2": {
     "context": "export items to csv file, choice field label",
@@ -9932,10 +9932,6 @@
   "t1Bd7E": {
     "string": "Payment captured"
   },
-  "t1XcOo": {
-    "context": "success message when all variants are created",
-    "string": "{count} variants created successfully"
-  },
   "t1scMK": {
     "string": "Refunds settings"
   },
@@ -10117,6 +10113,10 @@
     "context": "shipping zones configuration",
     "string": "Change default weight unit"
   },
+  "u6rPuc": {
+    "context": "warning message when some variants failed to create",
+    "string": "{success, plural, one {# variant} other {# variants}} created, {failed, plural, one {# failed} other {# failed}}"
+  },
   "u7ShY+": {
     "context": "pill status for overcaptured outcome",
     "string": "Overcaptured"
@@ -10205,10 +10205,6 @@
   "uccjUM": {
     "context": "Dry run objects",
     "string": "Objects"
-  },
-  "ud0w8h": {
-    "context": "number of postal code ranges",
-    "string": "{number} postal code ranges"
   },
   "udJUSa": {
     "context": "Authorize {app name}",
@@ -10381,6 +10377,10 @@
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
+  },
+  "vNaDeR": {
+    "context": "number of countries",
+    "string": "{count, plural, one {# Country} other {# Countries}}"
   },
   "vONi+O": {
     "string": "Country"

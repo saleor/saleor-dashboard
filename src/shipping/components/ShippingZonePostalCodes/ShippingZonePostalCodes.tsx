@@ -191,8 +191,8 @@ const ShippingZonePostalCodes = ({
                 <TableCell>
                   <Text size={2} fontWeight="light">
                     <FormattedMessage
-                      id="ud0w8h"
-                      defaultMessage="{number} postal code ranges"
+                      id="GjEdSd"
+                      defaultMessage="{number, plural, one {# postal code range} other {# postal code ranges}}"
                       description="number of postal code ranges"
                       values={{
                         number: postalCodes.length,

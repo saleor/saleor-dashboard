@@ -105,7 +105,7 @@ const CountryList = (props: CountryListProps) => {
               <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
                 <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
                   <FormattedMessage
-                    id="62Ywh2"
+                    id="vNaDeR"
                     defaultMessage="{count, plural, one {# Country} other {# Countries}}"
                     description="number of countries"
                     values={{

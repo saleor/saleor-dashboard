@@ -121,7 +121,7 @@ const AttributeValues = ({
         ) : values.length === 0 ? (
           <Placeholder>
             <FormattedMessage
-              id="g5zIpS"
+              id="dAst+b"
               defaultMessage="No values found"
               description="attribute values list: no attribute values found"
             />
