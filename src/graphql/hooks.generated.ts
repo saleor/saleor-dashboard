@@ -3693,9 +3693,16 @@ export const WarehouseDetailsFragmentDoc = gql`
     ...Address
   }
   email
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
 }
     ${WarehouseWithShippingFragmentDoc}
-${AddressFragmentDoc}`;
+${AddressFragmentDoc}
+${MetadataItemFragmentDoc}`;
 export const WebhookDetailsFragmentDoc = gql`
     fragment WebhookDetails on Webhook {
   ...Webhook

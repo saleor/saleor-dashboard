@@ -8,6 +8,7 @@ import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripple
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { Ripple } from "@dashboard/ripples/types";
+import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
   // ... register ripples here
@@ -20,6 +21,9 @@ export const allRipples: Ripple[] = [
   rippleNewRefundReasons,
   rippleOrderMetadata,
   rippleRefreshedOrderSections,
+
+  // Warehouses
+  rippleWarehouseMetadata,
 
   // Products
   rippleProductAvailabilityDiagnostics,
