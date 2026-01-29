@@ -55,7 +55,7 @@ import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
-import AttributeValues from "../AttributeValues";
+import { AttributeValues } from "../AttributeValues/AttributeValues";
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
