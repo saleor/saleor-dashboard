@@ -106,7 +106,7 @@ const CountryList = (props: CountryListProps) => {
                 <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
                   <FormattedMessage
                     id="62Ywh2"
-                    defaultMessage="{number} Countries"
+                    defaultMessage="{count, plural, one {# Country} other {# Countries}}"
                     description="number of countries"
                     values={{
                       number: getStringOrPlaceholder(countries?.length.toString()),

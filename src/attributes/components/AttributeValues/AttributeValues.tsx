@@ -123,7 +123,7 @@ const AttributeValues = ({
             <FormattedMessage
               id="g5zIpS"
               defaultMessage="No values found"
-              description="No attribute values found"
+              description="attribute values list: no attribute values found"
             />
           </Placeholder>
         ) : (
