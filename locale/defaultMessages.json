@@ -1100,10 +1100,6 @@
   "4YJHut": {
     "string": "Clear search"
   },
-  "4YtpqB": {
-    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
-    "string": "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
-  },
   "4YyeCx": {
     "context": "label for order total amount",
     "string": "Order total"
@@ -7732,6 +7728,10 @@
   "gCZYcl": {
     "context": "tooltip shown when shipping method is selected but no other options exist",
     "string": "No alternative shipping methods available"
+  },
+  "gDvd3v": {
+    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
+    "string": "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
   },
   "gE6aiQ": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
