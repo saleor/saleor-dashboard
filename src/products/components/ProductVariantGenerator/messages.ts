@@ -140,4 +140,66 @@ export const messages = defineMessages({
       "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants.",
     description: "warning dialog description when SKU and stock are not set",
   },
+  requiredAttributesTitle: {
+    id: "JaZh3+",
+    defaultMessage: "Required attributes",
+    description: "title for required non-selection attributes section",
+  },
+  requiredAttributesDescription: {
+    id: "2NdGVf",
+    defaultMessage: "These values will be applied to all generated variants.",
+    description: "description for required non-selection attributes section",
+  },
+  selectValue: {
+    id: "CD1NDm",
+    defaultMessage: "Select a value",
+    description: "placeholder for required attribute dropdown",
+  },
+  missingRequiredAttributes: {
+    id: "zKEVOg",
+    defaultMessage: "Please fill in all required attributes before generating variants.",
+    description: "error message when required attributes are not filled",
+  },
+  unsupportedRequiredAttributesTitle: {
+    id: "OCQLYd",
+    defaultMessage: "Cannot use generator",
+    description: "title for unsupported required attributes error",
+  },
+  unsupportedRequiredAttributesDescription: {
+    id: "Ml19/F",
+    defaultMessage:
+      "Required attributes ({attributes}) are not supported.{newline}{newline}To proceed:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting",
+    description: "description for unsupported required attributes error",
+  },
+  tabSelection: {
+    id: "nUp0Lp",
+    defaultMessage: "Selection Attributes",
+    description: "tab label for variant selection attributes",
+  },
+  tabRequired: {
+    id: "/ly15q",
+    defaultMessage: "Required Attributes",
+    description: "tab label for required attributes",
+  },
+  disabledNoNewVariants: {
+    id: "d12NWZ",
+    defaultMessage: "All possible variant combinations already exist",
+    description: "tooltip when generate button is disabled because no new variants can be created",
+  },
+  disabledNoSelections: {
+    id: "5WhtoK",
+    defaultMessage: "Select at least one value for each selection attribute",
+    description: "tooltip when generate button is disabled because no selections made",
+  },
+  disabledRequiredNotFilled: {
+    id: "oZFssJ",
+    defaultMessage: "Fill in all required attributes in the Required Attributes tab",
+    description:
+      "tooltip when generate button is disabled because required attributes are not filled",
+  },
+  disabledOverLimit: {
+    id: "lz7o8y",
+    defaultMessage: "Cannot create more than {limit} variants at once",
+    description: "tooltip when generate button is disabled because over variant limit",
+  },
 });
