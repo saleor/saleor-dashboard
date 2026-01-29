@@ -309,6 +309,7 @@ export const fragmentVariant = gql`
       productType {
         id
         name
+        hasVariants
       }
       channelListings {
         id

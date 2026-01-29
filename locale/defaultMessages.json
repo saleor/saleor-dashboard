@@ -11062,6 +11062,10 @@
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
   },
+  "zN0Eub": {
+    "context": "info message when hasVariants is false but variant attributes exist",
+    "string": "This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
+  },
   "zQvVDJ": {
     "string": "All"
   },
