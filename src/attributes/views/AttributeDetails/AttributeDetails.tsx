@@ -1,3 +1,4 @@
+import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttributeValuesSearch";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
 import {
   useAttributeDeleteMutation,
@@ -21,7 +22,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
@@ -55,50 +56,18 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     settings?.rowNumber,
   );
 
-  // Separate state for input value (immediate) and API query (debounced)
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
-  const debounceTimerRef = useRef<number | null>(null);
-  const previousSearchRef = useRef<string>("");
+  const resetPagination = useCallback(() => {
+    setValuesPaginationState({
+      first: settings?.rowNumber,
+      after: undefined,
+      last: undefined,
+      before: undefined,
+    });
+  }, [settings?.rowNumber, setValuesPaginationState]);
 
-  const handleSearchChange = useCallback((query: string) => {
-    setSearchQuery(query);
-
-    // Debounce the API call
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    debounceTimerRef.current = window.setTimeout(() => {
-      setDebouncedSearchQuery(query);
-    }, 300);
-  }, []);
-
-  // Cleanup debounce timer on unmount
-  useEffect(() => {
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, []);
-
-  // Reset pagination only when debounced search actually changes (skip initial mount)
-  useEffect(() => {
-    if (previousSearchRef.current !== debouncedSearchQuery) {
-      // Only reset if the search value actually changed (not on initial mount with empty string)
-      if (previousSearchRef.current !== "" || debouncedSearchQuery !== "") {
-        setValuesPaginationState({
-          first: settings?.rowNumber,
-          after: undefined,
-          last: undefined,
-          before: undefined,
-        });
-      }
-
-      previousSearchRef.current = debouncedSearchQuery;
-    }
-  }, [debouncedSearchQuery, settings?.rowNumber, setValuesPaginationState]);
+  const { searchQuery, debouncedSearchQuery, handleSearchChange } = useAttributeValuesSearch({
+    onResetPagination: resetPagination,
+  });
 
   const {
     data: currentData,

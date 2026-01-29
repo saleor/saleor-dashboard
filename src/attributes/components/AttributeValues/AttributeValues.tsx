@@ -2,6 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { SearchInput } from "@dashboard/components/SearchInput/SearchInput";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TablePagination } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -15,8 +16,7 @@ import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashb
 import { TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
-import { Search, Trash2, X } from "lucide-react";
-import { useRef } from "react";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface AttributeValuesProps
@@ -74,78 +74,6 @@ const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
   return value.file
     ? { backgroundImage: `url(${value.file.url})` }
     : { backgroundColor: value.value ?? undefined };
-};
-
-interface SearchInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-}
-
-const SearchInput = ({ value, onChange, placeholder }: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  return (
-    <Box
-      display="flex"
-      alignItems="center"
-      gap={2}
-      paddingX={3}
-      paddingY={2}
-      borderWidth={1}
-      borderStyle="solid"
-      borderColor="default1"
-      borderRadius={3}
-      backgroundColor="default1"
-    >
-      <Box display="flex" alignItems="center" flexShrink="0">
-        <Search size={16} color="var(--mu-colors-text-default2)" />
-      </Box>
-      <input
-        ref={inputRef}
-        type="text"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        onKeyDown={e => {
-          if (e.key === "Escape") {
-            onChange("");
-            inputRef.current?.blur();
-          }
-        }}
-        placeholder={placeholder}
-        data-test-id="attribute-value-search-input"
-        style={{
-          flex: 1,
-          border: "none",
-          outline: "none",
-          backgroundColor: "transparent",
-          fontSize: "14px",
-          color: "var(--mu-colors-text-default1)",
-          minWidth: 0,
-        }}
-      />
-      {value && (
-        <Box
-          as="button"
-          type="button"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          padding={0}
-          borderWidth={0}
-          backgroundColor="transparent"
-          cursor="pointer"
-          onClick={() => {
-            onChange("");
-            inputRef.current?.focus();
-          }}
-          data-test-id="attribute-value-search-clear"
-        >
-          <X size={16} color="var(--mu-colors-text-default2)" />
-        </Box>
-      )}
-    </Box>
-  );
 };
 
 const AttributeValues = ({
@@ -211,6 +139,7 @@ const AttributeValues = ({
                   defaultMessage: "Search attribute values...",
                   description: "attribute values search placeholder",
                 })}
+                data-test-id="attribute-value-search-input"
               />
             )}
             {/* No values at all (not searching) */}
