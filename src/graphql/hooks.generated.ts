@@ -198,6 +198,14 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  problems {
+    __typename
+    ... on AppProblemCustom {
+      createdAt
+      message
+      severity
+    }
+  }
   brand {
     logo {
       default(format: WEBP, size: 64)

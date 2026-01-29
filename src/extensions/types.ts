@@ -1,10 +1,33 @@
 import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
+import {
+  AppProblemSeverityEnum,
+  ExtensionListQuery,
+  InstalledAppDetailsFragment,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { ReactNode } from "react";
 
 import { AppDetailsUrlMountQueryParams } from "./urls";
+
+export type GraphQLAppProblem = InstalledAppDetailsFragment["problems"][number];
+
+export interface WebhookDeliveryProblem {
+  __typename: "WebhookDeliveryError";
+  message: string;
+  createdAt: string;
+}
+
+export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
+
+export const getProblemSeverity = (problem: AppProblem): AppProblemSeverityEnum => {
+  if (problem.__typename === "AppProblemCustom") {
+    return problem.severity;
+  }
+
+  return AppProblemSeverityEnum.ERROR;
+};
 
 interface CommonExtensionData {
   id: string;
@@ -63,6 +86,7 @@ export type InstalledExtension = {
   info: ReactNode;
   href?: string;
   actions?: ReactNode;
+  problems?: AppProblem[];
 };
 
 export interface Extension {

@@ -338,6 +338,53 @@ export const messages = defineMessages({
   },
 });
 
+export const problemMessages = defineMessages({
+  problemCount: {
+    defaultMessage: "{count, plural, one {{count} problem} other {{count} problems}}",
+    id: "QKrtDC",
+  },
+  errorCount: {
+    defaultMessage: "{count, plural, one {{count} error} other {{count} errors}}",
+    id: "ectAk7",
+  },
+  warningCount: {
+    defaultMessage: "{count, plural, one {{count} warning} other {{count} warnings}}",
+    id: "JVdGDR",
+  },
+  showMoreProblems: {
+    defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",
+    id: "tdcGPK",
+  },
+  showLessProblems: {
+    defaultMessage: "Show less",
+    id: "qyJtWy",
+  },
+  circuitBreakerType: {
+    defaultMessage: "CircuitBreaker",
+    id: "OYWn0V",
+  },
+  customType: {
+    defaultMessage: "App",
+    id: "2rUVsU",
+  },
+  customTypeTooltip: {
+    defaultMessage: "This message comes from the app",
+    id: "lRtZ2L",
+  },
+  webhookDeliveryType: {
+    defaultMessage: "Webhook delivery",
+    id: "MGxwn/",
+  },
+  checkWebhooks: {
+    defaultMessage: "Check webhooks",
+    id: "Pv6Tq8",
+  },
+  openTheApp: {
+    defaultMessage: "Open the app",
+    id: "lN6B54",
+  },
+});
+
 export const appManifestErrorMessages = defineMessages({
   invalidManifest: {
     // AppErrorCode.INVALID

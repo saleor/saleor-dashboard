@@ -826,6 +826,9 @@
   "2qfU+C": {
     "string": "The extension identifier is already in use."
   },
+  "2rUVsU": {
+    "string": "App"
+  },
   "2x9ZgK": {
     "context": "card title",
     "string": "Refund balance"
@@ -3767,6 +3770,9 @@
     "context": "window title",
     "string": "Create Webhook"
   },
+  "JVdGDR": {
+    "string": "{count, plural, one {{count} warning} other {{count} warnings}}"
+  },
   "JYfMRO": {
     "context": "order discount was updated event title",
     "string": "Order discount was updated"
@@ -4179,6 +4185,9 @@
   "MFUQrr": {
     "context": "Placeholder for date picker",
     "string": "dd/mm/yyyy, --:--"
+  },
+  "MGxwn/": {
+    "string": "Webhook delivery"
   },
   "MH1qA1": {
     "string": "Test Action"
@@ -4625,6 +4634,9 @@
     "context": "input label",
     "string": "Model type"
   },
+  "OYWn0V": {
+    "string": "CircuitBreaker"
+  },
   "OZc365": {
     "context": "single reference attribute type",
     "string": "Single Reference"
@@ -4878,6 +4890,9 @@
   "PuQb0P": {
     "string": "Reward"
   },
+  "Pv6Tq8": {
+    "string": "Check webhooks"
+  },
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
@@ -4969,6 +4984,9 @@
   "QJJke/": {
     "context": "dialog header",
     "string": "Select a model type"
+  },
+  "QKrtDC": {
+    "string": "{count, plural, one {{count} problem} other {{count} problems}}"
   },
   "QL4a0Z": {
     "context": "alert message",
@@ -7476,6 +7494,9 @@
     "context": "page title - creating custom app",
     "string": "Add extension manually"
   },
+  "ectAk7": {
+    "string": "{count, plural, one {{count} error} other {{count} errors}}"
+  },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
@@ -8640,12 +8661,18 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lN6B54": {
+    "string": "Open the app"
+  },
   "lNZuWl": {
     "string": "All orders"
   },
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lRtZ2L": {
+    "string": "This message comes from the app"
   },
   "lSOmbK": {
     "context": "fulfillment status fulfilled",
@@ -10011,6 +10038,9 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "tdcGPK": {
+    "string": "Show {count} more {count, plural, one {problem} other {problems}}"
   },
   "tf+OkY": {
     "context": "link to edit variant metadata",

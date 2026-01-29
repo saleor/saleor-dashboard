@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { AddExtensionDropdown } from "./components/AddExtensionDropdown/AddExtensionDropdown";
+import { ProblemsHeaderBadge } from "./components/AppProblems/ProblemsHeaderBadge";
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "./components/InstalledExtensionsList/InstalledExtensionsList";
 import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
@@ -48,8 +49,13 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
-  const { installedExtensions, installedAppsLoading, refetchInstalledApps } =
-    useInstalledExtensions();
+  const {
+    installedExtensions,
+    installedAppsLoading,
+    refetchInstalledApps,
+    errorCount,
+    warningCount,
+  } = useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
 
@@ -74,9 +80,12 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
-          <Text size={6} fontWeight="regular">
-            {intl.formatMessage(headerTitles.installedExtensions)}
-          </Text>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Text size={6} fontWeight="regular">
+              {intl.formatMessage(headerTitles.installedExtensions)}
+            </Text>
+            <ProblemsHeaderBadge errorCount={errorCount} warningCount={warningCount} />
+          </Box>
         </Box>
         <Box display="flex" gap={4} alignItems="center">
           {hasManagedAppsPermission && <AddExtensionDropdown />}
