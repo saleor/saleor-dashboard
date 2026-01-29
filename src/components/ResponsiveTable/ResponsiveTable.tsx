@@ -1,15 +1,16 @@
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { Table } from "@material-ui/core";
 import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { iconSize, iconStrokeWidthBySize } from "../icons";
 import styles from "./ResponsiveTable.module.css";
 
 interface ResponsiveTableProps {
-  children: React.ReactNode | React.ReactNodeArray;
+  children: ReactNode | ReactNode[];
   className?: string;
   onMouseLeave?: () => void;
   key?: string;
@@ -17,9 +18,9 @@ interface ResponsiveTableProps {
     placeholder?: string;
     initialValue?: string;
     onSearchChange?: (query: string) => void;
-    toolbar?: React.ReactNode;
+    toolbar?: ReactNode;
   };
-  footer?: React.ReactNode;
+  footer?: ReactNode;
   /** When 0 and search is active, shows "no results" state */
   filteredItemsCount?: number;
 }
@@ -30,46 +31,31 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
 
   const isSearchActive = searchValue.length > 0;
   const showFilteredEmptyState = isSearchActive && filteredItemsCount === 0;
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const debouncedOnSearchChange = useDebounce((value: string) => {
+    search?.onSearchChange?.(value);
+  }, 300);
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     setSearchValue(value);
 
     if (search?.onSearchChange) {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-
-      debounceRef.current = setTimeout(() => {
-        search.onSearchChange?.(value);
-      }, 300);
+      debouncedOnSearchChange(value);
     }
   };
 
   const clearSearch = () => {
     setSearchValue("");
     search?.onSearchChange?.("");
-
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
   };
 
-  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Escape") {
       clearSearch();
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div className={styles.container}>

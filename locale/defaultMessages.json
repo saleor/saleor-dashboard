@@ -7957,6 +7957,9 @@
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
   },
+  "hh0xW7": {
+    "string": "Channel Name"
+  },
   "hjEkEH": {
     "string": "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed."
   },
@@ -8190,10 +8193,6 @@
   "j/shmR": {
     "context": "Shown when shipping zone count cannot be determined",
     "string": "Shipping zones: Unknown"
-  },
-  "j/vV0n": {
-    "context": "channel name",
-    "string": "Channel Name"
   },
   "j08fR9": {
     "context": "Product collections",

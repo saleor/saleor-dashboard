@@ -83,11 +83,7 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
             <TableHead>
               <TableRowLink>
                 <TableCellHeader>
-                  <FormattedMessage
-                    id="j/vV0n"
-                    defaultMessage="Channel Name"
-                    description="channel name"
-                  />
+                  <FormattedMessage id="hh0xW7" defaultMessage="Channel Name" />
                 </TableCellHeader>
                 <TableCell />
               </TableRowLink>

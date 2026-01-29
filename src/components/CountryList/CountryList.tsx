@@ -12,7 +12,6 @@ import { ChevronDownIcon, Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getStringOrPlaceholder } from "../../misc";
 import { DashboardCard } from "../Card";
 import { groupCountriesByStartingLetter } from "./utils";
 
@@ -109,7 +108,7 @@ const CountryList = (props: CountryListProps) => {
                     defaultMessage="{count, plural, one {# Country} other {# Countries}}"
                     description="number of countries"
                     values={{
-                      number: getStringOrPlaceholder(countries?.length.toString()),
+                      count: countries?.length ?? 0,
                     }}
                   />
                 </TableCell>
