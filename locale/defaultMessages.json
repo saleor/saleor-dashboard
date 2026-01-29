@@ -1102,7 +1102,7 @@
   },
   "4YtpqB": {
     "context": "tooltip when generate variants is disabled due to unsupported required attributes",
-    "string": "Required attributes ({attributes}) are not currently supported by Generator.{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
+    "string": "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
   },
   "4YyeCx": {
     "context": "label for order total amount",

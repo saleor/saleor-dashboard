@@ -30,9 +30,9 @@ const localMessages = defineMessages({
     description: "link text to product type settings",
   },
   unsupportedRequiredAttributes: {
-    id: "4YtpqB",
+    id: "gDvd3v",
     defaultMessage:
-      "Required attributes ({attributes}) are not currently supported by Generator.{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting",
+      "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting",
     description:
       "tooltip when generate variants is disabled due to unsupported required attributes",
   },
@@ -81,10 +81,25 @@ const GenerateVariantsButton = ({
 
     // Unsupported required attributes
     if (hasUnsupportedRequired) {
+      const formatInputType = (type: string | null | undefined): string => {
+        if (!type) return "Unknown";
+
+        // Convert SCREAMING_SNAKE_CASE to Title Case
+        return type
+          .toLowerCase()
+          .split("_")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+      };
+
+      const attributesList = unsupportedRequiredAttributes
+        .map(a => `• ${a.name} (${formatInputType(a.inputType)})`)
+        .join("\n");
+
       return (
         <Text size={2} color="default1" style={{ whiteSpace: "pre-line" }}>
           {intl.formatMessage(localMessages.unsupportedRequiredAttributes, {
-            attributes: unsupportedRequiredAttributes.map(a => a.name).join(", "),
+            attributes: attributesList,
             newline: "\n",
           })}
         </Text>
