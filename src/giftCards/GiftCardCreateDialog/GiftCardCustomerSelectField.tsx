@@ -1,11 +1,12 @@
 // @ts-strict-ignore
-import { Combobox } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { commonMessages } from "@dashboard/intl";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";
@@ -23,6 +24,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
   disabled = false,
 }) => {
   const intl = useIntl();
+  const mounted = useRef(false);
   const { loadMore, search, result } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
@@ -31,9 +33,11 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
     value: email,
     label: getFullName({ firstName, lastName }) || email,
   }));
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const label = choices?.find(category => category.value === value)?.label;
+  const debouncedSearch = useDebounce(search, 500);
+
+  const handleSelect = (option: Option | null) => {
+    const value = option?.value ?? "";
+    const label = choices?.find(choice => choice.value === value)?.label ?? "";
 
     setSelectedCustomer({ email: value, name: label });
   };
@@ -42,23 +46,38 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
   )} *${intl.formatMessage(commonMessages.optionalField)}`;
 
   return (
-    <Combobox
+    <DynamicCombobox
       data-test-id="customer-field"
       disabled={disabled}
       label={label}
       options={choices || []}
-      fetchOptions={search}
-      fetchMore={{
-        onFetchMore: loadMore,
-        hasMore: result?.data?.search?.pageInfo?.hasNextPage,
-        loading: result?.loading,
+      onInputValueChange={debouncedSearch}
+      onFocus={() => {
+        if (!mounted.current) {
+          mounted.current = true;
+          search("");
+        }
       }}
+      onScrollEnd={() => {
+        if (result?.data?.search?.pageInfo?.hasNextPage) {
+          loadMore();
+        }
+      }}
+      loading={result?.loading || result?.data?.search?.pageInfo?.hasNextPage}
       name="customer"
-      value={{
-        label: selectedCustomer.name,
-        value: selectedCustomer.email,
-      }}
+      value={
+        selectedCustomer.email
+          ? {
+              label: selectedCustomer.name,
+              value: selectedCustomer.email,
+            }
+          : null
+      }
       onChange={handleSelect}
+      locale={{
+        loadingText: intl.formatMessage(commonMessages.loading),
+      }}
+      size="small"
     />
   );
 };

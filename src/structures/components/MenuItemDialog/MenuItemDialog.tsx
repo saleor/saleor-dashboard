@@ -1,16 +1,15 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { MenuErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { buttonMessages } from "@dashboard/intl";
+import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,7 +128,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                   control={control}
                   render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
                     return (
-                      <Combobox
+                      <DynamicCombobox
                         {...field}
                         disabled={disabled}
                         label={intl.formatMessage({
@@ -138,8 +137,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                           description: "label",
                         })}
                         options={linkTypeOptions}
-                        onChange={e => {
-                          onChange(e);
+                        onChange={(option: Option | null) => {
+                          onChange({ target: { name: "linkType", value: option?.value ?? null } });
                           setValue("linkValue", "");
                           clearErrors("linkValue");
                         }}
@@ -147,8 +146,11 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                         name="linkType"
                         error={!!idError || !!error}
                         helperText={getMenuErrorMessage(idError, intl) || error?.message}
-                        fetchOptions={() => undefined}
+                        locale={{
+                          loadingText: intl.formatMessage(commonMessages.loading),
+                        }}
                         data-test-id="menu-item-link-type-input"
+                        size="small"
                       />
                     );
                   }}
