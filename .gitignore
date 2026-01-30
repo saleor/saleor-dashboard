@@ -62,3 +62,4 @@ introspection.json
 storybook-static/
 
 !.claude
+!.claude/**/.claude-plugin/
