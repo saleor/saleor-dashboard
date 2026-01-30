@@ -37,14 +37,14 @@ const groupBySeverityAndType = (problems: AppProblem[]): SeverityTypeGroup[] => 
 
   const addTypeGroups = (source: AppProblem[], severity: AppProblemSeverityEnum) => {
     const webhook = source.filter(p => p.__typename === "WebhookDeliveryError");
-    const custom = source.filter(p => p.__typename === "AppProblemCustom");
+    const own = source.filter(p => p.__typename === "AppProblemOwn");
 
     if (webhook.length > 0) {
       groups.push({ typename: "WebhookDeliveryError", severity, items: webhook });
     }
 
-    if (custom.length > 0) {
-      groups.push({ typename: "AppProblemCustom", severity, items: custom });
+    if (own.length > 0) {
+      groups.push({ typename: "AppProblemOwn", severity, items: own });
     }
   };
 
@@ -65,7 +65,7 @@ const getGroupActionLink = (
     };
   }
 
-  if (typename === "AppProblemCustom") {
+  if (typename === "AppProblemOwn") {
     return {
       href: ExtensionsUrls.resolveViewManifestExtensionUrl(appId),
       label: "openTheApp",

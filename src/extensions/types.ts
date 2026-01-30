@@ -22,7 +22,7 @@ export interface WebhookDeliveryProblem {
 export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
 
 export const getProblemSeverity = (problem: AppProblem): AppProblemSeverityEnum => {
-  if (problem.__typename === "AppProblemCustom") {
+  if (problem.__typename === "AppProblemOwn") {
     return problem.severity;
   }
 
