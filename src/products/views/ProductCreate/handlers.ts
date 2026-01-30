@@ -132,6 +132,8 @@ export function createHandler(
       return { errors };
     }
 
+    // Only set channel listings for simple products (no variants)
+    // Products with variants will have availability configured when variants are created
     if (!hasVariants) {
       const result = await Promise.all([
         updateChannels(getChannelsVariables(productId, formData.channelListings)),
@@ -156,13 +158,6 @@ export function createHandler(
           },
         });
       }
-    } else {
-      const result = await updateChannels(
-        getChannelsVariables(productId, formData.channelListings),
-      );
-      const channelErrors = result.data?.productChannelListingUpdate?.errors || [];
-
-      errors = [...errors, ...channelErrors];
     }
 
     /*
