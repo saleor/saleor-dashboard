@@ -51,7 +51,10 @@ export class PermissionGroupDetailsPage extends BasePage {
   }
 
   async selectPermissionGroup(permission: string) {
-    await this.permissionGroupListItem.filter({ hasText: permission }).first().click();
+    const checkbox = this.permissionGroupCheckbox(permission);
+
+    await checkbox.waitFor({ state: "visible" });
+    await checkbox.click();
   }
 
   async clickAssignMembersButton() {

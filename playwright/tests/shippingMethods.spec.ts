@@ -102,6 +102,10 @@ test("TC: SALEOR_35 Delete a single shipping rate from its details page #shippin
   await shippingMethodsPage.clickDeleteShippingRateButton();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.expectSuccessBanner();
+  await shippingMethodsPage.page.waitForURL(
+    url => url.pathname.includes("/shipping/") && !url.pathname.includes(shippingRateId),
+    { timeout: 30000 },
+  );
   await expect(shippingMethodsPage.weightBasedRatesSection).toContainText(
     "No shipping rates found",
   );
