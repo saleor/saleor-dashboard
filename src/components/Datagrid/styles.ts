@@ -200,9 +200,12 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: "transparent",
-      accentLight: themeValues.colors.background.default2,
-      accentFg: "transparent",
+      // Accent colors for checkboxes and selection highlighting
+      // accentColor: used for checkbox fill when cell has focus
+      // accentLight: background overlay for focused/selected cells
+      accentColor: themeValues.colors.background.accent1,
+      accentLight: themeValues.colors.background.default2, // Neutral gray for focus highlight
+      accentFg: themeValues.colors.background.default1, // Checkmark color (contrasts with accentColor)
       bgCell: themeValues.colors.background.default1,
       bgHeader: themeValues.colors.background.default1,
       bgHeaderHasFocus: "transparent",
@@ -227,16 +230,17 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
     }),
     [themeValues, hasHeaderClickable],
   );
-  const readonylDatagridTheme = useMemo(
-    () => ({
+  const readonlyDatagridTheme = useMemo(
+    (): Partial<Theme> => ({
       ...datagridTheme,
-      accentColor: "transparent",
+      // In readonly mode, keep checkboxes visible but use muted colors
+      accentColor: themeValues.colors.text.default2,
       accentLight: themeValues.colors.background.default2,
     }),
     [themeValues, datagridTheme],
   );
 
-  return readonly ? readonylDatagridTheme : datagridTheme;
+  return readonly ? readonlyDatagridTheme : datagridTheme;
 }
 
 export default useStyles;
