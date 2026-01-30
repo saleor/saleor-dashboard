@@ -104,7 +104,6 @@ export const productVariantQuery = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
-    $searchValues: String
   ) {
     productVariant(id: $id) {
       ...ProductVariant
@@ -119,7 +118,6 @@ export const productVariantCreateQuery = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
-    $searchValues: String
   ) {
     product(id: $id) {
       id

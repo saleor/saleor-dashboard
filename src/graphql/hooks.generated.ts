@@ -15758,7 +15758,7 @@ export type ProductTypeQueryHookResult = ReturnType<typeof useProductTypeQuery>;
 export type ProductTypeLazyQueryHookResult = ReturnType<typeof useProductTypeLazyQuery>;
 export type ProductTypeQueryResult = Apollo.QueryResult<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>;
 export const ProductVariantDetailsDocument = gql`
-    query ProductVariantDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
+    query ProductVariantDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productVariant(id: $id) {
     ...ProductVariant
   }
@@ -15782,7 +15782,6 @@ export const ProductVariantDetailsDocument = gql`
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
- *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -15798,7 +15797,7 @@ export type ProductVariantDetailsQueryHookResult = ReturnType<typeof useProductV
 export type ProductVariantDetailsLazyQueryHookResult = ReturnType<typeof useProductVariantDetailsLazyQuery>;
 export type ProductVariantDetailsQueryResult = Apollo.QueryResult<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>;
 export const ProductVariantCreateDataDocument = gql`
-    query ProductVariantCreateData($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
+    query ProductVariantCreateData($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id) {
     id
     media {
@@ -15868,7 +15867,6 @@ export const ProductVariantCreateDataDocument = gql`
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
- *      searchValues: // value for 'searchValues'
  *   },
  * });
  */

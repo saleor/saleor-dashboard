@@ -11719,7 +11719,6 @@ export type ProductVariantDetailsQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11731,7 +11730,6 @@ export type ProductVariantCreateDataQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
