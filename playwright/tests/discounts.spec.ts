@@ -344,9 +344,15 @@ for (const promotion of promotionsWithRules) {
       await discounts.gotoExistingDiscount(promotion.id);
       await discounts.ruleSection.waitFor({
         state: "visible",
-        timeout: 50000,
+        timeout: 15000,
       });
-      await discounts.clickDeleteRuleButton(`${promotion.type} rule: ${rule.name}`);
+      const deleteButton = discounts.existingRule
+        .locator(discounts.ruleLabelWithActions)
+        .filter({ hasText: `${promotion.type} rule: ${rule.name}` })
+        .locator(discounts.deleteRuleButton);
+
+      await deleteButton.waitFor({ state: "visible", timeout: 10000 });
+      await deleteButton.click();
       await expect(discounts.deleteRuleModal).toBeVisible({ timeout: 10000 });
       await discounts.deleteRuleDialog.clickConfirmDeleteButton();
       await discounts.expectSuccessBanner();

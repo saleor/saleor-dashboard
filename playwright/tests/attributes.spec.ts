@@ -38,7 +38,7 @@ for (const attr of attributeClasses) {
       await attributesPage.addValueDialog.typeAndSaveAttributeValue();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-      await expect(await attributesPage.attributesRows.count()).toEqual(1);
+      await expect(attributesPage.attributesRows).toHaveCount(1);
       await attributesPage.valueRequiredCheckbox.waitFor({
         state: "visible",
         timeout: 10000,

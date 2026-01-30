@@ -1555,6 +1555,170 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLineFragmentDoc = gql`
+    fragment OrderLine on OrderLine {
+  id
+  isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+  variant {
+    id
+    name
+    quantityAvailable
+    preorder {
+      endDate
+    }
+    stocks {
+      ...Stock
+    }
+    product {
+      id
+      isAvailableForPurchase
+    }
+  }
+  productName
+  productSku
+  isGift
+  quantity
+  quantityFulfilled
+  quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
+  unitDiscount {
+    amount
+    currency
+  }
+  unitDiscountValue
+  unitDiscountReason
+  unitDiscountType
+  undiscountedUnitPrice {
+    currency
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  unitPrice {
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  thumbnail {
+    url
+  }
+}
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
+export const OrderDiscountFragmentDoc = gql`
+    fragment OrderDiscount on OrderDiscount {
+  id
+  type
+  name
+  calculationMode: valueType
+  value
+  reason
+  amount {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLinesUpdateFragmentDoc = gql`
+    fragment OrderLinesUpdate on Order {
+  id
+  lines {
+    ...OrderLine
+  }
+  subtotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  undiscountedTotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  isShippingRequired
+  shippingMethod {
+    id
+  }
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingMethodName
+  collectionPointName
+  shippingMethods {
+    id
+    name
+    price {
+      ...Money
+    }
+    active
+    message
+  }
+  discounts {
+    ...OrderDiscount
+  }
+}
+    ${OrderLineFragmentDoc}
+${MoneyFragmentDoc}
+${OrderDiscountFragmentDoc}`;
 export const OrderLineMetadataFragmentDoc = gql`
     fragment OrderLineMetadata on OrderLine {
   metadata {
@@ -1823,19 +1987,6 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
-export const OrderDiscountFragmentDoc = gql`
-    fragment OrderDiscount on OrderDiscount {
-  id
-  type
-  name
-  calculationMode: valueType
-  value
-  reason
-  amount {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1916,96 +2067,6 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    ...Warehouse
-  }
-}
-    ${WarehouseFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const OrderLineFragmentDoc = gql`
-    fragment OrderLine on OrderLine {
-  id
-  isShippingRequired
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  variant {
-    id
-    name
-    quantityAvailable
-    preorder {
-      endDate
-    }
-    stocks {
-      ...Stock
-    }
-    product {
-      id
-      isAvailableForPurchase
-    }
-  }
-  productName
-  productSku
-  isGift
-  quantity
-  quantityFulfilled
-  quantityToFulfill
-  totalPrice {
-    ...TaxedMoney
-  }
-  unitDiscount {
-    amount
-    currency
-  }
-  unitDiscountValue
-  unitDiscountReason
-  unitDiscountType
-  undiscountedUnitPrice {
-    currency
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  unitPrice {
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  thumbnail {
-    url
-  }
-}
-    ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   ...Metadata
@@ -12458,15 +12519,12 @@ export const OrderLineDeleteDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 
 /**
@@ -12500,15 +12558,12 @@ export const OrderLinesAddDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 
 /**
@@ -12545,10 +12600,14 @@ export const OrderLineUpdateDocument = gql`
     orderLine {
       ...OrderLine
     }
+    order {
+      ...OrderLinesUpdate
+    }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLineFragmentDoc}
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 
 /**
