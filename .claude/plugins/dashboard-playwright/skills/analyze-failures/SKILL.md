@@ -1,5 +1,5 @@
 ---
-name: analyze-playwright-failures
+name: analyze-failures
 description: Analyze Playwright E2E test failure reports from CI. Parses merged blob reports, groups similar errors, and delegates to specialized subagents for investigation and fixes. Use when CI tests fail or when asked to fix E2E test failures.
 argument-hint: "[github-run-url | pr-url | zip-file | folder-path]"
 allowed-tools: Read, Grep, Glob, Bash, Task, Write, Edit, AskUserQuestion
@@ -259,7 +259,7 @@ gh run download $RUN_ID -n merged-blob-reports -D ./playwright-failures/download
 ```bash
 # Use downloaded folder if from GitHub, or original $ARGUMENTS if local file/folder
 INPUT_PATH="./playwright-failures/downloaded"  # or "$ARGUMENTS" for local
-bash .claude/skills/analyze-playwright-failures/scripts/prepare-report.sh "$INPUT_PATH" ./playwright-failures
+bash scripts/prepare-report.sh "$INPUT_PATH" ./playwright-failures
 ```
 
 This script:
@@ -872,17 +872,17 @@ Given these failures:
 
 ### Agent Types and When to Use Them
 
-| Agent Type                                   | Model  | Purpose                              | When to Use                                |
-| -------------------------------------------- | ------ | ------------------------------------ | ------------------------------------------ |
-| `Explore`                                    | haiku  | Find recent changes, understand code | FIRST - before any fixing                  |
-| `Explore`                                    | haiku  | Understand selectors/components      | When selector issues suspected             |
-| `analyze-playwright-failures:e2e-test-fixer` | sonnet | Actually fix test code               | AFTER exploration confirms it's a test bug |
+| Agent Type                            | Model  | Purpose                              | When to Use                                |
+| ------------------------------------- | ------ | ------------------------------------ | ------------------------------------------ |
+| `Explore`                             | haiku  | Find recent changes, understand code | FIRST - before any fixing                  |
+| `Explore`                             | haiku  | Understand selectors/components      | When selector issues suspected             |
+| `dashboard-playwright:e2e-test-fixer` | sonnet | Actually fix test code               | AFTER exploration confirms it's a test bug |
 
 ### Workflow
 
 1. **FIRST**: Spawn `Explore` agents (haiku) to gather context
 2. **THEN**: Analyze results - is it test bug or app bug?
-3. **IF TEST BUG**: Spawn `analyze-playwright-failures:e2e-test-fixer` agents to fix
+3. **IF TEST BUG**: Spawn `dashboard-playwright:e2e-test-fixer` agents to fix
 4. **IF APP BUG**: Report to user, don't fix
 
 ### Spawning Fixer Agents
@@ -893,11 +893,11 @@ Given these failures:
 
 ### Subagent Prompt Template
 
-Use the Task tool with `subagent_type: "analyze-playwright-failures:e2e-test-fixer"`:
+Use the Task tool with `subagent_type: "dashboard-playwright:e2e-test-fixer"`:
 
 ````
 Task tool:
-  subagent_type: "analyze-playwright-failures:e2e-test-fixer"
+  subagent_type: "dashboard-playwright:e2e-test-fixer"
   description: "Fix [GROUP_NAME] ([COUNT] failures)"
   prompt: |
     # Fix [GROUP_NAME] in Playwright Tests
@@ -1159,7 +1159,7 @@ Tests that couldn't be fixed automatically:
 ### File Locations
 - Test specs: `playwright/tests/*.spec.ts`
 - Page objects: `playwright/pages/*.ts`
-- Skill scripts: `.claude/skills/analyze-playwright-failures/scripts/`
+- Skill scripts: `scripts/` (relative to skill base directory)
 
 ### Semantic Categories (hints from script)
 

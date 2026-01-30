@@ -5,9 +5,9 @@
   },
   "plugins": [
     {
-      "name": "analyze-playwright-failures",
+      "name": "dashboard-playwright",
       "description": "Analyze Playwright E2E test failures from CI, group similar errors, and delegate fixes to specialized subagents.",
-      "source": "./analyze-playwright-failures"
+      "source": "./dashboard-playwright"
     }
   ]
 }
