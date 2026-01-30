@@ -438,10 +438,11 @@ export type AppProblemCreateFieldPolicy = {
 	appErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemCustomKeySpecifier = ('aggregate' | 'createdAt' | 'message' | 'severity' | AppProblemCustomKeySpecifier)[];
-export type AppProblemCustomFieldPolicy = {
+export type AppProblemOwnKeySpecifier = ('aggregate' | 'createdAt' | 'key' | 'message' | 'severity' | AppProblemOwnKeySpecifier)[];
+export type AppProblemOwnFieldPolicy = {
 	aggregate?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	key?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	severity?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -7434,9 +7435,9 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AppProblemCreateKeySpecifier | (() => undefined | AppProblemCreateKeySpecifier),
 		fields?: AppProblemCreateFieldPolicy,
 	},
-	AppProblemCustom?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | AppProblemCustomKeySpecifier | (() => undefined | AppProblemCustomKeySpecifier),
-		fields?: AppProblemCustomFieldPolicy,
+	AppProblemOwn?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppProblemOwnKeySpecifier | (() => undefined | AppProblemOwnKeySpecifier),
+		fields?: AppProblemOwnFieldPolicy,
 	},
 	AppReenableSyncWebhooks?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppReenableSyncWebhooksKeySpecifier | (() => undefined | AppReenableSyncWebhooksKeySpecifier),

@@ -200,11 +200,7 @@ type Query {
     countryCode: CountryCode!
   ): TaxCountryConfiguration
 
-  """
-  
-  
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
-  """
+  "\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP."
   taxCountryConfigurations: [TaxCountryConfiguration!]
 
   """
@@ -3101,10 +3097,10 @@ type AppExtension implements Node {
 scalar JSON
 
 """Represents a problem associated with an app."""
-union AppProblem = AppProblemCustom
+union AppProblem = AppProblemOwn
 
-"""Custom problem set by the app on itself."""
-type AppProblemCustom {
+"""Problem set by the app on itself."""
+type AppProblemOwn {
   message: String!
   createdAt: DateTime!
 
@@ -3113,6 +3109,9 @@ type AppProblemCustom {
 
   """Severity of the problem."""
   severity: AppProblemSeverityEnum!
+
+  """Deduplication key for this problem."""
+  key: String
 }
 
 """Enum determining the severity of an app problem."""
@@ -5296,15 +5295,7 @@ type StockSettings {
   allocationStrategy: AllocationStrategyEnum!
 }
 
-"""
-Determine the allocation strategy for the channel.
-
-    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
-    within the channel
-
-    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
-    
-"""
+"Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock\n    "
 enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER
   PRIORITIZE_HIGH_STOCK
@@ -5376,17 +5367,7 @@ The `Minute` scalar type represents number of minutes by integer value.
 """
 scalar Minute
 
-"""
-Determine the mark as paid strategy for the channel.
-
-    TRANSACTION_FLOW - new orders marked as paid will receive a
-    `TransactionItem` object, that will cover the `order.total`.
-
-    PAYMENT_FLOW - new orders marked as paid will receive a
-    `Payment` object, that will cover the `order.total`.
-
-    
-"""
+"Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.\n\n    "
 enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW
   PAYMENT_FLOW
@@ -5465,13 +5446,7 @@ type PaymentSettings {
   checkoutReleaseFundsCutOffDate: DateTime
 }
 
-"""
-Determine the transaction flow strategy.
-
-    AUTHORIZATION - the processed transaction should be only authorized
-    CHARGE - the processed transaction should be charged.
-    
-"""
+"Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.\n    "
 enum TransactionFlowStrategyEnum {
   AUTHORIZATION
   CHARGE
@@ -11230,15 +11205,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
   reasonReference: Page
 }
 
-"""
-Represents possible actions on payment transaction.
-
-    The following actions are possible:
-    CHARGE - Represents the charge action.
-    REFUND - Represents a refund action.
-    CANCEL - Represents a cancel action. Added in Saleor 3.12.
-    
-"""
+"Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.\n    "
 enum TransactionActionEnum {
   CHARGE
   REFUND
@@ -12023,50 +11990,14 @@ enum PaymentChargeStatusEnum {
   CANCELLED
 }
 
-"""
-Determine a current authorize status for order.
-
-    We treat the order as fully authorized when the sum of authorized and charged funds
-    cover the `order.total`-`order.totalGrantedRefund`.
-    We treat the order as partially authorized when the sum of authorized and charged
-    funds covers only part of the `order.total`-`order.totalGrantedRefund`.
-    We treat the order as not authorized when the sum of authorized and charged funds is
-    0.
-
-    NONE - the funds are not authorized
-    PARTIAL - the funds that are authorized and charged don't cover fully the
-    `order.total`-`order.totalGrantedRefund`
-    FULL - the funds that are authorized and charged fully cover the
-    `order.total`-`order.totalGrantedRefund`
-    
-"""
+"Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    "
 enum OrderAuthorizeStatusEnum {
   NONE
   PARTIAL
   FULL
 }
 
-"""
-Determine the current charge status for the order.
-
-    An order is considered overcharged when the sum of the
-    transactionItem's charge amounts exceeds the value of
-    `order.total` - `order.totalGrantedRefund`.
-    If the sum of the transactionItem's charge amounts equals
-    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully
-    charged.
-    If the sum of the transactionItem's charge amounts covers a part of the
-    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.
-
-    NONE - the funds are not charged.
-    PARTIAL - the funds that are charged don't cover the
-    `order.total`-`order.totalGrantedRefund`
-    FULL - the funds that are charged fully cover the
-    `order.total`-`order.totalGrantedRefund`
-    OVERCHARGED - the charged funds are bigger than the
-    `order.total`-`order.totalGrantedRefund`
-    
-"""
+"Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`\n    "
 enum OrderChargeStatusEnum {
   NONE
   PARTIAL
@@ -12617,15 +12548,7 @@ type OrderGrantedRefundLine {
   reason: String
 }
 
-"""
-Represents the status of a granted refund.
-
-    NONE - the refund on related transactionItem is not processed
-    PENDING - the refund on related transactionItem is pending
-    FULL - the refund on related transactionItem is fully processed
-    FAIL - the refund on related transactionItem failed
-    
-"""
+"Represents the status of a granted refund.\n\n    NONE - the refund on related transactionItem is not processed\n    PENDING - the refund on related transactionItem is pending\n    FULL - the refund on related transactionItem is fully processed\n    FAIL - the refund on related transactionItem failed\n    "
 enum OrderGrantedRefundStatusEnum {
   NONE
   PENDING
@@ -12672,34 +12595,7 @@ type TransactionEvent implements Node {
   idempotencyKey: String
 }
 
-"""
-Represents possible event types.
-
-    Added in Saleor 3.12.
-
-    The following types are possible:
-    AUTHORIZATION_SUCCESS - represents success authorization.
-    AUTHORIZATION_FAILURE - represents failure authorization.
-    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.
-    AUTHORIZATION_REQUEST - represents authorization request.
-    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs
-    additional actions from the customer.
-    CHARGE_ACTION_REQUIRED - represents charge that needs
-    additional actions from the customer.
-    CHARGE_SUCCESS - represents success charge.
-    CHARGE_FAILURE - represents failure charge.
-    CHARGE_BACK - represents chargeback.
-    CHARGE_REQUEST - represents charge request.
-    REFUND_SUCCESS - represents success refund.
-    REFUND_FAILURE - represents failure refund.
-    REFUND_REVERSE - represents reverse refund.
-    REFUND_REQUEST - represents refund request.
-    CANCEL_SUCCESS - represents success cancel.
-    CANCEL_FAILURE - represents failure cancel.
-    CANCEL_REQUEST - represents cancel request.
-    INFO - represents info event.
-    
-"""
+"Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.\n    "
 enum TransactionEventTypeEnum {
   AUTHORIZATION_SUCCESS
   AUTHORIZATION_FAILURE
@@ -12733,44 +12629,14 @@ interface PaymentMethodDetails {
   name: String!
 }
 
-"""
-Determine a current authorize status for checkout.
-
-    We treat the checkout as fully authorized when the sum of authorized and charged
-    funds cover the checkout.total.
-    We treat the checkout as partially authorized when the sum of authorized and charged
-    funds covers only part of the checkout.total
-    We treat the checkout as not authorized when the sum of authorized and charged funds
-    is 0.
-
-    NONE - the funds are not authorized
-    PARTIAL - the cover funds don't cover fully the checkout's total
-    FULL - the cover funds covers the checkout's total
-    
-"""
+"Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total\n    "
 enum CheckoutAuthorizeStatusEnum {
   NONE
   PARTIAL
   FULL
 }
 
-"""
-Determine the current charge status for the checkout.
-
-    The checkout is considered overcharged when the sum of the transactionItem's charge
-    amounts exceeds the value of `checkout.total`.
-    If the sum of the transactionItem's charge amounts equals
-    `checkout.total`, we consider the checkout to be fully charged.
-    If the sum of the transactionItem's charge amounts covers a part of the
-    `checkout.total`, we treat the checkout as partially charged.
-
-
-    NONE - the funds are not charged.
-    PARTIAL - the funds that are charged don't cover the checkout's total
-    FULL - the funds that are charged fully cover the checkout's total
-    OVERCHARGED - the charged funds are bigger than checkout's total
-    
-"""
+"Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total\n    "
 enum CheckoutChargeStatusEnum {
   NONE
   PARTIAL
@@ -12809,14 +12675,7 @@ type StoredPaymentMethod {
   data: JSON
 }
 
-"""
-Represents possible tokenized payment flows that can be used to process payment.
-
-    The following flows are possible:
-    INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in
-    checkout form (might require additional authentication from user)
-    
-"""
+"Represents possible tokenized payment flows that can be used to process payment.\n\n    The following flows are possible:\n    INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in\n    checkout form (might require additional authentication from user)\n    "
 enum TokenizedPaymentFlowEnum {
   INTERACTIVE
 }
@@ -13356,18 +13215,7 @@ input PageWhereInput {
   OR: [PageWhereInput!]
 }
 
-"""
-Allows filtering based on metadata key/value pairs.
-
-        Examples:
-        - `{key: "size"}`
-          Matches objects where the metadata key "size" exists, regardless of its value.
-        - `{key: "color", value: {oneOf: ["blue", "green"]}}`
-          Matches objects where the metadata key "color" is set to either "blue" or "green".
-        - `{key: "status", value: {eq: "active"}}`
-          Matches objects where the metadata key "status" is set to "active".
-        
-"""
+"Allows filtering based on metadata key/value pairs.\n\n        Examples:\n        - `{key: \"size\"}`\n          Matches objects where the metadata key \"size\" exists, regardless of its value.\n        - `{key: \"color\", value: {oneOf: [\"blue\", \"green\"]}}`\n          Matches objects where the metadata key \"color\" is set to either \"blue\" or \"green\".\n        - `{key: \"status\", value: {eq: \"active\"}}`\n          Matches objects where the metadata key \"status\" is set to \"active\".\n        "
 input MetadataFilterInput {
   """
   Key to filter by. If not other fields provided - checking the existence of the key in metadata.
@@ -13744,15 +13592,7 @@ input PaymentMethodTypeEnumFilterInput {
   oneOf: [PaymentMethodTypeEnum!]
 }
 
-"""
-Represents possible payment method types.
-
-    The following types are possible:
-    CARD - represents a card payment method.
-    OTHER - represents any payment method that is not a card payment.
-
-    
-"""
+"Represents possible payment method types.\n\n    The following types are possible:\n    CARD - represents a card payment method.\n    OTHER - represents any payment method that is not a card payment.\n\n    "
 enum PaymentMethodTypeEnum {
   CARD
   OTHER
@@ -19416,7 +19256,7 @@ type Mutation {
   ): AppDeactivate
 
   """
-  Add a custom problem to the calling app.
+  Add a problem to the calling app. OWN problem type will be created
   
   Added in Saleor 3.22. 
   
@@ -19428,15 +19268,23 @@ type Mutation {
   ): AppProblemCreate
 
   """
-  Clear custom problems from the calling app.
+  Clear problems from the calling app.
   
   Added in Saleor 3.22. 
   
-  Requires one of the following permissions: AUTHENTICATED_APP.
+  Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   appProblemClear(
-    """If provided, only clears custom problems with this aggregate value."""
+    """If provided, only clears own problems with this aggregate value."""
     aggregate: String
+
+    """
+    ID of the app to clear problems for. Required for staff, disallowed for app callers.
+    """
+    app: ID
+
+    """If provided, only clears own problems with this key."""
+    key: String
   ): AppProblemClear
 
   """
@@ -24410,16 +24258,7 @@ type StoredPaymentMethodRequestDelete {
   errors: [PaymentMethodRequestDeleteError!]!
 }
 
-"""
-Result of deleting a stored payment method.
-
-    This enum is used to determine the result of deleting a stored payment method.
-    SUCCESSFULLY_DELETED - The stored payment method was successfully deleted.
-    FAILED_TO_DELETE - The stored payment method was not deleted.
-    FAILED_TO_DELIVER - The request to delete the stored payment method was not
-    delivered.
-    
-"""
+"Result of deleting a stored payment method.\n\n    This enum is used to determine the result of deleting a stored payment method.\n    SUCCESSFULLY_DELETED - The stored payment method was successfully deleted.\n    FAILED_TO_DELETE - The stored payment method was not deleted.\n    FAILED_TO_DELIVER - The request to delete the stored payment method was not\n    delivered.\n    "
 enum StoredPaymentMethodRequestDeleteResult {
   SUCCESSFULLY_DELETED
   FAILED_TO_DELETE
@@ -24464,15 +24303,7 @@ type PaymentGatewayInitializeTokenization {
   errors: [PaymentGatewayInitializeTokenizationError!]!
 }
 
-"""
-Result of initialize payment gateway for tokenization of payment method.
-
-    The result of initialize payment gateway for tokenization of payment method.
-    SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
-    FAILED_TO_INITIALIZE - The payment gateway was not initialized.
-    FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
-    
-"""
+"Result of initialize payment gateway for tokenization of payment method.\n\n    The result of initialize payment gateway for tokenization of payment method.\n    SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.\n    FAILED_TO_INITIALIZE - The payment gateway was not initialized.\n    FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.\n    "
 enum PaymentGatewayInitializeTokenizationResult {
   SUCCESSFULLY_INITIALIZED
   FAILED_TO_INITIALIZE
@@ -24520,17 +24351,7 @@ type PaymentMethodInitializeTokenization {
   errors: [PaymentMethodInitializeTokenizationError!]!
 }
 
-"""
-Result of tokenization of payment method.
-
-    SUCCESSFULLY_TOKENIZED - The payment method was successfully tokenized.
-    ADDITIONAL_ACTION_REQUIRED - The additional action is required to tokenize payment
-    method.
-    PENDING - The payment method is pending tokenization.
-    FAILED_TO_TOKENIZE - The payment method was not tokenized.
-    FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
-    
-"""
+"Result of tokenization of payment method.\n\n    SUCCESSFULLY_TOKENIZED - The payment method was successfully tokenized.\n    ADDITIONAL_ACTION_REQUIRED - The additional action is required to tokenize payment\n    method.\n    PENDING - The payment method is pending tokenization.\n    FAILED_TO_TOKENIZE - The payment method was not tokenized.\n    FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.\n    "
 enum PaymentMethodTokenizationResult {
   SUCCESSFULLY_TOKENIZED
   PENDING
@@ -26358,14 +26179,7 @@ input OrderBulkCreateInvoiceInput {
   privateMetadata: [MetadataInput!]
 }
 
-"""
-Determine how stocks should be updated, while processing an order.
-
-    SKIP - stocks are not checked and not updated.
-    UPDATE - only do update, if there is enough stock.
-    FORCE - force update, if there is not enough stock.
-    
-"""
+"Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.\n    "
 enum StockUpdatePolicyEnum {
   SKIP
   UPDATE
@@ -30468,7 +30282,7 @@ type AppDeactivate {
 }
 
 """
-Add a custom problem to the calling app.
+Add a problem to the calling app. OWN problem type will be created
 
 Added in Saleor 3.22. 
 
@@ -30490,17 +30304,29 @@ input AppProblemCreateInput {
 
   """Severity of the problem. Defaults to ERROR."""
   severity: AppProblemSeverityEnum
+
+  """
+  Optional deduplication key. If a problem with this key already exists, creation is skipped unless `force` is true.
+  """
+  key: String
+
+  """
+  If true and a problem with the same `key` exists, overwrite it with new message, severity, and timestamp. Defaults to false.
+  """
+  force: Boolean
 }
 
 """
-Clear custom problems from the calling app.
+Clear problems from the calling app.
 
 Added in Saleor 3.22. 
 
-Requires one of the following permissions: AUTHENTICATED_APP.
+Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
 """
 type AppProblemClear {
-  """The app whose problems were cleared."""
+  """
+  The app whose problems were cleared. Only OWN type of problems can be clear with this mutation.
+  """
   app: App
   appErrors: [AppError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [AppError!]!

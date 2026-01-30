@@ -7,7 +7,7 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "AppProblem": [
-      "AppProblemCustom"
+      "AppProblemOwn"
     ],
     "AssignedAttribute": [
       "AssignedBooleanAttribute",

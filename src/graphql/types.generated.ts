@@ -219,6 +219,7 @@ export enum AddressTypeEnum {
  *     within the channel
  *
  *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+ *
  */
 export enum AllocationStrategyEnum {
   PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK',
@@ -291,6 +292,10 @@ export type AppInstallInput = {
 export type AppProblemCreateInput = {
   /** Grouping key for this problem. Used to clear related problems. */
   aggregate?: InputMaybe<Scalars['String']>;
+  /** If true and a problem with the same `key` exists, overwrite it with new message, severity, and timestamp. Defaults to false. */
+  force?: InputMaybe<Scalars['Boolean']>;
+  /** Optional deduplication key. If a problem with this key already exists, creation is skipped unless `force` is true. */
+  key?: InputMaybe<Scalars['String']>;
   /** The problem message to display. */
   message: Scalars['String'];
   /** Severity of the problem. Defaults to ERROR. */
@@ -1180,6 +1185,7 @@ export type CheckoutAddressValidationRules = {
  *     NONE - the funds are not authorized
  *     PARTIAL - the cover funds don't cover fully the checkout's total
  *     FULL - the cover funds covers the checkout's total
+ *
  */
 export enum CheckoutAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -1211,6 +1217,7 @@ export type CheckoutAutoCompleteInput = {
  *     PARTIAL - the funds that are charged don't cover the checkout's total
  *     FULL - the funds that are charged fully cover the checkout's total
  *     OVERCHARGED - the charged funds are bigger than checkout's total
+ *
  */
 export enum CheckoutChargeStatusEnum {
   FULL = 'FULL',
@@ -3626,6 +3633,8 @@ export type LinesFilterInput = {
  *
  *     PAYMENT_FLOW - new orders marked as paid will receive a
  *     `Payment` object, that will cover the `order.total`.
+ *
+ *
  */
 export enum MarkAsPaidStrategyEnum {
   PAYMENT_FLOW = 'PAYMENT_FLOW',
@@ -3827,6 +3836,7 @@ export type MetadataFilter = {
  *           Matches objects where the metadata key "color" is set to either "blue" or "green".
  *         - `{key: "status", value: {eq: "active"}}`
  *           Matches objects where the metadata key "status" is set to "active".
+ *
  */
 export type MetadataFilterInput = {
   /** Key to filter by. If not other fields provided - checking the existence of the key in metadata. */
@@ -3906,6 +3916,7 @@ export type OrderAddNoteInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     FULL - the funds that are authorized and charged fully cover the
  *     `order.total`-`order.totalGrantedRefund`
+ *
  */
 export enum OrderAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -4207,6 +4218,7 @@ export type OrderBulkCreateUserInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     OVERCHARGED - the charged funds are bigger than the
  *     `order.total`-`order.totalGrantedRefund`
+ *
  */
 export enum OrderChargeStatusEnum {
   FULL = 'FULL',
@@ -4546,6 +4558,7 @@ export enum OrderGrantRefundUpdateLineErrorCode {
  *     PENDING - the refund on related transactionItem is pending
  *     FULL - the refund on related transactionItem is fully processed
  *     FAIL - the refund on related transactionItem failed
+ *
  */
 export enum OrderGrantedRefundStatusEnum {
   FAILURE = 'FAILURE',
@@ -5141,6 +5154,7 @@ export enum PaymentGatewayInitializeTokenizationErrorCode {
  *     SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
  *     FAILED_TO_INITIALIZE - The payment gateway was not initialized.
  *     FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
+ *
  */
 export enum PaymentGatewayInitializeTokenizationResult {
   FAILED_TO_DELIVER = 'FAILED_TO_DELIVER',
@@ -5223,6 +5237,7 @@ export enum PaymentMethodProcessTokenizationErrorCode {
  *     PENDING - The payment method is pending tokenization.
  *     FAILED_TO_TOKENIZE - The payment method was not tokenized.
  *     FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
+ *
  */
 export enum PaymentMethodTokenizationResult {
   ADDITIONAL_ACTION_REQUIRED = 'ADDITIONAL_ACTION_REQUIRED',
@@ -5238,6 +5253,8 @@ export enum PaymentMethodTokenizationResult {
  *     The following types are possible:
  *     CARD - represents a card payment method.
  *     OTHER - represents any payment method that is not a card payment.
+ *
+ *
  */
 export enum PaymentMethodTypeEnum {
   CARD = 'CARD',
@@ -7073,6 +7090,7 @@ export type StockUpdateInput = {
  *     SKIP - stocks are not checked and not updated.
  *     UPDATE - only do update, if there is enough stock.
  *     FORCE - force update, if there is not enough stock.
+ *
  */
 export enum StockUpdatePolicyEnum {
   FORCE = 'FORCE',
@@ -7106,6 +7124,7 @@ export enum StoredPaymentMethodRequestDeleteErrorCode {
  *     FAILED_TO_DELETE - The stored payment method was not deleted.
  *     FAILED_TO_DELIVER - The request to delete the stored payment method was not
  *     delivered.
+ *
  */
 export enum StoredPaymentMethodRequestDeleteResult {
   FAILED_TO_DELETE = 'FAILED_TO_DELETE',
@@ -7308,6 +7327,7 @@ export enum TimePeriodTypeEnum {
  *     The following flows are possible:
  *     INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in
  *     checkout form (might require additional authentication from user)
+ *
  */
 export enum TokenizedPaymentFlowEnum {
   INTERACTIVE = 'INTERACTIVE'
@@ -7320,6 +7340,7 @@ export enum TokenizedPaymentFlowEnum {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+ *
  */
 export enum TransactionActionEnum {
   CANCEL = 'CANCEL',
@@ -7417,6 +7438,7 @@ export enum TransactionEventReportErrorCode {
  *     CANCEL_FAILURE - represents failure cancel.
  *     CANCEL_REQUEST - represents cancel request.
  *     INFO - represents info event.
+ *
  */
 export enum TransactionEventTypeEnum {
   AUTHORIZATION_ACTION_REQUIRED = 'AUTHORIZATION_ACTION_REQUIRED',
@@ -7452,6 +7474,7 @@ export type TransactionFilterInput = {
  *
  *     AUTHORIZATION - the processed transaction should be only authorized
  *     CHARGE - the processed transaction should be charged.
+ *
  */
 export enum TransactionFlowStrategyEnum {
   AUTHORIZATION = 'AUTHORIZATION',
@@ -9946,7 +9969,7 @@ export type InstalledAppsListQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemCustom', createdAt: any, message: string, severity: AppProblemSeverityEnum }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemOwn', createdAt: any, message: string, severity: AppProblemSeverityEnum, key: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type EventDeliveryQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -10053,7 +10076,7 @@ export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{
 
 export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
 
-export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemCustom', createdAt: any, message: string, severity: AppProblemSeverityEnum }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
+export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemOwn', createdAt: any, message: string, severity: AppProblemSeverityEnum, key: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
