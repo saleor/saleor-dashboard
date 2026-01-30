@@ -136,7 +136,7 @@ const AttributeValues = ({
               <Box position="relative">
                 <SearchInput
                   value={searchQuery}
-                  onChange={onSearchChange}
+                  onChange={onSearchChange!}
                   placeholder={intl.formatMessage({
                     id: "9seX5T",
                     defaultMessage: "Search attribute values...",
