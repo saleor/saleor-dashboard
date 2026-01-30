@@ -63,3 +63,4 @@ storybook-static/
 
 !.claude
 !.claude/**/.claude-plugin/
+playwright-failures*/

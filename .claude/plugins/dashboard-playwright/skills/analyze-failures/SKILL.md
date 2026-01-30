@@ -95,15 +95,9 @@ If user agrees, add the label:
 gh pr edit $PR_NUM --add-label "run pw-e2e"
 ```
 
-Then wait and check for the run:
+Then stop and ask user to come back after test ends run.
 
-```bash
-# Wait a moment for CI to start
-sleep 30
-
-# Check for new runs
-gh run list --branch $(gh pr view $PR_NUM --json headRefName -q .headRefName) --limit 1 --json databaseId,status
-```
+--
 
 After downloading, the artifact folder becomes the input for the prepare script.
 
@@ -326,12 +320,12 @@ The trace ZIP contains:
 
 **Error toasts often appear because a GraphQL mutation/query failed!**
 
-To check network requests (tested and working):
+To check network requests:
 
 ```bash
 # Extract trace
-unzip [TRACE_PATH] -d ./trace-extracted
-cd ./trace-extracted
+unzip [TRACE_PATH] -d ./.trace-extracted
+cd ./.trace-extracted
 
 # List all GraphQL requests with status codes
 cat 0-trace.network | jq -r 'select(.snapshot.request.method == "POST") | "\(.snapshot.response.status) \(.snapshot.request.url)"'
@@ -371,7 +365,7 @@ npx playwright show-trace [TRACE_PATH]
 
 **To analyze trace snapshots:**
 
-1. Extract the trace: `unzip [TRACE_PATH] -d ./trace-extracted`
+1. Extract the trace: `unzip [TRACE_PATH] -d ./.trace-extracted`
 2. Look at `trace.json` for the action timeline
 3. Read the PNG snapshots in `resources/` to see UI at each step
 4. This shows if notification appeared THEN disappeared before assertion
@@ -384,8 +378,8 @@ npx playwright show-trace [TRACE_PATH]
 
 ```bash
 # Extract trace
-unzip [TRACE_PATH] -d ./trace-extracted
-cd ./trace-extracted
+unzip [TRACE_PATH] -d ./.trace-extracted
+cd ./.trace-extracted
 
 # 1. Find key actions (clicks, especially on save/delete buttons)
 cat 0-trace.trace | jq -r 'select(.type == "before") | "\(.startTime) - \(.apiName) \(.params.selector // "")"' 2>/dev/null
@@ -522,6 +516,8 @@ Task tool call:
 
 **You MUST call the Task tool like this:**
 
+for each suspected component that has a failure
+
 ```
 Task tool call:
   subagent_type: "Explore"
@@ -599,7 +595,7 @@ Test failures can be caused by:
 1. **Stale test data** - Fixtures not updated for new Saleor features
 2. **Missing test data** - Previous test run deleted items that weren't restored
 3. **Environment not restored** - CI should restore env, but sometimes fails
-4. **Saleor backend changes** - API behavior changed, test expectations outdated
+4. **Saleor backend changes** - API behavior changed, test expectations outdated - might be a bug in Saleor Dashboard as well
 5. **Database state drift** - Test environment diverged from expected state
 
 #### Signs of Data/Environment Issues

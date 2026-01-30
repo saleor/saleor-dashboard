@@ -50,14 +50,11 @@ Look for:
 
 ### 4. Read the Test Code
 
-Examine the failing test:
+Examine the failing test, look for:
 
-```typescript
-// Look for:
-// - What page object methods are called
-// - What assertions are made
-// - What the test flow expects
-```
+- What page object methods are called
+- What assertions are made
+- What the test flow expects
 
 ### 5. Read Page Objects
 
