@@ -63,6 +63,7 @@ export const productDetailsQuery = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     product(id: $id, channel: $channel) {
       ...Product
@@ -80,6 +81,7 @@ export const productTypeQuery = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     productType(id: $id) {
       id

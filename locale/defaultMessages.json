@@ -2026,6 +2026,10 @@
     "context": "section header",
     "string": "Product Attributes"
   },
+  "9seX5T": {
+    "context": "attribute values search placeholder",
+    "string": "Search attribute values..."
+  },
   "9uNz+T": {
     "context": "button",
     "string": "Cancel"
@@ -9175,6 +9179,10 @@
   "odpDdj": {
     "context": "order history message",
     "string": "Items were oversold"
+  },
+  "oegjWf": {
+    "context": "attribute values list: no search results",
+    "string": "No values match your search"
   },
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",

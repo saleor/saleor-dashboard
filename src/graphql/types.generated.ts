@@ -8955,10 +8955,11 @@ export type AttributeDetailsQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type AttributeListQueryVariables = Exact<{
   filter?: InputMaybe<AttributeFilterInput>;
@@ -10791,7 +10792,7 @@ export type PageTypeListQueryVariables = Exact<{
 }>;
 
 
-export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PageTypeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10814,6 +10815,7 @@ export type PageUpdateMutationVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -10859,6 +10861,7 @@ export type PageDetailsQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -10870,6 +10873,7 @@ export type PageTypeQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11691,6 +11695,7 @@ export type ProductDetailsQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11702,6 +11707,7 @@ export type ProductTypeQueryVariables = Exact<{
   afterValues?: InputMaybe<Scalars['String']>;
   lastValues?: InputMaybe<Scalars['Int']>;
   beforeValues?: InputMaybe<Scalars['String']>;
+  searchValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
