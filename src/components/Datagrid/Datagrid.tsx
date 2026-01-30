@@ -156,9 +156,13 @@ const Datagrid = ({
     () => ({ ...datagridTheme, ...themeOverride }),
     [datagridTheme, themeOverride],
   );
+  // rowMarkerTheme can override specific colors for the row marker column if needed
+  // Currently using the same as the main theme for consistency
   const rowMarkerTheme = useMemo(
     () => ({
-      accentColor: themeValues.colors.text.default1,
+      accentColor: themeValues.colors.background.accent1,
+      accentFg: themeValues.colors.background.default1,
+      accentLight: themeValues.colors.background.default2,
     }),
     [themeValues],
   );
