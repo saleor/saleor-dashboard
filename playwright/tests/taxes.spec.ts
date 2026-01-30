@@ -54,7 +54,9 @@ test("TC: SALEOR_117 Add new country and tax rates to it #taxes #e2e", async () 
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
-test("TC: SALEOR_118 Add new class with metadata and set tax rate for single country #taxes #e2e", async () => {
+test("TC: SALEOR_118 Add new class with metadata and set tax rate for single country #taxes #e2e", async ({
+  page,
+}) => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.clickTaxClassTab();
   await taxesPage.clickCreateClassButton();
@@ -65,6 +67,20 @@ test("TC: SALEOR_118 Add new class with metadata and set tax rate for single cou
   await taxesPage.metadataSeoPage.publicMetaSection.waitFor({ state: "attached", timeout: 10000 });
   await taxesPage.metadataSeoPage.publicMetaSection.scrollIntoViewIfNeeded();
   await taxesPage.metadataSeoPage.expandAndAddAllMetadata();
+
+  // Ensure save button is enabled after metadata changes
+  await expect(taxesPage.saveButton).toBeEnabled();
+
+  // Wait for the GraphQL mutation when save is clicked, then verify success
+  const responsePromise = page.waitForResponse(
+    resp =>
+      resp.url().includes("/graphql/") &&
+      resp.request().postDataJSON()?.operationName === "TaxClassCreate",
+    { timeout: 10000 },
+  );
+
   await taxesPage.clickSaveButton();
+  await responsePromise;
+
   await taxesPage.expectSuccessBanner();
 });
