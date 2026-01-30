@@ -1,15 +1,4 @@
 {
-  "extraKnownMarketplaces": {
-    "saleor-dashboard-plugins": {
-      "source": {
-        "source": "file",
-        "path": ".claude/plugins/.claude-plugin/marketplace.json"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "analyze-playwright-failures@saleor-dashboard-plugins": true
-  },
   "hooks": {
     "PreToolUse": [
       {
