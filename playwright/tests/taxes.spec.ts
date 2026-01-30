@@ -58,7 +58,7 @@ test("TC: SALEOR_118 Add new class with metadata and set tax rate for single cou
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.clickTaxClassTab();
   await taxesPage.clickCreateClassButton();
-  expect(await taxesPage.taxClassNameInput).toHaveValue("New tax class");
+  await expect(taxesPage.taxClassNameInput).toHaveValue("New tax class");
   await taxesPage.typeTaxClassName("Automation test tax class");
   await taxesPage.typeSearchedTaxCountryName("United States of America");
   await taxesPage.typeTaxRateInSearchedCountryRow("United States of America", "20");

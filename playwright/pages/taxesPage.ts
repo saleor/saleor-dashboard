@@ -116,6 +116,8 @@ export class TaxesPage extends BasePage {
 
   async clickCreateClassButton() {
     await this.createClassButton.click();
+    // Wait for the new tax class form to load
+    await this.taxClassNameInput.waitFor({ state: "visible" });
   }
 
   async selectTaxCalculationMethod(method: string) {
