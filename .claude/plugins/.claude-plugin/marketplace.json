@@ -1,0 +1,13 @@
+{
+  "name": "saleor-dashboard-plugins",
+  "owner": {
+    "name": "Saleor Commerce"
+  },
+  "plugins": [
+    {
+      "name": "dashboard-playwright",
+      "description": "Analyze Playwright E2E test failures from CI, group similar errors, and delegate fixes to specialized subagents.",
+      "source": "./dashboard-playwright"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "dashboard-playwright",
+  "description": "Analyze Playwright E2E test failures from CI, group similar errors, and delegate fixes to specialized subagents. Includes e2e-test-fixer agent and hooks to enforce delegation patterns.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Saleor Commerce"
+  },
+  "repository": "https://github.com/saleor/saleor-dashboard"
+}
