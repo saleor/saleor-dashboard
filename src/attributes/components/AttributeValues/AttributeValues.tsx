@@ -132,7 +132,7 @@ const AttributeValues = ({
         ) : (
           <Box display="flex" flexDirection="column" gap={4}>
             {/* Search input - always visible when search is enabled */}
-            {showSearch && onSearchChange && (
+            {showSearch && (
               <Box position="relative">
                 <SearchInput
                   value={searchQuery}
