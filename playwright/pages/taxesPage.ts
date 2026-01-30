@@ -3,7 +3,7 @@ import { URL_LIST } from "@data/url";
 import { AddCountriesDialog } from "@dialogs/addCountriesDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class TaxesPage extends BasePage {
   readonly page: Page;
@@ -105,6 +105,8 @@ export class TaxesPage extends BasePage {
 
   async typeSearchedTaxCountryName(taxCountryName: string) {
     await this.searchTaxCountryInput.fill(taxCountryName);
+    // Verify the input value is set before checking filtered results
+    await expect(this.searchTaxCountryInput).toHaveValue(taxCountryName);
     // Wait for search results to filter
     await this.searchedCountryRows
       .filter({ hasText: taxCountryName })
