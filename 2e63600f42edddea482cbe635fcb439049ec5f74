@@ -1,0 +1,41 @@
+src/orders/components/OrderTransaction/components/TransactionEvents/components/EventItem.test.tsx
+  b8ceb2ceda8c0f5a 5
+src/components/Link.test.tsx
+  b8ceb2ceda8c0f5a 4
+src/extensions/messages.ts
+  b8ceb2ceda8c0f5a 386-387,389-391,393-395,397
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  b8ceb2ceda8c0f5a 19-20,85-86,93-95,107-108,122,125-127,130-134,163-165,200-201
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  b8ceb2ceda8c0f5a 13,16,20,54-55,66-88,137-138
+src/extensions/mutations.ts
+  b8ceb2ceda8c0f5a 210-222
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  b8ceb2ceda8c0f5a 5,9,22-23,68-73,75-76,78-79,89,129-130,132-147,160-161,202-203
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard.tsx
+  b8ceb2ceda8c0f5a 1,5,11,31-40,44-49,51-57,60-61
+src/extensions/views/InstalledExtensions/components/AppProblems/AppProblems.module.css
+  b8ceb2ceda8c0f5a 116-127
+src/orders/components/OrderTransaction/components/TransactionEvents/components/EventCreatedBy.test.tsx
+  b8ceb2ceda8c0f5a 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.40",
+  "base_commit_sha": "2e63600f42edddea482cbe635fcb439049ec5f74",
+  "prompts": {
+    "b8ceb2ceda8c0f5a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8271ac3e-bf9f-49b4-b3ff-0a1ff29469fa",
+        "model": "claude-opus-4-5-20251101"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 201,
+      "total_deletions": 24,
+      "accepted_lines": 156,
+      "overriden_lines": 8
+    }
+  }
+}
