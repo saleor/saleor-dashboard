@@ -105,13 +105,21 @@ export class TaxesPage extends BasePage {
 
   async typeSearchedTaxCountryName(taxCountryName: string) {
     await this.searchTaxCountryInput.fill(taxCountryName);
+    // Wait for search results to filter
+    await this.searchedCountryRows
+      .filter({ hasText: taxCountryName })
+      .waitFor({ state: "visible", timeout: 10000 });
   }
 
   async typeTaxRateInSearchedCountryRow(taxCountryName: string, taxRateValue: string) {
-    await this.searchedCountryRows
-      .filter({ hasText: taxCountryName })
-      .locator("input")
-      .fill(taxRateValue);
+    const countryRow = this.searchedCountryRows.filter({ hasText: taxCountryName });
+
+    await countryRow.waitFor({ state: "visible", timeout: 10000 });
+
+    const input = countryRow.locator("input");
+
+    await input.waitFor({ state: "visible", timeout: 5000 });
+    await input.fill(taxRateValue);
   }
 
   async clickCreateClassButton() {
