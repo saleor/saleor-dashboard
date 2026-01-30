@@ -38,9 +38,7 @@ export class TaxesPage extends BasePage {
     readonly searchTaxClassInput = page.getByTestId("search-tax-class-input").locator("input"),
     readonly searchedCountryRows = page.getByTestId("country-rows"),
 
-    readonly searchTaxCountryInput = page
-      .getByTestId("search-tax-countries-input")
-      .locator("input"),
+    readonly searchTaxCountryInput = page.getByRole("textbox", { name: "Search tax countries" }),
     readonly taxClassNameInput = page.getByTestId("class-name-input").locator("input"),
     readonly noTaxRateInput = page.getByTestId("No Taxes").locator("input"),
     readonly defaultRateInput = page.getByTestId("Country default rate").locator("input"),
