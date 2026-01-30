@@ -62,6 +62,7 @@ test("TC: SALEOR_118 Add new class with metadata and set tax rate for single cou
   await taxesPage.typeTaxClassName("Automation test tax class");
   await taxesPage.typeSearchedTaxCountryName("United States of America");
   await taxesPage.typeTaxRateInSearchedCountryRow("United States of America", "20");
+  await taxesPage.metadataSeoPage.publicMetaSection.scrollIntoViewIfNeeded();
   await taxesPage.metadataSeoPage.expandAndAddAllMetadata();
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
