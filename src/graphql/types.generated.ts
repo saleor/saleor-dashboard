@@ -9941,6 +9941,14 @@ export type AppDeactivateMutationVariables = Exact<{
 
 export type AppDeactivateMutation = { __typename: 'Mutation', appDeactivate: { __typename: 'AppDeactivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
+export type AppProblemClearMutationVariables = Exact<{
+  app: Scalars['ID'];
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AppProblemClearMutation = { __typename: 'Mutation', appProblemClear: { __typename: 'AppProblemClear', app: { __typename: 'App', id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
 export type AppUpdatePermissionsMutationVariables = Exact<{
   id: Scalars['ID'];
   permissions: Array<PermissionEnum> | PermissionEnum;

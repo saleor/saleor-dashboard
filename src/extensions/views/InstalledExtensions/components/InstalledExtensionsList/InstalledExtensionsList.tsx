@@ -2,11 +2,11 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { messages } from "@dashboard/extensions/messages";
+import { messages, problemMessages } from "@dashboard/extensions/messages";
 import { getProblemSeverity, InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { AppProblemSeverityEnum } from "@dashboard/graphql";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -19,6 +19,8 @@ interface InstalledExtensionsListProps {
   loading: boolean;
   clearSearch: () => void;
   searchQuery?: string;
+  hasManagedAppsPermission?: boolean;
+  onClearProblem?: (appId: string, key?: string) => void;
 }
 
 const ExtensionLink = ({
@@ -63,7 +65,18 @@ const ExtensionLink = ({
   );
 };
 
-const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
+interface ExtensionRowProps {
+  extension: InstalledExtension;
+  hasManagedAppsPermission?: boolean;
+  onClearProblem?: (appId: string, key?: string) => void;
+}
+
+const ExtensionRow = ({
+  extension,
+  hasManagedAppsPermission,
+  onClearProblem,
+}: ExtensionRowProps) => {
+  const intl = useIntl();
   const problems = extension.problems ?? [];
   const errorCount = problems.filter(
     p => getProblemSeverity(p) === AppProblemSeverityEnum.ERROR,
@@ -73,6 +86,7 @@ const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
   ).length;
   const totalCount = errorCount + warningCount;
   const [problemsVisible, setProblemsVisible] = useState(totalCount > 0);
+  const hasAppOwnedProblems = problems.some(p => p.__typename === "AppProblemOwn");
 
   return (
     <>
@@ -112,7 +126,25 @@ const ExtensionRow = ({ extension }: { extension: InstalledExtension }) => {
       {problemsVisible && totalCount > 0 && (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
-            <ProblemsList problems={extension.problems!} appId={extension.id} />
+            <Box display="flex" gap={4} alignItems="flex-start">
+              <ProblemsList
+                problems={extension.problems!}
+                appId={extension.id}
+                onClearProblem={onClearProblem}
+                hasManagedAppsPermission={hasManagedAppsPermission}
+              />
+              {hasManagedAppsPermission && hasAppOwnedProblems && onClearProblem && (
+                <Box __paddingTop="22px" flexShrink="0" marginLeft="auto" paddingRight={5}>
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    onClick={() => onClearProblem(extension.id)}
+                  >
+                    {intl.formatMessage(problemMessages.clearAllAppProblems)}
+                  </Button>
+                </Box>
+              )}
+            </Box>
           </GridTable.Cell>
         </GridTable.Row>
       )}
@@ -125,6 +157,8 @@ export const InstalledExtensionsList = ({
   loading,
   clearSearch,
   searchQuery,
+  hasManagedAppsPermission,
+  onClearProblem,
 }: InstalledExtensionsListProps) => {
   const intl = useIntl();
 
@@ -162,7 +196,12 @@ export const InstalledExtensionsList = ({
             </GridTable.Cell>
           </GridTable.Row>
           {installedExtensions.map(extension => (
-            <ExtensionRow key={extension.id} extension={extension} />
+            <ExtensionRow
+              key={extension.id}
+              extension={extension}
+              hasManagedAppsPermission={hasManagedAppsPermission}
+              onClearProblem={onClearProblem}
+            />
           ))}
         </GridTable.Body>
       </GridTable>

@@ -10,12 +10,14 @@ import {
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";
 import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/InstalledExtensions/hooks/useInstalledExtensionsFilter";
+import { useAppProblemClearMutation } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { AddExtensionDropdown } from "./components/AddExtensionDropdown/AddExtensionDropdown";
@@ -49,6 +51,8 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     openModal("app-installation-remove", { id });
   };
 
+  const notify = useNotifier();
+
   const {
     installedExtensions,
     installedAppsLoading,
@@ -58,6 +62,30 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   } = useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
+
+  const [appProblemClear] = useAppProblemClearMutation({
+    onCompleted: data => {
+      const errors = data?.appProblemClear?.errors ?? [];
+
+      if (errors.length === 0) {
+        refetchInstalledApps();
+      } else {
+        errors.forEach(error => notify({ status: "error", text: error.message ?? "" }));
+      }
+    },
+  });
+
+  const handleClearProblem = useCallback(
+    (appId: string, key?: string) => {
+      appProblemClear({
+        variables: {
+          app: appId,
+          ...(key ? { key } : {}),
+        },
+      });
+    },
+    [appProblemClear],
+  );
 
   const {
     pendingInstallations,
@@ -106,6 +134,8 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           loading={pendingInstallationsLoading || installedAppsLoading}
           clearSearch={() => handleQueryChange("")}
           searchQuery={query}
+          hasManagedAppsPermission={hasManagedAppsPermission}
+          onClearProblem={handleClearProblem}
         />
 
         <DeleteFailedInstallationDialog

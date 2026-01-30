@@ -383,6 +383,18 @@ export const problemMessages = defineMessages({
     defaultMessage: "Open the app",
     id: "lN6B54",
   },
+  forceClear: {
+    defaultMessage: "Force clear",
+    id: "8dD0Gt",
+  },
+  forceClearTooltip: {
+    defaultMessage: "Force clear this error. Use if you know what you are doing",
+    id: "pkS9/B",
+  },
+  clearAllAppProblems: {
+    defaultMessage: "Clear all app owned problems",
+    id: "UBl/YR",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({

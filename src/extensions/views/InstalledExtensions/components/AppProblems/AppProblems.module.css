@@ -113,6 +113,18 @@
   padding-bottom: 12px;
 }
 
+.problemRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.forceClearButton:hover {
+  color: #374151;
+  border-color: #9ca3af;
+}
+
 .timestamp {
   color: #6b7280;
   font-size: 12px;

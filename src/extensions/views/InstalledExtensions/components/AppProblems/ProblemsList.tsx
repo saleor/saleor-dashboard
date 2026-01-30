@@ -16,6 +16,8 @@ const MAX_VISIBLE_PROBLEMS = 3;
 interface ProblemsListProps {
   problems: AppProblem[];
   appId: string;
+  onClearProblem?: (appId: string, key?: string) => void;
+  hasManagedAppsPermission?: boolean;
 }
 
 interface SeverityTypeGroup {
@@ -80,9 +82,18 @@ interface ProblemGroupSectionProps {
   severity: AppProblemSeverityEnum;
   problems: AppProblem[];
   appId: string;
+  onClearProblem?: (appId: string, key?: string) => void;
+  hasManagedAppsPermission?: boolean;
 }
 
-const ProblemGroupSection = ({ typename, severity, problems, appId }: ProblemGroupSectionProps) => {
+const ProblemGroupSection = ({
+  typename,
+  severity,
+  problems,
+  appId,
+  onClearProblem,
+  hasManagedAppsPermission,
+}: ProblemGroupSectionProps) => {
   const intl = useIntl();
 
   if (problems.length === 0) {
@@ -93,6 +104,8 @@ const ProblemGroupSection = ({ typename, severity, problems, appId }: ProblemGro
   const isError = severity === AppProblemSeverityEnum.ERROR;
   const SeverityIcon = isError ? CircleAlert : TriangleAlert;
   const iconClass = isError ? styles.errorIcon : styles.warningIcon;
+  const canForceClear =
+    hasManagedAppsPermission && typename === "AppProblemOwn" && !!onClearProblem;
 
   return (
     <>
@@ -106,8 +119,20 @@ const ProblemGroupSection = ({ typename, severity, problems, appId }: ProblemGro
           </Link>
         )}
       </div>
-      {problems.map((problem, index) => (
-        <ProblemCard key={index} problem={problem} />
+      {problems.map(problem => (
+        <ProblemCard
+          key={
+            problem.__typename === "AppProblemOwn"
+              ? `${problem.key}-${problem.createdAt}`
+              : problem.createdAt
+          }
+          problem={problem}
+          onForceClear={
+            canForceClear && problem.__typename === "AppProblemOwn"
+              ? () => onClearProblem(appId, problem.key ?? undefined)
+              : undefined
+          }
+        />
       ))}
     </>
   );
@@ -133,7 +158,12 @@ const getVisibleGroups = (allGroups: SeverityTypeGroup[], limit: number): Severi
   return result;
 };
 
-export const ProblemsList = ({ problems, appId }: ProblemsListProps) => {
+export const ProblemsList = ({
+  problems,
+  appId,
+  onClearProblem,
+  hasManagedAppsPermission,
+}: ProblemsListProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
 
@@ -167,6 +197,8 @@ export const ProblemsList = ({ problems, appId }: ProblemsListProps) => {
             severity={group.severity}
             problems={group.items}
             appId={appId}
+            onClearProblem={onClearProblem}
+            hasManagedAppsPermission={hasManagedAppsPermission}
           />
         </div>
       ))}

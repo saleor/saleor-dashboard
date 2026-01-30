@@ -207,6 +207,19 @@ export const appDeactivateMutation = gql`
   }
 `;
 
+export const appProblemClearMutation = gql`
+  mutation AppProblemClear($app: ID!, $key: String) {
+    appProblemClear(app: $app, key: $key) {
+      app {
+        id
+      }
+      errors {
+        ...AppError
+      }
+    }
+  }
+`;
+
 export const appUpdatePermissions = gql`
   mutation AppUpdatePermissions($id: ID!, $permissions: [PermissionEnum!]!) {
     appUpdate(id: $id, input: { permissions: $permissions }) {
