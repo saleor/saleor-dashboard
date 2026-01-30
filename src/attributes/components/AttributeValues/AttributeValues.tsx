@@ -209,7 +209,7 @@ const AttributeValues = ({
                     <TableCell className={classes.iconCell} />
                   </TableRowLink>
                 </TableHead>
-                <SortableTableBody onSortEnd={onValueReorder}>
+                <SortableTableBody onSortEnd={onValueReorder} disabled={!!searchQuery}>
                   {renderCollection(values, (value, valueIndex) => (
                     <SortableTableRow<"row">
                       data-test-id="attributes-rows"
