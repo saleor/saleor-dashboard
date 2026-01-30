@@ -148,6 +148,7 @@ const CollectionDetailsPage = ({
               titlePlaceholder={collection?.name}
               onChange={change}
             />
+            <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <div>

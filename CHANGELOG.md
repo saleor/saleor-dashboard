@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.22.29
+
+### Patch Changes
+
+- [#6284](https://github.com/saleor/saleor-dashboard/pull/6284) [`1a8279b`](https://github.com/saleor/saleor-dashboard/commit/1a8279b4f104220a6e0e79bcbccd8364cfa97831) Thanks [@xseignard](https://github.com/xseignard)! - Added metadata editing dialog for warehouses, allowing users to manage both public and private metadata through a dedicated modal accessible from the warehouse details page.
+
+- [#6299](https://github.com/saleor/saleor-dashboard/pull/6299) [`cee423f`](https://github.com/saleor/saleor-dashboard/commit/cee423f98f59f76842482236e7d5bbab971222cf) Thanks [@mirekm](https://github.com/mirekm)! - Fix visibility of checkboxes (when focused) in DataGrid
+
+- [#6300](https://github.com/saleor/saleor-dashboard/pull/6300) [`57e859a`](https://github.com/saleor/saleor-dashboard/commit/57e859a13b6b9e1670c358a9ad2291a63356c0f2) Thanks [@mirekm](https://github.com/mirekm)! - Fix variant form initialisation
+
+- [#6285](https://github.com/saleor/saleor-dashboard/pull/6285) [`d65d066`](https://github.com/saleor/saleor-dashboard/commit/d65d06657d599c7a638c5b164acd3cb32fdee68f) Thanks [@mirekm](https://github.com/mirekm)! - Improved Variants Generator to support required non-selection attributes with a dedicated tab. Also added contextual tooltips explaining why generation is disabled.
+
+- [#6301](https://github.com/saleor/saleor-dashboard/pull/6301) [`d097e37`](https://github.com/saleor/saleor-dashboard/commit/d097e370223d4088257994268409f4f863f8a09f) Thanks [@mirekm](https://github.com/mirekm)! - Attribute configuration: allow users to filter attribute values by slug or name when there are more than 5 values.
+
+- [#6276](https://github.com/saleor/saleor-dashboard/pull/6276) [`d0f142e`](https://github.com/saleor/saleor-dashboard/commit/d0f142e077b11f44d18f8e7e40a621c2416d13cf) Thanks [@mirekm](https://github.com/mirekm)! - Improve table design consistency across the dashboard with unified styling for ResponsiveTable components, better loading states, and improved scroll behavior for variant navigation
+
 ## 3.22.28
 
 ### Patch Changes

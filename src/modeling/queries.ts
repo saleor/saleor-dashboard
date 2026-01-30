@@ -39,6 +39,7 @@ export const pageDetails = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     page(id: $id) {
       ...PageDetails
@@ -53,6 +54,7 @@ export const pageTypeQuery = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     pageType(id: $id) {
       id

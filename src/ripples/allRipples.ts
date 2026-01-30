@@ -1,3 +1,4 @@
+import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
@@ -8,6 +9,7 @@ import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripple
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { Ripple } from "@dashboard/ripples/types";
+import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
   // ... register ripples here
@@ -21,9 +23,15 @@ export const allRipples: Ripple[] = [
   rippleOrderMetadata,
   rippleRefreshedOrderSections,
 
+  // Warehouses
+  rippleWarehouseMetadata,
+
   // Products
   rippleProductAvailabilityDiagnostics,
   rippleVariantGenerator,
+
+  // Attributes
+  rippleAttributeValuesSearch,
 
   // ...
 

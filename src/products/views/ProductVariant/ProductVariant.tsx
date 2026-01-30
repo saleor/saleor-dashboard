@@ -312,6 +312,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
+        hasVariants={variant?.product?.productType?.hasVariants ?? true}
         attributeValues={attributeValues}
         channels={channels}
         channelErrors={updateChannelsOpts?.data?.productVariantChannelListingUpdate?.errors || []}

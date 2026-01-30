@@ -2,7 +2,7 @@ import { transactionEvent } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 import { EventItem } from "./EventItem";
 
@@ -17,7 +17,7 @@ describe("EventItem", () => {
 
     // Act
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <Wrapper>
           <EventItem event={transactionEvent} onHover={onHover} hoveredPspReference={"PSP"} />
         </Wrapper>
@@ -39,7 +39,7 @@ describe("EventItem", () => {
   it("displays avatar with title for app creator", () => {
     // Arrange & Act
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <Wrapper>
           <EventItem
             event={transactionEvent}

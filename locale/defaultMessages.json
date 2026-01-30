@@ -528,6 +528,9 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
+  "0xMUfd": {
+    "string": "No results found for \"{query}\""
+  },
   "1+ROfp": {
     "string": "Transaction"
   },
@@ -1100,10 +1103,6 @@
   "4YJHut": {
     "string": "Clear search"
   },
-  "4YtpqB": {
-    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
-    "string": "Required attributes ({attributes}) are not currently supported by Generator.{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
-  },
   "4YyeCx": {
     "context": "label for order total amount",
     "string": "Order total"
@@ -1372,16 +1371,8 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
-  "5ye4Ik": {
-    "context": "warning message when some variants failed to create",
-    "string": "{success} variants created, {failed} failed"
-  },
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
-  },
-  "62Ywh2": {
-    "context": "number of countries",
-    "string": "{number} Countries"
   },
   "62nsdy": {
     "string": "Retry"
@@ -1731,6 +1722,10 @@
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
+  "8FDx9i": {
+    "context": "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
+    "string": "To use the Generator, this product type needs:{newline}{newline}• 'Product type uses Variant Attributes' enabled{newline}• Selection variant attributes defined"
+  },
   "8GC/ah": {
     "context": "variants section name",
     "string": "Variants"
@@ -1847,6 +1842,10 @@
   "8y4+0a": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
+  },
+  "9+iLpf": {
+    "context": "link text to product type settings",
+    "string": "Configure in product type settings"
   },
   "91vQMc": {
     "string": "order management"
@@ -2027,6 +2026,10 @@
     "context": "section header",
     "string": "Product Attributes"
   },
+  "9seX5T": {
+    "context": "attribute values search placeholder",
+    "string": "Search attribute values..."
+  },
   "9uNz+T": {
     "context": "button",
     "string": "Cancel"
@@ -2099,6 +2102,10 @@
   "AWGJnU": {
     "context": "replaced event title",
     "string": "Products were replaced"
+  },
+  "AWyKB7": {
+    "context": "card header title",
+    "string": "Channel list"
   },
   "AY7Tuz": {
     "string": "The same object cannot be in both lists"
@@ -3237,6 +3244,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
   },
+  "GjEdSd": {
+    "context": "number of postal code ranges",
+    "string": "{number, plural, one {# postal code range} other {# postal code ranges}}"
+  },
   "Gkip05": {
     "context": "button",
     "string": "Unassign"
@@ -3408,6 +3419,10 @@
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
     "string": "Sold units"
+  },
+  "Hd3E1g": {
+    "context": "table header column",
+    "string": "Channel name"
   },
   "Hebup2": {
     "context": "Health check subtitle when product is not published",
@@ -5810,10 +5825,6 @@
   "VEext+": {
     "string": "Are you sure you want to delete this image?"
   },
-  "VHuzgq": {
-    "context": "table actions",
-    "string": "Actions"
-  },
   "VIABHy": {
     "context": "error message",
     "string": "Default shipping zone already exists"
@@ -5982,10 +5993,6 @@
   },
   "WHgdsk": {
     "string": "Out of stock"
-  },
-  "WIxSDm": {
-    "context": "card header",
-    "string": "{country} class rates"
   },
   "WK62MN": {
     "string": "Fulfillment"
@@ -6950,6 +6957,10 @@
     "context": "button",
     "string": "Create permission group"
   },
+  "bRQeJp": {
+    "context": "success message when all variants are created",
+    "string": "{count, plural, one {# variant created successfully} other {# variants created successfully}}"
+  },
   "bRXgSC": {
     "context": "capture button with amount",
     "string": "Capture {amount}"
@@ -7295,6 +7306,10 @@
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
   },
+  "dAst+b": {
+    "context": "attribute values list: no attribute values found",
+    "string": "No values found"
+  },
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
@@ -7448,6 +7463,10 @@
   },
   "eRqx44": {
     "string": "Search collections..."
+  },
+  "eS8xZ6": {
+    "context": "card header",
+    "string": "Tax class rates: {country}"
   },
   "eUjFjW": {
     "string": "Permission group created"
@@ -7695,10 +7714,6 @@
     "context": "button",
     "string": "Assign categories"
   },
-  "g5zIpS": {
-    "context": "No attribute values found",
-    "string": "No values found"
-  },
   "g6yuk2": {
     "context": "export items to csv file, choice field label",
     "string": "Export information for:"
@@ -7724,6 +7739,10 @@
   "gCZYcl": {
     "context": "tooltip shown when shipping method is selected but no other options exist",
     "string": "No alternative shipping methods available"
+  },
+  "gDvd3v": {
+    "context": "tooltip when generate variants is disabled due to unsupported required attributes",
+    "string": "Required attributes with unsupported types:{newline}{attributes}{newline}{newline}To use the Generator:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
   },
   "gE6aiQ": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
@@ -7769,10 +7788,6 @@
   },
   "gTr0qE": {
     "string": "Shipping Settings"
-  },
-  "gVD1os": {
-    "context": "empty list message",
-    "string": "You haven’t assigned any member to this permission group yet."
   },
   "gVqSnA": {
     "string": "Assign and save"
@@ -7957,6 +7972,9 @@
   },
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
+  },
+  "hh0xW7": {
+    "string": "Channel Name"
   },
   "hjEkEH": {
     "string": "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed."
@@ -8144,6 +8162,9 @@
     "context": "translation progress",
     "string": "{current} of {max}"
   },
+  "imYtnq": {
+    "string": "Selected {number, plural, one {# item} other {# items}}"
+  },
   "inWs4U": {
     "context": "attribute visibility in storefront",
     "string": "Visible in storefront"
@@ -8188,10 +8209,6 @@
   "j/shmR": {
     "context": "Shown when shipping zone count cannot be determined",
     "string": "Shipping zones: Unknown"
-  },
-  "j/vV0n": {
-    "context": "channel name",
-    "string": "Channel Name"
   },
   "j08fR9": {
     "context": "Product collections",
@@ -8581,6 +8598,10 @@
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
   },
+  "lCEp2/": {
+    "context": "save button disabled tooltip",
+    "string": "Set prices for all channels to save"
+  },
   "lCPxtT": {
     "context": "resend code label",
     "string": "Resend code"
@@ -8599,10 +8620,6 @@
   "lEG/12": {
     "context": "Webhook subscription query card title",
     "string": "Subscription Query"
-  },
-  "lEx2zw": {
-    "context": "tooltip when generate variants is disabled due to no selection attributes",
-    "string": "No selection attributes defined for this product type."
   },
   "lF+VJQ": {
     "context": "Shipment information card header",
@@ -9162,6 +9179,10 @@
   "odpDdj": {
     "context": "order history message",
     "string": "Items were oversold"
+  },
+  "oegjWf": {
+    "context": "attribute values list: no search results",
+    "string": "No values match your search"
   },
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
@@ -9926,10 +9947,6 @@
   "t1Bd7E": {
     "string": "Payment captured"
   },
-  "t1XcOo": {
-    "context": "success message when all variants are created",
-    "string": "{count} variants created successfully"
-  },
   "t1scMK": {
     "string": "Refunds settings"
   },
@@ -9944,6 +9961,10 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
+  },
+  "t84lbb": {
+    "context": "empty list message",
+    "string": "You haven't assigned any member to this permission group yet."
   },
   "tCLTCb": {
     "context": "tab name",
@@ -10107,6 +10128,10 @@
     "context": "shipping zones configuration",
     "string": "Change default weight unit"
   },
+  "u6rPuc": {
+    "context": "warning message when some variants failed to create",
+    "string": "{success, plural, one {# variant} other {# variants}} created, {failed, plural, one {# failed} other {# failed}}"
+  },
   "u7ShY+": {
     "context": "pill status for overcaptured outcome",
     "string": "Overcaptured"
@@ -10195,10 +10220,6 @@
   "uccjUM": {
     "context": "Dry run objects",
     "string": "Objects"
-  },
-  "ud0w8h": {
-    "context": "number of postal code ranges",
-    "string": "{number} postal code ranges"
   },
   "udJUSa": {
     "context": "Authorize {app name}",
@@ -10316,6 +10337,9 @@
   "v3WWK+": {
     "string": "Status is invalid"
   },
+  "v8UngX": {
+    "string": "Search warehouses..."
+  },
   "v8e93p": {
     "context": "hint for order total option",
     "string": "Matches what customer owes"
@@ -10368,6 +10392,10 @@
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
+  },
+  "vNaDeR": {
+    "context": "number of countries",
+    "string": "{count, plural, one {# Country} other {# Countries}}"
   },
   "vONi+O": {
     "string": "Country"
@@ -10430,6 +10458,9 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "vaFjs6": {
+    "string": "No warehouses available to add"
   },
   "vbop3G": {
     "string": "Create new model"
@@ -10583,9 +10614,6 @@
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
-  },
-  "wL7VAE": {
-    "string": "Actions"
   },
   "wL850U": {
     "context": "draft order lines, section header",
@@ -10887,10 +10915,6 @@
     "context": "discount value",
     "string": "discount"
   },
-  "yLfbSh": {
-    "context": "support label",
-    "string": "Channel name"
-  },
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
@@ -11024,10 +11048,6 @@
   "zCb8fX": {
     "string": "Weight"
   },
-  "zD7/M6": {
-    "context": "empty list message",
-    "string": "Please use Assign Members button to do so."
-  },
   "zDvDnG": {
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
@@ -11057,6 +11077,10 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
+  },
+  "zN0Eub": {
+    "context": "info message when hasVariants is false but variant attributes exist",
+    "string": "This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
   },
   "zQvVDJ": {
     "string": "All"
@@ -11153,6 +11177,9 @@
   "znbVYT": {
     "context": "product available for purchase date",
     "string": "Will become available on {date}"
+  },
+  "zo5aT3": {
+    "string": "Warehouse Metadata"
   },
   "zoUlyR": {
     "string": "Go to product types"

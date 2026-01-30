@@ -21,6 +21,7 @@ export const pageUpdate = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     pageUpdate(id: $id, input: $input) {
       errors {
