@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,

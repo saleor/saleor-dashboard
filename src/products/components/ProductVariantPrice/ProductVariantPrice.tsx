@@ -5,7 +5,7 @@ import {
   ChannelPriceArgs,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";

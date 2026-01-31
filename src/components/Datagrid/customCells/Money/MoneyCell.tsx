@@ -1,4 +1,5 @@
 import { Locale } from "@dashboard/components/Locale";
+import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   CustomCell,
   CustomRenderer,
@@ -6,8 +7,8 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
+import { ChangeEvent, KeyboardEvent, useMemo } from "react";
 
-import { usePriceField } from "../../../PriceField/usePriceField";
 import { hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
@@ -22,25 +23,38 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   value: cell,
   onChange: onChangeBase,
 }) => {
-  const { onChange, onKeyDown, minValue, step } = usePriceField(cell.data.currency, event =>
+  const maxDecimalPlaces = useMemo(
+    () => getCurrencyDecimalPoints(cell.data.currency),
+    [cell.data.currency],
+  );
+  const step = 1 / Math.pow(10, maxDecimalPlaces ?? 2);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeBase({
       ...cell,
       data: {
         ...cell.data,
-        value: event.target.value,
+        value: e.target.value ? parseFloat(e.target.value) : null,
       },
-    }),
-  );
+    });
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // Block exponent notation and negative sign
+    if (e.key === "e" || e.key === "E" || e.key === "-") {
+      e.preventDefault();
+    }
+  };
 
   // TODO: range is read only - we don't need support for editing,
   // it is better to split component into range and editable money cell
   return (
     <input
       type="number"
-      onChange={onChange}
-      onKeyDown={onKeyDown}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
       value={Array.isArray(cell.data.value) ? "" : (cell.data.value ?? "")}
-      min={minValue}
+      min={0}
       step={step}
       autoFocus
     />

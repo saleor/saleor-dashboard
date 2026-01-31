@@ -1,2 +1,2 @@
-export { default } from "./PriceField";
-export * from "./PriceField";
+export type { PriceFieldProps } from "./PriceField";
+export { PriceField } from "./PriceField";

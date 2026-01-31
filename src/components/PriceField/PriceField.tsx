@@ -1,9 +1,8 @@
-// @ts-strict-ignore
 import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
 
 import { usePriceField } from "./usePriceField";
 
-export interface PriceFieldProps extends InputProps {
+export interface PriceFieldProps extends Omit<InputProps, "onChange"> {
   className?: string;
   currencySymbol?: string;
   disabled?: boolean;
@@ -12,26 +11,24 @@ export interface PriceFieldProps extends InputProps {
   label?: string;
   name?: string;
   value?: string;
-  minValue?: string;
   required?: boolean;
-  onChange: (event: any) => any;
+  onChange: (event: { target: { name: string; value: string | null } }) => void;
 }
 
-const PriceField = (props: PriceFieldProps) => {
-  const {
-    className,
-    disabled,
-    error,
-    label,
-    hint = "",
-    currencySymbol,
-    name,
-    onChange: onChangeBase,
-    required,
-    value,
-    ...inputProps
-  } = props;
-  const { onChange, onKeyDown, minValue, step } = usePriceField(currencySymbol, onChangeBase);
+export const PriceField = ({
+  className,
+  disabled,
+  error,
+  label,
+  hint = "",
+  currencySymbol,
+  name = "price",
+  onChange: onChangeBase,
+  required,
+  value,
+  ...inputProps
+}: PriceFieldProps) => {
+  const { onChange } = usePriceField(currencySymbol, onChangeBase);
 
   return (
     <Input
@@ -42,14 +39,13 @@ const PriceField = (props: PriceFieldProps) => {
       data-test-id="price-field"
       error={error}
       helperText={hint}
-      value={value}
-      min={props.minValue || minValue}
-      step={step}
+      value={value ?? ""}
       name={name}
       required={required}
       onChange={onChange}
-      onKeyDown={onKeyDown}
-      type="number"
+      type="text"
+      inputMode="decimal"
+      autoComplete="off"
       endAdornment={
         <Text size={2} marginRight={2}>
           {currencySymbol || ""}
@@ -60,8 +56,4 @@ const PriceField = (props: PriceFieldProps) => {
   );
 };
 
-PriceField.defaultProps = {
-  name: "price",
-};
 PriceField.displayName = "PriceField";
-export default PriceField;

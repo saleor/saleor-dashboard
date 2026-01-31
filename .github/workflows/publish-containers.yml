@@ -42,7 +42,6 @@ jobs:
             type=pep440,pattern={{major}}.{{minor}}
           context: git
 
-
   build-push:
     needs: prepare-variables
     uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
@@ -64,7 +63,6 @@ jobs:
       build-args: |
         COMMIT_ID=${{ github.sha }}
         PROJECT_VERSION=${{ needs.prepare-variables.outputs.version }}
-
 
   summary:
     needs: [prepare-variables, build-push]

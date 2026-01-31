@@ -1,2 +1,1 @@
-export { default } from "./TaxInput";
-export * from "./TaxInput";
+export { TaxInput } from "./TaxInput";
