@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import {
   OrderDetailsFragment,
   OrderGrantRefundCreateErrorFragment,
@@ -109,7 +109,7 @@ export const TransactionSubmitCard = ({
           />
           <PriceField
             label={intl.formatMessage(submitCardMessages.returnRefundValueLabel)}
-            onChange={e => onAmountChange(e.target.value)}
+            onChange={e => onAmountChange(parseFloat(e.target.value ?? "") || 0)}
             name="amount"
             value={getReturnRefundValue({
               autoGrantRefund,
