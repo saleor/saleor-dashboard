@@ -18,6 +18,11 @@ const line = {
       __typename: "Product",
       id: "UHJvZHVjdDoxMTY=",
       isAvailableForPurchase: true,
+      category: {
+        __typename: "Category",
+        id: "Q2F0ZWdvcnk6MQ==",
+        name: "Test Category",
+      },
     },
   },
   productName: "Blue Hoodie 4",

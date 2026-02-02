@@ -287,6 +287,11 @@ export class OrderFixture {
           __typename: "Product",
           id: "product-id-1",
           isAvailableForPurchase: true,
+          category: {
+            __typename: "Category",
+            id: "Q2F0ZWdvcnk6MQ==",
+            name: "Apparel",
+          },
         },
       },
       isGift: false,
@@ -348,6 +353,11 @@ export class OrderFixture {
               __typename: "Product",
               id: "",
               isAvailableForPurchase: false,
+              category: {
+                __typename: "Category",
+                id: "",
+                name: "",
+              },
             },
           },
           totalPrice: {
