@@ -137,13 +137,13 @@ const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     costPrice: "",
     currency: channel.currencyCode,
     id: channel.id,
-    isAvailableForPurchase: true,
+    isAvailableForPurchase: false,
     variantsIds: [],
-    isPublished: true,
+    isPublished: false,
     name: channel.name,
     price: "",
     publishedAt: null,
-    visibleInListings: true,
+    visibleInListings: false,
   })) || [];
 
 const createShippingChannels = (
