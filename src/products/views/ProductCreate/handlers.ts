@@ -9,6 +9,7 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { ChannelData } from "@dashboard/channels/utils";
+import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeErrorFragment,
   FileUploadMutation,
@@ -58,6 +59,7 @@ const getSimpleProductVariables = (formData: ProductCreateData, productId: strin
       : null,
     trackInventory: formData.trackInventory,
   },
+  firstValues: VALUES_PAGINATE_BY,
 });
 
 export function createHandler(
