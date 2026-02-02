@@ -283,7 +283,15 @@ const Datagrid = ({
 
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
-      if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
+      const [colIndex] = item;
+
+      if (preventRowClickOnSelectionCheckbox(rowMarkers, colIndex)) {
+        return;
+      }
+
+      const firstDataColumnIndex = rowMarkers === "checkbox" ? 1 : 0;
+
+      if (colIndex !== firstDataColumnIndex) {
         return;
       }
 
@@ -300,7 +308,7 @@ const Datagrid = ({
         return;
       }
 
-      if (getCellAction(availableColumns, item[0])) {
+      if (getCellAction(availableColumns, colIndex)) {
         return;
       }
 
@@ -321,7 +329,7 @@ const Datagrid = ({
         rowAnchorRef.current.dispatchEvent(clickEvent);
       }
     },
-    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
+    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef, availableColumns],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
