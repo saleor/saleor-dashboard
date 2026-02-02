@@ -6,13 +6,13 @@ export const customerFragment = gql`
     email
     firstName
     lastName
+    dateJoined
   }
 `;
 
 export const customerDetailsFragment = gql`
   fragment CustomerDetails on User {
     ...Customer
-    dateJoined
     lastLogin
     defaultShippingAddress {
       ...Address

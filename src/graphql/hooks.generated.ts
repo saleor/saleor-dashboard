@@ -453,6 +453,7 @@ export const CustomerFragmentDoc = gql`
   email
   firstName
   lastName
+  dateJoined
 }
     `;
 export const AddressFragmentDoc = gql`
@@ -478,7 +479,6 @@ export const AddressFragmentDoc = gql`
 export const CustomerDetailsFragmentDoc = gql`
     fragment CustomerDetails on User {
   ...Customer
-  dateJoined
   lastLogin
   defaultShippingAddress {
     ...Address

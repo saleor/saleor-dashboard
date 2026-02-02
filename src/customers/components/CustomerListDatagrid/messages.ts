@@ -23,4 +23,9 @@ export const columnsMessages = defineMessages({
     defaultMessage: "No. of orders",
     description: "column header",
   },
+  joinDate: {
+    id: "e+Xl52",
+    defaultMessage: "Join date",
+    description: "column header",
+  },
 });
