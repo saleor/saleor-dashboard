@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
@@ -10,7 +10,6 @@ import { toFixed } from "@dashboard/utils/toFixed";
 import { Button, Input, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
@@ -135,8 +134,8 @@ const OrderDiscountCommonModal = ({
     },
   ];
   const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
-  const handleSetDiscountValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
+  const handleSetDiscountValue = (event: { target: { value: string | null } }) => {
+    const value = event.target.value ?? "";
 
     setValueErrorMsg(getErrorMessage(value));
     setValue(value);

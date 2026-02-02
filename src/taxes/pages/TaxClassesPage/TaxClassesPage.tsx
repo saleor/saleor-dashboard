@@ -28,7 +28,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxInput from "../../components/TaxInput";
+import { TaxInput } from "../../components/TaxInput";
 import TaxClassesForm from "./form";
 import { useStyles } from "./styles";
 import { TaxClassesMenu } from "./TaxClassesMenu";
