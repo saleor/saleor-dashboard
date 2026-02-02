@@ -28,6 +28,11 @@ export const orderDetailsStaticColumnsAdapter = (
     width: 300,
   },
   {
+    id: "category",
+    title: intl.formatMessage(columnsMessages.category),
+    width: 150,
+  },
+  {
     id: "sku",
     title: intl.formatMessage(columnsMessages.sku),
     width: 150,
@@ -96,6 +101,8 @@ export const createGetCellContent =
         return readonlyTextCell(rowData.productSku ?? "", false);
       case "variantName":
         return readonlyTextCell(rowData?.variant?.name ?? "-", false);
+      case "category":
+        return readonlyTextCell(rowData?.variant?.product?.category?.name ?? "-", false);
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "price":

@@ -1434,6 +1434,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
                 isAvailableForPurchase: true,
+                category: {
+                  __typename: "Category",
+                  id: "Q2F0ZWdvcnk6MQ==",
+                  name: "Apparel",
+                },
               },
               stocks: [
                 {
@@ -1567,6 +1572,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
                 isAvailableForPurchase: true,
+                category: {
+                  __typename: "Category",
+                  id: "Q2F0ZWdvcnk6MQ==",
+                  name: "Apparel",
+                },
               },
               stocks: [
                 {
@@ -1700,6 +1710,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           __typename: "Product",
           id: "UHJvZHVjdDo1",
           isAvailableForPurchase: true,
+          category: {
+            __typename: "Category",
+            id: "Q2F0ZWdvcnk6MQ==",
+            name: "Apparel",
+          },
         },
         stocks: [
           {
@@ -1811,6 +1826,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           __typename: "Product",
           id: "UHJvZHVjdDo1",
           isAvailableForPurchase: true,
+          category: {
+            __typename: "Category",
+            id: "Q2F0ZWdvcnk6MQ==",
+            name: "Apparel",
+          },
         },
         stocks: [
           {
@@ -2091,6 +2111,11 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           __typename: "Product",
           id: "UHJvZHVjdDo1",
           isAvailableForPurchase: true,
+          category: {
+            __typename: "Category",
+            id: "Q2F0ZWdvcnk6MQ==",
+            name: "Apparel",
+          },
         },
         stocks: [
           {
@@ -2202,6 +2227,11 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           __typename: "Product",
           id: "UHJvZHVjdDo1",
           isAvailableForPurchase: true,
+          category: {
+            __typename: "Category",
+            id: "Q2F0ZWdvcnk6MQ==",
+            name: "Apparel",
+          },
         },
         stocks: [
           {
