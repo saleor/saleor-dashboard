@@ -1,4 +1,4 @@
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import { dateCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Customers } from "@dashboard/customers/types";
 import { CustomerListUrlSortField } from "@dashboard/customers/urls";
@@ -35,6 +35,11 @@ export const customerListStaticColumnsAdapter = (
           },
         ]
       : []),
+    {
+      id: "joinDate",
+      title: intl.formatMessage(columnsMessages.joinDate),
+      width: 200,
+    },
   ].map(column => ({
     ...column,
     icon: getColumnSortDirectionIcon(sort, column.id),
@@ -55,6 +60,8 @@ export const createGetCellContent =
         return readonlyTextCell(getUserName(rowData) ?? "");
       case "email":
         return readonlyTextCell(rowData?.email ?? "");
+      case "joinDate":
+        return dateCell(rowData?.dateJoined ?? "");
       case "orders":
         return readonlyTextCell(rowData?.orders?.totalCount?.toString() ?? "");
       default:

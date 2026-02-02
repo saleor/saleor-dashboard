@@ -689,6 +689,7 @@ export const customerList: Customers = [
     firstName: "curtis",
     id: "VXNlcjox",
     lastName: "Bailey",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -700,6 +701,7 @@ export const customerList: Customers = [
     firstName: "Curtis",
     id: "VXNlcjox",
     lastName: "Bailey",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -711,6 +713,7 @@ export const customerList: Customers = [
     firstName: "Elizabeth",
     id: "VXNlcjoy",
     lastName: "Vaughn",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -722,6 +725,7 @@ export const customerList: Customers = [
     firstName: "Michael",
     id: "VXNlcjoz",
     lastName: "Martinez",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -733,6 +737,7 @@ export const customerList: Customers = [
     firstName: "Kayla",
     id: "VXNlcjo0",
     lastName: "Griffin",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -744,6 +749,7 @@ export const customerList: Customers = [
     firstName: "Donna",
     id: "VXNlcjo1",
     lastName: "Robinson",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -755,6 +761,7 @@ export const customerList: Customers = [
     firstName: "James",
     id: "VXNlcjo2",
     lastName: "Bqall",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -766,6 +773,7 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjo3",
     lastName: "Gonzalez",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -777,6 +785,7 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjo3",
     lastName: "Gonzalez",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -788,6 +797,7 @@ export const customerList: Customers = [
     firstName: "Wesley",
     id: "VXNlcjo4",
     lastName: "Davis",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -799,6 +809,7 @@ export const customerList: Customers = [
     firstName: "Laura",
     id: "VXNlcjo5",
     lastName: "Stone",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -810,6 +821,7 @@ export const customerList: Customers = [
     firstName: "William",
     id: "VXNlcjoxMA==",
     lastName: "Miller",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -821,6 +833,7 @@ export const customerList: Customers = [
     firstName: "Donald",
     id: "VXNlcjoxMQ==",
     lastName: "Solomon",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -832,6 +845,7 @@ export const customerList: Customers = [
     firstName: "Anthony",
     id: "VXNlcjoxMg==",
     lastName: "Young",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -843,6 +857,7 @@ export const customerList: Customers = [
     firstName: "Hanson",
     id: "VXNlcjoxMw==",
     lastName: "Sharon",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -854,6 +869,7 @@ export const customerList: Customers = [
     firstName: "Laura",
     id: "VXNlcjoxNA==",
     lastName: "Jensen",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -865,6 +881,7 @@ export const customerList: Customers = [
     firstName: "Mark",
     id: "VXNlcjoxNQ==",
     lastName: "Lee",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 1,
@@ -876,6 +893,7 @@ export const customerList: Customers = [
     firstName: "David",
     id: "VXNlcjoxNg==",
     lastName: "Lawson",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -887,6 +905,7 @@ export const customerList: Customers = [
     firstName: "David",
     id: "VXNlcjoxNg==",
     lastName: "Lawson",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 2,
@@ -898,6 +917,7 @@ export const customerList: Customers = [
     firstName: "Faith",
     id: "VXNlcjoxNw==",
     lastName: "Smith",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -909,6 +929,7 @@ export const customerList: Customers = [
     firstName: "John",
     id: "VXNlcjoxOA==",
     lastName: "Jones",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -920,6 +941,7 @@ export const customerList: Customers = [
     firstName: "Ronald",
     id: "VXNlcjoxOQ==",
     lastName: "Fisher",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -931,6 +953,7 @@ export const customerList: Customers = [
     firstName: "Jason",
     id: "VXNlcjoyMA==",
     lastName: "Gray",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 0,
@@ -942,6 +965,7 @@ export const customerList: Customers = [
     firstName: "Tom",
     id: "VXNlcjoyMQ==",
     lastName: "Cooper",
+    dateJoined: "2023-01-20T12:00:00Z",
     orders: {
       __typename: "OrderCountableConnection",
       totalCount: 6,
