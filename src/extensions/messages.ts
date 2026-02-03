@@ -355,9 +355,21 @@ export const problemMessages = defineMessages({
     defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",
     id: "tdcGPK",
   },
-  showLessProblems: {
-    defaultMessage: "Show less",
-    id: "qyJtWy",
+  showMoreIncludingActiveAndCritical: {
+    defaultMessage: ", including {active} active and {critical} critical",
+    id: "1aAwu4",
+  },
+  showMoreIncludingActive: {
+    defaultMessage: ", including {active} active",
+    id: "CyYBH5",
+  },
+  showMoreIncludingCritical: {
+    defaultMessage: ", including {critical} critical",
+    id: "3OiSHe",
+  },
+  allProblems: {
+    defaultMessage: "All problems ({count})",
+    id: "mI+leH",
   },
   circuitBreakerType: {
     defaultMessage: "CircuitBreaker",
@@ -384,8 +396,8 @@ export const problemMessages = defineMessages({
     id: "lN6B54",
   },
   forceClear: {
-    defaultMessage: "Force dismiss",
-    id: "PvKgaj",
+    defaultMessage: "Dismiss",
+    id: "TDaF6J",
   },
   forceClearTooltip: {
     defaultMessage: "Force clear this error. Use if you know what you are doing",

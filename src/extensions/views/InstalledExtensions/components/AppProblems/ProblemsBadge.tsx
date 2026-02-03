@@ -25,8 +25,8 @@ export const ProblemsBadge = ({
 
   const label =
     criticalCount > 0
-      ? `${intl.formatMessage(problemMessages.errorCount, { count: totalCount })}, ${intl.formatMessage(problemMessages.includingCritical, { count: criticalCount })}`
-      : intl.formatMessage(problemMessages.errorCount, { count: totalCount });
+      ? `${intl.formatMessage(problemMessages.problemCount, { count: totalCount })}, ${intl.formatMessage(problemMessages.includingCritical, { count: criticalCount })}`
+      : intl.formatMessage(problemMessages.problemCount, { count: totalCount });
 
   return (
     <button

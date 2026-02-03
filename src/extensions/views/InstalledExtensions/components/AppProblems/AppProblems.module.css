@@ -2,9 +2,8 @@
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  margin: 18px 63px 18px;
+  margin: 18px 63px;
   overflow: hidden;
-  flex: 1;
 }
 
 .severityError {
@@ -228,6 +227,12 @@
 
 .groupActionLink:hover {
   text-decoration: underline;
+}
+
+.popupProblemsList {
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: 0 24px 24px;
 }
 
 .headerBadgeError {

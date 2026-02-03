@@ -2,14 +2,14 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { messages, problemMessages } from "@dashboard/extensions/messages";
+import { messages } from "@dashboard/extensions/messages";
 import {
   InstalledExtension,
   isProblemCritical,
   isProblemDismissed,
 } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -79,13 +79,11 @@ const ExtensionRow = ({
   hasManagedAppsPermission,
   onClearProblem,
 }: ExtensionRowProps) => {
-  const intl = useIntl();
   const problems = extension.problems ?? [];
   const activeProblems = problems.filter(p => !isProblemDismissed(p));
   const totalCount = activeProblems.length;
   const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
   const [problemsVisible, setProblemsVisible] = useState(problems.length > 0);
-  const hasAppOwnedProblems = problems.some(p => p.__typename === "AppProblem");
 
   return (
     <>
@@ -125,30 +123,12 @@ const ExtensionRow = ({
       {problemsVisible && problems.length > 0 && (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
-            <Box display="flex" gap={4} alignItems="flex-start">
-              <ProblemsList
-                problems={extension.problems!}
-                appId={extension.id}
-                onClearProblem={onClearProblem}
-                hasManagedAppsPermission={hasManagedAppsPermission}
-              />
-              {hasManagedAppsPermission && hasAppOwnedProblems && onClearProblem && (
-                <Box __paddingTop="22px" flexShrink="0" marginLeft="auto" paddingRight={5}>
-                  <Button
-                    variant="secondary"
-                    size="small"
-                    onClick={() =>
-                      onClearProblem(
-                        extension.id,
-                        problems.filter(p => p.__typename === "AppProblem").map(p => p.key),
-                      )
-                    }
-                  >
-                    {intl.formatMessage(problemMessages.clearAllAppProblems)}
-                  </Button>
-                </Box>
-              )}
-            </Box>
+            <ProblemsList
+              problems={extension.problems!}
+              appId={extension.id}
+              onClearProblem={onClearProblem}
+              hasManagedAppsPermission={hasManagedAppsPermission}
+            />
           </GridTable.Cell>
         </GridTable.Row>
       )}

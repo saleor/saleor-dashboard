@@ -143,8 +143,8 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
       ],
       installedAppsLoading: false,
       refetchInstalledApps: expect.any(Function),
-      errorCount: 0,
-      warningCount: 0,
+      totalCount: 0,
+      criticalCount: 0,
     });
   });
 
