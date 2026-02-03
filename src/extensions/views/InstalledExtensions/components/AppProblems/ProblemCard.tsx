@@ -92,6 +92,42 @@ const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {
   );
 };
 
+const getDismissedByText = (problem: AppProblem): string | null => {
+  if (problem.__typename !== "AppProblem" || !problem.dismissedBy) {
+    return null;
+  }
+
+  if (problem.dismissedBy.__typename === "App") {
+    return "Dismissed by the app";
+  }
+
+  if (problem.dismissedBy.__typename === "User") {
+    return `Dismissed by ${problem.dismissedBy.email}`;
+  }
+
+  return null;
+};
+
+const DismissedLabel = ({ problem }: { problem: AppProblem }) => {
+  const tooltipText = getDismissedByText(problem);
+
+  if (tooltipText) {
+    return (
+      <Tooltip>
+        <Tooltip.Trigger>
+          <span className={styles.dismissedLabel}>Dismissed</span>
+        </Tooltip.Trigger>
+        <Tooltip.Content side="top">
+          <Tooltip.Arrow />
+          {tooltipText}
+        </Tooltip.Content>
+      </Tooltip>
+    );
+  }
+
+  return <span className={styles.dismissedLabel}>Dismissed</span>;
+};
+
 export const ProblemCard = ({ problem, dismissed, onForceClear }: ProblemCardProps) => {
   const intl = useIntl();
 
@@ -99,7 +135,7 @@ export const ProblemCard = ({ problem, dismissed, onForceClear }: ProblemCardPro
     <div className={`${styles.problemRow} ${dismissed ? styles.problemRowDismissed : ""}`}>
       <div className={styles.problemRowHeader}>
         <ProblemTimestamps problem={problem} />
-        {dismissed && <span className={styles.dismissedLabel}>Dismissed</span>}
+        {dismissed && <DismissedLabel problem={problem} />}
         {!dismissed && onForceClear && (
           <Tooltip>
             <Tooltip.Trigger>
