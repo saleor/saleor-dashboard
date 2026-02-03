@@ -1,6 +1,8 @@
 blockExoticSubdeps: true
 
 minimumReleaseAge: 720 # 12h
+minimumReleaseAgeExclude:
+  - "@saleor/app-sdk"
 
 trustPolicy: no-downgrade
 
