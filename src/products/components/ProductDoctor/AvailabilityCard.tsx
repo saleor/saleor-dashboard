@@ -159,7 +159,12 @@ export const AvailabilityCard = ({
           )}
         </Box>
         {onManageClick && (
-          <Button variant="secondary" size="small" onClick={onManageClick}>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={onManageClick}
+            data-test-id="channels-availability-manage-button"
+          >
             {intl.formatMessage(messages.manageButton)}
           </Button>
         )}

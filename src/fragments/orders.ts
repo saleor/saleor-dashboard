@@ -152,6 +152,72 @@ export const fragmentOrderLine = gql`
   }
 `;
 
+// Slim fragment for order line mutations - includes only data that changes
+// when lines are added/updated/deleted (lines + pricing + shipping if no longer required)
+export const fragmentOrderLinesUpdate = gql`
+  fragment OrderLinesUpdate on Order {
+    id
+    lines {
+      ...OrderLine
+    }
+    subtotal {
+      gross {
+        ...Money
+      }
+      net {
+        ...Money
+      }
+    }
+    total {
+      gross {
+        ...Money
+      }
+      net {
+        ...Money
+      }
+      tax {
+        ...Money
+      }
+    }
+    undiscountedTotal {
+      gross {
+        ...Money
+      }
+      net {
+        ...Money
+      }
+    }
+    # Shipping can change when lines are deleted/added
+    # (shippingMethod, shippingPrice, shippingMethodName are reset when isShippingRequired becomes false)
+    isShippingRequired
+    shippingMethod {
+      id
+    }
+    shippingPrice {
+      gross {
+        amount
+        currency
+      }
+    }
+    shippingMethodName
+    collectionPointName
+    # Available shipping methods can change based on order contents (weight, items)
+    shippingMethods {
+      id
+      name
+      price {
+        ...Money
+      }
+      active
+      message
+    }
+    # Discounts shown in order summary
+    discounts {
+      ...OrderDiscount
+    }
+  }
+`;
+
 export const fragmentOrderLineMetadata = gql`
   fragment OrderLineMetadata on OrderLine {
     metadata {

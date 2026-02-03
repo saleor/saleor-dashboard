@@ -42,6 +42,10 @@ export class PermissionGroupDetailsPage extends BasePage {
     return this.page.locator(`[data-test-id="permission-checkbox-${permission}"] input`);
   }
 
+  permissionGroupCheckboxWrapper(permission: string) {
+    return this.page.locator(`[data-test-id="permission-checkbox-${permission}"]`);
+  }
+
   async fillPermissionGroupNameInput(name: string) {
     await this.permissionGroupNameInput.fill(name);
   }
@@ -51,7 +55,10 @@ export class PermissionGroupDetailsPage extends BasePage {
   }
 
   async selectPermissionGroup(permission: string) {
-    await this.permissionGroupListItem.filter({ hasText: permission }).first().click();
+    const checkboxWrapper = this.permissionGroupCheckboxWrapper(permission);
+
+    await checkboxWrapper.waitFor({ state: "visible" });
+    await checkboxWrapper.click();
   }
 
   async clickAssignMembersButton() {
