@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.30
+
+### Patch Changes
+
+- [#6305](https://github.com/saleor/saleor-dashboard/pull/6305) [`b53b0d7`](https://github.com/saleor/saleor-dashboard/commit/b53b0d7433eb423b6ba43d3e5dbc11d82cae3749) Thanks [@mirekm](https://github.com/mirekm)! - Fix broken pagination in simple product create mutation
+
+- [#6306](https://github.com/saleor/saleor-dashboard/pull/6306) [`cf68ca5`](https://github.com/saleor/saleor-dashboard/commit/cf68ca54f43bae44749637a092d7792605420492) Thanks [@mirekm](https://github.com/mirekm)! - New products are now created unpublished, unavailable, and unlisted by default
+
 ## 3.22.29
 
 ### Patch Changes
