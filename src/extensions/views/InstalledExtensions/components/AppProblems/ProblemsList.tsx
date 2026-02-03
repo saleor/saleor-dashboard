@@ -108,7 +108,7 @@ const ProblemItem = ({
         {problem.__typename === "AppProblem" && problem.count > 1 && (
           <span className={styles.countBadge}>{problem.count}×</span>
         )}
-        {actionLink && (
+        {actionLink && !dismissed && (
           <Link href={actionLink.href} className={styles.groupActionLink} inline={false}>
             {intl.formatMessage(problemMessages[actionLink.label])}
             <ExternalLink size={12} />
