@@ -62,6 +62,8 @@ test("TC: SALEOR_76 Create order with transaction flow activated #e2e #order", a
   await ordersPage.rightSideDetailsPage.selectCustomer();
   await expect(ordersPage.addressDialog.existingAddressRadioButton).toBeVisible();
   await ordersPage.addressDialog.clickConfirmButton();
+  await ordersPage.addShippingCarrierLink.waitFor({ state: "visible", timeout: 30000 });
+  await ordersPage.addShippingCarrierLink.scrollIntoViewIfNeeded();
   await ordersPage.clickAddShippingCarrierButton();
   await ordersPage.shippingAddressDialog.pickAndConfirmShippingMethod();
   await ordersPage.clickFinalizeButton();
