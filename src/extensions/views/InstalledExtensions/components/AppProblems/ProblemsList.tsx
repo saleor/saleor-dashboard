@@ -95,11 +95,7 @@ export const ProblemsList = ({
         const canForceClear =
           hasManagedAppsPermission && problem.__typename === "AppProblem" && !!onClearProblem;
 
-        const borderClass = dismissed
-          ? styles.severityDismissed
-          : critical
-            ? styles.severityError
-            : styles.severityWarning;
+        const borderClass = dismissed ? styles.severityDismissed : styles.severityError;
 
         return (
           <div
