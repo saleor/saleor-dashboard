@@ -207,14 +207,14 @@ export const appDeactivateMutation = gql`
   }
 `;
 
-export const appProblemClearMutation = gql`
-  mutation AppProblemClear($app: ID!, $key: String) {
-    appProblemClear(app: $app, key: $key) {
+export const appProblemDismissMutation = gql`
+  mutation appProblemDismiss($app: ID!, $keys: [String!]) {
+    appProblemDismiss(app: $app, keys: $keys) {
       app {
         id
       }
       errors {
-        ...AppError
+        message
       }
     }
   }

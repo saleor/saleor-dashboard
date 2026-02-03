@@ -6,9 +6,6 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
-    "AppProblem": [
-      "AppProblemOwn"
-    ],
     "AssignedAttribute": [
       "AssignedBooleanAttribute",
       "AssignedDateAttribute",
@@ -223,6 +220,7 @@
       "App",
       "AppExtension",
       "AppInstallation",
+      "AppProblem",
       "AppToken",
       "Attribute",
       "AttributeTranslatableContent",

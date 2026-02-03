@@ -204,11 +204,20 @@ export const InstalledAppDetails = gql`
     type
     problems {
       __typename
-      ... on AppProblemOwn {
-        createdAt
-        message
-        severity
-        key
+      key
+      createdAt
+      count
+      isCritical
+      dismissed
+      updatedAt
+      id
+      dismissedBy {
+        ... on App {
+          __typename
+        }
+        ... on User {
+          email
+        }
       }
     }
     brand {

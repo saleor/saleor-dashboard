@@ -289,25 +289,30 @@ export type AppInstallInput = {
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
 
+export enum AppProblemCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
 export type AppProblemCreateInput = {
-  /** Grouping key for this problem. Used to clear related problems. */
-  aggregate?: InputMaybe<Scalars['String']>;
-  /** If true and a problem with the same `key` exists, overwrite it with new message, severity, and timestamp. Defaults to false. */
-  force?: InputMaybe<Scalars['Boolean']>;
-  /** Optional deduplication key. If a problem with this key already exists, creation is skipped unless `force` is true. */
-  key?: InputMaybe<Scalars['String']>;
+  /** Time window in minutes for aggregating problems with the same key. Defaults to 60. If 0, a new problem is always created. */
+  aggregationPeriod?: InputMaybe<Scalars['Int']>;
+  /** If set, the problem becomes critical when count reaches this value. */
+  criticalThreshold?: InputMaybe<Scalars['Int']>;
+  /** Key identifying the type of problem. */
+  key: Scalars['String'];
   /** The problem message to display. */
   message: Scalars['String'];
-  /** Severity of the problem. Defaults to ERROR. */
-  severity?: InputMaybe<AppProblemSeverityEnum>;
 };
 
-/** Enum determining the severity of an app problem. */
-export enum AppProblemSeverityEnum {
-  /** A critical issue that may prevent the app from functioning correctly. Set by App. */
-  ERROR = 'ERROR',
-  /** A non-critical issue that does not prevent the app from functioning. Set by App. */
-  WARNING = 'WARNING'
+export enum AppProblemDismissErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  OUT_OF_SCOPE_APP = 'OUT_OF_SCOPE_APP',
+  REQUIRED = 'REQUIRED'
 }
 
 export enum AppSortField {
@@ -5931,6 +5936,11 @@ export enum ProductTypeEnum {
 }
 
 export type ProductTypeFilterInput = {
+  /**
+   *
+   *
+   * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
+   */
   configurable?: InputMaybe<ProductTypeConfigurable>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
@@ -5941,7 +5951,11 @@ export type ProductTypeFilterInput = {
 };
 
 export type ProductTypeInput = {
-  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
+  /**
+   * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
+   *
+   * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
+   */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
   /** Determines if products are digital. */
   isDigital?: InputMaybe<Scalars['Boolean']>;
@@ -9942,13 +9956,13 @@ export type AppDeactivateMutationVariables = Exact<{
 
 export type AppDeactivateMutation = { __typename: 'Mutation', appDeactivate: { __typename: 'AppDeactivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
-export type AppProblemClearMutationVariables = Exact<{
+export type AppProblemDismissMutationVariables = Exact<{
   app: Scalars['ID'];
-  key?: InputMaybe<Scalars['String']>;
+  keys?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
-export type AppProblemClearMutation = { __typename: 'Mutation', appProblemClear: { __typename: 'AppProblemClear', app: { __typename: 'App', id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+export type AppProblemDismissMutation = { __typename: 'Mutation', appProblemDismiss: { __typename: 'AppProblemDismiss', app: { __typename: 'App', id: string } | null, errors: Array<{ __typename: 'AppProblemDismissError', message: string | null }> } | null };
 
 export type AppUpdatePermissionsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -9978,7 +9992,7 @@ export type InstalledAppsListQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemOwn', createdAt: any, message: string, severity: AppProblemSeverityEnum, key: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, createdAt: any, count: number, isCritical: boolean, dismissed: boolean, updatedAt: any, id: string, dismissedBy: { __typename: 'App' } | { __typename: 'User', email: string } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type EventDeliveryQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -10085,7 +10099,7 @@ export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{
 
 export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
 
-export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblemOwn', createdAt: any, message: string, severity: AppProblemSeverityEnum, key: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
+export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, createdAt: any, count: number, isCritical: boolean, dismissed: boolean, updatedAt: any, id: string, dismissedBy: { __typename: 'App' } | { __typename: 'User', email: string } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
