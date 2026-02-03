@@ -1,0 +1,23 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  eca75fcc1eaea953 111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "0d9c224396d9828383404653055868491e028694",
+  "prompts": {
+    "eca75fcc1eaea953": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6dc72333-dff6-41f9-8691-355d636a7342",
+        "model": "claude-opus-4-5-20251101"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
