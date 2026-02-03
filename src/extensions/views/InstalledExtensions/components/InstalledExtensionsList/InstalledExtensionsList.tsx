@@ -3,7 +3,11 @@ import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
-import { getProblemSeverity, InstalledExtension } from "@dashboard/extensions/types";
+import {
+  InstalledExtension,
+  isProblemCritical,
+  isProblemDismissed,
+} from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
@@ -77,10 +81,10 @@ const ExtensionRow = ({
 }: ExtensionRowProps) => {
   const intl = useIntl();
   const problems = extension.problems ?? [];
-  const errorCount = problems.filter(p => getProblemSeverity(p) === "critical").length;
-  const warningCount = problems.filter(p => getProblemSeverity(p) === "warning").length;
-  const totalCount = errorCount + warningCount;
-  const [problemsVisible, setProblemsVisible] = useState(totalCount > 0);
+  const activeProblems = problems.filter(p => !isProblemDismissed(p));
+  const totalCount = activeProblems.length;
+  const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
+  const [problemsVisible, setProblemsVisible] = useState(problems.length > 0);
   const hasAppOwnedProblems = problems.some(p => p.__typename === "AppProblem");
 
   return (
@@ -100,10 +104,10 @@ const ExtensionRow = ({
               >
                 {extension.name}
               </Text>
-              {totalCount > 0 && (
+              {problems.length > 0 && (
                 <ProblemsBadge
-                  errorCount={errorCount}
-                  warningCount={warningCount}
+                  totalCount={totalCount}
+                  criticalCount={criticalCount}
                   expanded={problemsVisible}
                   onToggle={() => setProblemsVisible(prev => !prev)}
                 />
@@ -118,7 +122,7 @@ const ExtensionRow = ({
           </ExtensionLink>
         </GridTable.Cell>
       </GridTable.Row>
-      {problemsVisible && totalCount > 0 && (
+      {problemsVisible && problems.length > 0 && (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
             <Box display="flex" gap={4} alignItems="flex-start">

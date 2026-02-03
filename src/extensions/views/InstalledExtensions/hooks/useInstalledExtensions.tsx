@@ -6,8 +6,9 @@ import {
 } from "@dashboard/extensions/components/AppAlerts/utils";
 import { infoMessages } from "@dashboard/extensions/messages";
 import {
-  getProblemSeverity,
   InstalledExtension,
+  isProblemCritical,
+  isProblemDismissed,
   WebhookDeliveryProblem,
 } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -188,23 +189,18 @@ export const useInstalledExtensions = () => {
     [installedPluginsData],
   );
 
-  const errorCount = installedApps.reduce(
-    (sum, app) =>
-      sum + (app.problems?.filter(p => getProblemSeverity(p) === "critical").length ?? 0),
-    0,
+  const activeProblems = installedApps.flatMap(
+    app => app.problems?.filter(p => !isProblemDismissed(p)) ?? [],
   );
 
-  const warningCount = installedApps.reduce(
-    (sum, app) =>
-      sum + (app.problems?.filter(p => getProblemSeverity(p) === "warning").length ?? 0),
-    0,
-  );
+  const totalCount = activeProblems.length;
+  const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
     installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
-    errorCount,
-    warningCount,
+    totalCount,
+    criticalCount,
   };
 };

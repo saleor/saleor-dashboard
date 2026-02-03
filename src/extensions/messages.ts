@@ -347,9 +347,9 @@ export const problemMessages = defineMessages({
     defaultMessage: "{count, plural, one {{count} error} other {{count} errors}}",
     id: "ectAk7",
   },
-  warningCount: {
-    defaultMessage: "{count, plural, one {{count} warning} other {{count} warnings}}",
-    id: "JVdGDR",
+  includingCritical: {
+    defaultMessage: "including {count} critical",
+    id: "TEOp+x",
   },
   showMoreProblems: {
     defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",

@@ -20,14 +20,29 @@ export interface WebhookDeliveryProblem {
 
 export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
 
-export type ProblemSeverity = "critical" | "warning";
-
-export const getProblemSeverity = (problem: AppProblem): ProblemSeverity => {
+export const isProblemCritical = (problem: AppProblem): boolean => {
   if (problem.__typename === "AppProblem") {
-    return problem.isCritical ? "critical" : "warning";
+    return problem.isCritical;
   }
 
-  return "critical";
+  // WebhookDeliveryError is always critical
+  return true;
+};
+
+export const isProblemDismissed = (problem: AppProblem): boolean => {
+  if (problem.__typename === "AppProblem") {
+    return problem.dismissed;
+  }
+
+  return false;
+};
+
+export const getProblemSortDate = (problem: AppProblem): string => {
+  if (problem.__typename === "AppProblem") {
+    return problem.updatedAt;
+  }
+
+  return problem.createdAt;
 };
 
 interface CommonExtensionData {

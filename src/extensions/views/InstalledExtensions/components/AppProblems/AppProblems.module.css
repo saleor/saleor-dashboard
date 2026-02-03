@@ -3,8 +3,8 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   margin: 18px 63px 18px;
-  max-width: 700px;
   overflow: hidden;
+  flex: 1;
 }
 
 .severityError {
@@ -13,6 +13,17 @@
 
 .severityWarning {
   border-left: 3px solid #f59e0b;
+}
+
+.severityDismissed {
+  border-left: 3px solid #d1d5db;
+}
+
+.problemHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
 }
 
 .groupHeader {
@@ -30,6 +41,22 @@
 .warningIcon {
   color: #d97706;
   flex-shrink: 0;
+}
+
+.criticalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid #fecaca;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .circuitBreakerBadge {
@@ -106,11 +133,15 @@
 }
 
 .problemRow {
-  padding: 6px 16px 6px 40px;
+  padding: 8px 16px 8px 16px;
 }
 
 .problemRow:last-child {
-  padding-bottom: 12px;
+  padding-bottom: 14px;
+}
+
+.problemRowDismissed {
+  opacity: 0.5;
 }
 
 .problemRowHeader {
@@ -128,6 +159,14 @@
 .timestamp {
   color: #6b7280;
   font-size: 12px;
+}
+
+.dismissedLabel {
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .problemMessage {

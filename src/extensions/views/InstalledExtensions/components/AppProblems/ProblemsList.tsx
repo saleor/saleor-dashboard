@@ -1,8 +1,13 @@
 import Link from "@dashboard/components/Link";
 import { problemMessages } from "@dashboard/extensions/messages";
-import { AppProblem, getProblemSeverity, ProblemSeverity } from "@dashboard/extensions/types";
+import {
+  AppProblem,
+  getProblemSortDate,
+  isProblemCritical,
+  isProblemDismissed,
+} from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { ChevronDown, ChevronUp, CircleAlert, ExternalLink, TriangleAlert } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -19,50 +24,40 @@ interface ProblemsListProps {
   hasManagedAppsPermission?: boolean;
 }
 
-interface SeverityTypeGroup {
-  typename: AppProblem["__typename"];
-  severity: ProblemSeverity;
-  items: AppProblem[];
-}
+const sortProblems = (problems: AppProblem[]): AppProblem[] =>
+  [...problems].sort((a, b) => {
+    const aDismissed = isProblemDismissed(a);
+    const bDismissed = isProblemDismissed(b);
 
-const groupBySeverityAndType = (problems: AppProblem[]): SeverityTypeGroup[] => {
-  const groups: SeverityTypeGroup[] = [];
-
-  // Error groups first
-  const errorProblems = problems.filter(p => getProblemSeverity(p) === "critical");
-  const warningProblems = problems.filter(p => getProblemSeverity(p) === "warning");
-
-  const addTypeGroups = (source: AppProblem[], severity: ProblemSeverity) => {
-    const webhook = source.filter(p => p.__typename === "WebhookDeliveryError");
-    const own = source.filter(p => p.__typename === "AppProblem");
-
-    if (webhook.length > 0) {
-      groups.push({ typename: "WebhookDeliveryError", severity, items: webhook });
+    // Dismissed always after non-dismissed
+    if (aDismissed !== bDismissed) {
+      return aDismissed ? 1 : -1;
     }
 
-    if (own.length > 0) {
-      groups.push({ typename: "AppProblem", severity, items: own });
+    const aCritical = isProblemCritical(a);
+    const bCritical = isProblemCritical(b);
+
+    // Critical before non-critical
+    if (aCritical !== bCritical) {
+      return aCritical ? -1 : 1;
     }
-  };
 
-  addTypeGroups(errorProblems, "critical");
-  addTypeGroups(warningProblems, "warning");
+    // Newest first (by updatedAt / createdAt)
+    return new Date(getProblemSortDate(b)).getTime() - new Date(getProblemSortDate(a)).getTime();
+  });
 
-  return groups;
-};
-
-const getGroupActionLink = (
-  typename: AppProblem["__typename"],
+const getActionLink = (
+  problem: AppProblem,
   appId: string,
 ): { href: string; label: keyof typeof problemMessages } | null => {
-  if (typename === "WebhookDeliveryError") {
+  if (problem.__typename === "WebhookDeliveryError") {
     return {
       href: ExtensionsUrls.resolveEditManifestExtensionUrl(appId),
       label: "checkWebhooks",
     };
   }
 
-  if (typename === "AppProblem") {
+  if (problem.__typename === "AppProblem") {
     return {
       href: ExtensionsUrls.resolveViewManifestExtensionUrl(appId),
       label: "openTheApp",
@@ -70,86 +65,6 @@ const getGroupActionLink = (
   }
 
   return null;
-};
-
-interface ProblemGroupSectionProps {
-  typename: AppProblem["__typename"];
-  severity: ProblemSeverity;
-  problems: AppProblem[];
-  appId: string;
-  onClearProblem?: (appId: string, keys?: string[]) => void;
-  hasManagedAppsPermission?: boolean;
-}
-
-const ProblemGroupSection = ({
-  typename,
-  severity,
-  problems,
-  appId,
-  onClearProblem,
-  hasManagedAppsPermission,
-}: ProblemGroupSectionProps) => {
-  const intl = useIntl();
-
-  if (problems.length === 0) {
-    return null;
-  }
-
-  const actionLink = getGroupActionLink(typename, appId);
-  const isError = severity === "critical";
-  const SeverityIcon = isError ? CircleAlert : TriangleAlert;
-  const iconClass = isError ? styles.errorIcon : styles.warningIcon;
-  const canForceClear = hasManagedAppsPermission && typename === "AppProblem" && !!onClearProblem;
-
-  return (
-    <>
-      <div className={styles.groupHeader}>
-        <SeverityIcon size={16} className={iconClass} />
-        <ProblemTypeBadge typename={typename} />
-        {actionLink && (
-          <Link href={actionLink.href} className={styles.groupActionLink} inline={false}>
-            {intl.formatMessage(problemMessages[actionLink.label])}
-            <ExternalLink size={12} />
-          </Link>
-        )}
-      </div>
-      {problems.map(problem => (
-        <ProblemCard
-          key={
-            problem.__typename === "AppProblem"
-              ? `${problem.key}-${problem.createdAt}`
-              : problem.createdAt
-          }
-          problem={problem}
-          onForceClear={
-            canForceClear && problem.__typename === "AppProblem"
-              ? () => onClearProblem(appId, [problem.key])
-              : undefined
-          }
-        />
-      ))}
-    </>
-  );
-};
-
-/** Build an ordered flat list following severity+type priority, then slice to limit */
-const getVisibleGroups = (allGroups: SeverityTypeGroup[], limit: number): SeverityTypeGroup[] => {
-  let remaining = limit;
-  const result: SeverityTypeGroup[] = [];
-
-  for (const group of allGroups) {
-    if (remaining <= 0 || group.items.length === 0) {
-      continue;
-    }
-
-    result.push({
-      ...group,
-      items: group.items.slice(0, remaining),
-    });
-    remaining -= group.items.length;
-  }
-
-  return result;
 };
 
 export const ProblemsList = ({
@@ -161,37 +76,63 @@ export const ProblemsList = ({
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
 
-  const allGroups = useMemo(() => groupBySeverityAndType(problems), [problems]);
+  const sorted = useMemo(() => sortProblems(problems), [problems]);
 
-  if (problems.length === 0) {
+  if (sorted.length === 0) {
     return null;
   }
 
-  const hiddenCount = problems.length - MAX_VISIBLE_PROBLEMS;
+  const hiddenCount = sorted.length - MAX_VISIBLE_PROBLEMS;
   const hasMore = hiddenCount > 0;
-
-  const nonEmptyGroups = expanded
-    ? allGroups.filter(g => g.items.length > 0)
-    : getVisibleGroups(allGroups, MAX_VISIBLE_PROBLEMS);
+  const visible = expanded ? sorted : sorted.slice(0, MAX_VISIBLE_PROBLEMS);
 
   return (
     <div className={styles.problemsContainer}>
-      {nonEmptyGroups.map((group, groupIndex) => (
-        <div
-          key={`${group.severity}-${group.typename}`}
-          className={group.severity === "critical" ? styles.severityError : styles.severityWarning}
-        >
-          {groupIndex > 0 && <hr className={styles.groupDivider} />}
-          <ProblemGroupSection
-            typename={group.typename}
-            severity={group.severity}
-            problems={group.items}
-            appId={appId}
-            onClearProblem={onClearProblem}
-            hasManagedAppsPermission={hasManagedAppsPermission}
-          />
-        </div>
-      ))}
+      {visible.map((problem, index) => {
+        const critical = isProblemCritical(problem);
+        const dismissed = isProblemDismissed(problem);
+        const actionLink = getActionLink(problem, appId);
+        const canForceClear =
+          hasManagedAppsPermission && problem.__typename === "AppProblem" && !!onClearProblem;
+
+        const borderClass = dismissed
+          ? styles.severityDismissed
+          : critical
+            ? styles.severityError
+            : styles.severityWarning;
+
+        return (
+          <div
+            key={
+              problem.__typename === "AppProblem"
+                ? `${problem.key}-${problem.createdAt}`
+                : problem.createdAt
+            }
+            className={borderClass}
+          >
+            {index > 0 && <hr className={styles.groupDivider} />}
+            <div className={styles.problemHeader}>
+              <ProblemTypeBadge typename={problem.__typename} />
+              {critical && !dismissed && <span className={styles.criticalBadge}>Critical</span>}
+              {actionLink && (
+                <Link href={actionLink.href} className={styles.groupActionLink} inline={false}>
+                  {intl.formatMessage(problemMessages[actionLink.label])}
+                  <ExternalLink size={12} />
+                </Link>
+              )}
+            </div>
+            <ProblemCard
+              problem={problem}
+              dismissed={dismissed}
+              onForceClear={
+                canForceClear && problem.__typename === "AppProblem"
+                  ? () => onClearProblem(appId, [problem.key])
+                  : undefined
+              }
+            />
+          </div>
+        );
+      })}
       {hasMore && (
         <button
           className={styles.showMoreButton}

@@ -1,31 +1,30 @@
 import { problemMessages } from "@dashboard/extensions/messages";
-import { CircleAlert, TriangleAlert } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import styles from "./AppProblems.module.css";
 
 interface ProblemsHeaderBadgeProps {
-  errorCount: number;
-  warningCount: number;
+  totalCount: number;
+  criticalCount: number;
 }
 
-export const ProblemsHeaderBadge = ({ errorCount, warningCount }: ProblemsHeaderBadgeProps) => {
+export const ProblemsHeaderBadge = ({ totalCount, criticalCount }: ProblemsHeaderBadgeProps) => {
   const intl = useIntl();
 
+  if (totalCount === 0) {
+    return null;
+  }
+
+  const label =
+    criticalCount > 0
+      ? `${intl.formatMessage(problemMessages.errorCount, { count: totalCount })}, ${intl.formatMessage(problemMessages.includingCritical, { count: criticalCount })}`
+      : intl.formatMessage(problemMessages.errorCount, { count: totalCount });
+
   return (
-    <>
-      {errorCount > 0 && (
-        <span className={styles.headerBadgeError}>
-          <CircleAlert size={14} />
-          {intl.formatMessage(problemMessages.errorCount, { count: errorCount })}
-        </span>
-      )}
-      {warningCount > 0 && (
-        <span className={styles.headerBadgeWarning}>
-          <TriangleAlert size={14} />
-          {intl.formatMessage(problemMessages.warningCount, { count: warningCount })}
-        </span>
-      )}
-    </>
+    <span className={criticalCount > 0 ? styles.headerBadgeError : styles.headerBadgeWarning}>
+      <CircleAlert size={14} />
+      {label}
+    </span>
   );
 };

@@ -57,8 +57,8 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     installedExtensions,
     installedAppsLoading,
     refetchInstalledApps,
-    errorCount,
-    warningCount,
+    totalCount,
+    criticalCount,
   } = useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
@@ -112,7 +112,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
             <Text size={6} fontWeight="regular">
               {intl.formatMessage(headerTitles.installedExtensions)}
             </Text>
-            <ProblemsHeaderBadge errorCount={errorCount} warningCount={warningCount} />
+            <ProblemsHeaderBadge totalCount={totalCount} criticalCount={criticalCount} />
           </Box>
         </Box>
         <Box display="flex" gap={4} alignItems="center">

@@ -5,47 +5,38 @@ import { useIntl } from "react-intl";
 import styles from "./AppProblems.module.css";
 
 interface ProblemsBadgeProps {
-  errorCount: number;
-  warningCount: number;
+  totalCount: number;
+  criticalCount: number;
   expanded: boolean;
   onToggle: () => void;
 }
 
 export const ProblemsBadge = ({
-  errorCount,
-  warningCount,
+  totalCount,
+  criticalCount,
   expanded,
   onToggle,
 }: ProblemsBadgeProps) => {
   const intl = useIntl();
-  const total = errorCount + warningCount;
 
-  if (total === 0) {
+  if (totalCount === 0) {
     return null;
   }
 
-  const hasErrors = errorCount > 0;
-  const hasWarnings = warningCount > 0;
-
-  const parts: string[] = [];
-
-  if (hasErrors) {
-    parts.push(intl.formatMessage(problemMessages.errorCount, { count: errorCount }));
-  }
-
-  if (hasWarnings) {
-    parts.push(intl.formatMessage(problemMessages.warningCount, { count: warningCount }));
-  }
+  const label =
+    criticalCount > 0
+      ? `${intl.formatMessage(problemMessages.errorCount, { count: totalCount })}, ${intl.formatMessage(problemMessages.includingCritical, { count: criticalCount })}`
+      : intl.formatMessage(problemMessages.errorCount, { count: totalCount });
 
   return (
     <button
-      className={hasErrors ? styles.problemsBadgeError : styles.problemsBadgeWarning}
+      className={criticalCount > 0 ? styles.problemsBadgeError : styles.problemsBadgeWarning}
       onClick={e => {
         e.preventDefault();
         onToggle();
       }}
     >
-      {parts.join(", ")}
+      {label}
       {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
     </button>
   );
