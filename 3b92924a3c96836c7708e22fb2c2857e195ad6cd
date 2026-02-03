@@ -1,0 +1,25 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  973d504def2b513c 98
+src/extensions/views/InstalledExtensions/components/AppProblems/AppProblems.module.css
+  973d504def2b513c 230
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "3b92924a3c96836c7708e22fb2c2857e195ad6cd",
+  "prompts": {
+    "973d504def2b513c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe240cd7-5d8d-4af6-a486-48e721607058",
+        "model": "<synthetic>"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 17,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    }
+  }
+}
