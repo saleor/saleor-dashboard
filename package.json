@@ -157,7 +157,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@playwright/test": "1.56.1",
-    "@saleor/app-sdk": "1.5.0",
+    "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
     "@storybook/react-vite": "9.0.18",
     "@swc/jest": "^0.2.39",

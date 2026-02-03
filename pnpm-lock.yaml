@@ -313,8 +313,8 @@ importers:
         specifier: 1.56.1
         version: 1.56.1
       "@saleor/app-sdk":
-        specifier: 1.5.0
-        version: 1.5.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.7.0
+        version: 1.7.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@sentry/cli":
         specifier: ^2.58.2
         version: 2.58.2
@@ -4197,10 +4197,10 @@ packages:
         integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==,
       }
 
-  "@saleor/app-sdk@1.5.0":
+  "@saleor/app-sdk@1.7.0":
     resolution:
       {
-        integrity: sha512-E8SU7URRQVA4yeR4iMD3XhrdvYSogP6QTUKoEzX1Tq+h8Be1EV0v7WN6wRFcX/NZ15+x+4j0pVdZSYBQio9BHw==,
+        integrity: sha512-fHPKek64mduQ5TZzMGhN2b+Jk6umQY5OScvSn1TfUVLHTjc7C8loi2odwXkh1nDxM3HGuNMe1bf/KfU03xSyGw==,
       }
     peerDependencies:
       "@aws-sdk/client-dynamodb": ^3.848.0
@@ -16222,7 +16222,7 @@ snapshots:
 
   "@rtsao/scc@1.1.0": {}
 
-  "@saleor/app-sdk@1.5.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+  "@saleor/app-sdk@1.7.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
       "@opentelemetry/api": 1.9.0
       "@opentelemetry/semantic-conventions": 1.30.0
