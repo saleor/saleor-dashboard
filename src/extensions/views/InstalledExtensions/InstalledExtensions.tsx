@@ -10,7 +10,7 @@ import {
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";
 import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/InstalledExtensions/hooks/useInstalledExtensionsFilter";
-import { useAppProblemClearMutation } from "@dashboard/graphql";
+import { useAppProblemDismissMutation } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -63,9 +63,9 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
 
-  const [appProblemClear] = useAppProblemClearMutation({
+  const [appProblemDismiss] = useAppProblemDismissMutation({
     onCompleted: data => {
-      const errors = data?.appProblemClear?.errors ?? [];
+      const errors = data?.appProblemDismiss?.errors ?? [];
 
       if (errors.length === 0) {
         refetchInstalledApps();
@@ -76,15 +76,15 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   });
 
   const handleClearProblem = useCallback(
-    (appId: string, key?: string) => {
-      appProblemClear({
+    (appId: string, keys?: string[]) => {
+      appProblemDismiss({
         variables: {
           app: appId,
-          ...(key ? { key } : {}),
+          keys,
         },
       });
     },
-    [appProblemClear],
+    [appProblemDismiss],
   );
 
   const {

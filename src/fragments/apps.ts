@@ -205,6 +205,7 @@ export const InstalledAppDetails = gql`
     problems {
       __typename
       key
+      message
       createdAt
       count
       isCritical

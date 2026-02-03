@@ -1,8 +1,5 @@
-import { LatestWebhookDeliveryWithMoment } from "@dashboard/extensions/components/AppAlerts/utils";
-import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import moment from "moment-timezone";
 import * as React from "react";
 
 import { getExtensionInfo, useInstalledExtensions } from "./useInstalledExtensions";
@@ -38,6 +35,7 @@ jest.mock("@dashboard/graphql", () => ({
               name: "Test App",
               isActive: true,
               type: "THIRDPARTY",
+              problems: [],
             },
           },
           {
@@ -46,6 +44,7 @@ jest.mock("@dashboard/graphql", () => ({
               name: "Test App 2",
               isActive: false,
               type: "THIRDPARTY",
+              problems: [],
             },
           },
         ],
@@ -124,6 +123,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           logo: expect.any(Object),
           info: null,
           href: expect.any(String),
+          problems: [],
         },
         {
           id: "2",
@@ -131,6 +131,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           logo: expect.any(Object),
           info: expect.any(Object),
           href: expect.any(String),
+          problems: [],
         },
         {
           id: "plug1",
@@ -142,6 +143,8 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
       ],
       installedAppsLoading: false,
       refetchInstalledApps: expect.any(Function),
+      errorCount: 0,
+      warningCount: 0,
     });
   });
 
@@ -203,22 +206,17 @@ describe("InstalledExtensions / hooks / useInstalledExtensions / getExtensionInf
     expect(screen.getByTestId("loading-skeleton")).toBeInTheDocument();
   });
 
-  it("should return webhook warning when last failed attempt is not null", () => {
+  it("should return null when extension is active and not loading", () => {
     // Arrange
     const extension = {
-      id: "1",
       isActive: true,
       loading: false,
-      lastFailedAttempt: {
-        id: "1",
-        status: EventDeliveryStatusEnum.FAILED,
-        createdAt: moment("2023-10-03T00:00:00Z"),
-      } as LatestWebhookDeliveryWithMoment,
     };
 
-    render(getExtensionInfo(extension)!);
+    // Act
+    const result = getExtensionInfo(extension);
 
     // Assert
-    expect(screen.getByText("Webhook errors detected.")).toBeInTheDocument();
+    expect(result).toBeNull();
   });
 });

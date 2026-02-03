@@ -1,7 +1,6 @@
 import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import {
-  AppProblemSeverityEnum,
   ExtensionListQuery,
   InstalledAppDetailsFragment,
   PermissionEnum,
@@ -21,12 +20,14 @@ export interface WebhookDeliveryProblem {
 
 export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
 
-export const getProblemSeverity = (problem: AppProblem): AppProblemSeverityEnum => {
-  if (problem.__typename === "AppProblemOwn") {
-    return problem.severity;
+export type ProblemSeverity = "critical" | "warning";
+
+export const getProblemSeverity = (problem: AppProblem): ProblemSeverity => {
+  if (problem.__typename === "AppProblem") {
+    return problem.isCritical ? "critical" : "warning";
   }
 
-  return AppProblemSeverityEnum.ERROR;
+  return "critical";
 };
 
 interface CommonExtensionData {

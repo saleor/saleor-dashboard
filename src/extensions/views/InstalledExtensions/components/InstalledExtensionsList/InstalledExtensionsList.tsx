@@ -5,7 +5,6 @@ import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvata
 import { messages, problemMessages } from "@dashboard/extensions/messages";
 import { getProblemSeverity, InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { AppProblemSeverityEnum } from "@dashboard/graphql";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useState } from "react";
@@ -20,7 +19,7 @@ interface InstalledExtensionsListProps {
   clearSearch: () => void;
   searchQuery?: string;
   hasManagedAppsPermission?: boolean;
-  onClearProblem?: (appId: string, key?: string) => void;
+  onClearProblem?: (appId: string, keys?: string[]) => void;
 }
 
 const ExtensionLink = ({
@@ -68,7 +67,7 @@ const ExtensionLink = ({
 interface ExtensionRowProps {
   extension: InstalledExtension;
   hasManagedAppsPermission?: boolean;
-  onClearProblem?: (appId: string, key?: string) => void;
+  onClearProblem?: (appId: string, keys?: string[]) => void;
 }
 
 const ExtensionRow = ({
@@ -78,15 +77,11 @@ const ExtensionRow = ({
 }: ExtensionRowProps) => {
   const intl = useIntl();
   const problems = extension.problems ?? [];
-  const errorCount = problems.filter(
-    p => getProblemSeverity(p) === AppProblemSeverityEnum.ERROR,
-  ).length;
-  const warningCount = problems.filter(
-    p => getProblemSeverity(p) === AppProblemSeverityEnum.WARNING,
-  ).length;
+  const errorCount = problems.filter(p => getProblemSeverity(p) === "critical").length;
+  const warningCount = problems.filter(p => getProblemSeverity(p) === "warning").length;
   const totalCount = errorCount + warningCount;
   const [problemsVisible, setProblemsVisible] = useState(totalCount > 0);
-  const hasAppOwnedProblems = problems.some(p => p.__typename === "AppProblemOwn");
+  const hasAppOwnedProblems = problems.some(p => p.__typename === "AppProblem");
 
   return (
     <>
@@ -138,7 +133,12 @@ const ExtensionRow = ({
                   <Button
                     variant="secondary"
                     size="small"
-                    onClick={() => onClearProblem(extension.id)}
+                    onClick={() =>
+                      onClearProblem(
+                        extension.id,
+                        problems.filter(p => p.__typename === "AppProblem").map(p => p.key),
+                      )
+                    }
                   >
                     {intl.formatMessage(problemMessages.clearAllAppProblems)}
                   </Button>

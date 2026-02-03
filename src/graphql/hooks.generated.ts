@@ -201,6 +201,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   problems {
     __typename
     key
+    message
     createdAt
     count
     isCritical

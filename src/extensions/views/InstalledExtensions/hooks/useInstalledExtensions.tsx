@@ -13,7 +13,6 @@ import {
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
-  AppProblemSeverityEnum,
   AppTypeEnum,
   PermissionEnum,
   useEventDeliveryQuery,
@@ -191,17 +190,13 @@ export const useInstalledExtensions = () => {
 
   const errorCount = installedApps.reduce(
     (sum, app) =>
-      sum +
-      (app.problems?.filter(p => getProblemSeverity(p) === AppProblemSeverityEnum.ERROR).length ??
-        0),
+      sum + (app.problems?.filter(p => getProblemSeverity(p) === "critical").length ?? 0),
     0,
   );
 
   const warningCount = installedApps.reduce(
     (sum, app) =>
-      sum +
-      (app.problems?.filter(p => getProblemSeverity(p) === AppProblemSeverityEnum.WARNING).length ??
-        0),
+      sum + (app.problems?.filter(p => getProblemSeverity(p) === "warning").length ?? 0),
     0,
   );
 

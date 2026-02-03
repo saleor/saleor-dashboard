@@ -62,7 +62,6 @@ export const useAppActions = (
         return handleAppFormUpdate(action);
       }
       default: {
-        // @ts-expect-error this is for runtime checking
         const actionType = action?.type as string | undefined;
 
         captureMessage("Unknown action type requested by the App", scope => {
