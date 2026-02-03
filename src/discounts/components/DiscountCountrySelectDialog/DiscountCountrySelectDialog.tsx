@@ -4,7 +4,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";

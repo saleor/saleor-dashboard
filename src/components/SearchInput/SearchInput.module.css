@@ -1,0 +1,13 @@
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 14px;
+  color: var(--mu-colors-text-default1);
+  min-width: 0;
+}
+
+.input::placeholder {
+  color: var(--mu-colors-text-default2);
+}

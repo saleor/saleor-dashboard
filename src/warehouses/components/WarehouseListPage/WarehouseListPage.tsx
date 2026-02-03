@@ -1,4 +1,3 @@
-import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -8,7 +7,6 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { messages } from "@dashboard/shipping/components/ShippingZonesListPage/messages";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { warehouseAddUrl, WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
@@ -131,25 +129,24 @@ const WarehouseListPage = ({
           </LimitReachedAlert>
         )}
 
-        <Box paddingX={6} marginY={2}>
-          <Box __width="320px">
-            {/*TODO:To be replaced by ListFilters BCK-1476*/}
-            <SearchInput
-              initialSearch={initialSearch}
-              placeholder={intl.formatMessage(messages.searchShippingZones)}
-              onSearchChange={onSearchChange}
-            />
-          </Box>
+        <Box paddingX={6}>
+          <WarehouseList
+            warehouses={warehouses}
+            disabled={disabled}
+            settings={settings}
+            onRemove={onRemove}
+            onUpdateListSettings={onUpdateListSettings}
+            search={{
+              placeholder: intl.formatMessage({
+                id: "v8UngX",
+                defaultMessage: "Search warehouses...",
+              }),
+              initialValue: initialSearch,
+              onSearchChange,
+            }}
+            {...listProps}
+          />
         </Box>
-
-        <WarehouseList
-          warehouses={warehouses}
-          disabled={disabled}
-          settings={settings}
-          onRemove={onRemove}
-          onUpdateListSettings={onUpdateListSettings}
-          {...listProps}
-        />
       </DashboardCard>
     </ListPageLayout>
   );

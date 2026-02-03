@@ -7,13 +7,11 @@ export const attributeDetails = gql`
     $afterValues: String
     $lastValues: Int
     $beforeValues: String
+    $searchValues: String
   ) {
     attribute(id: $id) {
       ...AttributeDetails
       ...Metadata
-      choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
-        ...AttributeValueList
-      }
     }
   }
 `;

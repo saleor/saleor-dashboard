@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
@@ -21,12 +21,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    colAction: {
-      "&:last-child": {
-        paddingRight: 0,
-      },
-      width: 80,
-    },
     colGrab: {
       width: 60,
     },
@@ -53,11 +47,8 @@ const useStyles = makeStyles(
     link: {
       cursor: "pointer",
     },
-    textLeft: {
-      textAlign: "left",
-    },
   }),
-  { name: "ProductTypeAttributes" },
+  { name: "ProductTypeVariantAttributes" },
 );
 
 interface ProductTypeVariantAttributesProps extends ListActions {
@@ -147,7 +138,11 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
         </DashboardCard.Subtitle>
       </Box>
       <DashboardCard.Content>
-        {assignedVariantAttributes?.length > 0 ? (
+        {!assignedVariantAttributes?.length ? (
+          <Placeholder>
+            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
+          </Placeholder>
+        ) : (
           <ResponsiveTable>
             <colgroup>
               <col className={classes.colGrab} />
@@ -155,7 +150,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
               <col className={classes.colName} />
               <col className={classes.colSlug} />
               <col className={classes.colVariant} />
-              <col className={classes.colAction} />
+              <col className={tableStyles.colAction} />
             </colgroup>
             <TableHead
               colSpan={numberOfColumns}
@@ -289,7 +284,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         )}
                       </div>
                     </TableCell>
-                    <TableCell className={classes.colAction}>
+                    <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>
                         <Button
                           data-test-id="delete-icon"
@@ -310,10 +305,6 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
               })}
             </SortableTableBody>
           </ResponsiveTable>
-        ) : (
-          <Placeholder>
-            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
-          </Placeholder>
         )}
       </DashboardCard.Content>
     </DashboardCard>

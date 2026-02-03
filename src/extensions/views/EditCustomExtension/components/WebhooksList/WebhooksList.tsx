@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -57,7 +57,7 @@ export const WebhooksList = ({
           )}
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <DashboardCard.Content paddingX={0}>
+      <DashboardCard.Content>
         <ResponsiveTable className={classes.table}>
           {hasManagedAppsPermission && (
             <TableHead>
