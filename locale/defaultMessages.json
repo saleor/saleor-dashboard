@@ -1802,6 +1802,9 @@
     "context": "page title",
     "string": "Create New Attribute"
   },
+  "8dD0Gt": {
+    "string": "Force dismiss"
+  },
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
@@ -5631,6 +5634,9 @@
     "context": "Link to revert date change",
     "string": "Revert to previous date"
   },
+  "UBl/YR": {
+    "string": "Dismiss all problems raised by the app"
+  },
   "UBuKZ9": {
     "context": "searchbar placeholder",
     "string": "Country"
@@ -9356,6 +9362,9 @@
   "phIGQ1": {
     "context": "Canceled transaction amount, data display header",
     "string": "Canceled"
+  },
+  "pkS9/B": {
+    "string": "Force clear this error. Use if you know what you are doing"
   },
   "pkUbrL": {
     "string": "General Information"

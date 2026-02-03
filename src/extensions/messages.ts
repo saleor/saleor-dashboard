@@ -384,16 +384,16 @@ export const problemMessages = defineMessages({
     id: "lN6B54",
   },
   forceClear: {
-    defaultMessage: "Force clear",
-    id: "8dD0Gt",
+    defaultMessage: "Force dismiss",
+    id: "PvKgaj",
   },
   forceClearTooltip: {
     defaultMessage: "Force clear this error. Use if you know what you are doing",
     id: "pkS9/B",
   },
   clearAllAppProblems: {
-    defaultMessage: "Clear all app owned problems",
-    id: "UBl/YR",
+    defaultMessage: "Dismiss all problems raised by the app",
+    id: "PUxbpJ",
   },
 });
 
