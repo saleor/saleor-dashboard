@@ -17,7 +17,7 @@ describe("EventItem", () => {
 
     // Act
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <Wrapper>
           <EventItem event={transactionEvent} onHover={onHover} hoveredPspReference={"PSP"} />
         </Wrapper>
@@ -39,7 +39,7 @@ describe("EventItem", () => {
   it("displays avatar with title for app creator", () => {
     // Arrange & Act
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <Wrapper>
           <EventItem
             event={transactionEvent}

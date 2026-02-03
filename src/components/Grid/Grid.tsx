@@ -17,6 +17,11 @@ const useStyles = makeStyles(
     },
     inverted: {
       gridTemplateColumns: "4fr 9fr",
+      "& > div:first-child": {
+        position: "sticky",
+        top: 0,
+        alignSelf: "start",
+      },
     },
     root: {
       "& > div": {

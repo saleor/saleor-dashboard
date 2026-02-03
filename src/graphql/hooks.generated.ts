@@ -1564,6 +1564,170 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLineFragmentDoc = gql`
+    fragment OrderLine on OrderLine {
+  id
+  isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+  variant {
+    id
+    name
+    quantityAvailable
+    preorder {
+      endDate
+    }
+    stocks {
+      ...Stock
+    }
+    product {
+      id
+      isAvailableForPurchase
+    }
+  }
+  productName
+  productSku
+  isGift
+  quantity
+  quantityFulfilled
+  quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
+  unitDiscount {
+    amount
+    currency
+  }
+  unitDiscountValue
+  unitDiscountReason
+  unitDiscountType
+  undiscountedUnitPrice {
+    currency
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  unitPrice {
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  thumbnail {
+    url
+  }
+}
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
+export const OrderDiscountFragmentDoc = gql`
+    fragment OrderDiscount on OrderDiscount {
+  id
+  type
+  name
+  calculationMode: valueType
+  value
+  reason
+  amount {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLinesUpdateFragmentDoc = gql`
+    fragment OrderLinesUpdate on Order {
+  id
+  lines {
+    ...OrderLine
+  }
+  subtotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  undiscountedTotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  isShippingRequired
+  shippingMethod {
+    id
+  }
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingMethodName
+  collectionPointName
+  shippingMethods {
+    id
+    name
+    price {
+      ...Money
+    }
+    active
+    message
+  }
+  discounts {
+    ...OrderDiscount
+  }
+}
+    ${OrderLineFragmentDoc}
+${MoneyFragmentDoc}
+${OrderDiscountFragmentDoc}`;
 export const OrderLineMetadataFragmentDoc = gql`
     fragment OrderLineMetadata on OrderLine {
   metadata {
@@ -1832,19 +1996,6 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
-export const OrderDiscountFragmentDoc = gql`
-    fragment OrderDiscount on OrderDiscount {
-  id
-  type
-  name
-  calculationMode: valueType
-  value
-  reason
-  amount {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1925,96 +2076,6 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    ...Warehouse
-  }
-}
-    ${WarehouseFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const OrderLineFragmentDoc = gql`
-    fragment OrderLine on OrderLine {
-  id
-  isShippingRequired
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  variant {
-    id
-    name
-    quantityAvailable
-    preorder {
-      endDate
-    }
-    stocks {
-      ...Stock
-    }
-    product {
-      id
-      isAvailableForPurchase
-    }
-  }
-  productName
-  productSku
-  isGift
-  quantity
-  quantityFulfilled
-  quantityToFulfill
-  totalPrice {
-    ...TaxedMoney
-  }
-  unitDiscount {
-    amount
-    currency
-  }
-  unitDiscountValue
-  unitDiscountReason
-  unitDiscountType
-  undiscountedUnitPrice {
-    currency
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  unitPrice {
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  thumbnail {
-    url
-  }
-}
-    ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   ...Metadata
@@ -2528,6 +2589,7 @@ export const AttributeDetailsFragmentDoc = gql`
     after: $afterValues
     last: $lastValues
     before: $beforeValues
+    search: $searchValues
   ) {
     ...AttributeValueList
   }
@@ -3019,6 +3081,7 @@ export const ProductVariantFragmentDoc = gql`
     productType {
       id
       name
+      hasVariants
     }
     channelListings {
       id
@@ -3701,9 +3764,16 @@ export const WarehouseDetailsFragmentDoc = gql`
     ...Address
   }
   email
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
 }
     ${WarehouseWithShippingFragmentDoc}
-${AddressFragmentDoc}`;
+${AddressFragmentDoc}
+${MetadataItemFragmentDoc}`;
 export const WebhookDetailsFragmentDoc = gql`
     fragment WebhookDetails on Webhook {
   ...Webhook
@@ -4083,23 +4153,14 @@ export type AttributeValueReorderMutationHookResult = ReturnType<typeof useAttri
 export type AttributeValueReorderMutationResult = Apollo.MutationResult<Types.AttributeValueReorderMutation>;
 export type AttributeValueReorderMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueReorderMutation, Types.AttributeValueReorderMutationVariables>;
 export const AttributeDetailsDocument = gql`
-    query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   attribute(id: $id) {
     ...AttributeDetails
     ...Metadata
-    choices(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      ...AttributeValueList
-    }
   }
 }
     ${AttributeDetailsFragmentDoc}
-${MetadataFragmentDoc}
-${AttributeValueListFragmentDoc}`;
+${MetadataFragmentDoc}`;
 
 /**
  * __useAttributeDetailsQuery__
@@ -4118,6 +4179,7 @@ ${AttributeValueListFragmentDoc}`;
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -11096,7 +11158,7 @@ export type PageCreateMutationHookResult = ReturnType<typeof usePageCreateMutati
 export type PageCreateMutationResult = Apollo.MutationResult<Types.PageCreateMutation>;
 export type PageCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
 export const PageUpdateDocument = gql`
-    mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   pageUpdate(id: $id, input: $input) {
     errors {
       ...PageErrorWithAttributes
@@ -11129,6 +11191,7 @@ export type PageUpdateMutationFn = Apollo.MutationFunction<Types.PageUpdateMutat
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -11303,7 +11366,7 @@ export type PageListQueryHookResult = ReturnType<typeof usePageListQuery>;
 export type PageListLazyQueryHookResult = ReturnType<typeof usePageListLazyQuery>;
 export type PageListQueryResult = Apollo.QueryResult<Types.PageListQuery, Types.PageListQueryVariables>;
 export const PageDetailsDocument = gql`
-    query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   page(id: $id) {
     ...PageDetails
   }
@@ -11327,6 +11390,7 @@ export const PageDetailsDocument = gql`
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -11342,7 +11406,7 @@ export type PageDetailsQueryHookResult = ReturnType<typeof usePageDetailsQuery>;
 export type PageDetailsLazyQueryHookResult = ReturnType<typeof usePageDetailsLazyQuery>;
 export type PageDetailsQueryResult = Apollo.QueryResult<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>;
 export const PageTypeDocument = gql`
-    query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   pageType(id: $id) {
     id
     name
@@ -11370,6 +11434,7 @@ export const PageTypeDocument = gql`
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -12502,15 +12567,12 @@ export const OrderLineDeleteDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 
 /**
@@ -12544,15 +12606,12 @@ export const OrderLinesAddDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 
 /**
@@ -12589,10 +12648,14 @@ export const OrderLineUpdateDocument = gql`
     orderLine {
       ...OrderLine
     }
+    order {
+      ...OrderLinesUpdate
+    }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLineFragmentDoc}
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 
 /**
@@ -15708,7 +15771,7 @@ export type ProductCountQueryHookResult = ReturnType<typeof useProductCountQuery
 export type ProductCountLazyQueryHookResult = ReturnType<typeof useProductCountLazyQuery>;
 export type ProductCountQueryResult = Apollo.QueryResult<Types.ProductCountQuery, Types.ProductCountQueryVariables>;
 export const ProductDetailsDocument = gql`
-    query ProductDetails($id: ID!, $channel: String, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    query ProductDetails($id: ID!, $channel: String, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   product(id: $id, channel: $channel) {
     ...Product
     category {
@@ -15737,6 +15800,7 @@ ${CategoryWithAncestorsFragmentDoc}`;
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -15752,7 +15816,7 @@ export type ProductDetailsQueryHookResult = ReturnType<typeof useProductDetailsQ
 export type ProductDetailsLazyQueryHookResult = ReturnType<typeof useProductDetailsLazyQuery>;
 export type ProductDetailsQueryResult = Apollo.QueryResult<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>;
 export const ProductTypeDocument = gql`
-    query ProductType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+    query ProductType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   productType(id: $id) {
     id
     name
@@ -15785,6 +15849,7 @@ export const ProductTypeDocument = gql`
  *      afterValues: // value for 'afterValues'
  *      lastValues: // value for 'lastValues'
  *      beforeValues: // value for 'beforeValues'
+ *      searchValues: // value for 'searchValues'
  *   },
  * });
  */
@@ -15859,6 +15924,8 @@ export const ProductVariantCreateDataDocument = gql`
     name
     productType {
       id
+      name
+      hasVariants
       selectionVariantAttributes: variantAttributes(
         variantSelection: VARIANT_SELECTION
       ) {

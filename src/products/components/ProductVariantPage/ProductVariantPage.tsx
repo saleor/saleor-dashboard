@@ -44,7 +44,7 @@ import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -95,6 +95,8 @@ interface ProductVariantPageProps {
   header: string;
   channels: ChannelPriceData[];
   channelErrors: ProductChannelListingErrorFragment[];
+  /** Whether the product type supports variant attributes */
+  hasVariants: boolean;
   loading?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -136,6 +138,7 @@ export const ProductVariantPage = ({
   defaultVariantId,
   defaultWeightUnit,
   errors: apiErrors,
+  hasVariants,
   header,
   loading,
   placeholderImage,
@@ -204,7 +207,30 @@ export const ProductVariantPage = ({
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={productUrl(productId)} title={header}>
+      <TopNav
+        href={productUrl(productId)}
+        title={
+          loading ? (
+            <Skeleton __width="200px" />
+          ) : (
+            <Box display="flex" alignItems="center" gap={1}>
+              <Text
+                size={6}
+                color="default2"
+                ellipsis
+                __maxWidth="200px"
+                title={variant?.product?.name}
+              >
+                {variant?.product?.name}
+              </Text>
+              <Text size={6} color="default2">
+                /
+              </Text>
+              <Text size={6}>{header}</Text>
+            </Box>
+          )
+        }
+      >
         {variant?.product?.defaultVariant?.id !== variant?.id && (
           <Box marginRight={3}>
             <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
@@ -220,6 +246,7 @@ export const ProductVariantPage = ({
       </TopNav>
       <DetailPageLayout.Content>
         <ProductVariantUpdateForm
+          key={variant?.id}
           variant={variant}
           onSubmit={onSubmit}
           currentChannels={channels}
@@ -267,6 +294,7 @@ export const ProductVariantPage = ({
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
                       variants={variant?.product.variants}
+                      loading={loading}
                       onReorder={onVariantReorder}
                     />
                   </div>
@@ -288,7 +316,9 @@ export const ProductVariantPage = ({
                       <VariantAttributesSection
                         title={intl.formatMessage(messages.nonSelectionAttributes)}
                         attributes={nonSelectionAttributes}
+                        totalAttributesCount={data.attributes.length}
                         selectionAttributesExist={selectionAttributes.length > 0}
+                        hasVariants={hasVariants}
                         attributeValues={attributeValues}
                         productTypeName={variant.product.productType.name}
                         productTypeUrl={productTypeUrl(variant.product.productType.id)}
@@ -306,7 +336,7 @@ export const ProductVariantPage = ({
                         richTextGetters={attributeRichTextGetters}
                       />
                     )}
-                    {selectionAttributes.length > 0 && (
+                    {hasVariants && selectionAttributes.length > 0 && (
                       <>
                         <CardSpacer />
                         <Attributes

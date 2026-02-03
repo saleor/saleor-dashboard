@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import { Link } from "./Link";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  return <MemoryRouter>{children}</MemoryRouter>;
+  return <MemoryRouter initialEntries={[{ pathname: "/" }]}>{children}</MemoryRouter>;
 };
 
 const renderWithRouter = (component: React.ReactElement) => {

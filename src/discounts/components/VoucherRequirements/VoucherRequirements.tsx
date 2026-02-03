@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";
@@ -91,7 +92,11 @@ const VoucherRequirements = ({
           <FormSpacer />
         )}
         {data.requirementsPicker === RequirementsPicker.ORDER ? (
-          <>
+          data.channelListings?.length === 0 ? (
+            <Placeholder>
+              <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
+            </Placeholder>
+          ) : (
             <div className={classes.tableContainer}>
               <ResponsiveTable className={classes.table}>
                 <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
@@ -115,55 +120,43 @@ const VoucherRequirements = ({
                   </TableCell>
                 </TableHead>
                 <TableBody>
-                  {renderCollection(
-                    data.channelListings,
-                    (listing, index) => {
-                      const error = formErrors.minSpent?.channels?.find(id => id === listing.id);
+                  {renderCollection(data.channelListings, (listing, index) => {
+                    const error = formErrors.minSpent?.channels?.find(id => id === listing.id);
 
-                      return (
-                        <TableRowLink
-                          key={listing?.id || `skeleton-${index}`}
-                          data-test-id={listing?.name}
-                        >
-                          <TableCell>
-                            <Text>{listing?.name || <Skeleton />}</Text>
-                          </TableCell>
-                          <TableCell className={classes.colPrice}>
-                            {listing ? (
-                              <PriceField
-                                disabled={disabled}
-                                error={!!error?.length}
-                                hint={
-                                  error ? getDiscountErrorMessage(formErrors.minSpent, intl) : ""
-                                }
-                                label={minimalOrderValueText}
-                                name="minSpent"
-                                value={listing.minSpent || ""}
-                                onChange={e =>
-                                  onChannelChange(listing.id, {
-                                    minSpent: e.target.value,
-                                  })
-                                }
-                              />
-                            ) : (
-                              <Skeleton />
-                            )}
-                          </TableCell>
-                        </TableRowLink>
-                      );
-                    },
-                    () => (
-                      <TableRowLink>
-                        <TableCell colSpan={numberOfColumns}>
-                          <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
+                    return (
+                      <TableRowLink
+                        key={listing?.id || `skeleton-${index}`}
+                        data-test-id={listing?.name}
+                      >
+                        <TableCell>
+                          <Text>{listing?.name || <Skeleton />}</Text>
+                        </TableCell>
+                        <TableCell className={classes.colPrice}>
+                          {listing ? (
+                            <PriceField
+                              disabled={disabled}
+                              error={!!error?.length}
+                              hint={error ? getDiscountErrorMessage(formErrors.minSpent, intl) : ""}
+                              label={minimalOrderValueText}
+                              name="minSpent"
+                              value={listing.minSpent || ""}
+                              onChange={e =>
+                                onChannelChange(listing.id, {
+                                  minSpent: e.target.value,
+                                })
+                              }
+                            />
+                          ) : (
+                            <Skeleton />
+                          )}
                         </TableCell>
                       </TableRowLink>
-                    ),
-                  )}
+                    );
+                  })}
                 </TableBody>
               </ResponsiveTable>
             </div>
-          </>
+          )
         ) : data.requirementsPicker === RequirementsPicker.ITEM ? (
           <TextField
             data-test-id="minimum-quantity-of-items-input"

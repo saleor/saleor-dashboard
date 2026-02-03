@@ -5,7 +5,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -77,73 +77,65 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
           />
         </LimitReachedAlert>
       )}
-      <DashboardCard>
-        <ResponsiveTable>
-          <TableHead>
-            <TableRowLink>
-              <TableCellHeader>
-                <FormattedMessage
-                  id="j/vV0n"
-                  defaultMessage="Channel Name"
-                  description="channel name"
-                />
-              </TableCellHeader>
-              <TableCell className={classes.colRight}>
-                <FormattedMessage
-                  id="VHuzgq"
-                  defaultMessage="Actions"
-                  description="table actions"
-                />
-              </TableCell>
-            </TableRowLink>
-          </TableHead>
-          <TableBody data-test-id="channel-list">
-            {renderCollection(
-              channelsList,
-              channel => (
-                <TableRowLink
-                  data-test-id="channel-row"
-                  hover={!!channel}
-                  key={channel ? channel.id : "skeleton"}
-                  className={classes.tableRow}
-                  href={channel && channelUrl(channel.id)}
-                >
-                  <TableCell className={classes.colName}>
-                    <span data-test-id="name">{channel?.name || <Skeleton />}</span>
-                  </TableCell>
-                  <TableCell className={classes.colAction}>
-                    {channelsList && channelsList.length > 1 && (
-                      <TableButtonWrapper>
-                        <Button
-                          variant="secondary"
-                          data-test-id="delete-channel"
-                          icon={
-                            <Trash2
-                              size={iconSize.small}
-                              strokeWidth={iconStrokeWidthBySize.small}
-                            />
-                          }
-                          onClick={
-                            channel ? stopPropagation(() => onRemove(channel.id)) : undefined
-                          }
-                          marginLeft="auto"
-                          marginRight={1}
-                        />
-                      </TableButtonWrapper>
-                    )}
-                  </TableCell>
-                </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+      <DashboardCard marginTop={6}>
+        <DashboardCard.Content>
+          <ResponsiveTable>
+            <TableHead>
+              <TableRowLink>
+                <TableCellHeader>
+                  <FormattedMessage id="hh0xW7" defaultMessage="Channel Name" />
+                </TableCellHeader>
+                <TableCell />
+              </TableRowLink>
+            </TableHead>
+            <TableBody data-test-id="channel-list">
+              {renderCollection(
+                channelsList,
+                channel => (
+                  <TableRowLink
+                    data-test-id="channel-row"
+                    hover={!!channel}
+                    key={channel ? channel.id : "skeleton"}
+                    className={classes.tableRow}
+                    href={channel && channelUrl(channel.id)}
+                  >
+                    <TableCell className={classes.colName}>
+                      <span data-test-id="name">{channel?.name || <Skeleton />}</span>
+                    </TableCell>
+                    <TableCell className={classes.colAction}>
+                      {channelsList && channelsList.length > 1 && (
+                        <TableButtonWrapper>
+                          <Button
+                            variant="secondary"
+                            data-test-id="delete-channel"
+                            icon={
+                              <Trash2
+                                size={iconSize.small}
+                                strokeWidth={iconStrokeWidthBySize.small}
+                              />
+                            }
+                            onClick={
+                              channel ? stopPropagation(() => onRemove(channel.id)) : undefined
+                            }
+                            marginLeft="auto"
+                            marginRight={1}
+                          />
+                        </TableButtonWrapper>
+                      )}
+                    </TableCell>
+                  </TableRowLink>
+                ),
+                () => (
+                  <TableRowLink>
+                    <TableCell colSpan={numberOfColumns}>
+                      <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
+                    </TableCell>
+                  </TableRowLink>
+                ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </DashboardCard.Content>
       </DashboardCard>
     </ListPageLayout>
   );

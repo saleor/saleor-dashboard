@@ -7,7 +7,6 @@ export const useStyles = makeStyles(
       width: `calc(76px + ${theme.spacing(1)})`,
     },
     colName: {
-      paddingLeft: 0,
       width: "auto",
       minWidth: 200,
     },

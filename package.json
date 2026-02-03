@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.28",
+  "version": "3.22.30",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -24,6 +24,7 @@
     "dev": "vite --host",
     "dev:no-strict": "cross-env VITE_DISABLE_STRICT_MODE=true vite --host",
     "e2e": "pnpm exec playwright test --grep \"#e2e\"",
+    "e2e:clean-auth": "rm -rf ./playwright/.auth",
     "e2e:ui": "pnpm exec playwright test --ui",
     "extract-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.cjs",
     "fetch-local-schema": "node scripts/fetch-local-schema.cjs",

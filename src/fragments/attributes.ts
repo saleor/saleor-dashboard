@@ -56,7 +56,13 @@ export const attributeDetailsFragment = gql`
         name
       }
     }
-    choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
+    choices(
+      first: $firstValues
+      after: $afterValues
+      last: $lastValues
+      before: $beforeValues
+      search: $searchValues
+    ) {
       ...AttributeValueList
     }
   }

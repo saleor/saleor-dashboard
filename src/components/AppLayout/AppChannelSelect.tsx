@@ -15,9 +15,10 @@ const AppChannelSelect = ({
   selectedChannelId,
 }: AppChannelSelectProps) => {
   return (
-    <Box>
+    <Box display="flex" alignItems="center">
       <Select
         __width={130}
+        __height={28}
         data-test-id="app-channel-select"
         size="large"
         onChange={({ target }) => onChannelSelect(target.value)}

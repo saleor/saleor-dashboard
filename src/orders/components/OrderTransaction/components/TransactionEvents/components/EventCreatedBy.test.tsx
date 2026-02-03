@@ -18,7 +18,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the app if app is passed", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <EventCreatedBy createdBy={appAvatarFixture} />
       </MemoryRouter>,
     );
@@ -34,7 +34,7 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the user settings if user is passed", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[{ pathname: "/" }]}>
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,
     );

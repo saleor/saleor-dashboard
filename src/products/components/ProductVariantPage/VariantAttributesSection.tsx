@@ -17,7 +17,11 @@ import { FormattedMessage } from "react-intl";
 interface VariantAttributesSectionProps extends AttributeRowHandlers {
   title: ReactNode;
   attributes: AttributeInput[];
+  /** Total count of all variant attributes (selection + non-selection) */
+  totalAttributesCount: number;
   selectionAttributesExist: boolean;
+  /** Whether the product type supports variant attributes */
+  hasVariants: boolean;
   attributeValues: AttributeValueFragment[];
   productTypeName: string;
   productTypeUrl: string;
@@ -30,7 +34,9 @@ interface VariantAttributesSectionProps extends AttributeRowHandlers {
 export const VariantAttributesSection = ({
   title,
   attributes,
+  totalAttributesCount,
   selectionAttributesExist,
+  hasVariants,
   attributeValues,
   productTypeName,
   productTypeUrl,
@@ -88,6 +94,37 @@ export const VariantAttributesSection = ({
       </Tooltip>
     </Box>
   );
+
+  // When hasVariants is false but attributes exist, show info message instead of attribute fields
+  if (!hasVariants && totalAttributesCount > 0) {
+    return (
+      <>
+        <CardSpacer />
+        <DashboardCard paddingTop={6}>
+          <DashboardCard.Content>
+            <Box display="flex" flexDirection="column" gap={4} paddingBottom={4}>
+              {titleWithTooltip}
+              <Text size={2} color="default2">
+                <FormattedMessage
+                  id="zN0Eub"
+                  defaultMessage="This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
+                  description="info message when hasVariants is false but variant attributes exist"
+                  values={{
+                    count: totalAttributesCount,
+                    productTypeLink: (
+                      <Link href={productTypeUrl} underline>
+                        {productTypeName}
+                      </Link>
+                    ),
+                  }}
+                />
+              </Text>
+            </Box>
+          </DashboardCard.Content>
+        </DashboardCard>
+      </>
+    );
+  }
 
   // Only show empty state when both non-selection and selection attributes are empty
   if (attributes.length === 0) {
