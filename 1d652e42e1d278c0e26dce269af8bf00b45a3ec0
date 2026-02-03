@@ -1,0 +1,37 @@
+src/fragments/apps.ts
+  973d504def2b513c 208
+src/extensions/views/InstalledExtensions/InstalledExtensions.test.tsx
+  973d504def2b513c 40-41,49-52
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  973d504def2b513c 22,70,84,138-139
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.test.tsx
+  973d504def2b513c 38,47,126,134,146-147,209,216-217,220
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  973d504def2b513c 3,18,24,35,37,44,48-49,65,77,80,99,102,119,125-126,182
+src/extensions/types.ts
+  973d504def2b513c 23-27,30
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  973d504def2b513c 193,199
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  973d504def2b513c 13,66,68,79-80,83,87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "1d652e42e1d278c0e26dce269af8bf00b45a3ec0",
+  "prompts": {
+    "973d504def2b513c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe240cd7-5d8d-4af6-a486-48e721607058",
+        "model": "<synthetic>"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 65,
+      "total_deletions": 58,
+      "accepted_lines": 54,
+      "overriden_lines": 0
+    }
+  }
+}
