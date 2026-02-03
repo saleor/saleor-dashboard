@@ -1,0 +1,27 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard.tsx
+  973d504def2b513c 5,16,19-22,28-71,76,78,82,84,86,88-89
+src/extensions/views/InstalledExtensions/components/AppProblems/AppProblems.module.css
+  973d504def2b513c 155-175
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  973d504def2b513c 113-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "11227cef07d31a84ae6393d3a1db1ca69a510241",
+  "prompts": {
+    "973d504def2b513c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe240cd7-5d8d-4af6-a486-48e721607058",
+        "model": "<synthetic>"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 104,
+      "total_deletions": 29,
+      "accepted_lines": 83,
+      "overriden_lines": 0
+    }
+  }
+}
