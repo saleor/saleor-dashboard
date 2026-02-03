@@ -30,6 +30,7 @@ export const useAppActions = (
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
   const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
+  const { handle: handlePopupClose } = AppActionsHandler.useHandlePopupCloseAction();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -60,6 +61,9 @@ export const useAppActions = (
       }
       case "formPayloadUpdate": {
         return handleAppFormUpdate(action);
+      }
+      case "popupClose": {
+        return handlePopupClose(action);
       }
       default: {
         // @ts-expect-error this is for runtime checking
