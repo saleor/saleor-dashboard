@@ -152,6 +152,29 @@
   font-size: 12px;
 }
 
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.timestampHoverable {
+  cursor: default;
+  border-bottom: 1px dotted #9ca3af;
+}
+
+.timestampTooltip {
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
 .dismissedLabel {
   color: #9ca3af;
   font-size: 11px;

@@ -110,6 +110,9 @@ export const ProblemsList = ({
             <div className={styles.problemHeader}>
               <ProblemTypeBadge typename={problem.__typename} />
               {critical && !dismissed && <span className={styles.criticalBadge}>Critical</span>}
+              {problem.__typename === "AppProblem" && problem.count > 1 && (
+                <span className={styles.countBadge}>{problem.count}×</span>
+              )}
               {actionLink && (
                 <Link href={actionLink.href} className={styles.groupActionLink} inline={false}>
                   {intl.formatMessage(problemMessages[actionLink.label])}
