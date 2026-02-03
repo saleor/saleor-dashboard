@@ -7,9 +7,9 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { SearchProductsQuery } from "@dashboard/graphql";
+import { ProductWhereInput, SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
@@ -20,6 +20,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { AssignContainerDialogProps } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
+import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import {
@@ -35,7 +37,12 @@ interface AssignVariantDialogMultiProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
-  onFetch: (value: string) => void;
+  onFetch?: (value: string) => void;
+  onFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   onSubmit: (data: Container[]) => void;
   onClose: () => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
@@ -52,14 +59,23 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     loading,
     products,
     onClose,
-    onFetch,
+    onFetch: _onFetch,
+    onFilterChange,
     onFetchMore,
     onSubmit,
     open,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
+
+  const { combinedFilters, clearFilters } = useModalProductFilterContext();
+
+  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+    filterVariables: combinedFilters,
+    open,
+    onFetch: (filters, query) => onFilterChange?.(filters.where, filters.channel, query),
+  });
+
   const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
@@ -80,13 +96,15 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     );
 
   const handleClose = () => {
-    queryReset();
+    resetQuery();
+    clearFilters();
     onClose();
   };
 
   useModalDialogOpen(open, {
     onOpen: () => {
-      queryReset();
+      resetQuery();
+      clearFilters();
     },
     onClose: handleClose,
   });
@@ -105,6 +123,8 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
           endAdornment: loading && <SaleorThrobber size={16} />,
         }}
       />
+
+      <ModalFilters />
 
       <InfiniteScroll
         id={scrollableTargetId}

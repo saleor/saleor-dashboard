@@ -12,7 +12,7 @@ import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -64,15 +64,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   const classes = useStyles(props);
   const intl = useIntl();
   const [selectedProductId, setSelectedProductId] = useState<string>(selectedId ?? "");
-  const { filterVariables, filterChannel, clearFilters } = useModalProductFilterContext();
-
-  const combinedFilters = useMemo(
-    () => ({
-      where: filterVariables,
-      channel: filterChannel,
-    }),
-    [filterVariables, filterChannel],
-  );
+  const { combinedFilters, clearFilters } = useModalProductFilterContext();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
     filterVariables: combinedFilters,

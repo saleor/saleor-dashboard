@@ -526,6 +526,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-variant"}
         onFetch={searchProducts}
+        onFilterChange={handleProductFilterChange}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}

@@ -125,6 +125,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignVariantDialog
           products={filteredProducts}
+          initialConstraints={initialConstraints}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
