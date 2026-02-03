@@ -28,6 +28,7 @@ jest.mock("./appActionsHandler", () => ({
     useNotifyReadyAction: jest.fn(),
     useHandlePermissionRequest: jest.fn(),
     useHandleAppFormUpdate: jest.fn(),
+    useHandlePopupCloseAction: jest.fn(),
   },
 }));
 
@@ -51,6 +52,7 @@ describe("useAppActions", () => {
   const mockHandleNotifyReady = jest.fn();
   const mockHandlePermissionRequest = jest.fn();
   const mockHandleAppFormUpdate = jest.fn();
+  const mockHandlePopupClose = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -75,6 +77,9 @@ describe("useAppActions", () => {
     });
     (AppActionsHandler.useHandleAppFormUpdate as jest.Mock).mockReturnValue({
       handle: mockHandleAppFormUpdate,
+    });
+    (AppActionsHandler.useHandlePopupCloseAction as jest.Mock).mockReturnValue({
+      handle: mockHandlePopupClose,
     });
 
     // Reset capture message mock to return a proper scope
