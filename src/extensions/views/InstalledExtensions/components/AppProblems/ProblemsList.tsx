@@ -23,6 +23,9 @@ interface ProblemsListProps {
   appId: string;
   onClearProblem?: (appId: string, keys?: string[]) => void;
   hasManagedAppsPermission?: boolean;
+  showInline?: boolean;
+  modalOpen?: boolean;
+  onModalOpenChange?: (open: boolean) => void;
 }
 
 const sortProblems = (problems: AppProblem[]): AppProblem[] =>
@@ -133,9 +136,21 @@ export const ProblemsList = ({
   appId,
   onClearProblem,
   hasManagedAppsPermission,
+  showInline = true,
+  modalOpen,
+  onModalOpenChange,
 }: ProblemsListProps) => {
   const intl = useIntl();
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [internalPopupOpen, setInternalPopupOpen] = useState(false);
+
+  const isPopupOpen = modalOpen ?? internalPopupOpen;
+  const handlePopupChange = (open: boolean) => {
+    if (onModalOpenChange) {
+      onModalOpenChange(open);
+    } else {
+      setInternalPopupOpen(open);
+    }
+  };
 
   const sorted = useMemo(() => sortProblems(problems), [problems]);
 
@@ -154,50 +169,54 @@ export const ProblemsList = ({
   ).length;
 
   return (
-    <div className={styles.problemsContainer}>
-      {visible.map((problem, index) => (
-        <ProblemItem
-          key={
-            problem.__typename === "AppProblem"
-              ? `${problem.key}-${problem.createdAt}`
-              : problem.createdAt
-          }
-          problem={problem}
-          appId={appId}
-          index={index}
-          onClearProblem={onClearProblem}
-          hasManagedAppsPermission={hasManagedAppsPermission}
-        />
-      ))}
-      {hasMore && (
-        <button
-          className={styles.showMoreButton}
-          onClick={e => {
-            e.preventDefault();
-            setPopupOpen(true);
-          }}
-        >
-          <Maximize2 size={16} />
-          {intl.formatMessage(problemMessages.showMoreProblems, {
-            count: hiddenCount,
-          })}
-          {activeInHidden > 0 && criticalInHidden > 0
-            ? intl.formatMessage(problemMessages.showMoreIncludingActiveAndCritical, {
-                active: activeInHidden,
-                critical: criticalInHidden,
-              })
-            : activeInHidden > 0
-              ? intl.formatMessage(problemMessages.showMoreIncludingActive, {
-                  active: activeInHidden,
-                })
-              : criticalInHidden > 0
-                ? intl.formatMessage(problemMessages.showMoreIncludingCritical, {
+    <>
+      {showInline && (
+        <div className={styles.problemsContainer}>
+          {visible.map((problem, index) => (
+            <ProblemItem
+              key={
+                problem.__typename === "AppProblem"
+                  ? `${problem.key}-${problem.createdAt}`
+                  : problem.createdAt
+              }
+              problem={problem}
+              appId={appId}
+              index={index}
+              onClearProblem={onClearProblem}
+              hasManagedAppsPermission={hasManagedAppsPermission}
+            />
+          ))}
+          {hasMore && (
+            <button
+              className={styles.showMoreButton}
+              onClick={e => {
+                e.preventDefault();
+                handlePopupChange(true);
+              }}
+            >
+              <Maximize2 size={16} />
+              {intl.formatMessage(problemMessages.showMoreProblems, {
+                count: hiddenCount,
+              })}
+              {activeInHidden > 0 && criticalInHidden > 0
+                ? intl.formatMessage(problemMessages.showMoreIncludingActiveAndCritical, {
+                    active: activeInHidden,
                     critical: criticalInHidden,
                   })
-                : null}
-        </button>
+                : activeInHidden > 0
+                  ? intl.formatMessage(problemMessages.showMoreIncludingActive, {
+                      active: activeInHidden,
+                    })
+                  : criticalInHidden > 0
+                    ? intl.formatMessage(problemMessages.showMoreIncludingCritical, {
+                        critical: criticalInHidden,
+                      })
+                    : null}
+            </button>
+          )}
+        </div>
       )}
-      <DashboardModal open={popupOpen} onChange={() => setPopupOpen(false)}>
+      <DashboardModal open={isPopupOpen} onChange={() => handlePopupChange(false)}>
         <DashboardModal.Content size="md">
           <DashboardModal.Header>
             {intl.formatMessage(problemMessages.allProblems, {
@@ -222,6 +241,6 @@ export const ProblemsList = ({
           </div>
         </DashboardModal.Content>
       </DashboardModal>
-    </div>
+    </>
   );
 };

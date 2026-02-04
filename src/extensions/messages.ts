@@ -407,6 +407,10 @@ export const problemMessages = defineMessages({
     defaultMessage: "Dismiss all problems raised by the app",
     id: "PUxbpJ",
   },
+  openAppProblems: {
+    defaultMessage: "Open app problems",
+    id: "xEUTvE",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({

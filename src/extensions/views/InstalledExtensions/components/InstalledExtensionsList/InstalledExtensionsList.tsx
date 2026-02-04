@@ -2,14 +2,15 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { messages } from "@dashboard/extensions/messages";
+import { messages, problemMessages } from "@dashboard/extensions/messages";
 import {
   InstalledExtension,
   isProblemCritical,
   isProblemDismissed,
 } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { CircleAlert } from "lucide-react";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -79,11 +80,17 @@ const ExtensionRow = ({
   hasManagedAppsPermission,
   onClearProblem,
 }: ExtensionRowProps) => {
+  const intl = useIntl();
   const problems = extension.problems ?? [];
   const activeProblems = problems.filter(p => !isProblemDismissed(p));
   const totalCount = activeProblems.length;
   const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
-  const [problemsVisible, setProblemsVisible] = useState(problems.length > 0);
+
+  const hasActiveProblems = totalCount > 0;
+  const hasAnyProblems = problems.length > 0;
+
+  const [problemsVisible, setProblemsVisible] = useState(hasActiveProblems);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
@@ -102,7 +109,7 @@ const ExtensionRow = ({
               >
                 {extension.name}
               </Text>
-              {problems.length > 0 && (
+              {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
                   criticalCount={criticalCount}
@@ -113,24 +120,50 @@ const ExtensionRow = ({
             </Box>
             <Box marginLeft="auto" marginRight={4} display="flex" alignItems="center" gap={4}>
               {extension.info}
-              {/* Actions are here only for failed installation case,
-                  type InstalledExtension should be refactored. More info in its definition */}
+              {hasAnyProblems && (
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={e => {
+                    e.preventDefault();
+                    setModalOpen(true);
+                  }}
+                  data-test-id="open-app-problems"
+                >
+                  <CircleAlert size={14} />
+                  {intl.formatMessage(problemMessages.openAppProblems)}
+                </Button>
+              )}
               {extension.actions}
             </Box>
           </ExtensionLink>
         </GridTable.Cell>
       </GridTable.Row>
-      {problemsVisible && problems.length > 0 && (
+      {hasActiveProblems && problemsVisible ? (
         <GridTable.Row data-test-id="installed-extension-problems-row">
           <GridTable.Cell padding={0}>
             <ProblemsList
-              problems={extension.problems!}
+              problems={problems}
               appId={extension.id}
               onClearProblem={onClearProblem}
               hasManagedAppsPermission={hasManagedAppsPermission}
+              modalOpen={modalOpen}
+              onModalOpenChange={setModalOpen}
             />
           </GridTable.Cell>
         </GridTable.Row>
+      ) : (
+        hasAnyProblems && (
+          <ProblemsList
+            problems={problems}
+            appId={extension.id}
+            onClearProblem={onClearProblem}
+            hasManagedAppsPermission={hasManagedAppsPermission}
+            showInline={false}
+            modalOpen={modalOpen}
+            onModalOpenChange={setModalOpen}
+          />
+        )
       )}
     </>
   );

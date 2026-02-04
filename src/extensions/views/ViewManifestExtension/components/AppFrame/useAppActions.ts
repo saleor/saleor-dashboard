@@ -66,7 +66,7 @@ export const useAppActions = (
         return handlePopupClose(action);
       }
       default: {
-        const actionType = action?.type as string | undefined;
+        const actionType = (action as unknown as { type?: string })?.type;
 
         captureMessage("Unknown action type requested by the App", scope => {
           scope.setLevel("warning");

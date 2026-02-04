@@ -640,6 +640,9 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
+  "1aAwu4": {
+    "string": ", including {active} active and {critical} critical"
+  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -905,6 +908,9 @@
   "3Gkj+d": {
     "context": "button to reset cut-off date to saved value",
     "string": "Reset to saved value"
+  },
+  "3OiSHe": {
+    "string": ", including {critical} critical"
   },
   "3PVGWj": {
     "string": "Filter preset"
@@ -1797,9 +1803,6 @@
     "context": "page title",
     "string": "Create New Attribute"
   },
-  "8dD0Gt": {
-    "string": "Force dismiss"
-  },
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
@@ -2537,6 +2540,9 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
+  },
+  "CyYBH5": {
+    "string": ", including {active} active"
   },
   "D0KaT6": {
     "context": "webhook input label",
@@ -3788,9 +3794,6 @@
     "context": "window title",
     "string": "Create Webhook"
   },
-  "JVdGDR": {
-    "string": "{count, plural, one {{count} warning} other {{count} warnings}}"
-  },
   "JYfMRO": {
     "context": "order discount was updated event title",
     "string": "Order discount was updated"
@@ -4829,6 +4832,9 @@
     "context": "warning dialog title when SKU and stock are not set",
     "string": "Create without SKU and stock?"
   },
+  "PUxbpJ": {
+    "string": "Dismiss all problems raised by the app"
+  },
   "PV0SQd": {
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
@@ -5482,11 +5488,17 @@
     "context": "header",
     "string": "Structure Items"
   },
+  "TDaF6J": {
+    "string": "Dismiss"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
   "TE4fIS": {
     "string": "City"
+  },
+  "TEOp+x": {
+    "string": "including {count} critical"
   },
   "TGX4T1": {
     "string": "Search Engine Preview"
@@ -5652,9 +5664,6 @@
   "U9TPGD": {
     "context": "Link to revert date change",
     "string": "Revert to previous date"
-  },
-  "UBl/YR": {
-    "string": "Dismiss all problems raised by the app"
   },
   "UBuKZ9": {
     "context": "searchbar placeholder",
@@ -8840,6 +8849,9 @@
     "context": "modal button upload",
     "string": "Upload"
   },
+  "mI+leH": {
+    "string": "All problems ({count})"
+  },
   "mIRBuW": {
     "string": "Is published"
   },
@@ -10792,6 +10804,9 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xEUTvE": {
+    "string": "Open app problems"
   },
   "xFSJR1": {
     "context": "recent changes shortcut",
