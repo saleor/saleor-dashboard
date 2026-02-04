@@ -209,6 +209,7 @@ export type OrderUrlDialog =
   | "mark-paid"
   | "void"
   | "transaction-action"
+  | "transaction-charge-action"
   | "invoice-send"
   | "add-manual-transaction"
   | "view-order-line-metadata"
@@ -216,7 +217,7 @@ export type OrderUrlDialog =
   | "view-fulfillment-metadata";
 
 interface TransactionAction {
-  action: "transaction-action";
+  action: "transaction-action" | "transaction-charge-action";
   id: string;
   type: TransactionActionEnum;
 }

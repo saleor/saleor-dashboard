@@ -1,5 +1,5 @@
 import { ApolloError, ServerError } from "@apollo/client/core";
-import { IMessage, IMessageContext } from "@dashboard/components/messages";
+import { INotification, INotificationCallback } from "@dashboard/components/notifications";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
@@ -41,7 +41,7 @@ export const showAllErrors = ({
   notify,
   error,
 }: {
-  notify: IMessageContext;
+  notify: INotificationCallback;
   error: ApolloError;
 }) => {
   getAllErrorMessages(error).forEach(message => {
@@ -60,7 +60,7 @@ export const handleNestedMutationErrors = ({
 }: {
   data: any;
   intl: IntlShape;
-  notify: (message: IMessage) => void;
+  notify: (notification: INotification) => void;
 }) => {
   const mutationErrors = getMutationErrors({ data });
 
@@ -82,7 +82,7 @@ export const handleNestedMutationErrors = ({
 
 export async function handleQueryAuthError(
   error: ApolloError,
-  notify: IMessageContext,
+  notify: INotificationCallback,
   logout: () => void,
   intl: IntlShape,
 ) {

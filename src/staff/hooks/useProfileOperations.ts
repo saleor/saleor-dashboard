@@ -5,8 +5,8 @@ import {
   useUserAvatarUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { errorMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 import { staffMemberDetailsUrl } from "../urls";
@@ -27,7 +27,7 @@ export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutatio
         refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "B5/YE0", defaultMessage: "Profile updated" }),
         });
       }
     },
@@ -37,7 +37,7 @@ export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutatio
       if (!data.userAvatarUpdate?.errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "6V+aAL", defaultMessage: "Avatar updated" }),
         });
         refetch();
         navigate(staffMemberDetailsUrl(id));
@@ -55,7 +55,7 @@ export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutatio
       if (!data.userAvatarDelete?.errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "Z/jtCO", defaultMessage: "Avatar deleted" }),
         });
         refetch();
         navigate(staffMemberDetailsUrl(id));
@@ -67,7 +67,7 @@ export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutatio
       if (!data.passwordChange?.errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "h9aBq7", defaultMessage: "Password changed" }),
         });
         closeModal();
       }

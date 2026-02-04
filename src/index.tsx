@@ -35,8 +35,8 @@ import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
-import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
+import { NotificationProvider } from "./components/notifications";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
@@ -99,7 +99,7 @@ errorTracker.init(history);
   Handle legacy theming toggle. Since we use new and old macaw,
   we need to handle both theme swticher for a while.
 */
-const handleLegacyTheming = () => {
+const handleLegacyTheming = (): void => {
   const activeTheme = localStorage.getItem("activeMacawUITheme");
 
   if (activeTheme === "defaultDark") {
@@ -113,7 +113,7 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App = () => (
+const App = (): JSX.Element => (
   // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
@@ -122,7 +122,7 @@ const App = () => (
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <LocaleProvider>
-              <MessageManagerProvider>
+              <NotificationProvider>
                 <BackgroundTasksProvider>
                   <AppStateProvider>
                     <AuthProvider>
@@ -148,7 +148,7 @@ const App = () => (
                     </AuthProvider>
                   </AppStateProvider>
                 </BackgroundTasksProvider>
-              </MessageManagerProvider>
+              </NotificationProvider>
             </LocaleProvider>
           </ThemeProvider>
         </LegacyThemeProvider>

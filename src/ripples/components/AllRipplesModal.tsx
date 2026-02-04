@@ -206,9 +206,9 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
         </Text>
 
         {/* Description - always use consistent color */}
-        <Box fontSize={3} color="default2" __lineHeight="1.6">
+        <Text fontSize={3} color="default2" __lineHeight="1.6">
           {ripple.content.global}
-        </Box>
+        </Text>
 
         {/* Actions - filter out actions marked as hideInModal */}
         {ripple.actions

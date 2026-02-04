@@ -129,3 +129,25 @@ a.command-menu-item {
 .command-menu tr[data-focus="true"] {
   background-color: var(--mu-colors-background-default1-hovered) !important;
 }
+
+/* Fix PaginationRowNumberSelect styling from old macaw-ui */
+.MuiSelect-select.MuiSelect-select {
+  padding: 4px 24px 4px 8px !important;
+  border-radius: 4px !important;
+  background-color: transparent !important;
+}
+
+.MuiSelect-select.MuiSelect-select:hover,
+.MuiSelect-select.MuiSelect-select:focus {
+  background-color: var(--mu-colors-background-default1-hovered) !important;
+}
+
+/* Ensure toast notifications appear above modals */
+#toast-portal {
+  z-index: 2147483647;
+  pointer-events: none;
+}
+
+#toast-portal > * {
+  pointer-events: auto;
+}

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -9,7 +9,7 @@ import { ProductTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { ProductTypeListUrlSortField, productTypeUrl } from "@dashboard/productTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
@@ -29,9 +29,7 @@ const useStyles = makeStyles(
         width: 300,
       },
     },
-    colName: {
-      paddingLeft: 0,
-    },
+    colName: {},
     colTax: {},
     colType: {},
     link: {
@@ -64,7 +62,7 @@ const ProductTypeList = ({
   const location = useLocation();
 
   return (
-    <ResponsiveTable>
+    <ResponsiveTable footer={<TablePaginationWithContext />}>
       <TableHead
         colSpan={numberOfColumns}
         selected={selected}
@@ -110,11 +108,6 @@ const ProductTypeList = ({
           />
         </TableCell>
       </TableHead>
-      <TableFooter>
-        <TableRowLink>
-          <TablePaginationWithContext colSpan={numberOfColumns} />
-        </TableRowLink>
-      </TableFooter>
       <TableBody data-test-id="product-types-list">
         {renderCollection(
           productTypes,

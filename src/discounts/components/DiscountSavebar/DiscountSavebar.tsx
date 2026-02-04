@@ -1,7 +1,6 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -34,7 +33,10 @@ export const DiscountSavebar = ({
     // In case form has not been modified, on submit we redirect to discount list with success banner
     notify({
       status: "success",
-      text: intl.formatMessage(commonMessages.savedChanges),
+      text: intl.formatMessage({
+        id: "/4/nYx",
+        defaultMessage: "Discount updated",
+      }),
     });
   };
 

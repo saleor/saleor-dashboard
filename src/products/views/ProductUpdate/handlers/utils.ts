@@ -117,20 +117,17 @@ export function getProductChannelsUpdateVariables(
 
   data.channels.updateChannels
     .map(listing => {
+      // Always include date fields - they're needed for scheduling
+      // Saleor's scheduling works by: isPublished=true + publishedAt=futureDate
+      // Similarly: isAvailableForPurchase=true + availableForPurchaseAt=futureDate
       const fieldsToPick = [
         "channelId",
         "isAvailableForPurchase",
+        "availableForPurchaseAt",
         "isPublished",
+        "publishedAt",
         "visibleInListings",
       ] as Array<keyof ProductChannelListingAddInput>;
-
-      if (!listing.isAvailableForPurchase) {
-        fieldsToPick.push("availableForPurchaseAt");
-      }
-
-      if (!listing.isPublished) {
-        fieldsToPick.push("publishedAt");
-      }
 
       return pick(
         listing,
@@ -147,8 +144,11 @@ export function getProductChannelsUpdateVariables(
 
       return {
         ...data,
+        // Only force isAvailableForPurchase=true when there's an actual date set
         isAvailableForPurchase:
-          data.availableForPurchaseAt !== null ? true : data.isAvailableForPurchase,
+          data.availableForPurchaseAt !== null && data.availableForPurchaseAt !== undefined
+            ? true
+            : data.isAvailableForPurchase,
       };
     });
 

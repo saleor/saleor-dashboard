@@ -1,17 +1,24 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import { Combobox } from "@dashboard/components/Combobox";
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getBySlug } from "@dashboard/misc";
 import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Checkbox, Input, Spinner, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Checkbox,
+  DynamicCombobox,
+  Input,
+  Option,
+  Spinner,
+  Text,
+} from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -63,7 +70,7 @@ const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendMutation({
     onCompleted: data => {
       const errors = data?.giftCardResend?.errors;
-      const notifierData: IMessage = errors?.length
+      const notifierData: INotification = errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),
@@ -109,16 +116,28 @@ const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
         <Box display="grid" gap={2}>
           <Text>{intl.formatMessage(messages.description)}</Text>
 
-          <Combobox
+          <DynamicCombobox
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
             options={mapSlugNodeToChoice(filteredChannels)}
-            fetchOptions={onQueryChange}
+            onInputValueChange={onQueryChange}
             name="channelSlug"
-            value={{
-              label: channels?.find(getBySlug(data?.channelSlug))?.name,
-              value: data?.channelSlug,
+            size="small"
+            value={
+              data?.channelSlug
+                ? {
+                    label: channels?.find(getBySlug(data?.channelSlug))?.name ?? "",
+                    value: data?.channelSlug,
+                  }
+                : null
+            }
+            onChange={(option: Option | null) => {
+              change({
+                target: {
+                  name: "channelSlug",
+                  value: option?.value ?? "",
+                },
+              });
             }}
-            onChange={change}
           />
           <Checkbox
             name="differentMailConsent"

@@ -1,11 +1,11 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import { Button, Option } from "@saleor/macaw-ui-next";
+import { Button, DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -30,14 +30,22 @@ const PageTypePickerDialog = ({
   onConfirm,
 }: PageTypePickerDialogProps) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+
+  const debouncedFetchPageTypes = useDebounce(fetchPageTypes, 500);
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice(null);
+      setSelectedOption(null);
       fetchPageTypes("");
     },
   });
+
+  const handleScrollEnd = () => {
+    if (fetchMorePageTypes?.hasMore) {
+      fetchMorePageTypes?.onFetchMore();
+    }
+  };
 
   return (
     <DashboardModal open={open} onChange={onClose}>
@@ -46,15 +54,18 @@ const PageTypePickerDialog = ({
           <FormattedMessage {...messages.selectPageType} />
         </DashboardModal.Header>
 
-        <Combobox
+        <DynamicCombobox
           name="pageType"
           label={intl.formatMessage(messages.pageType)}
           options={pageTypes}
-          value={choice}
-          onChange={e => setChoice(e.target.value)}
-          fetchOptions={fetchPageTypes}
+          size="small"
+          value={selectedOption}
+          onChange={setSelectedOption}
+          onInputValueChange={debouncedFetchPageTypes}
+          onFocus={() => fetchPageTypes("")}
           data-test-id="dialog-page-type"
-          fetchMore={fetchMorePageTypes}
+          onScrollEnd={handleScrollEnd}
+          loading={fetchMorePageTypes?.loading}
         />
 
         <DashboardModal.Actions>
@@ -65,8 +76,8 @@ const PageTypePickerDialog = ({
           <ConfirmButton
             data-test-id="confirm-button"
             transitionState={confirmButtonState}
-            onClick={() => (choice ? onConfirm(choice) : null)}
-            disabled={!choice}
+            onClick={() => (selectedOption ? onConfirm(selectedOption.value) : null)}
+            disabled={!selectedOption}
           >
             {intl.formatMessage(buttonMessages.confirm)}
           </ConfirmButton>

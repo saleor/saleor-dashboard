@@ -6,7 +6,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { useIntl } from "react-intl";
@@ -26,8 +26,8 @@ const PageTypeCreate = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "TKQiDp",
-            defaultMessage: "Successfully created model type",
+            id: "pNxrLQ",
+            defaultMessage: "Model type created",
           }),
         });
         navigate(pageTypeUrl(updateData.pageTypeCreate.pageType.id));

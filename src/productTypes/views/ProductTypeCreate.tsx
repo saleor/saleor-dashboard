@@ -8,7 +8,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { useIntl } from "react-intl";
@@ -44,8 +44,8 @@ const ProductTypeCreate = ({ params }: ProductTypeCreateProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "paa4m0",
-            defaultMessage: "Successfully created product type",
+            id: "SZyphU",
+            defaultMessage: "Product type created",
           }),
         });
         navigate(productTypeUrl(data.productTypeCreate.productType.id));

@@ -14,7 +14,9 @@ jest.mock("@sentry/react", () => ({
 
 const mockNotifier = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => (): jest.Mock => mockNotifier);
+jest.mock("@dashboard/hooks/useNotifier", () => ({
+  useNotifier: (): jest.Mock => mockNotifier,
+}));
 
 jest.mock("./usePostToExtension");
 
@@ -26,6 +28,7 @@ jest.mock("./appActionsHandler", () => ({
     useNotifyReadyAction: jest.fn(),
     useHandlePermissionRequest: jest.fn(),
     useHandleAppFormUpdate: jest.fn(),
+    useHandlePopupCloseAction: jest.fn(),
   },
 }));
 
@@ -49,6 +52,7 @@ describe("useAppActions", () => {
   const mockHandleNotifyReady = jest.fn();
   const mockHandlePermissionRequest = jest.fn();
   const mockHandleAppFormUpdate = jest.fn();
+  const mockHandlePopupClose = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -74,6 +78,9 @@ describe("useAppActions", () => {
     (AppActionsHandler.useHandleAppFormUpdate as jest.Mock).mockReturnValue({
       handle: mockHandleAppFormUpdate,
     });
+    (AppActionsHandler.useHandlePopupCloseAction as jest.Mock).mockReturnValue({
+      handle: mockHandlePopupClose,
+    });
 
     // Reset capture message mock to return a proper scope
     mockCaptureMessage.mockImplementation((_message, callback) => {
@@ -90,7 +97,7 @@ describe("useAppActions", () => {
     });
   });
 
-  it("should capture unknown action type to Sentry and show notification", () => {
+  it("should capture unknown action type to Sentry", () => {
     // Arrange
     const unknownActionType = "unknownAction";
     const unknownAction = {
@@ -134,13 +141,6 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
-
-    // Verify notification was shown to user
-    expect(mockNotifier).toHaveBeenCalledWith({
-      title: "Invalid app event",
-      status: "error",
-      text: `App has sent invalid event type "${unknownActionType}". Contact app developer.`,
-    });
   });
 
   it("should ignore messages from different origins", () => {

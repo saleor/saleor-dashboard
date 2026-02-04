@@ -1,25 +1,28 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  ErrorPolicyEnum,
   ProductMediaCreateMutationVariables,
+  ProductVariantBulkCreateInput,
   ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
+  useProductVariantBulkCreateMutation,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -123,9 +126,13 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     onCompleted: () =>
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "Gi8zwc",
+          defaultMessage: "Image deleted",
+        }),
       }),
   });
+  const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
@@ -146,7 +153,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "lUvX5F",
+            defaultMessage: "Image added",
+          }),
         });
       }
     },
@@ -163,6 +173,101 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     });
   };
   const handleBack = () => navigate(productListUrl());
+
+  /**
+   * Handles bulk variant creation with two-tier error handling:
+   *
+   * 1. Attribute errors (e.g., missing required attribute) → returned in `attributeErrors`
+   *    and displayed INLINE next to the field in the generator modal. No notification shown.
+   *
+   * 2. Other errors (e.g., duplicate SKU, network) → shown as NOTIFICATIONS.
+   *    Only the first unique error is shown to avoid notification spam.
+   *
+   * This split ensures users see actionable errors where they can fix them (inline),
+   * while general failures are communicated via notifications.
+   */
+  const handleBulkCreateVariants = useCallback(
+    async (inputs: ProductVariantBulkCreateInput[]) => {
+      const result = await bulkCreateVariants({
+        variables: {
+          id,
+          inputs,
+          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+        },
+      });
+
+      const bulkErrors = result.data?.productVariantBulkCreate.errors ?? [];
+      const results = result.data?.productVariantBulkCreate.results ?? [];
+      const successCount = results.filter(
+        r => r.productVariant && (!r.errors || r.errors.length === 0),
+      ).length;
+      const failedCount = results.filter(r => r.errors && r.errors.length > 0).length;
+
+      // Categorize errors: attribute-specific (inline) vs other (notifications)
+      const attributeErrors: Array<{
+        attributeId: string;
+        code: string;
+        message: string | null;
+      }> = [];
+      const otherErrors: Array<{ message: string | null }> = [];
+
+      results
+        .flatMap(r => r.errors ?? [])
+        .forEach(error => {
+          if (error.attributes && error.attributes.length > 0) {
+            error.attributes.forEach(attrId => {
+              attributeErrors.push({
+                attributeId: attrId,
+                code: error.code,
+                message: error.message,
+              });
+            });
+          } else {
+            otherErrors.push({ message: error.message });
+          }
+        });
+
+      bulkErrors.forEach(error => {
+        otherErrors.push({ message: getProductErrorMessage(error, intl) });
+      });
+
+      // Show notifications based on outcome (skip if attribute errors will be shown inline)
+      if (successCount > 0 && failedCount === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.variantBulkCreateSuccess, { count: successCount }),
+        });
+        refetch();
+      } else if (successCount > 0 && failedCount > 0) {
+        notify({
+          status: "warning",
+          text: intl.formatMessage(messages.variantBulkCreatePartial, {
+            success: successCount,
+            failed: failedCount,
+          }),
+        });
+        refetch();
+      } else if (attributeErrors.length === 0 && otherErrors.length > 0) {
+        const uniqueMessages = [...new Set(otherErrors.map(e => e.message).filter(Boolean))];
+
+        if (uniqueMessages[0]) {
+          notify({
+            status: "error",
+            text: uniqueMessages[0],
+          });
+        }
+      }
+
+      return {
+        success: successCount > 0,
+        successCount,
+        failedCount,
+        attributeErrors,
+        otherErrors,
+      };
+    },
+    [bulkCreateVariants, id, intl, notify, refetch],
+  );
   const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
   const [submit, submitOpts] = useProductUpdateHandler(product);
   const handleImageUpload = createImageUploadHandler(id, variables =>
@@ -319,6 +424,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onProductFilterChange={handleProductFilterChange}
+        onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />
       <ActionDialog

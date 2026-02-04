@@ -63,6 +63,7 @@ export const channelListingProductWithoutPricingFragment = gql`
     channel {
       id
       name
+      slug
       currencyCode
     }
   }
@@ -144,6 +145,12 @@ export const productVariantAttributesFragment = gql`
     productType {
       id
       variantAttributes {
+        ...VariantAttribute
+      }
+      selectionVariantAttributes: variantAttributes(variantSelection: VARIANT_SELECTION) {
+        ...VariantAttribute
+      }
+      nonSelectionVariantAttributes: variantAttributes(variantSelection: NOT_VARIANT_SELECTION) {
         ...VariantAttribute
       }
     }
@@ -298,6 +305,11 @@ export const fragmentVariant = gql`
       name
       thumbnail {
         url
+      }
+      productType {
+        id
+        name
+        hasVariants
       }
       channelListings {
         id

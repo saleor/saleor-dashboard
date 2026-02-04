@@ -1,4 +1,3 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import {
   CustomCell,
   CustomRenderer,
@@ -6,8 +5,7 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { Option } from "@saleor/macaw-ui-next";
-import pick from "lodash/pick";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import { useCallback, useState } from "react";
 
 type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
@@ -40,34 +38,29 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     [cell.data],
   );
 
-  const userProps = pick(cell.data, ["allowCustomValues", "emptyOption"]);
   const props = cell.data.update
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
     : { fetchOnFocus: false, fetchChoices: () => Promise.resolve([]), choices: cell.data.choices };
 
   return (
-    <Combobox
-      allowCustomValues={userProps.allowCustomValues}
-      alwaysFetchOnFocus={props.fetchOnFocus}
-      allowEmptyValue={userProps.emptyOption}
-      fetchMore={{
-        hasMore: false,
-        loading: false,
-        onFetchMore: () => undefined,
-      }}
+    <DynamicCombobox
       options={props.choices ?? []}
       value={cell.data.value}
-      fetchOptions={props.fetchChoices}
+      onFocus={() => props.fetchChoices("")}
       loading={false}
       name=""
-      onChange={event => {
+      /**
+       * There is a bug - looks like it's properly changing with keyobard, but mouse event is somehow not passed
+       * to the dropdown layer @fixme
+       */
+      onChange={option => {
         return onFinishedEditing({
           ...cell,
           data: {
             ...cell.data,
-            value: props.choices?.find(c => c.value === event.target.value) ?? {
-              label: event.target.value ?? "",
-              value: event.target.value ?? "",
+            value: props.choices?.find(c => c.value === option?.value) ?? {
+              label: option?.label ?? "",
+              value: option?.value ?? "",
             },
           },
         });

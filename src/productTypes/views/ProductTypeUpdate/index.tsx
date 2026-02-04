@@ -22,8 +22,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
@@ -69,7 +68,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       ) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
         });
       } else if (
         updateData.productTypeUpdate.errors !== null &&
@@ -148,7 +147,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     if (data.productAttributeAssign.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
       });
       closeModal();
     } else if (
@@ -165,7 +164,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     if (data.productAttributeUnassign.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
       });
       closeModal();
       productAttributeListActions.reset();
@@ -188,7 +187,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     if (data.productTypeReorderAttributes.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
       });
     }
   };

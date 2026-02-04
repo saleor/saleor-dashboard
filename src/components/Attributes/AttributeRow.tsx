@@ -10,8 +10,6 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getSingleChoices,
-  getSingleDisplayValue,
   getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
@@ -21,8 +19,9 @@ import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { Combobox, Multiselect } from "../Combobox";
+import { Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
+import { DropdownRow } from "./DropdownRow";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { AttributeRowProps } from "./types";
 
@@ -42,7 +41,7 @@ const AttributeRow = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}: AttributeRowProps) => {
+}: AttributeRowProps): JSX.Element => {
   const intl = useIntl();
 
   switch (attribute.data.inputType) {
@@ -96,34 +95,16 @@ const AttributeRow = ({
       );
     case AttributeInputTypeEnum.DROPDOWN:
       return (
-        <BasicAttributeRow label={attribute.label}>
-          <Combobox
-            allowCustomValues
-            alwaysFetchOnFocus
-            size="small"
-            disabled={disabled}
-            options={getSingleChoices(attributeValues)}
-            value={
-              attribute.value[0]
-                ? {
-                    value: attribute.value[0],
-                    label: getSingleDisplayValue(attribute, attributeValues),
-                  }
-                : null
-            }
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            id={`attribute:${attribute.label}`}
-            label=""
-            onChange={e => onChange(attribute.id, e.target.value)}
-            fetchOptions={query => {
-              fetchAttributeValues(query, attribute.id);
-            }}
-            onBlur={onAttributeSelectBlur}
-            fetchMore={fetchMoreAttributeValues}
-          />
-        </BasicAttributeRow>
+        <DropdownRow
+          attribute={attribute}
+          attributeValues={attributeValues}
+          disabled={disabled}
+          error={error}
+          onChange={onChange}
+          fetchAttributeValues={fetchAttributeValues}
+          fetchMoreAttributeValues={fetchMoreAttributeValues}
+          onAttributeSelectBlur={onAttributeSelectBlur}
+        />
       );
     case AttributeInputTypeEnum.SWATCH:
       return (
@@ -277,6 +258,7 @@ const AttributeRow = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
+          {/* TODO It works, but replace it with Macaw Multiselect */}
           <Multiselect
             allowCustomValues
             alwaysFetchOnFocus

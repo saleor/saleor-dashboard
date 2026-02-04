@@ -1,11 +1,8 @@
-// @ts-strict-ignore
-import { Combobox } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { commonMessages } from "@dashboard/intl";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import * as React from "react";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";
@@ -17,7 +14,7 @@ interface GiftCardCustomerSelectFieldProps {
   disabled?: boolean;
 }
 
-const GiftCardCustomerSelectField = ({
+export const GiftCardCustomerSelectField = ({
   selectedCustomer,
   setSelectedCustomer,
   disabled = false,
@@ -31,36 +28,36 @@ const GiftCardCustomerSelectField = ({
     value: email,
     label: getFullName({ firstName, lastName }) || email,
   }));
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const label = choices?.find(category => category.value === value)?.label;
+  const handleSelect = (option: { value: string; label: string }): void => {
+    const label = choices?.find(o => o.value === option.value)?.label ?? option.value;
 
-    setSelectedCustomer({ email: value, name: label });
+    setSelectedCustomer({ email: option.value, name: label });
   };
-  const label = `${intl.formatMessage(
-    messages.customerLabel,
-  )} *${intl.formatMessage(commonMessages.optionalField)}`;
+  const label = `${intl.formatMessage(messages.customerLabel)}`;
 
   return (
-    <Combobox
+    <DynamicCombobox
       data-test-id="customer-field"
       disabled={disabled}
       label={label}
+      onFocus={() => search("")}
       options={choices || []}
-      fetchOptions={search}
-      fetchMore={{
-        onFetchMore: loadMore,
-        hasMore: result?.data?.search?.pageInfo?.hasNextPage,
-        loading: result?.loading,
+      onScrollEnd={() => {
+        if (!result?.loading && result?.data?.search?.pageInfo?.hasNextPage) {
+          loadMore();
+        }
       }}
       name="customer"
       value={{
         label: selectedCustomer.name,
         value: selectedCustomer.email,
       }}
-      onChange={handleSelect}
+      onChange={v =>
+        handleSelect({
+          value: v?.value ?? "",
+          label: v?.label ?? "",
+        })
+      }
     />
   );
 };
-
-export default GiftCardCustomerSelectField;

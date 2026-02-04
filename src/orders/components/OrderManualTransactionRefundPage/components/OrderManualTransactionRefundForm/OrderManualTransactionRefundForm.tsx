@@ -6,7 +6,7 @@ import {
   useOrderTransactionRequestActionMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { refundSavebarMessages } from "@dashboard/orders/components/OrderTransactionRefundPage/messages";
 import { orderUrl } from "@dashboard/orders/urls";
 import {
@@ -55,7 +55,7 @@ export const OrderManualTransactionRefundForm = ({
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(transactionRequestMessages.success),
+          text: intl.formatMessage(transactionRequestMessages.refundSuccess),
         });
         navigate(orderUrl(orderId));
       }

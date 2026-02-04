@@ -2,7 +2,7 @@
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -18,9 +18,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
+import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
-import { ModalFilters } from "./ModalFilters";
-import { useModalProductFilterContext } from "./ModalProductFilterProvider";
 import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
@@ -196,7 +196,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
                         opacity: !isProductAvailable ? 0.5 : 1,
                       }}
                     />
-                    <TableCell className={classes.colName}>
+                    <TableCell>
                       {product.name}
                       {!isProductAvailable && productUnavailableText && (
                         <Text display="block" size={1} color="default2">

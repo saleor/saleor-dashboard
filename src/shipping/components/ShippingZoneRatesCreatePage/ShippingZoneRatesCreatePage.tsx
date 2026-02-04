@@ -32,7 +32,7 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { FormEventHandler, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ShippingMethodTaxes from "../ShippingMethodTaxes";
+import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 
@@ -188,6 +188,7 @@ const ShippingZoneRatesCreatePage = ({
               onPostalCodeRangeAdd={onPostalCodeAssign}
               postalCodes={postalCodes}
             />
+            <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
@@ -216,6 +217,14 @@ const ShippingZoneRatesCreatePage = ({
               transitionState={saveButtonBarState}
               onClick={handleSubmit}
               disabled={isSaveDisabled}
+              tooltip={
+                !isValid &&
+                intl.formatMessage({
+                  id: "lCEp2/",
+                  defaultMessage: "Set prices for all channels to save",
+                  description: "save button disabled tooltip",
+                })
+              }
             />
           </Savebar>
         </DetailPageLayout>

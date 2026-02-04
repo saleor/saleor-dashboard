@@ -1,0 +1,4 @@
+/* Override the default padding for better alignment with the datagrid content below */
+.header > div:first-child {
+  padding-right: 8px;
+}

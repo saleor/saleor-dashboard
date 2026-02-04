@@ -6,9 +6,8 @@ import {
   useUpdateProductTranslationsMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { getMultipleUrlValues, stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
@@ -42,7 +41,7 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
       productTranslations.refetch();
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
       });
     }
   };

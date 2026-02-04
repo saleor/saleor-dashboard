@@ -9,7 +9,7 @@ import {
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -64,8 +64,8 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "jTifz+",
-            defaultMessage: "Successfully created attribute",
+            id: "c0hLoI",
+            defaultMessage: "Attribute created",
           }),
         });
         navigate(attributeUrl(data?.attributeCreate?.attribute?.id ?? ""));

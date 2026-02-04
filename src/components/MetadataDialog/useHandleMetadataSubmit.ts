@@ -1,8 +1,7 @@
 import { DocumentNode, useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
@@ -62,7 +61,7 @@ export const useHandleMetadataSubmit = <
     if (errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
       });
       onClose();
     }

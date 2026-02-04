@@ -32,8 +32,7 @@ jest.mock("./components/WelcomePageStocksAnalytics/useWelcomePageStocksAnalytics
 }));
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: jest.fn(() => () => undefined),
+  useNotifier: jest.fn(() => () => undefined),
 }));
 
 afterEach(() => {

@@ -353,9 +353,6 @@ export function handleMetadataReferenceAssignment(
       attributes as FormsetData<AttributeInputData, string[]>,
     );
 
-    // Set the reference values in useFormset hook
-    handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
-
     /* We will store attribute selection display values in useFormset "additionalData" field
      * This has to be done, because when user chooses new references in the modal,
      * we don't yet have referenced item details from the query */
@@ -373,6 +370,7 @@ export function handleMetadataReferenceAssignment(
     }, [] as AttributeValuesMetadata[]);
 
     handlers.selectAttributeReferenceAdditionalData(assignReferencesAttributeId, uniqueMetadata);
+    handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
   }
 }
 
@@ -587,50 +585,63 @@ const findReferenceByEntityType = (
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      attribute.value && attribute.value.length > 0
-        ? attribute.value.map(valueId => {
-            /* "additionalData" is the cache for newly selected values from useFormset hook.
-             * It is populated from the initial GraphQL payload
-             * and whenever the user assigns references in the dialog into useFormset data. */
-            const meta = attribute.additionalData?.find(m => m.value === valueId);
+) => {
+  return {
+    ...attribute,
+    data: {
+      ...attribute.data,
+      references:
+        attribute.value && attribute.value.length > 0
+          ? attribute.value.map(valueId => {
+              /* "additionalData" is the cache for newly selected values from useFormset hook.
+               * It is populated from the initial GraphQL payload
+               * and whenever the user assigns references in the dialog into useFormset data. */
+              const meta = attribute.additionalData?.find(m => m.value === valueId);
 
-            if (meta) {
+              if (meta) {
+                return {
+                  label: meta.label,
+                  value: meta.value,
+                };
+              }
+
+              /* As a fallback, look at the latest referenced entity search results.
+               * This should cover scenarios where the user has just added a reference in modal
+               * and metadata has not been updated yet.
+               *
+               * It's not default, because it can fail:
+               * search query filters out references based on `referenceType` and use search query for filtering */
+              const searchResult = findReferenceByEntityType(
+                valueId,
+                attribute.data.entityType,
+                referencesEntitiesSearchResult,
+              );
+
+              if (searchResult) {
+                return searchResult;
+              }
+
+              // Fallback: Look up the name from attribute.data.values
+              // This array contains the correct mapping of reference ID to entity name
+              const valueWithName = attribute.data.values.find(val => val.reference === valueId);
+
+              if (valueWithName) {
+                return {
+                  label: valueWithName.name,
+                  value: valueId,
+                };
+              }
+
+              // Ultimate fallback if not found anywhere
               return {
-                label: meta.label,
-                value: meta.value,
+                label: valueId,
+                value: valueId,
               };
-            }
-
-            /* As a fallback, look at the latest referenced entity search results.
-             * This should cover scenarios where the user has just added a reference in modal
-             * and metadata has not been updated yet.
-             *
-             * It's not default, because it can fail:
-             * search query filters out references based on `referenceType` and use search query for filtering */
-            const searchResult = findReferenceByEntityType(
-              valueId,
-              attribute.data.entityType,
-              referencesEntitiesSearchResult,
-            );
-
-            if (searchResult) {
-              return searchResult;
-            }
-
-            // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
-            return {
-              label: valueId,
-              value: valueId,
-            };
-          })
-        : [],
-  },
-});
+            })
+          : [],
+    },
+  };
+};
 
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],

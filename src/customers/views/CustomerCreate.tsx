@@ -2,7 +2,7 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";

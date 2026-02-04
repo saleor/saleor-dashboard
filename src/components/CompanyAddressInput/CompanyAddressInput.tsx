@@ -1,5 +1,5 @@
 import { DashboardCard } from "../Card";
-import CompanyAddressForm, { CompanyAddressFormProps } from "./CompanyAddressForm";
+import { CompanyAddressForm, CompanyAddressFormProps } from "./CompanyAddressForm";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
   header: string;

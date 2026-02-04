@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import { useComboboxHandlers } from "@dashboard/components/Combobox/hooks/useComboboxHandlers";
 import { getBySlug } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox } from "../Combobox";
 import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
@@ -28,9 +28,16 @@ export const SwatchRow = ({
   disabled,
   error,
   onChange,
-}: SwatchRowProps) => {
+}: SwatchRowProps): JSX.Element => {
   const intl = useIntl();
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+
+  const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
+    fetchOptions: query => fetchAttributeValues(query, attribute.id),
+    alwaysFetchOnFocus: false,
+    fetchMore: fetchMoreAttributeValues,
+  });
+
   const options = useMemo(
     () =>
       attributeValues.map(({ file, value, slug, name }) => ({
@@ -49,7 +56,7 @@ export const SwatchRow = ({
 
   return (
     <BasicAttributeRow label={attribute.label}>
-      <Combobox
+      <DynamicCombobox
         disabled={disabled}
         options={options}
         value={
@@ -57,6 +64,8 @@ export const SwatchRow = ({
             ? {
                 value: attribute.value[0],
                 label: getSingleDisplayValue(attribute, attributeValues),
+                // Not doing anything, but required in Macaw. @fixme
+                startAdornment: null,
               }
             : null
         }
@@ -74,11 +83,11 @@ export const SwatchRow = ({
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
         id={`attribute:${attribute.label}`}
-        onChange={e => onChange(attribute.id, e.target.value)}
-        fetchOptions={query => {
-          fetchAttributeValues(query, attribute.id);
-        }}
-        fetchMore={fetchMoreAttributeValues}
+        onChange={e => onChange(attribute.id, e?.value ?? "")}
+        onInputValueChange={handleInputChange}
+        onFocus={handleFocus}
+        onScrollEnd={handleFetchMore}
+        loading={fetchMoreAttributeValues?.hasMore || fetchMoreAttributeValues?.loading}
       />
     </BasicAttributeRow>
   );

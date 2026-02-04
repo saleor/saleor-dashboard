@@ -13,8 +13,7 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -92,7 +91,10 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
     if (errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "gelco+",
+          defaultMessage: "Metadata updated",
+        }),
       });
     }
 
@@ -138,7 +140,12 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
             }
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
-          onTransactionActionSend={orderMessages.handleTransactionAction}
+          onTransactionActionSend={async data => {
+            await apolloClient.refetchQueries({
+              include: [OrderDetailsWithMetadataDocument],
+            });
+            orderMessages.handleTransactionAction(data);
+          }}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
               include: [OrderDetailsWithMetadataDocument],

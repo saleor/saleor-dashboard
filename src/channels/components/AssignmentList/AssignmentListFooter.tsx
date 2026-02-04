@@ -1,9 +1,8 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -19,7 +18,7 @@ const messages = defineMessages({
 
 type AssignmentListFooterProps = AssignmentListProps;
 
-const AssignmentListFooter = ({
+export const AssignmentListFooter = ({
   items,
   itemsChoices,
   itemsName,
@@ -59,13 +58,24 @@ const AssignmentListFooter = ({
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
       <Box marginTop={3}>
-        <Combobox
+        <DynamicCombobox
           data-test-id={`${dataTestId}-auto-complete-select`}
           name={inputName}
-          onChange={handleChoice}
-          fetchOptions={searchItems}
+          onChange={v =>
+            handleChoice({
+              target: {
+                value: v?.value ?? "",
+                name: inputName,
+              },
+            })
+          }
+          onFocus={() => searchItems("")}
           options={mapNodeToChoice(itemsChoices)}
-          fetchMore={fetchMoreItems}
+          onScrollEnd={() => {
+            if (fetchMoreItems.hasMore) {
+              fetchMoreItems.onFetchMore();
+            }
+          }}
           value={{
             value: "",
             label: "",
@@ -86,5 +96,3 @@ const AssignmentListFooter = ({
     />
   );
 };
-
-export default AssignmentListFooter;

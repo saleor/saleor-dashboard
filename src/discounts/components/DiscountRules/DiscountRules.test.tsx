@@ -18,8 +18,7 @@ import { DiscountRules } from "./DiscountRules";
 import { catalogComplexRules, catalogRules, channels, orderRules } from "./mocksData";
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: jest.fn(() => () => undefined),
+  useNotifier: jest.fn(() => () => undefined),
 }));
 jest.mock("@dashboard/discounts/views/DiscountDetails/context/context", () => ({
   __esModule: true,

@@ -1,6 +1,6 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Condition, Rule } from "@dashboard/discounts/models";
+import { Combobox } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 
 import { useConditionNames } from "./hooks/useConditionNames";
@@ -32,12 +32,11 @@ export const RuleConditionName = ({
   return (
     <Combobox
       value={getConditionNameValue(nameField.value, conditionNames)}
-      fetchOptions={() => undefined}
       options={filteredConditionLeftOptions}
-      onChange={e => {
+      onChange={v => {
         condition.value = [];
         updateCondition(conditionIndex, condition);
-        nameField.onChange(e.target.value);
+        nameField.onChange(v?.value ?? "");
       }}
       size="medium"
       data-test-id={`condition-name-${conditionIndex}`}

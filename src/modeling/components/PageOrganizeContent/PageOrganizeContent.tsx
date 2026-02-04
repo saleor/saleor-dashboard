@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
 import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -8,7 +7,7 @@ import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageFormData } from "../PageDetailsPage/form";
@@ -26,7 +25,7 @@ interface PageOrganizeContentProps {
   fetchMorePageTypes?: FetchMoreProps;
 }
 
-const PageOrganizeContent = (props: PageOrganizeContentProps) => {
+export const PageOrganizeContent = (props: PageOrganizeContentProps) => {
   const {
     canChangeType,
     data,
@@ -55,7 +54,7 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {canChangeType ? (
-          <Combobox
+          <DynamicCombobox
             autoComplete="off"
             data-test-id="page-types-autocomplete-select"
             disabled={disabled}
@@ -66,14 +65,25 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
               defaultMessage: "Select model type",
             })}
             options={pageTypes}
-            fetchOptions={fetchPageTypes}
-            fetchMore={fetchMorePageTypes}
+            onFocus={() => fetchPageTypes("")}
+            onScrollEnd={() => {
+              if (fetchMorePageTypes?.hasMore) {
+                fetchMorePageTypes?.onFetchMore();
+              }
+            }}
             name="pageType"
             value={{
               label: pageTypeInputDisplayValue,
               value: data.pageType?.id,
             }}
-            onChange={onPageTypeChange}
+            onChange={v =>
+              onPageTypeChange({
+                target: {
+                  name: "pageType",
+                  value: v?.value ?? "",
+                },
+              })
+            }
           />
         ) : (
           <Box display="flex" flexDirection="column">
@@ -95,4 +105,3 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
 };
 
 PageOrganizeContent.displayName = "PageOrganizeContent";
-export default PageOrganizeContent;

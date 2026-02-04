@@ -127,6 +127,21 @@ The codebase follows a feature-based architecture with shared components:
 - Implement proper form validation with React Hook Form
 - Add internationalization support for user-facing text
 
+### UI Design Guidelines
+
+**Before redesigning any component that displays a list, ask: "What happens with 50+ items?"**
+
+If the list could be long:
+
+- Add scrollable container with `max-height`
+- Keep headers outside the scroll area
+- Auto-scroll to active item on load
+
+Other considerations:
+
+- Loading states: Show skeletons
+- Empty states: Handle zero items gracefully
+
 ### Testing Requirements
 
 - Write unit tests for utility functions and complex components
@@ -200,3 +215,119 @@ Once opening a pull request or working with GitHub directly, prefer to use `gh` 
 ## Code review
 
 During code review, do not verify auto-generated files. Such files are suffixed with `.generated.ts`
+
+## React & TypeScript Guidelines
+
+### Component Patterns
+
+- **No default exports** - Use named exports for all components and functions
+- **No `// @ts-strict-ignore`** - Write properly typed code from the start
+- **Use object destructuring** - Prefer named attributes in function parameters
+- **Prefer `@saleor/macaw-ui-next`** - Use the new Macaw UI library, not the legacy `@saleor/macaw-ui`
+- **Use Lucide icons directly** - Macaw icons are deprecated; import from `lucide-react` instead
+
+```typescript
+// ❌ Avoid
+import { IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon } from "@saleor/macaw-ui";
+
+// ✅ Prefer
+import { Button } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+```
+
+### React Best Practices
+
+- **Respect the React lifecycle** - Keep code idiomatic to React, correctly using `useEffect`, `useCallback`, `useRef`, `useMemo`
+- **Proper cleanup** - Handle mounting/unmounting cycles, cancel subscriptions and async operations
+- **Memoization** - Use `useCallback` for callbacks passed to children, `useMemo` for expensive computations
+
+```typescript
+// ✅ Proper useEffect with cleanup
+useEffect(() => {
+  const controller = new AbortController();
+  fetchData({ signal: controller.signal });
+  return () => controller.abort();
+}, [dependency]);
+```
+
+### Styling
+
+- **Use CSS Modules** - Use `.module.css` files instead of plain `.css` files to scope styles per-import without polluting the global CSS namespace
+
+```typescript
+// ✅ CSS Modules
+import styles from "./Component.module.css";
+<div className={styles.container}>
+```
+
+### Internationalization
+
+- **Reuse existing messages** - Check `src/intl.ts` and existing component messages before creating new ones
+- **Use `react-intl`** - All user-facing text must be internationalized
+
+### Module Organization
+
+- **No index files (barrel exports)** - Use direct imports instead. Index files are an anti-pattern being removed from this codebase
+
+```typescript
+// ❌ Avoid
+export { Component } from "./Component";
+import { Component } from "./components";
+
+// ✅ Prefer
+import { Component } from "./components/Component";
+```
+
+### TypeScript Style
+
+- **Prefer typed declarations over type assertions** - Annotate variable declarations rather than using `as`
+
+```typescript
+// ❌ Avoid: Type assertion bypasses type checking
+const style = {
+  display: "flex",
+  gap: 8,
+} as React.CSSProperties;
+
+// ✅ Prefer: Typed declaration ensures type safety at assignment
+const style: React.CSSProperties = {
+  display: "flex",
+  gap: 8,
+};
+```
+
+**Why:** Type assertions (`as`) tell TypeScript to trust you and skip validation. Typed declarations validate the object shape at the point of assignment, catching errors immediately if a property is misspelled or has the wrong type.
+
+### Component Template
+
+```typescript
+// Component.tsx
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+import { useCallback } from "react";
+import { FormattedMessage } from "react-intl";
+
+import styles from "./Component.module.css";
+
+interface ComponentProps {
+  title: string;
+  onDelete: (id: string) => void;
+}
+
+export const Component = ({ title, onDelete }: ComponentProps) => {
+  const handleDelete = useCallback(() => {
+    onDelete(title);
+  }, [title, onDelete]);
+
+  return (
+    <Box className={styles.container}>
+      <Text>{title}</Text>
+      <button onClick={handleDelete}>
+        <Trash2 size={16} />
+        <FormattedMessage defaultMessage="Delete" id="deleteBtn" />
+      </button>
+    </Box>
+  );
+};
+```

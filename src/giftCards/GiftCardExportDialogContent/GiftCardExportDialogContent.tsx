@@ -4,7 +4,7 @@ import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useForm from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
 import {
   ExportSettingsFormData,

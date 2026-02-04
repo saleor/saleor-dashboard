@@ -5,6 +5,18 @@ export const commonMessages = defineMessages({
     id: "hOxIeP",
     defaultMessage: "Availability",
   },
+  success: {
+    id: "xrKHS6",
+    defaultMessage: "Success",
+  },
+  info: {
+    id: "we4Lby",
+    defaultMessage: "Info",
+  },
+  warning: {
+    id: "3SVI5p",
+    defaultMessage: "Warning",
+  },
   products: {
     id: "7NFfmz",
     defaultMessage: "Products",

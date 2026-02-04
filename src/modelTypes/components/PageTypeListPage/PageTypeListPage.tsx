@@ -1,7 +1,5 @@
-import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -125,22 +123,19 @@ const PageTypeListPage = ({
           )}
         </Box>
       </TopNav>
-      <DashboardCard gap={0}>
-        <Box paddingX={6} marginBottom={2}>
-          <Box __width="320px">
-            <SearchInput
-              initialSearch={initialSearch}
-              placeholder={intl.formatMessage({
-                id: "INw68F",
-                defaultMessage: "Search model types...",
-              })}
-              onSearchChange={onSearchChange}
-            />
-          </Box>
-        </Box>
-
-        <PageTypeList {...listProps} />
-      </DashboardCard>
+      <Box paddingX={6}>
+        <PageTypeList
+          {...listProps}
+          search={{
+            placeholder: intl.formatMessage({
+              id: "INw68F",
+              defaultMessage: "Search model types...",
+            }),
+            initialValue: initialSearch,
+            onSearchChange,
+          }}
+        />
+      </Box>
     </ListPageLayout>
   );
 };

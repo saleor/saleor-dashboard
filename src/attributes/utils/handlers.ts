@@ -76,19 +76,16 @@ export function createAttributeReferenceChangeHandler(
   return (attributeId: string, values: string[]) => {
     attributes.change(attributeId, values);
 
-    /* Note: "additionalData" is a part of useFormset API.
-     * In here it is used to hold display values for references selected by user
-     * before they are returned from our API as attribute references
-     *  */
-    const currentAdditionalData =
-      attributes.data.find(a => a.id === attributeId)?.additionalData || [];
-
     // When user removes attribute values from selection, delete them in useFormset additionalData
-    const syncedAdditionalData = currentAdditionalData.filter((meta: AttributeValuesMetadata) =>
-      values.includes(meta.value),
-    );
+    // Use setAdditionalData with merge function to avoid race conditions with async state updates
+    attributes.setAdditionalData(attributeId, [], (prev: AttributeValuesMetadata[]) => {
+      // Filter using the latest state (prev), not currentAdditionalData which might be stale
+      const filtered = (prev ?? []).filter((meta: AttributeValuesMetadata) =>
+        values.includes(meta.value),
+      );
 
-    attributes.setAdditionalData(attributeId, syncedAdditionalData);
+      return filtered;
+    });
 
     triggerChange();
   };
@@ -111,10 +108,10 @@ export function createAttributeReferenceAdditionalDataHandler(
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
     const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
       const merged = mergeReferencesAdditionalData(prev, next);
-      const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
 
-      // Filter out additionalData for references that were removed from attribute
-      return merged.filter(meta => currentValues.includes(meta.value));
+      // Don't filter here - let the caller (handleMetadataReferenceAssignment) handle filtering
+      // Filtering here causes issues because attributes.data might have stale values
+      return merged;
     };
 
     attributes.setAdditionalData(attributeId, values, mergeFunction);
@@ -397,9 +394,11 @@ export const prepareAttributesInput = ({
     }
 
     if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+      const dropdownValue = attr.value[0];
+
       attrInput.push({
         id: attr.id,
-        values: attr.value.filter(value => value !== null),
+        dropdown: dropdownValue ? { value: dropdownValue } : null,
       });
 
       return attrInput;

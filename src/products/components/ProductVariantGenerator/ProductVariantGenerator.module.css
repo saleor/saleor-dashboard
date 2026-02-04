@@ -1,0 +1,109 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.attributesSectionWrapper {
+  position: relative;
+  height: 260px;
+  min-height: 260px;
+  max-height: 300px;
+  flex-shrink: 0;
+}
+
+.attributesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  height: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.attributesSectionWrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  height: 32px;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--mu-colors-background-default1) 70%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  border-radius: 0 0 7px 7px;
+}
+
+/* Required attributes section - same height as selection */
+.requiredAttributesSectionWrapper {
+  position: relative;
+  height: 260px;
+  min-height: 260px;
+  max-height: 300px;
+  flex-shrink: 0;
+}
+
+.requiredAttributesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  height: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.requiredAttributesSectionWrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  height: 32px;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--mu-colors-background-default1) 70%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  border-radius: 0 0 7px 7px;
+}
+
+.noAttributes {
+  color: var(--macaw-color-text-default2);
+  text-align: center;
+  padding: 40px;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--macaw-color-bg-default2);
+  border-radius: 8px;
+}
+
+.previewContent {
+  height: 280px;
+  min-height: 0;
+  flex-shrink: 1;
+}
+
+.callouts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

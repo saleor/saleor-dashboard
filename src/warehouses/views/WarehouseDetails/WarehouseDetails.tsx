@@ -7,9 +7,8 @@ import {
   useWarehouseUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
@@ -21,6 +20,7 @@ import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDel
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage";
+import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import {
   warehouseListUrl,
   warehouseUrl,
@@ -47,7 +47,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       if (data?.updateWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "arT1bu", defaultMessage: "Warehouse updated" }),
         });
       }
     },
@@ -58,7 +58,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
       if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "arT1bu", defaultMessage: "Warehouse updated" }),
         });
         navigate(warehouseListUrl());
       }
@@ -111,6 +111,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
         onDelete={() => openModal("delete")}
+        onShowMetadata={() => openModal("view-warehouse-metadata")}
         onSubmit={handleSubmit}
       />
       <WarehouseDeleteDialog
@@ -123,6 +124,11 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
           })
         }
         open={params.action === "delete"}
+      />
+      <WarehouseMetadataDialog
+        open={params.action === "view-warehouse-metadata"}
+        onClose={closeModal}
+        warehouse={data?.warehouse}
       />
     </>
   );

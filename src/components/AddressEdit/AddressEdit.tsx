@@ -3,11 +3,11 @@ import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Box, Input, Option } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Input, Option } from "@saleor/macaw-ui-next";
 import * as React from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox } from "../Combobox";
 import { getErrorMessage } from "./getErrorMessage";
 import { useAddressValidation } from "./useAddressValidation";
 
@@ -202,13 +202,20 @@ export const AddressEdit = (props: AddressEditProps) => {
               defaultMessage: "Country",
             })}
             options={countries}
-            fetchOptions={() => undefined}
             name="country"
             value={{
               label: countryDisplayValue,
               value: data.country,
             }}
-            onChange={onCountryChange}
+            onChange={v =>
+              onCountryChange({
+                target: {
+                  name: "country",
+                  value: v?.value ?? "",
+                },
+                // must assert, we use fake event because Combobox doesn't expose inner event, and upper handlers require it
+              } as ChangeEvent<any>)
+            }
           />
         </div>
         <div>
@@ -225,13 +232,20 @@ export const AddressEdit = (props: AddressEditProps) => {
                 defaultMessage: "Country area",
               })}
               options={areas}
-              fetchOptions={() => undefined}
               name="countryArea"
               value={{
                 label: getDisplayValue(data.countryArea),
                 value: data.countryArea,
               }}
-              onChange={onChange}
+              onChange={v =>
+                onChange({
+                  target: {
+                    name: "countryArea",
+                    value: v?.value ?? "",
+                  },
+                  // must cast, we use fake event because Combobox doesn't expose inner event, and upper handlers require it
+                } as ChangeEvent<any>)
+              }
             />
           )}
         </div>

@@ -35,8 +35,9 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { FormEventHandler, useMemo } from "react";
+import { useIntl } from "react-intl";
 
-import ShippingMethodTaxes from "../ShippingMethodTaxes";
+import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
@@ -97,6 +98,7 @@ const ShippingZoneRatesPage = ({
   ...listProps
 }: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
+  const intl = useIntl();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = useMemo(
     () => ({
@@ -208,6 +210,7 @@ const ShippingZoneRatesPage = ({
             />
             <CardSpacer />
             <Metadata data={data} onChange={changeMetadata} />
+            <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
@@ -239,6 +242,14 @@ const ShippingZoneRatesPage = ({
               transitionState={saveButtonBarState}
               onClick={handleSubmit}
               disabled={isSaveDisabled}
+              tooltip={
+                !isValid &&
+                intl.formatMessage({
+                  id: "lCEp2/",
+                  defaultMessage: "Set prices for all channels to save",
+                  description: "save button disabled tooltip",
+                })
+              }
             />
           </Savebar>
         </DetailPageLayout>
