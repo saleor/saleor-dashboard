@@ -379,12 +379,19 @@ const ProductList = ({ params }: ProductListProps) => {
           // Include filter when exporting filtered products
           if (data.scope === ExportScope.FILTER) {
             const filter = createProductExportQueryVariables(valueProvider.value);
+            const hasConditionalFilters =
+              filter && typeof filter === "object" && Object.keys(filter).length > 0;
+            const hasSearchQuery = params.query;
 
-            if (!filter || (typeof filter === "object" && Object.keys(filter).length === 0)) {
-              // Fall back to exporting all when no filters are applied
+            if (!hasConditionalFilters && !hasSearchQuery) {
+              // Fall back to exporting all when no filters or search query are applied
               exportInput.scope = ExportScope.ALL;
             } else {
-              exportInput.filter = filter;
+              // Build complete filter with both conditional filters and search query
+              exportInput.filter = {
+                ...(hasConditionalFilters ? filter : {}),
+                ...(hasSearchQuery ? { search: params.query } : {}),
+              };
             }
           }
 
