@@ -122,6 +122,7 @@ export const Toast = ({ id, type, title, description, action }: ToastProps) => {
 
   return (
     <Box
+      data-test-type={type}
       display="flex"
       alignItems="flex-start"
       gap={3}
