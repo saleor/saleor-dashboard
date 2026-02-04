@@ -6,6 +6,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
+  ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
@@ -97,6 +98,19 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   });
   const variantsSearch = productsSearch;
 
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    productsSearch.result.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
+    });
+  };
+
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
       notify({
@@ -151,6 +165,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         collectionsSearch={collectionsSearch}
         productsSearch={productsSearch}
         variantsSearch={variantsSearch}
+        onProductFilterChange={handleProductFilterChange}
         openModal={openModal}
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}

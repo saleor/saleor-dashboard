@@ -198,6 +198,6 @@ export const getFilterVariables = ({
   return {
     where,
     search: queryParams.query,
-    channel: channel?.eq,
+    channel,
   };
 };
