@@ -515,7 +515,6 @@ const VoucherCreatePage = ({
             confirmButtonState="default"
             hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-variant"}
-            onFetch={variantsSearch.search}
             onFilterChange={onProductFilterChange}
             onFetchMore={variantsSearch.loadMore}
             loading={variantsSearch.result.loading}
