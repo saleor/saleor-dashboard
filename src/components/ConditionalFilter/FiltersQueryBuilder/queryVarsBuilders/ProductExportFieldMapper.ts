@@ -1,5 +1,5 @@
 import { ApolloClient } from "@apollo/client";
-import * as Sentry from "@sentry/react";
+import { errorTracker } from "@dashboard/services/errorTracking";
 
 import { CategoryHandler, CollectionHandler, Handler, ProductTypeHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
@@ -61,7 +61,7 @@ export class ProductExportFieldMapper
         `Field ${element.value.type} cannot be mapped to ProductFilterInput. Expected one of: ${Object.keys(ProductExportFieldMapper.FIELD_MAP).join(", ")}`,
       );
 
-      Sentry.captureException(error);
+      errorTracker.captureException(error);
       throw error;
     }
 
