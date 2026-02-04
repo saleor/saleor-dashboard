@@ -17,7 +17,6 @@ interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
-  onFetch?: (value: string) => void;
   onFilterChange?: (
     filterVariables: ProductWhereInput,
     channel: string | undefined,

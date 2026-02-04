@@ -37,7 +37,6 @@ interface AssignVariantDialogMultiProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
-  onFetch?: (value: string) => void;
   onFilterChange?: (
     filterVariables: ProductWhereInput,
     channel: string | undefined,
@@ -59,7 +58,6 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     loading,
     products,
     onClose,
-    onFetch: _onFetch,
     onFilterChange,
     onFetchMore,
     onSubmit,
