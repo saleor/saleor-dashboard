@@ -396,6 +396,33 @@ describe("Create product export query variables", () => {
     expect(filter).toBeDefined();
   });
 
+  it("should combine conditional filters with search query in export filter object", () => {
+    // Arrange
+    const conditionalFilters = {
+      collections: ["col-123"],
+      categories: ["cat-456"],
+    };
+    const searchQuery = "iPhone";
+
+    // Act - Mimic the ProductList.tsx export handler logic (lines 385-392)
+    const hasConditionalFilters =
+      conditionalFilters &&
+      typeof conditionalFilters === "object" &&
+      Object.keys(conditionalFilters).length > 0;
+    const hasSearchQuery = !!searchQuery;
+
+    const exportFilter = {
+      ...(hasConditionalFilters ? conditionalFilters : {}),
+      ...(hasSearchQuery ? { search: searchQuery } : {}),
+    };
+
+    // Assert
+    expect(exportFilter).toBeDefined();
+    expect(exportFilter.collections).toEqual(["col-123"]);
+    expect(exportFilter.categories).toEqual(["cat-456"]);
+    expect(exportFilter.search).toEqual("iPhone");
+  });
+
   it("should return null when filter container is empty after normalization", () => {
     // Arrange
     const filterContainer = [

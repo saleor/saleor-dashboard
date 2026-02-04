@@ -2,7 +2,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
-import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -15,7 +14,6 @@ import {
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   AttributeTypeEnum,
-  ExportScope,
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
@@ -371,31 +369,14 @@ const ProductList = ({ params }: ProductListProps) => {
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data => {
-          const exportInput = {
-            ...data,
-            ids: selectedRowIds,
-          };
-
-          // Include filter when exporting filtered products
-          if (data.scope === ExportScope.FILTER) {
-            const filter = createProductExportQueryVariables(valueProvider.value);
-            const hasConditionalFilters =
-              filter && typeof filter === "object" && Object.keys(filter).length > 0;
-            const hasSearchQuery = params.query;
-
-            if (!hasConditionalFilters && !hasSearchQuery) {
-              // Fall back to exporting all when no filters or search query are applied
-              exportInput.scope = ExportScope.ALL;
-            } else {
-              // Build complete filter with both conditional filters and search query
-              exportInput.filter = {
-                ...(hasConditionalFilters ? filter : {}),
-                ...(hasSearchQuery ? { search: params.query } : {}),
-              };
-            }
-          }
-
-          const productsExportParams = new ProductsExportParameters(exportInput);
+          const productsExportParams = ProductsExportParameters.fromFilters({
+            exportData: {
+              ...data,
+              ids: selectedRowIds,
+            },
+            filterContainer: valueProvider.value,
+            searchQuery: params.query,
+          });
 
           exportProducts({
             variables: {
