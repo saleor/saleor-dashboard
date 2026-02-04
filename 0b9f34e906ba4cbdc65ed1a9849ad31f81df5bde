@@ -1,0 +1,29 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  1b594bf6035b14cf 26-28,139-141,144,146-153,172-174,194,202-203,206-207,212-217,219,244
+src/extensions/messages.ts
+  1b594bf6035b14cf 410-411,413
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  1b594bf6035b14cf 5,12-13,83,89-93,112,123-136,142,150-151,155-166
+src/extensions/views/ViewManifestExtension/components/AppFrame/useAppActions.ts
+  1b594bf6035b14cf 69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "0b9f34e906ba4cbdc65ed1a9849ad31f81df5bde",
+  "prompts": {
+    "1b594bf6035b14cf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3c4e139c-4fa0-41df-bdb5-9b3a114290e8",
+        "model": "claude-opus-4-5-20251101"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 118,
+      "total_deletions": 62,
+      "accepted_lines": 77,
+      "overriden_lines": 1
+    }
+  }
+}
