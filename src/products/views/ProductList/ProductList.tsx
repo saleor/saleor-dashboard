@@ -2,6 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
+import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -62,12 +63,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
 import { ProductsExportParameters } from "./export";
-import {
-  createProductQueryVariablesLegacyInput,
-  getFilterQueryParam,
-  getFilterVariables,
-  storageUtils,
-} from "./filters";
+import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { obtainChannelFromFilter } from "./utils";
 
@@ -379,7 +375,7 @@ const ProductList = ({ params }: ProductListProps) => {
 
           // Include filter when exporting filtered products
           if (data.scope === ExportScope.FILTER) {
-            const filter = createProductQueryVariablesLegacyInput(valueProvider.value);
+            const filter = createProductExportQueryVariables(valueProvider.value);
 
             if (!filter || (typeof filter === "object" && Object.keys(filter).length === 0)) {
               // Fall back to exporting all when no filters are applied

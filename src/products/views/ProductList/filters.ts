@@ -1,15 +1,7 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { FiltersQueryBuilder } from "@dashboard/components/ConditionalFilter/FiltersQueryBuilder";
-import { QueryApiType } from "@dashboard/components/ConditionalFilter/FiltersQueryBuilder/types";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import {
-  AttributeFragment,
-  AttributeInputTypeEnum,
-  InputMaybe,
-  ProductFilterInput,
-  StockAvailability,
-} from "@dashboard/graphql";
+import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {
@@ -208,94 +200,4 @@ export const getFilterVariables = ({
     search: queryParams.query,
     channel: channel?.eq,
   };
-};
-
-/**
- * Converts filter field names from internal format to export API format.
- * The export API uses plural field names (collections, categories, productTypes)
- * while internal representation may use singular forms.
- * Also handles price field format conversion.
- *
- * Note: This function uses QueryApiType.FILTER (legacy export API format),
- * while the main product list uses QueryApiType.WHERE. Output structures may differ.
- */
-const normalizeFilterFieldsForExport = (
-  filter: Partial<ProductFilterInput>,
-): ProductFilterInput => {
-  const normalized: any = { ...filter };
-
-  // Convert singular field names to plural for export API
-  if ("collection" in normalized && normalized.collection !== undefined) {
-    normalized.collections = normalized.collection;
-    delete normalized.collection;
-  }
-
-  if ("category" in normalized && normalized.category !== undefined) {
-    normalized.categories = normalized.category;
-    delete normalized.category;
-  }
-
-  if ("productType" in normalized && normalized.productType !== undefined) {
-    normalized.productTypes = normalized.productType;
-    delete normalized.productType;
-  }
-
-  // Handle price field format - must be an object with gte/lte, not a string
-  if (normalized.price !== undefined) {
-    // If price is a string or number, convert it to proper PriceRangeInput format
-    if (typeof normalized.price === "string" || typeof normalized.price === "number") {
-      const priceValue = parseFloat(String(normalized.price));
-
-      if (!Number.isNaN(priceValue)) {
-        normalized.price = { gte: priceValue };
-      } else {
-        // If we can't parse it, remove it
-        delete normalized.price;
-      }
-    } else if (typeof normalized.price === "object" && normalized.price !== null) {
-      // If it's already an object, ensure it has the right structure
-      // Use strict equality to handle price = 0 case correctly (0 is falsy but valid)
-      if (normalized.price.gte === undefined && normalized.price.lte === undefined) {
-        delete normalized.price;
-      }
-    }
-  }
-
-  return normalized as ProductFilterInput;
-};
-
-/**
- * Builds a ProductFilterInput for product export operations using the legacy FILTER API.
- *
- * Reuses the ConditionalFilter's FiltersQueryBuilder to avoid duplicating filter-building logic
- * for exports. Note that this function uses QueryApiType.FILTER (the legacy FILTER API format),
- * while the main product list uses QueryApiType.WHERE, so the exact filter transformations and
- * output structure may differ from those used by the main product list.
- *
- * @param filterContainer - The current filter state from ConditionalFilter context
- * @returns ProductFilterInput compatible with exportProducts mutation, or null if no filters
- *
- * @example
- * const filter = createProductQueryVariablesLegacyInput(filterContainer);
- * // Returns: { search: "shirt", categories: ["id1"], price: { gte: 10 }, ... } or null
- */
-export const createProductQueryVariablesLegacyInput = (
-  filterContainer: FilterContainer,
-): InputMaybe<ProductFilterInput> => {
-  if (!filterContainer) {
-    return null;
-  }
-
-  const builder = new FiltersQueryBuilder<ProductFilterInput, "channel">({
-    apiType: QueryApiType.FILTER,
-    filterContainer,
-    topLevelKeys: ["channel"],
-  });
-  const { filters } = builder.build();
-
-  // Normalize field names for export API compatibility
-  const normalized = normalizeFilterFieldsForExport(filters);
-
-  // Return null if no filters remain after normalization
-  return Object.keys(normalized).length === 0 ? null : normalized;
 };
