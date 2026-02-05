@@ -640,6 +640,9 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
+  "1aAwu4": {
+    "string": ", including {active} active and {critical} critical"
+  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -829,6 +832,9 @@
   "2qfU+C": {
     "string": "The extension identifier is already in use."
   },
+  "2rUVsU": {
+    "string": "App"
+  },
   "2x9ZgK": {
     "context": "card title",
     "string": "Refund balance"
@@ -902,6 +908,9 @@
   "3Gkj+d": {
     "context": "button to reset cut-off date to saved value",
     "string": "Reset to saved value"
+  },
+  "3OiSHe": {
+    "string": ", including {critical} critical"
   },
   "3PVGWj": {
     "string": "Filter preset"
@@ -2531,6 +2540,9 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
+  },
+  "CyYBH5": {
+    "string": ", including {active} active"
   },
   "D0KaT6": {
     "context": "webhook input label",
@@ -4195,6 +4207,9 @@
     "context": "Placeholder for date picker",
     "string": "dd/mm/yyyy, --:--"
   },
+  "MGxwn/": {
+    "string": "Webhook delivery"
+  },
   "MH1qA1": {
     "string": "Test Action"
   },
@@ -4640,6 +4655,9 @@
     "context": "input label",
     "string": "Model type"
   },
+  "OYWn0V": {
+    "string": "CircuitBreaker"
+  },
   "OZc365": {
     "context": "single reference attribute type",
     "string": "Single Reference"
@@ -4814,6 +4832,9 @@
     "context": "warning dialog title when SKU and stock are not set",
     "string": "Create without SKU and stock?"
   },
+  "PUxbpJ": {
+    "string": "Dismiss all problems raised by the app"
+  },
   "PV0SQd": {
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
@@ -4892,6 +4913,9 @@
   },
   "PuQb0P": {
     "string": "Reward"
+  },
+  "Pv6Tq8": {
+    "string": "Check webhooks"
   },
   "PvrceS": {
     "context": "Refund draft status",
@@ -4984,6 +5008,9 @@
   "QJJke/": {
     "context": "dialog header",
     "string": "Select a model type"
+  },
+  "QKrtDC": {
+    "string": "{count, plural, one {{count} problem} other {{count} problems}}"
   },
   "QL4a0Z": {
     "context": "alert message",
@@ -5461,11 +5488,17 @@
     "context": "header",
     "string": "Structure Items"
   },
+  "TDaF6J": {
+    "string": "Dismiss"
+  },
   "TDhHMi": {
     "string": "This needs to be unique"
   },
   "TE4fIS": {
     "string": "City"
+  },
+  "TEOp+x": {
+    "string": "including {count} critical"
   },
   "TGX4T1": {
     "string": "Search Engine Preview"
@@ -7495,6 +7528,9 @@
     "context": "page title - creating custom app",
     "string": "Add extension manually"
   },
+  "ectAk7": {
+    "string": "{count, plural, one {{count} error} other {{count} errors}}"
+  },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
@@ -8657,12 +8693,18 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lN6B54": {
+    "string": "Open the app"
+  },
   "lNZuWl": {
     "string": "All orders"
   },
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lRtZ2L": {
+    "string": "This message comes from the app"
   },
   "lSOmbK": {
     "context": "fulfillment status fulfilled",
@@ -8806,6 +8848,9 @@
   "mGiA6q": {
     "context": "modal button upload",
     "string": "Upload"
+  },
+  "mI+leH": {
+    "string": "All problems ({count})"
   },
   "mIRBuW": {
     "string": "Is published"
@@ -9354,6 +9399,9 @@
   "phIGQ1": {
     "context": "Canceled transaction amount, data display header",
     "string": "Canceled"
+  },
+  "pkS9/B": {
+    "string": "Force clear this error. Use if you know what you are doing"
   },
   "pkUbrL": {
     "string": "General Information"
@@ -10036,6 +10084,9 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "tdcGPK": {
+    "string": "Show {count} more {count, plural, one {problem} other {problems}}"
   },
   "tf+OkY": {
     "context": "link to edit variant metadata",
@@ -10757,6 +10808,9 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xEUTvE": {
+    "string": "Open app problems"
   },
   "xFSJR1": {
     "context": "recent changes shortcut",
