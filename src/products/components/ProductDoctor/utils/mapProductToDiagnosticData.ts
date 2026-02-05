@@ -15,6 +15,8 @@ export function mapProductToDiagnosticData(
   return {
     id: product.id,
     name: product.name,
+    // Default to true (shippable) if not specified - safer for diagnostics
+    isShippingRequired: product.productType?.isShippingRequired ?? true,
     channelListings:
       product.channelListings?.map(listing => ({
         channel: {
