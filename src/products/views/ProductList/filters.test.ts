@@ -1,4 +1,11 @@
-// @ts-strict-ignore
+import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { ConditionOptions } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
+import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
+import { ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import {
+  ExpressionValue,
+  FilterContainer,
+} from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import {
@@ -202,7 +209,7 @@ describe("Create product export query variables", () => {
 
   it("should return null when filter container is empty", () => {
     // Arrange
-    const filterContainer = [];
+    const filterContainer: FilterElement[] = [];
 
     // Act
     const filter = createProductExportQueryVariables(filterContainer);
@@ -398,29 +405,37 @@ describe("Create product export query variables", () => {
 
   it("should combine conditional filters with search query in export filter object", () => {
     // Arrange
-    const conditionalFilters = {
-      collections: ["col-123"],
-      categories: ["cat-456"],
-    };
-    const searchQuery = "iPhone";
+    const createFilterElement = (fieldName: string, value: ConditionValue): FilterElement => {
+      const expressionValue = new ExpressionValue(fieldName, fieldName, fieldName);
+      const conditionType = Array.isArray(value) ? "multiselect" : "text";
+      const conditionItem = {
+        type: conditionType,
+        label: fieldName,
+        value: `input-${conditionType}`,
+      };
+      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, value);
+      // Use empty ConditionOptions for arbitrary field names
+      const condition = new Condition(ConditionOptions.empty(), selected, false);
 
-    // Act - Mimic the ProductList.tsx export handler logic (lines 385-392)
-    const hasConditionalFilters =
-      conditionalFilters &&
-      typeof conditionalFilters === "object" &&
-      Object.keys(conditionalFilters).length > 0;
-    const hasSearchQuery = !!searchQuery;
-
-    const exportFilter = {
-      ...(hasConditionalFilters ? conditionalFilters : {}),
-      ...(hasSearchQuery ? { search: searchQuery } : {}),
+      return new FilterElement(expressionValue, condition, false);
     };
+
+    const filterContainer = [
+      createFilterElement("collections", ["col-123"]),
+      "AND",
+      createFilterElement("categories", ["cat-456"]),
+      "AND",
+      createFilterElement("search", "iPhone"),
+    ] as FilterContainer;
+
+    // Act
+    const exportFilter = createProductExportQueryVariables(filterContainer);
 
     // Assert
     expect(exportFilter).toBeDefined();
-    expect(exportFilter.collections).toEqual(["col-123"]);
-    expect(exportFilter.categories).toEqual(["cat-456"]);
-    expect(exportFilter.search).toEqual("iPhone");
+    expect(exportFilter?.collections).toEqual(["col-123"]);
+    expect(exportFilter?.categories).toEqual(["cat-456"]);
+    expect(exportFilter?.search).toEqual("iPhone");
   });
 
   it("should return null when filter container is empty after normalization", () => {
