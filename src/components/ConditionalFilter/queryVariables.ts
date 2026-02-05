@@ -3,7 +3,6 @@ import {
   CollectionFilterInput,
   CustomerFilterInput,
   GiftCardFilterInput,
-  InputMaybe,
   OrderDraftFilterInput,
   OrderWhereInput,
   PageFilterInput,
@@ -31,6 +30,7 @@ import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVars
 import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
 import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
+import { PriceRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceRangeQueryVarsBuilder";
 import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilders/ProductExportFieldMapper";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
 
@@ -68,12 +68,13 @@ export const createProductQueryVariables = (filterContainer: FilterContainer): P
 
 const productExportFilterResolver = new FilterQueryVarsBuilderResolver([
   new ProductExportFieldMapper(),
+  new PriceRangeQueryVarsBuilder(),
   ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
 ]);
 
 export const createProductExportQueryVariables = (
   filterContainer: FilterContainer,
-): InputMaybe<ProductFilterInput> => {
+): ProductFilterInput | null => {
   if (!filterContainer || filterContainer.length === 0) {
     return null;
   }

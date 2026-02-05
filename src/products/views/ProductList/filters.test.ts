@@ -1,5 +1,8 @@
 import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
-import { ConditionOptions } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+} from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
 import { ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import {
@@ -453,5 +456,77 @@ describe("Create product export query variables", () => {
     // Assert
     // Should return null, not empty object, when all fields are filtered out
     expect(filter).toBeNull();
+  });
+
+  // Helper to create a real FilterElement for price
+  function createPriceFilterElement(selectedValue: any, conditionLabel: string): FilterElement {
+    const value = new ExpressionValue("price", "Price", "price");
+
+    const conditionType = conditionLabel === "between" ? "number.range" : "number";
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
+    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
+    const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
+
+    return new FilterElement(value, condition, false);
+  }
+
+  it("should convert price filter 'is 200' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("200", "is");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 200, lte: 200 });
+  });
+
+  it("should convert price filter 'greater 100' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("100", "greater");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 100 });
+  });
+
+  it("should convert price filter 'lower 500' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("500", "lower");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ lte: 500 });
+  });
+
+  it("should convert price filter 'between 100..200' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement([100, 200], "between");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 100, lte: 200 });
   });
 });
