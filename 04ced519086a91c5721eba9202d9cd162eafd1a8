@@ -1,0 +1,23 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard.tsx
+  a051f8f26051c39e 58-60,73-74,139,148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "04ced519086a91c5721eba9202d9cd162eafd1a8",
+  "prompts": {
+    "a051f8f26051c39e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d32d33fc-e9eb-4ea2-bfa5-e93df4167ff3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 27,
+      "total_deletions": 31,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
