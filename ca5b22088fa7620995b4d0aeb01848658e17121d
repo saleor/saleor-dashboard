@@ -1,0 +1,29 @@
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  a051f8f26051c39e 82-83,85-87
+src/fragments/apps.ts
+  a051f8f26051c39e 215
+src/extensions/mutations.ts
+  a051f8f26051c39e 211-212
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard.tsx
+  a051f8f26051c39e 96,100-101,104
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "ca5b22088fa7620995b4d0aeb01848658e17121d",
+  "prompts": {
+    "a051f8f26051c39e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d32d33fc-e9eb-4ea2-bfa5-e93df4167ff3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 13,
+      "total_deletions": 23,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    }
+  }
+}
