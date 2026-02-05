@@ -208,11 +208,8 @@ export const appDeactivateMutation = gql`
 `;
 
 export const appProblemDismissMutation = gql`
-  mutation appProblemDismiss($app: ID!, $keys: [String!]) {
-    appProblemDismiss(app: $app, keys: $keys) {
-      app {
-        id
-      }
+  mutation appProblemDismiss($input: AppProblemDismissInput!) {
+    appProblemDismiss(input: $input) {
       errors {
         message
       }

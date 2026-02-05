@@ -93,19 +93,15 @@ const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {
 };
 
 const getDismissedByText = (problem: AppProblem): string | null => {
-  if (problem.__typename !== "AppProblem" || !problem.dismissedBy) {
+  if (problem.__typename !== "AppProblem" || !problem.dismissed) {
     return null;
   }
 
-  if (problem.dismissedBy.__typename === "App") {
-    return "Dismissed by the app";
+  if (problem.dismissedByUserEmail) {
+    return `Dismissed by ${problem.dismissedByUserEmail}`;
   }
 
-  if (problem.dismissedBy.__typename === "User") {
-    return `Dismissed by ${problem.dismissedBy.email}`;
-  }
-
-  return null;
+  return "Dismissed by app";
 };
 
 const DismissedLabel = ({ problem }: { problem: AppProblem }) => {

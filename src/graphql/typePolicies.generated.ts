@@ -426,12 +426,13 @@ export type AppManifestWebhookFieldPolicy = {
 	syncEvents?: FieldPolicy<any> | FieldReadFunction<any>,
 	targetUrl?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemKeySpecifier = ('count' | 'createdAt' | 'dismissed' | 'dismissedBy' | 'id' | 'isCritical' | 'key' | 'message' | 'updatedAt' | AppProblemKeySpecifier)[];
+export type AppProblemKeySpecifier = ('count' | 'createdAt' | 'dismissed' | 'dismissedBy' | 'dismissedByUserEmail' | 'id' | 'isCritical' | 'key' | 'message' | 'updatedAt' | AppProblemKeySpecifier)[];
 export type AppProblemFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	dismissed?: FieldPolicy<any> | FieldReadFunction<any>,
 	dismissedBy?: FieldPolicy<any> | FieldReadFunction<any>,
+	dismissedByUserEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	isCritical?: FieldPolicy<any> | FieldReadFunction<any>,
 	key?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -449,9 +450,8 @@ export type AppProblemCreateErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemDismissKeySpecifier = ('app' | 'errors' | AppProblemDismissKeySpecifier)[];
+export type AppProblemDismissKeySpecifier = ('errors' | AppProblemDismissKeySpecifier)[];
 export type AppProblemDismissFieldPolicy = {
-	app?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppProblemDismissErrorKeySpecifier = ('code' | 'field' | 'message' | AppProblemDismissErrorKeySpecifier)[];

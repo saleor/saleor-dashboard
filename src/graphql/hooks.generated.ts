@@ -208,14 +208,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
     dismissed
     updatedAt
     id
-    dismissedBy {
-      ... on App {
-        __typename
-      }
-      ... on User {
-        email
-      }
-    }
+    dismissedByUserEmail
   }
   brand {
     logo {
@@ -9239,11 +9232,8 @@ export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivate
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
 export const AppProblemDismissDocument = gql`
-    mutation appProblemDismiss($app: ID!, $keys: [String!]) {
-  appProblemDismiss(app: $app, keys: $keys) {
-    app {
-      id
-    }
+    mutation appProblemDismiss($input: AppProblemDismissInput!) {
+  appProblemDismiss(input: $input) {
     errors {
       message
     }
@@ -9265,8 +9255,7 @@ export type AppProblemDismissMutationFn = Apollo.MutationFunction<Types.AppProbl
  * @example
  * const [appProblemDismissMutation, { data, loading, error }] = useAppProblemDismissMutation({
  *   variables: {
- *      app: // value for 'app'
- *      keys: // value for 'keys'
+ *      input: // value for 'input'
  *   },
  * });
  */

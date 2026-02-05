@@ -212,14 +212,7 @@ export const InstalledAppDetails = gql`
       dismissed
       updatedAt
       id
-      dismissedBy {
-        ... on App {
-          __typename
-        }
-        ... on User {
-          email
-        }
-      }
+      dismissedByUserEmail
     }
     brand {
       logo {
