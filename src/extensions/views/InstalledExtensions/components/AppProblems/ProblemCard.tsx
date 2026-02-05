@@ -55,20 +55,23 @@ const TimestampWithTooltip = ({ date, label }: { date: string; label?: string })
   const { short, local, utc } = useFormattedDates(date);
 
   return (
-    <Tooltip>
-      <Tooltip.Trigger>
-        <time dateTime={date} className={styles.timestampHoverable}>
-          {label ? `${label} ${short}` : short}
-        </time>
-      </Tooltip.Trigger>
-      <Tooltip.Content side="top">
-        <Tooltip.Arrow />
-        <div className={styles.timestampTooltip}>
-          <div>Local: {local}</div>
-          <div>UTC: {utc}</div>
-        </div>
-      </Tooltip.Content>
-    </Tooltip>
+    <>
+      {label && `${label} `}
+      <Tooltip>
+        <Tooltip.Trigger>
+          <time dateTime={date} className={styles.timestampHoverable}>
+            {short}
+          </time>
+        </Tooltip.Trigger>
+        <Tooltip.Content side="top">
+          <Tooltip.Arrow />
+          <div className={styles.timestampTooltip}>
+            <div>Local: {local}</div>
+            <div>UTC: {utc}</div>
+          </div>
+        </Tooltip.Content>
+      </Tooltip>
+    </>
   );
 };
 
@@ -133,23 +136,16 @@ export const ProblemCard = ({ problem, dismissed, onForceClear }: ProblemCardPro
         <ProblemTimestamps problem={problem} />
         {dismissed && <DismissedLabel problem={problem} />}
         {!dismissed && onForceClear && (
-          <Tooltip>
-            <Tooltip.Trigger>
-              <Button
-                variant="secondary"
-                size="small"
-                onClick={e => {
-                  e.preventDefault();
-                  onForceClear();
-                }}
-              >
-                {intl.formatMessage(problemMessages.forceClear)}
-              </Button>
-            </Tooltip.Trigger>
-            <Tooltip.Content>
-              {intl.formatMessage(problemMessages.forceClearTooltip)}
-            </Tooltip.Content>
-          </Tooltip>
+          <Button
+            variant="secondary"
+            size="small"
+            onClick={e => {
+              e.preventDefault();
+              onForceClear();
+            }}
+          >
+            {intl.formatMessage(problemMessages.forceClear)}
+          </Button>
         )}
       </div>
       <div className={styles.problemMessage}>{problem.message}</div>
