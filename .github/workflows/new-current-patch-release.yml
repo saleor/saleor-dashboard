@@ -83,6 +83,7 @@ jobs:
   notify-failure:
     if: failure()
     needs: [recreate-release-branch, load-failure-secrets]
+    permissions: {}
     uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@dcebf56bd7d513dab52c0bb7c0a5cff98ecaadd1 # v1.8.0
     with:
       custom_title: "🚨 Patch Release Branch Recreation Failed"
