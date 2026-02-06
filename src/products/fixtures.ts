@@ -335,6 +335,7 @@ export const product: (
   productType: {
     __typename: "ProductType",
     hasVariants: true,
+    isShippingRequired: true,
     id: "pt76406",
     name: "Versatile",
     nonSelectionVariantAttributes: [
@@ -445,11 +446,6 @@ export const product: (
         },
       },
     ],
-    taxClass: {
-      __typename: "TaxClass",
-      name: "standard",
-      id: "standard",
-    },
     variantAttributes: [
       {
         __typename: "Attribute",
