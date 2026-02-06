@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.22.32
+
+### Patch Changes
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed issue when filtering products by parameters depending on channel (e.g. price) - previously filters didn't work correctly and always returned an empty list. Now filters will work correctly by passing correct channel value.
+
+- [#6317](https://github.com/saleor/saleor-dashboard/pull/6317) [`160511f`](https://github.com/saleor/saleor-dashboard/commit/160511f88fa381e54f26d85c093dd586e03bab45) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated to storybook v10
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Variant" modals based on products query `where` options, similar to existing filters on product list page.
+
 ## 3.22.31
 
 ### Patch Changes
