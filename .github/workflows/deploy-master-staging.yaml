@@ -91,7 +91,7 @@ jobs:
   notify-slack:
     needs: build
     if: always()
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@main
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@dcebf56bd7d513dab52c0bb7c0a5cff98ecaadd1 # v1.8.0
     with:
       type: deployment
       ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
