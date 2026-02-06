@@ -100,62 +100,26 @@ jobs:
           echo "Tags: $tags"
           echo "Digest: $digest"
 
-  notify-failure:
+  load-failure-secrets:
     if: failure()
     needs: [prepare-variables, build-push]
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
+    outputs:
+      slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
     steps:
       - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        with:
-          export-env: true
+        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           SLACK_WEBHOOK_URL: "op://Continuous Integration/DASHBOARD_BUILD_FAILURE_SLACK_WEBHOOK/password"
 
-      - name: Notify Slack on failure
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          payload: |
-            {
-              "text": "🚨 Docker Image Build Failed",
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "🚨 Docker Image Build Failed"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Repository:*\n${{ github.repository }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Version:*\n${{ needs.prepare-variables.outputs.version }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Triggered by:*\n${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Workflow:*\n${{ github.workflow }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Failed Workflow Run>"
-                  }
-                }
-              ]
-            }
+  notify-failure:
+    if: failure()
+    needs: [prepare-variables, build-push, load-failure-secrets]
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@main
+    with:
+      custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version }}*"
+      status: failure
+    secrets:
+      slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}
