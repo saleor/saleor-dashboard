@@ -38,12 +38,10 @@ jobs:
         run: |
           set -u
 
-          HIGHEST=$( gh release list -L 100 --json tagName -q '.[].tagName' \
-            | grep -E '^[0-9]+\.[0-9]+' \
-            | sort -Vr \
-            | head -1)
+          CURRENT_LATEST=$(gh api "/repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          HIGHEST=$( (echo "$CURRENT_LATEST"; echo "$CURRENT_TAG") | sort -V | tail -1)
 
-          echo "Current: $CURRENT_TAG, Highest: $HIGHEST"
+          echo "Selected: $CURRENT_TAG, Latest: $CURRENT_LATEST"
 
           if [[ "$CURRENT_TAG" == "$HIGHEST" ]]; then
             echo "is_latest=true" >> $GITHUB_OUTPUT
