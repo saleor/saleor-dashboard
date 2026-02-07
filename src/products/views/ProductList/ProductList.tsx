@@ -369,10 +369,13 @@ const ProductList = ({ params }: ProductListProps) => {
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data => {
-          const productsExportParams = new ProductsExportParameters({
-            ...data,
-            ...filterVariables,
-            ids: selectedRowIds,
+          const productsExportParams = ProductsExportParameters.fromFilters({
+            exportData: {
+              ...data,
+              ids: selectedRowIds,
+            },
+            filterContainer: valueProvider.value,
+            searchQuery: params.query,
           });
 
           exportProducts({

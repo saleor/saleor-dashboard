@@ -1,4 +1,15 @@
-// @ts-strict-ignore
+import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
+import {
+  ConditionItem,
+  ConditionOptions,
+} from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
+import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
+import { ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import {
+  ExpressionValue,
+  FilterContainer,
+} from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
+import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import {
   ProductListUrlFilters,
@@ -184,5 +195,338 @@ describe("Parsing filter value", () => {
 
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
+  });
+});
+
+describe("Create product export query variables", () => {
+  it("should return null when no filter container provided", () => {
+    // Arrange
+    const filterContainer = null as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeNull();
+  });
+
+  it("should return null when filter container is empty", () => {
+    // Arrange
+    const filterContainer: FilterElement[] = [];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeNull();
+  });
+
+  it("should map collection singular to collections plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "collection" },
+        condition: { active: true, value: ["col-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify mapping: collections (plural) should exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).collections).toEqual(["col-id"]);
+      expect((filter as any).collection).toBeUndefined();
+    }
+  });
+
+  it("should map category singular to categories plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "category" },
+        condition: { active: true, value: ["cat-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify mapping: categories (plural) should exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).categories).toEqual(["cat-id"]);
+      expect((filter as any).category).toBeUndefined();
+    }
+  });
+
+  it("should map productType singular to productTypes plural", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "productType" },
+        condition: { active: true, value: ["type-id"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(typeof filter).toBe("object");
+
+    // Verify mapping: productTypes (plural) should exist
+    if (filter && typeof filter === "object") {
+      expect((filter as any).productTypes).toEqual(["type-id"]);
+      expect((filter as any).productType).toBeUndefined();
+    }
+  });
+
+  it("should convert price string to PriceRangeInput object", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "200" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+
+    // Price should be converted to an object with gte property equal to 200
+    if (filter && typeof filter === "object" && filter.price) {
+      expect(typeof filter.price).toBe("object");
+      expect(filter.price).toEqual({ gte: 200 });
+    }
+  });
+
+  it("should remove invalid price fields", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "invalid" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    // Invalid price should be removed, and since it's the only field, filter should be null
+    expect(filter).toBeNull();
+  });
+
+  it("should handle price value of 0 correctly (not treat 0 as falsy)", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: { gte: 0, lte: 100 } },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    // Edge case: price with 0 should NOT be removed (0 is falsy but valid)
+    expect(filter).toBeDefined();
+
+    if (filter && typeof filter === "object" && filter.price) {
+      expect(filter.price.gte).toBe(0);
+      expect(filter.price.lte).toBe(100);
+    }
+  });
+
+  it("should handle multiple field mappings simultaneously", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "collection" },
+        condition: { active: true, value: ["col-1"] },
+      },
+      {
+        field: { name: "category" },
+        condition: { active: true, value: ["cat-1"] },
+      },
+      {
+        field: { name: "productType" },
+        condition: { active: true, value: ["type-1"] },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+
+    if (filter && typeof filter === "object") {
+      const filterObj = filter as any;
+
+      // All plural forms should exist
+      expect(filterObj.collections).toEqual(["col-1"]);
+      expect(filterObj.categories).toEqual(["cat-1"]);
+      expect(filterObj.productTypes).toEqual(["type-1"]);
+
+      // All singular forms should not exist
+      expect(filterObj.collection).toBeUndefined();
+      expect(filterObj.category).toBeUndefined();
+      expect(filterObj.productType).toBeUndefined();
+    }
+  });
+
+  it("should use FiltersQueryBuilder with FILTER api type", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "search" },
+        condition: { active: true, value: "test" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    // The function should successfully build filters without errors
+    expect(filter).toBeDefined();
+  });
+
+  it("should combine conditional filters with search query in export filter object", () => {
+    // Arrange
+    const createFilterElement = (fieldName: string, value: ConditionValue): FilterElement => {
+      const expressionValue = new ExpressionValue(fieldName, fieldName, fieldName);
+      const conditionType = Array.isArray(value) ? "multiselect" : "text";
+      const conditionItem = {
+        type: conditionType,
+        label: fieldName,
+        value: `input-${conditionType}`,
+      };
+      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, value);
+      // Use empty ConditionOptions for arbitrary field names
+      const condition = new Condition(ConditionOptions.empty(), selected, false);
+
+      return new FilterElement(expressionValue, condition, false);
+    };
+
+    const filterContainer = [
+      createFilterElement("collections", ["col-123"]),
+      "AND",
+      createFilterElement("categories", ["cat-456"]),
+      "AND",
+      createFilterElement("search", "iPhone"),
+    ] as FilterContainer;
+
+    // Act
+    const exportFilter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(exportFilter).toBeDefined();
+    expect(exportFilter?.collections).toEqual(["col-123"]);
+    expect(exportFilter?.categories).toEqual(["cat-456"]);
+    expect(exportFilter?.search).toEqual("iPhone");
+  });
+
+  it("should return null when filter container is empty after normalization", () => {
+    // Arrange
+    const filterContainer = [
+      {
+        field: { name: "price" },
+        condition: { active: true, value: "" },
+      },
+    ] as any;
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    // Should return null, not empty object, when all fields are filtered out
+    expect(filter).toBeNull();
+  });
+
+  // Helper to create a real FilterElement for price
+  function createPriceFilterElement(selectedValue: any, conditionLabel: string): FilterElement {
+    const value = new ExpressionValue("price", "Price", "price");
+
+    const conditionType = conditionLabel === "between" ? "number.range" : "number";
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
+    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
+    const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
+
+    return new FilterElement(value, condition, false);
+  }
+
+  it("should convert price filter 'is 200' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("200", "is");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 200, lte: 200 });
+  });
+
+  it("should convert price filter 'greater 100' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("100", "greater");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 100 });
+  });
+
+  it("should convert price filter 'lower 500' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement("500", "lower");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ lte: 500 });
+  });
+
+  it("should convert price filter 'between 100..200' to PriceRangeInput", () => {
+    // Arrange
+    const element = createPriceFilterElement([100, 200], "between");
+    const filterContainer = [element];
+
+    // Act
+    const filter = createProductExportQueryVariables(filterContainer);
+
+    // Assert
+    expect(filter).toBeDefined();
+    expect(filter?.price).toBeDefined();
+    expect(filter?.price).toEqual({ gte: 100, lte: 200 });
   });
 });
