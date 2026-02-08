@@ -274,8 +274,16 @@ const warehouseChecks: CheckFunction[] = [checkNoWarehouses, checkNoStock];
  */
 const shippingChecks: CheckFunction[] = [checkNoShippingZones, checkWarehouseNotInShippingZone];
 
+/**
+ * Options to skip certain check categories.
+ * These are typically set based on user permissions - if the user cannot view
+ * warehouse or shipping zone data, the corresponding checks should be skipped
+ * to avoid false positives from missing data.
+ */
 interface CheckSkipOptions {
+  /** Skip warehouse/stock checks (set when user lacks warehouse view permissions) */
   skipWarehouseChecks?: boolean;
+  /** Skip shipping zone checks (set when user lacks shipping zone view permissions) */
   skipShippingChecks?: boolean;
 }
 

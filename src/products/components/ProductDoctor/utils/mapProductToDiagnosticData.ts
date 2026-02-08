@@ -1,12 +1,53 @@
-import { ProductDetailsQuery } from "@dashboard/graphql";
-
 import { ProductDiagnosticData } from "./types";
 
 /**
- * Maps the product data from ProductDetailsQuery to the diagnostic data structure
+ * Minimal input type declaring only the fields used by mapProductToDiagnosticData.
+ * This makes the function's contract explicit and simplifies testing.
+ */
+export interface ProductDiagnosticInput {
+  id: string;
+  name: string;
+  productType: {
+    isShippingRequired: boolean;
+  };
+  channelListings?: Array<{
+    channel: {
+      id: string;
+      name: string;
+      slug: string;
+    };
+    isPublished: boolean;
+    publishedAt?: string | null;
+    isAvailableForPurchase: boolean | null;
+    availableForPurchaseAt?: string | null;
+    visibleInListings: boolean;
+  }> | null;
+  variants?: Array<{
+    id: string;
+    name: string;
+    channelListings?: Array<{
+      channel: {
+        id: string;
+      };
+      price: {
+        amount: number;
+      } | null;
+    }> | null;
+    stocks?: Array<{
+      warehouse: {
+        id: string;
+      };
+      quantity: number;
+    }> | null;
+  }> | null;
+}
+
+/**
+ * Maps the product data to the diagnostic data structure.
+ * Accepts ProductDiagnosticInput which is a subset of ProductDetailsQuery["product"].
  */
 export function mapProductToDiagnosticData(
-  product: ProductDetailsQuery["product"] | null | undefined,
+  product: ProductDiagnosticInput | null | undefined,
 ): ProductDiagnosticData | null {
   if (!product) {
     return null;
@@ -15,8 +56,7 @@ export function mapProductToDiagnosticData(
   return {
     id: product.id,
     name: product.name,
-    // Default to true (shippable) if not specified - safer for diagnostics
-    isShippingRequired: product.productType?.isShippingRequired ?? true,
+    isShippingRequired: product.productType.isShippingRequired,
     channelListings:
       product.channelListings?.map(listing => ({
         channel: {

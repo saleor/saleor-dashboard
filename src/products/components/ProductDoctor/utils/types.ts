@@ -47,8 +47,6 @@ export interface ProductDiagnosticData {
    * Note: Warehouse/stock checks still run for non-shippable products because they may
    * track inventory (e.g., activation codes, digital license keys). If a product doesn't
    * track inventory, variant.stocks will be empty and warehouse checks will pass naturally.
-   *
-   * @default true - Defaults to true when missing to show more warnings (safer for diagnostics)
    */
   isShippingRequired: boolean;
   channelListings: Array<{
