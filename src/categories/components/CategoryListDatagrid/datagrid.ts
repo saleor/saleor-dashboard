@@ -1,5 +1,5 @@
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import { loadingCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { CategoryFragment } from "@dashboard/graphql";
 import { Sort } from "@dashboard/types";
@@ -8,6 +8,19 @@ import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
+
+interface CreateGetCellContentOptions {
+  isCategoryExpanded?: (categoryId: string) => boolean;
+  isCategoryChildrenLoading?: (categoryId: string) => boolean;
+  getCategoryDepth?: (categoryId: string) => number;
+}
+
+export const categoryListExpandColumn: AvailableColumn = {
+  id: "expand",
+  title: "",
+  width: 20,
+  action: () => true,
+};
 
 export const categoryListStaticColumnsAdapter = (
   intl: IntlShape,
@@ -34,8 +47,19 @@ export const categoryListStaticColumnsAdapter = (
     icon: sort ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
+const getIndentedName = (name: string, depth: number): string =>
+  `${"\u00A0".repeat(depth * 4)}${name}`;
+
 export const createGetCellContent =
-  (categories: CategoryFragment[], columns: AvailableColumn[]) =>
+  (
+    categories: CategoryFragment[],
+    columns: AvailableColumn[],
+    {
+      isCategoryExpanded,
+      isCategoryChildrenLoading,
+      getCategoryDepth,
+    }: CreateGetCellContentOptions = {},
+  ) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
     const rowData: CategoryFragment | undefined = categories[row];
@@ -45,8 +69,25 @@ export const createGetCellContent =
     }
 
     switch (columnId) {
+      case "expand": {
+        const subcategoriesCount = rowData.children?.totalCount ?? 0;
+
+        if (!subcategoriesCount) {
+          return readonlyTextCell("", false);
+        }
+
+        if (isCategoryChildrenLoading?.(rowData.id)) {
+          return loadingCell();
+        }
+
+        const isExpanded = isCategoryExpanded?.(rowData.id) ?? false;
+
+        return readonlyTextCell(isExpanded ? "v" : ">");
+      }
       case "name":
-        return readonlyTextCell(rowData?.name ?? "");
+        const depth = getCategoryDepth?.(rowData.id) ?? 0;
+
+        return readonlyTextCell(getIndentedName(rowData.name ?? "", depth));
       case "subcategories":
         return readonlyTextCell(rowData?.children?.totalCount?.toString() ?? "");
       case "products":

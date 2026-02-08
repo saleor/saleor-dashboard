@@ -18,4 +18,8 @@ export const messages = defineMessages({
     defaultMessage: "Delete categories",
     id: "FiO/W/",
   },
+  subcategoriesPageSizeLabel: {
+    id: "8zbcLs",
+    defaultMessage: "№ of subcategories",
+  },
 });
