@@ -1,3 +1,4 @@
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -15,6 +16,7 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import { ChangeEvent, useCallback, useState } from "react";
@@ -160,6 +162,7 @@ export const CategoryListPage = ({
               <Text size={2}>
                 <FormattedMessage {...messages.subcategoriesPageSizeLabel} />
               </Text>
+              <Ripple model={rippleExpandedSubcategories} />
               <Input
                 size="small"
                 type="number"
