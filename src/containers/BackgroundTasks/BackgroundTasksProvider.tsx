@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { INotificationCallback } from "@dashboard/components/notifications";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -24,12 +23,12 @@ export function useBackgroundTasks(
     const intervalId = setInterval(() => {
       const queue = async () => {
         await Promise.all(
-          tasks.current.map(async task => {
+          tasks.current.map(async (task: QueuedTask) => {
             if (task.status === TaskStatus.PENDING) {
               const status = await handleTask(task);
 
               if (status !== TaskStatus.PENDING) {
-                const taskIndex = tasks.current.findIndex(t => t.id === task.id);
+                const taskIndex = tasks.current.findIndex((t: QueuedTask) => t.id === task.id);
 
                 tasks.current[taskIndex].status = status;
               }
@@ -45,7 +44,7 @@ export function useBackgroundTasks(
   });
 
   function cancel(id: number) {
-    tasks.current = tasks.current.filter(task => task.id !== id);
+    tasks.current = tasks.current.filter((task: QueuedTask) => task.id !== id);
   }
 
   function queue(type: Task, data?: TaskData) {
@@ -53,9 +52,17 @@ export function useBackgroundTasks(
 
     switch (type) {
       case Task.CUSTOM:
+        if (!data) {
+          throw new Error("data is required for CUSTOM task");
+        }
+
         queueCustom(idCounter.current, tasks, data);
         break;
       case Task.INVOICE_GENERATE:
+        if (!data || !data.generateInvoice) {
+          throw new Error("data.generateInvoice is required for INVOICE_GENERATE task");
+        }
+
         queueInvoiceGenerate(
           idCounter.current,
           data.generateInvoice,
@@ -65,7 +72,7 @@ export function useBackgroundTasks(
               fetchPolicy: "network-only",
               query: checkOrderInvoicesStatus,
               variables: {
-                id: data.generateInvoice.orderId,
+                id: data.generateInvoice!.orderId,
               },
             }),
           notify,
@@ -73,6 +80,10 @@ export function useBackgroundTasks(
         );
         break;
       case Task.EXPORT:
+        if (!data || !data.id) {
+          throw new Error("data.id is required for EXPORT task");
+        }
+
         queueExport(
           idCounter.current,
           tasks,
@@ -81,7 +92,7 @@ export function useBackgroundTasks(
               fetchPolicy: "network-only",
               query: checkExportFileStatus,
               variables: {
-                id: data.id,
+                id: data.id!,
               },
             }),
           notify,

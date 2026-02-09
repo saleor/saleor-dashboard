@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ApolloQueryResult } from "@apollo/client";
 import { INotificationCallback } from "@dashboard/components/notifications";
 import {
@@ -54,11 +53,14 @@ export function queueCustom(
   tasks: React.MutableRefObject<QueuedTask[]>,
   data: TaskData,
 ) {
-  (["handle", "onCompleted"] as Array<keyof TaskData>)
-    .filter(field => !data[field])
-    .forEach(field => {
-      throw new Error(`${field} is required when creating custom task`);
-    });
+  if (!data.handle) {
+    throw new Error("handle is required when creating custom task");
+  }
+
+  if (!data.onCompleted) {
+    throw new Error("onCompleted is required when creating custom task");
+  }
+
   tasks.current = [
     ...tasks.current,
     {
@@ -88,14 +90,24 @@ export function queueInvoiceGenerate(
     {
       handle: async () => {
         const result = await fetch();
-        const status = result.data.order.invoices.find(
-          invoice => invoice.id === generateInvoice.invoiceId,
-        ).status;
 
-        return getTaskStatus(status);
+        if (!result.data.order) {
+          throw new Error(`Order not found`);
+        }
+
+        const invoice = result.data.order.invoices.find(
+          (invoice: NonNullable<CheckOrderInvoicesStatusQuery["order"]>["invoices"][number]) =>
+            invoice.id === generateInvoice.invoiceId,
+        );
+
+        if (!invoice) {
+          throw new Error(`Invoice with id ${generateInvoice.invoiceId} not found`);
+        }
+
+        return getTaskStatus(invoice.status);
       },
       id,
-      onCompleted: data =>
+      onCompleted: (data: { status: TaskStatus }) =>
         data.status === TaskStatus.SUCCESS
           ? notify({
               status: "success",
@@ -125,12 +137,17 @@ export function queueExport(
     {
       handle: async () => {
         const result = await fetch();
+
+        if (!result.data.exportFile) {
+          throw new Error("Export file not found");
+        }
+
         const status = result.data.exportFile.status;
 
         return getTaskStatus(status);
       },
       id,
-      onCompleted: data =>
+      onCompleted: (data: { status: TaskStatus }) =>
         data.status === TaskStatus.SUCCESS
           ? notify({
               status: "success",
