@@ -36,9 +36,7 @@ apps.forEach(app => {
       timeout: APP_LOAD_TIMEOUT,
     });
 
-    await expect(iframeLocator.getByText(app.expectedText).first()).toBeVisible({
-      timeout: APP_LOAD_TIMEOUT,
-    });
+    await app.assertContent(iframeLocator, APP_LOAD_TIMEOUT);
 
     await expect(page.locator(LOCATORS.errorBanner)).not.toBeVisible();
   });
