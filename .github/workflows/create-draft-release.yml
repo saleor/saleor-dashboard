@@ -112,7 +112,7 @@ jobs:
     if: failure()
     needs: [create-draft-release, load-failure-secrets]
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@b659ecfb3d2d7e6fc55823c8a0ddd8fc26fcc2a9 # v1.8.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
     with:
       custom_title: "🚨 Draft Release Creation Failed for *${{ github.ref_name }}*"
       status: failure
