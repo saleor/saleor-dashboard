@@ -164,6 +164,8 @@ const emptyCategoryFetchingParams: CategoryFetchingParams = {
   updatedAt: [],
 };
 
+export { emptyCategoryFetchingParams };
+
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 const includedInParams = (c: UrlToken) =>
   TokenType.ATTRIBUTE_DROPDOWN === c.type ||
