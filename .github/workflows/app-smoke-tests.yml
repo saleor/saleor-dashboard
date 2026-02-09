@@ -33,6 +33,10 @@ on:
         default: ""
         description: "Comma-separated app identifiers to test (empty = all)"
 
+permissions:
+  contents: read
+  actions: write # needed for uploading playwright report artifacts
+
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.VERSION }}
   cancel-in-progress: true
