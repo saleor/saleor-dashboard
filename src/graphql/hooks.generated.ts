@@ -3014,6 +3014,7 @@ export const ProductFragmentDoc = gql`
     id
     name
     hasVariants
+    isShippingRequired
   }
   weight {
     ...Weight
