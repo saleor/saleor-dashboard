@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import mergeWith from "lodash/mergeWith";
 
@@ -45,13 +44,13 @@ export default function useListSettings<TColumns extends string = string>(
     setListSettings(settings => ({
       ...settings,
       [listName]: {
-        ...settings[listName],
+        ...(settings[listName as keyof AppListViewSettings] as ListSettings),
         [key]: value,
       },
     }));
 
   return {
-    settings: settings[listName] as ListSettings<TColumns>,
+    settings: settings[listName as keyof AppListViewSettings] as ListSettings<TColumns>,
     updateListSettings,
   };
 }

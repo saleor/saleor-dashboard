@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ApolloError,
   MutationFunction,
@@ -59,7 +58,10 @@ export function useMutation<TData, TVariables>(
               text: intl.formatMessage(commonMessages.readOnly),
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
-            user.logout();
+            if (user.logout) {
+              user.logout();
+            }
+
             notify({
               status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired),
@@ -87,7 +89,7 @@ export function useMutation<TData, TVariables>(
     mutateFn,
     {
       ...result,
-      status: getMutationStatus(result),
+      status: getMutationStatus(result as MutationResult<Record<string, any>>),
     },
   ];
 }

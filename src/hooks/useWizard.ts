@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useState } from "react";
 
 interface UseWizardActions<T> {
@@ -13,7 +12,7 @@ type UseWizard<T> = [T, UseWizardActions<T>];
 function useWizard<T>(initial: T, steps: T[], opts?: UseWizardOpts<T>): UseWizard<T> {
   const [stepIndex, setStepIndex] = useState(steps.indexOf(initial));
 
-  function goToStep(nextStepIndex) {
+  function goToStep(nextStepIndex: number) {
     if (typeof opts?.onTransition === "function") {
       opts.onTransition(steps[stepIndex], steps[nextStepIndex]);
     }

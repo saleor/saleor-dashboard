@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ApolloError,
   ApolloQueryResult,
@@ -11,7 +10,6 @@ import {
 import { handleQueryAuthError, useUser } from "@dashboard/auth";
 import { PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
 import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql/types.generated";
-import { RequireAtLeastOne } from "@dashboard/misc";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -100,12 +98,12 @@ export function useQuery<TData, TVariables>(
       if (handleError) {
         handleError(error);
       } else {
-        handleQueryAuthError(error, notify, user.logout, intl);
+        handleQueryAuthError(error, notify, user.logout ?? (() => {}), intl);
       }
     },
     skip,
     variables: variablesWithPermissions,
-  });
+  } as BaseQueryHookOptions<TData, TVariables & Record<PrefixedPermissions, boolean>>);
 
   useEffect(() => {
     if (displayLoader) {
@@ -120,7 +118,7 @@ export function useQuery<TData, TVariables>(
 
   const loadMore = (
     mergeFunc: (previousResults: TData, fetchMoreResult: TData) => TData,
-    extraVariables: RequireAtLeastOne<TVariables>,
+    extraVariables: Partial<TVariables>,
   ) =>
     queryData.fetchMore({
       query,
@@ -141,7 +139,8 @@ export function useQuery<TData, TVariables>(
 }
 
 function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, TVariables> {
-  return (opts: QueryHookOptions<TData, TVariables>) => useQuery<TData, TVariables>(query, opts);
+  return (opts?: QueryHookOptions<TData, Omit<TVariables, PrefixedPermissions>>) =>
+    useQuery<TData, TVariables>(query, opts as QueryHookOptions<TData, TVariables>);
 }
 
 export default makeQuery;
