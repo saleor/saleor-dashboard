@@ -239,6 +239,21 @@ export function getVersionFromBaseUrl(baseUrl: string): string {
   return match ? `v${match[1]}` : "";
 }
 
+export function getAppsForCurrentEnv(): { version: string; apps: AppSmokeEntry[] } {
+  const baseUrl = process.env.BASE_URL || "";
+  const version = getVersionFromBaseUrl(baseUrl);
+  const allApps = APP_SMOKE_DATA[version] || [];
+  const identifiersEnv = process.env.APP_IDENTIFIERS;
+
+  if (!identifiersEnv) {
+    return { version, apps: allApps };
+  }
+
+  const identifiers = identifiersEnv.split(",").map(id => id.trim());
+
+  return { version, apps: allApps.filter(app => identifiers.includes(app.identifier)) };
+}
+
 export function resolveAppUrl(version: string, appId: string): string {
   if (version === "v320") {
     return `apps/${appId}/app`;

@@ -1,4 +1,4 @@
-import { APP_SMOKE_DATA, getVersionFromBaseUrl, resolveAppUrl } from "@data/appSmokeTestData";
+import { APP_SMOKE_DATA, getAppsForCurrentEnv, resolveAppUrl } from "@data/appSmokeTestData";
 import { LOCATORS } from "@data/commonLocators";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
@@ -6,11 +6,12 @@ import { test } from "utils/testWithPermission";
 test.use({ permissionName: "admin" });
 
 const APP_LOAD_TIMEOUT = 30_000;
-const baseUrl = process.env.BASE_URL || "";
-const version = getVersionFromBaseUrl(baseUrl);
-const apps = APP_SMOKE_DATA[version] || [];
+const { version, apps } = getAppsForCurrentEnv();
 
-console.log(`App smoke tests: resolved version "${version}" from BASE_URL "${baseUrl}"`);
+console.log(
+  `App smoke tests: resolved version "${version}" from BASE_URL "${process.env.BASE_URL || ""}"` +
+    (process.env.APP_IDENTIFIERS ? `, filtering by: ${process.env.APP_IDENTIFIERS}` : ""),
+);
 
 if (!version || apps.length === 0) {
   console.warn(
