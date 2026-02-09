@@ -200,6 +200,7 @@ jobs:
       status: ${{ needs.build.result }}
       product: dashboard
       environment: ${{ needs.build.outputs.ENVIRONMENT }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
       slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
 

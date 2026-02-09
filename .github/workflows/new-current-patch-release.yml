@@ -88,5 +88,6 @@ jobs:
     with:
       custom_title: "🚨 Patch Release Branch Recreation Failed"
       status: failure
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
       slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}

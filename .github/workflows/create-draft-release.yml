@@ -116,5 +116,6 @@ jobs:
     with:
       custom_title: "🚨 Draft Release Creation Failed for *${{ github.ref_name }}*"
       status: failure
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
       slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}

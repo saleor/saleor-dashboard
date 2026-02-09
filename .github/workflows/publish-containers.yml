@@ -122,5 +122,6 @@ jobs:
     with:
       custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version }}*"
       status: failure
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
       slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}
