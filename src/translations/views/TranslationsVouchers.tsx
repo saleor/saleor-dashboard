@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
@@ -34,7 +33,7 @@ const TranslationsVouchers = ({ id, languageCode, params }: TranslationsVouchers
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateVoucherTranslationsMutation({
     onCompleted: data => {
-      if (data.voucherTranslate.errors.length === 0) {
+      if (data.voucherTranslate?.errors.length === 0) {
         voucherTranslations.refetch();
         notify({
           status: "success",
@@ -81,10 +80,10 @@ const TranslationsVouchers = ({ id, languageCode, params }: TranslationsVouchers
       languages={maybe(() => shop.languages, [])}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "VoucherTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={translation?.__typename === "VoucherTranslatableContent" ? translation : null!}
     />
   );
 };

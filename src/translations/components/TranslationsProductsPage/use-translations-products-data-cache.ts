@@ -4,19 +4,19 @@ type DataCacheFields = "productName" | "productDescription" | "seoDescription" |
 
 // A hack to access field that are currently being edited in nested form.
 export const useTranslationsProductsDataCache = () => {
-  const dataCache = useRef<Record<DataCacheFields, string | null>>({
-    productName: null,
-    productDescription: null,
-    seoDescription: null,
-    seoName: null,
+  const dataCache = useRef<Record<DataCacheFields, string | undefined>>({
+    productName: undefined,
+    productDescription: undefined,
+    seoDescription: undefined,
+    seoName: undefined,
   });
 
   const resetCache = (): void => {
     dataCache.current = {
-      productName: null,
-      productDescription: null,
-      seoName: null,
-      seoDescription: null,
+      productName: undefined,
+      productDescription: undefined,
+      seoName: undefined,
+      seoDescription: undefined,
     };
   };
 
