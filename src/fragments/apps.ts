@@ -202,6 +202,18 @@ export const InstalledAppDetails = gql`
     isActive
     name
     type
+    problems {
+      __typename
+      key
+      message
+      createdAt
+      count
+      isCritical
+      dismissed
+      updatedAt
+      id
+      dismissedByUserEmail
+    }
     brand {
       logo {
         default(format: WEBP, size: 64)

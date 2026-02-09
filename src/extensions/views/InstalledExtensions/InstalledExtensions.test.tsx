@@ -37,6 +37,8 @@ jest.mock("./hooks/useInstalledExtensions", () => ({
     installedExtensions: mockInstalledExtensions,
     installedAppsLoading: false,
     refetchInstalledApps: jest.fn(),
+    errorCount: 0,
+    warningCount: 0,
   }),
 }));
 
@@ -44,6 +46,10 @@ jest.mock("./hooks/usePendingInstallation");
 jest.mock("./hooks/useInstalledExtensionsFilter");
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn(() => jest.fn()));
+jest.mock("@dashboard/graphql", () => ({
+  ...(jest.requireActual("@dashboard/graphql") as object),
+  useAppProblemDismissMutation: jest.fn(() => [jest.fn(), {}]),
+}));
 jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", () => ({
   useContextualLink: () => "Extensions",
 }));

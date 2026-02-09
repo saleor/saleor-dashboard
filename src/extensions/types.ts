@@ -1,10 +1,49 @@
 import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
+import {
+  ExtensionListQuery,
+  InstalledAppDetailsFragment,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { ReactNode } from "react";
 
 import { AppDetailsUrlMountQueryParams } from "./urls";
+
+export type GraphQLAppProblem = InstalledAppDetailsFragment["problems"][number];
+
+export interface WebhookDeliveryProblem {
+  __typename: "WebhookDeliveryError";
+  message: string;
+  createdAt: string;
+}
+
+export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
+
+export const isProblemCritical = (problem: AppProblem): boolean => {
+  if (problem.__typename === "AppProblem") {
+    return problem.isCritical;
+  }
+
+  // WebhookDeliveryError is always critical
+  return true;
+};
+
+export const isProblemDismissed = (problem: AppProblem): boolean => {
+  if (problem.__typename === "AppProblem") {
+    return problem.dismissed;
+  }
+
+  return false;
+};
+
+export const getProblemSortDate = (problem: AppProblem): string => {
+  if (problem.__typename === "AppProblem") {
+    return problem.updatedAt;
+  }
+
+  return problem.createdAt;
+};
 
 interface CommonExtensionData {
   id: string;
@@ -63,6 +102,7 @@ export type InstalledExtension = {
   info: ReactNode;
   href?: string;
   actions?: ReactNode;
+  problems?: AppProblem[];
 };
 
 export interface Extension {
