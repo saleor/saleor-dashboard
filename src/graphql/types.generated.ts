@@ -302,21 +302,21 @@ export type AppProblemCreateInput = {
   criticalThreshold?: InputMaybe<Scalars['PositiveInt']>;
   /** Key identifying the type of problem. App can add multiple problems under the same key, to merge them together or delete them in batch. Must be between 3 and 128 characters. */
   key: Scalars['String'];
-  /** The problem message to display. Must be between 3 and 2048 characters. */
+  /** The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix. */
   message: Scalars['String'];
 };
 
 /** Input for app callers to dismiss their own problems. */
 export type AppProblemDismissByAppInput = {
-  /** List of problem IDs to dismiss. Cannot be combined with keys. */
+  /** List of problem IDs to dismiss. Cannot be combined with keys. Max 100. */
   ids?: InputMaybe<Array<Scalars['ID']>>;
-  /** List of problem keys to dismiss. Cannot be combined with ids. */
+  /** List of problem keys to dismiss. Cannot be combined with ids. Max 100. */
   keys?: InputMaybe<Array<Scalars['String']>>;
 };
 
 /** Input for staff/user callers to dismiss problems by IDs. */
 export type AppProblemDismissByUserWithIdsInput = {
-  /** List of problem IDs to dismiss. */
+  /** List of problem IDs to dismiss. Max 100. */
   ids: Array<Scalars['ID']>;
 };
 
@@ -324,7 +324,7 @@ export type AppProblemDismissByUserWithIdsInput = {
 export type AppProblemDismissByUserWithKeysInput = {
   /** ID of the app whose problems to dismiss. */
   app: Scalars['ID'];
-  /** List of problem keys to dismiss. */
+  /** List of problem keys to dismiss. Max 100. */
   keys: Array<Scalars['String']>;
 };
 
@@ -345,6 +345,11 @@ export type AppProblemDismissInput = {
   /** For staff/user callers - dismiss problems by keys for specified app. */
   byUserWithKeys?: InputMaybe<AppProblemDismissByUserWithKeysInput>;
 };
+
+export enum AppProblemDismissedByEnum {
+  APP = 'APP',
+  USER = 'USER'
+}
 
 export enum AppSortField {
   /** Sort apps by creation date. */
@@ -7438,6 +7443,12 @@ export type TransactionFilterInput = {
   metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by payment method details used to pay for the order. */
   paymentMethodDetails?: InputMaybe<PaymentMethodDetailsFilterInput>;
+  /**
+   * Filter by PSP reference of transactions.
+   *
+   * Added in Saleor 3.22.
+   */
+  pspReference?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -7546,6 +7557,18 @@ export type TransactionUpdateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']>;
+};
+
+export type TransactionWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<TransactionWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<TransactionWhereInput>>;
+  /** Filter by app identifier. */
+  appIdentifier?: InputMaybe<StringFilterInput>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by PSP reference. */
+  pspReference?: InputMaybe<StringFilterInput>;
 };
 
 export enum TranslatableKinds {
@@ -9937,7 +9960,7 @@ export type InstalledAppsListQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, dismissed: boolean, updatedAt: any, id: string, dismissedByUserEmail: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type EventDeliveryQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -10044,7 +10067,7 @@ export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{
 
 export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
 
-export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, dismissed: boolean, updatedAt: any, id: string, dismissedByUserEmail: string | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
+export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 

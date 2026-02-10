@@ -205,10 +205,12 @@ export const InstalledAppDetailsFragmentDoc = gql`
     createdAt
     count
     isCritical
-    dismissed
+    dismissed {
+      by
+      userEmail
+    }
     updatedAt
     id
-    dismissedByUserEmail
   }
   brand {
     logo {

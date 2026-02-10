@@ -25,13 +25,13 @@ export const isProblemCritical = (problem: AppProblem): boolean => {
     return problem.isCritical;
   }
 
-  // WebhookDeliveryError is always critical
-  return true;
+  // WebhookDeliveryError is a warning, not critical
+  return false;
 };
 
 export const isProblemDismissed = (problem: AppProblem): boolean => {
   if (problem.__typename === "AppProblem") {
-    return problem.dismissed;
+    return problem.dismissed !== null;
   }
 
   return false;

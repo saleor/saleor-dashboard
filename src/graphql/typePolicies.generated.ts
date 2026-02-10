@@ -426,22 +426,20 @@ export type AppManifestWebhookFieldPolicy = {
 	syncEvents?: FieldPolicy<any> | FieldReadFunction<any>,
 	targetUrl?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemKeySpecifier = ('count' | 'createdAt' | 'dismissed' | 'dismissedBy' | 'dismissedByUserEmail' | 'id' | 'isCritical' | 'key' | 'message' | 'updatedAt' | AppProblemKeySpecifier)[];
+export type AppProblemKeySpecifier = ('count' | 'createdAt' | 'dismissed' | 'id' | 'isCritical' | 'key' | 'message' | 'updatedAt' | AppProblemKeySpecifier)[];
 export type AppProblemFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	dismissed?: FieldPolicy<any> | FieldReadFunction<any>,
-	dismissedBy?: FieldPolicy<any> | FieldReadFunction<any>,
-	dismissedByUserEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	isCritical?: FieldPolicy<any> | FieldReadFunction<any>,
 	key?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppProblemCreateKeySpecifier = ('app' | 'errors' | AppProblemCreateKeySpecifier)[];
+export type AppProblemCreateKeySpecifier = ('appProblem' | 'errors' | AppProblemCreateKeySpecifier)[];
 export type AppProblemCreateFieldPolicy = {
-	app?: FieldPolicy<any> | FieldReadFunction<any>,
+	appProblem?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppProblemCreateErrorKeySpecifier = ('code' | 'field' | 'message' | AppProblemCreateErrorKeySpecifier)[];
@@ -459,6 +457,12 @@ export type AppProblemDismissErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppProblemDismissedKeySpecifier = ('by' | 'user' | 'userEmail' | AppProblemDismissedKeySpecifier)[];
+export type AppProblemDismissedFieldPolicy = {
+	by?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>,
+	userEmail?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppReenableSyncWebhooksKeySpecifier = ('app' | 'appErrors' | 'errors' | AppReenableSyncWebhooksKeySpecifier)[];
 export type AppReenableSyncWebhooksFieldPolicy = {
@@ -5398,7 +5402,7 @@ export type PromotionUpdatedEventFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('_entities' | '_service' | 'address' | 'addressValidationRules' | 'app' | 'appExtension' | 'appExtensions' | 'apps' | 'appsInstallations' | 'attribute' | 'attributes' | 'categories' | 'category' | 'channel' | 'channels' | 'checkout' | 'checkoutLines' | 'checkouts' | 'collection' | 'collections' | 'customers' | 'digitalContent' | 'digitalContents' | 'draftOrders' | 'exportFile' | 'exportFiles' | 'giftCard' | 'giftCardCurrencies' | 'giftCardSettings' | 'giftCardTags' | 'giftCards' | 'homepageEvents' | 'me' | 'menu' | 'menuItem' | 'menuItems' | 'menus' | 'order' | 'orderByToken' | 'orderSettings' | 'orders' | 'ordersTotal' | 'page' | 'pageType' | 'pageTypes' | 'pages' | 'payment' | 'payments' | 'permissionGroup' | 'permissionGroups' | 'plugin' | 'plugins' | 'product' | 'productType' | 'productTypes' | 'productVariant' | 'productVariants' | 'products' | 'promotion' | 'promotions' | 'refundSettings' | 'reportProductSales' | 'sale' | 'sales' | 'shippingZone' | 'shippingZones' | 'shop' | 'staffUsers' | 'stock' | 'stocks' | 'taxClass' | 'taxClasses' | 'taxConfiguration' | 'taxConfigurations' | 'taxCountryConfiguration' | 'taxCountryConfigurations' | 'taxTypes' | 'transaction' | 'translation' | 'translations' | 'user' | 'voucher' | 'vouchers' | 'warehouse' | 'warehouses' | 'webhook' | 'webhookEvents' | 'webhookSamplePayload' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('_entities' | '_service' | 'address' | 'addressValidationRules' | 'app' | 'appExtension' | 'appExtensions' | 'apps' | 'appsInstallations' | 'attribute' | 'attributes' | 'categories' | 'category' | 'channel' | 'channels' | 'checkout' | 'checkoutLines' | 'checkouts' | 'collection' | 'collections' | 'customers' | 'digitalContent' | 'digitalContents' | 'draftOrders' | 'exportFile' | 'exportFiles' | 'giftCard' | 'giftCardCurrencies' | 'giftCardSettings' | 'giftCardTags' | 'giftCards' | 'homepageEvents' | 'me' | 'menu' | 'menuItem' | 'menuItems' | 'menus' | 'order' | 'orderByToken' | 'orderSettings' | 'orders' | 'ordersTotal' | 'page' | 'pageType' | 'pageTypes' | 'pages' | 'payment' | 'payments' | 'permissionGroup' | 'permissionGroups' | 'plugin' | 'plugins' | 'product' | 'productType' | 'productTypes' | 'productVariant' | 'productVariants' | 'products' | 'promotion' | 'promotions' | 'refundSettings' | 'reportProductSales' | 'sale' | 'sales' | 'shippingZone' | 'shippingZones' | 'shop' | 'staffUsers' | 'stock' | 'stocks' | 'taxClass' | 'taxClasses' | 'taxConfiguration' | 'taxConfigurations' | 'taxCountryConfiguration' | 'taxCountryConfigurations' | 'taxTypes' | 'transaction' | 'transactions' | 'translation' | 'translations' | 'user' | 'voucher' | 'vouchers' | 'warehouse' | 'warehouses' | 'webhook' | 'webhookEvents' | 'webhookSamplePayload' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	_entities?: FieldPolicy<any> | FieldReadFunction<any>,
 	_service?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5478,6 +5482,7 @@ export type QueryFieldPolicy = {
 	taxCountryConfigurations?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
+	transactions?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
 	translations?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6507,6 +6512,17 @@ export type TransactionChargeRequestedFieldPolicy = {
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type TransactionCountableConnectionKeySpecifier = ('edges' | 'pageInfo' | 'totalCount' | TransactionCountableConnectionKeySpecifier)[];
+export type TransactionCountableConnectionFieldPolicy = {
+	edges?: FieldPolicy<any> | FieldReadFunction<any>,
+	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
+	totalCount?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TransactionCountableEdgeKeySpecifier = ('cursor' | 'node' | TransactionCountableEdgeKeySpecifier)[];
+export type TransactionCountableEdgeFieldPolicy = {
+	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
+	node?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type TransactionCreateKeySpecifier = ('errors' | 'transaction' | TransactionCreateKeySpecifier)[];
 export type TransactionCreateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -7460,6 +7476,10 @@ export type StrictTypedTypePolicies = {
 	AppProblemDismissError?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppProblemDismissErrorKeySpecifier | (() => undefined | AppProblemDismissErrorKeySpecifier),
 		fields?: AppProblemDismissErrorFieldPolicy,
+	},
+	AppProblemDismissed?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppProblemDismissedKeySpecifier | (() => undefined | AppProblemDismissedKeySpecifier),
+		fields?: AppProblemDismissedFieldPolicy,
 	},
 	AppReenableSyncWebhooks?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppReenableSyncWebhooksKeySpecifier | (() => undefined | AppReenableSyncWebhooksKeySpecifier),
@@ -10380,6 +10400,14 @@ export type StrictTypedTypePolicies = {
 	TransactionChargeRequested?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TransactionChargeRequestedKeySpecifier | (() => undefined | TransactionChargeRequestedKeySpecifier),
 		fields?: TransactionChargeRequestedFieldPolicy,
+	},
+	TransactionCountableConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | TransactionCountableConnectionKeySpecifier | (() => undefined | TransactionCountableConnectionKeySpecifier),
+		fields?: TransactionCountableConnectionFieldPolicy,
+	},
+	TransactionCountableEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | TransactionCountableEdgeKeySpecifier | (() => undefined | TransactionCountableEdgeKeySpecifier),
+		fields?: TransactionCountableEdgeFieldPolicy,
 	},
 	TransactionCreate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TransactionCreateKeySpecifier | (() => undefined | TransactionCreateKeySpecifier),

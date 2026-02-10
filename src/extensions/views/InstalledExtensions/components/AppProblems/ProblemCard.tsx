@@ -100,11 +100,15 @@ const getDismissedByText = (problem: AppProblem): string | null => {
     return null;
   }
 
-  if (problem.dismissedByUserEmail) {
-    return `Dismissed by ${problem.dismissedByUserEmail}`;
+  if (problem.dismissed.by === "USER" && problem.dismissed.userEmail) {
+    return `Dismissed by ${problem.dismissed.userEmail}`;
   }
 
-  return "Dismissed by app";
+  if (problem.dismissed.by === "APP") {
+    return "Dismissed by app";
+  }
+
+  return "Dismissed";
 };
 
 const DismissedLabel = ({ problem }: { problem: AppProblem }) => {
