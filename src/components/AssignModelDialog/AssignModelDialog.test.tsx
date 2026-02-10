@@ -107,7 +107,7 @@ describe("AssignModelDialog", () => {
       await user.click(checkboxes[0]);
       await user.click(checkboxes[2]);
 
-      const submitButton = screen.getByTestId("submit");
+      const submitButton = screen.getByTestId("assign-and-save-button");
 
       await user.click(submitButton);
 
@@ -154,7 +154,7 @@ describe("AssignModelDialog", () => {
 
       await user.click(radios[1]);
 
-      const submitButton = screen.getByTestId("submit");
+      const submitButton = screen.getByTestId("assign-and-save-button");
 
       await user.click(submitButton);
 
@@ -176,7 +176,7 @@ describe("AssignModelDialog", () => {
       await user.click(radios[0]);
       await user.click(radios[0]);
 
-      const submitButton = screen.getByTestId("submit");
+      const submitButton = screen.getByTestId("assign-and-save-button");
 
       await user.click(submitButton);
 
