@@ -157,6 +157,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.13",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-eslint/eslint-plugin": "^4.4.0",
+    "@mizdra/graphql-codegen-typescript-fabbrica": "^0.6.1",
     "@playwright/test": "1.56.1",
     "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
