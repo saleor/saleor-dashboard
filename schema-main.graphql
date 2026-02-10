@@ -316,7 +316,7 @@ type Query {
   digitalContent(
     """ID of the digital content."""
     id: ID!
-  ): DigitalContent @doc(category: "Products")
+  ): DigitalContent @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   List of digital content.
@@ -339,7 +339,7 @@ type Query {
     Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
     """
     last: Int
-  ): DigitalContentCountableConnection @doc(category: "Products")
+  ): DigitalContentCountableConnection @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """List of the shop's categories."""
   categories(
@@ -661,7 +661,7 @@ type Query {
   """
   Look up a transaction by ID.
   
-  Requires one of the following permissions: HANDLE_PAYMENTS.
+  Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
   """
   transaction(
     """
@@ -674,6 +674,34 @@ type Query {
     """
     token: UUID
   ): TransactionItem @doc(category: "Payments")
+
+  """
+  List of transactions. For apps with `MANAGE_ORDERS` permission, returns all transactions. For apps with just `HANDLE_PAYMENTS` permission, returns only transactions created by that app. For staff users, returns transactions from orders and checkouts in channels they have access to.
+  
+  Added in Saleor 3.22.
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+  """
+  transactions(
+    """Where filtering options for transactions."""
+    where: TransactionWhereInput
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): TransactionCountableConnection @doc(category: "Payments")
 
   """Look up a page by ID or slug."""
   page(
@@ -2877,7 +2905,10 @@ type App implements Node & ObjectWithMetadata @doc(category: "Apps") {
   
   Added in Saleor 3.22.
   """
-  problems: [AppProblem!]!
+  problems(
+    """Limit number of returned problems. Must be between 1 and 100."""
+    limit: PositiveInt
+  ): [AppProblem!]!
 
   """App's brand data."""
   brand: AppBrand
@@ -3075,27 +3106,36 @@ type AppProblem implements Node @doc(category: "Apps") {
   """Whether the problem has reached critical threshold."""
   isCritical: Boolean!
 
-  """Whether the problem has been dismissed."""
-  dismissed: Boolean!
+  """Dismissal information. Null if the problem has not been dismissed."""
+  dismissed: AppProblemDismissed
+  message: String!
+  key: String!
+}
+
+"""Dismissal information for an app problem."""
+type AppProblemDismissed {
+  """Whether the problem was dismissed by an App or a User."""
+  by: AppProblemDismissedByEnum!
 
   """
-  The entity (App or User) that dismissed this problem. If user does not exist anymore, it can be null.
+  The user who dismissed this problem. Null if dismissed by an app or the user was deleted.
   
-  When dismissed by a User, requires MANAGE_STAFF permission. When dismissed by an App, any authenticated requestor can access.
+  Requires MANAGE_STAFF permission. Not accessible for apps.
   """
-  dismissedBy: UserOrApp
+  user: User
 
   """
   Email of the user who dismissed this problem. Preserved even if the user is deleted.
   
   Requires one of the following permissions: MANAGE_STAFF, or being an authenticated staff user.
   """
-  dismissedByUserEmail: String
-  message: String!
-  key: String!
+  userEmail: String
 }
 
-union UserOrApp = User | App
+enum AppProblemDismissedByEnum @doc(category: "Apps") {
+  APP
+  USER
+}
 
 """Represents user data."""
 type User implements Node & ObjectWithMetadata @doc(category: "Users") {
@@ -11331,6 +11371,8 @@ enum TransactionEventTypeEnum @doc(category: "Payments") {
   INFO
 }
 
+union UserOrApp = User | App
+
 """
 Represents a payment method used for a transaction.
 
@@ -13152,6 +13194,39 @@ input PaymentFilterInput @doc(category: "Payments") {
   checkouts: [ID!]
 }
 
+type TransactionCountableConnection @doc(category: "Payments") {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+  edges: [TransactionCountableEdge!]!
+
+  """A total count of items in the collection."""
+  totalCount: Int
+}
+
+type TransactionCountableEdge @doc(category: "Payments") {
+  """The item at the end of the edge."""
+  node: TransactionItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input TransactionWhereInput @doc(category: "Payments") {
+  ids: [ID!]
+
+  """Filter by PSP reference."""
+  pspReference: StringFilterInput
+
+  """Filter by app identifier."""
+  appIdentifier: StringFilterInput
+
+  """List of conditions that must be met."""
+  AND: [TransactionWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [TransactionWhereInput!]
+}
+
 type PageCountableConnection @doc(category: "Pages") {
   """Pagination data for this connection."""
   pageInfo: PageInfo!
@@ -13593,6 +13668,13 @@ input LinesFilterInput @doc(category: "Orders") {
 input TransactionFilterInput @doc(category: "Orders") {
   """Filter by payment method details used to pay for the order."""
   paymentMethodDetails: PaymentMethodDetailsFilterInput
+
+  """
+  Filter by PSP reference of transactions.
+  
+  Added in Saleor 3.22.
+  """
+  pspReference: StringFilterInput
 
   """Filter by metadata fields of transactions."""
   metadata: MetadataFilterInput
@@ -16079,7 +16161,7 @@ type Mutation {
 
     """ID of a product variant to upload digital content."""
     variantId: ID!
-  ): DigitalContentCreate @doc(category: "Products")
+  ): DigitalContentCreate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Remove digital content assigned to given variant. 
@@ -16089,7 +16171,7 @@ type Mutation {
   digitalContentDelete(
     """ID of a product variant with digital content to remove."""
     variantId: ID!
-  ): DigitalContentDelete @doc(category: "Products")
+  ): DigitalContentDelete @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Updates digital content. 
@@ -16102,7 +16184,7 @@ type Mutation {
 
     """ID of a product variant with digital content to update."""
     variantId: ID!
-  ): DigitalContentUpdate @doc(category: "Products")
+  ): DigitalContentUpdate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Generate new URL to digital content. 
@@ -16112,7 +16194,7 @@ type Mutation {
   digitalContentUrlCreate(
     """Fields required to create a new url."""
     input: DigitalContentUrlCreateInput!
-  ): DigitalContentUrlCreate @doc(category: "Products")
+  ): DigitalContentUrlCreate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Creates a new variant for a product. 
@@ -18215,7 +18297,7 @@ type Mutation {
   exportProducts(
     """Fields required to export product data."""
     input: ExportProductsInput!
-  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Export gift cards to csv file. 
@@ -18229,14 +18311,12 @@ type Mutation {
   exportGiftCards(
     """Fields required to export gift cards data."""
     input: ExportGiftCardsInput!
-  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Export voucher codes to csv/xlsx file.
   
-  Added in Saleor 3.18.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  Added in Saleor 3.18. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -18246,7 +18326,7 @@ type Mutation {
   exportVoucherCodes(
     """Fields required to export voucher codes."""
     input: ExportVoucherCodesInput!
-  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
@@ -28025,9 +28105,7 @@ input ExportGiftCardsInput @doc(category: "Gift cards") {
 """
 Export voucher codes to csv/xlsx file.
 
-Added in Saleor 3.18.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+Added in Saleor 3.18. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -30045,8 +30123,8 @@ Added in Saleor 3.22.
 Requires one of the following permissions: AUTHENTICATED_APP.
 """
 type AppProblemCreate @doc(category: "Apps") {
-  """The app with the new problem."""
-  app: App
+  """The created or updated app problem."""
+  appProblem: AppProblem
   errors: [AppProblemCreateError!]!
 }
 
@@ -30071,7 +30149,9 @@ enum AppProblemCreateErrorCode {
 }
 
 input AppProblemCreateInput {
-  """The problem message to display. Must be between 3 and 2048 characters."""
+  """
+  The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix.
+  """
   message: String!
 
   """
@@ -30136,22 +30216,22 @@ input AppProblemDismissInput @doc(category: "Apps") {
 
 """Input for app callers to dismiss their own problems."""
 input AppProblemDismissByAppInput @doc(category: "Apps") {
-  """List of problem IDs to dismiss. Cannot be combined with keys."""
+  """List of problem IDs to dismiss. Cannot be combined with keys. Max 100."""
   ids: [ID!]
 
-  """List of problem keys to dismiss. Cannot be combined with ids."""
+  """List of problem keys to dismiss. Cannot be combined with ids. Max 100."""
   keys: [String!]
 }
 
 """Input for staff/user callers to dismiss problems by IDs."""
 input AppProblemDismissByUserWithIdsInput @doc(category: "Apps") {
-  """List of problem IDs to dismiss."""
+  """List of problem IDs to dismiss. Max 100."""
   ids: [ID!]!
 }
 
 """Input for staff/user callers to dismiss problems by keys."""
 input AppProblemDismissByUserWithKeysInput @doc(category: "Apps") {
-  """List of problem keys to dismiss."""
+  """List of problem keys to dismiss. Max 100."""
   keys: [String!]!
 
   """ID of the app whose problems to dismiss."""
