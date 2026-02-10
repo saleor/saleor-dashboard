@@ -225,12 +225,13 @@ export const createAttributesQueryVariables = (value: FilterContainer): Attribut
 };
 
 export const createCategoryQueryVariables = (
-  filterContainer: FilterContainer
+  filterContainer: FilterContainer,
 ): CategoryFilterInput => {
   const builder = new FiltersQueryBuilder<CategoryFilterInput>({
     apiType: QUERY_API_TYPES.CATEGORY,
     filterContainer,
   });
   const { filters } = builder.build();
+
   return filters;
 };

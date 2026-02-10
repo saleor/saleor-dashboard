@@ -1,16 +1,16 @@
 import { CategoryFilterInput } from "@dashboard/graphql";
 
+import { FilterAPIProvider } from "../../ConditionalFilter/API/FilterAPIProvider";
 import { InitialCategoryStateResponse } from "../../ConditionalFilter/API/initialState/category/InitialCategoryState";
 import { useInitialCategoryState } from "../../ConditionalFilter/API/initialState/category/useInitialCategoryState";
-import { FilterAPIProvider } from "../../ConditionalFilter/API/FilterAPIProvider";
 import { STATIC_CATEGORY_OPTIONS } from "../../ConditionalFilter/constants";
 import {
   createCategoryQueryVariables,
   QUERY_API_TYPES,
 } from "../../ConditionalFilter/queryVariables";
 import {
-  emptyCategoryFetchingParams,
   CategoryFetchingParams,
+  emptyCategoryFetchingParams,
 } from "../../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import { ModalFilterConfig } from "../types";
 

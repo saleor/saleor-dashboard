@@ -1,7 +1,7 @@
-import { InitialCategoryStateResponse } from "./InitialCategoryState";
 import { useState } from "react";
 
 import { CategoryFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { InitialCategoryStateResponse } from "./InitialCategoryState";
 
 export interface InitialCategoryAPIState {
   data: InitialCategoryStateResponse;

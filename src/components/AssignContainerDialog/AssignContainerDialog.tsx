@@ -17,6 +17,7 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
   emptyMessage?: string;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
+  onFilterChange?: (...args: any[]) => void;
 }
 
 const AssignContainerDialog = (props: AssignContainerDialogProps) => {
