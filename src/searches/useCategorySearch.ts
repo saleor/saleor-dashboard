@@ -26,8 +26,13 @@ export const searchCategories = gql`
 `;
 
 export const searchCategoriesWithTotalProducts = gql`
-  query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
-    search: categories(after: $after, first: $first, filter: { search: $query }) {
+  query SearchCategoriesWithTotalProducts(
+    $after: String
+    $first: Int!
+    $query: String!
+    $filter: CategoryFilterInput
+  ) {
+    search: categories(after: $after, first: $first, filter: $filter) {
       edges {
         node {
           ...CategoryWithTotalProducts
