@@ -16,6 +16,7 @@ import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
+  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -101,6 +102,7 @@ interface ProductCreatePageProps {
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
+  onPageFilterChange: (filterVariables: PageWhereInput, query: string) => void;
 }
 
 const ProductCreatePage = ({
@@ -152,6 +154,7 @@ const ProductCreatePage = ({
   fetchMoreWarehouses,
   searchWarehousesResult,
   searchWarehouses,
+  onPageFilterChange,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -401,6 +404,7 @@ const ProductCreatePage = ({
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }
+                onPageFilterChange={onPageFilterChange}
               />
             )}
           </DetailPageLayout>

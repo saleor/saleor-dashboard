@@ -23,6 +23,7 @@ import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
+  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -118,6 +119,7 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
+  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
   onVariantPreorderDeactivate: (id: string) => void;
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
@@ -158,6 +160,7 @@ export const ProductVariantPage = ({
   onWarehouseConfigure,
   assignReferencesAttributeId,
   onAssignReferencesClick,
+  onPageFilterChange,
   fetchReferencePages,
   fetchReferenceProducts,
   fetchReferenceCategories,
@@ -484,6 +487,7 @@ export const ProductVariantPage = ({
                     onSubmit={attributeValues =>
                       handleAssignReferenceAttribute(attributeValues, data, handlers)
                     }
+                    onPageFilterChange={onPageFilterChange}
                   />
                 )}
                 {variant && (

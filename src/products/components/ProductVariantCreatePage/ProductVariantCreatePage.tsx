@@ -20,6 +20,7 @@ import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
+  PageWhereInput,
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchAttributeValuesQuery,
@@ -117,6 +118,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
+  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
 }
 
 export const ProductVariantCreatePage = ({
@@ -153,6 +155,7 @@ export const ProductVariantCreatePage = ({
   fetchMoreWarehouses,
   searchWarehousesResult,
   searchWarehouses,
+  onPageFilterChange,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -390,6 +393,7 @@ export const ProductVariantCreatePage = ({
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
+                  onPageFilterChange={onPageFilterChange}
                 />
               )}
               {product && (

@@ -9,6 +9,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ErrorPolicyEnum,
+  PageWhereInput,
   ProductMediaCreateMutationVariables,
   ProductVariantBulkCreateInput,
   ProductWhereInput,
@@ -348,6 +349,17 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     [searchProductsOpts.refetch],
   );
 
+  const handlePageFilterChange = useCallback(
+    (where: PageWhereInput, query: string) => {
+      searchPagesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where,
+        query,
+      });
+    },
+    [searchPagesOpts.refetch],
+  );
+
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
@@ -424,6 +436,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onProductFilterChange={handleProductFilterChange}
+        onPageFilterChange={handlePageFilterChange}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

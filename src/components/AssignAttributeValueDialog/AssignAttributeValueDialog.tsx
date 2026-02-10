@@ -1,6 +1,8 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  PageWhereInput,
+  ProductWhereInput,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
@@ -10,7 +12,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
 import AssignCollectionDialog from "../AssignCollectionDialog";
-import AssignContainerDialog from "../AssignContainerDialog";
+import AssignModelDialog from "../AssignModelDialog";
 import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
@@ -50,7 +52,7 @@ const pagesMessages = defineMessages({
   },
 });
 
-type AssignAttributeValueDialogProps = AssignProductDialogProps & {
+type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {
   entityType: AttributeEntityTypeEnum;
   attribute: AttributeInput;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
@@ -59,6 +61,13 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   initialConstraints?: InitialConstraints;
   // onFetch is required for non-product dialogs (containers, variants, collections, categories)
   onFetch: (value: string) => void;
+  onProductFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
+  // onPageFilterChange is used for page filtering in AssignModelDialog
+  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
@@ -73,17 +82,19 @@ const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
   return { selectedId, selectionMode: "single" as const };
 };
 
-const AssignAttributeValueDialog = ({
-  entityType,
-  pages,
-  products,
-  collections,
-  categories,
-  attribute,
-  labels,
-  initialConstraints,
-  ...rest
-}: AssignAttributeValueDialogProps) => {
+const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
+  const {
+    entityType,
+    pages,
+    products,
+    collections,
+    categories,
+    attribute,
+    labels,
+    initialConstraints,
+    onPageFilterChange,
+    ...rest
+  } = props;
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
@@ -93,14 +104,9 @@ const AssignAttributeValueDialog = ({
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
       return (
-        <AssignContainerDialog
-          containers={
-            filteredPages?.map(page => ({
-              id: page.id,
-              name: page.title,
-            })) ?? []
-          }
-          emptyMessage={intl.formatMessage(pagesMessages.noPagesFound)}
+        <AssignModelDialog
+          pages={filteredPages ?? []}
+          onFilterChange={onPageFilterChange as any}
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),

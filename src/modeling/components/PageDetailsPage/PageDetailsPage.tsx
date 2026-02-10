@@ -21,6 +21,7 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
+  PageWhereInput,
   PermissionEnum,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
@@ -79,6 +80,7 @@ interface PageDetailsPageProps {
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;
+  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
 }
 
 const PageDetailsPage = ({
@@ -112,6 +114,7 @@ const PageDetailsPage = ({
   onCloseDialog,
   onSelectPageType,
   onAttributeSelectBlur,
+  onPageFilterChange,
 }: PageDetailsPageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -292,6 +295,7 @@ const PageDetailsPage = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
+                onPageFilterChange={onPageFilterChange}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }

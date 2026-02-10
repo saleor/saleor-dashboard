@@ -24,6 +24,7 @@ import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getEx
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
+  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductDetailsQuery,
@@ -136,6 +137,7 @@ interface ProductUpdatePageProps {
     channel: string | undefined,
     query: string,
   ) => void;
+  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
   onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints;
 }
@@ -193,6 +195,7 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onProductFilterChange,
+  onPageFilterChange,
   onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
@@ -606,7 +609,8 @@ const ProductUpdatePage = ({
                   onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                   loading={handlers.fetchMoreReferences?.loading}
                   onClose={onCloseDialog}
-                  onFilterChange={onProductFilterChange}
+                  onProductFilterChange={onProductFilterChange}
+                  onPageFilterChange={onPageFilterChange}
                   initialConstraints={initialConstraints}
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(
