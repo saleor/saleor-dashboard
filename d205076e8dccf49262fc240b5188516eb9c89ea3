@@ -1,0 +1,67 @@
+src/orders/components/OrderTransactionRefundPage/components/OrderTransactionReasonModal/OrderTransactionReasonModal.tsx
+  c548212ba4386d85 2,4-6,13-14,16,22-23,27,29,33-34,36-57,68-80,85-86,94
+src/orders/fixtures/OrderFixture.ts
+  c548212ba4386d85 403-404,407-408
+src/orders/components/OrderGrantRefundPage/OrderGrantRefundPage.tsx
+  c548212ba4386d85 1,6,9,15-16,20-21,23-24,56,66,111-128,130-134,249-292
+src/fragments/orders.ts
+  c548212ba4386d85 291-295,304-307,776-780,823-826
+src/orders/utils/data.test.ts
+  c548212ba4386d85 978-979,1100-1101,1222-1223,1344-1345,1466-1467,2067-2068,2189-2190,2311-2312,2555-2556,2677-2678,2799-2800
+src/orders/components/OrderTransactionRefundPage/formDefaults.ts
+  c548212ba4386d85 55,62,73
+src/orders/components/OrderGrantRefundPage/form.ts
+  c548212ba4386d85 10,19
+src/orders/views/OrderReturn/utils.tsx
+  c548212ba4386d85 62-63,73-74
+src/orders/views/OrderReturn/OrderReturn.tsx
+  c548212ba4386d85 5,36-38,113
+src/orders/components/OrderTransactionRefundPage/utils.test.ts
+  c548212ba4386d85 95,117,140,156,178,194,332,337
+src/orders/components/OrderReturnPage/form.tsx
+  c548212ba4386d85 43-44,84-85
+src/orders/components/OrderTransactionRefundPage/utils.ts
+  c548212ba4386d85 105,111,118-119
+src/orders/views/OrderEditGrantRefund/OrderEditGrantRefund.tsx
+  c548212ba4386d85 7,35-37,54,80,125
+src/orders/components/OrderTransactionRefundPage/components/OrderTransactionRefundTable/OrderTransactionRefundTableLine.tsx
+  c548212ba4386d85 52,63
+src/orders/views/OrderTransactionRefundCreate/handlers.ts
+  c548212ba4386d85 90
+src/orders/mutations.ts
+  c548212ba4386d85 554,564
+src/orders/fixtures.ts
+  c548212ba4386d85 1465-1466,1469-1470,1602-1603,1606-1607,3540-3541,3573-3574
+src/orders/views/OrderReturn/useRefundWithinReturn.ts
+  c548212ba4386d85 41-42
+src/orders/components/OrderFulfillmentCard/OrderFulfillmentCard.tsx
+  c548212ba4386d85 145-164
+src/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage.tsx
+  c548212ba4386d85 78,247,250,375-376,378-379
+src/orders/views/OrderGrantRefund/OrderGrantRefund.tsx
+  c548212ba4386d85 5,32-34,51,68,93
+src/orders/components/OrderGrantRefundPage/utils.ts
+  c548212ba4386d85 75,92,96-101
+src/orders/components/OrderReturnPage/OrderReturnPage.tsx
+  c548212ba4386d85 2,4,8-9,14,16,20-21,24-26,51,63,67-86,88-91,160-161,179-185,187-235
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.42",
+  "base_commit_sha": "d205076e8dccf49262fc240b5188516eb9c89ea3",
+  "prompts": {
+    "c548212ba4386d85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "19662c0b-6119-4868-9589-5f2efc12495e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 394,
+      "total_deletions": 39,
+      "accepted_lines": 368,
+      "overriden_lines": 3
+    }
+  }
+}
