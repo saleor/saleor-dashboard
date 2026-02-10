@@ -22,4 +22,8 @@ export const messages = defineMessages({
     id: "8zbcLs",
     defaultMessage: "№ of subcategories",
   },
+  collapseAllSubcategories: {
+    id: "v0fBOU",
+    defaultMessage: "Collapse all",
+  },
 });

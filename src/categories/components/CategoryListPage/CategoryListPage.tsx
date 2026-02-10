@@ -44,6 +44,8 @@ interface CategoryTableProps
   getCategoryDepth?: (categoryId: string) => number;
   subcategoryPageSize: number;
   onSubcategoryPageSizeChange: (value: number) => void;
+  hasExpandedSubcategories: boolean;
+  onCollapseAllSubcategories: () => void;
 }
 
 export const CategoryListPage = ({
@@ -69,6 +71,8 @@ export const CategoryListPage = ({
   getCategoryDepth,
   subcategoryPageSize,
   onSubcategoryPageSizeChange,
+  hasExpandedSubcategories,
+  onCollapseAllSubcategories,
   ...listProps
 }: CategoryTableProps): JSX.Element => {
   const navigate = useNavigator();
@@ -175,6 +179,14 @@ export const CategoryListPage = ({
                 data-test-id="subcategory-page-size-input"
               />
             </Box>
+            <Button
+              variant="secondary"
+              onClick={onCollapseAllSubcategories}
+              disabled={!hasExpandedSubcategories}
+              data-test-id="collapse-all-subcategories"
+            >
+              <FormattedMessage {...messages.collapseAllSubcategories} />
+            </Button>
             {selectedCategoriesIds.length > 0 && (
               <BulkDeleteButton onClick={onCategoriesDelete}>
                 <FormattedMessage {...messages.bulkCategoryDelete} />

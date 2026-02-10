@@ -13,6 +13,7 @@ import {
 } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -39,6 +40,11 @@ import {
   CategoryListUrlFilters,
   CategoryListUrlQueryParams,
 } from "../../urls";
+import {
+  CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,
+  normalizeStoredExpandedIds,
+  serializeExpandedIds,
+} from "./expandedIdsStorage";
 import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -122,6 +128,10 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
     paginationState,
     queryString: params,
   });
+  const [storedExpandedIds, setStoredExpandedIds] = useLocalStorage<string[]>(
+    CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,
+    storedIds => normalizeStoredExpandedIds(storedIds),
+  );
   const changeFilterField = (filter: CategoryListUrlFilters): void => {
     clearRowSelection();
     navigate(
@@ -132,15 +142,15 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
       }),
     );
   };
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set(storedExpandedIds));
   const [loadingChildrenIds, setLoadingChildrenIds] = useState<Set<string>>(() => new Set());
   const [loadedChildrenIds, setLoadedChildrenIds] = useState<Set<string>>(() => new Set());
   const [subcategoryPageSize, setSubcategoryPageSize] = useState(DEFAULT_SUBCATEGORIES_PAGE_SIZE);
   const deletingCategoryIdsRef = useRef<string[]>([]);
+  const hasRestoredExpandedIdsRef = useRef(false);
 
   const invalidateCache = useCallback(() => {
     setLoadedChildrenIds(new Set());
-    setExpandedIds(new Set());
     setLoadingChildrenIds(new Set());
     clearRowSelection();
   }, [clearRowSelection]);
@@ -203,6 +213,83 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
       return next;
     });
   }, []);
+
+  useEffect(() => {
+    const serializedExpandedIds = serializeExpandedIds(expandedIds);
+
+    if (!isEqual(serializedExpandedIds, storedExpandedIds)) {
+      setStoredExpandedIds(serializedExpandedIds);
+    }
+  }, [expandedIds, setStoredExpandedIds, storedExpandedIds]);
+
+  useEffect(() => {
+    if (hasRestoredExpandedIdsRef.current) {
+      return;
+    }
+
+    hasRestoredExpandedIdsRef.current = true;
+
+    const idsToRestore = [...expandedIds];
+
+    if (idsToRestore.length === 0) {
+      return;
+    }
+
+    void Promise.allSettled(
+      idsToRestore.map(async categoryId => {
+        if (loadingChildrenIds.has(categoryId)) {
+          return;
+        }
+
+        setCategoryChildrenLoading(categoryId, true);
+
+        try {
+          const response = await client.query<
+            CategoryChildrenQuery,
+            CategoryChildrenQueryVariables
+          >({
+            query: CategoryChildrenDocument,
+            variables: {
+              id: categoryId,
+              first: subcategoryPageSize,
+              after: null,
+            },
+            fetchPolicy: "network-only",
+          });
+
+          if (!response.data?.category) {
+            setExpandedIds(prev => {
+              const next = new Set(prev);
+
+              next.delete(categoryId);
+
+              return next;
+            });
+
+            return;
+          }
+
+          setLoadedChildrenIds(prev => {
+            const next = new Set(prev);
+
+            next.add(categoryId);
+
+            return next;
+          });
+        } catch {
+          setExpandedIds(prev => {
+            const next = new Set(prev);
+
+            next.delete(categoryId);
+
+            return next;
+          });
+        } finally {
+          setCategoryChildrenLoading(categoryId, false);
+        }
+      }),
+    );
+  }, [client, expandedIds, loadingChildrenIds, setCategoryChildrenLoading, subcategoryPageSize]);
 
   const isCategoryChildrenLoading = useCallback(
     (categoryId: string) => loadingChildrenIds.has(categoryId),
@@ -347,6 +434,11 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
       excludeFromSelected,
     ],
   );
+  const handleCollapseAllSubcategories = useCallback(() => {
+    setExpandedIds(new Set());
+    setLoadingChildrenIds(new Set());
+    clearRowSelection();
+  }, [clearRowSelection]);
 
   const visibleRows = useMemo<CategoryListRow[]>(() => {
     const rows: CategoryListRow[] = [];
@@ -570,6 +662,8 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
         getCategoryDepth={getCategoryDepth}
         subcategoryPageSize={subcategoryPageSize}
         onSubcategoryPageSizeChange={handleSubcategoryPageSizeChange}
+        hasExpandedSubcategories={expandedIds.size > 0}
+        onCollapseAllSubcategories={handleCollapseAllSubcategories}
       />
 
       <ActionDialog

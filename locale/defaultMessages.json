@@ -10324,6 +10324,9 @@
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
   },
+  "v0fBOU": {
+    "string": "Collapse all"
+  },
   "v17Lly": {
     "context": "label",
     "string": "Max Delivery Time"
