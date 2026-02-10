@@ -40,7 +40,7 @@ describe("ModalFilters / entityConfigs / pageFilterConfig", () => {
         ),
       ];
       const expectedOutput = {
-        pageTypes: {
+        pageType: {
           oneOf: ["type-1", "type-2"],
         },
       };
@@ -71,7 +71,7 @@ describe("ModalFilters / entityConfigs / pageFilterConfig", () => {
         ),
       ];
       const expectedOutput = {
-        pageTypes: {
+        pageType: {
           eq: "type-1",
         },
       };
