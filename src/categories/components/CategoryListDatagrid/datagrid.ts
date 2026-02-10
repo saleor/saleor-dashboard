@@ -82,7 +82,7 @@ export const createGetCellContent =
 
         const isExpanded = isCategoryExpanded?.(rowData.id) ?? false;
 
-        return readonlyTextCell(isExpanded ? "v" : ">");
+        return readonlyTextCell(isExpanded ? "▾" : "▸");
       }
       case "name":
         const depth = getCategoryDepth?.(rowData.id) ?? 0;
