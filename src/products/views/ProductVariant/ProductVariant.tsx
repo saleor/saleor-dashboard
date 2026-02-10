@@ -16,6 +16,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   PageWhereInput,
   ProductErrorWithAttributesFragment,
   useAttributeValueDeleteMutation,
@@ -360,7 +361,9 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

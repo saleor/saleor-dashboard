@@ -6,7 +6,9 @@ import {
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -21,7 +23,6 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
-  PageWhereInput,
   PermissionEnum,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
@@ -80,7 +81,7 @@ interface PageDetailsPageProps {
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;
-  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
 }
 
 const PageDetailsPage = ({
@@ -114,7 +115,7 @@ const PageDetailsPage = ({
   onCloseDialog,
   onSelectPageType,
   onAttributeSelectBlur,
-  onPageFilterChange,
+  onFilterChange,
 }: PageDetailsPageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -295,7 +296,7 @@ const PageDetailsPage = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
-                onPageFilterChange={onPageFilterChange}
+                onFilterChange={onFilterChange}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }

@@ -7,7 +7,9 @@ import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -24,7 +26,6 @@ import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getEx
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
-  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductDetailsQuery,
@@ -33,7 +34,6 @@ import {
   ProductErrorWithAttributesFragment,
   ProductFragment,
   ProductVariantBulkCreateInput,
-  ProductWhereInput,
   RefreshLimitsQuery,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
@@ -132,12 +132,7 @@ interface ProductUpdatePageProps {
   onImageUpload: (file: File) => any;
   onMediaUrlUpload: (mediaUrl: string) => any;
   onSeoClick?: () => any;
-  onProductFilterChange?: (
-    filterVariables: ProductWhereInput,
-    channel: string | undefined,
-    query: string,
-  ) => void;
-  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints;
 }
@@ -194,8 +189,7 @@ const ProductUpdatePage = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
-  onProductFilterChange,
-  onPageFilterChange,
+  onFilterChange,
   onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
@@ -609,8 +603,7 @@ const ProductUpdatePage = ({
                   onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                   loading={handlers.fetchMoreReferences?.loading}
                   onClose={onCloseDialog}
-                  onProductFilterChange={onProductFilterChange}
-                  onPageFilterChange={onPageFilterChange}
+                  onFilterChange={onFilterChange}
                   initialConstraints={initialConstraints}
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(

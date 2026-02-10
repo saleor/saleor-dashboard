@@ -8,6 +8,7 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   PageErrorWithAttributesFragment,
   PageWhereInput,
   useFileUploadMutation,
@@ -248,7 +249,9 @@ const PageCreate = ({ params }: PageCreateProps) => {
         selectedPageType={selectedPageType?.pageType}
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
     </>
   );

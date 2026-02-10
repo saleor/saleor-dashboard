@@ -5,7 +5,9 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import {
   AttributeInput,
   Attributes,
@@ -20,7 +22,6 @@ import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
-  PageWhereInput,
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchAttributeValuesQuery,
@@ -118,7 +119,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
-  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
 }
 
 export const ProductVariantCreatePage = ({
@@ -155,7 +156,7 @@ export const ProductVariantCreatePage = ({
   fetchMoreWarehouses,
   searchWarehousesResult,
   searchWarehouses,
-  onPageFilterChange,
+  onFilterChange,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -393,7 +394,7 @@ export const ProductVariantCreatePage = ({
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
-                  onPageFilterChange={onPageFilterChange}
+                  onFilterChange={onFilterChange}
                 />
               )}
               {product && (

@@ -9,6 +9,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   PageWhereInput,
   useFileUploadMutation,
   useProductVariantChannelListingUpdateMutation,
@@ -318,7 +319,9 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
         onAttributeSelectBlur={searchAttributeReset}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
     </>
   );

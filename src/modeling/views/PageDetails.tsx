@@ -14,6 +14,7 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   AttributeErrorFragment,
   AttributeValueInput,
   PageDetailsFragment,
@@ -261,7 +262,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
       <ActionDialog
         open={params.action === "remove"}

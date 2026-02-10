@@ -7,7 +7,9 @@ import {
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -16,7 +18,6 @@ import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
-  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -102,7 +103,7 @@ interface ProductCreatePageProps {
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
-  onPageFilterChange: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange: AssignAttributeValueDialogFilterChangeMap;
 }
 
 const ProductCreatePage = ({
@@ -154,7 +155,7 @@ const ProductCreatePage = ({
   fetchMoreWarehouses,
   searchWarehousesResult,
   searchWarehouses,
-  onPageFilterChange,
+  onFilterChange,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -404,7 +405,7 @@ const ProductCreatePage = ({
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }
-                onPageFilterChange={onPageFilterChange}
+                onFilterChange={onFilterChange}
               />
             )}
           </DetailPageLayout>

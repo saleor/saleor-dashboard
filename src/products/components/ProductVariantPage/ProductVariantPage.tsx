@@ -8,7 +8,9 @@ import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelPriceData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import {
   AttributeInput,
   Attributes,
@@ -23,7 +25,6 @@ import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
-  PageWhereInput,
   PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -119,7 +120,7 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
-  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onVariantPreorderDeactivate: (id: string) => void;
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
@@ -160,7 +161,7 @@ export const ProductVariantPage = ({
   onWarehouseConfigure,
   assignReferencesAttributeId,
   onAssignReferencesClick,
-  onPageFilterChange,
+  onFilterChange,
   fetchReferencePages,
   fetchReferenceProducts,
   fetchReferenceCategories,
@@ -487,7 +488,7 @@ export const ProductVariantPage = ({
                     onSubmit={attributeValues =>
                       handleAssignReferenceAttribute(attributeValues, data, handlers)
                     }
-                    onPageFilterChange={onPageFilterChange}
+                    onFilterChange={onFilterChange}
                   />
                 )}
                 {variant && (

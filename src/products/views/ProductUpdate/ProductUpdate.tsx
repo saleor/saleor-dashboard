@@ -8,6 +8,7 @@ import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   ErrorPolicyEnum,
   PageWhereInput,
   ProductMediaCreateMutationVariables,
@@ -435,8 +436,11 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onProductFilterChange={handleProductFilterChange}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

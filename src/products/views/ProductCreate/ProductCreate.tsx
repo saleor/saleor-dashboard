@@ -6,6 +6,7 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   PageWhereInput,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -366,7 +367,9 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
-        onPageFilterChange={handlePageFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
     </>
   );

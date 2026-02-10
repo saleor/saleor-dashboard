@@ -24,6 +24,20 @@ import {
   filterProductsByAttributeValues,
 } from "./utils";
 
+export type ProductFilterChangeHandler = (
+  filterVariables: ProductWhereInput,
+  channel: string | undefined,
+  query: string,
+) => void;
+
+export type PageFilterChangeHandler = (filterVariables: PageWhereInput, query: string) => void;
+
+export type AssignAttributeValueDialogFilterChangeMap = {
+  [AttributeEntityTypeEnum.PRODUCT]?: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]?: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
+};
+
 const pagesMessages = defineMessages({
   confirmBtn: {
     id: "ch96Wv",
@@ -61,13 +75,8 @@ type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterC
   initialConstraints?: InitialConstraints;
   // onFetch is required for non-product dialogs (containers, variants, collections, categories)
   onFetch: (value: string) => void;
-  onProductFilterChange?: (
-    filterVariables: ProductWhereInput,
-    channel: string | undefined,
-    query: string,
-  ) => void;
-  // onPageFilterChange is used for page filtering in AssignModelDialog
-  onPageFilterChange?: (filterVariables: PageWhereInput, query: string) => void;
+  // Generic filter callback map by entity type.
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
@@ -92,7 +101,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     attribute,
     labels,
     initialConstraints,
-    onPageFilterChange,
+    onFilterChange,
     ...rest
   } = props;
   const intl = useIntl();
@@ -100,13 +109,18 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
   const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
+  const productFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
+  const variantFilterChange =
+    onFilterChange?.[AttributeEntityTypeEnum.PRODUCT_VARIANT] ??
+    onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
+  const pageFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PAGE];
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
       return (
         <AssignModelDialog
           pages={filteredPages ?? []}
-          onFilterChange={onPageFilterChange as any}
+          onFilterChange={pageFilterChange}
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),
@@ -123,6 +137,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
         <AssignProductDialog
           products={filteredProducts ?? []}
           initialConstraints={initialConstraints}
+          onFilterChange={productFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -132,6 +147,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
         <AssignVariantDialog
           products={filteredProducts}
           initialConstraints={initialConstraints}
+          onFilterChange={variantFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
