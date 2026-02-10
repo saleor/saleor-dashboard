@@ -40,6 +40,8 @@ export interface OrderReturnData {
   autoGrantRefund: boolean;
   autoSendRefund: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
+  reason: string;
+  reasonReference: string;
 }
 
 interface OrderReturnHandlers {
@@ -79,6 +81,8 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   autoGrantRefund: false,
   autoSendRefund: false,
   transactionId: "",
+  reason: "",
+  reasonReference: "",
 });
 
 function useOrderReturnForm(

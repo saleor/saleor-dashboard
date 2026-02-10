@@ -142,6 +142,26 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
+      {(fulfillment.reason || fulfillment.reasonReference) && (
+        <Box paddingX={6} paddingY={4} backgroundColor="default2">
+          {fulfillment.reasonReference && (
+            <Box marginBottom={fulfillment.reason ? 1 : 0}>
+              <Text size={2} color="default2">
+                Reason type:
+              </Text>{" "}
+              <Text size={2}>{fulfillment.reasonReference.title}</Text>
+            </Box>
+          )}
+          {fulfillment.reason && (
+            <Box>
+              <Text size={2} color="default2">
+                Reason:
+              </Text>{" "}
+              <Text size={2}>{fulfillment.reason}</Text>
+            </Box>
+          )}
+        </Box>
+      )}
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}

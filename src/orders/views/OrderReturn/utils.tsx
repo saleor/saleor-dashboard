@@ -59,6 +59,8 @@ class ReturnFormDataParser {
         includeShippingCosts: refundShipmentCosts,
         orderLines,
         refund: this.getShouldRefund(orderLines, fulfillmentLines),
+        reason: this.formData.reason || undefined,
+        reasonReference: this.formData.reasonReference || undefined,
       };
     }
 
@@ -68,6 +70,8 @@ class ReturnFormDataParser {
       amountToRefund: 0,
       includeShippingCosts: refundShipmentCosts, // tood: remove once removed in API
       refund: false, // todo: remove once removed in API
+      reason: this.formData.reason || undefined,
+      reasonReference: this.formData.reasonReference || undefined,
     };
   };
 

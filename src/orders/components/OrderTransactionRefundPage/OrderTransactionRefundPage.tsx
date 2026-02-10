@@ -75,6 +75,7 @@ interface OrderTransactionRefundPageProps {
 export interface LineToRefund {
   quantity: number | string;
   reason: string;
+  reasonReference: string;
 }
 
 export interface OrderTransactionRefundPageFormData {
@@ -243,9 +244,10 @@ const OrderTransactionRefundPage = ({
     });
   };
 
-  const onReasonChange = (reason: string, index: number) => {
+  const onReasonChange = (reason: string, reasonReference: string, index: number) => {
     handleReasonChange({
       reason,
+      reasonReference,
       index,
       linesToRefund,
       refundFieldsUpdate,
@@ -370,9 +372,11 @@ const OrderTransactionRefundPage = ({
         <OrderTransactionReasonModal
           open={editedRefundLineIndex !== null}
           reason={linesToRefund[editedRefundLineIndex!]?.reason}
+          reasonReference={linesToRefund[editedRefundLineIndex!]?.reasonReference ?? null}
+          modelForRefundReasonRefId={modelForRefundReasonRefId}
           onClose={() => setEditedRefundLineIndex(null)}
-          onConfirm={(reason: string) => {
-            onReasonChange(reason, editedRefundLineIndex!);
+          onConfirm={(reason: string, reasonReference: string) => {
+            onReasonChange(reason, reasonReference, editedRefundLineIndex!);
           }}
         />
       </Box>

@@ -4,6 +4,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundEditQuery,
   useOrderGrantRefundEditMutation,
+  useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -31,6 +32,9 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
       id: orderId,
     },
   });
+  const { data: refundSettings } = useRefundSettingsQuery();
+  const modelForRefundReasonRefId = refundSettings?.refundSettings.reasonReferenceType?.id ?? null;
+
   const [grantRefund, grantRefundOptions] = useOrderGrantRefundEditMutation({
     onCompleted: submitData => {
       if (submitData.orderGrantRefundUpdate.errors.length === 0) {
@@ -47,6 +51,7 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
   const handleSubmit = async ({
     amount,
     reason,
+    reasonReference,
     lines,
     grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
@@ -72,6 +77,7 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
           refundId: grantRefundId,
           amount,
           reason,
+          reasonReferenceId: reasonReference?.length ? reasonReference : undefined,
           grantRefundForShipping,
           addLines: squashLines(
             lines.map(line => ({
@@ -116,6 +122,7 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
         onSubmit={handleSubmit}
         isEdit
         initialData={grantedRefund}
+        modelForRefundReasonRefId={modelForRefundReasonRefId}
       />
     </>
   );

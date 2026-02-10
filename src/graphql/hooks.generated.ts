@@ -1984,6 +1984,11 @@ export const OrderGrantedRefundFragmentDoc = gql`
     orderLine {
       id
     }
+    reason
+    reasonReference {
+      id
+      title
+    }
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
@@ -2078,6 +2083,11 @@ export const FulfillmentFragmentDoc = gql`
     orderLine {
       ...OrderLine
     }
+    reason
+    reasonReference {
+      id
+      title
+    }
   }
   fulfillmentOrder
   status
@@ -2085,6 +2095,11 @@ export const FulfillmentFragmentDoc = gql`
   warehouse {
     id
     name
+  }
+  reason
+  reasonReference {
+    id
+    title
   }
 }
     ${MetadataFragmentDoc}
@@ -2422,6 +2437,10 @@ export const OrderDetailsGrantedRefundFragmentDoc = gql`
     id
     quantity
     reason
+    reasonReference {
+      id
+      title
+    }
     orderLine {
       ...OrderLine
     }
@@ -12904,10 +12923,10 @@ export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGr
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
 export const OrderGrantRefundAddWithOrderDocument = gql`
-    mutation OrderGrantRefundAddWithOrder($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean, $transactionId: ID!) {
+    mutation OrderGrantRefundAddWithOrder($orderId: ID!, $amount: Decimal, $reason: String, $reasonReferenceId: ID, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean, $transactionId: ID!) {
   orderGrantRefundCreate(
     id: $orderId
-    input: {amount: $amount, reason: $reason, lines: $lines, grantRefundForShipping: $grantRefundForShipping, transactionId: $transactionId}
+    input: {amount: $amount, reason: $reason, reasonReference: $reasonReferenceId, lines: $lines, grantRefundForShipping: $grantRefundForShipping, transactionId: $transactionId}
   ) {
     errors {
       ...OrderGrantRefundCreateError
@@ -12940,6 +12959,7 @@ export type OrderGrantRefundAddWithOrderMutationFn = Apollo.MutationFunction<Typ
  *      orderId: // value for 'orderId'
  *      amount: // value for 'amount'
  *      reason: // value for 'reason'
+ *      reasonReferenceId: // value for 'reasonReferenceId'
  *      lines: // value for 'lines'
  *      grantRefundForShipping: // value for 'grantRefundForShipping'
  *      transactionId: // value for 'transactionId'
