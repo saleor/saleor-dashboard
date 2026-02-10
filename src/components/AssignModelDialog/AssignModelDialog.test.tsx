@@ -185,66 +185,40 @@ describe("AssignModelDialog", () => {
     });
   });
 
-  describe("Search functionality", () => {
-    it("should render search input", () => {
-      // Arrange & Act
-      render(<AssignModelDialog {...defaultProps} />);
+  it("should show loading indicator when loading is true", () => {
+    // Arrange & Act
+    render(<AssignModelDialog {...defaultProps} loading={true} />);
 
-      // Assert
-      expect(screen.getByPlaceholderText("Search Models")).toBeInTheDocument();
-    });
+    // Assert
+    const searchInput = screen.getByPlaceholderText("Search Models");
+    const inputContainer = searchInput.closest(".MuiInputBase-root") as HTMLElement;
+
+    expect(inputContainer).toBeInTheDocument();
+    expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();
   });
 
-  describe("Filter functionality", () => {
-    it("should render ModalFilters component", () => {
-      // Arrange & Act
-      render(<AssignModelDialog {...defaultProps} />);
+  it("should show 'no models available' message when pages array is empty", () => {
+    // Arrange & Act
+    render(<AssignModelDialog {...defaultProps} pages={[]} loading={false} />);
 
-      // Assert
-      expect(screen.getByText("Modal Filters")).toBeInTheDocument();
-    });
+    // Assert
+    expect(screen.getByText("No models available")).toBeInTheDocument();
   });
 
-  describe("Loading state", () => {
-    it("should show loading indicator when loading is true", () => {
-      // Arrange & Act
-      render(<AssignModelDialog {...defaultProps} loading={true} />);
+  it("should call onClose when back button is clicked", async () => {
+    // Arrange
+    const onClose = jest.fn();
 
-      // Assert
-      const searchInput = screen.getByPlaceholderText("Search Models");
-      const inputContainer = searchInput.closest(".MuiInputBase-root") as HTMLElement;
+    render(<AssignModelDialog {...defaultProps} onClose={onClose} />);
 
-      expect(inputContainer).toBeInTheDocument();
-      expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();
-    });
-  });
+    const user = userEvent.setup();
 
-  describe("Empty state", () => {
-    it("should show 'no models available' message when pages array is empty", () => {
-      // Arrange & Act
-      render(<AssignModelDialog {...defaultProps} pages={[]} loading={false} />);
+    // Act
+    const backButton = screen.getByRole("button", { name: /back/i });
 
-      // Assert
-      expect(screen.getByText("No models available")).toBeInTheDocument();
-    });
-  });
+    await user.click(backButton);
 
-  describe("Dialog actions", () => {
-    it("should call onClose when back button is clicked", async () => {
-      // Arrange
-      const onClose = jest.fn();
-
-      render(<AssignModelDialog {...defaultProps} onClose={onClose} />);
-
-      const user = userEvent.setup();
-
-      // Act
-      const backButton = screen.getByRole("button", { name: /back/i });
-
-      await user.click(backButton);
-
-      // Assert
-      expect(onClose).toHaveBeenCalled();
-    });
+    // Assert
+    expect(onClose).toHaveBeenCalled();
   });
 });
