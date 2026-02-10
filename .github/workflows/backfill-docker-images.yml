@@ -1,0 +1,150 @@
+name: Backfill Docker Images (Temporary)
+
+# This workflow is a one-time backfill for releases 3.22.27-3.22.30
+# that failed to publish Docker images due to missing pnpm-workspace.yaml
+# in the Dockerfile COPY command. Once backfill is complete, delete this file.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag to backfill (e.g., 3.22.27)"
+        required: true
+        type: string
+      image_tag:
+        description: "Docker image tag (defaults to release_tag if empty)"
+        required: false
+        type: string
+
+jobs:
+  prepare-variables:
+    name: Prepare variables
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    outputs:
+      image_name: ${{ steps.get-image-name.outputs.image_name }}
+      labels: ${{ steps.metadata.outputs.labels }}
+      tags: ${{ steps.metadata.outputs.tags }}
+      version: ${{ steps.get-version.outputs.version }}
+      commit_sha: ${{ steps.get-commit.outputs.commit_sha }}
+    steps:
+      - name: Get GHCR image name (owner/repo)
+        id: get-image-name
+        env:
+          GH_REPO: ${{ github.repository }}
+        run: |
+          # github.repository is already in owner/repo format required
+          # by GHCR; normalize it to lowercase.
+          GHCR_IMAGE_NAME="${GH_REPO,,}"
+          echo "image_name=$GHCR_IMAGE_NAME" >> $GITHUB_OUTPUT
+
+      - name: Checkout the release tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.release_tag }}
+
+      - name: Get commit SHA for the tag
+        id: get-commit
+        run: |
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "commit_sha=$COMMIT_SHA" >> $GITHUB_OUTPUT
+          echo "Building from commit: $COMMIT_SHA"
+
+      - name: Get version for metadata
+        id: get-version
+        run: |
+          # Use image_tag if provided, otherwise use release_tag
+          if [ -n "${{ inputs.image_tag }}" ]; then
+            VERSION="${{ inputs.image_tag }}"
+          else
+            VERSION="${{ inputs.release_tag }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Docker metadata
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ steps.get-image-name.outputs.image_name }}
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=${{ steps.get-version.outputs.version }}
+
+  build-push:
+    needs: prepare-variables
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout the release tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.release_tag }}
+
+      - name: Patch Dockerfile to fix missing files
+        run: |
+          echo "Original Dockerfile COPY line:"
+          grep "COPY package.json" Dockerfile || true
+
+          # Replace the broken COPY line with the fixed one
+          sed -i 's/COPY package\.json pnpm-lock\.yaml \.\//COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc .\//g' Dockerfile
+
+          # Also fix ENV syntax if present (best practice)
+          sed -i 's/^ENV \([A-Z_]*\) /ENV \1=/g' Dockerfile
+
+          # Fix AS capitalization
+          sed -i 's/ as builder/ AS builder/g' Dockerfile
+          sed -i 's/ as runner/ AS runner/g' Dockerfile
+
+          echo "Patched Dockerfile COPY line:"
+          grep "COPY package.json" Dockerfile
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ needs.prepare-variables.outputs.tags }}
+          labels: ${{ needs.prepare-variables.outputs.labels }}
+          build-args: |
+            COMMIT_ID=${{ needs.prepare-variables.outputs.commit_sha }}
+            PROJECT_VERSION=${{ needs.prepare-variables.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  summary:
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Display backfill summary
+        env:
+          release_tag: ${{ inputs.release_tag }}
+          version: ${{ needs.prepare-variables.outputs.version }}
+          tags: ${{ needs.prepare-variables.outputs.tags }}
+          commit_sha: ${{ needs.prepare-variables.outputs.commit_sha }}
+        run: |
+          echo "✅ Successfully backfilled Docker image"
+          echo ""
+          echo "Release Tag: $release_tag"
+          echo "Version: $version"
+          echo "Commit: $commit_sha"
+          echo "Tags: $tags"
+          echo ""
+          echo "Test with: docker pull ghcr.io/${{ github.repository }}:$version"

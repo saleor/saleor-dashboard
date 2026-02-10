@@ -1,5 +1,5 @@
 // @ts-check
-
+import storybook from "eslint-plugin-storybook";
 import eslint from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
 import formatjs from "eslint-plugin-formatjs";
@@ -31,24 +31,20 @@ export default tseslint.config(
     ".github/**/*.js",
     ".featureFlags/",
   ]),
-
-  eslint.configs.recommended,
-  tseslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
+  eslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
+  tseslint.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   reactHooks.configs.flat["recommended-latest"],
   reactRefresh.configs.vite,
   reactYouMightNotNeedAnEffect.configs.recommended,
-
   {
     settings: {
       react: {
         version: "detect",
       },
     },
-  },
-
-  // Disable global rules:
+  }, // Disable global rules:
   {
     rules: {
       "sort-imports": "off", // imports are handled by simple-import-sort/sort
@@ -104,9 +100,7 @@ export default tseslint.config(
       "no-case-declarations": "off",
       "prefer-const": "off",
     },
-  },
-
-  // Properly resolve Node.js globals in .cjs files
+  }, // Properly resolve Node.js globals in .cjs files
   {
     files: ["**/*.cjs"],
     languageOptions: {
@@ -114,9 +108,7 @@ export default tseslint.config(
         ...globals.node, // Use all Node.js globals
       },
     },
-  },
-
-  // Configure custom plugins and rules for React files
+  }, // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
@@ -206,9 +198,7 @@ export default tseslint.config(
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
     },
-  },
-
-  // Disable rules for specific files
+  }, // Disable rules for specific files
   {
     files: ["vite.config.js"],
     languageOptions: {
@@ -220,14 +210,12 @@ export default tseslint.config(
       "no-console": "off",
     },
   },
-
   {
     files: ["playwright/**/*.ts"],
     rules: {
       "no-console": "off",
     },
   },
-
   {
     files: ["src/**/*.stories.@(ts|tsx)"],
     rules: {
@@ -247,7 +235,6 @@ export default tseslint.config(
       "@typescript-eslint/no-require-imports": "off",
     },
   },
-
   {
     rules: {
       /**
@@ -302,9 +289,7 @@ export default tseslint.config(
         },
       ],
     },
-  },
-
-  // Graphql plugin
+  }, // Graphql plugin
   {
     /**
      * Plugin first converts all ts(x) files to
@@ -328,8 +313,7 @@ export default tseslint.config(
       "@graphql-eslint/no-duplicate-fields": "error",
       "@graphql-eslint/no-deprecated": "warn",
     },
-  },
-
-  // Disable any rules that conflict with Prettier
+  }, // Disable any rules that conflict with Prettier
   prettierConfig,
+  storybook.configs["flat/recommended"],
 );

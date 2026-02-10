@@ -11,6 +11,8 @@ jobs:
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
+    outputs:
+      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION }}
     env:
       ## backward compatibility for older versions
       API_URI: /graphql/
@@ -86,13 +88,17 @@ jobs:
         env:
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment to saleor-master-staging"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    with:
+      type: deployment
+      ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: saleor-master-staging
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+    secrets:
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}

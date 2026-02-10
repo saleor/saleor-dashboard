@@ -30,16 +30,38 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Check if tag should be tagged as "latest"
+        id: check-latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ github.ref_name }}
+        run: |
+          set -u
+
+          CURRENT_LATEST=$(gh api "/repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          HIGHEST=$( (echo "$CURRENT_LATEST"; echo "$CURRENT_TAG") | sort -V | tail -1)
+
+          echo "Selected: $CURRENT_TAG, Latest: $CURRENT_LATEST"
+
+          if [[ "$CURRENT_TAG" == "$HIGHEST" ]]; then
+            echo "is_latest=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_latest=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Docker metadata
         id: metadata
         uses: docker/metadata-action@v5
         with:
           images: |
             ghcr.io/${{ steps.get-image-name.outputs.image_name }}
+          flavor: |
+            latest=false
           tags: |
             type=ref,event=branch
             type=pep440,pattern={{version}}
             type=pep440,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable=${{ steps.check-latest.outputs.is_latest }}
           context: git
 
   build-push:
@@ -77,3 +99,29 @@ jobs:
         run: |
           echo "Tags: $tags"
           echo "Digest: $digest"
+
+  load-failure-secrets:
+    if: failure()
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-22.04
+    outputs:
+      slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Load secrets
+        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        id: load-secrets
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/DASHBOARD_BUILD_FAILURE_SLACK_WEBHOOK/password"
+
+  notify-failure:
+    if: failure()
+    needs: [prepare-variables, build-push, load-failure-secrets]
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    with:
+      custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version }}*"
+      status: failure
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+    secrets:
+      slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}

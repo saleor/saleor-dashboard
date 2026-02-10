@@ -9808,6 +9808,10 @@
     "context": "button",
     "string": "OK"
   },
+  "sAqzEK": {
+    "context": "no products placeholder",
+    "string": "No products available"
+  },
   "sDMNfc": {
     "context": "bulk issue structure item",
     "string": "Bulk Issue"

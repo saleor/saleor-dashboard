@@ -34,7 +34,7 @@ import { PriceRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuild
 import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilders/ProductExportFieldMapper";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
 
-type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
+type ProductQueryVars = ProductWhereInput & { channel?: string };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 
@@ -55,11 +55,18 @@ export const QUERY_API_TYPES = {
   ATTRIBUTE: QueryApiType.FILTER,
 } as const;
 
+const productFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  // Product search expects channel to be a slug, not id
+  new SlugChannelQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
 export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
   const builder = new FiltersQueryBuilder<ProductQueryVars, "channel">({
     apiType: QUERY_API_TYPES.PRODUCT,
     filterContainer,
     topLevelKeys: ["channel"],
+    filterDefinitionResolver: productFilterDefinitionResolver,
   });
   const { topLevel, filters } = builder.build();
 
