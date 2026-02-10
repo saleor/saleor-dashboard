@@ -118,7 +118,8 @@ export const UserControls = () => {
                 <List.Item
                   display="flex"
                   alignItems="center"
-                  gap={2}
+                  __lineHeight={0}
+                  gap={1.5}
                   marginTop={1}
                   onClick={() => {
                     changeTheme();
