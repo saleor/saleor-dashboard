@@ -1,25 +1,19 @@
-import { SearchPagesQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { PageFactory } from "../AssignDialogShared/factories";
 import AssignModelDialog from "./AssignModelDialog";
-
-type Pages = RelayToFlat<SearchPagesQuery["search"]>;
-
-const mockPages: Pages = Array.from({ length: 8 }, (_, i) => ({
-  __typename: "Page" as const,
-  id: `page-${i + 1}`,
-  title: `Page ${i + 1}`,
-}));
 
 const noop = () => {};
 
 const meta: Meta<typeof AssignModelDialog> = {
-  title: "Components/AssignModelDialog",
+  title: "Components/Dialogs/AssignModelDialog",
   component: AssignModelDialog,
+  loaders: [async () => ({ pages: await PageFactory.buildList(8) })],
+  render: (args, { loaded: { pages } }) => (
+    <AssignModelDialog {...args} pages={args.pages ?? pages} />
+  ),
   args: {
     open: true,
-    pages: mockPages,
     loading: false,
     hasMore: false,
     confirmButtonState: "default",
@@ -36,28 +30,21 @@ type Story = StoryObj<typeof AssignModelDialog>;
 export const Default: Story = {};
 
 export const SingleSelection: Story = {
-  args: {
-    selectionMode: "single",
-  },
+  args: { selectionMode: "single" },
 };
 
 export const Loading: Story = {
-  args: {
-    loading: true,
-    pages: [],
-  },
+  args: { loading: true, pages: [] },
 };
 
 export const Empty: Story = {
-  args: {
-    pages: [],
-  },
+  args: { pages: [] },
 };
 
 export const WithLockedPageType: Story = {
   args: {
     initialConstraints: {
-      pageType: "page-type-1",
+      pageTypes: [{ id: "page-type-1", name: "Blog Post" }],
     },
   },
 };
