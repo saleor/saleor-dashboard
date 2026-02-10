@@ -30,6 +30,8 @@ jobs:
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
+    outputs:
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
       ## backward compatibility for older versions
       APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
@@ -137,13 +139,17 @@ jobs:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: production
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    with:
+      type: deployment
+      ref: ${{ github.event.client_payload.ref }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: ${{ needs.build.outputs.ENVIRONMENT }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+    secrets:
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
