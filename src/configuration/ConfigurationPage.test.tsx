@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { useUser } from "../auth";
+import { useUser } from "../auth/useUser";
 import { PermissionEnum, UserFragment } from "../graphql";
 import { ConfigurationPage } from "./ConfigurationPage";
 import { MenuSection } from "./types";
