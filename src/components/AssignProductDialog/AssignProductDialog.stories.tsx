@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { withFilterApolloMocks } from "@storybookUtils/AssignDialogShared/decorators";
 import { ProductFactory } from "@storybookUtils/AssignDialogShared/factories";
-import { withMockedFilters } from "@storybookUtils/AssignDialogShared/storyDecorators";
 import { ComponentProps } from "react";
 import { fn } from "storybook/test";
 
@@ -11,7 +11,7 @@ type Props = ComponentProps<typeof AssignProductDialog>;
 const meta: Meta<typeof AssignProductDialog> = {
   title: "Components/Dialogs/AssignProductDialog",
   component: AssignProductDialog,
-  decorators: [withMockedFilters],
+  decorators: [withFilterApolloMocks],
   loaders: [async () => ({ products: await ProductFactory.buildList(6) })],
   render: (args: Props, { loaded }: { loaded: { products: Props["products"] } }) => (
     <AssignProductDialog {...args} products={args.products ?? loaded.products} />

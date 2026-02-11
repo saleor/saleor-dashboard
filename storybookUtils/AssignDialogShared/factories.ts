@@ -1,10 +1,12 @@
 import {
+  defineAttributeFactory,
   defineCategoryFactory,
   defineChannelFactory,
   defineCollectionFactory,
   defineImageFactory,
   defineMoneyFactory,
   definePageFactory,
+  definePageTypeFactory,
   defineProductChannelListingFactory,
   defineProductFactory,
   defineProductTypeFactory,
@@ -29,7 +31,7 @@ export const ProductTypeFactory = defineProductTypeFactory({
     __typename: "ProductType",
     id: dynamic(({ seq }) => `product-type-${seq}`),
     name: dynamic(
-      ({ seq }) => ["Simple Product", "Digital Product", "Configurable Product"][seq % 3]!,
+      ({ seq }) => ["Simple Product", "Digital Product", "Configurable Product"][seq % 3],
     ),
     slug: dynamic(({ seq }) => `product-type-${seq}`),
   },
@@ -76,7 +78,7 @@ export const ProductVariantFactory = defineProductVariantFactory({
   defaultFields: {
     __typename: "ProductVariant",
     id: dynamic(({ seq }) => `variant-${seq}`),
-    name: dynamic(({ seq }) => ["S", "M", "L", "XL", "Blue", "Red", "Green"][seq % 7]!),
+    name: dynamic(({ seq }) => ["S", "M", "L", "XL", "Blue", "Red", "Green"][seq % 7]),
     sku: dynamic(({ seq }) => `SKU-${1000 + seq}`),
     channelListings: dynamic(async () => [await ProductVariantChannelListingFactory.build()]),
     product: dynamic(async () => ({
@@ -104,7 +106,7 @@ export const ProductFactory = defineProductFactory({
           "Organic Coffee Beans",
           "Yoga Mat",
           "Stainless Steel Water Bottle",
-        ][seq % 8]!,
+        ][seq % 8],
     ),
     productType: dynamic(() => ProductTypeFactory.build()),
     thumbnail: dynamic(() => ImageFactory.build()),
@@ -129,7 +131,7 @@ export const CategoryFactory = defineCategoryFactory({
           "Health & Beauty",
           "Toys & Games",
           "Food & Beverages",
-        ][seq % 8]!,
+        ][seq % 8],
     ),
   },
 });
@@ -149,7 +151,7 @@ export const CollectionFactory = defineCollectionFactory({
           "Gift Guide",
           "Staff Picks",
           "Eco-Friendly",
-        ][seq % 8]!,
+        ][seq % 8],
     ),
   },
 });
@@ -169,7 +171,27 @@ export const PageFactory = definePageFactory({
           "Privacy Policy",
           "Contact Us",
           "FAQ",
-        ][seq % 8]!,
+        ][seq % 8],
     ),
+  },
+});
+
+export const AttributeFactory = defineAttributeFactory({
+  defaultFields: {
+    __typename: "Attribute",
+    id: dynamic(({ seq }) => `attr-${seq}`),
+    name: dynamic(({ seq }) => ["Color", "Size", "Material", "Brand", "Weight", "Style"][seq % 6]),
+    slug: dynamic(({ seq }) => ["color", "size", "material", "brand", "weight", "style"][seq % 6]),
+    inputType: "DROPDOWN",
+    entityType: null,
+  },
+});
+
+export const PageTypeFactory = definePageTypeFactory({
+  defaultFields: {
+    __typename: "PageType",
+    id: dynamic(({ seq }) => `page-type-${seq}`),
+    name: dynamic(({ seq }) => ["Blog Post", "Landing Page", "FAQ Page", "Documentation"][seq % 4]),
+    slug: dynamic(({ seq }) => `page-type-${seq}`),
   },
 });
