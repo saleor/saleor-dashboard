@@ -69,6 +69,8 @@ const ATTRIBUTES_STATICS = [
   "visibleInStorefront",
 ];
 
+const CATEGORY_STATICS = ["metadata", "updatedAt"];
+
 const STATIC_TO_LOAD = [
   ...PRODUCT_STATICS,
   ...ORDER_STATICS,
@@ -79,6 +81,7 @@ const STATIC_TO_LOAD = [
   ...PRODUCT_TYPES_STATICS,
   ...STAFF_MEMBERS_STATICS,
   ...ATTRIBUTES_STATICS,
+  ...CATEGORY_STATICS,
 ];
 
 export const TokenType = {

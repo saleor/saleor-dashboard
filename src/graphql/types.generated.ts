@@ -11876,6 +11876,7 @@ export type SearchCategoriesWithTotalProductsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  filter?: InputMaybe<CategoryFilterInput>;
 }>;
 
 

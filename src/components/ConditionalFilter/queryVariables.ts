@@ -1,5 +1,6 @@
 import {
   AttributeFilterInput,
+  CategoryFilterInput,
   CollectionFilterInput,
   CustomerFilterInput,
   GiftCardFilterInput,
@@ -49,6 +50,7 @@ export const QUERY_API_TYPES = {
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
   ATTRIBUTE: QueryApiType.FILTER,
+  CATEGORY: QueryApiType.FILTER,
 } as const;
 
 const productFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
@@ -216,6 +218,18 @@ export const createAttributesQueryVariables = (value: FilterContainer): Attribut
   const builder = new FiltersQueryBuilder<AttributeFilterInput>({
     apiType: QUERY_API_TYPES.ATTRIBUTE,
     filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createCategoryQueryVariables = (
+  filterContainer: FilterContainer,
+): CategoryFilterInput => {
+  const builder = new FiltersQueryBuilder<CategoryFilterInput>({
+    apiType: QUERY_API_TYPES.CATEGORY,
+    filterContainer,
   });
   const { filters } = builder.build();
 

@@ -26,6 +26,7 @@ import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
+  CategoryFilterInput,
   CategoryWithTotalProductsFragment,
   CollectionWithTotalProductsFragment,
   CountryWithCodeFragment,
@@ -97,6 +98,7 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     channel: string | undefined,
     query: string,
   ) => void;
+  onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
   categoriesSearch: UseSearchResult<
     SearchCategoriesWithTotalProductsQuery,
     SearchCategoriesWithTotalProductsQueryVariables
@@ -136,6 +138,7 @@ const VoucherCreatePage = ({
   collectionsSearch,
   variantsSearch,
   onProductFilterChange,
+  onCategoryFilterChange,
   countries,
   resetSelected,
 }: VoucherCreatePageProps) => {
@@ -471,6 +474,7 @@ const VoucherCreatePage = ({
             hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-category"}
             onFetch={categoriesSearch.search}
+            onFilterChange={onCategoryFilterChange}
             onFetchMore={categoriesSearch.loadMore}
             loading={categoriesSearch.result?.loading}
             onClose={closeModal}

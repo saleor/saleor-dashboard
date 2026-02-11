@@ -31,6 +31,7 @@ import {
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
 import {
+  CategoryFilterInput,
   ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -105,6 +106,17 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       where: filterVariables,
       channel,
+      query,
+    });
+  };
+
+  const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
+    searchCategoriesOpts.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
       query,
     });
   };
@@ -462,6 +474,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-category"}
         onFetch={searchCategories}
+        onFilterChange={handleCategoryFilterChange}
         onFetchMore={loadMoreCategories}
         loading={searchCategoriesOpts.loading}
         onClose={closeModal}
