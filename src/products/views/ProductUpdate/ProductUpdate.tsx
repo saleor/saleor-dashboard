@@ -2,6 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -305,24 +306,35 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
 
-  // Extract productType constraints from reference attribute for modal filter
-  const initialConstraints = useMemo((): InitialConstraints | undefined => {
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(():
+    | (InitialConstraints & InitialPageConstraints)
+    | undefined => {
     if (!refAttr?.referenceTypes?.length) {
       return undefined;
     }
 
-    // Filter to get only ProductType references
     const productTypeRefs = refAttr.referenceTypes.filter(
       (t): t is { __typename: "ProductType"; id: string; name: string } =>
         t?.__typename === "ProductType" && Boolean(t?.id),
     );
 
-    if (productTypeRefs.length === 0) {
+    const pageTypeRefs = refAttr.referenceTypes.filter(
+      (t): t is { __typename: "PageType"; id: string; name: string } =>
+        t?.__typename === "PageType" && Boolean(t?.id),
+    );
+
+    if (productTypeRefs.length === 0 && pageTypeRefs.length === 0) {
       return undefined;
     }
 
     return {
-      productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      ...(productTypeRefs.length > 0 && {
+        productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
+      ...(pageTypeRefs.length > 0 && {
+        pageTypes: pageTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
     };
   }, [refAttr?.referenceTypes]);
 

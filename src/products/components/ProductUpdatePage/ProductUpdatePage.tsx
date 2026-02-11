@@ -16,6 +16,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
+import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
@@ -134,7 +135,7 @@ interface ProductUpdatePageProps {
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
-  initialConstraints?: InitialConstraints;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
 const ProductUpdatePage = ({
