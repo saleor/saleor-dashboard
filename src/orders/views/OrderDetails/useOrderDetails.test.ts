@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useOrderDetails } from "./useOrderDetails";
 
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/graphql");
 
 describe("useOrderDetails", () => {

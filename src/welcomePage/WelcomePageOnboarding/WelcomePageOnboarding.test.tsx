@@ -15,7 +15,7 @@ jest.mock("@dashboard/components/Router/useRouteChange", () => ({
     register: jest.fn(),
   }),
 }));
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn().mockReturnValue({
     enabled: false,

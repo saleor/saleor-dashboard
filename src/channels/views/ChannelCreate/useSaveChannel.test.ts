@@ -5,7 +5,7 @@ import { ChannelCreateInput } from "@dashboard/graphql";
 import { useSaveChannel } from "./useSaveChannel";
 
 jest.mock(
-  "@dashboard/auth",
+  "@dashboard/auth/useUser",
   jest.fn(() => ({
     useUser: jest.fn(),
   })),

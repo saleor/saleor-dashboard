@@ -16,7 +16,7 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => children),
 }));
-jest.mock("@dashboard/auth", () => ({
+jest.mock("@dashboard/auth/useUser", () => ({
   useUser: jest.fn(),
 }));
 jest.mock("./styles", () => ({

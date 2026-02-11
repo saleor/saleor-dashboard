@@ -10,7 +10,7 @@ import { useOrderSendRefund } from "./useOrderSendRefund";
 
 const mockSendRefund = jest.fn();
 
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/graphql");
 
 describe("useOrderSendRefund", () => {

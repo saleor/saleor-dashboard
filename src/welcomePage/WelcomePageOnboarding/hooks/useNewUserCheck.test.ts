@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useNewUserCheck } from "./useNewUserCheck";
 
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 
 describe("useNewUserCheck", () => {
   const originalEnv = process.env;

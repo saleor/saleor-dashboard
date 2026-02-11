@@ -7,7 +7,7 @@ import {
   useSidebarWebhookAlertMetadata,
 } from "./useSidebarWebhookAlertMetadata";
 
-jest.mock("@dashboard/auth", () => ({
+jest.mock("@dashboard/auth/useUser", () => ({
   useUser: jest.fn().mockReturnValue({ user: null }),
 }));
 

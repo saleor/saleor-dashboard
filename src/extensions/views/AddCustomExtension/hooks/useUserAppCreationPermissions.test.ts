@@ -6,7 +6,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useUserAppCreationPermissions } from "./useUserAppCreationPermissions";
 
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/hooks/useShop");
 
 const mockUseUser = useUser as jest.MockedFunction<typeof useUser>;
