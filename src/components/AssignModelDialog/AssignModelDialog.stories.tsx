@@ -1,26 +1,44 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ComponentProps } from "react";
+import { fn } from "storybook/test";
 
 import { PageFactory } from "../AssignDialogShared/factories";
+import { withMockedFilters } from "../AssignDialogShared/storyDecorators";
 import AssignModelDialog from "./AssignModelDialog";
 
-const noop = () => {};
+type Props = ComponentProps<typeof AssignModelDialog>;
 
 const meta: Meta<typeof AssignModelDialog> = {
   title: "Components/Dialogs/AssignModelDialog",
   component: AssignModelDialog,
+  decorators: [withMockedFilters],
   loaders: [async () => ({ pages: await PageFactory.buildList(8) })],
-  render: (args, { loaded: { pages } }) => (
-    <AssignModelDialog {...args} pages={args.pages ?? pages} />
+  render: (args: Props, { loaded }: { loaded: { pages: Props["pages"] } }) => (
+    <AssignModelDialog {...args} pages={args.pages ?? loaded.pages} />
   ),
+  argTypes: {
+    confirmButtonState: {
+      control: "inline-radio",
+      options: ["default", "loading", "success", "error"],
+    },
+    onClose: { table: { disable: true } },
+    onFetchMore: { table: { disable: true } },
+    onSubmit: { table: { disable: true } },
+    onFilterChange: { table: { disable: true } },
+    pages: { table: { disable: true } },
+    excludedFilters: { table: { disable: true } },
+    initialConstraints: { table: { disable: true } },
+    labels: { table: { disable: true } },
+  },
   args: {
     open: true,
     loading: false,
     hasMore: false,
     confirmButtonState: "default",
-    onClose: noop,
-    onFetchMore: noop,
-    onSubmit: noop,
-    onFilterChange: noop,
+    onClose: fn(),
+    onFetchMore: fn(),
+    onSubmit: fn(),
+    onFilterChange: fn(),
   },
 };
 
