@@ -1,5 +1,9 @@
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
-import { loadingCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  chevronCell,
+  loadingCell,
+  readonlyTextCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { CategoryFragment } from "@dashboard/graphql";
 import { Sort } from "@dashboard/types";
@@ -82,7 +86,7 @@ export const createGetCellContent =
 
         const isExpanded = isCategoryExpanded?.(rowData.id) ?? false;
 
-        return readonlyTextCell(isExpanded ? "⯆" : "⯈");
+        return chevronCell(isExpanded);
       }
       case "name":
         const depth = getCategoryDepth?.(rowData.id) ?? 0;

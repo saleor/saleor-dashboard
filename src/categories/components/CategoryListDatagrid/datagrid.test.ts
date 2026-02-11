@@ -78,12 +78,18 @@ describe("CategoryListDatagrid createGetCellContent", () => {
 
     // Assert
     expect(collapsedCell).toMatchObject({
-      kind: GridCellKind.Text,
-      data: "⯈",
+      kind: GridCellKind.Custom,
+      data: {
+        kind: "chevron-cell",
+        direction: "right",
+      },
     });
     expect(expandedCell).toMatchObject({
-      kind: GridCellKind.Text,
-      data: "⯆",
+      kind: GridCellKind.Custom,
+      data: {
+        kind: "chevron-cell",
+        direction: "down",
+      },
     });
   });
 
