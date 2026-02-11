@@ -309,9 +309,6 @@ importers:
       "@graphql-eslint/eslint-plugin":
         specifier: ^4.4.0
         version: 4.4.0(@types/node@20.19.31)(eslint@9.39.2(jiti@2.6.1))(graphql@16.11.0)(typescript@5.8.3)
-      "@mizdra/graphql-codegen-typescript-fabbrica":
-        specifier: ^0.6.1
-        version: 0.6.1(graphql@16.11.0)
       "@playwright/test":
         specifier: 1.56.1
         version: 1.56.1
@@ -580,15 +577,6 @@ packages:
     resolution:
       {
         integrity: sha512-9anThAaj1dQr6IGmzBMcfzOQKTa5artjuPmw8NYK/fiGEMjADbSguBY2FMDykt+QhilR3wc9VA/3yVju7JHg7Q==,
-      }
-    hasBin: true
-    peerDependencies:
-      graphql: "*"
-
-  "@ardatan/relay-compiler@12.0.3":
-    resolution:
-      {
-        integrity: sha512-mBDFOGvAoVlWaWqs3hm1AciGHSQE1rqFc/liZTyYz/Oek9yZdT5H26pH2zAFuEiTiBVPPyMuqf5VjOFPI2DGsQ==,
       }
     hasBin: true
     peerDependencies:
@@ -2368,15 +2356,6 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  "@graphql-codegen/plugin-helpers@5.1.1":
-    resolution:
-      {
-        integrity: sha512-28GHODK2HY1NhdyRcPP3sCz0Kqxyfiz7boIZ8qIxFYmpLYnlDgiYok5fhFLVSZihyOpCs4Fa37gVHf/Q4I2FEg==,
-      }
-    engines: { node: ">=16" }
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
   "@graphql-codegen/schema-ast@2.6.1":
     resolution:
       {
@@ -2430,14 +2409,6 @@ packages:
     resolution:
       {
         integrity: sha512-IQWu99YV4wt8hGxIbBQPtqRuaWZhkQRG2IZKbMoSvh0vGeWb3dB0n0hSgKaOOxDY+tljtOf9MTcUYvJslQucMQ==,
-      }
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
-  "@graphql-codegen/visitor-plugin-common@4.1.2":
-    resolution:
-      {
-        integrity: sha512-yk7iEAL1kYZ2Gi/pvVjdsZhul5WsYEM4Zcgh2Ev15VicMdJmPHsMhNUsZWyVJV0CaQCYpNOFlGD/11Ea3pn4GA==,
       }
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -2737,15 +2708,6 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
-  "@graphql-tools/optimize@2.0.0":
-    resolution:
-      {
-        integrity: sha512-nhdT+CRGDZ+bk68ic+Jw1OZ99YCDIKYA5AlVAnBHJvMawSx9YQqQAIj4refNc1/LRieGiuWvhbG3jvPVYho0Dg==,
-      }
-    engines: { node: ">=16.0.0" }
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
   "@graphql-tools/prisma-loader@7.2.72":
     resolution:
       {
@@ -2760,15 +2722,6 @@ packages:
       {
         integrity: sha512-mc5VPyTeV+LwiM+DNvoDQfPqwQYhPV/cl5jOBjTgSniyaq8/86aODfMkrE2OduhQ5E00hqrkuL2Fdrgk0w1QJg==,
       }
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-
-  "@graphql-tools/relay-operation-optimizer@7.0.27":
-    resolution:
-      {
-        integrity: sha512-rdkL1iDMFaGDiHWd7Bwv7hbhrhnljkJaD0MXeqdwQlZVgVdUDlMot2WuF7CEKVgijpH6eSC6AxXMDeqVgSBS2g==,
-      }
-    engines: { node: ">=16.0.0" }
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
@@ -3256,15 +3209,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: ^16.8.0 || ^17.0.0
-
-  "@mizdra/graphql-codegen-typescript-fabbrica@0.6.1":
-    resolution:
-      {
-        integrity: sha512-Sa50LZAY0j1FL1MS6ebialT/lW7yigTiID4keVu0oi3sh/JgTE4sPeYEAlTHAUtI2c0r6EHMZNREhRCMgVRYIg==,
-      }
-    engines: { node: ">=18.0.0" }
-    peerDependencies:
-      graphql: ^16.0.0
 
   "@n1ru4l/push-pull-async-iterable-iterator@3.2.0":
     resolution:
@@ -8806,15 +8750,6 @@ packages:
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
 
-  graphql-relay@0.10.2:
-    resolution:
-      {
-        integrity: sha512-abybva1hmlNt7Y9pMpAzHuFnM2Mme/a2Usd8S4X27fNteLGRAECMYfhmsrpZFvGn3BhmBZugMXYW/Mesv3P1Kw==,
-      }
-    engines: { node: ^12.20.0 || ^14.15.0 || >= 15.9.0 }
-    peerDependencies:
-      graphql: ^16.2.0
-
   graphql-request@6.1.0:
     resolution:
       {
@@ -12863,12 +12798,6 @@ packages:
         integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==,
       }
 
-  tslib@2.6.3:
-    resolution:
-      {
-        integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==,
-      }
-
   tslib@2.8.1:
     resolution:
       {
@@ -13772,22 +13701,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  "@ardatan/relay-compiler@12.0.3(graphql@16.11.0)":
-    dependencies:
-      "@babel/generator": 7.29.0
-      "@babel/parser": 7.29.0
-      "@babel/runtime": 7.28.6
-      chalk: 4.1.2
-      fb-watchman: 2.0.2
-      graphql: 16.11.0
-      immutable: 3.7.6
-      invariant: 2.2.4
-      nullthrows: 1.1.1
-      relay-runtime: 12.0.0
-      signedsource: 1.0.0
-    transitivePeerDependencies:
-      - encoding
 
   "@ardatan/sync-fetch@0.0.1":
     dependencies:
@@ -15130,16 +15043,6 @@ snapshots:
       lodash: 4.17.23
       tslib: 2.4.1
 
-  "@graphql-codegen/plugin-helpers@5.1.1(graphql@16.11.0)":
-    dependencies:
-      "@graphql-tools/utils": 10.11.0(graphql@16.11.0)
-      change-case-all: 1.0.15
-      common-tags: 1.8.2
-      graphql: 16.11.0
-      import-from: 4.0.0
-      lodash: 4.17.23
-      tslib: 2.6.3
-
   "@graphql-codegen/schema-ast@2.6.1(graphql@16.11.0)":
     dependencies:
       "@graphql-codegen/plugin-helpers": 3.1.2(graphql@16.11.0)
@@ -15229,22 +15132,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  "@graphql-codegen/visitor-plugin-common@4.1.2(graphql@16.11.0)":
-    dependencies:
-      "@graphql-codegen/plugin-helpers": 5.1.1(graphql@16.11.0)
-      "@graphql-tools/optimize": 2.0.0(graphql@16.11.0)
-      "@graphql-tools/relay-operation-optimizer": 7.0.27(graphql@16.11.0)
-      "@graphql-tools/utils": 10.11.0(graphql@16.11.0)
-      auto-bind: 4.0.0
-      change-case-all: 1.0.15
-      dependency-graph: 0.11.0
-      graphql: 16.11.0
-      graphql-tag: 2.12.6(graphql@16.11.0)
-      parse-filepath: 1.0.2
-      tslib: 2.6.3
-    transitivePeerDependencies:
-      - encoding
 
   "@graphql-eslint/eslint-plugin@4.4.0(@types/node@20.19.31)(eslint@9.39.2(jiti@2.6.1))(graphql@16.11.0)(typescript@5.8.3)":
     dependencies:
@@ -15598,11 +15485,6 @@ snapshots:
       graphql: 16.11.0
       tslib: 2.8.1
 
-  "@graphql-tools/optimize@2.0.0(graphql@16.11.0)":
-    dependencies:
-      graphql: 16.11.0
-      tslib: 2.8.1
-
   "@graphql-tools/prisma-loader@7.2.72(@types/node@20.19.31)(graphql@16.11.0)":
     dependencies:
       "@graphql-tools/url-loader": 7.17.18(@types/node@20.19.31)(graphql@16.11.0)
@@ -15640,15 +15522,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  "@graphql-tools/relay-operation-optimizer@7.0.27(graphql@16.11.0)":
-    dependencies:
-      "@ardatan/relay-compiler": 12.0.3(graphql@16.11.0)
-      "@graphql-tools/utils": 11.0.0(graphql@16.11.0)
-      graphql: 16.11.0
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - encoding
 
   "@graphql-tools/schema@10.0.31(graphql@16.11.0)":
     dependencies:
@@ -16149,15 +16022,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
-
-  "@mizdra/graphql-codegen-typescript-fabbrica@0.6.1(graphql@16.11.0)":
-    dependencies:
-      "@graphql-codegen/plugin-helpers": 5.1.1(graphql@16.11.0)
-      "@graphql-codegen/visitor-plugin-common": 4.1.2(graphql@16.11.0)
-      graphql: 16.11.0
-      graphql-relay: 0.10.2(graphql@16.11.0)
-    transitivePeerDependencies:
-      - encoding
 
   "@n1ru4l/push-pull-async-iterable-iterator@3.2.0": {}
 
@@ -20047,10 +19911,6 @@ snapshots:
       nullthrows: 1.1.1
       vscode-languageserver-types: 3.17.5
 
-  graphql-relay@0.10.2(graphql@16.11.0):
-    dependencies:
-      graphql: 16.11.0
-
   graphql-request@6.1.0(graphql@16.11.0):
     dependencies:
       "@graphql-typed-document-node/core": 3.2.0(graphql@16.11.0)
@@ -22875,8 +22735,6 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.4.1: {}
-
-  tslib@2.6.3: {}
 
   tslib@2.8.1: {}
 
