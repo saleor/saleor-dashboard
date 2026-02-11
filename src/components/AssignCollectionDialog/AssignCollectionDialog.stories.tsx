@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { CollectionFactory } from "@storybookUtils/AssignDialogShared/factories";
 import { ComponentProps } from "react";
 import { fn } from "storybook/test";
 
-import { CollectionFactory } from "../AssignDialogShared/factories";
 import AssignCollectionDialog from "./AssignCollectionDialog";
 
 type Props = ComponentProps<typeof AssignCollectionDialog>;

@@ -23,6 +23,7 @@
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
       "@test/*": ["testUtils/*"],
+      "@storybookUtils/*": ["storybookUtils/*"],
       "@mizdra/graphql-codegen-typescript-fabbrica/helper": [
         "node_modules/@mizdra/graphql-codegen-typescript-fabbrica/dist/esm/helper/index"
       ]

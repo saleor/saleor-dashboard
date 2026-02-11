@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ProductFactory } from "@storybookUtils/AssignDialogShared/factories";
+import { withMockedFilters } from "@storybookUtils/AssignDialogShared/storyDecorators";
 import { ComponentProps } from "react";
 import { fn } from "storybook/test";
 
-import { ProductFactory } from "../AssignDialogShared/factories";
-import { withMockedFilters } from "../AssignDialogShared/storyDecorators";
 import { AssignProductDialog } from "./AssignProductDialog";
 
 type Props = ComponentProps<typeof AssignProductDialog>;
