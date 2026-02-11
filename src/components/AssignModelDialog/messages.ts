@@ -16,8 +16,8 @@ export const messages = defineMessages({
     defaultMessage: "Search Models",
   },
   assignModelDialogSearch: {
-    id: "kXbFxw",
-    defaultMessage: "Search by model name, model type, etc...",
+    id: "R4gIJc",
+    defaultMessage: "Search by model name...",
   },
   noModelsFound: {
     id: "L7j412",

@@ -8,7 +8,6 @@ import {
   SearchPagesQuery,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { defineMessages, useIntl } from "react-intl";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
 import AssignCollectionDialog from "../AssignCollectionDialog";
@@ -16,6 +15,7 @@ import AssignModelDialog from "../AssignModelDialog";
 import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
+import { InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import {
   filterCategoriesByAttributeValues,
@@ -38,41 +38,13 @@ export type AssignAttributeValueDialogFilterChangeMap = {
   [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
 };
 
-const pagesMessages = defineMessages({
-  confirmBtn: {
-    id: "ch96Wv",
-    defaultMessage: "Assign and save",
-    description: "assign reference to a model, button",
-  },
-  header: {
-    id: "Z+m5hG",
-    defaultMessage: "Assign model",
-    description: "dialog header",
-  },
-  searchLabel: {
-    id: "kTt3D2",
-    defaultMessage: "Search models",
-    description: "label",
-  },
-  searchPlaceholder: {
-    id: "Z768vg",
-    defaultMessage: "Search by model name, etc...",
-    description: "placeholder",
-  },
-  noPagesFound: {
-    id: "BOYzu+",
-    defaultMessage: "No models found",
-    description: "search results",
-  },
-});
-
 type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {
   entityType: AttributeEntityTypeEnum;
   attribute: AttributeInput;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  initialConstraints?: InitialConstraints;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
   // onFetch is required for non-product dialogs (containers, variants, collections, categories)
   onFetch: (value: string) => void;
   // Generic filter callback map by entity type.
@@ -99,12 +71,10 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     collections,
     categories,
     attribute,
-    labels,
     initialConstraints,
     onFilterChange,
     ...rest
   } = props;
-  const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
   const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
@@ -120,14 +90,8 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignModelDialog
           pages={filteredPages ?? []}
+          initialConstraints={initialConstraints}
           onFilterChange={pageFilterChange}
-          labels={{
-            confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
-            label: intl.formatMessage(pagesMessages.searchLabel),
-            placeholder: intl.formatMessage(pagesMessages.searchPlaceholder),
-            title: intl.formatMessage(pagesMessages.header),
-            ...labels,
-          }}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
