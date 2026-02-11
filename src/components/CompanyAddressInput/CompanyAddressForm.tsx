@@ -8,18 +8,18 @@ import {
   WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { useAddressValidation } from "../AddressEdit/useAddressValidation";
-import { Combobox } from "../Combobox";
 
 export interface CompanyAddressFormProps {
   countries: Option[];
@@ -169,7 +169,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
       </Grid>
       <FormSpacer />
       <Grid>
-        <Combobox
+        <DynamicCombobox
           id="autocomplete-dropdown-country"
           data-test-id="address-edit-country-select-field"
           autoComplete="off"
@@ -181,18 +181,29 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
             id: "vONi+O",
             defaultMessage: "Country",
           })}
-          options={countries}
-          fetchOptions={() => undefined}
+          options={countries ?? []}
           name="country"
-          value={{
-            label: displayCountry,
-            value: data.country,
+          value={
+            data.country
+              ? {
+                  label: displayCountry,
+                  value: data.country,
+                }
+              : null
+          }
+          onChange={(option: Option | null) => {
+            onCountryChange({
+              target: { name: "country", value: option?.value ?? "" },
+            } as unknown as ChangeEvent);
           }}
-          onChange={onCountryChange}
+          locale={{
+            loadingText: intl.formatMessage(commonMessages.loading),
+          }}
+          size="small"
         />
 
         {isFieldAllowed("countryArea") && (
-          <Combobox
+          <DynamicCombobox
             id="autocomplete-dropdown-country-area"
             data-test-id="address-edit-country-area-field"
             autoComplete="off"
@@ -204,14 +215,25 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
               id: "AuwpCm",
               defaultMessage: "Country area",
             })}
-            options={areas}
-            fetchOptions={() => undefined}
+            options={areas.map(a => ({ label: a.label, value: a.value })) ?? []}
             name="countryArea"
-            value={{
-              label: getDisplayValue(data.countryArea),
-              value: data.countryArea,
+            value={
+              data.countryArea
+                ? {
+                    label: getDisplayValue(data.countryArea),
+                    value: data.countryArea,
+                  }
+                : null
+            }
+            onChange={(option: Option | null) => {
+              onChange({
+                target: { name: "countryArea", value: option?.value ?? "" },
+              } as unknown as ChangeEvent);
             }}
-            onChange={onChange}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
+            size="small"
           />
         )}
       </Grid>

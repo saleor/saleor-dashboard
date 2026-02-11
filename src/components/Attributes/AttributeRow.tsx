@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
+import { DropdownRow } from "@dashboard/components/Attributes/DropdownRow";
 import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttributeRow";
 import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
@@ -12,8 +13,6 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getSingleChoices,
-  getSingleDisplayValue,
   getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
@@ -24,7 +23,7 @@ import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox, Multiselect } from "../Combobox";
+import { Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { AttributeRowProps } from "./types";
 
@@ -90,34 +89,16 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DROPDOWN:
       return (
-        <BasicAttributeRow label={attribute.label}>
-          <Combobox
-            allowCustomValues
-            alwaysFetchOnFocus
-            size="small"
-            disabled={disabled}
-            options={getSingleChoices(attributeValues)}
-            value={
-              attribute.value[0]
-                ? {
-                    value: attribute.value[0],
-                    label: getSingleDisplayValue(attribute, attributeValues),
-                  }
-                : null
-            }
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            id={`attribute:${attribute.label}`}
-            label=""
-            onChange={e => onChange(attribute.id, e.target.value)}
-            fetchOptions={query => {
-              fetchAttributeValues(query, attribute.id);
-            }}
-            onBlur={onAttributeSelectBlur}
-            fetchMore={fetchMoreAttributeValues}
-          />
-        </BasicAttributeRow>
+        <DropdownRow
+          attribute={attribute}
+          attributeValues={attributeValues}
+          onChange={onChange}
+          disabled={disabled}
+          error={error}
+          fetchAttributeValues={fetchAttributeValues}
+          fetchMoreAttributeValues={fetchMoreAttributeValues}
+          onAttributeSelectBlur={onAttributeSelectBlur}
+        />
       );
     case AttributeInputTypeEnum.SWATCH:
       return (

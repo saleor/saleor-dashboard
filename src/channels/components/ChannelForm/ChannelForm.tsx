@@ -4,7 +4,6 @@ import {
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import {
   ChannelErrorFragment,
@@ -18,7 +17,7 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, CopyIcon, DynamicCombobox, Input, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -133,21 +132,31 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         </Text>
         <Box paddingX={6}>
           {renderCurrencySelection ? (
-            <Combobox
+            <DynamicCombobox
               data-test-id="channel-currency-select-input"
-              allowCustomValues
               disabled={disabled}
               error={!!formErrors.currencyCode}
               label={intl.formatMessage(messages.channelCurrency)}
               helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
-              options={currencyCodes}
-              fetchOptions={() => undefined}
+              options={currencyCodes ?? []}
               name="currencyCode"
-              value={{
-                label: selectedCurrencyCode ?? "",
-                value: selectedCurrencyCode ?? "",
+              value={
+                selectedCurrencyCode
+                  ? {
+                      label: selectedCurrencyCode,
+                      value: selectedCurrencyCode,
+                    }
+                  : null
+              }
+              onChange={(option: Option | null) => {
+                onCurrencyCodeChange?.({
+                  target: { name: "currencyCode", value: option?.value ?? null },
+                });
               }}
-              onChange={onCurrencyCodeChange}
+              locale={{
+                loadingText: intl.formatMessage(commonMessages.loading),
+              }}
+              size="small"
             />
           ) : (
             <Box display="flex" flexDirection="column">
@@ -162,20 +171,31 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>
-          <Combobox
+          <DynamicCombobox
             data-test-id="country-select-input"
             disabled={disabled}
             error={!!formErrors.defaultCountry}
             label={intl.formatMessage(messages.defaultCountry)}
             helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
-            options={countries}
-            fetchOptions={() => undefined}
+            options={countries ?? []}
             name="defaultCountry"
-            value={{
-              label: selectedCountryDisplayName,
-              value: data.defaultCountry,
+            value={
+              data.defaultCountry
+                ? {
+                    label: selectedCountryDisplayName,
+                    value: data.defaultCountry,
+                  }
+                : null
+            }
+            onChange={(option: Option | null) => {
+              onDefaultCountryChange({
+                target: { name: "defaultCountry", value: option?.value ?? null },
+              });
             }}
-            onChange={onDefaultCountryChange}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
+            size="small"
           />
         </Box>
         <Box paddingX={6}>

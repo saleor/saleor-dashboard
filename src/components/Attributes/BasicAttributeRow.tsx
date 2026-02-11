@@ -6,6 +6,7 @@ interface BasicAttributeRowProps {
   description?: string | React.ReactNode;
   id?: string;
   clickableLabel?: boolean;
+  children?: React.ReactNode;
 }
 
 const capitalize = (str: BasicAttributeRowProps["label"]) =>

@@ -17,7 +17,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
 import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
-import { parse as parseQs } from "qs";
+import { parseQs } from "@dashboard/url-utils";
 import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
