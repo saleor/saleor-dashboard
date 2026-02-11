@@ -5,12 +5,12 @@ import { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
-import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
+import { useUser } from "../useUser";
 
 interface LoginViewProps {
   params: LoginUrlQueryParams;

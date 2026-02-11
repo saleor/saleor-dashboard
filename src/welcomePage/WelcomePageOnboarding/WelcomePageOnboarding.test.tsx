@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";

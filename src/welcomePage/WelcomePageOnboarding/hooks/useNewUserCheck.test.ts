@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useNewUserCheck } from "./useNewUserCheck";
