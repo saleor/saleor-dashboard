@@ -4,3 +4,7 @@
 declare module "@storybook/react-vite" {
   export { Decorator, Meta, StoryFn, StoryObj } from "@storybook/react/dist/index";
 }
+
+declare module "storybook/test" {
+  export { fn } from "storybook/dist/test/index";
+}
