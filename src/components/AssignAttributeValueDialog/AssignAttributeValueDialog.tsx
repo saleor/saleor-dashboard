@@ -82,6 +82,7 @@ const AssignAttributeValueDialog = ({
   attribute,
   labels,
   initialConstraints,
+  onFilterChange,
   ...rest
 }: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
@@ -117,6 +118,7 @@ const AssignAttributeValueDialog = ({
         <AssignProductDialog
           products={filteredProducts ?? []}
           initialConstraints={initialConstraints}
+          onFilterChange={onFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
