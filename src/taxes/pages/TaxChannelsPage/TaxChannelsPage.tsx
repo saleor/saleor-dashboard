@@ -7,7 +7,7 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   CountryCode,
   CountryFragment,

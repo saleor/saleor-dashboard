@@ -69,6 +69,28 @@ const config: CodegenConfig = {
         typesPath: "./types.generated",
       },
     },
+    "./src/graphql/fabbricaTypes.generated.ts": {
+      plugins: ["typescript"],
+      config: {
+        enumsAsTypes: true,
+        avoidOptionals: true,
+        nonOptionalTypename: true,
+        scalars: {
+          Day: "number",
+          Hour: "number",
+          Date: "string",
+        },
+        namingConvention: {
+          enumValues: "change-case-all#upperCase",
+        },
+      },
+    },
+    "./src/graphql/fabbrica.generated.ts": {
+      plugins: ["@mizdra/graphql-codegen-typescript-fabbrica"],
+      config: {
+        typesFile: "./fabbricaTypes.generated",
+      },
+    },
   },
 };
 

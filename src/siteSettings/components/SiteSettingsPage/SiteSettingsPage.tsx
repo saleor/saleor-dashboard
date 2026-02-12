@@ -8,7 +8,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { ShopErrorFragment, SiteSettingsQuery } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
