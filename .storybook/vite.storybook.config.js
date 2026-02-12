@@ -11,6 +11,7 @@ export default defineConfig({
       "@dashboard": path.resolve(__dirname, "..", "./src"),
       src: path.resolve(__dirname, "..", "./src"),
       moment: path.resolve(__dirname, "..", "./node_modules/moment/min/moment-with-locales.js"),
+      "@storybookUtils": path.resolve(__dirname, "..", "./storybookUtils"),
     },
   },
 

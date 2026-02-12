@@ -9,7 +9,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { TablePagination } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { TaxClassFragment } from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";

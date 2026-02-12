@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { handleNestedMutationErrors } from "@dashboard/auth";
+import { handleNestedMutationErrors } from "@dashboard/auth/utils";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useFulfillOrderMutation,
