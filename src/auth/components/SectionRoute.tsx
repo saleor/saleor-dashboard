@@ -3,8 +3,8 @@ import { PermissionEnum } from "@dashboard/graphql";
 import { RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
-import { useUser } from "..";
 import { hasAllPermissions, hasAnyPermissions } from "../misc";
+import { useUser } from "../useUser";
 
 type MatchPermissionType = "all" | "any";
 
