@@ -15,13 +15,23 @@ import {
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { LockedFilter } from "./types";
 
-export const createLockedFilterElement = (lockedFilter: LockedFilter): FilterElement => {
+const resolveFieldLabel = (field: string, staticOptions?: LeftOperand[]): string => {
+  const match = staticOptions?.find(option => option.value === field);
+
+  return match?.label ?? field.charAt(0).toUpperCase() + field.slice(1);
+};
+
+export const createLockedFilterElement = (
+  lockedFilter: LockedFilter,
+  staticOptions?: LeftOperand[],
+): FilterElement => {
   const expressionValue = new ExpressionValue(
     lockedFilter.field,
-    lockedFilter.field.charAt(0).toUpperCase() + lockedFilter.field.slice(1),
+    resolveFieldLabel(lockedFilter.field, staticOptions),
     lockedFilter.field,
   );
 

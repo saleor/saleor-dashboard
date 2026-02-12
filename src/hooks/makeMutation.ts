@@ -6,8 +6,9 @@ import {
   MutationResult,
   useMutation as useBaseMutation,
 } from "@apollo/client";
-import { handleNestedMutationErrors, showAllErrors, useUser } from "@dashboard/auth";
 import { isJwtError } from "@dashboard/auth/errors";
+import { useUser } from "@dashboard/auth/useUser";
+import { handleNestedMutationErrors, showAllErrors } from "@dashboard/auth/utils";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationStatus } from "@dashboard/misc";
 import { MutationResultAdditionalProps } from "@dashboard/types";

@@ -9,6 +9,7 @@ import {
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import {
   createLockedFilterElement,
@@ -145,7 +146,7 @@ describe("getFilteredOptions", () => {
 });
 
 describe("createLockedFilterElement", () => {
-  it("should create element with correct ExpressionValue", () => {
+  it("should create element with correct ExpressionValue using fallback label", () => {
     // Arrange
     const lockedFilter = createProductTypeLockedFilter([{ id: "pt-1", name: "Simple Product" }]);
 
@@ -156,6 +157,25 @@ describe("createLockedFilterElement", () => {
     expect(element.value.value).toBe("productType");
     expect(element.value.label).toBe("ProductType");
     expect(element.value.type).toBe("productType");
+  });
+
+  it("should use label from staticOptions when provided", () => {
+    // Arrange
+    const lockedFilter: LockedFilter = {
+      field: "pageTypes",
+      values: [{ id: "pt-1", name: "Blog Post" }],
+    };
+    const staticOptions: LeftOperand[] = [
+      { value: "pageTypes", label: "Model types", type: "pageTypes", slug: "pageTypes" },
+    ];
+
+    // Act
+    const element = createLockedFilterElement(lockedFilter, staticOptions);
+
+    // Assert
+    expect(element.value.value).toBe("pageTypes");
+    expect(element.value.label).toBe("Model types");
+    expect(element.value.type).toBe("pageTypes");
   });
 
   it("should create element with GLOBAL constraint", () => {
