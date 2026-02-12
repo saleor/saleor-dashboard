@@ -1,7 +1,7 @@
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -137,7 +137,7 @@ const OrderValue = ({
                         onChange={e =>
                           onChannelsChange(channel.id, {
                             ...channel,
-                            minValue: e.target.value,
+                            minValue: e.target.value ?? "",
                           })
                         }
                         currencySymbol={channel.currency}
@@ -156,11 +156,10 @@ const OrderValue = ({
                         })}
                         name={`maxValue:${channel.name}`}
                         value={channel.maxValue}
-                        minValue={channel.minValue}
                         onChange={e =>
                           onChannelsChange(channel.id, {
                             ...channel,
-                            maxValue: e.target.value,
+                            maxValue: e.target.value ?? "",
                           })
                         }
                         currencySymbol={channel.currency}
