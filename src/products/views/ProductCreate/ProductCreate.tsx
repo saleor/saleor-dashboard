@@ -6,6 +6,8 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
+  PageWhereInput,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   useFileUploadMutation,
@@ -49,7 +51,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
@@ -238,6 +240,18 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     search: searchPages,
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
+
+  const handlePageFilterChange = useCallback(
+    (where: PageWhereInput, query: string) => {
+      searchPagesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where,
+        query,
+      });
+    },
+    [searchPagesOpts.refetch],
+  );
+
   const fetchMoreProductTypes = {
     hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductTypesOpts.loading,
@@ -353,6 +367,9 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
     </>
   );
