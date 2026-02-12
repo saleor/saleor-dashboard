@@ -16816,7 +16816,7 @@ export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategor
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
 export const SearchCategoriesWithTotalProductsDocument = gql`
-    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!, $filter: CategoryFilterInput) {
+    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $filter: CategoryFilterInput) {
   search: categories(after: $after, first: $first, filter: $filter) {
     edges {
       node {
@@ -16845,7 +16845,6 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
  *      filter: // value for 'filter'
  *   },
  * });

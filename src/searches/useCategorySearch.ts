@@ -29,7 +29,6 @@ export const searchCategoriesWithTotalProducts = gql`
   query SearchCategoriesWithTotalProducts(
     $after: String
     $first: Int!
-    $query: String!
     $filter: CategoryFilterInput
   ) {
     search: categories(after: $after, first: $first, filter: $filter) {
@@ -48,7 +47,12 @@ export const searchCategoriesWithTotalProducts = gql`
 export const useCategoryWithTotalProductsSearch = makeTopLevelSearch<
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables
->(SearchCategoriesWithTotalProductsDocument);
+>(SearchCategoriesWithTotalProductsDocument, {
+  mapSearchToVariables: (searchQuery, variables) => ({
+    ...variables,
+    filter: { ...variables.filter, search: searchQuery },
+  }),
+});
 
 export default makeTopLevelSearch<SearchCategoriesQuery, SearchCategoriesQueryVariables>(
   SearchCategoriesDocument,
