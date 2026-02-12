@@ -15,7 +15,12 @@ export interface InitialConstraints {
   productTypes?: ProductTypeConstraint[];
 }
 
-type ModalProductFilterContextValue = ModalFilterResult<ProductWhereInput>;
+interface ModalProductFilterContextValue extends ModalFilterResult<ProductWhereInput> {
+  combinedFilters: {
+    where: ProductWhereInput;
+    channel: string | undefined;
+  };
+}
 
 const ModalProductFilterContext = createContext<ModalProductFilterContextValue | null>(null);
 
@@ -47,6 +52,14 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
       lockedFilter,
     });
 
+  const combinedFilters = useMemo(
+    () => ({
+      where: filterVariables,
+      channel: filterChannel,
+    }),
+    [filterVariables, filterChannel],
+  );
+
   return (
     <ConditionalFilterContext.Provider value={filterContext}>
       <ModalProductFilterContext.Provider
@@ -54,6 +67,7 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
           filterContext,
           filterVariables,
           filterChannel,
+          combinedFilters,
           clearFilters,
           hasActiveFilters,
         }}

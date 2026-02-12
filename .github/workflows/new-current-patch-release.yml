@@ -65,3 +65,29 @@ jobs:
           git push origin refs/heads/$CURRENT_RELEASE:refs/heads/$CURRENT_RELEASE
 
           echo "✅ Successfully recreated release branch $CURRENT_RELEASE from main"
+
+  load-failure-secrets:
+    if: failure()
+    needs: recreate-release-branch
+    runs-on: ubuntu-22.04
+    outputs:
+      slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Load secrets
+        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        id: load-secrets
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/DASHBOARD_BUILD_FAILURE_SLACK_WEBHOOK/password"
+
+  notify-failure:
+    if: failure()
+    needs: [recreate-release-branch, load-failure-secrets]
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    with:
+      custom_title: "🚨 Patch Release Branch Recreation Failed"
+      status: failure
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+    secrets:
+      slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}

@@ -3,7 +3,7 @@ import { URL_LIST } from "@data/url";
 import { AddCountriesDialog } from "@dialogs/addCountriesDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class TaxesPage extends BasePage {
   readonly page: Page;
@@ -38,9 +38,7 @@ export class TaxesPage extends BasePage {
     readonly searchTaxClassInput = page.getByTestId("search-tax-class-input").locator("input"),
     readonly searchedCountryRows = page.getByTestId("country-rows"),
 
-    readonly searchTaxCountryInput = page
-      .getByTestId("search-tax-countries-input")
-      .locator("input"),
+    readonly searchTaxCountryInput = page.getByRole("textbox", { name: "Search tax countries" }),
     readonly taxClassNameInput = page.getByTestId("class-name-input").locator("input"),
     readonly noTaxRateInput = page.getByTestId("No Taxes").locator("input"),
     readonly defaultRateInput = page.getByTestId("Country default rate").locator("input"),
@@ -105,17 +103,29 @@ export class TaxesPage extends BasePage {
 
   async typeSearchedTaxCountryName(taxCountryName: string) {
     await this.searchTaxCountryInput.fill(taxCountryName);
+    // Verify the input value is set before checking filtered results
+    await expect(this.searchTaxCountryInput).toHaveValue(taxCountryName);
+    // Wait for search results to filter
+    await this.searchedCountryRows
+      .filter({ hasText: taxCountryName })
+      .waitFor({ state: "visible", timeout: 10000 });
   }
 
   async typeTaxRateInSearchedCountryRow(taxCountryName: string, taxRateValue: string) {
-    await this.searchedCountryRows
-      .filter({ hasText: taxCountryName })
-      .locator("input")
-      .fill(taxRateValue);
+    const countryRow = this.searchedCountryRows.filter({ hasText: taxCountryName });
+
+    await countryRow.waitFor({ state: "visible", timeout: 10000 });
+
+    const input = countryRow.locator("input");
+
+    await input.waitFor({ state: "visible", timeout: 5000 });
+    await input.fill(taxRateValue);
   }
 
   async clickCreateClassButton() {
     await this.createClassButton.click();
+    // Wait for the new tax class form to load
+    await this.taxClassNameInput.waitFor({ state: "visible" });
   }
 
   async selectTaxCalculationMethod(method: string) {

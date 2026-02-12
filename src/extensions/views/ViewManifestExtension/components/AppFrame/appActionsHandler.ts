@@ -9,6 +9,7 @@ import {
   FormPayloadUpdate,
   NotificationAction,
   NotifyReady,
+  PopupClose,
   RedirectAction,
   RequestPermissions,
   UpdateRouting,
@@ -267,6 +268,21 @@ const useHandleAppFormUpdate = () => {
   };
 };
 
+const useHandlePopupCloseAction = () => {
+  const { deactivate } = useActiveAppExtension();
+
+  return {
+    handle: (action: PopupClose) => {
+      const { actionId } = action.payload;
+
+      debug(`Handling PopupClose action with ID: %s`, actionId);
+      deactivate();
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
@@ -275,4 +291,5 @@ export const AppActionsHandler = {
   createResponseStatus,
   useHandlePermissionRequest,
   useHandleAppFormUpdate,
+  useHandlePopupCloseAction,
 };

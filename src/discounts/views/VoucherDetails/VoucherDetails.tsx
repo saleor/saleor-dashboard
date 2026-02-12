@@ -92,11 +92,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   } = useCollectionWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
+  const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
@@ -525,7 +521,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         confirmButtonState={voucherUpdateOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-variant"}
-        onFetch={searchProducts}
+        onFilterChange={handleProductFilterChange}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}

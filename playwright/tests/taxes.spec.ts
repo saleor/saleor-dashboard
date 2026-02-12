@@ -47,22 +47,40 @@ test("TC: SALEOR_117 Add new country and tax rates to it #taxes #e2e", async () 
   await taxesPage.addCountriesDialog.checkAndSaveSingleCountry(
     COUNTRIES.countryToBeAddedInTaxes.name,
   );
-  expect(await taxesPage.countriesListRow.first()).toHaveText(
+  await expect(taxesPage.countriesListRow.first()).toHaveText(
     COUNTRIES.countryToBeAddedInTaxes.name,
   );
   await taxesPage.typeAllTaxRatesForCountry("23", "0", "16", "7", "21", "19");
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
-test("TC: SALEOR_118 Add new class with metadata and set tax rate for single country #taxes #e2e", async () => {
+test("TC: SALEOR_118 Add new class with metadata and set tax rate for single country #taxes #e2e", async ({
+  page,
+}) => {
   await taxesPage.gotoChannelsTabUrl();
   await taxesPage.clickTaxClassTab();
   await taxesPage.clickCreateClassButton();
-  expect(await taxesPage.taxClassNameInput).toHaveValue("New tax class");
+  await expect(taxesPage.taxClassNameInput).toHaveValue("New tax class");
   await taxesPage.typeTaxClassName("Automation test tax class");
   await taxesPage.typeSearchedTaxCountryName("United States of America");
   await taxesPage.typeTaxRateInSearchedCountryRow("United States of America", "20");
+  await taxesPage.metadataSeoPage.publicMetaSection.waitFor({ state: "attached", timeout: 10000 });
+  await taxesPage.metadataSeoPage.publicMetaSection.scrollIntoViewIfNeeded();
   await taxesPage.metadataSeoPage.expandAndAddAllMetadata();
+
+  // Ensure save button is enabled after metadata changes
+  await expect(taxesPage.saveButton).toBeEnabled();
+
+  // Wait for the GraphQL mutation when save is clicked, then verify success
+  const responsePromise = page.waitForResponse(
+    resp =>
+      resp.url().includes("/graphql/") &&
+      resp.request().postDataJSON()?.operationName === "TaxClassCreate",
+    { timeout: 10000 },
+  );
+
   await taxesPage.clickSaveButton();
+  await responsePromise;
+
   await taxesPage.expectSuccessBanner();
 });

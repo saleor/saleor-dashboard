@@ -1,4 +1,9 @@
-import { DiscountValueTypeEnum, OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
+import {
+  DiscountValueTypeEnum,
+  OrderDetailsFragment,
+  OrderDiscountType,
+  OrderLinesUpdateFragment,
+} from "@dashboard/graphql";
 import { prepareMoney } from "@dashboard/orders/fixtures";
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import Wrapper from "@test/wrapper";
@@ -8,11 +13,14 @@ import userEvent from "@testing-library/user-event";
 import { OrderValue } from "./OrderValue";
 
 type BaseOrderValueProps = {
-  orderSubtotal: OrderDetailsFragment["subtotal"];
-  shippingMethodName: OrderDetailsFragment["shippingMethodName"];
-  shippingPrice: OrderDetailsFragment["shippingPrice"];
-  orderTotal: OrderDetailsFragment["total"];
-  discounts: OrderDetailsFragment["discounts"];
+  orderSubtotal: OrderLinesUpdateFragment["subtotal"];
+  shippingMethodName: OrderLinesUpdateFragment["shippingMethodName"];
+  shippingPrice: OrderLinesUpdateFragment["shippingPrice"];
+  orderTotal: OrderLinesUpdateFragment["total"];
+  discounts: OrderLinesUpdateFragment["discounts"];
+  isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
+  shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
+  shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
@@ -36,6 +44,9 @@ const baseProps: BaseOrderValueProps = {
     tax: { __typename: "Money", amount: 0, currency: "USD" },
   },
   discounts: [],
+  isShippingRequired: true,
+  shippingMethods: [],
+  shippingMethod: null,
   giftCardsAmount: null,
   usedGiftCards: null,
   displayGrossPrices: true,

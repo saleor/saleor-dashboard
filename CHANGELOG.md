@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.22.31
+
+### Patch Changes
+
+- [#6310](https://github.com/saleor/saleor-dashboard/pull/6310) [`3693eb4`](https://github.com/saleor/saleor-dashboard/commit/3693eb47cfaaf03cce40208d6d3a6784d3c57ea3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated @saleor/app-sdk and added support for `popupClose` action. Since this release, app will be able to close the popup via code
+
+- [#6292](https://github.com/saleor/saleor-dashboard/pull/6292) [`0bdad3e`](https://github.com/saleor/saleor-dashboard/commit/0bdad3e686c7473eae5182336b0f49a910623e0e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed data-fetching in Order details page. Now when line items are changed, order summary (total, shipping price, etc.) are updated. Previously these values were not updated and displayed stale data.
+
+- [#6292](https://github.com/saleor/saleor-dashboard/pull/6292) [`0bdad3e`](https://github.com/saleor/saleor-dashboard/commit/0bdad3e686c7473eae5182336b0f49a910623e0e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed e2e tests: updated assertions for notifications, datagrid, gift cards
+
+## 3.22.30
+
+### Patch Changes
+
+- [#6305](https://github.com/saleor/saleor-dashboard/pull/6305) [`b53b0d7`](https://github.com/saleor/saleor-dashboard/commit/b53b0d7433eb423b6ba43d3e5dbc11d82cae3749) Thanks [@mirekm](https://github.com/mirekm)! - Fix broken pagination in simple product create mutation
+
+- [#6306](https://github.com/saleor/saleor-dashboard/pull/6306) [`cf68ca5`](https://github.com/saleor/saleor-dashboard/commit/cf68ca54f43bae44749637a092d7792605420492) Thanks [@mirekm](https://github.com/mirekm)! - New products are now created unpublished, unavailable, and unlisted by default
+
 ## 3.22.29
 
 ### Patch Changes

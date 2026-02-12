@@ -31,6 +31,7 @@ import {
   CountryWithCodeFragment,
   DiscountErrorFragment,
   PermissionEnum,
+  ProductWhereInput,
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsWithTotalProductsQuery,
@@ -91,6 +92,11 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
   action: VoucherCreateUrlQueryParams["action"];
   openModal: (action: VoucherCreateUrlQueryParams["action"]) => void;
   closeModal: () => void;
+  onProductFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   categoriesSearch: UseSearchResult<
     SearchCategoriesWithTotalProductsQuery,
     SearchCategoriesWithTotalProductsQueryVariables
@@ -129,6 +135,7 @@ const VoucherCreatePage = ({
   categoriesSearch,
   collectionsSearch,
   variantsSearch,
+  onProductFilterChange,
   countries,
   resetSelected,
 }: VoucherCreatePageProps) => {
@@ -508,7 +515,7 @@ const VoucherCreatePage = ({
             confirmButtonState="default"
             hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-variant"}
-            onFetch={variantsSearch.search}
+            onFilterChange={onProductFilterChange}
             onFetchMore={variantsSearch.loadMore}
             loading={variantsSearch.result.loading}
             onClose={closeModal}
