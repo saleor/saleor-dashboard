@@ -1,7 +1,7 @@
-import { getExternalAuthenticationMethodName } from "@dashboard/auth";
 import { LastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
+import { getExternalAuthenticationMethodName } from "@dashboard/auth/utils";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";

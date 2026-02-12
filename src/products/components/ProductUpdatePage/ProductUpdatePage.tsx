@@ -3,8 +3,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   handleMetadataReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
-import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
