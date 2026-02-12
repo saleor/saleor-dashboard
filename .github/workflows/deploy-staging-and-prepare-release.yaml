@@ -63,6 +63,7 @@ jobs:
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
       ## backward compatibility for older versions
       APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
@@ -169,17 +170,6 @@ jobs:
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.VERSION }} to ${{ env.ENVIRONMENT }}"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
-
       - name: Prepare Sandbox release pull request
         if: needs.prepare-release.outputs.hasChangesets == 'false'
         run: |
@@ -198,6 +188,21 @@ jobs:
           }')
 
           gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
+
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    with:
+      type: deployment
+      ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: ${{ needs.build.outputs.ENVIRONMENT }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+    secrets:
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
 
   run-tests-on-release:
     needs: [prepare-release, build]
