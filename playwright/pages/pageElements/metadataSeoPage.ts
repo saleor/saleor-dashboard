@@ -56,12 +56,20 @@ export class MetadataSeoPage {
     privateMetaName = privateMetaDataName,
     privateMetaValue = privateMetaDataValue,
   ) {
+    // Wait for public metadata section to be visible before expanding
+    await this.publicMetaSection.waitFor({ state: "visible", timeout: 2_000 });
     await this.clickMetadataSectionExpandButton();
+    await this.addMetaButton.waitFor({ state: "visible", timeout: 1_000 });
     await this.addMetaButton.click();
+    await this.metaDataNameInput.waitFor({ state: "visible", timeout: 1_000 });
     await this.metaDataNameInput.fill(metaName);
     await this.metadataValueField.fill(metaValue);
+    // Wait for private metadata section before expanding
+    await this.privateMetaSection.waitFor({ state: "visible", timeout: 1_000 });
     await this.clickPrivateMetadataSectionExpandButton();
+    await this.addPrivateMetaButton.waitFor({ state: "visible", timeout: 1_000 });
     await this.addPrivateMetaButton.click();
+    await this.privateMetaDataNameInput.waitFor({ state: "visible", timeout: 1_000 });
     await this.privateMetaDataNameInput.fill(privateMetaName);
     await this.privateMetadataValueField.fill(privateMetaValue);
   }

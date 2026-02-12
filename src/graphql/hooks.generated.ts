@@ -479,6 +479,7 @@ export const AddressFragmentDoc = gql`
 export const CustomerDetailsFragmentDoc = gql`
     fragment CustomerDetails on User {
   ...Customer
+  dateJoined
   lastLogin
   defaultShippingAddress {
     ...Address
@@ -1961,10 +1962,6 @@ export const OrderLineFragmentDoc = gql`
     product {
       id
       isAvailableForPurchase
-      category {
-        id
-        name
-      }
     }
   }
   productName

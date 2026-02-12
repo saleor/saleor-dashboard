@@ -39,9 +39,7 @@ export interface ModalFilterConfig<
   lockedFilterField?: string;
   emptyFetchingParams: TFetchingParams;
   filterProviderType: FilterProviderType;
-  createQueryVariables: (
-    container: FilterContainer,
-  ) => TQueryVariables & { channel?: { eq: string } };
+  createQueryVariables: (container: FilterContainer) => TQueryVariables & { channel?: string };
   useApiProvider: () => FilterAPIProvider;
   useInitialState: () => InitialStateAPI<TInitialState, TFetchingParams>;
 }

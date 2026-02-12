@@ -386,10 +386,7 @@ export const orderLineDeleteMutation = gql`
         ...OrderError
       }
       order {
-        id
-        lines {
-          ...OrderLine
-        }
+        ...OrderLinesUpdate
       }
     }
   }
@@ -402,10 +399,7 @@ export const orderLinesAddMutation = gql`
         ...OrderError
       }
       order {
-        id
-        lines {
-          ...OrderLine
-        }
+        ...OrderLinesUpdate
       }
     }
   }
@@ -419,6 +413,9 @@ export const orderLineUpdateMutation = gql`
       }
       orderLine {
         ...OrderLine
+      }
+      order {
+        ...OrderLinesUpdate
       }
     }
   }

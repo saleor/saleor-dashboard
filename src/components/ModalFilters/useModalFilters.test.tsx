@@ -222,7 +222,7 @@ describe("useModalFilters", () => {
       const wrapper = createWrapper();
       const config = createMockConfig({
         createQueryVariables: jest.fn().mockReturnValue({
-          channel: { eq: "default-channel" },
+          channel: "default-channel",
           price: { eq: "100" },
         }),
       });
@@ -255,7 +255,7 @@ describe("useModalFilters", () => {
       const wrapper = createWrapper();
       const config = createMockConfig({
         createQueryVariables: jest.fn().mockReturnValue({
-          channel: { eq: "default-channel" },
+          channel: "default-channel",
           price: { eq: "100" },
         }),
       });

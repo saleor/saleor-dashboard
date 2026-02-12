@@ -37,6 +37,18 @@ export interface ChannelDiagnosticData {
 export interface ProductDiagnosticData {
   id: string;
   name: string;
+  /**
+   * Whether the product type requires shipping (from productType.isShippingRequired).
+   *
+   * This flag affects which diagnostic checks run:
+   * - When true: All checks run (shipping zones, warehouses, stock, etc.)
+   * - When false: Shipping zone checks are skipped (non-shippable products don't need shipping)
+   *
+   * Note: Warehouse/stock checks still run for non-shippable products because they may
+   * track inventory (e.g., activation codes, digital license keys). If a product doesn't
+   * track inventory, variant.stocks will be empty and warehouse checks will pass naturally.
+   */
+  isShippingRequired: boolean;
   channelListings: Array<{
     channel: {
       id: string;

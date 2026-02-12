@@ -227,11 +227,13 @@ const checkWarehouseNotInShippingZone: CheckFunction = ({ product, channelData, 
     });
   });
 
-  // Check if any warehouse with stock is also in a shipping zone
+  // Pre-compute channel warehouse IDs for O(1) lookup instead of O(W) scan
+  const channelWarehouseIds = new Set(channelData.warehouses.map(w => w.id));
+
+  // Check if any warehouse with stock is also in a shipping zone AND assigned to this channel
   const hasReachableStock = Array.from(warehouseIdsWithStock).some(
     warehouseId =>
-      warehouseIdsInShippingZones.has(warehouseId) &&
-      channelData.warehouses.some(w => w.id === warehouseId),
+      warehouseIdsInShippingZones.has(warehouseId) && channelWarehouseIds.has(warehouseId),
   );
 
   if (warehouseIdsWithStock.size > 0 && !hasReachableStock) {
@@ -272,8 +274,16 @@ const warehouseChecks: CheckFunction[] = [checkNoWarehouses, checkNoStock];
  */
 const shippingChecks: CheckFunction[] = [checkNoShippingZones, checkWarehouseNotInShippingZone];
 
+/**
+ * Options to skip certain check categories.
+ * These are typically set based on user permissions - if the user cannot view
+ * warehouse or shipping zone data, the corresponding checks should be skipped
+ * to avoid false positives from missing data.
+ */
 interface CheckSkipOptions {
+  /** Skip warehouse/stock checks (set when user lacks warehouse view permissions) */
   skipWarehouseChecks?: boolean;
+  /** Skip shipping zone checks (set when user lacks shipping zone view permissions) */
   skipShippingChecks?: boolean;
 }
 
@@ -305,7 +315,10 @@ export function runAvailabilityChecks(
     }
   }
 
-  // Run warehouse checks only if we have permission
+  // Run warehouse checks only if we have permission.
+  // Note: Warehouse checks run for ALL products (including non-shippable) because:
+  // - Non-shippable products may still track inventory (e.g., activation codes, digital license keys)
+  // - If a product doesn't track inventory, variant.stocks will be empty and checks will pass
   if (!skipOptions?.skipWarehouseChecks) {
     for (const check of warehouseChecks) {
       const issue = check(context);
@@ -316,8 +329,12 @@ export function runAvailabilityChecks(
     }
   }
 
-  // Run shipping checks only if we have permission
-  if (!skipOptions?.skipShippingChecks) {
+  // Run shipping checks only if:
+  // 1. We have permission (skipShippingChecks is not set)
+  // 2. Product requires shipping (non-shippable products don't need shipping configuration)
+  const shouldRunShippingChecks = !skipOptions?.skipShippingChecks && product.isShippingRequired;
+
+  if (shouldRunShippingChecks) {
     for (const check of shippingChecks) {
       const issue = check(context);
 
