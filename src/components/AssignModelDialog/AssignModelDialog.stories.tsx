@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { withFilterApolloMocks } from "@storybookUtils/AssignDialogShared/decorators";
 import { PageFactory } from "@storybookUtils/AssignDialogShared/factories";
-import { withMockedFilters } from "@storybookUtils/AssignDialogShared/storyDecorators";
 import { ComponentProps } from "react";
 import { fn } from "storybook/test";
 
@@ -11,7 +11,7 @@ type Props = ComponentProps<typeof AssignModelDialog>;
 const meta: Meta<typeof AssignModelDialog> = {
   title: "Components/Dialogs/AssignModelDialog",
   component: AssignModelDialog,
-  decorators: [withMockedFilters],
+  decorators: [withFilterApolloMocks],
   loaders: [async () => ({ pages: await PageFactory.buildList(8) })],
   render: (args: Props, { loaded }: { loaded: { pages: Props["pages"] } }) => (
     <AssignModelDialog {...args} pages={args.pages ?? loaded.pages} />
