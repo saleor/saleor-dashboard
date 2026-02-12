@@ -1,5 +1,5 @@
-import { useUser } from "@dashboard/auth";
 import LoginLoading from "@dashboard/auth/components/LoginLoading/LoginLoading";
+import { useUser } from "@dashboard/auth/useUser";
 import { ReactNode, useEffect, useState } from "react";
 
 import { FlagList } from "./availableFlags";

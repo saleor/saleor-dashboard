@@ -5,7 +5,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { StaffMembers } from "@dashboard/staff/types";

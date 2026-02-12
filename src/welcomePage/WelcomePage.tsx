@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";

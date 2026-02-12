@@ -8,7 +8,7 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   CountryCode,
   TaxClassRateInput,

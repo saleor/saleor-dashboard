@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
