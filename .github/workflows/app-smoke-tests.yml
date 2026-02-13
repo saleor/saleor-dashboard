@@ -87,7 +87,7 @@ jobs:
           E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
           MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
-          E2E_ENCODE_PASS: "op://Everyone/TESTS_RESULT_PASSWORD/password"
+          E2E_ENCODE_PASS: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
 
       - name: Export caller secrets
         if: github.event_name != 'workflow_dispatch'
