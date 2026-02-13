@@ -1,0 +1,65 @@
+src/orders/components/OrderDetailsRefundTable/OrderDetailsRefundLine.tsx
+  24eafe239290352d 133,136-137,157-172,176-177
+src/orders/components/OrderDetailsDatagrid/datagrid.ts
+  cd95e567915e09a7 20-24,28,66-74,83,87,135-140
+src/orders/views/OrderReturn/useRefundWithinReturn.ts
+  cd95e567915e09a7 94-95,98-99,105-106
+  8310b3b7c3bb27e4 17,26-27,30-64,73-79,86,88,93,96-97,100,148-150
+src/orders/components/OrderDetailsDatagrid/OrderDetailsDatagrid.tsx
+  cd95e567915e09a7 26,36,44,51,53-54,87,89
+  24eafe239290352d 64-72,77
+src/orders/views/OrderReturn/useRefundWithinReturn.test.ts
+  8310b3b7c3bb27e4 32-43,45-61
+src/orders/views/OrderReturn/OrderReturn.tsx
+  8310b3b7c3bb27e4 77
+src/orders/components/OrderFulfillmentCard/OrderFulfillmentCard.tsx
+  cd95e567915e09a7 19,51-56,76-78,81-83,171
+src/orders/components/OrderDetailsDatagrid/messages.ts
+  cd95e567915e09a7 38,40-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "39ac280f9e08004798b12a060450457839bdd9d2",
+  "prompts": {
+    "24eafe239290352d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d86dfd30-b531-47be-87d8-e6911e7a4030",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 58,
+      "total_deletions": 44,
+      "accepted_lines": 31,
+      "overriden_lines": 2
+    },
+    "8310b3b7c3bb27e4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "098766ed-fa0e-44cc-8adf-e52fbe9fa936",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 89,
+      "total_deletions": 8,
+      "accepted_lines": 86,
+      "overriden_lines": 1
+    },
+    "cd95e567915e09a7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9c1592c8-6787-4bb0-9bf9-59a28abd5d51",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 65,
+      "total_deletions": 13,
+      "accepted_lines": 55,
+      "overriden_lines": 1
+    }
+  }
+}
