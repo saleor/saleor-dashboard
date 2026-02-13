@@ -79,10 +79,7 @@ const OrderTransaction = ({
                 borderTopWidth={1}
                 backgroundColor="default1"
               >
-                <TransactionEvents
-                  events={events}
-                  paymentMethodDetails={transaction.paymentMethodDetails}
-                />
+                <TransactionEvents events={events} />
                 {cardFooter}
               </Box>
             </Accordion.Content>

@@ -121,6 +121,23 @@ export const WithCardPaymentMethod: Story = {
   },
 };
 
+export const WithMastercardPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "mastercard",
+        expMonth: 3,
+        expYear: 2026,
+        lastDigits: "4444",
+      },
+    },
+  },
+};
+
 export const WithOtherPaymentMethod: Story = {
   args: {
     transaction: {
