@@ -54,6 +54,8 @@ const OrderTransactionPayment = ({
     chargePendingAmount: prepareMoney(0, currency),
     cancelPendingAmount: prepareMoney(0, currency),
     createdAt: fakeEvents[0]?.createdAt,
+    createdBy: null,
+    paymentMethodDetails: null,
     __typename: "FakeTransaction",
   };
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {

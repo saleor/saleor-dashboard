@@ -9,6 +9,7 @@ import { OrderTransactionProps } from "../../OrderTransaction";
 import { ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
 import { EventTime } from "../TransactionEvents/components/EventTime";
+import { PaymentMethodDetails } from "../TransactionEvents/components/PaymentMethodDetails";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 
@@ -148,6 +149,17 @@ export const OrderTransactionCardTitle = ({
       <TransactionTitle transaction={transaction} index={index} chevron={chevron} />
 
       <Box display="flex" gap={4} alignItems="center">
+        {transaction.paymentMethodDetails && (
+          <Box
+            borderRightStyle="solid"
+            borderColor="default1"
+            borderRightWidth={1}
+            paddingRight={4}
+          >
+            <PaymentMethodDetails paymentMethodDetails={transaction.paymentMethodDetails} />
+          </Box>
+        )}
+
         {amounts.map(({ label, money }) => (
           <MoneyDisplay key={label.id} label={intl.formatMessage(label)} money={money} />
         ))}
