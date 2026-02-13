@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchAttributeValuesDocument,
@@ -39,18 +38,19 @@ export function useSearchAttributeValuesSuggestions() {
           query,
         },
       })
-      .then(({ data }) =>
-        mapEdgesToItems(data.attribute.choices).map(({ name, slug }) => ({
-          label: name,
-          value: slug,
-        })),
+      .then(
+        ({ data }) =>
+          mapEdgesToItems(data.attribute?.choices ?? undefined)?.map(({ name, slug }) => ({
+            label: name,
+            value: slug,
+          })) ?? [],
       );
 }
 
 export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>(
   SearchAttributeValuesDocument,
   result => {
-    if (result.data?.attribute.choices.pageInfo.hasNextPage) {
+    if (result.data?.attribute?.choices?.pageInfo?.hasNextPage) {
       result.loadMore(
         (prev, next) => {
           if (
@@ -60,15 +60,19 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
             return prev;
           }
 
+          if (!next.attribute || !next.attribute.choices || !prev.attribute) {
+            return prev;
+          }
+
           return {
             ...prev,
             attribute: {
               ...prev.attribute,
               choices: {
-                ...prev?.attribute.choices,
+                ...(prev.attribute.choices ?? next.attribute.choices),
                 edges: [
                   ...(prev.attribute.choices?.edges ?? []),
-                  ...(next.attribute.choices?.edges ?? []),
+                  ...(next.attribute.choices.edges ?? []),
                 ],
                 pageInfo: next.attribute.choices.pageInfo,
               },
@@ -78,7 +82,7 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
         {
           ...result.variables,
           after: result.data.attribute.choices.pageInfo.endCursor,
-        },
+        } as Partial<SearchAttributeValuesQueryVariables>,
       );
     }
   },

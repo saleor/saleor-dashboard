@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchProductTypesDocument,
@@ -36,11 +35,12 @@ export function useSearchProductTypes() {
           query,
         },
       })
-      .then(({ data }) =>
-        mapEdgesToItems(data.search).map(({ name, id }) => ({
-          label: name,
-          value: id,
-        })),
+      .then(
+        ({ data }) =>
+          mapEdgesToItems(data.search ?? undefined)?.map(({ name, id }) => ({
+            label: name,
+            value: id,
+          })) ?? [],
       );
 }
 

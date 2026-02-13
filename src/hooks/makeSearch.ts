@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import { useState } from "react";
@@ -41,7 +40,7 @@ function makeSearch<TData, TVariables extends SearchVariables>(
       variables: {
         ...opts.variables,
         query: searchQuery,
-      },
+      } as TVariables,
     });
 
     return {

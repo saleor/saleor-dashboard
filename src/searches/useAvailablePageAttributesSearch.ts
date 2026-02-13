@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
   SearchAvailablePageAttributesDocument,
@@ -28,33 +27,40 @@ export const searchPageAttributes = gql`
 export default makeSearch<
   SearchAvailablePageAttributesQuery,
   SearchAvailablePageAttributesQueryVariables
->(SearchAvailablePageAttributesDocument, result =>
-  result.loadMore(
-    (prev, next) => {
-      if (
-        prev.pageType.availableAttributes.pageInfo.endCursor ===
-        next.pageType.availableAttributes.pageInfo.endCursor
-      ) {
-        return prev;
-      }
+>(SearchAvailablePageAttributesDocument, result => {
+  if (result.data?.pageType?.availableAttributes?.pageInfo?.hasNextPage) {
+    result.loadMore(
+      (prev, next) => {
+        if (
+          prev.pageType?.availableAttributes?.pageInfo?.endCursor ===
+          next.pageType?.availableAttributes?.pageInfo?.endCursor
+        ) {
+          return prev;
+        }
 
-      return {
-        ...prev,
-        pageType: {
-          ...prev.pageType,
-          availableAttributes: {
-            ...prev.pageType.availableAttributes,
-            edges: [
-              ...prev.pageType.availableAttributes.edges,
-              ...next.pageType.availableAttributes.edges,
-            ],
-            pageInfo: next.pageType.availableAttributes.pageInfo,
+        if (!next.pageType || !next.pageType.availableAttributes || !prev.pageType) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          pageType: {
+            ...prev.pageType,
+            availableAttributes: {
+              ...(prev.pageType.availableAttributes ?? next.pageType.availableAttributes),
+              edges: [
+                ...(prev.pageType.availableAttributes?.edges ?? []),
+                ...(next.pageType.availableAttributes.edges ?? []),
+              ],
+              pageInfo: next.pageType.availableAttributes.pageInfo,
+            },
           },
-        },
-      };
-    },
-    {
-      after: result.data.pageType.availableAttributes.pageInfo.endCursor,
-    },
-  ),
-);
+        };
+      },
+      {
+        ...result.variables,
+        after: result.data.pageType.availableAttributes.pageInfo.endCursor,
+      } as Partial<SearchAvailablePageAttributesQueryVariables>,
+    );
+  }
+});
