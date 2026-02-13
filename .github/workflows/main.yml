@@ -39,10 +39,6 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      # TODO: remove || true once we resolve errors in actionlint
-      - name: Run actionlint
-        run: pnpm run lint:actionlint || true
-
       - name: Run tsc
         run: pnpm run check-types
 
