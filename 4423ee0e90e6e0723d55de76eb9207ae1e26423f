@@ -1,0 +1,31 @@
+src/orders/components/OrderTransaction/components/CardTitle/CardTitle.tsx
+  0034ced7abb2c582 152-157
+src/orders/components/OrderTransaction/OrderTransaction.stories.tsx
+  0034ced7abb2c582 124-140
+src/orders/components/OrderTransaction/components/TransactionEvents/TransactionEvents.tsx
+  0034ced7abb2c582 44
+src/orders/components/OrderTransaction/components/TransactionEvents/components/EventItem.tsx
+  0034ced7abb2c582 92
+src/orders/components/OrderTransaction/OrderTransaction.tsx
+  0034ced7abb2c582 82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "4423ee0e90e6e0723d55de76eb9207ae1e26423f",
+  "prompts": {
+    "0034ced7abb2c582": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7384ea2b-17cf-43e3-a874-0e0e0ce06c9a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 88,
+      "total_deletions": 58,
+      "accepted_lines": 79,
+      "overriden_lines": 0
+    }
+  }
+}
