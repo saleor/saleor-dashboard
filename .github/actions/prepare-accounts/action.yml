@@ -46,4 +46,5 @@ runs:
         E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
       run: |
         ACCOUNTS=$(node playwright/auth.js login)
+        echo "::add-mask::${ACCOUNTS}"
         echo "ACCOUNTS=${ACCOUNTS}" >> "$GITHUB_OUTPUT"
