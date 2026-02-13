@@ -42,15 +42,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prepare:
+  run-smoke-tests:
     runs-on: ubuntu-22.04
-    outputs:
-      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
-      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          repository: saleor/saleor-dashboard
 
       - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - name: Setup Node
@@ -88,51 +85,37 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
-  run-smoke-tests:
-    runs-on: ubuntu-22.04
-    needs: prepare
-    steps:
-      - uses: actions/checkout@v4
-
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: "1/1"
-          BASE_URL: ${{ needs.prepare.outputs.BASE_URL }}
-          API_URL: ${{ needs.prepare.outputs.API_URL }}
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          ACCOUNTS: ${{ needs.prepare.outputs.ACCOUNTS }}
+          ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: "1"
           PW_RETRIES: "1"
           PROJECT: "app-smoke"
           BRANCH_NAME: ${{ github.ref }}
-          SALEOR_CLOUD_SERVICE: ${{ needs.prepare.outputs.SALEOR_CLOUD_SERVICE }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
 
   tests-complete:
     if: "!cancelled()"
-    needs: ["prepare", "run-smoke-tests"]
+    needs: ["run-smoke-tests"]
     runs-on: ubuntu-22.04
     outputs:
       TESTS_CONCLUSION: ${{ steps.conclusion.outputs.status }}
     steps:
       - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
+          repository: saleor/saleor-dashboard
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
