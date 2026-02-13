@@ -1,3 +1,4 @@
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -15,9 +16,10 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { ChangeEvent, useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
@@ -35,6 +37,15 @@ interface CategoryTableProps
   onTabUpdate: (tabName: string) => void;
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  onSelectedCategoriesIdsChange?: (ids: string[]) => void;
+  isCategoryExpanded?: (categoryId: string) => boolean;
+  onCategoryExpandToggle?: (categoryId: string) => void;
+  isCategoryChildrenLoading?: (categoryId: string) => boolean;
+  getCategoryDepth?: (categoryId: string) => number;
+  subcategoryPageSize: number;
+  onSubcategoryPageSizeChange: (value: number) => void;
+  hasExpandedSubcategories: boolean;
+  onCollapseAllSubcategories: () => void;
 }
 
 export const CategoryListPage = ({
@@ -51,9 +62,19 @@ export const CategoryListPage = ({
   onTabUpdate,
   hasPresetsChanged,
   onCategoriesDelete,
+  onSelectCategoriesIds,
+  onSelectedCategoriesIdsChange,
   selectedCategoriesIds,
+  isCategoryExpanded,
+  isCategoryChildrenLoading,
+  onCategoryExpandToggle,
+  getCategoryDepth,
+  subcategoryPageSize,
+  onSubcategoryPageSizeChange,
+  hasExpandedSubcategories,
+  onCollapseAllSubcategories,
   ...listProps
-}: CategoryTableProps) => {
+}: CategoryTableProps): JSX.Element => {
   const navigate = useNavigator();
 
   const intl = useIntl();
@@ -67,6 +88,18 @@ export const CategoryListPage = ({
     selectedCategoriesIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CATEGORY_OVERVIEW_CREATE);
+  const handleSubcategoryPageSizeInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const nextValue = Number.parseInt(event.target.value, 10);
+
+      if (Number.isNaN(nextValue)) {
+        return;
+      }
+
+      onSubcategoryPageSizeChange(nextValue);
+    },
+    [onSubcategoryPageSizeChange],
+  );
 
   return (
     <ListPageLayout>
@@ -128,16 +161,50 @@ export const CategoryListPage = ({
               onSearchChange={onSearchChange}
             />
           </Box>
-          {selectedCategoriesIds.length > 0 && (
-            <BulkDeleteButton onClick={onCategoriesDelete}>
-              <FormattedMessage {...messages.bulkCategoryDelete} />
-            </BulkDeleteButton>
-          )}
+          <Box display="flex" alignItems="center" gap={4}>
+            <Box display="flex" alignItems="center" gap={2}>
+              <Text size={2}>
+                <FormattedMessage {...messages.subcategoriesPageSizeLabel} />
+              </Text>
+              <Ripple model={rippleExpandedSubcategories} />
+              <Input
+                size="small"
+                type="number"
+                min={1}
+                max={200}
+                step={1}
+                value={subcategoryPageSize}
+                onChange={handleSubcategoryPageSizeInputChange}
+                __width="104px"
+                data-test-id="subcategory-page-size-input"
+              />
+            </Box>
+            <Button
+              variant="secondary"
+              onClick={onCollapseAllSubcategories}
+              disabled={!hasExpandedSubcategories}
+              data-test-id="collapse-all-subcategories"
+            >
+              <FormattedMessage {...messages.collapseAllSubcategories} />
+            </Button>
+            {selectedCategoriesIds.length > 0 && (
+              <BulkDeleteButton onClick={onCategoriesDelete}>
+                <FormattedMessage {...messages.bulkCategoryDelete} />
+              </BulkDeleteButton>
+            )}
+          </Box>
         </Box>
         <CategoryListDatagrid
           disabled={disabled}
           categories={categories}
           hasRowHover={!isFilterPresetOpen}
+          onSelectCategoriesIds={onSelectCategoriesIds}
+          selectedCategoriesIds={selectedCategoriesIds}
+          onSelectedCategoriesIdsChange={onSelectedCategoriesIdsChange}
+          isCategoryExpanded={isCategoryExpanded}
+          onCategoryExpandToggle={onCategoryExpandToggle}
+          isCategoryChildrenLoading={isCategoryChildrenLoading}
+          getCategoryDepth={getCategoryDepth}
           {...listProps}
         />
       </DashboardCard>

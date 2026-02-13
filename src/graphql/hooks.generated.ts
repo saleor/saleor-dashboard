@@ -4620,6 +4620,54 @@ export function useCategoryDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type CategoryDetailsQueryHookResult = ReturnType<typeof useCategoryDetailsQuery>;
 export type CategoryDetailsLazyQueryHookResult = ReturnType<typeof useCategoryDetailsLazyQuery>;
 export type CategoryDetailsQueryResult = Apollo.QueryResult<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>;
+export const CategoryChildrenDocument = gql`
+    query CategoryChildren($id: ID!, $first: Int!, $after: String) {
+  category(id: $id) {
+    id
+    children(first: $first, after: $after) {
+      edges {
+        node {
+          ...Category
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${CategoryFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useCategoryChildrenQuery__
+ *
+ * To run a query within a React component, call `useCategoryChildrenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryChildrenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryChildrenQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCategoryChildrenQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryChildrenQuery, Types.CategoryChildrenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CategoryChildrenQuery, Types.CategoryChildrenQueryVariables>(CategoryChildrenDocument, options);
+      }
+export function useCategoryChildrenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryChildrenQuery, Types.CategoryChildrenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CategoryChildrenQuery, Types.CategoryChildrenQueryVariables>(CategoryChildrenDocument, options);
+        }
+export type CategoryChildrenQueryHookResult = ReturnType<typeof useCategoryChildrenQuery>;
+export type CategoryChildrenLazyQueryHookResult = ReturnType<typeof useCategoryChildrenLazyQuery>;
+export type CategoryChildrenQueryResult = Apollo.QueryResult<Types.CategoryChildrenQuery, Types.CategoryChildrenQueryVariables>;
 export const ChannelCreateDocument = gql`
     mutation ChannelCreate($input: ChannelCreateInput!) {
   channelCreate(input: $input) {
