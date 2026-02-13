@@ -56,8 +56,8 @@ export const useModalFilters = <
       return null;
     }
 
-    return createLockedFilterElement(lockedFilter);
-  }, [lockedFilter]);
+    return createLockedFilterElement(lockedFilter, config.staticOptions);
+  }, [lockedFilter, config.staticOptions]);
 
   // Wrap value provider with locked filter behavior
   const wrappedValueProvider = useMemo(

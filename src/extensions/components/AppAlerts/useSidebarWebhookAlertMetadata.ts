@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
 import { useMemo } from "react";
 

@@ -28,6 +28,10 @@ const SUPPORTED_STATIC_FIELDS = new Set([
 
 type SupportedStaticFieldsKeys = typeof SUPPORTED_STATIC_FIELDS extends Set<infer T> ? T : never;
 
+const STATIC_WHERE_FIELD_NAME_MAP: Partial<Record<SupportedStaticFieldsKeys, string>> = {
+  pageTypes: "pageType",
+};
+
 type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
 
 /** Static definitions provide a list of chosable elements based on entity type (e.g. category)
@@ -67,7 +71,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
   updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const { value: selectedValue } = element.condition.selected;
-    const fieldName = element.value.value;
+    const fieldName = this.getWhereFieldName(element.value.value as SupportedStaticFieldsKeys);
     let queryPart: StaticWhereQueryPart | undefined;
 
     if (isItemOption(selectedValue)) {
@@ -83,8 +87,9 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
   updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const whereQuery = this.updateWhereQueryVariables(query, element);
-    const fieldName = element.value.value;
-    const whereQueryPart = whereQuery[fieldName] as StaticWhereQueryPart;
+    const whereFieldName = this.getWhereFieldName(element.value.value as SupportedStaticFieldsKeys);
+    const filterFieldName = element.value.value;
+    const whereQueryPart = whereQuery[whereFieldName] as StaticWhereQueryPart;
 
     if (!whereQueryPart) {
       return query;
@@ -92,9 +97,13 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
     return {
       ...query,
-      [fieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
+      [filterFieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
         whereQueryPart as { eq?: string; oneOf?: string[] },
       ),
     };
+  }
+
+  private getWhereFieldName(fieldName: SupportedStaticFieldsKeys): string {
+    return STATIC_WHERE_FIELD_NAME_MAP[fieldName] ?? fieldName;
   }
 }

@@ -53,6 +53,10 @@ inputs:
   BUILD_URL:
     description: "GH actions url"
     required: false
+  APP_IDENTIFIERS:
+    description: "Comma-separated app identifiers to test (optional, empty = all)"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -67,6 +71,32 @@ runs:
       shell: bash
       run: pnpm install
 
+    - name: Get Playwright version
+      id: playwright-version
+      shell: bash
+      run: |
+        VERSION=$(pnpm exec playwright --version | awk '{print $NF}')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Cache Playwright browsers
+      id: playwright-cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+        restore-keys: |
+          playwright-${{ runner.os }}-
+
+    - name: Install Playwright system dependencies (cache hit)
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: pnpm exec playwright install-deps chromium
+
+    - name: Install Playwright Browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: pnpm exec playwright install --with-deps chromium
+
     - name: Restore accounts
       uses: ./.github/actions/restore-accounts
       with:
@@ -74,10 +104,6 @@ runs:
         API_URL: ${{ inputs.API_URL }}
         ACCOUNTS: ${{ inputs.ACCOUNTS }}
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
-
-    - name: Install Playwright Browsers
-      shell: bash
-      run: pnpm exec playwright install --with-deps chromium
 
     - name: Run tests
       shell: bash
@@ -101,6 +127,7 @@ runs:
         DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
         BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
         BUILD_URL: ${{ inputs.BUILD_URL }}
+        APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
 
       run: |
         PROJECTS=($PROJECT)

@@ -2265,10 +2265,6 @@
   "BNTZLv": {
     "string": "Order #{orderId} was placed from draft"
   },
-  "BOYzu+": {
-    "context": "search results",
-    "string": "No models found"
-  },
   "BR8au7": {
     "context": "delete channel",
     "string": "Select channel that you wish to move existing orders to."
@@ -4023,6 +4019,10 @@
     "context": "product rating",
     "string": "Product Rating"
   },
+  "L7j412": {
+    "context": "no models placeholder",
+    "string": "No models found"
+  },
   "L8J/jr": {
     "context": "status pill when order is fully paid",
     "string": "Fully Captured"
@@ -4676,6 +4676,10 @@
     "context": "stock input label",
     "string": "Initial stock (all warehouses)"
   },
+  "OpgSjI": {
+    "context": "dialog header",
+    "string": "Assign Model"
+  },
   "OqYCQ4": {
     "context": "allow legacy gift card use description",
     "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
@@ -5109,6 +5113,9 @@
   "R4IIw1": {
     "context": "tracking number of the shipment",
     "string": "Tracking number"
+  },
+  "R4gIJc": {
+    "string": "Search by model name..."
   },
   "R98JLZ": {
     "context": "OrderCustomer Fulfillment from All Warehouses",
@@ -6110,6 +6117,10 @@
     "context": "shipping method not available label",
     "string": "(not available)"
   },
+  "X1WqwZ": {
+    "context": "button, assign models and save",
+    "string": "Assign and save"
+  },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
@@ -6496,10 +6507,6 @@
   "YzLUXA": {
     "string": "Ensure this value is greater than 0."
   },
-  "Z+m5hG": {
-    "context": "dialog header",
-    "string": "Assign model"
-  },
   "Z/7hyu": {
     "context": "card balance label",
     "string": "Card Balance"
@@ -6513,10 +6520,6 @@
   },
   "Z6QAbw": {
     "string": "This variant does not have any digital content"
-  },
-  "Z768vg": {
-    "context": "placeholder",
-    "string": "Search by model name, etc..."
   },
   "Z7Tf8e": {
     "context": "stock exceeded dialog description",
@@ -7220,10 +7223,6 @@
     "context": "page header",
     "string": "Create New Category"
   },
-  "ch96Wv": {
-    "context": "assign reference to a model, button",
-    "string": "Assign and save"
-  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -7561,6 +7560,9 @@
   "fDc5ys": {
     "context": "order transaction refund summary label",
     "string": "Selected products"
+  },
+  "fEeZGG": {
+    "string": "Search Models"
   },
   "fEfCtO": {
     "context": "voucher discount type",
@@ -8473,10 +8475,6 @@
   },
   "kTr2o8": {
     "string": "Attribute name"
-  },
-  "kTt3D2": {
-    "context": "label",
-    "string": "Search models"
   },
   "kVKTwC": {
     "context": "order expiration card title",
@@ -10609,6 +10607,10 @@
   "wBGCR1": {
     "context": "Badge shown when channel is marked for removal",
     "string": "to remove"
+  },
+  "wBRaTi": {
+    "context": "no models placeholder",
+    "string": "No models available"
   },
   "wDUBLR": {
     "context": "order refund amount",

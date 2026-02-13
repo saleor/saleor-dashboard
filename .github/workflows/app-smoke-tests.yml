@@ -1,0 +1,135 @@
+name: App smoke tests
+
+on:
+  workflow_call:
+    inputs:
+      VERSION:
+        type: string
+        required: true
+        description: "Saleor version (e.g., '3.20', '3.21', '3.22')"
+      APP_IDENTIFIERS:
+        type: string
+        required: false
+        default: ""
+        description: "Comma-separated app identifiers to test (empty = all)"
+    outputs:
+      TESTS_CONCLUSION:
+        value: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
+        description: conclusion of tests
+
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        type: choice
+        required: true
+        description: "Saleor version to test"
+        options:
+          - "3.20"
+          - "3.21"
+          - "3.22"
+      APP_IDENTIFIERS:
+        type: string
+        required: false
+        default: ""
+        description: "Comma-separated app identifiers to test (empty = all)"
+
+permissions:
+  contents: read
+  actions: write # needed for uploading playwright report artifacts
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.VERSION }}
+  cancel-in-progress: true
+
+jobs:
+  run-smoke-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: saleor/saleor-dashboard
+
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-api-variables
+        with:
+          MODE: "from-version"
+          VERSION: ${{ inputs.VERSION }}
+
+      - name: Prepare accounts
+        id: accounts
+        uses: ./.github/actions/prepare-accounts
+        with:
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+
+      - name: Run playwright tests
+        uses: ./.github/actions/run-pw-tests
+        with:
+          SHARD: "1/1"
+          BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
+          MAILPITURL: ${{ secrets.MAILPITURL }}
+          PW_WORKERS: "1"
+          PW_RETRIES: "1"
+          PROJECT: "app-smoke"
+          BRANCH_NAME: ${{ github.ref }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+          BUILD_NUMBER: ${{ github.run_id }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
+
+  tests-complete:
+    if: "!cancelled()"
+    needs: ["run-smoke-tests"]
+    runs-on: ubuntu-22.04
+    outputs:
+      TESTS_CONCLUSION: ${{ steps.conclusion.outputs.status }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: saleor/saleor-dashboard
+
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports
+        with:
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
+
+      - name: Determine conclusion
+        id: conclusion
+        shell: bash
+        env:
+          SMOKE_RESULT: ${{ needs.run-smoke-tests.result }}
+        run: |
+          if [[ "$SMOKE_RESULT" == "success" ]]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+          fi

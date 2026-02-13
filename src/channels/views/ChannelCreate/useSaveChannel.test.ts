@@ -1,11 +1,11 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { ChannelCreateInput } from "@dashboard/graphql";
 
 import { useSaveChannel } from "./useSaveChannel";
 
 jest.mock(
-  "@dashboard/auth",
+  "@dashboard/auth/useUser",
   jest.fn(() => ({
     useUser: jest.fn(),
   })),

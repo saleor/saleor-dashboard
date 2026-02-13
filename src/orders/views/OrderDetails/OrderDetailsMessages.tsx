@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { handleNestedMutationErrors } from "@dashboard/auth";
+import { handleNestedMutationErrors } from "@dashboard/auth/utils";
 import { formatMoney } from "@dashboard/components/Money";
 import messages from "@dashboard/containers/BackgroundTasks/messages";
 import {
