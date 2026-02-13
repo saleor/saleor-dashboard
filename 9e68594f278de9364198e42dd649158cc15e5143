@@ -1,0 +1,37 @@
+src/orders/components/OrderTransaction/components/TransactionEvents/TransactionEvents.tsx
+  0034ced7abb2c582 2,16,46-47,66
+src/orders/components/OrderTransaction/components/TransactionEvents/components/CardPaymentMethod.tsx
+  0034ced7abb2c582 1-15
+src/orders/components/OrderTransaction/components/TransactionEvents/components/PaymentMethodDetails.tsx
+  0034ced7abb2c582 1-23
+src/orders/components/OrderTransaction/OrderTransaction.stories.tsx
+  0034ced7abb2c582 106-146
+src/orders/components/OrderTransaction/OrderTransaction.tsx
+  0034ced7abb2c582 84
+src/orders/fixtures.ts
+  0034ced7abb2c582 144-152,220-223,2830-2838,2892-2900,2970-2978,3048-3051,3121,3207-3215,3317-3320,3422
+src/orders/components/OrderTransaction/components/TransactionEvents/components/EventItem.tsx
+  0034ced7abb2c582 4-5,18,25,59,102-103,125-127
+src/orders/components/OrderTransaction/components/TransactionEvents/components/OtherPaymentMethod.tsx
+  0034ced7abb2c582 1-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "9e68594f278de9364198e42dd649158cc15e5143",
+  "prompts": {
+    "0034ced7abb2c582": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7384ea2b-17cf-43e3-a874-0e0e0ce06c9a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 177,
+      "total_deletions": 6,
+      "accepted_lines": 164,
+      "overriden_lines": 0
+    }
+  }
+}
