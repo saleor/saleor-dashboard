@@ -55,26 +55,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  resolve-playwright-version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: saleor/saleor-dashboard
-          sparse-checkout: package.json
-          sparse-checkout-cone-mode: false
-
-      - name: Get Playwright version
-        id: version
-        run: echo "version=$(jq -r '.devDependencies["@playwright/test"]' package.json)" >> "$GITHUB_OUTPUT"
-
   run-smoke-tests:
-    needs: resolve-playwright-version
     runs-on: ubuntu-22.04
-    container:
-      image: mcr.microsoft.com/playwright:v${{ needs.resolve-playwright-version.outputs.version }}-jammy
     steps:
       - uses: actions/checkout@v4
         with:
@@ -152,7 +134,6 @@ jobs:
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
-          SKIP_PW_INSTALL: "true"
           SHARD: "1/1"
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}

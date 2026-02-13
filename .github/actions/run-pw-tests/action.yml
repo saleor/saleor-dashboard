@@ -57,10 +57,6 @@ inputs:
     description: "Comma-separated app identifiers to test (optional, empty = all)"
     required: false
     default: ""
-  SKIP_PW_INSTALL:
-    description: "Skip Playwright browser/deps installation (use when running in Playwright Docker image)"
-    required: false
-    default: "false"
 
 runs:
   using: "composite"
@@ -76,7 +72,6 @@ runs:
       run: pnpm install
 
     - name: Get Playwright version
-      if: inputs.SKIP_PW_INSTALL != 'true'
       id: playwright-version
       shell: bash
       run: |
@@ -84,7 +79,6 @@ runs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
 
     - name: Cache Playwright browsers
-      if: inputs.SKIP_PW_INSTALL != 'true'
       id: playwright-cache
       uses: actions/cache@v4
       with:
@@ -94,12 +88,12 @@ runs:
           playwright-${{ runner.os }}-
 
     - name: Install Playwright system dependencies (cache hit)
-      if: inputs.SKIP_PW_INSTALL != 'true' && steps.playwright-cache.outputs.cache-hit == 'true'
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
       shell: bash
       run: pnpm exec playwright install-deps chromium
 
     - name: Install Playwright Browsers
-      if: inputs.SKIP_PW_INSTALL != 'true' && steps.playwright-cache.outputs.cache-hit != 'true'
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       shell: bash
       run: pnpm exec playwright install --with-deps chromium
 
