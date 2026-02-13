@@ -13,7 +13,7 @@ on:
         default: ""
         description: "Comma-separated app identifiers to test (empty = all)"
     secrets:
-      OP_SERVICE_ACCOUNT_TOKEN:
+      STAGING_TOKEN:
         required: true
       E2E_USER_NAME:
         required: true
@@ -74,13 +74,41 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      - name: Load secrets
+      - name: Load secrets from 1Password
+        # load secrets when NOT called from external repo
+        if: github.event_name == 'workflow_dispatch'
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         with:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+          E2E_ENCODE_PASS: "op://Everyone/TESTS_RESULT_PASSWORD/password"
+
+      - name: Export caller secrets
+        if: github.event_name != 'workflow_dispatch'
+        shell: bash
+        env:
+          # Export from workflow secrets -> env variables
+          _STAGING_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          _E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
+          _E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          _E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          _E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          _MAILPITURL: ${{ secrets.MAILPITURL }}
+        run: |
+          {
+            echo "STAGING_TOKEN=${_STAGING_TOKEN}"
+            echo "E2E_USER_NAME=${_E2E_USER_NAME}"
+            echo "E2E_USER_PASSWORD=${_E2E_USER_PASSWORD}"
+            echo "E2E_PERMISSIONS_USERS_PASSWORD=${_E2E_PERMISSIONS_USERS_PASSWORD}"
+            echo "E2E_ENCODE_PASS=${_E2E_ENCODE_PASS}"
+            echo "MAILPITURL=${_MAILPITURL}"
+          } >> "$GITHUB_ENV"
 
       - name: Generate variables
         id: cloud_variables
@@ -95,10 +123,10 @@ jobs:
         with:
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -106,12 +134,12 @@ jobs:
           SHARD: "1/1"
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: "1"
           PW_RETRIES: "1"
           PROJECT: "app-smoke"
@@ -132,10 +160,26 @@ jobs:
         with:
           repository: saleor/saleor-dashboard
 
+      - name: Load secrets from 1Password
+        if: github.event_name == 'workflow_dispatch'
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          TESTS_RESULT_PASSWORD: "op://Everyone/TESTS_RESULT_PASSWORD/password"
+
+      - name: Export caller secrets
+        if: github.event_name != 'workflow_dispatch'
+        shell: bash
+        env:
+          _TESTS_RESULT_PASSWORD: ${{ secrets.TESTS_RESULT_PASSWORD }}
+        run: echo "TESTS_RESULT_PASSWORD=${_TESTS_RESULT_PASSWORD}" >> "$GITHUB_ENV"
+
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
-          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
 
       - name: Determine conclusion
         id: conclusion
