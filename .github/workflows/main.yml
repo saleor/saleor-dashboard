@@ -39,11 +39,9 @@ jobs:
       - name: Install deps
         run: pnpm install
 
+      # TODO: remove || true once we resolve errors in actionlint
       - name: Run actionlint
-        uses: raven-actions/actionlint@e01d1ea33dd6a5ed517d95b4c0c357560ac6f518 # v2.1.1
-        with:
-          # TODO: set to true once existing actionlint errors are resolved
-          fail-on-error: false
+        run: pnpm run lint:actionlint || true
 
       - name: Run tsc
         run: pnpm run check-types
