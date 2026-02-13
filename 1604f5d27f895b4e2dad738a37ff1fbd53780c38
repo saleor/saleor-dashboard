@@ -1,0 +1,46 @@
+src/orders/components/OrderReturnPage/OrderReturnRefundItemsCard/ReturnItemsCard.tsx
+  255bc8ec83ba7def 19,22,77-79,91-93,138-141,143-149,215-223,229
+src/orders/components/OrderReturnPage/OrderReturnPage.tsx
+  255bc8ec83ba7def 25-26,30,94-96,119-121,140-142,162-164,172,245-260,281-300
+src/orders/views/OrderReturn/utils.tsx
+  255bc8ec83ba7def 89,97,104-107
+src/orders/components/OrderReturnPage/form.tsx
+  255bc8ec83ba7def 36-40,60,68,109,195-201,216,249
+src/orders/components/OrderDetailsRefundTable/OrderDetailsRefundLine.tsx
+  59d2df7126f79df7 38-39,133
+src/orders/components/OrderReturnPage/OrderReturnRefundItemsCard/ReturnLineReasonCell.tsx
+  255bc8ec83ba7def 1-7,9-36,38-81
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "1604f5d27f895b4e2dad738a37ff1fbd53780c38",
+  "prompts": {
+    "255bc8ec83ba7def": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1486974b-52e4-472b-917d-aa0d9f34d2de",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 191,
+      "total_deletions": 7,
+      "accepted_lines": 183,
+      "overriden_lines": 2
+    },
+    "59d2df7126f79df7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9fd2553b-89b0-47f9-985c-5d8d3c56a9ac",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
