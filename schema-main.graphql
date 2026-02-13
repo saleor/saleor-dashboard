@@ -310,7 +310,7 @@ type Query {
   digitalContent(
     """ID of the digital content."""
     id: ID!
-  ): DigitalContent
+  ): DigitalContent @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   List of digital content.
@@ -333,7 +333,7 @@ type Query {
     Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
     """
     last: Int
-  ): DigitalContentCountableConnection
+  ): DigitalContentCountableConnection @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """List of the shop's categories."""
   categories(
@@ -16195,7 +16195,7 @@ type Mutation {
 
     """ID of a product variant to upload digital content."""
     variantId: ID!
-  ): DigitalContentCreate
+  ): DigitalContentCreate @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Remove digital content assigned to given variant. 
@@ -16205,7 +16205,7 @@ type Mutation {
   digitalContentDelete(
     """ID of a product variant with digital content to remove."""
     variantId: ID!
-  ): DigitalContentDelete
+  ): DigitalContentDelete @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Updates digital content. 
@@ -16218,7 +16218,7 @@ type Mutation {
 
     """ID of a product variant with digital content to update."""
     variantId: ID!
-  ): DigitalContentUpdate
+  ): DigitalContentUpdate @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Generate new URL to digital content. 
@@ -16228,7 +16228,7 @@ type Mutation {
   digitalContentUrlCreate(
     """Fields required to create a new url."""
     input: DigitalContentUrlCreateInput!
-  ): DigitalContentUrlCreate
+  ): DigitalContentUrlCreate @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Creates a new variant for a product. 

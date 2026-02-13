@@ -22,6 +22,7 @@ interface OrderTransactionRefundTableLineProps {
   onEditReasonModal: React.Dispatch<React.SetStateAction<number | null>>;
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
   onChange: (data: RefundQuantityChange, index: number) => void;
+  modelForRefundReasonRefId: string | null;
 }
 
 export const OrderTransactionRefundTableLine = ({
@@ -36,6 +37,7 @@ export const OrderTransactionRefundTableLine = ({
   onEditReasonModal,
   refundFieldsUpdate,
   onChange,
+  modelForRefundReasonRefId,
 }: OrderTransactionRefundTableLineProps) => {
   const handleInputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(
@@ -77,7 +79,12 @@ export const OrderTransactionRefundTableLine = ({
         handleInputOnChange={handleInputOnChange}
         handleMaxRefund={handleMaxRefund}
       />
-      <RefundTableReasonCell field={field} index={index} onEditReasonModal={onEditReasonModal} />
+      <RefundTableReasonCell
+        field={field}
+        index={index}
+        onEditReasonModal={onEditReasonModal}
+        modelForRefundReasonRefId={modelForRefundReasonRefId}
+      />
     </GridTable.Row>
   );
 };

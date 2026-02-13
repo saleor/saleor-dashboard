@@ -284,6 +284,7 @@ const OrderTransactionRefundPage = ({
               linesToRefund={linesToRefund}
               refundFields={refundFields}
               refundFieldsUpdate={refundFieldsUpdate}
+              modelForRefundReasonRefId={modelForRefundReasonRefId}
             />
           </DashboardCard>
           <DashboardCard marginBottom={5}>
