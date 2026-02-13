@@ -33,6 +33,11 @@ export interface LineItemData {
 export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
+export interface LineReasonData {
+  reason: string;
+  reasonReference: string;
+}
+
 export interface OrderReturnData {
   transactionId: string;
   amount: number;
@@ -52,6 +57,7 @@ interface OrderReturnHandlers {
   handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
   handleAmountChange: (value: number) => void;
+  changeLineReason: (lineId: string, reason: string, reasonReference: string) => void;
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
@@ -59,6 +65,7 @@ export interface OrderReturnFormData extends OrderReturnData {
   fulfilledItemsQuantities: FormsetQuantityData;
   waitingItemsQuantities: FormsetQuantityData;
   unfulfilledItemsQuantities: FormsetQuantityData;
+  lineReasons: Record<string, LineReasonData>;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -99,6 +106,7 @@ function useOrderReturnForm(
     confirmLeave: true,
   });
   const [isAmountDirty, setAmountDirty] = React.useState(false);
+  const [lineReasons, setLineReasons] = React.useState<Record<string, LineReasonData>>({});
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
   });
@@ -184,6 +192,13 @@ function useOrderReturnForm(
     triggerChange();
     quantities.set(newQuantities);
   };
+  const handleLineReasonChange = (lineId: string, reason: string, reasonReference: string) => {
+    triggerChange();
+    setLineReasons(prev => ({
+      ...prev,
+      [lineId]: { reason, reasonReference },
+    }));
+  };
   const handleAmountChange = (value: number) => {
     setAmountDirty(true);
     handleChange({
@@ -198,6 +213,7 @@ function useOrderReturnForm(
     waitingItemsQuantities: waitingItemsQuantities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
+    lineReasons,
     ...formData,
   };
   const handleFormSubmit = useHandleFormSubmit({
@@ -230,6 +246,7 @@ function useOrderReturnForm(
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,
       handleAmountChange,
+      changeLineReason: handleLineReasonChange,
     },
     submit,
     isSaveDisabled,

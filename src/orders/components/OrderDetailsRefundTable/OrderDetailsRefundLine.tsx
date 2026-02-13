@@ -35,7 +35,8 @@ export const OrderDetailsRefundLine = ({
   const isEditable = OrderRefundsViewModel.canEditRefund(refund);
   const intl = useIntl();
   const noReasonTypeNorNote = !refund.reasonType && !refund.reasonNote;
-  const hasLineReasons = refund.lineReasons.length > 0;
+  const refundedLineReasons = refund.lineReasons.filter(line => line.quantity > 0);
+  const hasLineReasons = refundedLineReasons.length > 0;
 
   return (
     <>
@@ -129,7 +130,7 @@ export const OrderDetailsRefundLine = ({
 
       {isExpanded &&
         hasLineReasons &&
-        refund.lineReasons.map(line => (
+        refundedLineReasons.map(line => (
           <GridTable.Row key={line.id}>
             <GridTable.Cell />
             <GridTable.Cell colSpan={6} paddingLeft={8}>

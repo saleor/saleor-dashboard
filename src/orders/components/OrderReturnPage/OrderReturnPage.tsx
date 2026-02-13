@@ -22,11 +22,12 @@ import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
-import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { Fragment, useMemo } from "react";
+import { Box, Select, Skeleton, Text, Textarea } from "@saleor/macaw-ui-next";
+import { Fragment, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
+import { OrderTransactionReasonModal } from "../OrderTransactionRefundPage/components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { TransactionSubmitCard } from "./components";
 import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
 import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
@@ -90,6 +91,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     ];
   }, [modelsData, intl]);
 
+  const [reasonModalLineId, setReasonModalLineId] = useState<string | null>(null);
+  const hasTransactions = orderHasTransactions(order);
+
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => (
@@ -112,6 +116,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
                   onSetMaxQuantity={handlers.handleSetMaximalUnfulfiledItemsQuantities}
                   onChangeSelected={handlers.changeItemsToBeReplaced}
+                  lineReasons={hasTransactions ? data.lineReasons : undefined}
+                  onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
+                  modelForRefundReasonRefId={modelForRefundReasonRefId}
                 />
                 <CardSpacer />
               </>
@@ -130,6 +137,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeQuantity={handlers.changeWaitingItemsQuantity}
                     onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={hasTransactions ? data.lineReasons : undefined}
+                    onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
+                    modelForRefundReasonRefId={modelForRefundReasonRefId}
                   />
                   <CardSpacer />
                 </Fragment>
@@ -149,6 +159,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeQuantity={handlers.changeFulfiledItemsQuantity}
                     onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={hasTransactions ? data.lineReasons : undefined}
+                    onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
+                    modelForRefundReasonRefId={modelForRefundReasonRefId}
                   />
                   <CardSpacer />
                 </Fragment>
@@ -156,7 +169,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
             )}
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            {orderHasTransactions(order) ? (
+            {hasTransactions ? (
               <>
                 <TransactionSubmitCard
                   transactions={order.transactions}
@@ -229,6 +242,22 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                           </Text>
                         )}
                       </Box>
+                      <Box marginTop={4}>
+                        <Textarea
+                          data-test-id="refund-reason-textarea"
+                          rows={4}
+                          value={data.reason}
+                          name="reason"
+                          onChange={event =>
+                            change({
+                              target: {
+                                name: "reason",
+                                value: event.target.value,
+                              },
+                            })
+                          }
+                        />
+                      </Box>
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
@@ -249,6 +278,26 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
               />
             )}
           </DetailPageLayout.RightSidebar>
+          {hasTransactions && (
+            <OrderTransactionReasonModal
+              open={!!reasonModalLineId}
+              reason={
+                reasonModalLineId ? (data.lineReasons[reasonModalLineId]?.reason ?? null) : null
+              }
+              reasonReference={
+                reasonModalLineId
+                  ? (data.lineReasons[reasonModalLineId]?.reasonReference ?? null)
+                  : null
+              }
+              modelForRefundReasonRefId={modelForRefundReasonRefId ?? null}
+              onClose={() => setReasonModalLineId(null)}
+              onConfirm={(reason, reasonReference) => {
+                if (reasonModalLineId) {
+                  handlers.changeLineReason(reasonModalLineId, reason, reasonReference);
+                }
+              }}
+            />
+          )}
         </DetailPageLayout>
       )}
     </OrderRefundForm>
