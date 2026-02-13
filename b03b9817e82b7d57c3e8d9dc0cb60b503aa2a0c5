@@ -1,0 +1,23 @@
+src/orders/components/OrderTransaction/OrderTransaction.stories.tsx
+  f8e4b97847f63fa0 1-113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "b03b9817e82b7d57c3e8d9dc0cb60b503aa2a0c5",
+  "prompts": {
+    "f8e4b97847f63fa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "518e24ea-d7d3-484f-9b40-f981178a9335",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 114,
+      "total_deletions": 0,
+      "accepted_lines": 114,
+      "overriden_lines": 0
+    }
+  }
+}
