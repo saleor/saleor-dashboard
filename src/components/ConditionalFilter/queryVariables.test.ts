@@ -11,6 +11,7 @@ import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
   createAttributesQueryVariables,
+  createCategoryQueryVariables,
   createCustomerQueryVariables,
   createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
@@ -20,6 +21,93 @@ import {
   createStaffMembersQueryVariables,
   createVoucherQueryVariables,
 } from "./queryVariables";
+
+describe("ConditionalFilter / queryVariables / createCategoryQueryVariables", () => {
+  it("should skip invalid empty metadata and updatedAt values", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("metadata", "Metadata", "metadata"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("metadata"),
+          new ConditionSelected(
+            "",
+            { type: "text.double", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("updatedAt", "Updated at", "updatedAt"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("updatedAt"),
+          new ConditionSelected(
+            [],
+            { type: "datetime", label: "lower", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+
+    // Act
+    const result = createCategoryQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual({});
+  });
+
+  it("should keep valid updatedAt and metadata values", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("metadata", "Metadata", "metadata"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("metadata"),
+          new ConditionSelected(
+            ["externalId", "cat-1"],
+            { type: "text.double", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("updatedAt", "Updated at", "updatedAt"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("updatedAt"),
+          new ConditionSelected(
+            "2026-02-13T20:08",
+            { type: "datetime", label: "lower", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+
+    // Act
+    const result = createCategoryQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual({
+      metadata: [{ key: "externalId", value: "cat-1" }],
+      updatedAt: { lte: "2026-02-13T20:08" },
+    });
+  });
+});
 
 describe("ConditionalFilter / queryVariables / createProductQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
