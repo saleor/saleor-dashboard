@@ -74,7 +74,7 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       return;
     }
 
-    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData);
+    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData, data.order);
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
 
     if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {

@@ -130,46 +130,51 @@ export const OrderDetailsRefundLine = ({
 
       {isExpanded &&
         hasLineReasons &&
-        refundedLineReasons.map(line => (
-          <GridTable.Row key={line.id}>
-            <GridTable.Cell />
-            <GridTable.Cell colSpan={6} paddingLeft={8}>
-              <Box display="flex" alignItems="center" gap={3}>
-                {line.thumbnailUrl && (
-                  <img
-                    src={line.thumbnailUrl}
-                    alt={line.productName}
-                    width={32}
-                    height={32}
-                    style={{ borderRadius: 4, objectFit: "cover" }}
-                  />
-                )}
-                <Box>
-                  <Text size={2} fontWeight="medium">
-                    {line.productName || intl.formatMessage(refundGridMessages.unknownProduct)}
-                    {" x "}
-                    {line.quantity}
-                  </Text>
-                  {(line.reasonType || line.reason) && (
-                    <Box>
-                      {line.reasonType && (
-                        <Text size={1} fontWeight="medium">
-                          {line.reasonType}
-                          {line.reason && ": "}
-                        </Text>
-                      )}
-                      {line.reason && (
-                        <Text size={1} color="default2">
-                          {line.reason}
-                        </Text>
-                      )}
-                    </Box>
+        refundedLineReasons.map(line => {
+          const reasonType = line.reasonType;
+          const reason = line.reason;
+
+          return (
+            <GridTable.Row key={line.id}>
+              <GridTable.Cell />
+              <GridTable.Cell colSpan={6} paddingLeft={8}>
+                <Box display="flex" alignItems="center" gap={3}>
+                  {line.thumbnailUrl && (
+                    <img
+                      src={line.thumbnailUrl}
+                      alt={line.productName}
+                      width={32}
+                      height={32}
+                      style={{ borderRadius: 4, objectFit: "cover" }}
+                    />
                   )}
+                  <Box>
+                    <Text size={2} fontWeight="medium">
+                      {line.productName || intl.formatMessage(refundGridMessages.unknownProduct)}
+                      {" x "}
+                      {line.quantity}
+                    </Text>
+                    {(reasonType || reason) && (
+                      <Box>
+                        {reasonType && (
+                          <Text size={1} fontWeight="medium">
+                            {reasonType}
+                            {reason && ": "}
+                          </Text>
+                        )}
+                        {reason && (
+                          <Text size={1} color="default2">
+                            {reason}
+                          </Text>
+                        )}
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            </GridTable.Cell>
-          </GridTable.Row>
-        ))}
+              </GridTable.Cell>
+            </GridTable.Row>
+          );
+        })}
     </>
   );
 };
