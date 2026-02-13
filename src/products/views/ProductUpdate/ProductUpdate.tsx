@@ -2,14 +2,17 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   CategoryFilterInput,
   ErrorPolicyEnum,
+  PageWhereInput,
   ProductMediaCreateMutationVariables,
   ProductVariantBulkCreateInput,
   ProductWhereInput,
@@ -316,24 +319,35 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
 
-  // Extract productType constraints from reference attribute for modal filter
-  const initialConstraints = useMemo((): InitialConstraints | undefined => {
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(():
+    | (InitialConstraints & InitialPageConstraints)
+    | undefined => {
     if (!refAttr?.referenceTypes?.length) {
       return undefined;
     }
 
-    // Filter to get only ProductType references
     const productTypeRefs = refAttr.referenceTypes.filter(
       (t): t is { __typename: "ProductType"; id: string; name: string } =>
         t?.__typename === "ProductType" && Boolean(t?.id),
     );
 
-    if (productTypeRefs.length === 0) {
+    const pageTypeRefs = refAttr.referenceTypes.filter(
+      (t): t is { __typename: "PageType"; id: string; name: string } =>
+        t?.__typename === "PageType" && Boolean(t?.id),
+    );
+
+    if (productTypeRefs.length === 0 && pageTypeRefs.length === 0) {
       return undefined;
     }
 
     return {
-      productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      ...(productTypeRefs.length > 0 && {
+        productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
+      ...(pageTypeRefs.length > 0 && {
+        pageTypes: pageTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
     };
   }, [refAttr?.referenceTypes]);
 
@@ -373,6 +387,17 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       });
     },
     [searchReferenceCategoriesOpts.refetch],
+  );
+
+  const handlePageFilterChange = useCallback(
+    (where: PageWhereInput, query: string) => {
+      searchPagesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where,
+        query,
+      });
+    },
+    [searchPagesOpts.refetch],
   );
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
@@ -463,8 +488,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onProductFilterChange={handleProductFilterChange}
-        onCategoryFilterChange={handleCategoryFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
+        }}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

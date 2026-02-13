@@ -190,11 +190,8 @@ export const STATIC_CONDITIONS = {
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
   pageTypes: [
-    {
-      type: "multiselect",
-      label: "in",
-      value: "input-1",
-    },
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
   ],
   currency: [
     {

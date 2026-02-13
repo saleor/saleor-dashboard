@@ -14,11 +14,13 @@ import { AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
   AttributeErrorFragment,
   AttributeValueInput,
   PageDetailsFragment,
   PageErrorFragment,
   PageInput,
+  PageWhereInput,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -40,6 +42,7 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder, maybe } from "../../misc";
@@ -208,6 +211,17 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     onFetchMore: loadMoreAttributeValues,
   };
 
+  const handlePageFilterChange = useCallback(
+    (where: PageWhereInput, query: string) => {
+      searchPagesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where,
+        query,
+      });
+    },
+    [searchPagesOpts.refetch],
+  );
+
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
@@ -248,6 +262,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+        }}
       />
       <ActionDialog
         open={params.action === "remove"}
