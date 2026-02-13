@@ -12,6 +12,21 @@ on:
         required: false
         default: ""
         description: "Comma-separated app identifiers to test (empty = all)"
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN:
+        required: true
+      E2E_USER_NAME:
+        required: true
+      E2E_USER_PASSWORD:
+        required: true
+      E2E_PERMISSIONS_USERS_PASSWORD:
+        required: true
+      E2E_ENCODE_PASS:
+        required: true
+      MAILPITURL:
+        required: true
+      TESTS_RESULT_PASSWORD:
+        required: true
     outputs:
       TESTS_CONCLUSION:
         value: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
