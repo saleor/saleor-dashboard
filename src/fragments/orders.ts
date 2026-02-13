@@ -647,6 +647,16 @@ export const transactionItemFragment = gql`
     pspReference
     externalUrl
     createdAt
+    createdBy {
+      ... on App {
+        name
+        brand {
+          logo {
+            default(size: 64)
+          }
+        }
+      }
+    }
     paymentMethodDetails {
       name
       __typename
