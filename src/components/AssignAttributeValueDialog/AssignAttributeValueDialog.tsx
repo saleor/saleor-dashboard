@@ -1,6 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  CategoryFilterInput,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
@@ -59,6 +60,7 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   initialConstraints?: InitialConstraints;
   // onFetch is required for non-product dialogs (containers, variants, collections, categories)
   onFetch: (value: string) => void;
+  onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
@@ -83,6 +85,7 @@ const AssignAttributeValueDialog = ({
   labels,
   initialConstraints,
   onFilterChange,
+  onCategoryFilterChange,
   ...rest
 }: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
@@ -144,6 +147,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignCategoryDialog
           categories={filteredCategories}
+          onFilterChange={onCategoryFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

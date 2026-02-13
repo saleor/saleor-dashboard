@@ -23,6 +23,7 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
+  CategoryFilterInput,
   ChannelFragment,
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -136,6 +137,7 @@ interface ProductUpdatePageProps {
     channel: string | undefined,
     query: string,
   ) => void;
+  onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
   onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints;
 }
@@ -193,6 +195,7 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onProductFilterChange,
+  onCategoryFilterChange,
   onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
@@ -607,6 +610,7 @@ const ProductUpdatePage = ({
                   loading={handlers.fetchMoreReferences?.loading}
                   onClose={onCloseDialog}
                   onFilterChange={onProductFilterChange}
+                  onCategoryFilterChange={onCategoryFilterChange}
                   initialConstraints={initialConstraints}
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(

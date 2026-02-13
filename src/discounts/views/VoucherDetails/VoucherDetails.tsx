@@ -84,7 +84,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategoryWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -112,12 +115,12 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     searchCategoriesOpts.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
       filter: {
         ...filterVariables,
         search: query,
       },
-      query,
     });
   };
 

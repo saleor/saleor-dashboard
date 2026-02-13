@@ -89,7 +89,10 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   });
 
   const categoriesSearch = useCategoryWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
@@ -114,12 +117,12 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     categoriesSearch.result.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
       filter: {
         ...filterVariables,
         search: query,
       },
-      query,
     });
   };
 

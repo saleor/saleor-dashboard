@@ -33,8 +33,6 @@ import {
   DiscountErrorFragment,
   PermissionEnum,
   ProductWhereInput,
-  SearchCategoriesWithTotalProductsQuery,
-  SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsWithTotalProductsQuery,
   SearchCollectionsWithTotalProductsQueryVariables,
   SearchProductFragment,
@@ -49,6 +47,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
@@ -99,10 +98,7 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     query: string,
   ) => void;
   onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
-  categoriesSearch: UseSearchResult<
-    SearchCategoriesWithTotalProductsQuery,
-    SearchCategoriesWithTotalProductsQueryVariables
-  >;
+  categoriesSearch: ReturnType<typeof useCategoryWithTotalProductsSearch>;
   collectionsSearch: UseSearchResult<
     SearchCollectionsWithTotalProductsQuery,
     SearchCollectionsWithTotalProductsQueryVariables

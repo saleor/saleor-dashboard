@@ -17,6 +17,10 @@ export class InitialCategoryStateResponse implements InitialCategoryState {
   }
 
   public filterByUrlToken(token: UrlToken) {
+    if (token.name === "metadata" || token.name === "updatedAt") {
+      return token.value;
+    }
+
     const entry = this.getEntryByName(token.name);
 
     if (!token.isLoadable()) {
