@@ -61,10 +61,6 @@ inputs:
     description: "Skip Playwright browser/deps installation (use when running in Playwright Docker image)"
     required: false
     default: "false"
-  PW_DOCKER_IMAGE:
-    description: "Run tests inside this Playwright Docker image (e.g., mcr.microsoft.com/playwright:v1.56.1-jammy). When empty, tests run directly on the host."
-    required: false
-    default: ""
 
 runs:
   using: "composite"
@@ -116,7 +112,6 @@ runs:
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}
 
     - name: Run tests
-      if: inputs.PW_DOCKER_IMAGE == ''
       shell: bash
       env:
         ## backward compatibility for older versions
@@ -149,51 +144,6 @@ runs:
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
-
-    - name: Run tests (Docker)
-      if: inputs.PW_DOCKER_IMAGE != ''
-      shell: bash
-      env:
-        API_URI: ${{ inputs.API_URL }}
-        API_URL: ${{ inputs.API_URL }}
-        BASE_URL: ${{ inputs.BASE_URL }}
-        E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
-        E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
-        E2E_PERMISSIONS_USERS_PASSWORD: ${{ inputs.E2E_PERMISSIONS_USERS_PASSWORD }}
-        SHARD_NUMBER: ${{ inputs.SHARD }}
-        MAILPITURL: ${{ inputs.MAILPITURL }}
-        URL_TO_RUN: ${{ inputs.URL_TO_RUN }}
-        WORKERS: ${{ inputs.PW_WORKERS }}
-        RETRIES: ${{ inputs.PW_RETRIES }}
-        PROJECT: ${{ inputs.PROJECT }}
-        BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
-        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
-        DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
-        BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
-        BUILD_URL: ${{ inputs.BUILD_URL }}
-        APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
-        PW_DOCKER_IMAGE: ${{ inputs.PW_DOCKER_IMAGE }}
-
-      run: |
-        PROJECTS=($PROJECT)
-        PROJECT_PARAMS=""
-        for PROJECT in "${PROJECTS[@]}"; do
-          PROJECT_PARAMS+="--project=${PROJECT} "
-        done
-        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-
-        docker run --rm --ipc=host \
-          -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" \
-          -w "$GITHUB_WORKSPACE" \
-          -e API_URI -e API_URL -e BASE_URL \
-          -e E2E_USER_NAME -e E2E_USER_PASSWORD -e E2E_PERMISSIONS_USERS_PASSWORD \
-          -e SHARD_NUMBER -e MAILPITURL -e URL_TO_RUN \
-          -e WORKERS -e RETRIES -e PROJECT \
-          -e BRANCH_NAME -e SALEOR_CLOUD_SERVICE -e DASHBOARD_VERSION \
-          -e BUILD_NUMBER -e BUILD_URL -e APP_IDENTIFIERS \
-          "$PW_DOCKER_IMAGE" \
-          npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4

@@ -73,6 +73,8 @@ jobs:
   run-smoke-tests:
     needs: resolve-playwright-version
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.resolve-playwright-version.outputs.version }}-jammy
     steps:
       - uses: actions/checkout@v4
         with:
@@ -151,7 +153,6 @@ jobs:
         uses: ./.github/actions/run-pw-tests
         with:
           SKIP_PW_INSTALL: "true"
-          PW_DOCKER_IMAGE: mcr.microsoft.com/playwright:v${{ needs.resolve-playwright-version.outputs.version }}-jammy
           SHARD: "1/1"
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
