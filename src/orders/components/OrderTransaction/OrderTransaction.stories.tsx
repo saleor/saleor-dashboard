@@ -103,7 +103,7 @@ export const WithoutActions: Story = {
   },
 };
 
-export const WithCardPaymentMethod: Story = {
+export const WithVisaPaymentMethod: Story = {
   args: {
     transaction: {
       ...transactions.chargeSuccess[0],
@@ -138,17 +138,34 @@ export const WithMastercardPaymentMethod: Story = {
   },
 };
 
+const otherPaymentBrands = ["klarna", "paypal", "link", "blik", "Other"];
+
 export const WithOtherPaymentMethod: Story = {
-  args: {
-    transaction: {
-      ...transactions.chargeSuccess[0],
-      index: 0,
-      paymentMethodDetails: {
-        __typename: "OtherPaymentMethodDetails",
-        name: "PayPal",
-      },
+  argTypes: {
+    paymentBrand: {
+      control: "select",
+      options: otherPaymentBrands,
     },
   },
+  args: {
+    paymentBrand: "paypal",
+  },
+  render: (args: Record<string, unknown>) => (
+    <OrderTransaction
+      onTransactionAction={args.onTransactionAction as () => void}
+      showActions={args.showActions as boolean}
+      disabled={args.disabled as boolean}
+      defaultExpanded={args.defaultExpanded as boolean}
+      transaction={{
+        ...transactions.chargeSuccess[0],
+        index: 0,
+        paymentMethodDetails: {
+          __typename: "OtherPaymentMethodDetails",
+          name: args.paymentBrand as string,
+        },
+      }}
+    />
+  ),
 };
 
 export const WithoutPaymentMethod: Story = {

@@ -115,6 +115,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     actions: [],
     externalUrl: null,
     createdAt: "2022-08-12T14:10:22.226875+00:00",
+    createdBy: null,
     events: [
       {
         id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -158,6 +159,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     pspReference: "123",
     externalUrl: null,
     createdAt: "2022-08-12T14:10:22.226875+00:00",
+    createdBy: null,
     actions: [],
     events: [
       {
@@ -2801,6 +2803,7 @@ export const transactions: Record<
       actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.CHARGE],
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
+      createdBy: transactionApp,
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2847,6 +2850,7 @@ export const transactions: Record<
       externalUrl: null,
       actions: [],
       createdAt: "2022-08-12T14:10:22.226875+00:00",
+      createdBy: transactionApp,
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2908,6 +2912,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
       externalUrl: null,
+      createdBy: transactionApp,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
@@ -2985,6 +2990,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3058,6 +3064,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CHARGE],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3128,6 +3135,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3222,6 +3230,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3327,6 +3336,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [

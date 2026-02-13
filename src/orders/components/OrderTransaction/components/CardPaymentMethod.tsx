@@ -1,11 +1,11 @@
-import mastercardLogo from "@assets/images/payment-methods/mastercard-svgrepo-com.svg";
-import visaLogo from "@assets/images/payment-methods/visa-logo-svgrepo-com.svg";
+import mastercardLogo from "@assets/images/payment-methods/mastercard.svg";
+import visaLogo from "@assets/images/payment-methods/visa.svg";
 import { CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 
 const MASKED_GROUP = "****";
-const BRAND_LOGO_SIZE = 30;
+const BRAND_LOGO_SIZE = 35;
 
 const brandLogos: Record<string, string> = {
   visa: visaLogo,
@@ -17,7 +17,7 @@ const BrandLogo = ({ brand }: { brand: string }) => {
   const logo = brandLogos[brand.toLowerCase()];
 
   if (logo) {
-    return <img src={logo} alt={brand} height={BRAND_LOGO_SIZE} />;
+    return <img src={logo} alt={brand} title={brand} height={BRAND_LOGO_SIZE} />;
   }
 
   return (
