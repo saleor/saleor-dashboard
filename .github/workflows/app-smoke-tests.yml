@@ -161,13 +161,14 @@ jobs:
           repository: saleor/saleor-dashboard
 
       - name: Load secrets from 1Password
+        # load secrets when NOT called from external repo
         if: github.event_name == 'workflow_dispatch'
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         with:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          TESTS_RESULT_PASSWORD: "op://Everyone/TESTS_RESULT_PASSWORD/password"
+          TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
 
       - name: Export caller secrets
         if: github.event_name != 'workflow_dispatch'
