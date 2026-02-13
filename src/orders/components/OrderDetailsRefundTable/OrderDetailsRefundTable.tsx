@@ -4,6 +4,7 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
+import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
@@ -21,9 +22,16 @@ export const OrderDetailsRefundTable = ({
   onRefundAdd,
 }: OrderDetailsRefundTableProps) => {
   const intl = useIntl();
+  const [expandedRefundId, setExpandedRefundId] = useState<string | null>(null);
+
+  const handleToggleExpand = useCallback((id: string) => {
+    setExpandedRefundId(prev => (prev === id ? null : id));
+  }, []);
+
   const mergedRefunds = OrderRefundsViewModel.prepareOrderRefundDisplayList(
     order.transactions.flatMap(t => t.events),
     order.grantedRefunds ?? [],
+    order.lines,
   );
 
   const refundState = OrderRefundsViewModel.getRefundState(order.transactions);
@@ -63,6 +71,7 @@ export const OrderDetailsRefundTable = ({
       <GridTable data-test-id="refund-list" height="100%" paddingX={6}>
         <GridTable.Colgroup>
           <GridTable.Col __width="1%" />
+          <GridTable.Col __width="1%" />
           <GridTable.Col __width="10%" />
           <GridTable.Col __width="25%" />
           <GridTable.Col __width="1%" />
@@ -70,7 +79,13 @@ export const OrderDetailsRefundTable = ({
           <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
         {mergedRefunds.map(refund => (
-          <OrderDetailsRefundLine key={refund.id} refund={refund} orderId={orderId} />
+          <OrderDetailsRefundLine
+            key={refund.id}
+            refund={refund}
+            orderId={orderId}
+            isExpanded={expandedRefundId === refund.id}
+            onToggleExpand={handleToggleExpand}
+          />
         ))}
       </GridTable>
       {mergedRefunds.length === 0 && (

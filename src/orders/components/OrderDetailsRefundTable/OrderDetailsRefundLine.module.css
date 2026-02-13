@@ -1,0 +1,16 @@
+.chevronButton {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.chevronCollapsed {
+  transform: rotate(-90deg);
+}
+
+.chevronExpanded {
+  transform: rotate(0deg);
+}

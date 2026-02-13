@@ -11,6 +11,15 @@ import {
 } from "@dashboard/graphql";
 import { getUserInitials } from "@dashboard/misc";
 
+export type OrderRefundLineReason = {
+  id: string;
+  productName: string;
+  thumbnailUrl: string | null;
+  quantity: number;
+  reason: string | null;
+  reasonType: string | null;
+};
+
 export type OrderRefundDisplay = {
   id: string;
   type: "standard" | "manual";
@@ -32,6 +41,7 @@ export type OrderRefundDisplay = {
     initials: string;
     logoUrl: string | null;
   } | null;
+  lineReasons: OrderRefundLineReason[];
 };
 
 export type OrderRefundState =
@@ -159,6 +169,7 @@ export abstract class OrderRefundsViewModel {
         reasonNote: null,
         reasonType: null,
         creator: this.getCreator(latestEvent.createdBy),
+        lineReasons: [],
       };
 
       // Only REQUEST contains a reason, that is attached when transactionRequestAction("refund") is executed
@@ -201,22 +212,47 @@ export abstract class OrderRefundsViewModel {
 
   private static convertGrantedRefundsToOrderRefunds(
     grantedRefunds: OrderGrantedRefundFragment[],
+    orderLines: OrderDetailsFragment["lines"],
   ): OrderRefundDisplay[] {
-    return grantedRefunds.map(refund => ({
-      ...refund,
-      type: "standard",
-      reasonType: refund.reasonReference?.title ?? null,
-      reasonNote: refund.reason,
-      creator: this.getCreator(refund.app || refund.user),
-    }));
+    const orderLineMap = new Map(
+      orderLines.map(line => [
+        line.id,
+        { productName: line.productName, thumbnailUrl: line.thumbnail?.url ?? null },
+      ]),
+    );
+
+    return grantedRefunds.map(refund => {
+      const lineReasons: OrderRefundLineReason[] = (refund.lines ?? []).map(line => {
+        const orderLineInfo = orderLineMap.get(line.orderLine.id);
+
+        return {
+          id: line.id,
+          productName: orderLineInfo?.productName ?? "",
+          thumbnailUrl: orderLineInfo?.thumbnailUrl ?? null,
+          quantity: line.quantity,
+          reason: line.reason ?? null,
+          reasonType: line.reasonReference?.title ?? null,
+        };
+      });
+
+      return {
+        ...refund,
+        type: "standard",
+        reasonType: refund.reasonReference?.title ?? null,
+        reasonNote: refund.reason,
+        creator: this.getCreator(refund.app || refund.user),
+        lineReasons,
+      };
+    });
   }
 
   static prepareOrderRefundDisplayList(
     transactionsEvents: TransactionEventFragment[],
     grantedRefunds: OrderGrantedRefundFragment[],
+    orderLines: OrderDetailsFragment["lines"],
   ): OrderRefundDisplay[] {
     return [
-      ...OrderRefundsViewModel.convertGrantedRefundsToOrderRefunds(grantedRefunds),
+      ...OrderRefundsViewModel.convertGrantedRefundsToOrderRefunds(grantedRefunds, orderLines),
       ...OrderRefundsViewModel.convertManualRefundsToOrderRefunds(
         transactionsEvents,
         grantedRefunds,
