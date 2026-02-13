@@ -21,8 +21,6 @@ on:
         required: true
       E2E_PERMISSIONS_USERS_PASSWORD:
         required: true
-      E2E_ENCODE_PASS:
-        required: true
       MAILPITURL:
         required: true
       TESTS_RESULT_PASSWORD:
@@ -87,7 +85,6 @@ jobs:
           E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
           MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
-          E2E_ENCODE_PASS: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
 
       - name: Export caller secrets
         if: github.event_name != 'workflow_dispatch'
@@ -98,7 +95,6 @@ jobs:
           _E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
           _E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
           _E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          _E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           _MAILPITURL: ${{ secrets.MAILPITURL }}
         run: |
           {
@@ -106,9 +102,16 @@ jobs:
             echo "E2E_USER_NAME=${_E2E_USER_NAME}"
             echo "E2E_USER_PASSWORD=${_E2E_USER_PASSWORD}"
             echo "E2E_PERMISSIONS_USERS_PASSWORD=${_E2E_PERMISSIONS_USERS_PASSWORD}"
-            echo "E2E_ENCODE_PASS=${_E2E_ENCODE_PASS}"
             echo "MAILPITURL=${_MAILPITURL}"
           } >> "$GITHUB_ENV"
+
+      # This is used by prepare accounts and by restore accounts (in run playwright tests)
+      - name: Generate ephemeral encode password
+        shell: bash
+        run: |
+          PASS=$(openssl rand -base64 32)
+          echo "::add-mask::$PASS"
+          echo "E2E_ENCODE_PASS=$PASS" >> "$GITHUB_ENV"
 
       - name: Generate variables
         id: cloud_variables
