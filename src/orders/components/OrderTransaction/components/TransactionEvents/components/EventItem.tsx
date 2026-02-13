@@ -1,5 +1,9 @@
 import Money from "@dashboard/components/Money";
-import { TransactionEventFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
+import {
+  TransactionEventFragment,
+  TransactionEventTypeEnum,
+  TransactionItemFragment,
+} from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -11,12 +15,14 @@ import { EventAvatar } from "./EventAvatar";
 import { EventStatus } from "./EventStatus";
 import { EventTime } from "./EventTime";
 import { EventType } from "./EventType";
+import { PaymentMethodDetails } from "./PaymentMethodDetails";
 import { PspReference } from "./PspReference";
 
 interface EventItemProps {
   event: TransactionEventFragment | TransactionFakeEvent;
   onHover: (pspReference: string) => void;
   hoveredPspReference: string;
+  paymentMethodDetails?: TransactionItemFragment["paymentMethodDetails"];
 }
 
 const useStyles = makeStyles(
@@ -50,6 +56,7 @@ const useStyles = makeStyles(
       },
     },
     colMessage: {},
+    colPaymentMethod: {},
     colPspReference: {
       textAlign: "right",
     },
@@ -89,7 +96,12 @@ const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent
   return true;
 };
 
-export const EventItem = ({ event, onHover, hoveredPspReference }: EventItemProps) => {
+export const EventItem = ({
+  event,
+  onHover,
+  hoveredPspReference,
+  paymentMethodDetails,
+}: EventItemProps) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
   const isHovered = event.pspReference && event.pspReference === hoveredPspReference;
@@ -109,6 +121,9 @@ export const EventItem = ({ event, onHover, hoveredPspReference }: EventItemProp
       </TableCell>
       <TableCell className={classes.colMessage}>
         <EventType type={type} message={event.message} />
+      </TableCell>
+      <TableCell className={classes.colPaymentMethod}>
+        <PaymentMethodDetails paymentMethodDetails={paymentMethodDetails} />
       </TableCell>
       <TableCell className={classes.colPspReference}>
         {event.pspReference && (

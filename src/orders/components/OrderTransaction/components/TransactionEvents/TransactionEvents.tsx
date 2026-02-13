@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { TransactionEventFragment } from "@dashboard/graphql";
+import { TransactionEventFragment, TransactionItemFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
@@ -13,6 +13,7 @@ import { messages } from "./messages";
 
 interface OrderTransactionEventsProps {
   events: TransactionEventFragment[] | TransactionFakeEvent[];
+  paymentMethodDetails?: TransactionItemFragment["paymentMethodDetails"];
 }
 
 const useStyles = makeStyles(
@@ -41,7 +42,10 @@ const useStyles = makeStyles(
   },
 );
 
-export const TransactionEvents = ({ events }: OrderTransactionEventsProps) => {
+export const TransactionEvents = ({
+  events,
+  paymentMethodDetails,
+}: OrderTransactionEventsProps) => {
   const classes = useStyles();
   const [hoveredPspReference, setHoveredPspReference] = useState(null);
 
@@ -59,6 +63,7 @@ export const TransactionEvents = ({ events }: OrderTransactionEventsProps) => {
             event={transactionEvent}
             onHover={setHoveredPspReference}
             hoveredPspReference={hoveredPspReference}
+            paymentMethodDetails={paymentMethodDetails}
           />
         ),
         () => (

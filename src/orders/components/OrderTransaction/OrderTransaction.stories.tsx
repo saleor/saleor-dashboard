@@ -103,6 +103,47 @@ export const WithoutActions: Story = {
   },
 };
 
+export const WithCardPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "visa",
+        expMonth: 12,
+        expYear: 2025,
+        firstDigits: "4242",
+        lastDigits: "4242",
+      },
+    },
+  },
+};
+
+export const WithOtherPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "OtherPaymentMethodDetails",
+        name: "PayPal",
+      },
+    },
+  },
+};
+
+export const WithoutPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: null,
+    },
+  },
+};
+
 export const WithCardFooter: Story = {
   args: {
     transaction: { ...transactions.chargeSuccess[0], index: 0 },
