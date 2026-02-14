@@ -400,8 +400,12 @@ export class OrderFixture {
             url: "",
           },
         },
+        reason: "",
+        reasonReference: null,
       },
     ],
+    reason: "",
+    reasonReference: null,
     warehouse: {
       __typename: "Warehouse",
       id: "warehouse-id-1",

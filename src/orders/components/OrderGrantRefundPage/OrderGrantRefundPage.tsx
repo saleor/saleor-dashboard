@@ -1,19 +1,27 @@
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Link from "@dashboard/components/Link";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
   OrderLineGrantRefundFragment,
+  PermissionEnum,
+  useModelsOfTypeQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { pageListUrl } from "@dashboard/modeling/urls";
+import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { Box, Input, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -45,6 +53,7 @@ interface OrderGrantRefundPageProps {
   onSubmit: (data: OrderGrantRefundFormData) => void;
   isEdit?: boolean;
   initialData?: OrderDetailsGrantedRefundFragment;
+  modelForRefundReasonRefId?: string | null;
 }
 
 const OrderGrantRefundPage = ({
@@ -54,6 +63,7 @@ const OrderGrantRefundPage = ({
   onSubmit,
   isEdit,
   initialData,
+  modelForRefundReasonRefId,
 }: OrderGrantRefundPageProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
@@ -98,6 +108,30 @@ const OrderGrantRefundPage = ({
     refundAmount: Number(data.amount),
     totalCalulatedPrice: totalSelectedPrice,
   });
+  const permissions = useUserPermissions();
+  const canManageSettings = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
+  const { data: modelsData, loading: modelsLoading } = useModelsOfTypeQuery({
+    variables: {
+      pageTypeId: modelForRefundReasonRefId ?? "",
+    },
+    skip: !modelForRefundReasonRefId,
+  });
+  const reasonRefOptions = React.useMemo(() => {
+    const options =
+      modelsData?.pages?.edges.map(model => ({
+        value: model.node.id,
+        label: model.node.title,
+      })) ?? [];
+
+    return [
+      {
+        value: "",
+        label: intl.formatMessage({ defaultMessage: "Select a reason type", id: "vSLaZ7" }),
+      },
+      ...options,
+    ];
+  }, [modelsData, intl]);
+
   const currency = order?.total?.gross?.currency ?? "";
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
@@ -211,6 +245,50 @@ const OrderGrantRefundPage = ({
                     value={getRefundAmountDisplayValue()}
                     data-test-id="amountInput"
                   />
+                </Box>
+
+                <Box display="flex" flexDirection="column" gap={2}>
+                  {modelsLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <Select
+                      disabled={!modelForRefundReasonRefId || loading}
+                      options={reasonRefOptions}
+                      value={data.reasonReference}
+                      name={"reasonReference" as keyof OrderGrantRefundFormData}
+                      onChange={value =>
+                        change({
+                          target: {
+                            name: "reasonReference",
+                            value: value as string,
+                          },
+                        })
+                      }
+                    />
+                  )}
+                  <Box>
+                    {canManageSettings && modelForRefundReasonRefId && (
+                      <Link href={pageListUrl()}>
+                        <Text color="inherit" size={2}>
+                          {intl.formatMessage(refundReasonSelectHelperMessages.manageReasons)}
+                        </Text>
+                      </Link>
+                    )}
+                    {canManageSettings && !modelForRefundReasonRefId && (
+                      <Link href={refundsSettingsPath}>
+                        <Text color="inherit" size={2}>
+                          {intl.formatMessage(
+                            refundReasonSelectHelperMessages.enableReasonsInSettings,
+                          )}
+                        </Text>
+                      </Link>
+                    )}
+                    {!canManageSettings && (
+                      <Text color="default2" size={2}>
+                        {intl.formatMessage(refundReasonSelectHelperMessages.noPermissionsHint)}
+                      </Text>
+                    )}
+                  </Box>
                 </Box>
               </DashboardCard.Content>
             </DashboardCard>

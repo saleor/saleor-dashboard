@@ -59,6 +59,8 @@ class ReturnFormDataParser {
         includeShippingCosts: refundShipmentCosts,
         orderLines,
         refund: this.getShouldRefund(orderLines, fulfillmentLines),
+        reason: this.formData.reason || undefined,
+        reasonReference: this.formData.reasonReference || undefined,
       };
     }
 
@@ -68,6 +70,8 @@ class ReturnFormDataParser {
       amountToRefund: 0,
       includeShippingCosts: refundShipmentCosts, // tood: remove once removed in API
       refund: false, // todo: remove once removed in API
+      reason: this.formData.reason || undefined,
+      reasonReference: this.formData.reasonReference || undefined,
     };
   };
 
@@ -82,7 +86,7 @@ class ReturnFormDataParser {
     itemsQuantities: FormsetQuantityData,
     idKey: "fulfillmentLineId" | "orderLineId",
   ): T[] => {
-    const { itemsToBeReplaced } = this.formData;
+    const { itemsToBeReplaced, lineReasons } = this.formData;
 
     return itemsQuantities.reduce((result, { value: quantity, id }) => {
       if (!quantity) {
@@ -90,8 +94,18 @@ class ReturnFormDataParser {
       }
 
       const shouldReplace = !!itemsToBeReplaced.find(getById(id))?.value;
+      const lineReason = lineReasons[id];
 
-      return [...result, { [idKey]: id, quantity, replace: shouldReplace } as unknown as T];
+      return [
+        ...result,
+        {
+          [idKey]: id,
+          quantity,
+          replace: shouldReplace,
+          ...(lineReason?.reason ? { reason: lineReason.reason } : {}),
+          ...(lineReason?.reasonReference ? { reasonReference: lineReason.reasonReference } : {}),
+        } as unknown as T,
+      ];
     }, []);
   };
 

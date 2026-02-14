@@ -16,9 +16,10 @@ import { FormattedMessage } from "react-intl";
 
 import { OrderCardTitle } from "../../OrderCardTitle/OrderCardTitle";
 import { MaximalButton } from "../components/MaximalButton";
-import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { FormsetQuantityData, FormsetReplacementData, LineReasonData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
 import ProductErrorCell from "./ProductErrorCell";
+import { ReturnLineReasonCell } from "./ReturnLineReasonCell";
 
 const useStyles = makeStyles(
   theme => {
@@ -73,6 +74,9 @@ interface OrderReturnRefundLinesCardProps {
   itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
   onSetMaxQuantity: () => any;
+  lineReasons?: Record<string, LineReasonData>;
+  onEditLineReason?: (lineId: string) => void;
+  modelForRefundReasonRefId?: string | null;
 }
 
 const ItemsCard = ({
@@ -84,6 +88,9 @@ const ItemsCard = ({
   itemsQuantities,
   fulfilmentId,
   order,
+  lineReasons,
+  onEditLineReason,
+  modelForRefundReasonRefId,
 }: OrderReturnRefundLinesCardProps) => {
   const classes = useStyles({});
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -128,6 +135,18 @@ const ItemsCard = ({
                 description="table column header"
               />
             </TableCell>
+            {onEditLineReason && (
+              <>
+                <TableCell>
+                  <FormattedMessage
+                    id="oK3RrV"
+                    defaultMessage="Reason"
+                    description="table column header"
+                  />
+                </TableCell>
+                <TableCell />
+              </>
+            )}
           </TableRowLink>
         </TableHead>
         <TableBody>
@@ -193,12 +212,21 @@ const ItemsCard = ({
                       />
                     )}
                   </TableCell>
+                  {onEditLineReason && (
+                    <ReturnLineReasonCell
+                      lineId={id}
+                      lineReason={lineReasons?.[id]}
+                      disabled={!currentQuantity}
+                      onEditReason={onEditLineReason}
+                      modelForRefundReasonRefId={modelForRefundReasonRefId ?? null}
+                    />
+                  )}
                 </TableRowLink>
               );
             },
             () => (
               <TableRowLink>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={onEditLineReason ? 7 : 4}>
                   <Skeleton />
                 </TableCell>
               </TableRowLink>

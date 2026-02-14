@@ -40,6 +40,11 @@ export const refundGridMessages = defineMessages({
     id: "OSnO9P",
     defaultMessage: "All transactions are non-refundable",
   },
+  unknownProduct: {
+    id: "wnnAjg",
+    defaultMessage: "Unknown product",
+    description: "fallback for refund line with missing product",
+  },
 });
 
 export const refundStatuses = defineMessages({

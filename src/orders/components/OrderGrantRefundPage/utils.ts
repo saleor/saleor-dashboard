@@ -72,6 +72,7 @@ export const getLineAvailableQuantity = ({
 export interface OrderGrantRefundData {
   amount: number;
   reason: string;
+  reasonReference: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
   grantRefundId: string;
@@ -88,9 +89,16 @@ export const getGrantedRefundData = (
   return {
     grantRefundId: grantedRefund.id,
     reason: grantedRefund?.reason ?? "",
+    reasonReference: grantedRefund?.reasonReference?.id ?? "",
     amount: grantedRefund.amount.amount,
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
-    lines: grantedRefund?.lines ?? [],
+    lines:
+      grantedRefund?.lines?.map(line => ({
+        id: line.orderLine.id,
+        quantity: line.quantity,
+        reason: line.reason ?? undefined,
+        reasonReference: line.reasonReference?.id ?? undefined,
+      })) ?? [],
     transactionId: grantedRefund?.transaction?.id ?? "",
   };
 };

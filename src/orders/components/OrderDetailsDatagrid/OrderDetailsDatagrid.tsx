@@ -20,7 +20,11 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
-import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
+import {
+  createGetCellContent,
+  LineReasonDisplay,
+  orderDetailsStaticColumnsAdapter,
+} from "./datagrid";
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
@@ -29,6 +33,7 @@ interface OrderDetailsDatagridProps {
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
   datagridCustomTheme?: Partial<Theme>;
+  lineReasons?: LineReasonDisplay[];
 }
 
 export const OrderDetailsDatagrid = ({
@@ -36,15 +41,17 @@ export const OrderDetailsDatagrid = ({
   loading,
   onOrderLineShowMetadata,
   datagridCustomTheme = {},
+  lineReasons,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
 
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
   const emptyColumn = useEmptyColumn();
+  const withReasonColumn = !!lineReasons;
   const orderDetailsStaticColumns = useMemo(
-    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn),
-    [intl, emptyColumn],
+    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn, { withReasonColumn }),
+    [intl, emptyColumn, withReasonColumn],
   );
   const handleColumnChange = useCallback(
     picked => {
@@ -54,11 +61,20 @@ export const OrderDetailsDatagrid = ({
     },
     [updateListSettings],
   );
+  const selectedColumnsWithReason = useMemo(() => {
+    const cols = settings?.columns ?? [];
+
+    if (withReasonColumn && !cols.includes("reason")) {
+      return [...cols, "reason"];
+    }
+
+    return cols;
+  }, [settings?.columns, withReasonColumn]);
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
       gridName: "order_details_products",
       staticColumns: orderDetailsStaticColumns,
-      selectedColumns: settings?.columns ?? [],
+      selectedColumns: selectedColumnsWithReason,
       onSave: handleColumnChange,
     });
   const getCellContent = useCallback(
@@ -68,8 +84,9 @@ export const OrderDetailsDatagrid = ({
       loading,
       onOrderLineShowMetadata,
       intl,
+      lineReasons,
     }),
-    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata],
+    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata, lineReasons],
   );
   const getMenuItems = useCallback(
     index => [

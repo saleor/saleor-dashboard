@@ -975,6 +975,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "5",
@@ -1095,6 +1097,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "6",
@@ -1215,6 +1219,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "7",
@@ -1335,6 +1341,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "8",
@@ -1455,6 +1463,8 @@ describe("Get the total value of all replaced products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
     ];
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
@@ -2054,6 +2064,8 @@ describe("Get the total value of all selected products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "5",
@@ -2174,6 +2186,8 @@ describe("Get the total value of all selected products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "6",
@@ -2294,6 +2308,8 @@ describe("Get the total value of all selected products", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
     ];
     const unfulfilledItemsQuantities: FormsetData<LineItemData, number> = [
@@ -2536,6 +2552,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "RnVsZmlsbG1lbnRMaW5lOjMy",
@@ -2656,6 +2674,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
       {
         id: "RnVsZmlsbG1lbnRMaW5lOjMz",
@@ -2776,6 +2796,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
+        reason: "",
+        reasonReference: null,
       },
     ];
     const mergedLines = mergeRepeatedOrderLines(lines);
