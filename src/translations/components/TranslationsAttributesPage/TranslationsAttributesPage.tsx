@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
@@ -93,7 +92,7 @@ const TranslationsAttributesPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.attributes, translationId))
@@ -113,10 +112,10 @@ const TranslationsAttributesPage = ({
                 id: "DRMMDs",
                 defaultMessage: "Attribute Name",
               }),
-              name: fieldNames.attribute + ":" + data?.attribute.id,
-              translation: data?.translation?.name || null,
+              name: fieldNames.attribute + ":" + (data?.attribute?.id ?? ""),
+              translation: data?.translation?.name ?? "",
               type: "short" as const,
-              value: data?.attribute?.name,
+              value: data?.attribute?.name ?? "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -126,7 +125,7 @@ const TranslationsAttributesPage = ({
           onSubmit={onSubmit}
         />
         <CardSpacer />
-        {data?.attribute?.choices.edges.length > 0 && withChoices && (
+        {data?.attribute?.choices && data.attribute.choices.edges.length > 0 && withChoices && (
           <TranslationFields
             activeField={activeField}
             disabled={disabled}

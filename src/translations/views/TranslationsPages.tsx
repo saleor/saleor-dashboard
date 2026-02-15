@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   usePageTranslationDetailsQuery,
@@ -48,10 +47,10 @@ const TranslationsPages = ({ id, languageCode, params }: TranslationsPagesProps)
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdatePageTranslationsMutation({
-    onCompleted: data => onUpdate(data.pageTranslate.errors),
+    onCompleted: data => onUpdate(data.pageTranslate?.errors ?? []),
   });
   const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    onCompleted: data => onUpdate(data.attributeValueTranslate?.errors ?? []),
   });
   const onEdit = (field: string) =>
     navigate(
@@ -87,7 +86,7 @@ const TranslationsPages = ({ id, languageCode, params }: TranslationsPagesProps)
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
-          id,
+          id: id ?? "",
           input: getAttributeValueTranslationsInputData(type, data),
           language: languageCode,
         },
@@ -103,11 +102,11 @@ const TranslationsPages = ({ id, languageCode, params }: TranslationsPagesProps)
       languageCode={languageCode}
       languages={shop?.languages || []}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={translation?.__typename === "PageTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      onAttributeValueSubmit={handleAttributeValueSubmit as any}
+      data={translation?.__typename === "PageTranslatableContent" ? translation : null!}
     />
   );
 };

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useProductTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
@@ -24,23 +23,28 @@ const TranslationsProductList = ({ params, variables }: TranslationsEntityListPr
       <TranslationsEntitiesList
         data-test-id="translation-list-view"
         disabled={loading}
-        entities={mapEdgesToItems(data?.translations)?.map(
-          node =>
-            node.__typename === "ProductTranslatableContent" && {
-              completion: {
-                current: sumCompleted([
-                  node.translation?.description,
-                  node.translation?.name,
-                  node.translation?.seoDescription,
-                  node.translation?.seoTitle,
-                  ...(node.attributeValues?.map(({ translation }) => translation?.richText) || []),
-                ]),
-                max: 4 + (node.attributeValues?.length || 0),
-              },
-              id: node?.product?.id,
-              name: node?.product?.name,
-            },
-        )}
+        entities={
+          mapEdgesToItems(data?.translations)
+            ?.map(
+              node =>
+                node.__typename === "ProductTranslatableContent" && {
+                  completion: {
+                    current: sumCompleted([
+                      node.translation?.description,
+                      node.translation?.name,
+                      node.translation?.seoDescription,
+                      node.translation?.seoTitle,
+                      ...(node.attributeValues?.map(({ translation }) => translation?.richText) ||
+                        []),
+                    ]),
+                    max: 4 + (node.attributeValues?.length || 0),
+                  },
+                  id: node?.product?.id ?? "",
+                  name: node?.product?.name ?? "",
+                },
+            )
+            .filter(Boolean) as any
+        }
         getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.products, id)}
       />
     </PaginatorContext.Provider>

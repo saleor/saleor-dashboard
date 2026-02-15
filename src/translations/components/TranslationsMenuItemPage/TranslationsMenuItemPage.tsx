@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -63,7 +62,7 @@ const TranslationsMenuItemPage = ({
           },
           {
             languageCode,
-            menuItemName: getStringOrPlaceholder(data?.menuItem.name),
+            menuItemName: getStringOrPlaceholder(data?.menuItem?.name),
           },
         )}
       >
@@ -81,7 +80,7 @@ const TranslationsMenuItemPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.menuItems, translationId))
@@ -103,9 +102,9 @@ const TranslationsMenuItemPage = ({
                 description: "structure item name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation: data?.translation?.name ?? "",
               type: "short" as const,
-              value: data?.menuItem.name,
+              value: data?.menuItem?.name ?? "",
             },
           ]}
           saveButtonState={saveButtonState}

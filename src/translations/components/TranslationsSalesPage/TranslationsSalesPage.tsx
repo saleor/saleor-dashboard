@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -81,7 +80,7 @@ const TranslationsSalesPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.sales, translationId))
@@ -102,9 +101,9 @@ const TranslationsSalesPage = ({
                 defaultMessage: "Sale Name",
               }),
               name: fieldNames.name,
-              translation: data?.translation?.name || null,
+              translation: data?.translation?.name ?? "",
               type: "short" as const,
-              value: data?.sale?.name,
+              value: data?.sale?.name ?? "",
             },
           ]}
           saveButtonState={saveButtonState}

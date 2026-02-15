@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
@@ -37,7 +36,7 @@ const TranslationsCategories = ({ id, languageCode, params }: TranslationsCatego
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateCategoryTranslationsMutation({
     onCompleted: data => {
-      if (data.categoryTranslate.errors.length === 0) {
+      if (data.categoryTranslate?.errors.length === 0) {
         categoryTranslations.refetch();
         notify({
           status: "success",
@@ -84,10 +83,10 @@ const TranslationsCategories = ({ id, languageCode, params }: TranslationsCatego
       languageCode={languageCode}
       languages={shop?.languages || []}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "CategoryTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={(translation?.__typename === "CategoryTranslatableContent" ? translation : null)!}
     />
   );
 };

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -49,7 +48,7 @@ const TranslationsLanguageList = (props: TranslationsLanguageListProps) => {
                   href={language && languageEntitiesUrl(language.code, {})}
                 >
                   <TableCell className={classes.capitalize}>
-                    {maybe<React.ReactNode>(() => language.language, <Skeleton />)}
+                    {maybe<React.ReactNode>(() => language?.language, <Skeleton />)}
                   </TableCell>
                 </TableRowLink>
               ),

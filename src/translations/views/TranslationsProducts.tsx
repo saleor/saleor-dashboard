@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useProductTranslationDetailsQuery,
@@ -46,10 +45,10 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
-    onCompleted: data => onUpdate(data.productTranslate.errors),
+    onCompleted: data => onUpdate(data.productTranslate?.errors ?? []),
   });
   const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    onCompleted: data => onUpdate(data.attributeValueTranslate?.errors ?? []),
   });
   const onEdit = (field: string | string[]) =>
     navigate(
@@ -127,7 +126,7 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
     extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
-          id,
+          id: id ?? "",
           input: getAttributeValueTranslationsInputData(type, data),
           language: languageCode,
         },
@@ -144,11 +143,11 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
       languageCode={languageCode}
       languages={maybe(() => shop.languages, [])}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={translation?.__typename === "ProductTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      onAttributeValueSubmit={handleAttributeValueSubmit as any}
+      data={translation?.__typename === "ProductTranslatableContent" ? translation : null!}
     />
   );
 };

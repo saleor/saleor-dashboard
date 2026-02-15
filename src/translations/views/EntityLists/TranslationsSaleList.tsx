@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useSaleTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
@@ -23,17 +22,21 @@ const TranslationsSaleList = ({ params, variables }: TranslationsEntityListProps
     <PaginatorContext.Provider value={paginationValues}>
       <TranslationsEntitiesList
         disabled={loading}
-        entities={mapEdgesToItems(data?.translations)?.map(
-          node =>
-            node.__typename === "SaleTranslatableContent" && {
-              completion: {
-                current: sumCompleted([node.translation?.name]),
-                max: 1,
-              },
-              id: node.sale?.id,
-              name: node.sale?.name,
-            },
-        )}
+        entities={
+          mapEdgesToItems(data?.translations)
+            ?.map(
+              node =>
+                node.__typename === "SaleTranslatableContent" && {
+                  completion: {
+                    current: sumCompleted([node.translation?.name]),
+                    max: 1,
+                  },
+                  id: node.sale?.id ?? "",
+                  name: node.sale?.name ?? "",
+                },
+            )
+            .filter(Boolean) as any
+        }
         getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.sales, id)}
       />
     </PaginatorContext.Provider>

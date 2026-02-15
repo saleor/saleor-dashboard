@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useShippingMethodTranslationDetailsQuery,
@@ -38,7 +37,7 @@ const TranslationsShippingMethod = ({
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateShippingMethodTranslationsMutation({
     onCompleted: data => {
-      if (data.shippingPriceTranslate.errors.length === 0) {
+      if (data.shippingPriceTranslate?.errors.length === 0) {
         shippingMethodTranslations.refetch();
         notify({
           status: "success",
@@ -82,10 +81,10 @@ const TranslationsShippingMethod = ({
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "ShippingMethodTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={translation?.__typename === "ShippingMethodTranslatableContent" ? translation : null!}
     />
   );
 };

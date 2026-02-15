@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
@@ -84,7 +83,7 @@ const TranslationsPagesPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.pages, translationId))
@@ -105,9 +104,9 @@ const TranslationsPagesPage = ({
                 defaultMessage: "Model title",
               }),
               name: PageTranslationInputFieldName.title,
-              translation: data?.translation?.title || null,
+              translation: data?.translation?.title ?? "",
               type: "short",
-              value: data?.page?.title,
+              value: data?.page?.title ?? "",
             },
             {
               displayName: intl.formatMessage({
@@ -116,9 +115,9 @@ const TranslationsPagesPage = ({
                 description: "page models",
               }),
               name: PageTranslationInputFieldName.content,
-              translation: data?.translation?.content || null,
+              translation: data?.translation?.content ?? "",
               type: "rich",
-              value: data?.page?.content,
+              value: data?.page?.content ?? "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -144,9 +143,9 @@ const TranslationsPagesPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: PageTranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
+              translation: data?.translation?.seoTitle ?? "",
               type: "short",
-              value: data?.page?.seoTitle,
+              value: data?.page?.seoTitle ?? "",
             },
             {
               displayName: intl.formatMessage({
@@ -154,9 +153,9 @@ const TranslationsPagesPage = ({
                 defaultMessage: "Search Engine Description",
               }),
               name: PageTranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
+              translation: data?.translation?.seoDescription ?? "",
               type: "long",
-              value: data?.page?.seoDescription,
+              value: data?.page?.seoDescription ?? "",
             },
           ]}
           saveButtonState={saveButtonState}

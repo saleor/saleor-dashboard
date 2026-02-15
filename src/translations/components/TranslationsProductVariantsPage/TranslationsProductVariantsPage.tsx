@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
@@ -81,7 +80,7 @@ const TranslationsProductsPage = ({
             selectedId={variantId}
           />
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
           />
@@ -99,9 +98,9 @@ const TranslationsProductsPage = ({
               defaultMessage: "Variant Name",
             }),
             name: TranslationInputFieldName.name,
-            translation: data?.translation?.name || null,
+            translation: data?.translation?.name ?? "",
             type: "short",
-            value: data?.name,
+            value: data?.name ?? "",
           },
         ]}
         saveButtonState={saveButtonState}

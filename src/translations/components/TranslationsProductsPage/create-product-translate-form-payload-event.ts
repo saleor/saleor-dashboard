@@ -13,10 +13,10 @@ export const createProductTranslateFormPayloadEvent = ({
 }: {
   languageCode: string;
   productId: string;
-  cachedProductDescription: string;
-  cachedProductName: string;
-  cachedProductSeoName: string;
-  cachedProductSeoDescription: string;
+  cachedProductDescription: string | undefined;
+  cachedProductName: string | undefined;
+  cachedProductSeoName: string | undefined;
+  cachedProductSeoDescription: string | undefined;
   productData: Exclude<ProductTranslationFragment["product"], null>;
   translationData: ProductTranslationFragment["translation"];
 }): FormPayloadProductTranslate => {
