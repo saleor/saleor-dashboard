@@ -1,23 +1,41 @@
-import mastercardLogo from "@assets/images/payment-methods/mastercard.svg";
-import visaLogo from "@assets/images/payment-methods/visa.svg";
 import { CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 
 const MASKED_GROUP = "****";
-const BRAND_LOGO_SIZE = 35;
+const BRAND_LOGO_SIZE = 26;
 
-const brandLogos: Record<string, string> = {
-  visa: visaLogo,
-  mastercard: mastercardLogo,
-  mc: mastercardLogo,
+const getPaymentMethodIconUrl = (fileName: string) =>
+  `${import.meta.env.BASE_URL}payment-methods/${fileName}.svg`;
+
+// Whitelist of card brands mapped to their icon file names
+// in the activemerchant/payment_icons repository
+const CARD_BRAND_ICONS: Record<string, string> = {
+  visa: "visa",
+  mastercard: "master",
+  mc: "master",
+  american_express: "american_express",
+  amex: "american_express",
+  discover: "discover",
+  jcb: "jcb",
+  diners_club: "diners_club",
+  unionpay: "unionpay",
+  maestro: "maestro",
+  givex: "gift-card",
 };
 
 const BrandLogo = ({ brand }: { brand: string }) => {
-  const logo = brandLogos[brand.toLowerCase()];
+  const iconName = CARD_BRAND_ICONS[brand.toLowerCase()];
 
-  if (logo) {
-    return <img src={logo} alt={brand} title={brand} height={BRAND_LOGO_SIZE} />;
+  if (iconName) {
+    return (
+      <img
+        src={getPaymentMethodIconUrl(iconName)}
+        alt={brand}
+        title={brand}
+        height={BRAND_LOGO_SIZE}
+      />
+    );
   }
 
   return (

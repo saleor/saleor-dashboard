@@ -1,9 +1,6 @@
-import blikLogo from "@assets/images/payment-methods/blik.svg";
-import klarnaLogo from "@assets/images/payment-methods/klarna.svg";
-import paypalLogo from "@assets/images/payment-methods/paypal.svg";
-import stripeLinkLogo from "@assets/images/payment-methods/stripe-link.svg";
 import { OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 
 interface OtherPaymentMethodProps {
   details: OtherPaymentMethodDetailsFragment;
@@ -11,28 +8,32 @@ interface OtherPaymentMethodProps {
 
 const BRAND_LOGO_SIZE = 20;
 
-const brandLogos: Record<string, string> = {
-  klarna: klarnaLogo,
-  paypal: paypalLogo,
-  link: stripeLinkLogo,
-  blik: blikLogo,
-};
+const getPaymentMethodIconUrl = (name: string) =>
+  `${import.meta.env.BASE_URL}payment-methods/${name.toLowerCase()}.svg`;
 
 const Logo = ({ name }: { name?: string }) => {
+  const [hasError, setHasError] = useState(false);
+
   if (!name) {
     return null;
   }
 
-  const logo = brandLogos[name.toLowerCase()];
-
-  if (logo) {
-    return <img src={logo} title={name} alt={name} height={BRAND_LOGO_SIZE} />;
+  if (hasError) {
+    return (
+      <Text>
+        <Text fontWeight="medium">Paid by:</Text> {name}
+      </Text>
+    );
   }
 
   return (
-    <Text>
-      <Text fontWeight="medium">Paid by:</Text> {name}
-    </Text>
+    <img
+      src={getPaymentMethodIconUrl(name)}
+      title={name}
+      alt={name}
+      height={BRAND_LOGO_SIZE}
+      onError={() => setHasError(true)}
+    />
   );
 };
 
