@@ -1,0 +1,31 @@
+src/orders/components/OrderTransaction/components/OtherPaymentMethod.tsx
+  f2c6f6ea5d82722c 2,13
+testUtils/__mocks__/getBaseUrl.ts
+  f2c6f6ea5d82722c 1
+jest.config.js
+  f2c6f6ea5d82722c 31
+src/misc/getBaseUrl.ts
+  f2c6f6ea5d82722c 1
+src/orders/components/OrderTransaction/components/CardPaymentMethod.tsx
+  f2c6f6ea5d82722c 2,10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "31357ee7d19a3bf8440d34e20726cc483133da20",
+  "prompts": {
+    "f2c6f6ea5d82722c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c782173b-f666-47ac-9e16-34145fa48e90",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 7,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
