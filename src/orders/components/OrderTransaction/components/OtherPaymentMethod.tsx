@@ -1,4 +1,5 @@
 import { OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
+import { getBaseUrl } from "@dashboard/misc/getBaseUrl";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 
@@ -9,7 +10,7 @@ interface OtherPaymentMethodProps {
 const BRAND_LOGO_SIZE = 20;
 
 const getPaymentMethodIconUrl = (name: string) =>
-  `${import.meta.env.BASE_URL}payment-methods/${name.toLowerCase()}.svg`;
+  `${getBaseUrl()}payment-methods/${name.toLowerCase()}.svg`;
 
 const Logo = ({ name }: { name?: string }) => {
   const [hasError, setHasError] = useState(false);

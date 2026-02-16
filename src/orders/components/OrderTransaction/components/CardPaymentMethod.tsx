@@ -1,4 +1,5 @@
 import { CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
+import { getBaseUrl } from "@dashboard/misc/getBaseUrl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 
@@ -6,7 +7,7 @@ const MASKED_GROUP = "****";
 const BRAND_LOGO_SIZE = 26;
 
 const getPaymentMethodIconUrl = (fileName: string) =>
-  `${import.meta.env.BASE_URL}payment-methods/${fileName}.svg`;
+  `${getBaseUrl()}payment-methods/${fileName}.svg`;
 
 // Whitelist of card brands mapped to their icon file names
 // in the activemerchant/payment_icons repository
