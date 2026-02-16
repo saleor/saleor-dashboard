@@ -1,0 +1,23 @@
+src/components/GraphiQLPlain/AttachAuthButton.tsx
+  9121fc3fbe1c3886 36,38-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "643a8f45dfbea2b56f17a5e9ba8e6a6b87d636f1",
+  "prompts": {
+    "9121fc3fbe1c3886": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb6f2d77-d833-4101-9cb1-0fb8b4c56926",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
