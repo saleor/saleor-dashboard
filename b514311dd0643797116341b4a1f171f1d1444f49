@@ -1,0 +1,25 @@
+src/orders/components/OrderTransaction/components/CardPaymentMethod.tsx
+  895323fc02a57ca0 1,10
+src/orders/components/OrderTransaction/components/OtherPaymentMethod.tsx
+  895323fc02a57ca0 1,13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "b514311dd0643797116341b4a1f171f1d1444f49",
+  "prompts": {
+    "895323fc02a57ca0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e7fa0e3c-ff35-42bd-8e40-f8204c77beb0",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
