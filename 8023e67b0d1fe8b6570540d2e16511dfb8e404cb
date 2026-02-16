@@ -1,0 +1,25 @@
+src/extensions/views/ViewManifestExtension/components/AppFrame/useAppActions.ts
+  6a5c398446828ff3 93-94,96-104,106-107
+src/extensions/views/ViewManifestExtension/components/AppFrame/useAppActions.test.ts
+  6a5c398446828ff3 105,146-171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "8023e67b0d1fe8b6570540d2e16511dfb8e404cb",
+  "prompts": {
+    "6a5c398446828ff3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f8030acd-5475-4020-89eb-8d3568fe4764",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 42,
+      "total_deletions": 7,
+      "accepted_lines": 41,
+      "overriden_lines": 0
+    }
+  }
+}
