@@ -8,8 +8,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { OrderTransactionProps } from "../../OrderTransaction";
 import { ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
+import { PaymentMethodDetails } from "../PaymentMethodDetails";
 import { EventTime } from "../TransactionEvents/components/EventTime";
-import { PaymentMethodDetails } from "../TransactionEvents/components/PaymentMethodDetails";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 

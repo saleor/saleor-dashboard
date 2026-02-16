@@ -1,7 +1,7 @@
 import { TransactionItemFragment } from "@dashboard/graphql";
 
-import { CardPaymentMethod } from "../../CardPaymentMethod";
-import { OtherPaymentMethod } from "../../OtherPaymentMethod";
+import { CardPaymentMethod } from "./CardPaymentMethod";
+import { OtherPaymentMethod } from "./OtherPaymentMethod";
 
 type PaymentMethodDetailsType = TransactionItemFragment["paymentMethodDetails"];
 
@@ -19,5 +19,7 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
       return <CardPaymentMethod details={paymentMethodDetails} />;
     case "OtherPaymentMethodDetails":
       return <OtherPaymentMethod details={paymentMethodDetails} />;
+    default:
+      throw new Error("Unknown payment method details type:");
   }
 };
