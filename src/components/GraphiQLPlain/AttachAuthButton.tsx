@@ -33,8 +33,12 @@ export const AttachAuthButton = ({
       // invalid JSON, start fresh
     }
 
-    const existingToken = headers["Authorization-Bearer"] || headers["Authorization"];
-    const rawToken = window.prompt("Paste auth token (leave empty to clear):", existingToken ?? "");
+    const existingToken = (
+      headers["Authorization-Bearer"] ||
+      headers["Authorization"] ||
+      ""
+    ).replace(/^Bearer\s+/i, "");
+    const rawToken = window.prompt("Paste auth token (leave empty to clear):", existingToken);
 
     if (rawToken === null) {
       return;
