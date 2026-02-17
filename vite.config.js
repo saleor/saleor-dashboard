@@ -126,6 +126,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     root: "src",
     base,
+    publicDir: "../public",
     envDir: "..",
     server: {
       port: 9000,
