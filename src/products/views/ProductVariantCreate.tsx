@@ -10,7 +10,9 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
+  CategoryFilterInput,
   PageWhereInput,
+  ProductWhereInput,
   useFileUploadMutation,
   useProductVariantChannelListingUpdateMutation,
   useProductVariantCreateDataQuery,
@@ -229,6 +231,29 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     },
     [searchPagesOpts.refetch],
   );
+
+  const handleProductFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
+      searchProductsOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: filterVariables,
+        channel,
+        query,
+      });
+    },
+    [searchProductsOpts.refetch],
+  );
+
+  const handleCategoryFilterChange = useCallback(
+    (filterVariables: CategoryFilterInput, query: string) => {
+      searchCategoriesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        query,
+      });
+    },
+    [searchCategoriesOpts.refetch],
+  );
+
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
@@ -320,7 +345,10 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
           [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
         }}
       />
     </>

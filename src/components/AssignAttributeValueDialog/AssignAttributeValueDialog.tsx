@@ -39,10 +39,10 @@ export type CategoryFilterChangeHandler = (
 ) => void;
 
 export type AssignAttributeValueDialogFilterChangeMap = {
-  [AttributeEntityTypeEnum.PRODUCT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PRODUCT_VARIANT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
-  [AttributeEntityTypeEnum.CATEGORY]?: CategoryFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PAGE]: PageFilterChangeHandler;
+  [AttributeEntityTypeEnum.CATEGORY]: CategoryFilterChangeHandler;
 };
 
 type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {

@@ -9,8 +9,10 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
+  CategoryFilterInput,
   PageErrorWithAttributesFragment,
   PageWhereInput,
+  ProductWhereInput,
   useFileUploadMutation,
   usePageCreateMutation,
   usePageTypeQuery,
@@ -190,6 +192,28 @@ const PageCreate = ({ params }: PageCreateProps) => {
     [searchPagesOpts.refetch],
   );
 
+  const handleProductFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
+      searchProductsOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: filterVariables,
+        channel,
+        query,
+      });
+    },
+    [searchProductsOpts.refetch],
+  );
+
+  const handleCategoryFilterChange = useCallback(
+    (filterVariables: CategoryFilterInput, query: string) => {
+      searchCategoriesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        query,
+      });
+    },
+    [searchCategoriesOpts.refetch],
+  );
+
   const fetchMoreReferenceCategories = {
     hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchCategoriesOpts.loading,
@@ -250,7 +274,10 @@ const PageCreate = ({ params }: PageCreateProps) => {
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
           [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
         }}
       />
     </>

@@ -17,10 +17,12 @@ import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
   AttributeValueInput,
+  CategoryFilterInput,
   PageDetailsFragment,
   PageErrorFragment,
   PageInput,
   PageWhereInput,
+  ProductWhereInput,
   UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -222,6 +224,28 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     [searchPagesOpts.refetch],
   );
 
+  const handleProductFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
+      searchProductsOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: filterVariables,
+        channel,
+        query,
+      });
+    },
+    [searchProductsOpts.refetch],
+  );
+
+  const handleCategoryFilterChange = useCallback(
+    (filterVariables: CategoryFilterInput, query: string) => {
+      searchCategoriesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        query,
+      });
+    },
+    [searchCategoriesOpts.refetch],
+  );
+
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
@@ -263,7 +287,10 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
           [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
         }}
       />
       <ActionDialog
