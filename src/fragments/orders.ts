@@ -629,11 +629,44 @@ export const transactionBaseItemFragment = gql`
 `;
 
 export const transactionItemFragment = gql`
+  fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
+    name
+  }
+
+  fragment CardPaymentMethodDetails on CardPaymentMethodDetails {
+    name
+    brand
+    expMonth
+    expYear
+    firstDigits
+    lastDigits
+  }
+
   fragment TransactionItem on TransactionItem {
     ...TransactionBaseItem
     pspReference
     externalUrl
     createdAt
+    createdBy {
+      ... on App {
+        name
+        brand {
+          logo {
+            default(size: 64)
+          }
+        }
+      }
+    }
+    paymentMethodDetails {
+      name
+      __typename
+      ... on CardPaymentMethodDetails {
+        ...CardPaymentMethodDetails
+      }
+      ... on OtherPaymentMethodDetails {
+        ...OtherPaymentMethodDetails
+      }
+    }
     events {
       ...TransactionEvent
     }

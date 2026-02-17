@@ -88,5 +88,7 @@ export const singleRefundableTransaction = [
       amount: 0,
       currency: "EUR",
     },
+    createdBy: null,
+    paymentMethodDetails: null,
   },
 ];

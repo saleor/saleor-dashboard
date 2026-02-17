@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.31",
+  "version": "3.22.32",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -51,7 +51,8 @@
     "test:ci": "CI=true jest --coverage --silent",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
     "test:quiet": "jest --silent",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "update-payment-assets": "node scripts/update-payment-assets.cjs"
   },
   "config": {
     "saleor": {
