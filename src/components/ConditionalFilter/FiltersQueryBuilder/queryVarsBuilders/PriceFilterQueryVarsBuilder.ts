@@ -31,7 +31,7 @@ export class PriceFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<Pr
     const amountParsed = QueryVarsBuilderUtils.getFloatValueFromElement(element);
     const conditionLabel = element.condition.selected.conditionValue?.label || "";
     const decimalInput = QueryVarsBuilderUtils.handleRangeCondition(
-      amountParsed,
+      QueryVarsBuilderUtils.numericToConditionValue(amountParsed),
       conditionLabel,
     ) as DecimalFilterInput;
 

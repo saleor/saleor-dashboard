@@ -47,6 +47,8 @@ function extractValueFromOption(value: ConditionValue): string {
   if (Array.isArray(value) && typeof value[0] === "string") {
     return value[0];
   }
+
+  return "";
 }
 
 /**
@@ -137,7 +139,7 @@ function isAnyTuple(value: unknown): value is [unknown, unknown] {
  * and builds the inner range object with gte/lte properties
  */
 function buildRangeObject(
-  selectedValue: unknown,
+  selectedValue: ConditionValue,
   label: string,
 ): { gte?: unknown; lte?: unknown } | null {
   if (label === "lower") {
@@ -168,7 +170,7 @@ function buildRangeObject(
  * - DecimalFilterInput
  */
 function handleRangeCondition(
-  selectedValue: unknown,
+  selectedValue: ConditionValue,
   label: string,
 ): ProcessedConditionValue | null {
   if (selectedValue === null || selectedValue === undefined || selectedValue === "") {
@@ -309,6 +311,18 @@ const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart | Attrib
   return queryPart;
 };
 
+function numericToConditionValue(value: number | number[] | null): ConditionValue {
+  if (value === null) {
+    return "";
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(String);
+  }
+
+  return String(value);
+}
+
 export const QueryVarsBuilderUtils = {
   getBooleanValueFromElement,
   extractConditionValueFromFilterElement,
@@ -323,4 +337,5 @@ export const QueryVarsBuilderUtils = {
   handleMultipleOption,
   handleStringCondition,
   handleArrayCondition,
+  numericToConditionValue,
 };

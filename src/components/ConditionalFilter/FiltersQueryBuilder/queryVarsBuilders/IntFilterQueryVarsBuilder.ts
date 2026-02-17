@@ -38,7 +38,7 @@ export class IntFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<IntF
     const conditionLabel = element.condition.selected.conditionValue?.label || "";
 
     return QueryVarsBuilderUtils.handleRangeCondition(
-      parsedValue,
+      QueryVarsBuilderUtils.numericToConditionValue(parsedValue),
       conditionLabel,
     ) as IntFilterInput;
   }
