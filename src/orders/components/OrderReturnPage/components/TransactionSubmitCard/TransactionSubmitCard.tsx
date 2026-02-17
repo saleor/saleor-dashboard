@@ -14,7 +14,11 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
+import {
+  canGrantRefundDuringReturn,
+  canSendRefundDuringReturn,
+  getReturnRefundValue,
+} from "../../utils";
 import { GrantRefundCheckbox } from "./GrantRefundCheckbox";
 import { submitCardMessages } from "./messages";
 import RefundShipmentCheckbox from "./RefundShipmentCheckbox";
@@ -39,6 +43,8 @@ interface TransactionSubmitCardProps {
   isAmountDirty: boolean;
   transactionId?: string;
   onAmountChange: (value: number) => void;
+  refundReasonConfigured?: boolean;
+  orderId: string;
 }
 
 export const TransactionSubmitCard = ({
@@ -58,8 +64,13 @@ export const TransactionSubmitCard = ({
   isAmountDirty,
   transactionId,
   onAmountChange,
+  refundReasonConfigured,
+  orderId,
 }: TransactionSubmitCardProps) => {
   const intl = useIntl();
+  const canGrantRefund = canGrantRefundDuringReturn({
+    refundReasonConfigured,
+  });
   const canSendRefund = canSendRefundDuringReturn({
     autoGrantRefund,
     transactions,
@@ -86,6 +97,8 @@ export const TransactionSubmitCard = ({
             autoGrantRefund={autoGrantRefund}
             grantRefundErrors={grantRefundErrors}
             onChange={onChange}
+            canGrantRefund={canGrantRefund}
+            orderId={orderId}
           />
           {autoGrantRefund && (
             <TransactionSelector

@@ -50,6 +50,7 @@ interface OrderReturnPageProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
   modelForReturnReasonRefId?: string | null;
+  refundReasonConfigured?: boolean;
 }
 
 const OrderRefundPage = (props: OrderReturnPageProps) => {
@@ -62,6 +63,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     onSubmit,
     submitStatus,
     modelForReturnReasonRefId,
+    refundReasonConfigured,
   } = props;
   const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
   const intl = useIntl();
@@ -189,6 +191,8 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   submitStatus={submitStatus}
                   onAmountChange={handlers.handleAmountChange}
                   isAmountDirty={isAmountDirty}
+                  refundReasonConfigured={refundReasonConfigured}
+                  orderId={order?.id ?? ""}
                 />
                 <Box marginTop={6}>
                   <DashboardCard>

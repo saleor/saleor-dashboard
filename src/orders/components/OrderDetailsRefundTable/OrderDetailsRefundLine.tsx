@@ -41,7 +41,7 @@ export const OrderDetailsRefundLine = ({
   return (
     <>
       <GridTable.Row key={refund.id}>
-        <GridTable.Cell>
+        <GridTable.Cell paddingLeft={4}>
           {hasLineReasons && (
             <button
               className={`${styles.chevronButton} ${isExpanded ? styles.chevronExpanded : styles.chevronCollapsed}`}
