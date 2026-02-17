@@ -2,7 +2,7 @@ import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
-  useRefundSettingsQuery,
+  useReturnSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -33,8 +33,9 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       id: orderId,
     },
   });
-  const { data: refundSettings } = useRefundSettingsQuery();
-  const modelForRefundReasonRefId = refundSettings?.refundSettings.reasonReferenceType?.id ?? null;
+  const { data: returnSettingsData } = useReturnSettingsQuery();
+  const modelForReturnReasonRefId =
+    returnSettingsData?.returnSettings.reasonReferenceType?.id ?? null;
 
   const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
     onCompleted: data => {
@@ -110,7 +111,7 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
       submitStatus={returnCreateOpts.status}
-      modelForRefundReasonRefId={modelForRefundReasonRefId}
+      modelForReturnReasonRefId={modelForReturnReasonRefId}
     />
   );
 };

@@ -12,7 +12,7 @@ interface ReturnLineReasonCellProps {
   lineReason: LineReasonData | undefined;
   disabled: boolean;
   onEditReason: (lineId: string) => void;
-  modelForRefundReasonRefId: string | null;
+  modelForReturnReasonRefId: string | null;
 }
 
 export const ReturnLineReasonCell = ({
@@ -20,13 +20,13 @@ export const ReturnLineReasonCell = ({
   lineReason,
   disabled,
   onEditReason,
-  modelForRefundReasonRefId,
+  modelForReturnReasonRefId,
 }: ReturnLineReasonCellProps) => {
   const { data: modelsData } = useModelsOfTypeQuery({
     variables: {
-      pageTypeId: modelForRefundReasonRefId ?? "",
+      pageTypeId: modelForReturnReasonRefId ?? "",
     },
-    skip: !modelForRefundReasonRefId || !lineReason?.reasonReference,
+    skip: !modelForReturnReasonRefId || !lineReason?.reasonReference,
   });
 
   const referenceLabel = useMemo(() => {

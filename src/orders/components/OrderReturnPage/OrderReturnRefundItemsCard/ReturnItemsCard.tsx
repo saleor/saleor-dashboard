@@ -76,7 +76,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity: () => any;
   lineReasons?: Record<string, LineReasonData>;
   onEditLineReason?: (lineId: string) => void;
-  modelForRefundReasonRefId?: string | null;
+  modelForReturnReasonRefId?: string | null;
 }
 
 const ItemsCard = ({
@@ -90,7 +90,7 @@ const ItemsCard = ({
   order,
   lineReasons,
   onEditLineReason,
-  modelForRefundReasonRefId,
+  modelForReturnReasonRefId,
 }: OrderReturnRefundLinesCardProps) => {
   const classes = useStyles({});
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -218,7 +218,7 @@ const ItemsCard = ({
                       lineReason={lineReasons?.[id]}
                       disabled={!currentQuantity}
                       onEditReason={onEditLineReason}
-                      modelForRefundReasonRefId={modelForRefundReasonRefId ?? null}
+                      modelForReturnReasonRefId={modelForReturnReasonRefId ?? null}
                     />
                   )}
                 </TableRowLink>

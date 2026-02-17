@@ -18,10 +18,10 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { pageListUrl } from "@dashboard/modeling/urls";
-import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
+import { returnReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
-import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { returnsSettingsPath } from "@dashboard/returnsSettings/urls";
 import { Box, Select, Skeleton, Text, Textarea } from "@saleor/macaw-ui-next";
 import { Fragment, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -49,7 +49,7 @@ interface OrderReturnPageProps {
   sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
-  modelForRefundReasonRefId?: string | null;
+  modelForReturnReasonRefId?: string | null;
 }
 
 const OrderRefundPage = (props: OrderReturnPageProps) => {
@@ -61,7 +61,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     sendRefundErrors = [],
     onSubmit,
     submitStatus,
-    modelForRefundReasonRefId,
+    modelForReturnReasonRefId,
   } = props;
   const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
   const intl = useIntl();
@@ -70,9 +70,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
 
   const { data: modelsData, loading: modelsLoading } = useModelsOfTypeQuery({
     variables: {
-      pageTypeId: modelForRefundReasonRefId ?? "",
+      pageTypeId: modelForReturnReasonRefId ?? "",
     },
-    skip: !modelForRefundReasonRefId,
+    skip: !modelForReturnReasonRefId,
   });
 
   const reasonRefOptions = useMemo(() => {
@@ -118,7 +118,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   onChangeSelected={handlers.changeItemsToBeReplaced}
                   lineReasons={hasTransactions ? data.lineReasons : undefined}
                   onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
-                  modelForRefundReasonRefId={modelForRefundReasonRefId}
+                  modelForReturnReasonRefId={modelForReturnReasonRefId}
                 />
                 <CardSpacer />
               </>
@@ -139,7 +139,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                     lineReasons={hasTransactions ? data.lineReasons : undefined}
                     onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
-                    modelForRefundReasonRefId={modelForRefundReasonRefId}
+                    modelForReturnReasonRefId={modelForReturnReasonRefId}
                   />
                   <CardSpacer />
                 </Fragment>
@@ -161,7 +161,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                     lineReasons={hasTransactions ? data.lineReasons : undefined}
                     onEditLineReason={hasTransactions ? setReasonModalLineId : undefined}
-                    modelForRefundReasonRefId={modelForRefundReasonRefId}
+                    modelForReturnReasonRefId={modelForReturnReasonRefId}
                   />
                   <CardSpacer />
                 </Fragment>
@@ -195,8 +195,8 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     <DashboardCard.Header>
                       <DashboardCard.Title>
                         {intl.formatMessage({
-                          defaultMessage: "Refund reason",
-                          id: "yUvR0h",
+                          defaultMessage: "Return reason",
+                          id: "6nwJUr",
                         })}
                       </DashboardCard.Title>
                     </DashboardCard.Header>
@@ -205,7 +205,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                         <Skeleton />
                       ) : (
                         <Select
-                          disabled={!modelForRefundReasonRefId || loading}
+                          disabled={!modelForReturnReasonRefId || loading}
                           options={reasonRefOptions}
                           value={data.reasonReference}
                           name="reasonReference"
@@ -220,25 +220,25 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                         />
                       )}
                       <Box marginTop={2}>
-                        {canManageSettings && modelForRefundReasonRefId && (
+                        {canManageSettings && modelForReturnReasonRefId && (
                           <Link href={pageListUrl()}>
                             <Text color="inherit" size={2}>
-                              {intl.formatMessage(refundReasonSelectHelperMessages.manageReasons)}
+                              {intl.formatMessage(returnReasonSelectHelperMessages.manageReasons)}
                             </Text>
                           </Link>
                         )}
-                        {canManageSettings && !modelForRefundReasonRefId && (
-                          <Link href={refundsSettingsPath}>
+                        {canManageSettings && !modelForReturnReasonRefId && (
+                          <Link href={returnsSettingsPath}>
                             <Text color="inherit" size={2}>
                               {intl.formatMessage(
-                                refundReasonSelectHelperMessages.enableReasonsInSettings,
+                                returnReasonSelectHelperMessages.enableReasonsInSettings,
                               )}
                             </Text>
                           </Link>
                         )}
                         {!canManageSettings && (
                           <Text color="default2" size={2}>
-                            {intl.formatMessage(refundReasonSelectHelperMessages.noPermissionsHint)}
+                            {intl.formatMessage(returnReasonSelectHelperMessages.noPermissionsHint)}
                           </Text>
                         )}
                       </Box>
@@ -289,7 +289,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   ? (data.lineReasons[reasonModalLineId]?.reasonReference ?? null)
                   : null
               }
-              modelForRefundReasonRefId={modelForRefundReasonRefId ?? null}
+              modelForRefundReasonRefId={modelForReturnReasonRefId ?? null}
               onClose={() => setReasonModalLineId(null)}
               onConfirm={(reason, reasonReference) => {
                 if (reasonModalLineId) {

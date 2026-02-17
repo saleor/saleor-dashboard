@@ -325,3 +325,14 @@ export const refundSettings = gql`
     }
   }
 `;
+
+export const returnSettings = gql`
+  query ReturnSettings {
+    returnSettings {
+      reasonReferenceType {
+        id
+        name
+      }
+    }
+  }
+`;

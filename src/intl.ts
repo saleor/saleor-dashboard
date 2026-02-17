@@ -657,6 +657,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Refunds Settings",
     description: "configuration section name for refund settings",
   },
+  returnsSettings: {
+    id: "12sZA0",
+    defaultMessage: "Returns Settings",
+    description: "configuration section name for return settings",
+  },
 });
 
 export const commonStatusMessages = defineMessages({

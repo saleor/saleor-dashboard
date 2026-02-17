@@ -15,6 +15,7 @@ import { sectionNames } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { returnsSettingsPath } from "@dashboard/returnsSettings/urls";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
@@ -185,6 +186,17 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.refundsSettings),
           url: refundsSettingsPath,
           testId: "configuration-menu-refunds-settings",
+        },
+        {
+          description: intl.formatMessage({
+            id: "9CsDlr",
+            defaultMessage: "Configure returns behavior",
+          }),
+          icon: <CreditCard />,
+          permissions: [PermissionEnum.MANAGE_SETTINGS],
+          title: intl.formatMessage(sectionNames.returnsSettings),
+          url: returnsSettingsPath,
+          testId: "configuration-menu-returns-settings",
         },
       ],
     },
