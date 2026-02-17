@@ -30,10 +30,10 @@ export class PriceFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<Pr
   protected getConditionValue(element: FilterElement): PriceFilterInput | null {
     const amountParsed = QueryVarsBuilderUtils.getFloatValueFromElement(element);
     const conditionLabel = element.condition.selected.conditionValue?.label || "";
-    const decimalInput = QueryVarsBuilderUtils.handleRangeCondition(
+    const decimalInput = QueryVarsBuilderUtils.buildNumericRangeCondition(
       amountParsed,
       conditionLabel,
-    ) as DecimalFilterInput;
+    ) as DecimalFilterInput | null;
 
     if (decimalInput === null) {
       return null;

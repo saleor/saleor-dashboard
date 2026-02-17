@@ -104,7 +104,7 @@ describe("ConditionalFilter / queryVariables / createCategoryQueryVariables", ()
     // Assert
     expect(result).toEqual({
       metadata: [{ key: "externalId", value: "cat-1" }],
-      updatedAt: { lte: "2026-02-13T20:08" },
+      updatedAt: { lte: "2026-02-13T20:08:00.000Z" },
     });
   });
 });
