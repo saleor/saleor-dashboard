@@ -190,11 +190,8 @@ export const STATIC_CONDITIONS = {
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
   pageTypes: [
-    {
-      type: "multiselect",
-      label: "in",
-      value: "input-1",
-    },
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
   ],
   currency: [
     {
@@ -770,6 +767,21 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
   },
 ];
 
+export const STATIC_CATEGORY_OPTIONS: LeftOperand[] = [
+  {
+    value: "metadata",
+    label: "Metadata",
+    type: "metadata",
+    slug: "metadata",
+  },
+  {
+    value: "updatedAt",
+    label: "Updated at",
+    type: "updatedAt",
+    slug: "updatedAt",
+  },
+];
+
 export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_OPTIONS,
   ...STATIC_DISCOUNT_OPTIONS,
@@ -783,6 +795,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_TYPES_OPTIONS,
   ...STAFF_MEMBER_OPTIONS,
   ...STATIC_ATTRIBUTES_OPTIONS,
+  ...STATIC_CATEGORY_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

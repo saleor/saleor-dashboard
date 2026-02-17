@@ -1795,6 +1795,21 @@ export const TransactionBaseItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseEventFragmentDoc}`;
+export const CardPaymentMethodDetailsFragmentDoc = gql`
+    fragment CardPaymentMethodDetails on CardPaymentMethodDetails {
+  name
+  brand
+  expMonth
+  expYear
+  firstDigits
+  lastDigits
+}
+    `;
+export const OtherPaymentMethodDetailsFragmentDoc = gql`
+    fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
+  name
+}
+    `;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1845,6 +1860,26 @@ export const TransactionItemFragmentDoc = gql`
   pspReference
   externalUrl
   createdAt
+  createdBy {
+    ... on App {
+      name
+      brand {
+        logo {
+          default(size: 64)
+        }
+      }
+    }
+  }
+  paymentMethodDetails {
+    name
+    __typename
+    ... on CardPaymentMethodDetails {
+      ...CardPaymentMethodDetails
+    }
+    ... on OtherPaymentMethodDetails {
+      ...OtherPaymentMethodDetails
+    }
+  }
   events {
     ...TransactionEvent
   }
@@ -1874,6 +1909,8 @@ export const TransactionItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseItemFragmentDoc}
+${CardPaymentMethodDetailsFragmentDoc}
+${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
@@ -16836,8 +16873,8 @@ export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategor
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
 export const SearchCategoriesWithTotalProductsDocument = gql`
-    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
-  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $filter: CategoryFilterInput) {
+  search: categories(after: $after, first: $first, filter: $filter) {
     edges {
       node {
         ...CategoryWithTotalProducts
@@ -16865,7 +16902,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *   },
  * });
  */

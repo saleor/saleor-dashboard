@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from "@saleor/macaw-ui";
 import { ReactNode } from "react";
 import SVG from "react-inlinesvg";
 
-import { useUser } from "..";
+import { useUser } from "../useUser";
 import LoginLoading from "./LoginLoading";
 
 const useStyles = makeStyles(

@@ -5,7 +5,9 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import {
   AttributeInput,
   Attributes,
@@ -117,6 +119,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
 }
 
 export const ProductVariantCreatePage = ({
@@ -153,6 +156,7 @@ export const ProductVariantCreatePage = ({
   fetchMoreWarehouses,
   searchWarehousesResult,
   searchWarehouses,
+  onFilterChange,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -390,6 +394,7 @@ export const ProductVariantCreatePage = ({
                   onSubmit={attributeValues =>
                     handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
+                  onFilterChange={onFilterChange}
                 />
               )}
               {product && (

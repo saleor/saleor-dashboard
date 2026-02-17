@@ -1,5 +1,7 @@
 import { InitialAttributesStateResponse } from "./API/initialState/attributes/InitialAttributesState";
 import { InitialAttributesAPIState } from "./API/initialState/attributes/useInitialAttributesState";
+import { InitialCategoryStateResponse } from "./API/initialState/category/InitialCategoryState";
+import { InitialCategoryAPIState } from "./API/initialState/category/useInitialCategoryState";
 import { InitialCollectionStateResponse } from "./API/initialState/collections/InitialCollectionState";
 import { InitialCollectionAPIState } from "./API/initialState/collections/useInitialCollectionsState";
 import { InitialGiftCardsStateResponse } from "./API/initialState/giftCards/InitialGiftCardsState";
@@ -26,7 +28,8 @@ export type InitialResponseType =
   | InitialProductTypesStateResponse
   | InitialGiftCardsStateResponse
   | InitialStaffMembersStateResponse
-  | InitialAttributesStateResponse;
+  | InitialAttributesStateResponse
+  | InitialCategoryStateResponse;
 
 export type InitialAPIState =
   | InitialProductAPIState
@@ -37,7 +40,8 @@ export type InitialAPIState =
   | InitialCollectionAPIState
   | InitialProductTypesAPIState
   | InitialStaffMembersAPIState
-  | InitialAttributesAPIState;
+  | InitialAttributesAPIState
+  | InitialCategoryAPIState;
 
 export type FilterProviderType =
   | "product"
@@ -51,4 +55,5 @@ export type FilterProviderType =
   | "collection"
   | "product-types"
   | "staff-members"
-  | "attributes";
+  | "attributes"
+  | "category";

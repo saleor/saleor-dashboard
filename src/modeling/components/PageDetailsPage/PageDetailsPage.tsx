@@ -3,10 +3,12 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   handleContainerReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
-import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import AssignAttributeValueDialog, {
+  AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -79,6 +81,7 @@ interface PageDetailsPageProps {
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
 }
 
 const PageDetailsPage = ({
@@ -112,6 +115,7 @@ const PageDetailsPage = ({
   onCloseDialog,
   onSelectPageType,
   onAttributeSelectBlur,
+  onFilterChange,
 }: PageDetailsPageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -292,6 +296,7 @@ const PageDetailsPage = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
+                onFilterChange={onFilterChange}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }

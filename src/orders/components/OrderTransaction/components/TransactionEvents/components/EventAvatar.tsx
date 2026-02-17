@@ -35,6 +35,8 @@ export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
   }
 
   if (createdBy.__typename === "App") {
+    const logoUrl = createdBy.brand?.logo?.default;
+
     return (
       <Box
         display="flex"
@@ -50,8 +52,19 @@ export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
         flexShrink="0"
         __color={vars.colors.text.default2}
         title={createdBy.name || "App"}
+        overflow="hidden"
       >
-        <LayoutGridIcon size={ICON_SIZE} color="currentColor" />
+        {logoUrl ? (
+          <img
+            src={logoUrl}
+            alt={createdBy.name || "App"}
+            width={AVATAR_SIZE}
+            height={AVATAR_SIZE}
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          <LayoutGridIcon size={ICON_SIZE} color="currentColor" />
+        )}
       </Box>
     );
   }

@@ -72,6 +72,8 @@ const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardP
     refundPendingAmount: prepareMoney(0, currency),
     canceledAmount: prepareMoney(0, currency),
     cancelPendingAmount: prepareMoney(0, currency),
+    createdBy: null,
+    paymentMethodDetails: null,
     __typename: "FakeTransaction",
   };
 

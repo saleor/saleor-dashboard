@@ -45,7 +45,6 @@ runs:
       uses: actions/upload-artifact/merge@v4
       with:
         name: merged-blob-reports
-        path: all-blob-reports
         pattern: all-blob-reports-*
         retention-days: 7
         delete-merged: true
