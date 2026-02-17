@@ -92,13 +92,13 @@ jobs:
     needs: build
     if: always()
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       type: deployment
       ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
       status: ${{ needs.build.result }}
       product: dashboard
       environment: saleor-master-staging
-      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
       slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
