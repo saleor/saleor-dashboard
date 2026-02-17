@@ -54,6 +54,8 @@ export const QUERY_API_TYPES = {
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
   ATTRIBUTE: QueryApiType.FILTER,
+  // TODO: Categories should use WHERE filter
+  // cannot be used because it's missing `search` input
   CATEGORY: QueryApiType.FILTER,
 } as const;
 
@@ -252,12 +254,18 @@ export const createAttributesQueryVariables = (value: FilterContainer): Attribut
   return filters;
 };
 
+const categoryFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new DateTimeRangeQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
 export const createCategoryQueryVariables = (
   filterContainer: FilterContainer,
 ): CategoryFilterInput => {
   const builder = new FiltersQueryBuilder<CategoryFilterInput>({
     apiType: QUERY_API_TYPES.CATEGORY,
     filterContainer,
+    filterDefinitionResolver: categoryFilterDefinitionResolver,
   });
   const { filters } = builder.build();
 

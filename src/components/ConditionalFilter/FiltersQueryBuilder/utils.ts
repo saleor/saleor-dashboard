@@ -35,8 +35,18 @@ function extractBooleanValue(value: ConditionValue): boolean {
  * Extracts the actual value from ItemOption or returns the value as-is.
  * Uses originalSlug if available, falls back to value.
  */
-function extractValueFromOption(value: unknown): string {
-  return isItemOption(value) ? value.originalSlug || value.value : (value as string);
+function extractValueFromOption(value: ConditionValue): string {
+  if (isItemOption(value)) {
+    return value.originalSlug || value.value;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value) && typeof value[0] === "string") {
+    return value[0];
+  }
 }
 
 /**
