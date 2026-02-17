@@ -26,14 +26,13 @@ import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
+  CategoryFilterInput,
   CategoryWithTotalProductsFragment,
   CollectionWithTotalProductsFragment,
   CountryWithCodeFragment,
   DiscountErrorFragment,
   PermissionEnum,
   ProductWhereInput,
-  SearchCategoriesWithTotalProductsQuery,
-  SearchCategoriesWithTotalProductsQueryVariables,
   SearchCollectionsWithTotalProductsQuery,
   SearchCollectionsWithTotalProductsQueryVariables,
   SearchProductFragment,
@@ -48,6 +47,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
+import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
@@ -97,10 +97,8 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     channel: string | undefined,
     query: string,
   ) => void;
-  categoriesSearch: UseSearchResult<
-    SearchCategoriesWithTotalProductsQuery,
-    SearchCategoriesWithTotalProductsQueryVariables
-  >;
+  onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
+  categoriesSearch: ReturnType<typeof useCategoryWithTotalProductsSearch>;
   collectionsSearch: UseSearchResult<
     SearchCollectionsWithTotalProductsQuery,
     SearchCollectionsWithTotalProductsQueryVariables
@@ -136,6 +134,7 @@ const VoucherCreatePage = ({
   collectionsSearch,
   variantsSearch,
   onProductFilterChange,
+  onCategoryFilterChange,
   countries,
   resetSelected,
 }: VoucherCreatePageProps) => {
@@ -471,6 +470,7 @@ const VoucherCreatePage = ({
             hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-category"}
             onFetch={categoriesSearch.search}
+            onFilterChange={onCategoryFilterChange}
             onFetchMore={categoriesSearch.loadMore}
             loading={categoriesSearch.result?.loading}
             onClose={closeModal}

@@ -2,7 +2,7 @@
 import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 
-import makeSearch, { SearchVariables, UseSearchHook } from "../makeSearch";
+import makeSearch, { BaseSearchVariables, UseSearchHook } from "../makeSearch";
 
 export interface SearchData {
   search: {
@@ -17,33 +17,42 @@ export interface ResultSearchData {
   data: SearchData;
 }
 
-function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchVariables>(
-  query: DocumentNode,
-): UseSearchHook<TData, TVariables> {
-  return makeSearch<TData, TVariables>(query, result => {
-    if (result?.data?.search?.pageInfo?.hasNextPage) {
-      result.loadMore(
-        (prev, next) => {
-          if (prev.search?.pageInfo?.endCursor === next.search?.pageInfo?.endCursor) {
-            return prev;
-          }
+interface MakeTopLevelSearchOptions<TVariables extends BaseSearchVariables> {
+  mapSearchToVariables?: (searchQuery: string, variables: TVariables) => TVariables;
+}
 
-          return {
-            ...prev,
-            search: {
-              ...prev.search,
-              edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
-              pageInfo: next.search.pageInfo,
-            },
-          };
-        },
-        {
-          ...result.variables,
-          after: result.data.search.pageInfo.endCursor,
-        },
-      );
-    }
-  });
+function makeTopLevelSearch<TData extends SearchData, TVariables extends BaseSearchVariables>(
+  query: DocumentNode,
+  options?: MakeTopLevelSearchOptions<TVariables>,
+): UseSearchHook<TData, TVariables> {
+  return makeSearch<TData, TVariables>(
+    query,
+    result => {
+      if (result?.data?.search?.pageInfo?.hasNextPage) {
+        result.loadMore(
+          (prev, next) => {
+            if (prev.search?.pageInfo?.endCursor === next.search?.pageInfo?.endCursor) {
+              return prev;
+            }
+
+            return {
+              ...prev,
+              search: {
+                ...prev.search,
+                edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
+                pageInfo: next.search.pageInfo,
+              },
+            };
+          },
+          {
+            ...result.variables,
+            after: result.data.search.pageInfo.endCursor,
+          },
+        );
+      }
+    },
+    options,
+  );
 }
 
 export default makeTopLevelSearch;
