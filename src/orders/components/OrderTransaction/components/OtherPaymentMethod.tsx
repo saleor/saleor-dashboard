@@ -10,7 +10,7 @@ interface OtherPaymentMethodProps {
 const BRAND_LOGO_SIZE = 20;
 
 const getPaymentMethodIconUrl = (name: string) =>
-  `${getAppMountUri()}payment-methods/${name.toLowerCase()}.svg`;
+  `${getAppMountUri()}static/payment-methods/${name.toLowerCase()}.svg`;
 
 const Logo = ({ name }: { name?: string }) => {
   const [hasError, setHasError] = useState(false);

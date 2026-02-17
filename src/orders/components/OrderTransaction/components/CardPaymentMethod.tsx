@@ -7,7 +7,7 @@ const MASKED_GROUP = "****";
 const BRAND_LOGO_SIZE = 26;
 
 const getPaymentMethodIconUrl = (fileName: string) =>
-  `${getAppMountUri()}payment-methods/${fileName}.svg`;
+  `${getAppMountUri()}static/payment-methods/${fileName}.svg`;
 
 // Whitelist of card brands mapped to their icon file names
 // in the activemerchant/payment_icons repository
