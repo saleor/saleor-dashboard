@@ -1,0 +1,37 @@
+src/orders/components/OrderReturnPage/components/TransactionSubmitCard/GrantRefundCheckbox.tsx
+  9a95e41f67e1d7ae 1,4-5,9,16-17,24-25,27-53
+src/orders/components/OrderReturnPage/utils.tsx
+  9a95e41f67e1d7ae 153-171
+src/orders/views/OrderReturn/OrderReturn.tsx
+  9a95e41f67e1d7ae 5,41-43,119
+src/orders/components/OrderReturnPage/components/TransactionSubmitCard/TransactionSubmitCard.test.tsx
+  9a95e41f67e1d7ae 56
+src/orders/components/OrderDetailsRefundTable/OrderDetailsRefundLine.tsx
+  9a95e41f67e1d7ae 44
+src/orders/components/OrderReturnPage/components/TransactionSubmitCard/TransactionSubmitCard.tsx
+  9a95e41f67e1d7ae 18,46-47,67-68,71-73,100-101
+src/orders/components/OrderReturnPage/components/TransactionSubmitCard/messages.ts
+  9a95e41f67e1d7ae 58-60,62-65,67-68
+src/orders/components/OrderReturnPage/OrderReturnPage.tsx
+  9a95e41f67e1d7ae 53,66,194-195
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "dc06cc3b79d086b072fb820af5dd3b79dd724a37",
+  "prompts": {
+    "9a95e41f67e1d7ae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "98f02f7b-7177-4eef-83ac-38fd4b88d00d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 86,
+      "total_deletions": 3,
+      "accepted_lines": 84,
+      "overriden_lines": 2
+    }
+  }
+}
