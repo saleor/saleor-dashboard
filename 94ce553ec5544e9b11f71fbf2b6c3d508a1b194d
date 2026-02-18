@@ -1,0 +1,41 @@
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  c3e04b66fcb781c4 155
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  c3e04b66fcb781c4 30,41,56,93-97,99-105,109-110,120-121,137,146
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemTypeBadge.stories.tsx
+  c3e04b66fcb781c4 2-3,7,11-12,16
+src/extensions/types.ts
+  c3e04b66fcb781c4 13
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsBadge.stories.tsx
+  c3e04b66fcb781c4 2-3,7,11-12,16
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard.stories.tsx
+  c3e04b66fcb781c4 2-3,13,17-18,22
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsHeaderBadge.stories.tsx
+  c3e04b66fcb781c4 2-3,7,11-12,16
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.stories.tsx
+  c3e04b66fcb781c4 2-3,15,19-20,24
+src/extensions/components/AppAlerts/useAppsAlert.ts
+  c3e04b66fcb781c4 27
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  c3e04b66fcb781c4 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "94ce553ec5544e9b11f71fbf2b6c3d508a1b194d",
+  "prompts": {
+    "c3e04b66fcb781c4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0b49223e-12fc-49f5-9c53-309675312908",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 88,
+      "total_deletions": 76,
+      "accepted_lines": 55,
+      "overriden_lines": 0
+    }
+  }
+}
