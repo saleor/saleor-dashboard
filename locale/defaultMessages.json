@@ -611,6 +611,9 @@
     "context": "section header",
     "string": "Recent Orders"
   },
+  "1MnSfo": {
+    "string": "Dismissed"
+  },
   "1N8lSy": {
     "context": "Order summary payment header",
     "string": "Payments summary"
@@ -825,6 +828,9 @@
   "2pw5dQ": {
     "context": "payment status",
     "string": "Fully paid"
+  },
+  "2pzTGC": {
+    "string": "Critical"
   },
   "2qHTHI": {
     "string": "Default weight unit updated"
@@ -1764,6 +1770,9 @@
   "8LWaFr": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
+  },
+  "8LqsLj": {
+    "string": "Dismissed by {email}"
   },
   "8MSYNw": {
     "context": "order send refund, manual transaction refund was created",
@@ -4107,9 +4116,15 @@
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
   },
+  "LZIpXn": {
+    "string": "UTC: {time}"
+  },
   "La3xKC": {
     "context": "Description of public API verification feature",
     "string": "Check if customers can actually purchase this product"
+  },
+  "LaIqAi": {
+    "string": "Started at"
   },
   "LdNCP/": {
     "context": "Filter or element text",
@@ -4361,6 +4376,9 @@
   },
   "MzXzjL": {
     "string": "Warehouse deleted"
+  },
+  "N+jVKe": {
+    "string": "Dismissed by app"
   },
   "N1Z/Er": {
     "context": "Title when product is not visible in listings",
@@ -5956,6 +5974,9 @@
   "VyKl39": {
     "context": "Dialog warning text",
     "string": "Are you sure you want to {actionType} this transaction?"
+  },
+  "Vyv8xK": {
+    "string": "Local: {time}"
   },
   "VyzsWZ": {
     "string": "Default Billing Address"
@@ -10683,6 +10704,9 @@
   "wOaLvi": {
     "context": "relative time",
     "string": "just now"
+  },
+  "wPgEIA": {
+    "string": "last occurred at"
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"

@@ -52,6 +52,7 @@ const useFormattedDates = (date: string) => {
 };
 
 const TimestampWithTooltip = ({ date, label }: { date: string; label?: string }) => {
+  const intl = useIntl();
   const { short, local, utc } = useFormattedDates(date);
 
   return (
@@ -66,8 +67,8 @@ const TimestampWithTooltip = ({ date, label }: { date: string; label?: string })
         <Tooltip.Content side="top">
           <Tooltip.Arrow />
           <div className={styles.timestampTooltip}>
-            <div>Local: {local}</div>
-            <div>UTC: {utc}</div>
+            <div>{intl.formatMessage(problemMessages.localTime, { time: local })}</div>
+            <div>{intl.formatMessage(problemMessages.utcTime, { time: utc })}</div>
           </div>
         </Tooltip.Content>
       </Tooltip>
@@ -76,6 +77,7 @@ const TimestampWithTooltip = ({ date, label }: { date: string; label?: string })
 };
 
 const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {
+  const intl = useIntl();
   const count = problem.__typename === "AppProblem" ? problem.count : 1;
   const updatedAt = problem.__typename === "AppProblem" ? problem.updatedAt : null;
   const showUpdated = count > 1 && updatedAt && updatedAt !== problem.createdAt;
@@ -84,9 +86,15 @@ const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {
     <span className={styles.timestamp}>
       {showUpdated ? (
         <>
-          <TimestampWithTooltip date={problem.createdAt} label="Started at" />
+          <TimestampWithTooltip
+            date={problem.createdAt}
+            label={intl.formatMessage(problemMessages.startedAt)}
+          />
           {", "}
-          <TimestampWithTooltip date={updatedAt} label="last occurred at" />
+          <TimestampWithTooltip
+            date={updatedAt}
+            label={intl.formatMessage(problemMessages.lastOccurredAt)}
+          />
         </>
       ) : (
         <TimestampWithTooltip date={problem.createdAt} />
@@ -95,30 +103,37 @@ const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {
   );
 };
 
-const getDismissedByText = (problem: AppProblem): string | null => {
+const useDismissedByText = (problem: AppProblem): string | null => {
+  const intl = useIntl();
+
   if (problem.__typename !== "AppProblem" || !problem.dismissed) {
     return null;
   }
 
   if (problem.dismissed.by === "USER" && problem.dismissed.userEmail) {
-    return `Dismissed by ${problem.dismissed.userEmail}`;
+    return intl.formatMessage(problemMessages.dismissedByUser, {
+      email: problem.dismissed.userEmail,
+    });
   }
 
   if (problem.dismissed.by === "APP") {
-    return "Dismissed by app";
+    return intl.formatMessage(problemMessages.dismissedByApp);
   }
 
-  return "Dismissed";
+  return intl.formatMessage(problemMessages.dismissed);
 };
 
 const DismissedLabel = ({ problem }: { problem: AppProblem }) => {
-  const tooltipText = getDismissedByText(problem);
+  const intl = useIntl();
+  const tooltipText = useDismissedByText(problem);
 
   if (tooltipText) {
     return (
       <Tooltip>
         <Tooltip.Trigger>
-          <span className={styles.dismissedLabel}>Dismissed</span>
+          <span className={styles.dismissedLabel}>
+            {intl.formatMessage(problemMessages.dismissed)}
+          </span>
         </Tooltip.Trigger>
         <Tooltip.Content side="top">
           <Tooltip.Arrow />
@@ -128,7 +143,9 @@ const DismissedLabel = ({ problem }: { problem: AppProblem }) => {
     );
   }
 
-  return <span className={styles.dismissedLabel}>Dismissed</span>;
+  return (
+    <span className={styles.dismissedLabel}>{intl.formatMessage(problemMessages.dismissed)}</span>
+  );
 };
 
 export const ProblemCard = ({ problem, dismissed, onForceClear }: ProblemCardProps) => {

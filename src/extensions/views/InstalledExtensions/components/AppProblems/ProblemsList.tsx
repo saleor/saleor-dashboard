@@ -111,7 +111,11 @@ const ProblemItem = ({
       {index > 0 && <hr className={styles.groupDivider} />}
       <div className={styles.problemHeader}>
         <ProblemTypeBadge typename={problem.__typename} />
-        {critical && !dismissed && <span className={styles.criticalBadge}>Critical</span>}
+        {critical && !dismissed && (
+          <span className={styles.criticalBadge}>
+            {intl.formatMessage(problemMessages.critical)}
+          </span>
+        )}
         {problem.__typename === "AppProblem" && problem.count > 1 && (
           <span className={styles.countBadge}>{problem.count}×</span>
         )}

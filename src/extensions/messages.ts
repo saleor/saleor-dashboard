@@ -411,6 +411,38 @@ export const problemMessages = defineMessages({
     defaultMessage: "Open app problems",
     id: "xEUTvE",
   },
+  localTime: {
+    defaultMessage: "Local: {time}",
+    id: "Vyv8xK",
+  },
+  utcTime: {
+    defaultMessage: "UTC: {time}",
+    id: "LZIpXn",
+  },
+  startedAt: {
+    defaultMessage: "Started at",
+    id: "LaIqAi",
+  },
+  lastOccurredAt: {
+    defaultMessage: "last occurred at",
+    id: "wPgEIA",
+  },
+  dismissedByUser: {
+    defaultMessage: "Dismissed by {email}",
+    id: "8LqsLj",
+  },
+  dismissedByApp: {
+    defaultMessage: "Dismissed by app",
+    id: "N+jVKe",
+  },
+  dismissed: {
+    defaultMessage: "Dismissed",
+    id: "1MnSfo",
+  },
+  critical: {
+    defaultMessage: "Critical",
+    id: "2pzTGC",
+  },
 });
 
 export const appManifestErrorMessages = defineMessages({
