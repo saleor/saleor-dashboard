@@ -1,0 +1,29 @@
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  eb3d65d217ba6037 178
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  eb3d65d217ba6037 206
+.changeset/long-rugs-wash.md
+  eb3d65d217ba6037 1-5
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsBadge.tsx
+  eb3d65d217ba6037 33,35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "b4b0b5f84f84a9474b5c7bebd32e8be48939c91b",
+  "prompts": {
+    "eb3d65d217ba6037": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6ff4419b-91b7-4513-9494-1055364840af",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 1,
+      "accepted_lines": 9,
+      "overriden_lines": 0
+    }
+  }
+}
