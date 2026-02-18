@@ -1,0 +1,29 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList.tsx
+  eb3d65d217ba6037 11,25,58,67,80,89,97,150,198,251
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  eb3d65d217ba6037 155,168
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  eb3d65d217ba6037 175
+src/extensions/types.ts
+  eb3d65d217ba6037 4,107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "ee25183556ff53e90e63f8928e2c3341f5dfd07b",
+  "prompts": {
+    "eb3d65d217ba6037": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6ff4419b-91b7-4513-9494-1055364840af",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 15,
+      "total_deletions": 2,
+      "accepted_lines": 15,
+      "overriden_lines": 0
+    }
+  }
+}
