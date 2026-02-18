@@ -162,7 +162,7 @@ jobs:
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
-          PROJECT: "e2e apps-e2e"
+          PROJECT: "e2e apps-e2e app-smoke"
           DASHBOARD_VERSION: ${{inputs.CUSTOM_VERSION}}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
@@ -180,16 +180,6 @@ jobs:
       PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
       - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports

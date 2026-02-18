@@ -2,13 +2,17 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
+import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
+  AttributeEntityTypeEnum,
+  CategoryFilterInput,
   ErrorPolicyEnum,
+  PageWhereInput,
   ProductMediaCreateMutationVariables,
   ProductVariantBulkCreateInput,
   ProductWhereInput,
@@ -24,7 +28,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCategorySearch, {
+  useCategoryWithTotalProductsSearch,
+} from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
   useReferencePageSearch,
@@ -66,6 +72,16 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchCategoriesOpts,
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useCategoryWithTotalProductsSearch({
+    variables: {
+      after: null,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -303,24 +319,35 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
 
-  // Extract productType constraints from reference attribute for modal filter
-  const initialConstraints = useMemo((): InitialConstraints | undefined => {
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(():
+    | (InitialConstraints & InitialPageConstraints)
+    | undefined => {
     if (!refAttr?.referenceTypes?.length) {
       return undefined;
     }
 
-    // Filter to get only ProductType references
     const productTypeRefs = refAttr.referenceTypes.filter(
       (t): t is { __typename: "ProductType"; id: string; name: string } =>
         t?.__typename === "ProductType" && Boolean(t?.id),
     );
 
-    if (productTypeRefs.length === 0) {
+    const pageTypeRefs = refAttr.referenceTypes.filter(
+      (t): t is { __typename: "PageType"; id: string; name: string } =>
+        t?.__typename === "PageType" && Boolean(t?.id),
+    );
+
+    if (productTypeRefs.length === 0 && pageTypeRefs.length === 0) {
       return undefined;
     }
 
     return {
-      productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      ...(productTypeRefs.length > 0 && {
+        productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
+      ...(pageTypeRefs.length > 0 && {
+        pageTypes: pageTypeRefs.map(t => ({ id: t.id, name: t.name })),
+      }),
     };
   }, [refAttr?.referenceTypes]);
 
@@ -348,11 +375,49 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     [searchProductsOpts.refetch],
   );
 
+  const handleCategoryFilterChange = useCallback(
+    (filterVariables: CategoryFilterInput, query: string) => {
+      searchReferenceCategoriesOpts.refetch({
+        after: DEFAULT_INITIAL_SEARCH_DATA.after,
+        first: DEFAULT_INITIAL_SEARCH_DATA.first,
+        filter: {
+          ...filterVariables,
+          search: query,
+        },
+      });
+    },
+    [searchReferenceCategoriesOpts.refetch],
+  );
+
+  const handlePageFilterChange = useCallback(
+    (where: PageWhereInput, query: string) => {
+      searchPagesOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where,
+        query,
+      });
+    },
+    [searchPagesOpts.refetch],
+  );
+
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
+  const referenceCategories =
+    mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search)?.map(category => ({
+      __typename: "Category" as const,
+      id: category.id,
+      name: category.name,
+      level: 0,
+      parent: null,
+      ancestors: null,
+    })) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
   const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
+  const fetchMoreReferenceCategories = getSearchFetchMoreProps(
+    searchReferenceCategoriesOpts,
+    loadMoreReferenceCategories,
+  );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const fetchMoreAttributeValues = {
@@ -409,21 +474,26 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
-        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
+        referenceCategories={referenceCategories}
         referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCategories}
+        fetchReferenceCategories={searchReferenceCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
         fetchReferenceCollections={searchCollections}
         fetchMoreReferenceCollections={fetchMoreCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onProductFilterChange={handleProductFilterChange}
+        onFilterChange={{
+          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
+          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
+          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
+        }}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

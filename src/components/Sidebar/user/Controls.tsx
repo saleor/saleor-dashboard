@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
@@ -118,7 +118,8 @@ export const UserControls = () => {
                 <List.Item
                   display="flex"
                   alignItems="center"
-                  gap={2}
+                  __lineHeight={0}
+                  gap={1.5}
                   marginTop={1}
                   onClick={() => {
                     changeTheme();

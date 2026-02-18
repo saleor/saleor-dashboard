@@ -1,10 +1,8 @@
 import { Route } from "@dashboard/components/Router";
 import { parseQs } from "@dashboard/url-utils";
-import { createContext, useContext } from "react";
 import { Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import { UserContext as Context } from "./types";
 import {
   LoginUrlQueryParams,
   newPasswordPath,
@@ -23,18 +21,6 @@ const LoginView = () => {
   return <LoginViewComponent params={params} />;
 };
 
-export const UserContext = createContext<Context>({
-  login: undefined,
-  loginByExternalPlugin: undefined,
-  logout: undefined,
-  requestLoginByExternalPlugin: undefined,
-  authenticating: false,
-  isCredentialsLogin: false,
-  authenticated: false,
-  errors: [],
-  refetchUser: undefined,
-});
-
 const AuthRouter = () => (
   <Layout>
     <Switch>
@@ -48,6 +34,3 @@ const AuthRouter = () => (
 
 AuthRouter.displayName = "AuthRouter";
 export default AuthRouter;
-
-export * from "./utils";
-export const useUser = () => useContext(UserContext);

@@ -1,11 +1,13 @@
 import {
   AttributeFilterInput,
+  CategoryFilterInput,
   CollectionFilterInput,
   CustomerFilterInput,
   GiftCardFilterInput,
   OrderDraftFilterInput,
   OrderWhereInput,
   PageFilterInput,
+  ProductFilterInput,
   ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
@@ -29,15 +31,18 @@ import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVars
 import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
 import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
+import { PriceRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceRangeQueryVarsBuilder";
+import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilders/ProductExportFieldMapper";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
 
-type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
+type ProductQueryVars = ProductWhereInput & { channel?: string };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 
 // Single source of truth for API types used across all filter pages
 export const QUERY_API_TYPES = {
   PRODUCT: QueryApiType.WHERE,
+  PRODUCT_EXPORT: QueryApiType.FILTER,
   DISCOUNT: QueryApiType.WHERE,
   ORDER: QueryApiType.WHERE,
   VOUCHER: QueryApiType.FILTER,
@@ -49,17 +54,51 @@ export const QUERY_API_TYPES = {
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
   ATTRIBUTE: QueryApiType.FILTER,
+  // TODO: Categories should use WHERE filter
+  // cannot be used because it's missing `search` input
+  CATEGORY: QueryApiType.FILTER,
 } as const;
+
+const productFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  // Product search expects channel to be a slug, not id
+  new SlugChannelQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
 
 export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
   const builder = new FiltersQueryBuilder<ProductQueryVars, "channel">({
     apiType: QUERY_API_TYPES.PRODUCT,
     filterContainer,
     topLevelKeys: ["channel"],
+    filterDefinitionResolver: productFilterDefinitionResolver,
   });
   const { topLevel, filters } = builder.build();
 
   return { ...filters, ...topLevel };
+};
+
+const productExportFilterResolver = new FilterQueryVarsBuilderResolver([
+  new ProductExportFieldMapper(),
+  new PriceRangeQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
+export const createProductExportQueryVariables = (
+  filterContainer: FilterContainer,
+): ProductFilterInput | null => {
+  if (!filterContainer || filterContainer.length === 0) {
+    return null;
+  }
+
+  const builder = new FiltersQueryBuilder<ProductFilterInput>({
+    apiType: QUERY_API_TYPES.PRODUCT_EXPORT,
+    filterContainer,
+    filterDefinitionResolver: productExportFilterResolver,
+  });
+  const { filters } = builder.build();
+
+  // Return null if no filters remain (backend requirement)
+  return Object.keys(filters).length === 0 ? null : filters;
 };
 
 export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
@@ -209,6 +248,24 @@ export const createAttributesQueryVariables = (value: FilterContainer): Attribut
   const builder = new FiltersQueryBuilder<AttributeFilterInput>({
     apiType: QUERY_API_TYPES.ATTRIBUTE,
     filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+const categoryFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new DateTimeRangeQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
+export const createCategoryQueryVariables = (
+  filterContainer: FilterContainer,
+): CategoryFilterInput => {
+  const builder = new FiltersQueryBuilder<CategoryFilterInput>({
+    apiType: QUERY_API_TYPES.CATEGORY,
+    filterContainer,
+    filterDefinitionResolver: categoryFilterDefinitionResolver,
   });
   const { filters } = builder.build();
 

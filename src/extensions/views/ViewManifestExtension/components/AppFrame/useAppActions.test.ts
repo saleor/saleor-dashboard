@@ -102,7 +102,7 @@ describe("useAppActions", () => {
     const unknownActionType = "unknownAction";
     const unknownAction = {
       type: unknownActionType,
-      payload: { some: "data" },
+      payload: { actionId: "action-1", some: "data" },
     } as unknown as Actions;
 
     renderHook(() =>
@@ -141,6 +141,32 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
+  });
+
+  it("should ignore messages without type and actionId (e.g., from browser extensions)", () => {
+    // Arrange
+    const extensionMessage = {
+      payload: { event: "operations", payload: [] },
+      source: "react-devtools-bridge",
+    };
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: extensionMessage,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
+    expect(mockPostToExtension).not.toHaveBeenCalled();
   });
 
   it("should ignore messages from different origins", () => {

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";

@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ChannelPermission } from "@dashboard/components/ChannelPermission";

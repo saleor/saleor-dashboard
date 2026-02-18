@@ -29,10 +29,18 @@ export class MetadataFilterQueryVarsBuilder
     if (isTuple(selectedValue)) {
       const [key, value] = selectedValue;
 
+      if (!key && !value) {
+        return query;
+      }
+
       return {
         ...query,
         metadata: [...existing, { key, value }],
       };
+    }
+
+    if (!selectedValue || selectedValue === "") {
+      return query;
     }
 
     // Fallback: use the label as key and value as value

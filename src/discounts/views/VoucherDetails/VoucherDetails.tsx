@@ -31,6 +31,7 @@ import {
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
 import {
+  CategoryFilterInput,
   ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -83,7 +84,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategoryWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -92,11 +96,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   } = useCollectionWithTotalProductsSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
+  const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
@@ -110,6 +110,17 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       where: filterVariables,
       channel,
       query,
+    });
+  };
+
+  const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
+    searchCategoriesOpts.refetch({
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
     });
   };
 
@@ -466,6 +477,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-category"}
         onFetch={searchCategories}
+        onFilterChange={handleCategoryFilterChange}
         onFetchMore={loadMoreCategories}
         loading={searchCategoriesOpts.loading}
         onClose={closeModal}
@@ -525,7 +537,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         confirmButtonState={voucherUpdateOpts.status}
         hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-variant"}
-        onFetch={searchProducts}
+        onFilterChange={handleProductFilterChange}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}

@@ -56,8 +56,8 @@ export const useModalFilters = <
       return null;
     }
 
-    return createLockedFilterElement(lockedFilter);
-  }, [lockedFilter]);
+    return createLockedFilterElement(lockedFilter, config.staticOptions);
+  }, [lockedFilter, config.staticOptions]);
 
   // Wrap value provider with locked filter behavior
   const wrappedValueProvider = useMemo(
@@ -82,12 +82,12 @@ export const useModalFilters = <
   const { filterVariables, filterChannel } = useMemo(() => {
     const queryVars = config.createQueryVariables(
       wrappedValueProvider.value as FilterContainer,
-    ) as TQueryVariables & { channel?: { eq: string } };
+    ) as TQueryVariables & { channel?: string };
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where as TQueryVariables,
-      filterChannel: channel?.eq,
+      filterChannel: channel,
     };
   }, [wrappedValueProvider.value, config]);
 

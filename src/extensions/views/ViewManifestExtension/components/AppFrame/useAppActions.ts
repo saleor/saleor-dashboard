@@ -89,12 +89,21 @@ export const useAppActions = (
 
   useEffect(() => {
     const handler = (event: MessageEvent<Actions>) => {
-      if (event.origin === appOrigin) {
-        const response = handleAction(event.data);
+      if (event.origin !== appOrigin) {
+        return;
+      }
 
-        if (response) {
-          postToExtension(response);
-        }
+      // Ignore messages that don't look like app-bridge actions
+      // (e.g., from browser extensions like React DevTools).
+      // Valid app-bridge actions always have `type` and `payload.actionId`.
+      if (!event.data?.type || !event.data?.payload?.actionId) {
+        return;
+      }
+
+      const response = handleAction(event.data);
+
+      if (response) {
+        postToExtension(response);
       }
     };
 

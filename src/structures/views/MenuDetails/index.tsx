@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   PermissionEnum,

@@ -3,7 +3,7 @@ import { hasAllPermissions, hasAnyPermissions } from "@dashboard/auth/misc";
 import { PermissionEnum, UserFragment } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
-import { createConfigurationMenu } from ".";
+import { createConfigurationMenu } from "./createConfigurationMenu";
 import { MenuItem } from "./types";
 
 export const getConfigMenuItemsPermissions = (intl: IntlShape): PermissionEnum[] =>

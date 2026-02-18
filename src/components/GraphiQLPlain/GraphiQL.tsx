@@ -51,6 +51,7 @@ import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
 import * as React from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";
+import { AttachAuthButton } from "./AttachAuthButton";
 
 interface GraphiQLToolbarConfig {
   /**
@@ -458,6 +459,16 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                           >
                             Headers
                           </UnStyledButton>
+                        ) : null}
+                        {isHeadersEditorEnabled ? (
+                          <AttachAuthButton
+                            setActiveSecondaryEditor={setActiveSecondaryEditor}
+                            showEditorTools={() => {
+                              if (editorToolsResize.hiddenElement === "second") {
+                                editorToolsResize.setHiddenElement(null);
+                              }
+                            }}
+                          />
                         ) : null}
                       </div>
                       <Tooltip

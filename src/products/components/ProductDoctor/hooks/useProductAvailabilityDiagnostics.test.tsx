@@ -30,6 +30,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 const createMockProduct = (overrides?: Partial<ProductDiagnosticData>): ProductDiagnosticData => ({
   id: "product-123",
   name: "Test Product",
+  isShippingRequired: true,
   channelListings: [
     {
       channel: {

@@ -1,5 +1,46 @@
 # Changelog
 
+## 3.22.32
+
+### Patch Changes
+
+- [#6340](https://github.com/saleor/saleor-dashboard/pull/6340) [`ccc005a`](https://github.com/saleor/saleor-dashboard/commit/ccc005a715c5834291630ad19c3808f30fa6593a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed debugging messages (warnings in browser console) where Dashboard confused actions from 3rd party, like browser extensions signals with AppBridge actions. Now warnings should only occur, when proper frame is sent, but with invalid events inside
+
+- [#6323](https://github.com/saleor/saleor-dashboard/pull/6323) [`85e7f3f`](https://github.com/saleor/saleor-dashboard/commit/85e7f3f81e7f9c534ff7a8e9f87d9ed3a1d93cd4) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added new e2e tests for Saleor apps deployed in staging environment (internal). They check if app loads correctly and displays its settings
+
+- [#6254](https://github.com/saleor/saleor-dashboard/pull/6254) [`a0011cc`](https://github.com/saleor/saleor-dashboard/commit/a0011cc9bc7f23deca89df61eeaaffd358e495ab) Thanks [@iharshyadav](https://github.com/iharshyadav)! - Fix product export with "Current search" filter option. The export mutation now correctly includes filter parameters when exporting products with the "Current search" scope, allowing users to export only filtered products as intended.
+
+- [#6339](https://github.com/saleor/saleor-dashboard/pull/6339) [`23d946c`](https://github.com/saleor/saleor-dashboard/commit/23d946c24465d85c254aaf863e692e9d296e281d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Order Transaction will now display payment method details, like card brand or type.
+
+- [#6327](https://github.com/saleor/saleor-dashboard/pull/6327) [`4f81c86`](https://github.com/saleor/saleor-dashboard/commit/4f81c86b5e244fedb3908bbce538cefbe454b498) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering UI to "Assign Model" dialogs.
+  This allows filtering by "Model type" when assigning values to Model reference attributes in products and product variants.
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed issue when filtering products by parameters depending on channel (e.g. price) - previously filters didn't work correctly and always returned an empty list. Now filters will work correctly by passing correct channel value.
+
+- [#6318](https://github.com/saleor/saleor-dashboard/pull/6318) [`cf1c8aa`](https://github.com/saleor/saleor-dashboard/commit/cf1c8aa1b5db738b22415764b472bf448d1bb978) Thanks [@mirekm](https://github.com/mirekm)! - Product availability diagnostics now skip shipping zone warnings for non-shippable products (digital goods, activation codes, etc.). Products with isShippingRequired: false on their product type will no longer see false positive warnings about missing shipping zones or unreachable warehouses via shipping.
+
+- [#6333](https://github.com/saleor/saleor-dashboard/pull/6333) [`1739498`](https://github.com/saleor/saleor-dashboard/commit/1739498df428d728395436230df197b88ad4ade3) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed code splitting for `auth` and `configuration` chunks. Previously this code was included in the main bundle, skipping dynamic imports. Now it will only load when needed, which should improve performance.
+
+- [#6324](https://github.com/saleor/saleor-dashboard/pull/6324) [`9ab34dc`](https://github.com/saleor/saleor-dashboard/commit/9ab34dcd90515abd1468fd55f62059693f1bd0e4) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed icon in theme switcher not showing
+
+- [#6317](https://github.com/saleor/saleor-dashboard/pull/6317) [`160511f`](https://github.com/saleor/saleor-dashboard/commit/160511f88fa381e54f26d85c093dd586e03bab45) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated to storybook v10
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Variant" modals based on products query `where` options, similar to existing filters on product list page.
+
+- [#6334](https://github.com/saleor/saleor-dashboard/pull/6334) [`5669ef5`](https://github.com/saleor/saleor-dashboard/commit/5669ef5cdcc8ed86959a3e3677d2fac253623d1a) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Maintanance: Added stories for Assign attribute value modals and configuration for mocking GraphQL responses in Storybook.
+
+- [#6341](https://github.com/saleor/saleor-dashboard/pull/6341) [`4a45b49`](https://github.com/saleor/saleor-dashboard/commit/4a45b494c655ddd0ebd8b9abd96ed4a34e5f8c21) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added quick-paste of auth token to GraphQL Playground. Now to test queries as apps or specific users, you can paste bare token and full authorization header will be included.
+
+## 3.22.31
+
+### Patch Changes
+
+- [#6310](https://github.com/saleor/saleor-dashboard/pull/6310) [`3693eb4`](https://github.com/saleor/saleor-dashboard/commit/3693eb47cfaaf03cce40208d6d3a6784d3c57ea3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated @saleor/app-sdk and added support for `popupClose` action. Since this release, app will be able to close the popup via code
+
+- [#6292](https://github.com/saleor/saleor-dashboard/pull/6292) [`0bdad3e`](https://github.com/saleor/saleor-dashboard/commit/0bdad3e686c7473eae5182336b0f49a910623e0e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed data-fetching in Order details page. Now when line items are changed, order summary (total, shipping price, etc.) are updated. Previously these values were not updated and displayed stale data.
+
+- [#6292](https://github.com/saleor/saleor-dashboard/pull/6292) [`0bdad3e`](https://github.com/saleor/saleor-dashboard/commit/0bdad3e686c7473eae5182336b0f49a910623e0e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed e2e tests: updated assertions for notifications, datagrid, gift cards
+
 ## 3.22.30
 
 ### Patch Changes

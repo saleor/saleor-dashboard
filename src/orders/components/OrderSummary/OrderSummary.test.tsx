@@ -67,6 +67,8 @@ const transaction = {
     amount: 0,
     currency: "USD",
   },
+  createdBy: null,
+  paymentMethodDetails: null,
 };
 
 describe("OrderSummary", () => {
