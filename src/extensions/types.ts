@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 
 import { AppDetailsUrlMountQueryParams } from "./urls";
 
-export type GraphQLAppProblem = InstalledAppDetailsFragment["problems"][number];
+export type GraphQLAppProblem = NonNullable<InstalledAppDetailsFragment["problems"]>[number];
 
 export interface WebhookDeliveryProblem {
   __typename: "WebhookDeliveryError";

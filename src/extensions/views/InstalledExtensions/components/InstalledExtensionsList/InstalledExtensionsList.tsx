@@ -27,7 +27,7 @@ interface InstalledExtensionsListProps {
   onClearProblem?: (appId: string, keys?: string[]) => void;
 }
 
-const ExtensionLink = ({
+const ExtensionName = ({
   href,
   name,
   children,
@@ -38,7 +38,7 @@ const ExtensionLink = ({
 }) => {
   if (!href) {
     return (
-      <Box display="flex" alignItems="center" __padding="5px 20px">
+      <Box display="flex" alignItems="center" gap={2}>
         {children}
       </Box>
     );
@@ -53,16 +53,10 @@ const ExtensionLink = ({
       style={{
         display: "flex",
         alignItems: "center",
-        padding: "5px 20px",
+        gap: "8px",
         textDecoration: "none",
         color: "inherit",
       }}
-      className={sprinkles({
-        backgroundColor: {
-          default: "default1",
-          hover: "default2",
-        },
-      })}
     >
       {children}
     </Link>
@@ -96,19 +90,35 @@ const ExtensionRow = ({
     <>
       <GridTable.Row data-test-id="installed-extension-row">
         <GridTable.Cell padding={0}>
-          <ExtensionLink href={extension.href} name={extension.name}>
+          <Box
+            display="flex"
+            alignItems="center"
+            __padding="5px 20px"
+            className={
+              extension.href
+                ? sprinkles({
+                    backgroundColor: {
+                      default: "default1",
+                      hover: "default2",
+                    },
+                  })
+                : undefined
+            }
+          >
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-              <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
-              <Text
-                size={4}
-                fontWeight="bold"
-                __maxWidth="400px"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-              >
-                {extension.name}
-              </Text>
+              <ExtensionName href={extension.href} name={extension.name}>
+                <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
+                <Text
+                  size={4}
+                  fontWeight="bold"
+                  __maxWidth="400px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
+                  {extension.name}
+                </Text>
+              </ExtensionName>
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
@@ -124,10 +134,7 @@ const ExtensionRow = ({
                 <Button
                   variant="secondary"
                   size="small"
-                  onClick={e => {
-                    e.preventDefault();
-                    setModalOpen(true);
-                  }}
+                  onClick={() => setModalOpen(true)}
                   data-test-id="open-app-problems"
                 >
                   <CircleAlert size={14} />
@@ -136,7 +143,7 @@ const ExtensionRow = ({
               )}
               {extension.actions}
             </Box>
-          </ExtensionLink>
+          </Box>
         </GridTable.Cell>
       </GridTable.Row>
       {hasActiveProblems && problemsVisible ? (

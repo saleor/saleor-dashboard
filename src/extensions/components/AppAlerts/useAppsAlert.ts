@@ -24,7 +24,7 @@ export const useAppsAlert = () => {
   const hasAppProblems = useMemo(() => {
     const apps = mapEdgesToItems(installedAppsData?.apps) ?? [];
 
-    return apps.some(app => app.problems.length > 0);
+    return apps.some(app => (app.problems?.length ?? 0) > 0);
   }, [installedAppsData?.apps]);
 
   const fetchAll = () => {

@@ -1,5 +1,6 @@
 import { LocaleContext } from "@dashboard/components/Locale/Locale";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/react-vite";
+import React from "react";
 
 import {
   criticalAppProblem,
@@ -11,16 +12,16 @@ import {
 } from "./fixtures";
 import { ProblemsList } from "./ProblemsList";
 
+const withLocale: Decorator = (Story: React.FC) => (
+  <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
+    <Story />
+  </LocaleContext.Provider>
+);
+
 const meta: Meta<typeof ProblemsList> = {
   title: "Extensions/AppProblems/ProblemsList",
   component: ProblemsList,
-  decorators: [
-    Story => (
-      <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
-        <Story />
-      </LocaleContext.Provider>
-    ),
-  ],
+  decorators: [withLocale],
 };
 
 export default meta;

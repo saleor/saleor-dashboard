@@ -80,7 +80,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
       appProblemDismiss({
         variables: {
           input: {
-            byUserWithKeys: {
+            byStaffWithKeys: {
               app: appId,
               keys: keys ?? [],
             },

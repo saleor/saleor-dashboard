@@ -152,7 +152,7 @@ export const useInstalledExtensions = () => {
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
         const allProblems = [
-          ...problems,
+          ...(problems ?? []),
           ...(lastFailedAttempt
             ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
             : []),

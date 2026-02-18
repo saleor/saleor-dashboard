@@ -1,18 +1,19 @@
 import { LocaleContext } from "@dashboard/components/Locale/Locale";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Decorator, Meta, StoryObj } from "@storybook/react-vite";
+import React from "react";
 
 import { ProblemsHeaderBadge } from "./ProblemsHeaderBadge";
+
+const withLocale: Decorator = (Story: React.FC) => (
+  <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
+    <Story />
+  </LocaleContext.Provider>
+);
 
 const meta: Meta<typeof ProblemsHeaderBadge> = {
   title: "Extensions/AppProblems/ProblemsHeaderBadge",
   component: ProblemsHeaderBadge,
-  decorators: [
-    Story => (
-      <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
-        <Story />
-      </LocaleContext.Provider>
-    ),
-  ],
+  decorators: [withLocale],
 };
 
 export default meta;
