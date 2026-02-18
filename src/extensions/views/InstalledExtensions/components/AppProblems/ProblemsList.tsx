@@ -21,7 +21,7 @@ const MAX_VISIBLE_PROBLEMS = 3;
 interface ProblemsListProps {
   problems: AppProblem[];
   appId: string;
-  onClearProblem?: (appId: string, keys?: string[]) => void;
+  onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
   showInline?: boolean;
   modalOpen?: boolean;
@@ -75,7 +75,7 @@ interface ProblemItemProps {
   problem: AppProblem;
   appId: string;
   index: number;
-  onClearProblem?: (appId: string, keys?: string[]) => void;
+  onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
 }
 
@@ -131,7 +131,7 @@ const ProblemItem = ({
         dismissed={dismissed}
         onForceClear={
           canForceClear && problem.__typename === "AppProblem"
-            ? () => onClearProblem(appId, [problem.key])
+            ? () => onClearProblem(problem.id)
             : undefined
         }
       />

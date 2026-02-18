@@ -76,13 +76,12 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   });
 
   const handleClearProblem = useCallback(
-    (appId: string, keys?: string[]) => {
+    (problemId: string) => {
       appProblemDismiss({
         variables: {
           input: {
-            byStaffWithKeys: {
-              app: appId,
-              keys: keys ?? [],
+            byStaffWithIds: {
+              ids: [problemId],
             },
           },
         },

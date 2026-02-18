@@ -24,7 +24,7 @@ interface InstalledExtensionsListProps {
   clearSearch: () => void;
   searchQuery?: string;
   hasManagedAppsPermission?: boolean;
-  onClearProblem?: (appId: string, keys?: string[]) => void;
+  onClearProblem?: (problemId: string) => void;
 }
 
 const ExtensionName = ({
@@ -66,7 +66,7 @@ const ExtensionName = ({
 interface ExtensionRowProps {
   extension: InstalledExtension;
   hasManagedAppsPermission?: boolean;
-  onClearProblem?: (appId: string, keys?: string[]) => void;
+  onClearProblem?: (problemId: string) => void;
 }
 
 const ExtensionRow = ({
