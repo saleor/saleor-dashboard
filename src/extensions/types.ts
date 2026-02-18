@@ -1,6 +1,7 @@
 import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import {
+  AppTypeEnum,
   ExtensionListQuery,
   InstalledAppDetailsFragment,
   PermissionEnum,
@@ -103,6 +104,7 @@ export type InstalledExtension = {
   href?: string;
   actions?: ReactNode;
   problems?: AppProblem[];
+  appType?: AppTypeEnum | null;
 };
 
 export interface Extension {

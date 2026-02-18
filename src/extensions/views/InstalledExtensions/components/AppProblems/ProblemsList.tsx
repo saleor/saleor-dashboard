@@ -8,6 +8,7 @@ import {
   isProblemDismissed,
 } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { AppTypeEnum } from "@dashboard/graphql";
 import { ExternalLink, Maximize2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -21,6 +22,7 @@ const MAX_VISIBLE_PROBLEMS = 3;
 interface ProblemsListProps {
   problems: AppProblem[];
   appId: string;
+  appType?: AppTypeEnum | null;
   onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
   showInline?: boolean;
@@ -53,6 +55,7 @@ const sortProblems = (problems: AppProblem[]): AppProblem[] =>
 const getActionLink = (
   problem: AppProblem,
   appId: string,
+  appType?: AppTypeEnum | null,
 ): { href: string; label: keyof typeof problemMessages } | null => {
   if (problem.__typename === "WebhookDeliveryError") {
     return {
@@ -61,7 +64,7 @@ const getActionLink = (
     };
   }
 
-  if (problem.__typename === "AppProblem") {
+  if (problem.__typename === "AppProblem" && appType === AppTypeEnum.THIRDPARTY) {
     return {
       href: ExtensionsUrls.resolveViewManifestExtensionUrl(appId),
       label: "openTheApp",
@@ -74,6 +77,7 @@ const getActionLink = (
 interface ProblemItemProps {
   problem: AppProblem;
   appId: string;
+  appType?: AppTypeEnum | null;
   index: number;
   onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
@@ -82,6 +86,7 @@ interface ProblemItemProps {
 const ProblemItem = ({
   problem,
   appId,
+  appType,
   index,
   onClearProblem,
   hasManagedAppsPermission,
@@ -89,7 +94,7 @@ const ProblemItem = ({
   const intl = useIntl();
   const critical = isProblemCritical(problem);
   const dismissed = isProblemDismissed(problem);
-  const actionLink = getActionLink(problem, appId);
+  const actionLink = getActionLink(problem, appId, appType);
   const canForceClear =
     hasManagedAppsPermission && problem.__typename === "AppProblem" && !!onClearProblem;
 
@@ -142,6 +147,7 @@ const ProblemItem = ({
 export const ProblemsList = ({
   problems,
   appId,
+  appType,
   onClearProblem,
   hasManagedAppsPermission,
   showInline = true,
@@ -189,6 +195,7 @@ export const ProblemsList = ({
               }
               problem={problem}
               appId={appId}
+              appType={appType}
               index={index}
               onClearProblem={onClearProblem}
               hasManagedAppsPermission={hasManagedAppsPermission}
@@ -241,6 +248,7 @@ export const ProblemsList = ({
                 }
                 problem={problem}
                 appId={appId}
+                appType={appType}
                 index={index}
                 onClearProblem={onClearProblem}
                 hasManagedAppsPermission={hasManagedAppsPermission}

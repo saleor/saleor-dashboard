@@ -172,6 +172,7 @@ export const useInstalledExtensions = () => {
           }),
           href: resolveExtensionHref({ id, type, isActive }),
           problems: allProblems,
+          appType: type,
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData],

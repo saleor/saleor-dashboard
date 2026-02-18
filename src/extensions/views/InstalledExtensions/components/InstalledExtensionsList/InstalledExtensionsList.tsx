@@ -152,6 +152,7 @@ const ExtensionRow = ({
             <ProblemsList
               problems={problems}
               appId={extension.id}
+              appType={extension.appType}
               onClearProblem={onClearProblem}
               hasManagedAppsPermission={hasManagedAppsPermission}
               modalOpen={modalOpen}
@@ -164,6 +165,7 @@ const ExtensionRow = ({
           <ProblemsList
             problems={problems}
             appId={extension.id}
+            appType={extension.appType}
             onClearProblem={onClearProblem}
             hasManagedAppsPermission={hasManagedAppsPermission}
             showInline={false}
