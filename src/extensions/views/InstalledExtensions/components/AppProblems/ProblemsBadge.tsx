@@ -30,7 +30,9 @@ export const ProblemsBadge = ({
 
   return (
     <button
+      type="button"
       className={criticalCount > 0 ? styles.problemsBadgeError : styles.problemsBadgeWarning}
+      aria-expanded={expanded}
       onClick={e => {
         e.preventDefault();
         onToggle();

@@ -175,7 +175,7 @@ export const useInstalledExtensions = () => {
           appType: type,
         };
       }),
-    [eventDeliveries, eventDeliveriesData, installedAppsData],
+    [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
   );
 
   const installedPlugins = useMemo<InstalledExtension[]>(

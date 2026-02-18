@@ -203,6 +203,7 @@ export const ProblemsList = ({
           ))}
           {hasMore && (
             <button
+              type="button"
               className={styles.showMoreButton}
               onClick={e => {
                 e.preventDefault();
