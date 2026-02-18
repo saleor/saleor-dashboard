@@ -1,6 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
+  CategoryFilterInput,
   PageWhereInput,
   ProductWhereInput,
   SearchCategoriesQuery,
@@ -32,10 +33,16 @@ export type ProductFilterChangeHandler = (
 
 export type PageFilterChangeHandler = (filterVariables: PageWhereInput, query: string) => void;
 
+export type CategoryFilterChangeHandler = (
+  filterVariables: CategoryFilterInput,
+  query: string,
+) => void;
+
 export type AssignAttributeValueDialogFilterChangeMap = {
   [AttributeEntityTypeEnum.PRODUCT]?: ProductFilterChangeHandler;
   [AttributeEntityTypeEnum.PRODUCT_VARIANT]?: ProductFilterChangeHandler;
   [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
+  [AttributeEntityTypeEnum.CATEGORY]?: CategoryFilterChangeHandler;
 };
 
 type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {
@@ -84,6 +91,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT_VARIANT] ??
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
   const pageFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PAGE];
+  const categoryFilterChange = onFilterChange?.[AttributeEntityTypeEnum.CATEGORY];
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -128,6 +136,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignCategoryDialog
           categories={filteredCategories}
+          onFilterChange={categoryFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

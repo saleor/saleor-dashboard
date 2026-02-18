@@ -56,6 +56,8 @@ export class TransactionFixture {
       amount: 0,
       currency: "USD",
     },
+    createdBy: null,
+    paymentMethodDetails: null,
   } satisfies OrderDetailsFragment["transactions"][number];
 
   static stripeApp = {

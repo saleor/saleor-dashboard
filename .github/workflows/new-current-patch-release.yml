@@ -84,10 +84,10 @@ jobs:
     if: failure()
     needs: [recreate-release-branch, load-failure-secrets]
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       custom_title: "🚨 Patch Release Branch Recreation Failed"
       status: failure
-      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
     secrets:
       slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
