@@ -12,7 +12,7 @@ const getPaymentMethodIconUrl = (fileName: string) =>
 // Whitelist of card brands mapped to their icon file names
 // in the activemerchant/payment_icons repository
 const CARD_BRAND_ICONS: Record<string, string> = {
-  visa: "visa",
+  visa: "uaevisa",
   mastercard: "master",
   mc: "master",
   american_express: "american_express",
