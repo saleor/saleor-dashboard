@@ -1,0 +1,23 @@
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.test.tsx
+  eb3d65d217ba6037 127,136
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "36c726a814de45b27a82f2dfdf8eea50bc3c9107",
+  "prompts": {
+    "eb3d65d217ba6037": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6ff4419b-91b7-4513-9494-1055364840af",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
