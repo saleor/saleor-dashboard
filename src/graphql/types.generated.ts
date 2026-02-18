@@ -245,11 +245,21 @@ export enum AppErrorCode {
 
 export type AppExtensionFilterInput = {
   /**
+   * DEPRECATED: Use `mountName` instead.
+   * @deprecated Field no longer supported
+   */
+  mount?: InputMaybe<Array<AppExtensionMountEnum>>;
+  /**
    * Plain-text mount name (case insensitive)
    *
    * Added in Saleor 3.22.
    */
   mountName?: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * DEPRECATED: Use `targetName` instead.
+   * @deprecated Field no longer supported
+   */
+  target?: InputMaybe<AppExtensionTargetEnum>;
   /**
    * Plain-text target name (case insensitive)
    *
@@ -257,6 +267,73 @@ export type AppExtensionFilterInput = {
    */
   targetName?: InputMaybe<Scalars['String']>;
 };
+
+/** All places where app extension can be mounted. */
+export enum AppExtensionMountEnum {
+  CATEGORY_DETAILS_MORE_ACTIONS = 'CATEGORY_DETAILS_MORE_ACTIONS',
+  CATEGORY_OVERVIEW_CREATE = 'CATEGORY_OVERVIEW_CREATE',
+  CATEGORY_OVERVIEW_MORE_ACTIONS = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
+  COLLECTION_DETAILS_MORE_ACTIONS = 'COLLECTION_DETAILS_MORE_ACTIONS',
+  COLLECTION_DETAILS_WIDGETS = 'COLLECTION_DETAILS_WIDGETS',
+  COLLECTION_OVERVIEW_CREATE = 'COLLECTION_OVERVIEW_CREATE',
+  COLLECTION_OVERVIEW_MORE_ACTIONS = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
+  CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
+  CUSTOMER_DETAILS_WIDGETS = 'CUSTOMER_DETAILS_WIDGETS',
+  CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
+  CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
+  DISCOUNT_DETAILS_MORE_ACTIONS = 'DISCOUNT_DETAILS_MORE_ACTIONS',
+  DISCOUNT_OVERVIEW_CREATE = 'DISCOUNT_OVERVIEW_CREATE',
+  DISCOUNT_OVERVIEW_MORE_ACTIONS = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
+  DRAFT_ORDER_DETAILS_MORE_ACTIONS = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
+  DRAFT_ORDER_DETAILS_WIDGETS = 'DRAFT_ORDER_DETAILS_WIDGETS',
+  DRAFT_ORDER_OVERVIEW_CREATE = 'DRAFT_ORDER_OVERVIEW_CREATE',
+  DRAFT_ORDER_OVERVIEW_MORE_ACTIONS = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
+  GIFT_CARD_DETAILS_MORE_ACTIONS = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
+  GIFT_CARD_DETAILS_WIDGETS = 'GIFT_CARD_DETAILS_WIDGETS',
+  GIFT_CARD_OVERVIEW_CREATE = 'GIFT_CARD_OVERVIEW_CREATE',
+  GIFT_CARD_OVERVIEW_MORE_ACTIONS = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
+  MENU_DETAILS_MORE_ACTIONS = 'MENU_DETAILS_MORE_ACTIONS',
+  MENU_OVERVIEW_CREATE = 'MENU_OVERVIEW_CREATE',
+  MENU_OVERVIEW_MORE_ACTIONS = 'MENU_OVERVIEW_MORE_ACTIONS',
+  NAVIGATION_CATALOG = 'NAVIGATION_CATALOG',
+  NAVIGATION_CUSTOMERS = 'NAVIGATION_CUSTOMERS',
+  NAVIGATION_DISCOUNTS = 'NAVIGATION_DISCOUNTS',
+  NAVIGATION_ORDERS = 'NAVIGATION_ORDERS',
+  NAVIGATION_PAGES = 'NAVIGATION_PAGES',
+  NAVIGATION_TRANSLATIONS = 'NAVIGATION_TRANSLATIONS',
+  ORDER_DETAILS_MORE_ACTIONS = 'ORDER_DETAILS_MORE_ACTIONS',
+  ORDER_DETAILS_WIDGETS = 'ORDER_DETAILS_WIDGETS',
+  ORDER_OVERVIEW_CREATE = 'ORDER_OVERVIEW_CREATE',
+  ORDER_OVERVIEW_MORE_ACTIONS = 'ORDER_OVERVIEW_MORE_ACTIONS',
+  PAGE_DETAILS_MORE_ACTIONS = 'PAGE_DETAILS_MORE_ACTIONS',
+  PAGE_OVERVIEW_CREATE = 'PAGE_OVERVIEW_CREATE',
+  PAGE_OVERVIEW_MORE_ACTIONS = 'PAGE_OVERVIEW_MORE_ACTIONS',
+  PAGE_TYPE_DETAILS_MORE_ACTIONS = 'PAGE_TYPE_DETAILS_MORE_ACTIONS',
+  PAGE_TYPE_OVERVIEW_CREATE = 'PAGE_TYPE_OVERVIEW_CREATE',
+  PAGE_TYPE_OVERVIEW_MORE_ACTIONS = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
+  PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
+  PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
+  PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
+  PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
+  TRANSLATIONS_MORE_ACTIONS = 'TRANSLATIONS_MORE_ACTIONS',
+  VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
+  VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
+  VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',
+  VOUCHER_OVERVIEW_MORE_ACTIONS = 'VOUCHER_OVERVIEW_MORE_ACTIONS'
+}
+
+/**
+ * All available ways of opening an app extension.
+ *
+ *     POPUP - app's extension will be mounted as a popup window
+ *     APP_PAGE - redirect to app's page
+ */
+export enum AppExtensionTargetEnum {
+  APP_PAGE = 'APP_PAGE',
+  NEW_TAB = 'NEW_TAB',
+  POPUP = 'POPUP',
+  WIDGET = 'WIDGET'
+}
 
 export type AppFilterInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -314,14 +391,14 @@ export type AppProblemDismissByAppInput = {
   keys?: InputMaybe<Array<Scalars['String']>>;
 };
 
-/** Input for staff/user callers to dismiss problems by IDs. */
-export type AppProblemDismissByUserWithIdsInput = {
+/** Input for staff callers to dismiss problems by IDs. */
+export type AppProblemDismissByStaffWithIdsInput = {
   /** List of problem IDs to dismiss. Max 100. */
   ids: Array<Scalars['ID']>;
 };
 
-/** Input for staff/user callers to dismiss problems by keys. */
-export type AppProblemDismissByUserWithKeysInput = {
+/** Input for staff callers to dismiss problems by keys. */
+export type AppProblemDismissByStaffWithKeysInput = {
   /** ID of the app whose problems to dismiss. */
   app: Scalars['ID'];
   /** List of problem keys to dismiss. Max 100. */
@@ -340,10 +417,10 @@ export enum AppProblemDismissErrorCode {
 export type AppProblemDismissInput = {
   /** For app callers only - dismiss own problems. */
   byApp?: InputMaybe<AppProblemDismissByAppInput>;
-  /** For staff/user callers - dismiss problems by IDs. */
-  byUserWithIds?: InputMaybe<AppProblemDismissByUserWithIdsInput>;
-  /** For staff/user callers - dismiss problems by keys for specified app. */
-  byUserWithKeys?: InputMaybe<AppProblemDismissByUserWithKeysInput>;
+  /** For staff callers - dismiss problems by IDs. */
+  byStaffWithIds?: InputMaybe<AppProblemDismissByStaffWithIdsInput>;
+  /** For staff callers - dismiss problems by keys for specified app. */
+  byStaffWithKeys?: InputMaybe<AppProblemDismissByStaffWithKeysInput>;
 };
 
 export enum AppProblemDismissedByEnum {
@@ -1396,12 +1473,6 @@ export type CheckoutLineUpdateInput = {
 };
 
 export type CheckoutSettingsInput = {
-  /**
-   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
-   *
-   * Added in Saleor 3.23.
-   */
-  allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']>;
   /**
    * Settings for automatic completion of fully paid checkouts.
    *
@@ -2777,6 +2848,11 @@ export type GlobalIdFilterInput = {
   oneOf?: InputMaybe<Array<Scalars['ID']>>;
 };
 
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST'
+}
+
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
   ORIGINAL = 'ORIGINAL',
@@ -2843,785 +2919,1565 @@ export enum JobStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
+/** Language code enum. It contains all the languages supported by Saleor. */
 export enum LanguageCodeEnum {
+  /** Afrikaans */
   AF = 'AF',
+  /** Afrikaans (Namibia) */
   AF_NA = 'AF_NA',
+  /** Afrikaans (South Africa) */
   AF_ZA = 'AF_ZA',
+  /** Aghem */
   AGQ = 'AGQ',
+  /** Aghem (Cameroon) */
   AGQ_CM = 'AGQ_CM',
+  /** Akan */
   AK = 'AK',
+  /** Akan (Ghana) */
   AK_GH = 'AK_GH',
+  /** Amharic */
   AM = 'AM',
+  /** Amharic (Ethiopia) */
   AM_ET = 'AM_ET',
+  /** Arabic */
   AR = 'AR',
+  /** Arabic (United Arab Emirates) */
   AR_AE = 'AR_AE',
+  /** Arabic (Bahrain) */
   AR_BH = 'AR_BH',
+  /** Arabic (Djibouti) */
   AR_DJ = 'AR_DJ',
+  /** Arabic (Algeria) */
   AR_DZ = 'AR_DZ',
+  /** Arabic (Egypt) */
   AR_EG = 'AR_EG',
+  /** Arabic (Western Sahara) */
   AR_EH = 'AR_EH',
+  /** Arabic (Eritrea) */
   AR_ER = 'AR_ER',
+  /** Arabic (Israel) */
   AR_IL = 'AR_IL',
+  /** Arabic (Iraq) */
   AR_IQ = 'AR_IQ',
+  /** Arabic (Jordan) */
   AR_JO = 'AR_JO',
+  /** Arabic (Comoros) */
   AR_KM = 'AR_KM',
+  /** Arabic (Kuwait) */
   AR_KW = 'AR_KW',
+  /** Arabic (Lebanon) */
   AR_LB = 'AR_LB',
+  /** Arabic (Libya) */
   AR_LY = 'AR_LY',
+  /** Arabic (Morocco) */
   AR_MA = 'AR_MA',
+  /** Arabic (Mauritania) */
   AR_MR = 'AR_MR',
+  /** Arabic (Oman) */
   AR_OM = 'AR_OM',
+  /** Arabic (Palestinian Territories) */
   AR_PS = 'AR_PS',
+  /** Arabic (Qatar) */
   AR_QA = 'AR_QA',
+  /** Arabic (Saudi Arabia) */
   AR_SA = 'AR_SA',
+  /** Arabic (Sudan) */
   AR_SD = 'AR_SD',
+  /** Arabic (Somalia) */
   AR_SO = 'AR_SO',
+  /** Arabic (South Sudan) */
   AR_SS = 'AR_SS',
+  /** Arabic (Syria) */
   AR_SY = 'AR_SY',
+  /** Arabic (Chad) */
   AR_TD = 'AR_TD',
+  /** Arabic (Tunisia) */
   AR_TN = 'AR_TN',
+  /** Arabic (Yemen) */
   AR_YE = 'AR_YE',
+  /** Assamese */
   AS = 'AS',
+  /** Asu */
   ASA = 'ASA',
+  /** Asu (Tanzania) */
   ASA_TZ = 'ASA_TZ',
+  /** Asturian */
   AST = 'AST',
+  /** Asturian (Spain) */
   AST_ES = 'AST_ES',
+  /** Assamese (India) */
   AS_IN = 'AS_IN',
+  /** Azerbaijani */
   AZ = 'AZ',
+  /** Azerbaijani (Cyrillic) */
   AZ_CYRL = 'AZ_CYRL',
+  /** Azerbaijani (Cyrillic, Azerbaijan) */
   AZ_CYRL_AZ = 'AZ_CYRL_AZ',
+  /** Azerbaijani (Latin) */
   AZ_LATN = 'AZ_LATN',
+  /** Azerbaijani (Latin, Azerbaijan) */
   AZ_LATN_AZ = 'AZ_LATN_AZ',
+  /** Basaa */
   BAS = 'BAS',
+  /** Basaa (Cameroon) */
   BAS_CM = 'BAS_CM',
+  /** Belarusian */
   BE = 'BE',
+  /** Bemba */
   BEM = 'BEM',
+  /** Bemba (Zambia) */
   BEM_ZM = 'BEM_ZM',
+  /** Bena */
   BEZ = 'BEZ',
+  /** Bena (Tanzania) */
   BEZ_TZ = 'BEZ_TZ',
+  /** Belarusian (Belarus) */
   BE_BY = 'BE_BY',
+  /** Bulgarian */
   BG = 'BG',
+  /** Bulgarian (Bulgaria) */
   BG_BG = 'BG_BG',
+  /** Bambara */
   BM = 'BM',
+  /** Bambara (Mali) */
   BM_ML = 'BM_ML',
+  /** Bangla */
   BN = 'BN',
+  /** Bangla (Bangladesh) */
   BN_BD = 'BN_BD',
+  /** Bangla (India) */
   BN_IN = 'BN_IN',
+  /** Tibetan */
   BO = 'BO',
+  /** Tibetan (China) */
   BO_CN = 'BO_CN',
+  /** Tibetan (India) */
   BO_IN = 'BO_IN',
+  /** Breton */
   BR = 'BR',
+  /** Bodo */
   BRX = 'BRX',
+  /** Bodo (India) */
   BRX_IN = 'BRX_IN',
+  /** Breton (France) */
   BR_FR = 'BR_FR',
+  /** Bosnian */
   BS = 'BS',
+  /** Bosnian (Cyrillic) */
   BS_CYRL = 'BS_CYRL',
+  /** Bosnian (Cyrillic, Bosnia & Herzegovina) */
   BS_CYRL_BA = 'BS_CYRL_BA',
+  /** Bosnian (Latin) */
   BS_LATN = 'BS_LATN',
+  /** Bosnian (Latin, Bosnia & Herzegovina) */
   BS_LATN_BA = 'BS_LATN_BA',
+  /** Catalan */
   CA = 'CA',
+  /** Catalan (Andorra) */
   CA_AD = 'CA_AD',
+  /** Catalan (Spain) */
   CA_ES = 'CA_ES',
+  /** Catalan (Spain, Valencian) */
   CA_ES_VALENCIA = 'CA_ES_VALENCIA',
+  /** Catalan (France) */
   CA_FR = 'CA_FR',
+  /** Catalan (Italy) */
   CA_IT = 'CA_IT',
+  /** Chakma */
   CCP = 'CCP',
+  /** Chakma (Bangladesh) */
   CCP_BD = 'CCP_BD',
+  /** Chakma (India) */
   CCP_IN = 'CCP_IN',
+  /** Chechen */
   CE = 'CE',
+  /** Cebuano */
   CEB = 'CEB',
+  /** Cebuano (Philippines) */
   CEB_PH = 'CEB_PH',
+  /** Chechen (Russia) */
   CE_RU = 'CE_RU',
+  /** Chiga */
   CGG = 'CGG',
+  /** Chiga (Uganda) */
   CGG_UG = 'CGG_UG',
+  /** Cherokee */
   CHR = 'CHR',
+  /** Cherokee (United States) */
   CHR_US = 'CHR_US',
+  /** Central Kurdish */
   CKB = 'CKB',
+  /** Central Kurdish (Iraq) */
   CKB_IQ = 'CKB_IQ',
+  /** Central Kurdish (Iran) */
   CKB_IR = 'CKB_IR',
+  /** Czech */
   CS = 'CS',
+  /** Czech (Czechia) */
   CS_CZ = 'CS_CZ',
+  /** Church Slavic */
   CU = 'CU',
+  /** Church Slavic (Russia) */
   CU_RU = 'CU_RU',
+  /** Welsh */
   CY = 'CY',
+  /** Welsh (United Kingdom) */
   CY_GB = 'CY_GB',
+  /** Danish */
   DA = 'DA',
+  /** Taita */
   DAV = 'DAV',
+  /** Taita (Kenya) */
   DAV_KE = 'DAV_KE',
+  /** Danish (Denmark) */
   DA_DK = 'DA_DK',
+  /** Danish (Greenland) */
   DA_GL = 'DA_GL',
+  /** German */
   DE = 'DE',
+  /** German (Austria) */
   DE_AT = 'DE_AT',
+  /** German (Belgium) */
   DE_BE = 'DE_BE',
+  /** German (Switzerland) */
   DE_CH = 'DE_CH',
+  /** German (Germany) */
   DE_DE = 'DE_DE',
+  /** German (Italy) */
   DE_IT = 'DE_IT',
+  /** German (Liechtenstein) */
   DE_LI = 'DE_LI',
+  /** German (Luxembourg) */
   DE_LU = 'DE_LU',
+  /** Zarma */
   DJE = 'DJE',
+  /** Zarma (Niger) */
   DJE_NE = 'DJE_NE',
+  /** Lower Sorbian */
   DSB = 'DSB',
+  /** Lower Sorbian (Germany) */
   DSB_DE = 'DSB_DE',
+  /** Duala */
   DUA = 'DUA',
+  /** Duala (Cameroon) */
   DUA_CM = 'DUA_CM',
+  /** Jola-Fonyi */
   DYO = 'DYO',
+  /** Jola-Fonyi (Senegal) */
   DYO_SN = 'DYO_SN',
+  /** Dzongkha */
   DZ = 'DZ',
+  /** Dzongkha (Bhutan) */
   DZ_BT = 'DZ_BT',
+  /** Embu */
   EBU = 'EBU',
+  /** Embu (Kenya) */
   EBU_KE = 'EBU_KE',
+  /** Ewe */
   EE = 'EE',
+  /** Ewe (Ghana) */
   EE_GH = 'EE_GH',
+  /** Ewe (Togo) */
   EE_TG = 'EE_TG',
+  /** Greek */
   EL = 'EL',
+  /** Greek (Cyprus) */
   EL_CY = 'EL_CY',
+  /** Greek (Greece) */
   EL_GR = 'EL_GR',
+  /** English */
   EN = 'EN',
+  /** English (United Arab Emirates) */
   EN_AE = 'EN_AE',
+  /** English (Antigua & Barbuda) */
   EN_AG = 'EN_AG',
+  /** English (Anguilla) */
   EN_AI = 'EN_AI',
+  /** English (American Samoa) */
   EN_AS = 'EN_AS',
+  /** English (Austria) */
   EN_AT = 'EN_AT',
+  /** English (Australia) */
   EN_AU = 'EN_AU',
+  /** English (Barbados) */
   EN_BB = 'EN_BB',
+  /** English (Belgium) */
   EN_BE = 'EN_BE',
+  /** English (Burundi) */
   EN_BI = 'EN_BI',
+  /** English (Bermuda) */
   EN_BM = 'EN_BM',
+  /** English (Bahamas) */
   EN_BS = 'EN_BS',
+  /** English (Botswana) */
   EN_BW = 'EN_BW',
+  /** English (Belize) */
   EN_BZ = 'EN_BZ',
+  /** English (Canada) */
   EN_CA = 'EN_CA',
+  /** English (Cocos (Keeling) Islands) */
   EN_CC = 'EN_CC',
+  /** English (Switzerland) */
   EN_CH = 'EN_CH',
+  /** English (Cook Islands) */
   EN_CK = 'EN_CK',
+  /** English (Cameroon) */
   EN_CM = 'EN_CM',
+  /** English (Christmas Island) */
   EN_CX = 'EN_CX',
+  /** English (Cyprus) */
   EN_CY = 'EN_CY',
+  /** English (Germany) */
   EN_DE = 'EN_DE',
+  /** English (Diego Garcia) */
   EN_DG = 'EN_DG',
+  /** English (Denmark) */
   EN_DK = 'EN_DK',
+  /** English (Dominica) */
   EN_DM = 'EN_DM',
+  /** English (Eritrea) */
   EN_ER = 'EN_ER',
+  /** English (Finland) */
   EN_FI = 'EN_FI',
+  /** English (Fiji) */
   EN_FJ = 'EN_FJ',
+  /** English (Falkland Islands) */
   EN_FK = 'EN_FK',
+  /** English (Micronesia) */
   EN_FM = 'EN_FM',
+  /** English (United Kingdom) */
   EN_GB = 'EN_GB',
+  /** English (Grenada) */
   EN_GD = 'EN_GD',
+  /** English (Guernsey) */
   EN_GG = 'EN_GG',
+  /** English (Ghana) */
   EN_GH = 'EN_GH',
+  /** English (Gibraltar) */
   EN_GI = 'EN_GI',
+  /** English (Gambia) */
   EN_GM = 'EN_GM',
+  /** English (Guam) */
   EN_GU = 'EN_GU',
+  /** English (Guyana) */
   EN_GY = 'EN_GY',
+  /** English (Hong Kong SAR China) */
   EN_HK = 'EN_HK',
+  /** English (Ireland) */
   EN_IE = 'EN_IE',
+  /** English (Israel) */
   EN_IL = 'EN_IL',
+  /** English (Isle of Man) */
   EN_IM = 'EN_IM',
+  /** English (India) */
   EN_IN = 'EN_IN',
+  /** English (British Indian Ocean Territory) */
   EN_IO = 'EN_IO',
+  /** English (Jersey) */
   EN_JE = 'EN_JE',
+  /** English (Jamaica) */
   EN_JM = 'EN_JM',
+  /** English (Kenya) */
   EN_KE = 'EN_KE',
+  /** English (Kiribati) */
   EN_KI = 'EN_KI',
+  /** English (St. Kitts & Nevis) */
   EN_KN = 'EN_KN',
+  /** English (Cayman Islands) */
   EN_KY = 'EN_KY',
+  /** English (St. Lucia) */
   EN_LC = 'EN_LC',
+  /** English (Liberia) */
   EN_LR = 'EN_LR',
+  /** English (Lesotho) */
   EN_LS = 'EN_LS',
+  /** English (Madagascar) */
   EN_MG = 'EN_MG',
+  /** English (Marshall Islands) */
   EN_MH = 'EN_MH',
+  /** English (Macao SAR China) */
   EN_MO = 'EN_MO',
+  /** English (Northern Mariana Islands) */
   EN_MP = 'EN_MP',
+  /** English (Montserrat) */
   EN_MS = 'EN_MS',
+  /** English (Malta) */
   EN_MT = 'EN_MT',
+  /** English (Mauritius) */
   EN_MU = 'EN_MU',
+  /** English (Malawi) */
   EN_MW = 'EN_MW',
+  /** English (Malaysia) */
   EN_MY = 'EN_MY',
+  /** English (Namibia) */
   EN_NA = 'EN_NA',
+  /** English (Norfolk Island) */
   EN_NF = 'EN_NF',
+  /** English (Nigeria) */
   EN_NG = 'EN_NG',
+  /** English (Netherlands) */
   EN_NL = 'EN_NL',
+  /** English (Nauru) */
   EN_NR = 'EN_NR',
+  /** English (Niue) */
   EN_NU = 'EN_NU',
+  /** English (New Zealand) */
   EN_NZ = 'EN_NZ',
+  /** English (Papua New Guinea) */
   EN_PG = 'EN_PG',
+  /** English (Philippines) */
   EN_PH = 'EN_PH',
+  /** English (Pakistan) */
   EN_PK = 'EN_PK',
+  /** English (Pitcairn Islands) */
   EN_PN = 'EN_PN',
+  /** English (Puerto Rico) */
   EN_PR = 'EN_PR',
+  /** English (Palau) */
   EN_PW = 'EN_PW',
+  /** English (Rwanda) */
   EN_RW = 'EN_RW',
+  /** English (Solomon Islands) */
   EN_SB = 'EN_SB',
+  /** English (Seychelles) */
   EN_SC = 'EN_SC',
+  /** English (Sudan) */
   EN_SD = 'EN_SD',
+  /** English (Sweden) */
   EN_SE = 'EN_SE',
+  /** English (Singapore) */
   EN_SG = 'EN_SG',
+  /** English (St. Helena) */
   EN_SH = 'EN_SH',
+  /** English (Slovenia) */
   EN_SI = 'EN_SI',
+  /** English (Sierra Leone) */
   EN_SL = 'EN_SL',
+  /** English (South Sudan) */
   EN_SS = 'EN_SS',
+  /** English (Sint Maarten) */
   EN_SX = 'EN_SX',
+  /** English (Eswatini) */
   EN_SZ = 'EN_SZ',
+  /** English (Turks & Caicos Islands) */
   EN_TC = 'EN_TC',
+  /** English (Tokelau) */
   EN_TK = 'EN_TK',
+  /** English (Tonga) */
   EN_TO = 'EN_TO',
+  /** English (Trinidad & Tobago) */
   EN_TT = 'EN_TT',
+  /** English (Tuvalu) */
   EN_TV = 'EN_TV',
+  /** English (Tanzania) */
   EN_TZ = 'EN_TZ',
+  /** English (Uganda) */
   EN_UG = 'EN_UG',
+  /** English (U.S. Outlying Islands) */
   EN_UM = 'EN_UM',
+  /** English (United States) */
   EN_US = 'EN_US',
+  /** English (St. Vincent & Grenadines) */
   EN_VC = 'EN_VC',
+  /** English (British Virgin Islands) */
   EN_VG = 'EN_VG',
+  /** English (U.S. Virgin Islands) */
   EN_VI = 'EN_VI',
+  /** English (Vanuatu) */
   EN_VU = 'EN_VU',
+  /** English (Samoa) */
   EN_WS = 'EN_WS',
+  /** English (South Africa) */
   EN_ZA = 'EN_ZA',
+  /** English (Zambia) */
   EN_ZM = 'EN_ZM',
+  /** English (Zimbabwe) */
   EN_ZW = 'EN_ZW',
+  /** Esperanto */
   EO = 'EO',
+  /** Spanish */
   ES = 'ES',
+  /** Spanish (Argentina) */
   ES_AR = 'ES_AR',
+  /** Spanish (Bolivia) */
   ES_BO = 'ES_BO',
+  /** Spanish (Brazil) */
   ES_BR = 'ES_BR',
+  /** Spanish (Belize) */
   ES_BZ = 'ES_BZ',
+  /** Spanish (Chile) */
   ES_CL = 'ES_CL',
+  /** Spanish (Colombia) */
   ES_CO = 'ES_CO',
+  /** Spanish (Costa Rica) */
   ES_CR = 'ES_CR',
+  /** Spanish (Cuba) */
   ES_CU = 'ES_CU',
+  /** Spanish (Dominican Republic) */
   ES_DO = 'ES_DO',
+  /** Spanish (Ceuta & Melilla) */
   ES_EA = 'ES_EA',
+  /** Spanish (Ecuador) */
   ES_EC = 'ES_EC',
+  /** Spanish (Spain) */
   ES_ES = 'ES_ES',
+  /** Spanish (Equatorial Guinea) */
   ES_GQ = 'ES_GQ',
+  /** Spanish (Guatemala) */
   ES_GT = 'ES_GT',
+  /** Spanish (Honduras) */
   ES_HN = 'ES_HN',
+  /** Spanish (Canary Islands) */
   ES_IC = 'ES_IC',
+  /** Spanish (Mexico) */
   ES_MX = 'ES_MX',
+  /** Spanish (Nicaragua) */
   ES_NI = 'ES_NI',
+  /** Spanish (Panama) */
   ES_PA = 'ES_PA',
+  /** Spanish (Peru) */
   ES_PE = 'ES_PE',
+  /** Spanish (Philippines) */
   ES_PH = 'ES_PH',
+  /** Spanish (Puerto Rico) */
   ES_PR = 'ES_PR',
+  /** Spanish (Paraguay) */
   ES_PY = 'ES_PY',
+  /** Spanish (El Salvador) */
   ES_SV = 'ES_SV',
+  /** Spanish (United States) */
   ES_US = 'ES_US',
+  /** Spanish (Uruguay) */
   ES_UY = 'ES_UY',
+  /** Spanish (Venezuela) */
   ES_VE = 'ES_VE',
+  /** Estonian */
   ET = 'ET',
+  /** Estonian (Estonia) */
   ET_EE = 'ET_EE',
+  /** Basque */
   EU = 'EU',
+  /** Basque (Spain) */
   EU_ES = 'EU_ES',
+  /** Ewondo */
   EWO = 'EWO',
+  /** Ewondo (Cameroon) */
   EWO_CM = 'EWO_CM',
+  /** Persian */
   FA = 'FA',
+  /** Persian (Afghanistan) */
   FA_AF = 'FA_AF',
+  /** Persian (Iran) */
   FA_IR = 'FA_IR',
+  /** Fulah */
   FF = 'FF',
+  /** Fulah (Adlam) */
   FF_ADLM = 'FF_ADLM',
+  /** Fulah (Adlam, Burkina Faso) */
   FF_ADLM_BF = 'FF_ADLM_BF',
+  /** Fulah (Adlam, Cameroon) */
   FF_ADLM_CM = 'FF_ADLM_CM',
+  /** Fulah (Adlam, Ghana) */
   FF_ADLM_GH = 'FF_ADLM_GH',
+  /** Fulah (Adlam, Gambia) */
   FF_ADLM_GM = 'FF_ADLM_GM',
+  /** Fulah (Adlam, Guinea) */
   FF_ADLM_GN = 'FF_ADLM_GN',
+  /** Fulah (Adlam, Guinea-Bissau) */
   FF_ADLM_GW = 'FF_ADLM_GW',
+  /** Fulah (Adlam, Liberia) */
   FF_ADLM_LR = 'FF_ADLM_LR',
+  /** Fulah (Adlam, Mauritania) */
   FF_ADLM_MR = 'FF_ADLM_MR',
+  /** Fulah (Adlam, Niger) */
   FF_ADLM_NE = 'FF_ADLM_NE',
+  /** Fulah (Adlam, Nigeria) */
   FF_ADLM_NG = 'FF_ADLM_NG',
+  /** Fulah (Adlam, Sierra Leone) */
   FF_ADLM_SL = 'FF_ADLM_SL',
+  /** Fulah (Adlam, Senegal) */
   FF_ADLM_SN = 'FF_ADLM_SN',
+  /** Fulah (Latin) */
   FF_LATN = 'FF_LATN',
+  /** Fulah (Latin, Burkina Faso) */
   FF_LATN_BF = 'FF_LATN_BF',
+  /** Fulah (Latin, Cameroon) */
   FF_LATN_CM = 'FF_LATN_CM',
+  /** Fulah (Latin, Ghana) */
   FF_LATN_GH = 'FF_LATN_GH',
+  /** Fulah (Latin, Gambia) */
   FF_LATN_GM = 'FF_LATN_GM',
+  /** Fulah (Latin, Guinea) */
   FF_LATN_GN = 'FF_LATN_GN',
+  /** Fulah (Latin, Guinea-Bissau) */
   FF_LATN_GW = 'FF_LATN_GW',
+  /** Fulah (Latin, Liberia) */
   FF_LATN_LR = 'FF_LATN_LR',
+  /** Fulah (Latin, Mauritania) */
   FF_LATN_MR = 'FF_LATN_MR',
+  /** Fulah (Latin, Niger) */
   FF_LATN_NE = 'FF_LATN_NE',
+  /** Fulah (Latin, Nigeria) */
   FF_LATN_NG = 'FF_LATN_NG',
+  /** Fulah (Latin, Sierra Leone) */
   FF_LATN_SL = 'FF_LATN_SL',
+  /** Fulah (Latin, Senegal) */
   FF_LATN_SN = 'FF_LATN_SN',
+  /** Finnish */
   FI = 'FI',
+  /** Filipino */
   FIL = 'FIL',
+  /** Filipino (Philippines) */
   FIL_PH = 'FIL_PH',
+  /** Finnish (Finland) */
   FI_FI = 'FI_FI',
+  /** Faroese */
   FO = 'FO',
+  /** Faroese (Denmark) */
   FO_DK = 'FO_DK',
+  /** Faroese (Faroe Islands) */
   FO_FO = 'FO_FO',
+  /** French */
   FR = 'FR',
+  /** French (Belgium) */
   FR_BE = 'FR_BE',
+  /** French (Burkina Faso) */
   FR_BF = 'FR_BF',
+  /** French (Burundi) */
   FR_BI = 'FR_BI',
+  /** French (Benin) */
   FR_BJ = 'FR_BJ',
+  /** French (St. Barthélemy) */
   FR_BL = 'FR_BL',
+  /** French (Canada) */
   FR_CA = 'FR_CA',
+  /** French (Congo - Kinshasa) */
   FR_CD = 'FR_CD',
+  /** French (Central African Republic) */
   FR_CF = 'FR_CF',
+  /** French (Congo - Brazzaville) */
   FR_CG = 'FR_CG',
+  /** French (Switzerland) */
   FR_CH = 'FR_CH',
+  /** French (Côte d’Ivoire) */
   FR_CI = 'FR_CI',
+  /** French (Cameroon) */
   FR_CM = 'FR_CM',
+  /** French (Djibouti) */
   FR_DJ = 'FR_DJ',
+  /** French (Algeria) */
   FR_DZ = 'FR_DZ',
+  /** French (France) */
   FR_FR = 'FR_FR',
+  /** French (Gabon) */
   FR_GA = 'FR_GA',
+  /** French (French Guiana) */
   FR_GF = 'FR_GF',
+  /** French (Guinea) */
   FR_GN = 'FR_GN',
+  /** French (Guadeloupe) */
   FR_GP = 'FR_GP',
+  /** French (Equatorial Guinea) */
   FR_GQ = 'FR_GQ',
+  /** French (Haiti) */
   FR_HT = 'FR_HT',
+  /** French (Comoros) */
   FR_KM = 'FR_KM',
+  /** French (Luxembourg) */
   FR_LU = 'FR_LU',
+  /** French (Morocco) */
   FR_MA = 'FR_MA',
+  /** French (Monaco) */
   FR_MC = 'FR_MC',
+  /** French (St. Martin) */
   FR_MF = 'FR_MF',
+  /** French (Madagascar) */
   FR_MG = 'FR_MG',
+  /** French (Mali) */
   FR_ML = 'FR_ML',
+  /** French (Martinique) */
   FR_MQ = 'FR_MQ',
+  /** French (Mauritania) */
   FR_MR = 'FR_MR',
+  /** French (Mauritius) */
   FR_MU = 'FR_MU',
+  /** French (New Caledonia) */
   FR_NC = 'FR_NC',
+  /** French (Niger) */
   FR_NE = 'FR_NE',
+  /** French (French Polynesia) */
   FR_PF = 'FR_PF',
+  /** French (St. Pierre & Miquelon) */
   FR_PM = 'FR_PM',
+  /** French (Réunion) */
   FR_RE = 'FR_RE',
+  /** French (Rwanda) */
   FR_RW = 'FR_RW',
+  /** French (Seychelles) */
   FR_SC = 'FR_SC',
+  /** French (Senegal) */
   FR_SN = 'FR_SN',
+  /** French (Syria) */
   FR_SY = 'FR_SY',
+  /** French (Chad) */
   FR_TD = 'FR_TD',
+  /** French (Togo) */
   FR_TG = 'FR_TG',
+  /** French (Tunisia) */
   FR_TN = 'FR_TN',
+  /** French (Vanuatu) */
   FR_VU = 'FR_VU',
+  /** French (Wallis & Futuna) */
   FR_WF = 'FR_WF',
+  /** French (Mayotte) */
   FR_YT = 'FR_YT',
+  /** Friulian */
   FUR = 'FUR',
+  /** Friulian (Italy) */
   FUR_IT = 'FUR_IT',
+  /** Western Frisian */
   FY = 'FY',
+  /** Western Frisian (Netherlands) */
   FY_NL = 'FY_NL',
+  /** Irish */
   GA = 'GA',
+  /** Irish (United Kingdom) */
   GA_GB = 'GA_GB',
+  /** Irish (Ireland) */
   GA_IE = 'GA_IE',
+  /** Scottish Gaelic */
   GD = 'GD',
+  /** Scottish Gaelic (United Kingdom) */
   GD_GB = 'GD_GB',
+  /** Galician */
   GL = 'GL',
+  /** Galician (Spain) */
   GL_ES = 'GL_ES',
+  /** Swiss German */
   GSW = 'GSW',
+  /** Swiss German (Switzerland) */
   GSW_CH = 'GSW_CH',
+  /** Swiss German (France) */
   GSW_FR = 'GSW_FR',
+  /** Swiss German (Liechtenstein) */
   GSW_LI = 'GSW_LI',
+  /** Gujarati */
   GU = 'GU',
+  /** Gusii */
   GUZ = 'GUZ',
+  /** Gusii (Kenya) */
   GUZ_KE = 'GUZ_KE',
+  /** Gujarati (India) */
   GU_IN = 'GU_IN',
+  /** Manx */
   GV = 'GV',
+  /** Manx (Isle of Man) */
   GV_IM = 'GV_IM',
+  /** Hausa */
   HA = 'HA',
+  /** Hawaiian */
   HAW = 'HAW',
+  /** Hawaiian (United States) */
   HAW_US = 'HAW_US',
+  /** Hausa (Ghana) */
   HA_GH = 'HA_GH',
+  /** Hausa (Niger) */
   HA_NE = 'HA_NE',
+  /** Hausa (Nigeria) */
   HA_NG = 'HA_NG',
+  /** Hebrew */
   HE = 'HE',
+  /** Hebrew (Israel) */
   HE_IL = 'HE_IL',
+  /** Hindi */
   HI = 'HI',
+  /** Hindi (India) */
   HI_IN = 'HI_IN',
+  /** Croatian */
   HR = 'HR',
+  /** Croatian (Bosnia & Herzegovina) */
   HR_BA = 'HR_BA',
+  /** Croatian (Croatia) */
   HR_HR = 'HR_HR',
+  /** Upper Sorbian */
   HSB = 'HSB',
+  /** Upper Sorbian (Germany) */
   HSB_DE = 'HSB_DE',
+  /** Hungarian */
   HU = 'HU',
+  /** Hungarian (Hungary) */
   HU_HU = 'HU_HU',
+  /** Armenian */
   HY = 'HY',
+  /** Armenian (Armenia) */
   HY_AM = 'HY_AM',
+  /** Interlingua */
   IA = 'IA',
+  /** Indonesian */
   ID = 'ID',
+  /** Indonesian (Indonesia) */
   ID_ID = 'ID_ID',
+  /** Igbo */
   IG = 'IG',
+  /** Igbo (Nigeria) */
   IG_NG = 'IG_NG',
+  /** Sichuan Yi */
   II = 'II',
+  /** Sichuan Yi (China) */
   II_CN = 'II_CN',
+  /** Icelandic */
   IS = 'IS',
+  /** Icelandic (Iceland) */
   IS_IS = 'IS_IS',
+  /** Italian */
   IT = 'IT',
+  /** Italian (Switzerland) */
   IT_CH = 'IT_CH',
+  /** Italian (Italy) */
   IT_IT = 'IT_IT',
+  /** Italian (San Marino) */
   IT_SM = 'IT_SM',
+  /** Italian (Vatican City) */
   IT_VA = 'IT_VA',
+  /** Japanese */
   JA = 'JA',
+  /** Japanese (Japan) */
   JA_JP = 'JA_JP',
+  /** Ngomba */
   JGO = 'JGO',
+  /** Ngomba (Cameroon) */
   JGO_CM = 'JGO_CM',
+  /** Machame */
   JMC = 'JMC',
+  /** Machame (Tanzania) */
   JMC_TZ = 'JMC_TZ',
+  /** Javanese */
   JV = 'JV',
+  /** Javanese (Indonesia) */
   JV_ID = 'JV_ID',
+  /** Georgian */
   KA = 'KA',
+  /** Kabyle */
   KAB = 'KAB',
+  /** Kabyle (Algeria) */
   KAB_DZ = 'KAB_DZ',
+  /** Kamba */
   KAM = 'KAM',
+  /** Kamba (Kenya) */
   KAM_KE = 'KAM_KE',
+  /** Georgian (Georgia) */
   KA_GE = 'KA_GE',
+  /** Makonde */
   KDE = 'KDE',
+  /** Makonde (Tanzania) */
   KDE_TZ = 'KDE_TZ',
+  /** Kabuverdianu */
   KEA = 'KEA',
+  /** Kabuverdianu (Cape Verde) */
   KEA_CV = 'KEA_CV',
+  /** Koyra Chiini */
   KHQ = 'KHQ',
+  /** Koyra Chiini (Mali) */
   KHQ_ML = 'KHQ_ML',
+  /** Kikuyu */
   KI = 'KI',
+  /** Kikuyu (Kenya) */
   KI_KE = 'KI_KE',
+  /** Kazakh */
   KK = 'KK',
+  /** Kako */
   KKJ = 'KKJ',
+  /** Kako (Cameroon) */
   KKJ_CM = 'KKJ_CM',
+  /** Kazakh (Kazakhstan) */
   KK_KZ = 'KK_KZ',
+  /** Kalaallisut */
   KL = 'KL',
+  /** Kalenjin */
   KLN = 'KLN',
+  /** Kalenjin (Kenya) */
   KLN_KE = 'KLN_KE',
+  /** Kalaallisut (Greenland) */
   KL_GL = 'KL_GL',
+  /** Khmer */
   KM = 'KM',
+  /** Khmer (Cambodia) */
   KM_KH = 'KM_KH',
+  /** Kannada */
   KN = 'KN',
+  /** Kannada (India) */
   KN_IN = 'KN_IN',
+  /** Korean */
   KO = 'KO',
+  /** Konkani */
   KOK = 'KOK',
+  /** Konkani (India) */
   KOK_IN = 'KOK_IN',
+  /** Korean (North Korea) */
   KO_KP = 'KO_KP',
+  /** Korean (South Korea) */
   KO_KR = 'KO_KR',
+  /** Kashmiri */
   KS = 'KS',
+  /** Shambala */
   KSB = 'KSB',
+  /** Shambala (Tanzania) */
   KSB_TZ = 'KSB_TZ',
+  /** Bafia */
   KSF = 'KSF',
+  /** Bafia (Cameroon) */
   KSF_CM = 'KSF_CM',
+  /** Colognian */
   KSH = 'KSH',
+  /** Colognian (Germany) */
   KSH_DE = 'KSH_DE',
+  /** Kashmiri (Arabic) */
   KS_ARAB = 'KS_ARAB',
+  /** Kashmiri (Arabic, India) */
   KS_ARAB_IN = 'KS_ARAB_IN',
+  /** Kurdish */
   KU = 'KU',
+  /** Kurdish (Turkey) */
   KU_TR = 'KU_TR',
+  /** Cornish */
   KW = 'KW',
+  /** Cornish (United Kingdom) */
   KW_GB = 'KW_GB',
+  /** Kyrgyz */
   KY = 'KY',
+  /** Kyrgyz (Kyrgyzstan) */
   KY_KG = 'KY_KG',
+  /** Langi */
   LAG = 'LAG',
+  /** Langi (Tanzania) */
   LAG_TZ = 'LAG_TZ',
+  /** Luxembourgish */
   LB = 'LB',
+  /** Luxembourgish (Luxembourg) */
   LB_LU = 'LB_LU',
+  /** Ganda */
   LG = 'LG',
+  /** Ganda (Uganda) */
   LG_UG = 'LG_UG',
+  /** Lakota */
   LKT = 'LKT',
+  /** Lakota (United States) */
   LKT_US = 'LKT_US',
+  /** Lingala */
   LN = 'LN',
+  /** Lingala (Angola) */
   LN_AO = 'LN_AO',
+  /** Lingala (Congo - Kinshasa) */
   LN_CD = 'LN_CD',
+  /** Lingala (Central African Republic) */
   LN_CF = 'LN_CF',
+  /** Lingala (Congo - Brazzaville) */
   LN_CG = 'LN_CG',
+  /** Lao */
   LO = 'LO',
+  /** Lao (Laos) */
   LO_LA = 'LO_LA',
+  /** Northern Luri */
   LRC = 'LRC',
+  /** Northern Luri (Iraq) */
   LRC_IQ = 'LRC_IQ',
+  /** Northern Luri (Iran) */
   LRC_IR = 'LRC_IR',
+  /** Lithuanian */
   LT = 'LT',
+  /** Lithuanian (Lithuania) */
   LT_LT = 'LT_LT',
+  /** Luba-Katanga */
   LU = 'LU',
+  /** Luo */
   LUO = 'LUO',
+  /** Luo (Kenya) */
   LUO_KE = 'LUO_KE',
+  /** Luyia */
   LUY = 'LUY',
+  /** Luyia (Kenya) */
   LUY_KE = 'LUY_KE',
+  /** Luba-Katanga (Congo - Kinshasa) */
   LU_CD = 'LU_CD',
+  /** Latvian */
   LV = 'LV',
+  /** Latvian (Latvia) */
   LV_LV = 'LV_LV',
+  /** Maithili */
   MAI = 'MAI',
+  /** Maithili (India) */
   MAI_IN = 'MAI_IN',
+  /** Masai */
   MAS = 'MAS',
+  /** Masai (Kenya) */
   MAS_KE = 'MAS_KE',
+  /** Masai (Tanzania) */
   MAS_TZ = 'MAS_TZ',
+  /** Meru */
   MER = 'MER',
+  /** Meru (Kenya) */
   MER_KE = 'MER_KE',
+  /** Morisyen */
   MFE = 'MFE',
+  /** Morisyen (Mauritius) */
   MFE_MU = 'MFE_MU',
+  /** Malagasy */
   MG = 'MG',
+  /** Makhuwa-Meetto */
   MGH = 'MGH',
+  /** Makhuwa-Meetto (Mozambique) */
   MGH_MZ = 'MGH_MZ',
+  /** Metaʼ */
   MGO = 'MGO',
+  /** Metaʼ (Cameroon) */
   MGO_CM = 'MGO_CM',
+  /** Malagasy (Madagascar) */
   MG_MG = 'MG_MG',
+  /** Maori */
   MI = 'MI',
+  /** Maori (New Zealand) */
   MI_NZ = 'MI_NZ',
+  /** Macedonian */
   MK = 'MK',
+  /** Macedonian (North Macedonia) */
   MK_MK = 'MK_MK',
+  /** Malayalam */
   ML = 'ML',
+  /** Malayalam (India) */
   ML_IN = 'ML_IN',
+  /** Mongolian */
   MN = 'MN',
+  /** Manipuri */
   MNI = 'MNI',
+  /** Manipuri (Bangla) */
   MNI_BENG = 'MNI_BENG',
+  /** Manipuri (Bangla, India) */
   MNI_BENG_IN = 'MNI_BENG_IN',
+  /** Mongolian (Mongolia) */
   MN_MN = 'MN_MN',
+  /** Marathi */
   MR = 'MR',
+  /** Marathi (India) */
   MR_IN = 'MR_IN',
+  /** Malay */
   MS = 'MS',
+  /** Malay (Brunei) */
   MS_BN = 'MS_BN',
+  /** Malay (Indonesia) */
   MS_ID = 'MS_ID',
+  /** Malay (Malaysia) */
   MS_MY = 'MS_MY',
+  /** Malay (Singapore) */
   MS_SG = 'MS_SG',
+  /** Maltese */
   MT = 'MT',
+  /** Maltese (Malta) */
   MT_MT = 'MT_MT',
+  /** Mundang */
   MUA = 'MUA',
+  /** Mundang (Cameroon) */
   MUA_CM = 'MUA_CM',
+  /** Burmese */
   MY = 'MY',
+  /** Burmese (Myanmar (Burma)) */
   MY_MM = 'MY_MM',
+  /** Mazanderani */
   MZN = 'MZN',
+  /** Mazanderani (Iran) */
   MZN_IR = 'MZN_IR',
+  /** Nama */
   NAQ = 'NAQ',
+  /** Nama (Namibia) */
   NAQ_NA = 'NAQ_NA',
+  /** Norwegian Bokmål */
   NB = 'NB',
+  /** Norwegian Bokmål (Norway) */
   NB_NO = 'NB_NO',
+  /** Norwegian Bokmål (Svalbard & Jan Mayen) */
   NB_SJ = 'NB_SJ',
+  /** North Ndebele */
   ND = 'ND',
+  /** Low German */
   NDS = 'NDS',
+  /** Low German (Germany) */
   NDS_DE = 'NDS_DE',
+  /** Low German (Netherlands) */
   NDS_NL = 'NDS_NL',
+  /** North Ndebele (Zimbabwe) */
   ND_ZW = 'ND_ZW',
+  /** Nepali */
   NE = 'NE',
+  /** Nepali (India) */
   NE_IN = 'NE_IN',
+  /** Nepali (Nepal) */
   NE_NP = 'NE_NP',
+  /** Dutch */
   NL = 'NL',
+  /** Dutch (Aruba) */
   NL_AW = 'NL_AW',
+  /** Dutch (Belgium) */
   NL_BE = 'NL_BE',
+  /** Dutch (Caribbean Netherlands) */
   NL_BQ = 'NL_BQ',
+  /** Dutch (Curaçao) */
   NL_CW = 'NL_CW',
+  /** Dutch (Netherlands) */
   NL_NL = 'NL_NL',
+  /** Dutch (Suriname) */
   NL_SR = 'NL_SR',
+  /** Dutch (Sint Maarten) */
   NL_SX = 'NL_SX',
+  /** Kwasio */
   NMG = 'NMG',
+  /** Kwasio (Cameroon) */
   NMG_CM = 'NMG_CM',
+  /** Norwegian Nynorsk */
   NN = 'NN',
+  /** Ngiemboon */
   NNH = 'NNH',
+  /** Ngiemboon (Cameroon) */
   NNH_CM = 'NNH_CM',
+  /** Norwegian Nynorsk (Norway) */
   NN_NO = 'NN_NO',
+  /** Nuer */
   NUS = 'NUS',
+  /** Nuer (South Sudan) */
   NUS_SS = 'NUS_SS',
+  /** Nyankole */
   NYN = 'NYN',
+  /** Nyankole (Uganda) */
   NYN_UG = 'NYN_UG',
+  /** Oromo */
   OM = 'OM',
+  /** Oromo (Ethiopia) */
   OM_ET = 'OM_ET',
+  /** Oromo (Kenya) */
   OM_KE = 'OM_KE',
+  /** Odia */
   OR = 'OR',
+  /** Odia (India) */
   OR_IN = 'OR_IN',
+  /** Ossetic */
   OS = 'OS',
+  /** Ossetic (Georgia) */
   OS_GE = 'OS_GE',
+  /** Ossetic (Russia) */
   OS_RU = 'OS_RU',
+  /** Punjabi */
   PA = 'PA',
+  /** Punjabi (Arabic) */
   PA_ARAB = 'PA_ARAB',
+  /** Punjabi (Arabic, Pakistan) */
   PA_ARAB_PK = 'PA_ARAB_PK',
+  /** Punjabi (Gurmukhi) */
   PA_GURU = 'PA_GURU',
+  /** Punjabi (Gurmukhi, India) */
   PA_GURU_IN = 'PA_GURU_IN',
+  /** Nigerian Pidgin */
   PCM = 'PCM',
+  /** Nigerian Pidgin (Nigeria) */
   PCM_NG = 'PCM_NG',
+  /** Polish */
   PL = 'PL',
+  /** Polish (Poland) */
   PL_PL = 'PL_PL',
+  /** Prussian */
   PRG = 'PRG',
+  /** Pashto */
   PS = 'PS',
+  /** Pashto (Afghanistan) */
   PS_AF = 'PS_AF',
+  /** Pashto (Pakistan) */
   PS_PK = 'PS_PK',
+  /** Portuguese */
   PT = 'PT',
+  /** Portuguese (Angola) */
   PT_AO = 'PT_AO',
+  /** Portuguese (Brazil) */
   PT_BR = 'PT_BR',
+  /** Portuguese (Switzerland) */
   PT_CH = 'PT_CH',
+  /** Portuguese (Cape Verde) */
   PT_CV = 'PT_CV',
+  /** Portuguese (Equatorial Guinea) */
   PT_GQ = 'PT_GQ',
+  /** Portuguese (Guinea-Bissau) */
   PT_GW = 'PT_GW',
+  /** Portuguese (Luxembourg) */
   PT_LU = 'PT_LU',
+  /** Portuguese (Macao SAR China) */
   PT_MO = 'PT_MO',
+  /** Portuguese (Mozambique) */
   PT_MZ = 'PT_MZ',
+  /** Portuguese (Portugal) */
   PT_PT = 'PT_PT',
+  /** Portuguese (São Tomé & Príncipe) */
   PT_ST = 'PT_ST',
+  /** Portuguese (Timor-Leste) */
   PT_TL = 'PT_TL',
+  /** Quechua */
   QU = 'QU',
+  /** Quechua (Bolivia) */
   QU_BO = 'QU_BO',
+  /** Quechua (Ecuador) */
   QU_EC = 'QU_EC',
+  /** Quechua (Peru) */
   QU_PE = 'QU_PE',
+  /** Romansh */
   RM = 'RM',
+  /** Romansh (Switzerland) */
   RM_CH = 'RM_CH',
+  /** Rundi */
   RN = 'RN',
+  /** Rundi (Burundi) */
   RN_BI = 'RN_BI',
+  /** Romanian */
   RO = 'RO',
+  /** Rombo */
   ROF = 'ROF',
+  /** Rombo (Tanzania) */
   ROF_TZ = 'ROF_TZ',
+  /** Romanian (Moldova) */
   RO_MD = 'RO_MD',
+  /** Romanian (Romania) */
   RO_RO = 'RO_RO',
+  /** Russian */
   RU = 'RU',
+  /** Russian (Belarus) */
   RU_BY = 'RU_BY',
+  /** Russian (Kyrgyzstan) */
   RU_KG = 'RU_KG',
+  /** Russian (Kazakhstan) */
   RU_KZ = 'RU_KZ',
+  /** Russian (Moldova) */
   RU_MD = 'RU_MD',
+  /** Russian (Russia) */
   RU_RU = 'RU_RU',
+  /** Russian (Ukraine) */
   RU_UA = 'RU_UA',
+  /** Kinyarwanda */
   RW = 'RW',
+  /** Rwa */
   RWK = 'RWK',
+  /** Rwa (Tanzania) */
   RWK_TZ = 'RWK_TZ',
+  /** Kinyarwanda (Rwanda) */
   RW_RW = 'RW_RW',
+  /** Sakha */
   SAH = 'SAH',
+  /** Sakha (Russia) */
   SAH_RU = 'SAH_RU',
+  /** Samburu */
   SAQ = 'SAQ',
+  /** Samburu (Kenya) */
   SAQ_KE = 'SAQ_KE',
+  /** Santali */
   SAT = 'SAT',
+  /** Santali (Ol Chiki) */
   SAT_OLCK = 'SAT_OLCK',
+  /** Santali (Ol Chiki, India) */
   SAT_OLCK_IN = 'SAT_OLCK_IN',
+  /** Sangu */
   SBP = 'SBP',
+  /** Sangu (Tanzania) */
   SBP_TZ = 'SBP_TZ',
+  /** Sindhi */
   SD = 'SD',
+  /** Sindhi (Arabic) */
   SD_ARAB = 'SD_ARAB',
+  /** Sindhi (Arabic, Pakistan) */
   SD_ARAB_PK = 'SD_ARAB_PK',
+  /** Sindhi (Devanagari) */
   SD_DEVA = 'SD_DEVA',
+  /** Sindhi (Devanagari, India) */
   SD_DEVA_IN = 'SD_DEVA_IN',
+  /** Northern Sami */
   SE = 'SE',
+  /** Sena */
   SEH = 'SEH',
+  /** Sena (Mozambique) */
   SEH_MZ = 'SEH_MZ',
+  /** Koyraboro Senni */
   SES = 'SES',
+  /** Koyraboro Senni (Mali) */
   SES_ML = 'SES_ML',
+  /** Northern Sami (Finland) */
   SE_FI = 'SE_FI',
+  /** Northern Sami (Norway) */
   SE_NO = 'SE_NO',
+  /** Northern Sami (Sweden) */
   SE_SE = 'SE_SE',
+  /** Sango */
   SG = 'SG',
+  /** Sango (Central African Republic) */
   SG_CF = 'SG_CF',
+  /** Tachelhit */
   SHI = 'SHI',
+  /** Tachelhit (Latin) */
   SHI_LATN = 'SHI_LATN',
+  /** Tachelhit (Latin, Morocco) */
   SHI_LATN_MA = 'SHI_LATN_MA',
+  /** Tachelhit (Tifinagh) */
   SHI_TFNG = 'SHI_TFNG',
+  /** Tachelhit (Tifinagh, Morocco) */
   SHI_TFNG_MA = 'SHI_TFNG_MA',
+  /** Sinhala */
   SI = 'SI',
+  /** Sinhala (Sri Lanka) */
   SI_LK = 'SI_LK',
+  /** Slovak */
   SK = 'SK',
+  /** Slovak (Slovakia) */
   SK_SK = 'SK_SK',
+  /** Slovenian */
   SL = 'SL',
+  /** Slovenian (Slovenia) */
   SL_SI = 'SL_SI',
+  /** Inari Sami */
   SMN = 'SMN',
+  /** Inari Sami (Finland) */
   SMN_FI = 'SMN_FI',
+  /** Shona */
   SN = 'SN',
+  /** Shona (Zimbabwe) */
   SN_ZW = 'SN_ZW',
+  /** Somali */
   SO = 'SO',
+  /** Somali (Djibouti) */
   SO_DJ = 'SO_DJ',
+  /** Somali (Ethiopia) */
   SO_ET = 'SO_ET',
+  /** Somali (Kenya) */
   SO_KE = 'SO_KE',
+  /** Somali (Somalia) */
   SO_SO = 'SO_SO',
+  /** Albanian */
   SQ = 'SQ',
+  /** Albanian (Albania) */
   SQ_AL = 'SQ_AL',
+  /** Albanian (North Macedonia) */
   SQ_MK = 'SQ_MK',
+  /** Albanian (Kosovo) */
   SQ_XK = 'SQ_XK',
+  /** Serbian */
   SR = 'SR',
+  /** Serbian (Cyrillic) */
   SR_CYRL = 'SR_CYRL',
+  /** Serbian (Cyrillic, Bosnia & Herzegovina) */
   SR_CYRL_BA = 'SR_CYRL_BA',
+  /** Serbian (Cyrillic, Montenegro) */
   SR_CYRL_ME = 'SR_CYRL_ME',
+  /** Serbian (Cyrillic, Serbia) */
   SR_CYRL_RS = 'SR_CYRL_RS',
+  /** Serbian (Cyrillic, Kosovo) */
   SR_CYRL_XK = 'SR_CYRL_XK',
+  /** Serbian (Latin) */
   SR_LATN = 'SR_LATN',
+  /** Serbian (Latin, Bosnia & Herzegovina) */
   SR_LATN_BA = 'SR_LATN_BA',
+  /** Serbian (Latin, Montenegro) */
   SR_LATN_ME = 'SR_LATN_ME',
+  /** Serbian (Latin, Serbia) */
   SR_LATN_RS = 'SR_LATN_RS',
+  /** Serbian (Latin, Kosovo) */
   SR_LATN_XK = 'SR_LATN_XK',
+  /** Sundanese */
   SU = 'SU',
+  /** Sundanese (Latin) */
   SU_LATN = 'SU_LATN',
+  /** Sundanese (Latin, Indonesia) */
   SU_LATN_ID = 'SU_LATN_ID',
+  /** Swedish */
   SV = 'SV',
+  /** Swedish (Åland Islands) */
   SV_AX = 'SV_AX',
+  /** Swedish (Finland) */
   SV_FI = 'SV_FI',
+  /** Swedish (Sweden) */
   SV_SE = 'SV_SE',
+  /** Swahili */
   SW = 'SW',
+  /** Swahili (Congo - Kinshasa) */
   SW_CD = 'SW_CD',
+  /** Swahili (Kenya) */
   SW_KE = 'SW_KE',
+  /** Swahili (Tanzania) */
   SW_TZ = 'SW_TZ',
+  /** Swahili (Uganda) */
   SW_UG = 'SW_UG',
+  /** Tamil */
   TA = 'TA',
+  /** Tamil (India) */
   TA_IN = 'TA_IN',
+  /** Tamil (Sri Lanka) */
   TA_LK = 'TA_LK',
+  /** Tamil (Malaysia) */
   TA_MY = 'TA_MY',
+  /** Tamil (Singapore) */
   TA_SG = 'TA_SG',
+  /** Telugu */
   TE = 'TE',
+  /** Teso */
   TEO = 'TEO',
+  /** Teso (Kenya) */
   TEO_KE = 'TEO_KE',
+  /** Teso (Uganda) */
   TEO_UG = 'TEO_UG',
+  /** Telugu (India) */
   TE_IN = 'TE_IN',
+  /** Tajik */
   TG = 'TG',
+  /** Tajik (Tajikistan) */
   TG_TJ = 'TG_TJ',
+  /** Thai */
   TH = 'TH',
+  /** Thai (Thailand) */
   TH_TH = 'TH_TH',
+  /** Tigrinya */
   TI = 'TI',
+  /** Tigrinya (Eritrea) */
   TI_ER = 'TI_ER',
+  /** Tigrinya (Ethiopia) */
   TI_ET = 'TI_ET',
+  /** Turkmen */
   TK = 'TK',
+  /** Turkmen (Turkmenistan) */
   TK_TM = 'TK_TM',
+  /** Tongan */
   TO = 'TO',
+  /** Tongan (Tonga) */
   TO_TO = 'TO_TO',
+  /** Turkish */
   TR = 'TR',
+  /** Turkish (Cyprus) */
   TR_CY = 'TR_CY',
+  /** Turkish (Turkey) */
   TR_TR = 'TR_TR',
+  /** Tatar */
   TT = 'TT',
+  /** Tatar (Russia) */
   TT_RU = 'TT_RU',
+  /** Tasawaq */
   TWQ = 'TWQ',
+  /** Tasawaq (Niger) */
   TWQ_NE = 'TWQ_NE',
+  /** Central Atlas Tamazight */
   TZM = 'TZM',
+  /** Central Atlas Tamazight (Morocco) */
   TZM_MA = 'TZM_MA',
+  /** Uyghur */
   UG = 'UG',
+  /** Uyghur (China) */
   UG_CN = 'UG_CN',
+  /** Ukrainian */
   UK = 'UK',
+  /** Ukrainian (Ukraine) */
   UK_UA = 'UK_UA',
+  /** Urdu */
   UR = 'UR',
+  /** Urdu (India) */
   UR_IN = 'UR_IN',
+  /** Urdu (Pakistan) */
   UR_PK = 'UR_PK',
+  /** Uzbek */
   UZ = 'UZ',
+  /** Uzbek (Arabic) */
   UZ_ARAB = 'UZ_ARAB',
+  /** Uzbek (Arabic, Afghanistan) */
   UZ_ARAB_AF = 'UZ_ARAB_AF',
+  /** Uzbek (Cyrillic) */
   UZ_CYRL = 'UZ_CYRL',
+  /** Uzbek (Cyrillic, Uzbekistan) */
   UZ_CYRL_UZ = 'UZ_CYRL_UZ',
+  /** Uzbek (Latin) */
   UZ_LATN = 'UZ_LATN',
+  /** Uzbek (Latin, Uzbekistan) */
   UZ_LATN_UZ = 'UZ_LATN_UZ',
+  /** Vai */
   VAI = 'VAI',
+  /** Vai (Latin) */
   VAI_LATN = 'VAI_LATN',
+  /** Vai (Latin, Liberia) */
   VAI_LATN_LR = 'VAI_LATN_LR',
+  /** Vai (Vai) */
   VAI_VAII = 'VAI_VAII',
+  /** Vai (Vai, Liberia) */
   VAI_VAII_LR = 'VAI_VAII_LR',
+  /** Vietnamese */
   VI = 'VI',
+  /** Vietnamese (Vietnam) */
   VI_VN = 'VI_VN',
+  /** Volapük */
   VO = 'VO',
+  /** Vunjo */
   VUN = 'VUN',
+  /** Vunjo (Tanzania) */
   VUN_TZ = 'VUN_TZ',
+  /** Walser */
   WAE = 'WAE',
+  /** Walser (Switzerland) */
   WAE_CH = 'WAE_CH',
+  /** Wolof */
   WO = 'WO',
+  /** Wolof (Senegal) */
   WO_SN = 'WO_SN',
+  /** Xhosa */
   XH = 'XH',
+  /** Xhosa (South Africa) */
   XH_ZA = 'XH_ZA',
+  /** Soga */
   XOG = 'XOG',
+  /** Soga (Uganda) */
   XOG_UG = 'XOG_UG',
+  /** Yangben */
   YAV = 'YAV',
+  /** Yangben (Cameroon) */
   YAV_CM = 'YAV_CM',
+  /** Yiddish */
   YI = 'YI',
+  /** Yoruba */
   YO = 'YO',
+  /** Yoruba (Benin) */
   YO_BJ = 'YO_BJ',
+  /** Yoruba (Nigeria) */
   YO_NG = 'YO_NG',
+  /** Cantonese */
   YUE = 'YUE',
+  /** Cantonese (Simplified) */
   YUE_HANS = 'YUE_HANS',
+  /** Cantonese (Simplified, China) */
   YUE_HANS_CN = 'YUE_HANS_CN',
+  /** Cantonese (Traditional) */
   YUE_HANT = 'YUE_HANT',
+  /** Cantonese (Traditional, Hong Kong SAR China) */
   YUE_HANT_HK = 'YUE_HANT_HK',
+  /** Standard Moroccan Tamazight */
   ZGH = 'ZGH',
+  /** Standard Moroccan Tamazight (Morocco) */
   ZGH_MA = 'ZGH_MA',
+  /** Chinese */
   ZH = 'ZH',
+  /** Chinese (Simplified) */
   ZH_HANS = 'ZH_HANS',
+  /** Chinese (Simplified, China) */
   ZH_HANS_CN = 'ZH_HANS_CN',
+  /** Chinese (Simplified, Hong Kong SAR China) */
   ZH_HANS_HK = 'ZH_HANS_HK',
+  /** Chinese (Simplified, Macao SAR China) */
   ZH_HANS_MO = 'ZH_HANS_MO',
+  /** Chinese (Simplified, Singapore) */
   ZH_HANS_SG = 'ZH_HANS_SG',
+  /** Chinese (Traditional) */
   ZH_HANT = 'ZH_HANT',
+  /** Chinese (Traditional, Hong Kong SAR China) */
   ZH_HANT_HK = 'ZH_HANT_HK',
+  /** Chinese (Traditional, Macao SAR China) */
   ZH_HANT_MO = 'ZH_HANT_MO',
+  /** Chinese (Traditional, Taiwan) */
   ZH_HANT_TW = 'ZH_HANT_TW',
+  /** Zulu */
   ZU = 'ZU',
+  /** Zulu (South Africa) */
   ZU_ZA = 'ZU_ZA'
 }
 
@@ -5053,7 +5909,7 @@ export type PageTypeUpdateInput = {
   addAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Name of the page type. */
   name?: InputMaybe<Scalars['String']>;
-  /** List of attribute IDs to be unassigned from the page type. */
+  /** List of attribute IDs to be assigned to the page type. */
   removeAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Page type slug. */
   slug?: InputMaybe<Scalars['String']>;
@@ -5915,7 +6771,6 @@ export enum ProductTypeEnum {
 }
 
 export type ProductTypeFilterInput = {
-  /** @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting. */
   configurable?: InputMaybe<ProductTypeConfigurable>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
@@ -5926,10 +6781,7 @@ export type ProductTypeFilterInput = {
 };
 
 export type ProductTypeInput = {
-  /**
-   * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
-   * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
-   */
+  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
   /** Determines if products are digital. */
   isDigital?: InputMaybe<Scalars['Boolean']>;
@@ -8906,7 +9758,7 @@ export type AttributeUpdateMutationVariables = Exact<{
 }>;
 
 
-export type AttributeUpdateMutation = { __typename: 'Mutation', attributeUpdate: { __typename: 'AttributeUpdate', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
+export type AttributeUpdateMutation = { __typename: 'Mutation', attributeUpdate: { __typename: 'AttributeUpdate', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeValueDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -8972,7 +9824,7 @@ export type AttributeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type AttributeListQueryVariables = Exact<{
   filter?: InputMaybe<AttributeFilterInput>;
@@ -8984,7 +9836,7 @@ export type AttributeListQueryVariables = Exact<{
 }>;
 
 
-export type AttributeListQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type AttributeListQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type RequestPasswordResetMutationVariables = Exact<{
   email: Scalars['String'];
@@ -9237,7 +10089,7 @@ export type _GetDynamicLeftOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _GetDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null } }> } | null };
+export type _GetDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null } }> } | null };
 
 export type _GetChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9290,7 +10142,7 @@ export type _SearchAttributeOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchAttributeOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string, originalSlug: string | null } }> } | null } }> } | null };
+export type _SearchAttributeOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string, originalSlug: string | null } }> } | null } }> } | null };
 
 export type _GetAttributeChoicesQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -9960,7 +10812,7 @@ export type InstalledAppsListQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type EventDeliveryQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -10067,19 +10919,19 @@ export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{
 
 export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
 
-export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }>, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
+export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 
 export type AttributeValueFragment = { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
 export type AttributeValueDetailsFragment = { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null };
 
-export type AttributeFragment = { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null };
+export type AttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null };
 
-export type AttributeDetailsFragment = { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
+export type AttributeDetailsFragment = { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
 
 export type AttributeValueListFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> };
 
-export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, name: string, slug: string };
+export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null };
 
 export type UserPermissionFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string };
 
@@ -10447,15 +11299,15 @@ export type PageInfoFragment = { __typename: 'PageInfo', endCursor: string | nul
 
 export type PageTypeFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null };
 
-export type PageTypeDetailsFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type PageTypeDetailsFragment = { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type PageFragment = { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string } };
 
-export type PageSelectedAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
+export type PageSelectedAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
 
-export type PageAttributesFragment = { __typename: 'Page', attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } };
+export type PageAttributesFragment = { __typename: 'Page', attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } };
 
-export type PageDetailsFragment = { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type PageDetailsFragment = { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type PermissionGroupFragment = { __typename: 'Group', id: string, name: string, userCanManage: boolean, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string }> | null };
 
@@ -10479,7 +11331,7 @@ export type PaymentGatewayFragment = { __typename: 'PaymentGateway', name: strin
 
 export type ProductTypeFragment = { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, taxClass: { __typename: 'TaxClass', id: string, name: string } | null };
 
-export type ProductTypeDetailsFragment = { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type ProductTypeDetailsFragment = { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type StockFragment = { __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } };
 
@@ -10499,17 +11351,17 @@ export type ChannelListingProductVariantFragment = { __typename: 'ProductVariant
 
 export type ProductWithChannelListingsFragment = { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, category?: { __typename: 'Category', id: string, name: string } | null, collections?: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null };
 
-export type ProductVariantAttributesFragment = { __typename: 'Product', id: string, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, productType: { __typename: 'ProductType', id: string, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
+export type ProductVariantAttributesFragment = { __typename: 'Product', id: string, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, productType: { __typename: 'ProductType', id: string, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null };
 
-export type ProductDetailsVariantFragment = { __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null };
+export type ProductDetailsVariantFragment = { __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null };
 
-export type ProductFragment = { __typename: 'Product', name: string, slug: string, description: any | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, isAvailable: boolean | null, id: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, category: { __typename: 'Category', id: string, name: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string, slug: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type ProductFragment = { __typename: 'Product', name: string, slug: string, description: any | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, isAvailable: boolean | null, id: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, category: { __typename: 'Category', id: string, name: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string, slug: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
-export type VariantAttributeFragment = { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
+export type VariantAttributeFragment = { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null };
 
-export type SelectedVariantAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
+export type SelectedVariantAttributeFragment = { __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> };
 
-export type ProductVariantFragment = { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+export type ProductVariantFragment = { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type SearchProductFragment = { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string } }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null }> | null, collections: Array<{ __typename: 'Collection', id: string }> | null };
 
@@ -10583,9 +11435,9 @@ export type PageTranslatableFragment = { __typename: 'PageTranslatableContent', 
 
 export type AttributeChoicesTranslationFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> };
 
-export type AttributeTranslationFragment = { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null } | null };
+export type AttributeTranslationFragment = { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null } | null };
 
-export type AttributeTranslationDetailsFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> } | null } | null };
+export type AttributeTranslationDetailsFragment = { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> } | null } | null };
 
 export type MenuItemTranslationFragment = { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null };
 
@@ -10757,14 +11609,14 @@ export type PageTypeUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageTypeCreateMutationVariables = Exact<{
   input: PageTypeCreateInput;
 }>;
 
 
-export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type AssignPageAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10772,7 +11624,7 @@ export type AssignPageAttributeMutationVariables = Exact<{
 }>;
 
 
-export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UnassignPageAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10780,7 +11632,7 @@ export type UnassignPageAttributeMutationVariables = Exact<{
 }>;
 
 
-export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageTypeDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10802,7 +11654,7 @@ export type PageTypeAttributeReorderMutationVariables = Exact<{
 }>;
 
 
-export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageTypeListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -10821,7 +11673,7 @@ export type PageTypeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type PageCreateMutationVariables = Exact<{
   input: PageCreateInput;
@@ -10841,7 +11693,7 @@ export type PageUpdateMutationVariables = Exact<{
 }>;
 
 
-export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageRemoveMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10887,7 +11739,7 @@ export type PageDetailsQueryVariables = Exact<{
 }>;
 
 
-export type PageDetailsQuery = { __typename: 'Query', page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type PageDetailsQuery = { __typename: 'Query', page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type PageTypeQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10899,7 +11751,7 @@ export type PageTypeQueryVariables = Exact<{
 }>;
 
 
-export type PageTypeQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null };
+export type PageTypeQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null };
 
 export type PageCountQueryVariables = Exact<{
   filter?: InputMaybe<PageFilterInput>;
@@ -11430,7 +12282,7 @@ export type ProductTypeUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ProductTypeUpdateMutation = { __typename: 'Mutation', productTypeUpdate: { __typename: 'ProductTypeUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type ProductTypeUpdateMutation = { __typename: 'Mutation', productTypeUpdate: { __typename: 'ProductTypeUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type AssignProductAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11438,7 +12290,7 @@ export type AssignProductAttributeMutationVariables = Exact<{
 }>;
 
 
-export type AssignProductAttributeMutation = { __typename: 'Mutation', productAttributeAssign: { __typename: 'ProductAttributeAssign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type AssignProductAttributeMutation = { __typename: 'Mutation', productAttributeAssign: { __typename: 'ProductAttributeAssign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UnassignProductAttributeMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11446,14 +12298,14 @@ export type UnassignProductAttributeMutationVariables = Exact<{
 }>;
 
 
-export type UnassignProductAttributeMutation = { __typename: 'Mutation', productAttributeUnassign: { __typename: 'ProductAttributeUnassign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type UnassignProductAttributeMutation = { __typename: 'Mutation', productAttributeUnassign: { __typename: 'ProductAttributeUnassign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductTypeCreateMutationVariables = Exact<{
   input: ProductTypeInput;
 }>;
 
 
-export type ProductTypeCreateMutation = { __typename: 'Mutation', productTypeCreate: { __typename: 'ProductTypeCreate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type ProductTypeCreateMutation = { __typename: 'Mutation', productTypeCreate: { __typename: 'ProductTypeCreate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductTypeAttributeReorderMutationVariables = Exact<{
   move: ReorderInput;
@@ -11462,7 +12314,7 @@ export type ProductTypeAttributeReorderMutationVariables = Exact<{
 }>;
 
 
-export type ProductTypeAttributeReorderMutation = { __typename: 'Mutation', productTypeReorderAttributes: { __typename: 'ProductTypeReorderAttributes', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type ProductTypeAttributeReorderMutation = { __typename: 'Mutation', productTypeReorderAttributes: { __typename: 'ProductTypeReorderAttributes', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductAttributeAssignmentUpdateMutationVariables = Exact<{
   operations: Array<ProductAttributeAssignmentUpdateInput> | ProductAttributeAssignmentUpdateInput;
@@ -11470,7 +12322,7 @@ export type ProductAttributeAssignmentUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ProductAttributeAssignmentUpdateMutation = { __typename: 'Mutation', productAttributeAssignmentUpdate: { __typename: 'ProductAttributeAssignmentUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null, attributes: Array<string> | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type ProductAttributeAssignmentUpdateMutation = { __typename: 'Mutation', productAttributeAssignmentUpdate: { __typename: 'ProductAttributeAssignmentUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null, attributes: Array<string> | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductTypeListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -11489,7 +12341,7 @@ export type ProductTypeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ProductTypeDetailsQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null } };
+export type ProductTypeDetailsQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null } };
 
 export type ProductTypeCreateDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -11570,7 +12422,7 @@ export type VariantUpdateMutationVariables = Exact<{
 }>;
 
 
-export type VariantUpdateMutation = { __typename: 'Mutation', productVariantStocksDelete: { __typename: 'ProductVariantStocksDelete', errors: Array<{ __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null } | null } | null, productVariantStocksCreate: { __typename: 'ProductVariantStocksCreate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null } | null } | null, productVariantStocksUpdate: { __typename: 'ProductVariantStocksUpdate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, productVariantUpdate: { __typename: 'ProductVariantUpdate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type VariantUpdateMutation = { __typename: 'Mutation', productVariantStocksDelete: { __typename: 'ProductVariantStocksDelete', errors: Array<{ __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null } | null } | null, productVariantStocksCreate: { __typename: 'ProductVariantStocksCreate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null } | null } | null, productVariantStocksUpdate: { __typename: 'ProductVariantStocksUpdate', errors: Array<{ __typename: 'BulkStockError', code: ProductErrorCode, field: string | null, index: number | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, productVariantUpdate: { __typename: 'ProductVariantUpdate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type VariantCreateMutationVariables = Exact<{
   input: ProductVariantCreateInput;
@@ -11581,7 +12433,7 @@ export type VariantCreateMutationVariables = Exact<{
 }>;
 
 
-export type VariantCreateMutation = { __typename: 'Mutation', productVariantCreate: { __typename: 'ProductVariantCreate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+export type VariantCreateMutation = { __typename: 'Mutation', productVariantCreate: { __typename: 'ProductVariantCreate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductMediaDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11721,7 +12573,7 @@ export type ProductDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ProductDetailsQuery = { __typename: 'Query', product: { __typename: 'Product', name: string, slug: string, description: any | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, isAvailable: boolean | null, id: string, category: { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string, slug: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type ProductDetailsQuery = { __typename: 'Query', product: { __typename: 'Product', name: string, slug: string, description: any | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, isAvailable: boolean | null, id: string, category: { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string, slug: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type ProductTypeQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11733,7 +12585,7 @@ export type ProductTypeQueryVariables = Exact<{
 }>;
 
 
-export type ProductTypeQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, productAttributes: Array<{ __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null } | null };
+export type ProductTypeQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, productAttributes: Array<{ __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null } | null };
 
 export type ProductVariantDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11744,7 +12596,7 @@ export type ProductVariantDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ProductVariantDetailsQuery = { __typename: 'Query', productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+export type ProductVariantDetailsQuery = { __typename: 'Query', productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: any }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: any }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type ProductVariantCreateDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11755,7 +12607,7 @@ export type ProductVariantCreateDataQueryVariables = Exact<{
 }>;
 
 
-export type ProductVariantCreateDataQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, media: Array<{ __typename: 'ProductMedia', id: string, sortOrder: number | null, url: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, thumbnail: { __typename: 'Image', url: string } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType }> | null }> | null } | null };
+export type ProductVariantCreateDataQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, media: Array<{ __typename: 'ProductMedia', id: string, sortOrder: number | null, url: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, thumbnail: { __typename: 'Image', url: string } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType }> | null }> | null } | null };
 
 export type ProductMediaByIdQueryVariables = Exact<{
   productId: Scalars['ID'];
@@ -11772,7 +12624,7 @@ export type GridAttributesQueryVariables = Exact<{
 }>;
 
 
-export type GridAttributesQuery = { __typename: 'Query', availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }> } | null };
+export type GridAttributesQuery = { __typename: 'Query', availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }> } | null };
 
 export type AvailableColumnAttributesQueryVariables = Exact<{
   search: Scalars['String'];
@@ -11784,7 +12636,7 @@ export type AvailableColumnAttributesQueryVariables = Exact<{
 }>;
 
 
-export type AvailableColumnAttributesQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type AvailableColumnAttributesQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type GridWarehousesQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
@@ -11842,7 +12694,7 @@ export type SearchAttributesQueryVariables = Exact<{
 }>;
 
 
-export type SearchAttributesQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type SearchAttributesQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchAttributeValuesQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']>;
@@ -11861,7 +12713,7 @@ export type SearchAvailableInGridAttributesQueryVariables = Exact<{
 }>;
 
 
-export type SearchAvailableInGridAttributesQuery = { __typename: 'Query', availableInGrid: { __typename: 'AttributeCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type SearchAvailableInGridAttributesQuery = { __typename: 'Query', availableInGrid: { __typename: 'AttributeCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchAvailablePageAttributesQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11871,7 +12723,7 @@ export type SearchAvailablePageAttributesQueryVariables = Exact<{
 }>;
 
 
-export type SearchAvailablePageAttributesQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+export type SearchAvailablePageAttributesQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type SearchAvailableProductAttributesQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11881,7 +12733,7 @@ export type SearchAvailableProductAttributesQueryVariables = Exact<{
 }>;
 
 
-export type SearchAvailableProductAttributesQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+export type SearchAvailableProductAttributesQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type SearchCategoriesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -12503,7 +13355,7 @@ export type UpdateAttributeTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAttributeTranslationsMutation = { __typename: 'Mutation', attributeTranslate: { __typename: 'AttributeTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attribute: { __typename: 'Attribute', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null } | null } | null };
+export type UpdateAttributeTranslationsMutation = { __typename: 'Mutation', attributeTranslate: { __typename: 'AttributeTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attribute: { __typename: 'Attribute', id: string, name: string | null, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null } | null } | null };
 
 export type UpdateAttributeValueTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12607,7 +13459,7 @@ export type AttributeTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type AttributeTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null } | null } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type AttributeTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null } | null } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ShippingMethodTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -12704,7 +13556,7 @@ export type AttributeTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type AttributeTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> } | null } | null } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type AttributeTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> } | null } | null } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type ShippingMethodTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
