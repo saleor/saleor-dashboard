@@ -3386,6 +3386,7 @@ export const ShopFragmentDoc = gql`
   reserveStockDurationAuthenticatedUser
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
+  useLegacyUpdateWebhookEmission
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
