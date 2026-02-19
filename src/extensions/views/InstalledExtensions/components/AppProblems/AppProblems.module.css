@@ -1,0 +1,270 @@
+.problemsContainer {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin: 18px 63px;
+  overflow: hidden;
+}
+
+.severityError {
+  border-left: 3px solid #dc2626;
+}
+
+.severityWarning {
+  border-left: 3px solid #d97706;
+}
+
+.severityDismissed {
+  border-left: 3px solid #d1d5db;
+}
+
+.problemHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
+}
+
+.errorIcon {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.criticalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid #fecaca;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.circuitBreakerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.customBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.webhookBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.problemsBadgeError {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.problemsBadgeWarning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #d97706;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.problemRow {
+  padding: 8px 16px 8px 16px;
+}
+
+.problemRow:last-child {
+  padding-bottom: 14px;
+}
+
+.problemRowDismissed {
+  opacity: 0.5;
+}
+
+.problemRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.forceClearButton:hover {
+  color: #374151;
+  border-color: #9ca3af;
+}
+
+.timestamp {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.timestampHoverable {
+  cursor: default;
+  border-bottom: 1px dotted #9ca3af;
+}
+
+.timestampTooltip {
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.dismissedLabel {
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.problemMessage {
+  font-size: 14px;
+  color: #111827;
+}
+
+.showMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 8px 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.showMoreButton:hover {
+  color: #374151;
+}
+
+.groupDivider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 4px 16px;
+}
+
+.groupActionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.groupActionLink:hover {
+  text-decoration: underline;
+}
+
+.popupProblemsList {
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: 0 24px 24px;
+}
+
+.headerBadgeError {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.headerBadgeWarning {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  border: 1px solid #fde68a;
+  line-height: 1.4;
+  white-space: nowrap;
+}

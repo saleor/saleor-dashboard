@@ -198,6 +198,20 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  problems {
+    __typename
+    key
+    message
+    createdAt
+    count
+    isCritical
+    dismissed {
+      by
+      userEmail
+    }
+    updatedAt
+    id
+  }
   brand {
     logo {
       default(format: WEBP, size: 64)
@@ -9258,6 +9272,41 @@ export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+export const AppProblemDismissDocument = gql`
+    mutation appProblemDismiss($input: AppProblemDismissInput!) {
+  appProblemDismiss(input: $input) {
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type AppProblemDismissMutationFn = Apollo.MutationFunction<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
+
+/**
+ * __useAppProblemDismissMutation__
+ *
+ * To run a mutation, you first call `useAppProblemDismissMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppProblemDismissMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appProblemDismissMutation, { data, loading, error }] = useAppProblemDismissMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppProblemDismissMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>(AppProblemDismissDocument, options);
+      }
+export type AppProblemDismissMutationHookResult = ReturnType<typeof useAppProblemDismissMutation>;
+export type AppProblemDismissMutationResult = Apollo.MutationResult<Types.AppProblemDismissMutation>;
+export type AppProblemDismissMutationOptions = Apollo.BaseMutationOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
 export const AppUpdatePermissionsDocument = gql`
     mutation AppUpdatePermissions($id: ID!, $permissions: [PermissionEnum!]!) {
   appUpdate(id: $id, input: {permissions: $permissions}) {

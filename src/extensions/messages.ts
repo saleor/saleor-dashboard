@@ -338,6 +338,113 @@ export const messages = defineMessages({
   },
 });
 
+export const problemMessages = defineMessages({
+  problemCount: {
+    defaultMessage: "{count, plural, one {{count} problem} other {{count} problems}}",
+    id: "QKrtDC",
+  },
+  errorCount: {
+    defaultMessage: "{count, plural, one {{count} error} other {{count} errors}}",
+    id: "ectAk7",
+  },
+  includingCritical: {
+    defaultMessage: "including {count} critical",
+    id: "TEOp+x",
+  },
+  showMoreProblems: {
+    defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",
+    id: "tdcGPK",
+  },
+  showMoreIncludingActiveAndCritical: {
+    defaultMessage: ", including {active} active and {critical} critical",
+    id: "1aAwu4",
+  },
+  showMoreIncludingActive: {
+    defaultMessage: ", including {active} active",
+    id: "CyYBH5",
+  },
+  showMoreIncludingCritical: {
+    defaultMessage: ", including {critical} critical",
+    id: "3OiSHe",
+  },
+  allProblems: {
+    defaultMessage: "All problems ({count})",
+    id: "mI+leH",
+  },
+  circuitBreakerType: {
+    defaultMessage: "CircuitBreaker",
+    id: "OYWn0V",
+  },
+  customType: {
+    defaultMessage: "App",
+    id: "2rUVsU",
+  },
+  customTypeTooltip: {
+    defaultMessage: "This message comes from the app",
+    id: "lRtZ2L",
+  },
+  webhookDeliveryType: {
+    defaultMessage: "Webhook delivery",
+    id: "MGxwn/",
+  },
+  checkWebhooks: {
+    defaultMessage: "Check webhooks",
+    id: "Pv6Tq8",
+  },
+  openTheApp: {
+    defaultMessage: "Open the app",
+    id: "lN6B54",
+  },
+  forceClear: {
+    defaultMessage: "Dismiss",
+    id: "TDaF6J",
+  },
+  forceClearTooltip: {
+    defaultMessage: "Force clear this error. Use if you know what you are doing",
+    id: "pkS9/B",
+  },
+  clearAllAppProblems: {
+    defaultMessage: "Dismiss all problems raised by the app",
+    id: "PUxbpJ",
+  },
+  openAppProblems: {
+    defaultMessage: "Open app problems",
+    id: "xEUTvE",
+  },
+  localTime: {
+    defaultMessage: "Local: {time}",
+    id: "Vyv8xK",
+  },
+  utcTime: {
+    defaultMessage: "UTC: {time}",
+    id: "LZIpXn",
+  },
+  startedAt: {
+    defaultMessage: "Started at",
+    id: "LaIqAi",
+  },
+  lastOccurredAt: {
+    defaultMessage: "last occurred at",
+    id: "wPgEIA",
+  },
+  dismissedByUser: {
+    defaultMessage: "Dismissed by {email}",
+    id: "8LqsLj",
+  },
+  dismissedByApp: {
+    defaultMessage: "Dismissed by app",
+    id: "N+jVKe",
+  },
+  dismissed: {
+    defaultMessage: "Dismissed",
+    id: "1MnSfo",
+  },
+  critical: {
+    defaultMessage: "Critical",
+    id: "2pzTGC",
+  },
+});
+
 export const appManifestErrorMessages = defineMessages({
   invalidManifest: {
     // AppErrorCode.INVALID
