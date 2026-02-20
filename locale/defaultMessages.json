@@ -6910,6 +6910,10 @@
     "context": "Taxes section title",
     "string": "Channels"
   },
+  "b2qX/b": {
+    "context": "search gift card placeholder",
+    "string": "Search Gift Cards"
+  },
   "b6L9n7": {
     "context": "voucher is active until date",
     "string": "Ends"
@@ -8287,10 +8291,6 @@
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
-  },
-  "jY80Gs": {
-    "context": "search gift card placeholder",
-    "string": "Search by code, e.g {exampleGiftCardCode}"
   },
   "ja+tNj": {
     "string": "requests access to new permissions."
