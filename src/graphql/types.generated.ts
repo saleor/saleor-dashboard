@@ -10710,6 +10710,7 @@ export type GiftCardListQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<GiftCardFilterInput>;
   sort?: InputMaybe<GiftCardSortingInput>;
+  search?: InputMaybe<Scalars['String']>;
 }>;
 
 
