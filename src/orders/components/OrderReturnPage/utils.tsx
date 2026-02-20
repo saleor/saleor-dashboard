@@ -150,6 +150,25 @@ export function getReplacementDataFromItems(itemsSelections: FormsetReplacementD
   };
 }
 
+export type CanGrantRefund =
+  | { value: false; reason: MessageDescriptor }
+  | { value: true; reason: null };
+
+export const canGrantRefundDuringReturn = ({
+  refundReasonConfigured,
+}: {
+  refundReasonConfigured: boolean | undefined;
+}): CanGrantRefund => {
+  if (refundReasonConfigured) {
+    return {
+      value: false,
+      reason: submitCardMessages.cantGrantRefundReasonRequired,
+    };
+  }
+
+  return { value: true, reason: null };
+};
+
 export type CanSendRefund =
   | { value: false; reason: MessageDescriptor }
   | { value: true; reason: null };

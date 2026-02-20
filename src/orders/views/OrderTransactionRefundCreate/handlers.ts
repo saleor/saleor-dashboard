@@ -87,6 +87,7 @@ export const prepareRefundAddLines = ({
       acc.push({
         quantity: line.quantity,
         reason: line.reason,
+        reasonReference: line.reasonReference || undefined,
         id: data.order!.lines[ix].id,
       });
     }

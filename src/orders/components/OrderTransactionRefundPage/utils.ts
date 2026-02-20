@@ -102,16 +102,22 @@ export const handleLinesToRefundChange = ({
 
 export const handleReasonChange = ({
   reason,
+  reasonReference,
   index,
   linesToRefund,
   refundFieldsUpdate,
 }: {
   reason: string;
+  reasonReference: string;
   index: number;
   linesToRefund: LineToRefund[];
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
 }) => {
-  refundFieldsUpdate(index, { quantity: linesToRefund[index].quantity, reason });
+  refundFieldsUpdate(index, {
+    quantity: linesToRefund[index].quantity,
+    reason,
+    reasonReference,
+  });
 };
 
 const roundToTwoDecimals = (num: number) => {

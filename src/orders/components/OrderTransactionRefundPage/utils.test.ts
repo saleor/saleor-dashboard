@@ -92,6 +92,7 @@ describe("useRecalculateTotalAmount", () => {
           transactionId: "",
           includeShipping: true,
           reason: "",
+          reasonReference: "",
         } as OrderTransactionRefundPageFormData,
       }),
     );
@@ -113,6 +114,7 @@ describe("useRecalculateTotalAmount", () => {
           row: 0,
           quantity: 2,
           reason: "",
+          reasonReference: "",
         },
       ],
       isFormDirty: true,
@@ -135,6 +137,7 @@ describe("useRecalculateTotalAmount", () => {
           transactionId: "",
           includeShipping: true,
           reason: "",
+          reasonReference: "",
         } as OrderTransactionRefundPageFormData,
       }),
     );
@@ -150,6 +153,7 @@ describe("useRecalculateTotalAmount", () => {
           row: 0,
           quantity: 2,
           reason: "",
+          reasonReference: "",
         },
       ],
       isFormDirty: true,
@@ -171,6 +175,7 @@ describe("useRecalculateTotalAmount", () => {
           transactionId: "",
           includeShipping: true,
           reason: "",
+          reasonReference: "",
         } as OrderTransactionRefundPageFormData,
       }),
     );
@@ -186,6 +191,7 @@ describe("useRecalculateTotalAmount", () => {
           row: 0,
           quantity: 2,
           reason: "",
+          reasonReference: "",
         },
       ],
       isFormDirty: true,
@@ -323,10 +329,12 @@ describe("getRefundEditOrderLinesToRefund", () => {
       {
         quantity: 2,
         reason: "",
+        reasonReference: "",
       },
       {
         quantity: 3,
         reason: "",
+        reasonReference: "",
       },
     ]);
   });

@@ -55,4 +55,15 @@ export const submitCardMessages = defineMessages({
     id: "K1ycaD",
     description: "input label",
   },
+  cantGrantRefundReasonRequired: {
+    defaultMessage:
+      "Granted refund requires providing a reason. Create it on the dedicated refund page.",
+    id: "y4OlUy",
+    description: "tooltip, grant refund checkbox disabled when refund reason is configured",
+  },
+  grantRefundOnDedicatedPage: {
+    defaultMessage: "Create refund on the dedicated page",
+    id: "lThJtc",
+    description: "link below disabled grant refund checkbox",
+  },
 });

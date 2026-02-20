@@ -96,6 +96,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
       currency: "USD",
     },
     creator: null,
+    lineReasons: [],
     ...overrides,
   };
 };
@@ -159,6 +160,7 @@ describe("OrderRefundsViewModel", () => {
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         transactionEvents,
         grantedRefunds,
+        [],
       );
 
       // Assert
@@ -174,6 +176,7 @@ describe("OrderRefundsViewModel", () => {
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         transactionEvents,
         grantedRefunds,
+        [],
       );
 
       // Assert
@@ -202,6 +205,7 @@ describe("OrderRefundsViewModel", () => {
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         transactionEvents,
         grantedRefunds,
+        [],
       );
 
       // Assert
@@ -239,6 +243,7 @@ describe("OrderRefundsViewModel", () => {
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         [mockTransactionEvent, transactionEventAssociated],
         [grantedRefundWithEvent],
+        [],
       );
 
       // Assert
@@ -271,6 +276,7 @@ describe("OrderRefundsViewModel", () => {
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         [olderEvent, mockTransactionEvent],
         [newerRefund],
+        [],
       );
 
       // Assert
@@ -320,6 +326,7 @@ describe("OrderRefundsViewModel", () => {
       // Act
       const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         [unsupportedEvent, ...supportedEvents],
+        [],
         [],
       );
 
@@ -382,6 +389,7 @@ describe("OrderRefundsViewModel", () => {
       const results = OrderRefundsViewModel.prepareOrderRefundDisplayList(
         manualEvents,
         grantedRefunds,
+        [],
       );
 
       // For brevity, check only fields related to reason mapping
@@ -418,6 +426,114 @@ Array [
   },
 ]
 `);
+    });
+
+    it("should resolve line reasons with product info from order lines", () => {
+      // Arrange
+      const grantedRefund = createGrantedRefund({
+        lines: [
+          {
+            __typename: "OrderGrantedRefundLine",
+            id: "line-1",
+            quantity: 2,
+            reason: "Damaged item",
+            orderLine: { __typename: "OrderLine", id: "order-line-1" },
+            reasonReference: { __typename: "Page", id: "page-1", title: "Damaged" },
+          },
+          {
+            __typename: "OrderGrantedRefundLine",
+            id: "line-2",
+            quantity: 1,
+            reason: null,
+            orderLine: { __typename: "OrderLine", id: "order-line-2" },
+            reasonReference: null,
+          },
+        ],
+      });
+      const orderLines = [
+        {
+          id: "order-line-1",
+          productName: "T-Shirt",
+          thumbnail: { __typename: "Image" as const, url: "https://example.com/tshirt.jpg" },
+        },
+        {
+          id: "order-line-2",
+          productName: "Hat",
+          thumbnail: null,
+        },
+      ] as any;
+
+      // Act
+      const result = OrderRefundsViewModel.prepareOrderRefundDisplayList(
+        [],
+        [grantedRefund],
+        orderLines,
+      );
+
+      // Assert
+      expect(result[0].lineReasons).toStrictEqual([
+        {
+          id: "line-1",
+          productName: "T-Shirt",
+          thumbnailUrl: "https://example.com/tshirt.jpg",
+          quantity: 2,
+          reason: "Damaged item",
+          reasonType: "Damaged",
+        },
+        {
+          id: "line-2",
+          productName: "Hat",
+          thumbnailUrl: null,
+          quantity: 1,
+          reason: null,
+          reasonType: null,
+        },
+      ]);
+    });
+
+    it("should include all lines from granted refunds regardless of reason", () => {
+      // Arrange
+      const grantedRefund = createGrantedRefund({
+        lines: [
+          {
+            __typename: "OrderGrantedRefundLine",
+            id: "line-no-reason",
+            quantity: 3,
+            reason: null,
+            orderLine: { __typename: "OrderLine", id: "order-line-1" },
+            reasonReference: null,
+          },
+        ],
+      });
+
+      // Act
+      const result = OrderRefundsViewModel.prepareOrderRefundDisplayList([], [grantedRefund], []);
+
+      // Assert
+      expect(result[0].lineReasons).toHaveLength(1);
+      expect(result[0].lineReasons[0]).toStrictEqual({
+        id: "line-no-reason",
+        productName: "",
+        thumbnailUrl: null,
+        quantity: 3,
+        reason: null,
+        reasonType: null,
+      });
+    });
+
+    it("should have empty lineReasons for manual refunds", () => {
+      // Arrange
+      const manualEvent = createTransactionEvent({
+        id: "manual-1",
+        pspReference: "psp-manual-1",
+        type: TransactionEventTypeEnum.REFUND_SUCCESS,
+      });
+
+      // Act
+      const result = OrderRefundsViewModel.prepareOrderRefundDisplayList([manualEvent], [], []);
+
+      // Assert
+      expect(result[0].lineReasons).toStrictEqual([]);
     });
   });
 

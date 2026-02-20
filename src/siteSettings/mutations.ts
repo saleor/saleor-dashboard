@@ -56,3 +56,37 @@ export const refundReasonReferenceClear = gql`
     }
   }
 `;
+
+export const returnSettingsUpdate = gql`
+  mutation ReturnSettingsUpdate($returnSettingsInput: ReturnSettingsUpdateInput!) {
+    returnSettingsUpdate(input: $returnSettingsInput) {
+      errors {
+        code
+        message
+      }
+      returnSettings {
+        reasonReferenceType {
+          name
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const returnReasonReferenceClear = gql`
+  mutation ReturnReasonReferenceClear {
+    returnReasonReferenceClear {
+      returnSettings {
+        reasonReferenceType {
+          id
+          name
+        }
+      }
+      errors {
+        code
+        message
+      }
+    }
+  }
+`;

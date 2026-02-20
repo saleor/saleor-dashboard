@@ -10,6 +10,7 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { returnsSettingsPath } from "@dashboard/returnsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
@@ -87,6 +88,9 @@ const ConfigurationSection = lazy(() => import("./configuration"));
 const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
+);
+const ReturnsSettingsRoute = lazy(() =>
+  import("./returnsSettings/route").then(m => ({ default: m.ReturnsSettingsRoute })),
 );
 
 if (GTM_ID) {
@@ -272,6 +276,11 @@ const Routes = () => {
                     permissions={[PermissionEnum.MANAGE_SETTINGS]}
                     path={refundsSettingsPath}
                     component={RefundsSettingsRoute}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path={returnsSettingsPath}
+                    component={ReturnsSettingsRoute}
                   />
                   <SectionRoute path="/taxes" component={TaxesSection} />
                   <SectionRoute

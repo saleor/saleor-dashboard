@@ -17,6 +17,7 @@ interface OrderTransactionRefundTableProps {
   linesToRefund: LineToRefund[];
   refundFields: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">[];
   refundFieldsUpdate: UseFieldArrayUpdate<OrderTransactionRefundPageFormData, "linesToRefund">;
+  modelForRefundReasonRefId: string | null;
 }
 
 export interface OrderRefundTransactionDatagridError {
@@ -33,14 +34,16 @@ export const OrderTransactionRefundTable = ({
   linesToRefund,
   refundFields,
   refundFieldsUpdate,
+  modelForRefundReasonRefId,
 }: OrderTransactionRefundTableProps) => {
   return (
     <GridTable height="100%" paddingX={6}>
       <GridTable.Colgroup>
-        <GridTable.Col __width="45%" />
+        <GridTable.Col __width="30%" />
+        <GridTable.Col __width="15%" />
         <GridTable.Col __width="20%" />
-        <GridTable.Col __width="25%" />
-        <GridTable.Col __width="10%" />
+        <GridTable.Col __width="20%" />
+        <GridTable.Col __width="15%" />
       </GridTable.Colgroup>
       <GridTable.Body>
         {refundFields?.map((field, index) => {
@@ -70,6 +73,7 @@ export const OrderTransactionRefundTable = ({
               onChange={onChange}
               refundFieldsUpdate={refundFieldsUpdate}
               onEditReasonModal={onEditReasonModal}
+              modelForRefundReasonRefId={modelForRefundReasonRefId}
             />
           );
         })}

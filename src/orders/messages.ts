@@ -94,3 +94,18 @@ export const refundReasonSelectHelperMessages = defineMessages({
     id: "lLKEMH",
   }),
 });
+
+export const returnReasonSelectHelperMessages = defineMessages({
+  manageReasons: defineMessage({
+    defaultMessage: "Manage available return reasons",
+    id: "KDP2wG",
+  }),
+  enableReasonsInSettings: defineMessage({
+    defaultMessage: "Enable return reasons in settings",
+    id: "A+P3fU",
+  }),
+  noPermissionsHint: defineMessage({
+    defaultMessage: "Use return settings to configure available reasons (permissions required)",
+    id: "Z5AIVT",
+  }),
+});
