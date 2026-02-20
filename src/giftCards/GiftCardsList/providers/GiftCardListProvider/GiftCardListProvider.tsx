@@ -109,9 +109,9 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
       ...paginationState,
       filter: {
         ...filters,
-        code: params.query,
       },
       sort: getSortQueryVariables(params),
+      search: params.query,
     }),
     [params, settings.rowNumber, valueProvider.value],
   );

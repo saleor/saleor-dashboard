@@ -10561,7 +10561,7 @@ export type BulkDeleteGiftCardMutationHookResult = ReturnType<typeof useBulkDele
 export type BulkDeleteGiftCardMutationResult = Apollo.MutationResult<Types.BulkDeleteGiftCardMutation>;
 export type BulkDeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>;
 export const GiftCardListDocument = gql`
-    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput) {
+    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput, $search: String) {
   giftCards(
     first: $first
     after: $after
@@ -10569,6 +10569,7 @@ export const GiftCardListDocument = gql`
     last: $last
     filter: $filter
     sortBy: $sort
+    search: $search
   ) {
     edges {
       node {
@@ -10622,6 +10623,7 @@ ${MoneyFragmentDoc}`;
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      search: // value for 'search'
  *   },
  * });
  */
