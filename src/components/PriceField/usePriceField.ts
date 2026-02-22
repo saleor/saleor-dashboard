@@ -14,7 +14,7 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
 
   const handleChange: FormChange = e => {
     const rawValue = String(e.target.value ?? "");
-    const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces ?? 2);
+    const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
 
     onChange({
       target: {

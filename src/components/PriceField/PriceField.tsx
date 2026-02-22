@@ -2,6 +2,10 @@ import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
 
 import { usePriceField } from "./usePriceField";
 
+export interface PriceFieldChangeEvent {
+  target: { name: string; value: string | null };
+}
+
 export interface PriceFieldProps extends Omit<InputProps, "onChange"> {
   className?: string;
   currencySymbol?: string;
@@ -12,7 +16,7 @@ export interface PriceFieldProps extends Omit<InputProps, "onChange"> {
   name?: string;
   value?: string;
   required?: boolean;
-  onChange: (event: { target: { name: string; value: string | null } }) => void;
+  onChange: (event: PriceFieldChangeEvent) => void;
 }
 
 export const PriceField = ({

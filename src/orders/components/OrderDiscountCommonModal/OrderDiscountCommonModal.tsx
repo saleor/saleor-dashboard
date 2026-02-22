@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { PriceField } from "@dashboard/components/PriceField";
+import { PriceField, PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
@@ -134,7 +134,7 @@ const OrderDiscountCommonModal = ({
     },
   ];
   const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
-  const handleSetDiscountValue = (event: { target: { value: string | null } }) => {
+  const handleSetDiscountValue = (event: PriceFieldChangeEvent) => {
     const value = event.target.value ?? "";
 
     setValueErrorMsg(getErrorMessage(value));
