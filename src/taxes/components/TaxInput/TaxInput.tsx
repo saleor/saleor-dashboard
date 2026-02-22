@@ -35,7 +35,6 @@ const TaxInput = ({ placeholder, value, change }: TaxInputProps) => {
       value={value ?? ""}
       InputProps={{
         startAdornment: <InputAdornment position="start">%</InputAdornment>,
-        className: classes.hideSpinboxes,
       }}
       inputProps={{
         className: classes.inputPadding,
