@@ -7,7 +7,7 @@ on:
 jobs:
   prepare-variables:
     name: Prepare variables
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     outputs:
@@ -30,16 +30,46 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Check if tag should be tagged as "latest"
+        id: check-latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ github.ref_name }}
+        run: |
+          set -ux
+
+          # Only stable semver releases (e.g. 3.22.0) can be tagged as latest.
+          # Non-semver refs (branch names, PR refs) are not valid candidates to become latest.
+          if ! [[ "$CURRENT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Tag inferred from this run ('$CURRENT_TAG') is not a semver release - can't be tagged as latest."
+            echo "IS_LATEST=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          CURRENT_LATEST=$(gh api "/repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          HIGHEST=$( (echo "$CURRENT_LATEST"; echo "$CURRENT_TAG") | sort -V | tail -1)
+
+          echo "Selected: $CURRENT_TAG, Latest: $CURRENT_LATEST"
+
+          if [[ "$CURRENT_TAG" == "$HIGHEST" ]]; then
+            echo "IS_LATEST=true" >> $GITHUB_OUTPUT
+          else
+            echo "IS_LATEST=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Docker metadata
         id: metadata
         uses: docker/metadata-action@v5
         with:
           images: |
             ghcr.io/${{ steps.get-image-name.outputs.image_name }}
+          flavor: |
+            latest=false
           tags: |
             type=ref,event=branch
             type=pep440,pattern={{version}}
             type=pep440,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable=${{ steps.check-latest.outputs.IS_LATEST }}
           context: git
 
   build-push:
@@ -66,7 +96,7 @@ jobs:
 
   summary:
     needs: [prepare-variables, build-push]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -77,3 +107,30 @@ jobs:
         run: |
           echo "Tags: $tags"
           echo "Digest: $digest"
+
+  load-failure-secrets:
+    if: failure()
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Load secrets
+        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        id: load-secrets
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/DASHBOARD_BUILD_FAILURE_SLACK_WEBHOOK/password"
+
+  notify-failure:
+    if: failure()
+    needs: [prepare-variables, build-push, load-failure-secrets]
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    with:
+      custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version || github.ref_name }}*"
+      status: failure
+    secrets:
+      slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
