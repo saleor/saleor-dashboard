@@ -812,6 +812,7 @@ export type Allocation = Node & {
  *     within the channel
  *
  *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+ *
  */
 export type AllocationStrategyEnum =
   | 'PRIORITIZE_HIGH_STOCK'
@@ -896,6 +897,14 @@ export type App = Node & ObjectWithMetadata & {
   privateMetafield: Maybe<Scalars['String']>;
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields: Maybe<Scalars['Metadata']>;
+  /**
+   * List of problems associated with this app.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+   */
+  problems: Maybe<Array<AppProblem>>;
   /** Support page for the app. */
   supportUrl: Maybe<Scalars['String']>;
   /**
@@ -940,6 +949,12 @@ export type AppPrivateMetafieldsArgs = {
   keys: InputMaybe<Array<Scalars['String']>>;
 };
 
+
+/** Represents app data. */
+export type AppProblemsArgs = {
+  limit: InputMaybe<Scalars['PositiveInt']>;
+};
+
 /**
  * Activate the app.
  *
@@ -973,7 +988,7 @@ export type AppBrandLogo = {
 
 /** Represents the app's brand logo data. */
 export type AppBrandLogoDefaultArgs = {
-  format?: InputMaybe<IconThumbnailFormatEnum>;
+  format: InputMaybe<IconThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -1171,7 +1186,8 @@ export type AppExtensionCountableEdge = {
 export type AppExtensionFilterInput = {
   /**
    * DEPRECATED: Use `mountName` instead.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   mount: InputMaybe<Array<AppExtensionMountEnum>>;
   /**
@@ -1182,7 +1198,8 @@ export type AppExtensionFilterInput = {
   mountName: InputMaybe<Array<Scalars['String']>>;
   /**
    * DEPRECATED: Use `targetName` instead.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   target: InputMaybe<AppExtensionTargetEnum>;
   /**
@@ -1273,6 +1290,7 @@ export type AppExtensionPossibleOptions = AppExtensionOptionsNewTab | AppExtensi
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
+ *
  */
 export type AppExtensionTargetEnum =
   | 'APP_PAGE'
@@ -1386,7 +1404,7 @@ export type AppManifestBrandLogo = {
 
 /** Represents the app's manifest brand data. */
 export type AppManifestBrandLogoDefaultArgs = {
-  format?: InputMaybe<IconThumbnailFormatEnum>;
+  format: InputMaybe<IconThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -1449,6 +1467,202 @@ export type AppManifestWebhook = {
   /** The url to receive the payload. */
   targetUrl: Scalars['String'];
 };
+
+/**
+ * Represents a problem associated with an app.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AppProblem = Node & {
+  __typename: 'AppProblem';
+  /**
+   * Number of occurrences.
+   *
+   * Added in Saleor 3.22.
+   */
+  count: Scalars['Int'];
+  /**
+   * The date and time when the problem was created.
+   *
+   * Added in Saleor 3.22.
+   */
+  createdAt: Scalars['DateTime'];
+  /**
+   * Dismissal information. Null if the problem has not been dismissed.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+   */
+  dismissed: Maybe<AppProblemDismissed>;
+  /**
+   * The ID of the app problem.
+   *
+   * Added in Saleor 3.22.
+   */
+  id: Scalars['ID'];
+  /**
+   * Whether the problem has reached critical threshold.
+   *
+   * Added in Saleor 3.22.
+   */
+  isCritical: Scalars['Boolean'];
+  /**
+   * Key identifying the type of problem.
+   *
+   * Added in Saleor 3.22.
+   */
+  key: Scalars['String'];
+  /**
+   * The problem message.
+   *
+   * Added in Saleor 3.22.
+   */
+  message: Scalars['String'];
+  /**
+   * The date and time when the problem was last updated.
+   *
+   * Added in Saleor 3.22.
+   */
+  updatedAt: Scalars['DateTime'];
+};
+
+/**
+ * Add a problem to the calling app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type AppProblemCreate = {
+  __typename: 'AppProblemCreate';
+  /** The created or updated app problem. */
+  appProblem: Maybe<AppProblem>;
+  errors: Array<AppProblemCreateError>;
+};
+
+export type AppProblemCreateError = {
+  __typename: 'AppProblemCreateError';
+  /** The error code. */
+  code: AppProblemCreateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+export type AppProblemCreateErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_FOUND'
+  | 'REQUIRED';
+
+export type AppProblemCreateInput = {
+  /** Time window in minutes for aggregating problems with the same key. Defaults to 60. If 0, a new problem is always created. */
+  aggregationPeriod: InputMaybe<Scalars['Minute']>;
+  /** If set, the problem becomes critical when count reaches this value. If sent again with higher value than already counted, problem can be de-escalated. */
+  criticalThreshold: InputMaybe<Scalars['PositiveInt']>;
+  /** Key identifying the type of problem. App can add multiple problems under the same key, to merge them together or delete them in batch. Must be between 3 and 128 characters. */
+  key: Scalars['String'];
+  /** The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix. */
+  message: Scalars['String'];
+};
+
+/**
+ * Dismiss problems for an app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+ */
+export type AppProblemDismiss = {
+  __typename: 'AppProblemDismiss';
+  errors: Array<AppProblemDismissError>;
+};
+
+/** Input for app callers to dismiss their own problems. */
+export type AppProblemDismissByAppInput = {
+  /** List of problem IDs to dismiss. Cannot be combined with keys. Max 100. */
+  ids: InputMaybe<Array<Scalars['ID']>>;
+  /** List of problem keys to dismiss. Cannot be combined with ids. Max 100. */
+  keys: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** Input for staff callers to dismiss problems by IDs. */
+export type AppProblemDismissByStaffWithIdsInput = {
+  /** List of problem IDs to dismiss. Max 100. */
+  ids: Array<Scalars['ID']>;
+};
+
+/** Input for staff callers to dismiss problems by keys. */
+export type AppProblemDismissByStaffWithKeysInput = {
+  /** ID of the app whose problems to dismiss. */
+  app: Scalars['ID'];
+  /** List of problem keys to dismiss. Max 100. */
+  keys: Array<Scalars['String']>;
+};
+
+export type AppProblemDismissError = {
+  __typename: 'AppProblemDismissError';
+  /** The error code. */
+  code: AppProblemDismissErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+export type AppProblemDismissErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_FOUND'
+  | 'OUT_OF_SCOPE_APP'
+  | 'REQUIRED';
+
+/** Input for dismissing app problems. Only one can be specified. */
+export type AppProblemDismissInput = {
+  /** For app callers only - dismiss own problems. */
+  byApp: InputMaybe<AppProblemDismissByAppInput>;
+  /** For staff callers - dismiss problems by IDs. */
+  byStaffWithIds: InputMaybe<AppProblemDismissByStaffWithIdsInput>;
+  /** For staff callers - dismiss problems by keys for specified app. */
+  byStaffWithKeys: InputMaybe<AppProblemDismissByStaffWithKeysInput>;
+};
+
+/**
+ * Dismissal information for an app problem.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AppProblemDismissed = {
+  __typename: 'AppProblemDismissed';
+  /**
+   * Whether the problem was dismissed by an App or a User.
+   *
+   * Added in Saleor 3.22.
+   */
+  by: AppProblemDismissedByEnum;
+  /**
+   * The user who dismissed this problem. Null if dismissed by an app or the user was deleted.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_STAFF.
+   */
+  user: Maybe<User>;
+  /**
+   * Email of the user who dismissed this problem. Preserved even if the user is deleted.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+   */
+  userEmail: Maybe<Scalars['String']>;
+};
+
+export type AppProblemDismissedByEnum =
+  | 'APP'
+  | 'USER';
 
 /**
  * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
@@ -2032,7 +2246,7 @@ export type AssignedSwatchAttributeValue = {
   file: Maybe<File>;
   /** Hex color code. */
   hexColor: Maybe<Scalars['String']>;
-  /** Name of the selected swatch value. */
+  /** Name of the selected swatch value.  */
   name: Maybe<Scalars['String']>;
   /** Slug of the selected swatch value. */
   slug: Maybe<Scalars['String']>;
@@ -2429,7 +2643,8 @@ export type AttributeCreate = {
 export type AttributeCreateInput = {
   /**
    * Whether the attribute can be displayed in the admin product list.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   availableInGrid: InputMaybe<Scalars['Boolean']>;
   /** The entity type which can be used as a reference. */
@@ -2440,7 +2655,8 @@ export type AttributeCreateInput = {
   filterableInDashboard: InputMaybe<Scalars['Boolean']>;
   /**
    * Whether the attribute can be filtered in storefront.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   filterableInStorefront: InputMaybe<Scalars['Boolean']>;
   /** The input type to use for entering attribute values in the dashboard. */
@@ -2461,7 +2677,8 @@ export type AttributeCreateInput = {
   slug: InputMaybe<Scalars['String']>;
   /**
    * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   storefrontSearchPosition: InputMaybe<Scalars['Int']>;
   /** The attribute type. */
@@ -2558,7 +2775,8 @@ export type AttributeFilterInput = {
   availableInGrid: InputMaybe<Scalars['Boolean']>;
   /**
    * Specifies the channel by which the data should be filtered.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   filterableInDashboard: InputMaybe<Scalars['Boolean']>;
@@ -2578,31 +2796,36 @@ export type AttributeFilterInput = {
 export type AttributeInput = {
   /**
    * The boolean value of the attribute. Requires `slug` to be provided.
-   * @deprecated Use `value` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `value` instead.
    */
   boolean: InputMaybe<Scalars['Boolean']>;
   /**
    * The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. Requires `slug` to be provided.
-   * @deprecated Use `value` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `value` instead.
    */
   date: InputMaybe<DateRangeInput>;
   /**
    * The date/time range that the returned values should be in. Requires `slug` to be provided.
-   * @deprecated Use `value` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `value` instead.
    */
   dateTime: InputMaybe<DateTimeRangeInput>;
   /** Internal representation of an attribute name. */
   slug: InputMaybe<Scalars['String']>;
-  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`. */
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`.  */
   value: InputMaybe<AssignedAttributeValueInput>;
   /**
    * Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided.
-   * @deprecated Use `value` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `value` instead.
    */
   values: InputMaybe<Array<Scalars['String']>>;
   /**
    * The range that the returned values should be in. Requires `slug` to be provided.
-   * @deprecated Use `value` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `value` instead.
    */
   valuesRange: InputMaybe<IntRangeInput>;
 };
@@ -2767,7 +2990,8 @@ export type AttributeUpdateInput = {
   addValues: InputMaybe<Array<AttributeValueUpdateInput>>;
   /**
    * Whether the attribute can be displayed in the admin product list.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   availableInGrid: InputMaybe<Scalars['Boolean']>;
   /** External ID of this product. */
@@ -2776,7 +3000,8 @@ export type AttributeUpdateInput = {
   filterableInDashboard: InputMaybe<Scalars['Boolean']>;
   /**
    * Whether the attribute can be filtered in storefront.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   filterableInStorefront: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute is for variants only. */
@@ -2797,7 +3022,8 @@ export type AttributeUpdateInput = {
   slug: InputMaybe<Scalars['String']>;
   /**
    * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   storefrontSearchPosition: InputMaybe<Scalars['Int']>;
   /** The unit of attribute values. */
@@ -2974,14 +3200,16 @@ export type AttributeValueCreateInput = {
   name: Scalars['String'];
   /**
    * Represents the text of the attribute value, plain text without formatting.
-   * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   *
+   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   plainText: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
-   * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   *
+   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -3080,7 +3308,8 @@ export type AttributeValueInput = {
   swatch: InputMaybe<AttributeValueSelectableTypeInput>;
   /**
    * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   values: InputMaybe<Array<Scalars['String']>>;
 };
@@ -3217,14 +3446,16 @@ export type AttributeValueUpdateInput = {
   name: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, plain text without formatting.
-   * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   *
+   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   plainText: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
-   * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   *
+   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -3316,7 +3547,8 @@ export type BulkAttributeValueInput = {
   swatch: InputMaybe<AttributeValueSelectableTypeInput>;
   /**
    * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   values: InputMaybe<Array<Scalars['String']>>;
 };
@@ -3518,7 +3750,7 @@ export type CategoryAncestorsArgs = {
 
 /** Represents a single category of products. Categories allow to organize products in a tree-hierarchies which can be used for navigation in the storefront. */
 export type CategoryBackgroundImageArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -3713,7 +3945,8 @@ export type CategorySortField =
 export type CategorySortingInput = {
   /**
    * Specifies the channel in which to sort the data.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort categories. */
@@ -4524,6 +4757,7 @@ export type CheckoutAddressValidationRules = {
  *     NONE - the funds are not authorized
  *     PARTIAL - the cover funds don't cover fully the checkout's total
  *     FULL - the cover funds covers the checkout's total
+ *
  */
 export type CheckoutAuthorizeStatusEnum =
   | 'FULL'
@@ -4569,6 +4803,7 @@ export type CheckoutBillingAddressUpdate = {
  *     PARTIAL - the funds that are charged don't cover the checkout's total
  *     FULL - the funds that are charged fully cover the checkout's total
  *     OVERCHARGED - the charged funds are bigger than checkout's total
+ *
  */
 export type CheckoutChargeStatusEnum =
   | 'FULL'
@@ -5092,7 +5327,7 @@ export type CheckoutLineDelete = {
 };
 
 export type CheckoutLineInput = {
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
   forceNewLine: InputMaybe<Scalars['Boolean']>;
   /**
    * Fields required to update the object's metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -5146,7 +5381,8 @@ export type CheckoutLineUpdateInput = {
   quantity: InputMaybe<Scalars['Int']>;
   /**
    * ID of the product variant.
-   * @deprecated Use `lineId` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `lineId` instead.
    */
   variantId: InputMaybe<Scalars['ID']>;
 };
@@ -5260,7 +5496,11 @@ export type CheckoutSettings = {
    * Added in Saleor 3.20.
    */
   automaticallyCompleteFullyPaidCheckouts: Scalars['Boolean'];
-  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
+  /**
+   * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   useLegacyErrorFlow: Scalars['Boolean'];
 };
 
@@ -5275,12 +5515,14 @@ export type CheckoutSettingsInput = {
    * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
-   * @deprecated Use `automatic_completion` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts: InputMaybe<Scalars['Boolean']>;
   /**
    * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   useLegacyErrorFlow: InputMaybe<Scalars['Boolean']>;
 };
@@ -5435,7 +5677,7 @@ export type Collection = Node & ObjectWithMetadata & {
 
 /** Represents a collection of products. */
 export type CollectionBackgroundImageArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -5624,7 +5866,8 @@ export type CollectionCreateInput = {
   products: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   publicationDate: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
@@ -5712,7 +5955,8 @@ export type CollectionErrorCode =
 export type CollectionFilterInput = {
   /**
    * Specifies the channel by which the data should be filtered.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   ids: InputMaybe<Array<Scalars['ID']>>;
@@ -5751,7 +5995,8 @@ export type CollectionInput = {
   privateMetadata: InputMaybe<Array<MetadataInput>>;
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   publicationDate: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
@@ -5840,7 +6085,8 @@ export type CollectionSortField =
 export type CollectionSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort collections. */
@@ -7077,7 +7323,8 @@ export type DraftOrderCreateInput = {
   customerNote: InputMaybe<Scalars['String']>;
   /**
    * Discount amount for the order.
-   * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
+   *
+   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
   discount: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
@@ -7190,7 +7437,8 @@ export type DraftOrderInput = {
   customerNote: InputMaybe<Scalars['String']>;
   /**
    * Discount amount for the order.
-   * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
+   *
+   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
   discount: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
@@ -7855,6 +8103,18 @@ export type Fulfillment = Node & ObjectWithMetadata & {
   privateMetafield: Maybe<Scalars['String']>;
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields: Maybe<Scalars['Metadata']>;
+  /**
+   * Reason for the fulfillment action.
+   *
+   * Added in Saleor 3.22.
+   */
+  reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this fulfillment.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: Maybe<Page>;
   /** Amount of refunded shipping price. */
   shippingRefundedAmount: Maybe<Money>;
   /** Status of fulfillment. */
@@ -8007,6 +8267,18 @@ export type FulfillmentLine = Node & {
   orderLine: Maybe<OrderLine>;
   /** The number of items included in the fulfillment line. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for the fulfillment line action.
+   *
+   * Added in Saleor 3.22.
+   */
+  reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this fulfillment line.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: Maybe<Page>;
 };
 
 /** Event sent when fulfillment metadata is updated. */
@@ -8430,12 +8702,14 @@ export type GiftCardCreateInput = {
   channel: InputMaybe<Scalars['String']>;
   /**
    * Code to use the gift card.
-   * @deprecated The code is now auto generated.
+   *
+   * DEPRECATED: this field will be removed. The code is now auto generated.
    */
   code: InputMaybe<Scalars['String']>;
   /**
    * End date of the gift card in ISO 8601 format.
-   * @deprecated Use `expiryDate` from `expirySettings` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
    */
   endDate: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
@@ -8462,7 +8736,8 @@ export type GiftCardCreateInput = {
   privateMetadata: InputMaybe<Array<MetadataInput>>;
   /**
    * Start date of the gift card in ISO 8601 format.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   startDate: InputMaybe<Scalars['Date']>;
   /** Email of the customer to whom gift card will be sent. */
@@ -8837,7 +9112,8 @@ export type GiftCardUpdateInput = {
   balanceAmount: InputMaybe<Scalars['PositiveDecimal']>;
   /**
    * End date of the gift card in ISO 8601 format.
-   * @deprecated Use `expiryDate` from `expirySettings` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
    */
   endDate: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
@@ -8862,7 +9138,8 @@ export type GiftCardUpdateInput = {
   removeTags: InputMaybe<Array<Scalars['String']>>;
   /**
    * Start date of the gift card in ISO 8601 format.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   startDate: InputMaybe<Scalars['Date']>;
 };
@@ -9240,785 +9517,1565 @@ export type JobStatusEnum =
   | 'PENDING'
   | 'SUCCESS';
 
+/** Language code enum. It contains all the languages supported by Saleor. */
 export type LanguageCodeEnum =
+  /** Afrikaans */
   | 'AF'
+  /** Afrikaans (Namibia) */
   | 'AF_NA'
+  /** Afrikaans (South Africa) */
   | 'AF_ZA'
+  /** Aghem */
   | 'AGQ'
+  /** Aghem (Cameroon) */
   | 'AGQ_CM'
+  /** Akan */
   | 'AK'
+  /** Akan (Ghana) */
   | 'AK_GH'
+  /** Amharic */
   | 'AM'
+  /** Amharic (Ethiopia) */
   | 'AM_ET'
+  /** Arabic */
   | 'AR'
+  /** Arabic (United Arab Emirates) */
   | 'AR_AE'
+  /** Arabic (Bahrain) */
   | 'AR_BH'
+  /** Arabic (Djibouti) */
   | 'AR_DJ'
+  /** Arabic (Algeria) */
   | 'AR_DZ'
+  /** Arabic (Egypt) */
   | 'AR_EG'
+  /** Arabic (Western Sahara) */
   | 'AR_EH'
+  /** Arabic (Eritrea) */
   | 'AR_ER'
+  /** Arabic (Israel) */
   | 'AR_IL'
+  /** Arabic (Iraq) */
   | 'AR_IQ'
+  /** Arabic (Jordan) */
   | 'AR_JO'
+  /** Arabic (Comoros) */
   | 'AR_KM'
+  /** Arabic (Kuwait) */
   | 'AR_KW'
+  /** Arabic (Lebanon) */
   | 'AR_LB'
+  /** Arabic (Libya) */
   | 'AR_LY'
+  /** Arabic (Morocco) */
   | 'AR_MA'
+  /** Arabic (Mauritania) */
   | 'AR_MR'
+  /** Arabic (Oman) */
   | 'AR_OM'
+  /** Arabic (Palestinian Territories) */
   | 'AR_PS'
+  /** Arabic (Qatar) */
   | 'AR_QA'
+  /** Arabic (Saudi Arabia) */
   | 'AR_SA'
+  /** Arabic (Sudan) */
   | 'AR_SD'
+  /** Arabic (Somalia) */
   | 'AR_SO'
+  /** Arabic (South Sudan) */
   | 'AR_SS'
+  /** Arabic (Syria) */
   | 'AR_SY'
+  /** Arabic (Chad) */
   | 'AR_TD'
+  /** Arabic (Tunisia) */
   | 'AR_TN'
+  /** Arabic (Yemen) */
   | 'AR_YE'
+  /** Assamese */
   | 'AS'
+  /** Asu */
   | 'ASA'
+  /** Asu (Tanzania) */
   | 'ASA_TZ'
+  /** Asturian */
   | 'AST'
+  /** Asturian (Spain) */
   | 'AST_ES'
+  /** Assamese (India) */
   | 'AS_IN'
+  /** Azerbaijani */
   | 'AZ'
+  /** Azerbaijani (Cyrillic) */
   | 'AZ_CYRL'
+  /** Azerbaijani (Cyrillic, Azerbaijan) */
   | 'AZ_CYRL_AZ'
+  /** Azerbaijani (Latin) */
   | 'AZ_LATN'
+  /** Azerbaijani (Latin, Azerbaijan) */
   | 'AZ_LATN_AZ'
+  /** Basaa */
   | 'BAS'
+  /** Basaa (Cameroon) */
   | 'BAS_CM'
+  /** Belarusian */
   | 'BE'
+  /** Bemba */
   | 'BEM'
+  /** Bemba (Zambia) */
   | 'BEM_ZM'
+  /** Bena */
   | 'BEZ'
+  /** Bena (Tanzania) */
   | 'BEZ_TZ'
+  /** Belarusian (Belarus) */
   | 'BE_BY'
+  /** Bulgarian */
   | 'BG'
+  /** Bulgarian (Bulgaria) */
   | 'BG_BG'
+  /** Bambara */
   | 'BM'
+  /** Bambara (Mali) */
   | 'BM_ML'
+  /** Bangla */
   | 'BN'
+  /** Bangla (Bangladesh) */
   | 'BN_BD'
+  /** Bangla (India) */
   | 'BN_IN'
+  /** Tibetan */
   | 'BO'
+  /** Tibetan (China) */
   | 'BO_CN'
+  /** Tibetan (India) */
   | 'BO_IN'
+  /** Breton */
   | 'BR'
+  /** Bodo */
   | 'BRX'
+  /** Bodo (India) */
   | 'BRX_IN'
+  /** Breton (France) */
   | 'BR_FR'
+  /** Bosnian */
   | 'BS'
+  /** Bosnian (Cyrillic) */
   | 'BS_CYRL'
+  /** Bosnian (Cyrillic, Bosnia & Herzegovina) */
   | 'BS_CYRL_BA'
+  /** Bosnian (Latin) */
   | 'BS_LATN'
+  /** Bosnian (Latin, Bosnia & Herzegovina) */
   | 'BS_LATN_BA'
+  /** Catalan */
   | 'CA'
+  /** Catalan (Andorra) */
   | 'CA_AD'
+  /** Catalan (Spain) */
   | 'CA_ES'
+  /** Catalan (Spain, Valencian) */
   | 'CA_ES_VALENCIA'
+  /** Catalan (France) */
   | 'CA_FR'
+  /** Catalan (Italy) */
   | 'CA_IT'
+  /** Chakma */
   | 'CCP'
+  /** Chakma (Bangladesh) */
   | 'CCP_BD'
+  /** Chakma (India) */
   | 'CCP_IN'
+  /** Chechen */
   | 'CE'
+  /** Cebuano */
   | 'CEB'
+  /** Cebuano (Philippines) */
   | 'CEB_PH'
+  /** Chechen (Russia) */
   | 'CE_RU'
+  /** Chiga */
   | 'CGG'
+  /** Chiga (Uganda) */
   | 'CGG_UG'
+  /** Cherokee */
   | 'CHR'
+  /** Cherokee (United States) */
   | 'CHR_US'
+  /** Central Kurdish */
   | 'CKB'
+  /** Central Kurdish (Iraq) */
   | 'CKB_IQ'
+  /** Central Kurdish (Iran) */
   | 'CKB_IR'
+  /** Czech */
   | 'CS'
+  /** Czech (Czechia) */
   | 'CS_CZ'
+  /** Church Slavic */
   | 'CU'
+  /** Church Slavic (Russia) */
   | 'CU_RU'
+  /** Welsh */
   | 'CY'
+  /** Welsh (United Kingdom) */
   | 'CY_GB'
+  /** Danish */
   | 'DA'
+  /** Taita */
   | 'DAV'
+  /** Taita (Kenya) */
   | 'DAV_KE'
+  /** Danish (Denmark) */
   | 'DA_DK'
+  /** Danish (Greenland) */
   | 'DA_GL'
+  /** German */
   | 'DE'
+  /** German (Austria) */
   | 'DE_AT'
+  /** German (Belgium) */
   | 'DE_BE'
+  /** German (Switzerland) */
   | 'DE_CH'
+  /** German (Germany) */
   | 'DE_DE'
+  /** German (Italy) */
   | 'DE_IT'
+  /** German (Liechtenstein) */
   | 'DE_LI'
+  /** German (Luxembourg) */
   | 'DE_LU'
+  /** Zarma */
   | 'DJE'
+  /** Zarma (Niger) */
   | 'DJE_NE'
+  /** Lower Sorbian */
   | 'DSB'
+  /** Lower Sorbian (Germany) */
   | 'DSB_DE'
+  /** Duala */
   | 'DUA'
+  /** Duala (Cameroon) */
   | 'DUA_CM'
+  /** Jola-Fonyi */
   | 'DYO'
+  /** Jola-Fonyi (Senegal) */
   | 'DYO_SN'
+  /** Dzongkha */
   | 'DZ'
+  /** Dzongkha (Bhutan) */
   | 'DZ_BT'
+  /** Embu */
   | 'EBU'
+  /** Embu (Kenya) */
   | 'EBU_KE'
+  /** Ewe */
   | 'EE'
+  /** Ewe (Ghana) */
   | 'EE_GH'
+  /** Ewe (Togo) */
   | 'EE_TG'
+  /** Greek */
   | 'EL'
+  /** Greek (Cyprus) */
   | 'EL_CY'
+  /** Greek (Greece) */
   | 'EL_GR'
+  /** English */
   | 'EN'
+  /** English (United Arab Emirates) */
   | 'EN_AE'
+  /** English (Antigua & Barbuda) */
   | 'EN_AG'
+  /** English (Anguilla) */
   | 'EN_AI'
+  /** English (American Samoa) */
   | 'EN_AS'
+  /** English (Austria) */
   | 'EN_AT'
+  /** English (Australia) */
   | 'EN_AU'
+  /** English (Barbados) */
   | 'EN_BB'
+  /** English (Belgium) */
   | 'EN_BE'
+  /** English (Burundi) */
   | 'EN_BI'
+  /** English (Bermuda) */
   | 'EN_BM'
+  /** English (Bahamas) */
   | 'EN_BS'
+  /** English (Botswana) */
   | 'EN_BW'
+  /** English (Belize) */
   | 'EN_BZ'
+  /** English (Canada) */
   | 'EN_CA'
+  /** English (Cocos (Keeling) Islands) */
   | 'EN_CC'
+  /** English (Switzerland) */
   | 'EN_CH'
+  /** English (Cook Islands) */
   | 'EN_CK'
+  /** English (Cameroon) */
   | 'EN_CM'
+  /** English (Christmas Island) */
   | 'EN_CX'
+  /** English (Cyprus) */
   | 'EN_CY'
+  /** English (Germany) */
   | 'EN_DE'
+  /** English (Diego Garcia) */
   | 'EN_DG'
+  /** English (Denmark) */
   | 'EN_DK'
+  /** English (Dominica) */
   | 'EN_DM'
+  /** English (Eritrea) */
   | 'EN_ER'
+  /** English (Finland) */
   | 'EN_FI'
+  /** English (Fiji) */
   | 'EN_FJ'
+  /** English (Falkland Islands) */
   | 'EN_FK'
+  /** English (Micronesia) */
   | 'EN_FM'
+  /** English (United Kingdom) */
   | 'EN_GB'
+  /** English (Grenada) */
   | 'EN_GD'
+  /** English (Guernsey) */
   | 'EN_GG'
+  /** English (Ghana) */
   | 'EN_GH'
+  /** English (Gibraltar) */
   | 'EN_GI'
+  /** English (Gambia) */
   | 'EN_GM'
+  /** English (Guam) */
   | 'EN_GU'
+  /** English (Guyana) */
   | 'EN_GY'
+  /** English (Hong Kong SAR China) */
   | 'EN_HK'
+  /** English (Ireland) */
   | 'EN_IE'
+  /** English (Israel) */
   | 'EN_IL'
+  /** English (Isle of Man) */
   | 'EN_IM'
+  /** English (India) */
   | 'EN_IN'
+  /** English (British Indian Ocean Territory) */
   | 'EN_IO'
+  /** English (Jersey) */
   | 'EN_JE'
+  /** English (Jamaica) */
   | 'EN_JM'
+  /** English (Kenya) */
   | 'EN_KE'
+  /** English (Kiribati) */
   | 'EN_KI'
+  /** English (St. Kitts & Nevis) */
   | 'EN_KN'
+  /** English (Cayman Islands) */
   | 'EN_KY'
+  /** English (St. Lucia) */
   | 'EN_LC'
+  /** English (Liberia) */
   | 'EN_LR'
+  /** English (Lesotho) */
   | 'EN_LS'
+  /** English (Madagascar) */
   | 'EN_MG'
+  /** English (Marshall Islands) */
   | 'EN_MH'
+  /** English (Macao SAR China) */
   | 'EN_MO'
+  /** English (Northern Mariana Islands) */
   | 'EN_MP'
+  /** English (Montserrat) */
   | 'EN_MS'
+  /** English (Malta) */
   | 'EN_MT'
+  /** English (Mauritius) */
   | 'EN_MU'
+  /** English (Malawi) */
   | 'EN_MW'
+  /** English (Malaysia) */
   | 'EN_MY'
+  /** English (Namibia) */
   | 'EN_NA'
+  /** English (Norfolk Island) */
   | 'EN_NF'
+  /** English (Nigeria) */
   | 'EN_NG'
+  /** English (Netherlands) */
   | 'EN_NL'
+  /** English (Nauru) */
   | 'EN_NR'
+  /** English (Niue) */
   | 'EN_NU'
+  /** English (New Zealand) */
   | 'EN_NZ'
+  /** English (Papua New Guinea) */
   | 'EN_PG'
+  /** English (Philippines) */
   | 'EN_PH'
+  /** English (Pakistan) */
   | 'EN_PK'
+  /** English (Pitcairn Islands) */
   | 'EN_PN'
+  /** English (Puerto Rico) */
   | 'EN_PR'
+  /** English (Palau) */
   | 'EN_PW'
+  /** English (Rwanda) */
   | 'EN_RW'
+  /** English (Solomon Islands) */
   | 'EN_SB'
+  /** English (Seychelles) */
   | 'EN_SC'
+  /** English (Sudan) */
   | 'EN_SD'
+  /** English (Sweden) */
   | 'EN_SE'
+  /** English (Singapore) */
   | 'EN_SG'
+  /** English (St. Helena) */
   | 'EN_SH'
+  /** English (Slovenia) */
   | 'EN_SI'
+  /** English (Sierra Leone) */
   | 'EN_SL'
+  /** English (South Sudan) */
   | 'EN_SS'
+  /** English (Sint Maarten) */
   | 'EN_SX'
+  /** English (Eswatini) */
   | 'EN_SZ'
+  /** English (Turks & Caicos Islands) */
   | 'EN_TC'
+  /** English (Tokelau) */
   | 'EN_TK'
+  /** English (Tonga) */
   | 'EN_TO'
+  /** English (Trinidad & Tobago) */
   | 'EN_TT'
+  /** English (Tuvalu) */
   | 'EN_TV'
+  /** English (Tanzania) */
   | 'EN_TZ'
+  /** English (Uganda) */
   | 'EN_UG'
+  /** English (U.S. Outlying Islands) */
   | 'EN_UM'
+  /** English (United States) */
   | 'EN_US'
+  /** English (St. Vincent & Grenadines) */
   | 'EN_VC'
+  /** English (British Virgin Islands) */
   | 'EN_VG'
+  /** English (U.S. Virgin Islands) */
   | 'EN_VI'
+  /** English (Vanuatu) */
   | 'EN_VU'
+  /** English (Samoa) */
   | 'EN_WS'
+  /** English (South Africa) */
   | 'EN_ZA'
+  /** English (Zambia) */
   | 'EN_ZM'
+  /** English (Zimbabwe) */
   | 'EN_ZW'
+  /** Esperanto */
   | 'EO'
+  /** Spanish */
   | 'ES'
+  /** Spanish (Argentina) */
   | 'ES_AR'
+  /** Spanish (Bolivia) */
   | 'ES_BO'
+  /** Spanish (Brazil) */
   | 'ES_BR'
+  /** Spanish (Belize) */
   | 'ES_BZ'
+  /** Spanish (Chile) */
   | 'ES_CL'
+  /** Spanish (Colombia) */
   | 'ES_CO'
+  /** Spanish (Costa Rica) */
   | 'ES_CR'
+  /** Spanish (Cuba) */
   | 'ES_CU'
+  /** Spanish (Dominican Republic) */
   | 'ES_DO'
+  /** Spanish (Ceuta & Melilla) */
   | 'ES_EA'
+  /** Spanish (Ecuador) */
   | 'ES_EC'
+  /** Spanish (Spain) */
   | 'ES_ES'
+  /** Spanish (Equatorial Guinea) */
   | 'ES_GQ'
+  /** Spanish (Guatemala) */
   | 'ES_GT'
+  /** Spanish (Honduras) */
   | 'ES_HN'
+  /** Spanish (Canary Islands) */
   | 'ES_IC'
+  /** Spanish (Mexico) */
   | 'ES_MX'
+  /** Spanish (Nicaragua) */
   | 'ES_NI'
+  /** Spanish (Panama) */
   | 'ES_PA'
+  /** Spanish (Peru) */
   | 'ES_PE'
+  /** Spanish (Philippines) */
   | 'ES_PH'
+  /** Spanish (Puerto Rico) */
   | 'ES_PR'
+  /** Spanish (Paraguay) */
   | 'ES_PY'
+  /** Spanish (El Salvador) */
   | 'ES_SV'
+  /** Spanish (United States) */
   | 'ES_US'
+  /** Spanish (Uruguay) */
   | 'ES_UY'
+  /** Spanish (Venezuela) */
   | 'ES_VE'
+  /** Estonian */
   | 'ET'
+  /** Estonian (Estonia) */
   | 'ET_EE'
+  /** Basque */
   | 'EU'
+  /** Basque (Spain) */
   | 'EU_ES'
+  /** Ewondo */
   | 'EWO'
+  /** Ewondo (Cameroon) */
   | 'EWO_CM'
+  /** Persian */
   | 'FA'
+  /** Persian (Afghanistan) */
   | 'FA_AF'
+  /** Persian (Iran) */
   | 'FA_IR'
+  /** Fulah */
   | 'FF'
+  /** Fulah (Adlam) */
   | 'FF_ADLM'
+  /** Fulah (Adlam, Burkina Faso) */
   | 'FF_ADLM_BF'
+  /** Fulah (Adlam, Cameroon) */
   | 'FF_ADLM_CM'
+  /** Fulah (Adlam, Ghana) */
   | 'FF_ADLM_GH'
+  /** Fulah (Adlam, Gambia) */
   | 'FF_ADLM_GM'
+  /** Fulah (Adlam, Guinea) */
   | 'FF_ADLM_GN'
+  /** Fulah (Adlam, Guinea-Bissau) */
   | 'FF_ADLM_GW'
+  /** Fulah (Adlam, Liberia) */
   | 'FF_ADLM_LR'
+  /** Fulah (Adlam, Mauritania) */
   | 'FF_ADLM_MR'
+  /** Fulah (Adlam, Niger) */
   | 'FF_ADLM_NE'
+  /** Fulah (Adlam, Nigeria) */
   | 'FF_ADLM_NG'
+  /** Fulah (Adlam, Sierra Leone) */
   | 'FF_ADLM_SL'
+  /** Fulah (Adlam, Senegal) */
   | 'FF_ADLM_SN'
+  /** Fulah (Latin) */
   | 'FF_LATN'
+  /** Fulah (Latin, Burkina Faso) */
   | 'FF_LATN_BF'
+  /** Fulah (Latin, Cameroon) */
   | 'FF_LATN_CM'
+  /** Fulah (Latin, Ghana) */
   | 'FF_LATN_GH'
+  /** Fulah (Latin, Gambia) */
   | 'FF_LATN_GM'
+  /** Fulah (Latin, Guinea) */
   | 'FF_LATN_GN'
+  /** Fulah (Latin, Guinea-Bissau) */
   | 'FF_LATN_GW'
+  /** Fulah (Latin, Liberia) */
   | 'FF_LATN_LR'
+  /** Fulah (Latin, Mauritania) */
   | 'FF_LATN_MR'
+  /** Fulah (Latin, Niger) */
   | 'FF_LATN_NE'
+  /** Fulah (Latin, Nigeria) */
   | 'FF_LATN_NG'
+  /** Fulah (Latin, Sierra Leone) */
   | 'FF_LATN_SL'
+  /** Fulah (Latin, Senegal) */
   | 'FF_LATN_SN'
+  /** Finnish */
   | 'FI'
+  /** Filipino */
   | 'FIL'
+  /** Filipino (Philippines) */
   | 'FIL_PH'
+  /** Finnish (Finland) */
   | 'FI_FI'
+  /** Faroese */
   | 'FO'
+  /** Faroese (Denmark) */
   | 'FO_DK'
+  /** Faroese (Faroe Islands) */
   | 'FO_FO'
+  /** French */
   | 'FR'
+  /** French (Belgium) */
   | 'FR_BE'
+  /** French (Burkina Faso) */
   | 'FR_BF'
+  /** French (Burundi) */
   | 'FR_BI'
+  /** French (Benin) */
   | 'FR_BJ'
+  /** French (St. Barthélemy) */
   | 'FR_BL'
+  /** French (Canada) */
   | 'FR_CA'
+  /** French (Congo - Kinshasa) */
   | 'FR_CD'
+  /** French (Central African Republic) */
   | 'FR_CF'
+  /** French (Congo - Brazzaville) */
   | 'FR_CG'
+  /** French (Switzerland) */
   | 'FR_CH'
+  /** French (Côte d’Ivoire) */
   | 'FR_CI'
+  /** French (Cameroon) */
   | 'FR_CM'
+  /** French (Djibouti) */
   | 'FR_DJ'
+  /** French (Algeria) */
   | 'FR_DZ'
+  /** French (France) */
   | 'FR_FR'
+  /** French (Gabon) */
   | 'FR_GA'
+  /** French (French Guiana) */
   | 'FR_GF'
+  /** French (Guinea) */
   | 'FR_GN'
+  /** French (Guadeloupe) */
   | 'FR_GP'
+  /** French (Equatorial Guinea) */
   | 'FR_GQ'
+  /** French (Haiti) */
   | 'FR_HT'
+  /** French (Comoros) */
   | 'FR_KM'
+  /** French (Luxembourg) */
   | 'FR_LU'
+  /** French (Morocco) */
   | 'FR_MA'
+  /** French (Monaco) */
   | 'FR_MC'
+  /** French (St. Martin) */
   | 'FR_MF'
+  /** French (Madagascar) */
   | 'FR_MG'
+  /** French (Mali) */
   | 'FR_ML'
+  /** French (Martinique) */
   | 'FR_MQ'
+  /** French (Mauritania) */
   | 'FR_MR'
+  /** French (Mauritius) */
   | 'FR_MU'
+  /** French (New Caledonia) */
   | 'FR_NC'
+  /** French (Niger) */
   | 'FR_NE'
+  /** French (French Polynesia) */
   | 'FR_PF'
+  /** French (St. Pierre & Miquelon) */
   | 'FR_PM'
+  /** French (Réunion) */
   | 'FR_RE'
+  /** French (Rwanda) */
   | 'FR_RW'
+  /** French (Seychelles) */
   | 'FR_SC'
+  /** French (Senegal) */
   | 'FR_SN'
+  /** French (Syria) */
   | 'FR_SY'
+  /** French (Chad) */
   | 'FR_TD'
+  /** French (Togo) */
   | 'FR_TG'
+  /** French (Tunisia) */
   | 'FR_TN'
+  /** French (Vanuatu) */
   | 'FR_VU'
+  /** French (Wallis & Futuna) */
   | 'FR_WF'
+  /** French (Mayotte) */
   | 'FR_YT'
+  /** Friulian */
   | 'FUR'
+  /** Friulian (Italy) */
   | 'FUR_IT'
+  /** Western Frisian */
   | 'FY'
+  /** Western Frisian (Netherlands) */
   | 'FY_NL'
+  /** Irish */
   | 'GA'
+  /** Irish (United Kingdom) */
   | 'GA_GB'
+  /** Irish (Ireland) */
   | 'GA_IE'
+  /** Scottish Gaelic */
   | 'GD'
+  /** Scottish Gaelic (United Kingdom) */
   | 'GD_GB'
+  /** Galician */
   | 'GL'
+  /** Galician (Spain) */
   | 'GL_ES'
+  /** Swiss German */
   | 'GSW'
+  /** Swiss German (Switzerland) */
   | 'GSW_CH'
+  /** Swiss German (France) */
   | 'GSW_FR'
+  /** Swiss German (Liechtenstein) */
   | 'GSW_LI'
+  /** Gujarati */
   | 'GU'
+  /** Gusii */
   | 'GUZ'
+  /** Gusii (Kenya) */
   | 'GUZ_KE'
+  /** Gujarati (India) */
   | 'GU_IN'
+  /** Manx */
   | 'GV'
+  /** Manx (Isle of Man) */
   | 'GV_IM'
+  /** Hausa */
   | 'HA'
+  /** Hawaiian */
   | 'HAW'
+  /** Hawaiian (United States) */
   | 'HAW_US'
+  /** Hausa (Ghana) */
   | 'HA_GH'
+  /** Hausa (Niger) */
   | 'HA_NE'
+  /** Hausa (Nigeria) */
   | 'HA_NG'
+  /** Hebrew */
   | 'HE'
+  /** Hebrew (Israel) */
   | 'HE_IL'
+  /** Hindi */
   | 'HI'
+  /** Hindi (India) */
   | 'HI_IN'
+  /** Croatian */
   | 'HR'
+  /** Croatian (Bosnia & Herzegovina) */
   | 'HR_BA'
+  /** Croatian (Croatia) */
   | 'HR_HR'
+  /** Upper Sorbian */
   | 'HSB'
+  /** Upper Sorbian (Germany) */
   | 'HSB_DE'
+  /** Hungarian */
   | 'HU'
+  /** Hungarian (Hungary) */
   | 'HU_HU'
+  /** Armenian */
   | 'HY'
+  /** Armenian (Armenia) */
   | 'HY_AM'
+  /** Interlingua */
   | 'IA'
+  /** Indonesian */
   | 'ID'
+  /** Indonesian (Indonesia) */
   | 'ID_ID'
+  /** Igbo */
   | 'IG'
+  /** Igbo (Nigeria) */
   | 'IG_NG'
+  /** Sichuan Yi */
   | 'II'
+  /** Sichuan Yi (China) */
   | 'II_CN'
+  /** Icelandic */
   | 'IS'
+  /** Icelandic (Iceland) */
   | 'IS_IS'
+  /** Italian */
   | 'IT'
+  /** Italian (Switzerland) */
   | 'IT_CH'
+  /** Italian (Italy) */
   | 'IT_IT'
+  /** Italian (San Marino) */
   | 'IT_SM'
+  /** Italian (Vatican City) */
   | 'IT_VA'
+  /** Japanese */
   | 'JA'
+  /** Japanese (Japan) */
   | 'JA_JP'
+  /** Ngomba */
   | 'JGO'
+  /** Ngomba (Cameroon) */
   | 'JGO_CM'
+  /** Machame */
   | 'JMC'
+  /** Machame (Tanzania) */
   | 'JMC_TZ'
+  /** Javanese */
   | 'JV'
+  /** Javanese (Indonesia) */
   | 'JV_ID'
+  /** Georgian */
   | 'KA'
+  /** Kabyle */
   | 'KAB'
+  /** Kabyle (Algeria) */
   | 'KAB_DZ'
+  /** Kamba */
   | 'KAM'
+  /** Kamba (Kenya) */
   | 'KAM_KE'
+  /** Georgian (Georgia) */
   | 'KA_GE'
+  /** Makonde */
   | 'KDE'
+  /** Makonde (Tanzania) */
   | 'KDE_TZ'
+  /** Kabuverdianu */
   | 'KEA'
+  /** Kabuverdianu (Cape Verde) */
   | 'KEA_CV'
+  /** Koyra Chiini */
   | 'KHQ'
+  /** Koyra Chiini (Mali) */
   | 'KHQ_ML'
+  /** Kikuyu */
   | 'KI'
+  /** Kikuyu (Kenya) */
   | 'KI_KE'
+  /** Kazakh */
   | 'KK'
+  /** Kako */
   | 'KKJ'
+  /** Kako (Cameroon) */
   | 'KKJ_CM'
+  /** Kazakh (Kazakhstan) */
   | 'KK_KZ'
+  /** Kalaallisut */
   | 'KL'
+  /** Kalenjin */
   | 'KLN'
+  /** Kalenjin (Kenya) */
   | 'KLN_KE'
+  /** Kalaallisut (Greenland) */
   | 'KL_GL'
+  /** Khmer */
   | 'KM'
+  /** Khmer (Cambodia) */
   | 'KM_KH'
+  /** Kannada */
   | 'KN'
+  /** Kannada (India) */
   | 'KN_IN'
+  /** Korean */
   | 'KO'
+  /** Konkani */
   | 'KOK'
+  /** Konkani (India) */
   | 'KOK_IN'
+  /** Korean (North Korea) */
   | 'KO_KP'
+  /** Korean (South Korea) */
   | 'KO_KR'
+  /** Kashmiri */
   | 'KS'
+  /** Shambala */
   | 'KSB'
+  /** Shambala (Tanzania) */
   | 'KSB_TZ'
+  /** Bafia */
   | 'KSF'
+  /** Bafia (Cameroon) */
   | 'KSF_CM'
+  /** Colognian */
   | 'KSH'
+  /** Colognian (Germany) */
   | 'KSH_DE'
+  /** Kashmiri (Arabic) */
   | 'KS_ARAB'
+  /** Kashmiri (Arabic, India) */
   | 'KS_ARAB_IN'
+  /** Kurdish */
   | 'KU'
+  /** Kurdish (Turkey) */
   | 'KU_TR'
+  /** Cornish */
   | 'KW'
+  /** Cornish (United Kingdom) */
   | 'KW_GB'
+  /** Kyrgyz */
   | 'KY'
+  /** Kyrgyz (Kyrgyzstan) */
   | 'KY_KG'
+  /** Langi */
   | 'LAG'
+  /** Langi (Tanzania) */
   | 'LAG_TZ'
+  /** Luxembourgish */
   | 'LB'
+  /** Luxembourgish (Luxembourg) */
   | 'LB_LU'
+  /** Ganda */
   | 'LG'
+  /** Ganda (Uganda) */
   | 'LG_UG'
+  /** Lakota */
   | 'LKT'
+  /** Lakota (United States) */
   | 'LKT_US'
+  /** Lingala */
   | 'LN'
+  /** Lingala (Angola) */
   | 'LN_AO'
+  /** Lingala (Congo - Kinshasa) */
   | 'LN_CD'
+  /** Lingala (Central African Republic) */
   | 'LN_CF'
+  /** Lingala (Congo - Brazzaville) */
   | 'LN_CG'
+  /** Lao */
   | 'LO'
+  /** Lao (Laos) */
   | 'LO_LA'
+  /** Northern Luri */
   | 'LRC'
+  /** Northern Luri (Iraq) */
   | 'LRC_IQ'
+  /** Northern Luri (Iran) */
   | 'LRC_IR'
+  /** Lithuanian */
   | 'LT'
+  /** Lithuanian (Lithuania) */
   | 'LT_LT'
+  /** Luba-Katanga */
   | 'LU'
+  /** Luo */
   | 'LUO'
+  /** Luo (Kenya) */
   | 'LUO_KE'
+  /** Luyia */
   | 'LUY'
+  /** Luyia (Kenya) */
   | 'LUY_KE'
+  /** Luba-Katanga (Congo - Kinshasa) */
   | 'LU_CD'
+  /** Latvian */
   | 'LV'
+  /** Latvian (Latvia) */
   | 'LV_LV'
+  /** Maithili */
   | 'MAI'
+  /** Maithili (India) */
   | 'MAI_IN'
+  /** Masai */
   | 'MAS'
+  /** Masai (Kenya) */
   | 'MAS_KE'
+  /** Masai (Tanzania) */
   | 'MAS_TZ'
+  /** Meru */
   | 'MER'
+  /** Meru (Kenya) */
   | 'MER_KE'
+  /** Morisyen */
   | 'MFE'
+  /** Morisyen (Mauritius) */
   | 'MFE_MU'
+  /** Malagasy */
   | 'MG'
+  /** Makhuwa-Meetto */
   | 'MGH'
+  /** Makhuwa-Meetto (Mozambique) */
   | 'MGH_MZ'
+  /** Metaʼ */
   | 'MGO'
+  /** Metaʼ (Cameroon) */
   | 'MGO_CM'
+  /** Malagasy (Madagascar) */
   | 'MG_MG'
+  /** Maori */
   | 'MI'
+  /** Maori (New Zealand) */
   | 'MI_NZ'
+  /** Macedonian */
   | 'MK'
+  /** Macedonian (North Macedonia) */
   | 'MK_MK'
+  /** Malayalam */
   | 'ML'
+  /** Malayalam (India) */
   | 'ML_IN'
+  /** Mongolian */
   | 'MN'
+  /** Manipuri */
   | 'MNI'
+  /** Manipuri (Bangla) */
   | 'MNI_BENG'
+  /** Manipuri (Bangla, India) */
   | 'MNI_BENG_IN'
+  /** Mongolian (Mongolia) */
   | 'MN_MN'
+  /** Marathi */
   | 'MR'
+  /** Marathi (India) */
   | 'MR_IN'
+  /** Malay */
   | 'MS'
+  /** Malay (Brunei) */
   | 'MS_BN'
+  /** Malay (Indonesia) */
   | 'MS_ID'
+  /** Malay (Malaysia) */
   | 'MS_MY'
+  /** Malay (Singapore) */
   | 'MS_SG'
+  /** Maltese */
   | 'MT'
+  /** Maltese (Malta) */
   | 'MT_MT'
+  /** Mundang */
   | 'MUA'
+  /** Mundang (Cameroon) */
   | 'MUA_CM'
+  /** Burmese */
   | 'MY'
+  /** Burmese (Myanmar (Burma)) */
   | 'MY_MM'
+  /** Mazanderani */
   | 'MZN'
+  /** Mazanderani (Iran) */
   | 'MZN_IR'
+  /** Nama */
   | 'NAQ'
+  /** Nama (Namibia) */
   | 'NAQ_NA'
+  /** Norwegian Bokmål */
   | 'NB'
+  /** Norwegian Bokmål (Norway) */
   | 'NB_NO'
+  /** Norwegian Bokmål (Svalbard & Jan Mayen) */
   | 'NB_SJ'
+  /** North Ndebele */
   | 'ND'
+  /** Low German */
   | 'NDS'
+  /** Low German (Germany) */
   | 'NDS_DE'
+  /** Low German (Netherlands) */
   | 'NDS_NL'
+  /** North Ndebele (Zimbabwe) */
   | 'ND_ZW'
+  /** Nepali */
   | 'NE'
+  /** Nepali (India) */
   | 'NE_IN'
+  /** Nepali (Nepal) */
   | 'NE_NP'
+  /** Dutch */
   | 'NL'
+  /** Dutch (Aruba) */
   | 'NL_AW'
+  /** Dutch (Belgium) */
   | 'NL_BE'
+  /** Dutch (Caribbean Netherlands) */
   | 'NL_BQ'
+  /** Dutch (Curaçao) */
   | 'NL_CW'
+  /** Dutch (Netherlands) */
   | 'NL_NL'
+  /** Dutch (Suriname) */
   | 'NL_SR'
+  /** Dutch (Sint Maarten) */
   | 'NL_SX'
+  /** Kwasio */
   | 'NMG'
+  /** Kwasio (Cameroon) */
   | 'NMG_CM'
+  /** Norwegian Nynorsk */
   | 'NN'
+  /** Ngiemboon */
   | 'NNH'
+  /** Ngiemboon (Cameroon) */
   | 'NNH_CM'
+  /** Norwegian Nynorsk (Norway) */
   | 'NN_NO'
+  /** Nuer */
   | 'NUS'
+  /** Nuer (South Sudan) */
   | 'NUS_SS'
+  /** Nyankole */
   | 'NYN'
+  /** Nyankole (Uganda) */
   | 'NYN_UG'
+  /** Oromo */
   | 'OM'
+  /** Oromo (Ethiopia) */
   | 'OM_ET'
+  /** Oromo (Kenya) */
   | 'OM_KE'
+  /** Odia */
   | 'OR'
+  /** Odia (India) */
   | 'OR_IN'
+  /** Ossetic */
   | 'OS'
+  /** Ossetic (Georgia) */
   | 'OS_GE'
+  /** Ossetic (Russia) */
   | 'OS_RU'
+  /** Punjabi */
   | 'PA'
+  /** Punjabi (Arabic) */
   | 'PA_ARAB'
+  /** Punjabi (Arabic, Pakistan) */
   | 'PA_ARAB_PK'
+  /** Punjabi (Gurmukhi) */
   | 'PA_GURU'
+  /** Punjabi (Gurmukhi, India) */
   | 'PA_GURU_IN'
+  /** Nigerian Pidgin */
   | 'PCM'
+  /** Nigerian Pidgin (Nigeria) */
   | 'PCM_NG'
+  /** Polish */
   | 'PL'
+  /** Polish (Poland) */
   | 'PL_PL'
+  /** Prussian */
   | 'PRG'
+  /** Pashto */
   | 'PS'
+  /** Pashto (Afghanistan) */
   | 'PS_AF'
+  /** Pashto (Pakistan) */
   | 'PS_PK'
+  /** Portuguese */
   | 'PT'
+  /** Portuguese (Angola) */
   | 'PT_AO'
+  /** Portuguese (Brazil) */
   | 'PT_BR'
+  /** Portuguese (Switzerland) */
   | 'PT_CH'
+  /** Portuguese (Cape Verde) */
   | 'PT_CV'
+  /** Portuguese (Equatorial Guinea) */
   | 'PT_GQ'
+  /** Portuguese (Guinea-Bissau) */
   | 'PT_GW'
+  /** Portuguese (Luxembourg) */
   | 'PT_LU'
+  /** Portuguese (Macao SAR China) */
   | 'PT_MO'
+  /** Portuguese (Mozambique) */
   | 'PT_MZ'
+  /** Portuguese (Portugal) */
   | 'PT_PT'
+  /** Portuguese (São Tomé & Príncipe) */
   | 'PT_ST'
+  /** Portuguese (Timor-Leste) */
   | 'PT_TL'
+  /** Quechua */
   | 'QU'
+  /** Quechua (Bolivia) */
   | 'QU_BO'
+  /** Quechua (Ecuador) */
   | 'QU_EC'
+  /** Quechua (Peru) */
   | 'QU_PE'
+  /** Romansh */
   | 'RM'
+  /** Romansh (Switzerland) */
   | 'RM_CH'
+  /** Rundi */
   | 'RN'
+  /** Rundi (Burundi) */
   | 'RN_BI'
+  /** Romanian */
   | 'RO'
+  /** Rombo */
   | 'ROF'
+  /** Rombo (Tanzania) */
   | 'ROF_TZ'
+  /** Romanian (Moldova) */
   | 'RO_MD'
+  /** Romanian (Romania) */
   | 'RO_RO'
+  /** Russian */
   | 'RU'
+  /** Russian (Belarus) */
   | 'RU_BY'
+  /** Russian (Kyrgyzstan) */
   | 'RU_KG'
+  /** Russian (Kazakhstan) */
   | 'RU_KZ'
+  /** Russian (Moldova) */
   | 'RU_MD'
+  /** Russian (Russia) */
   | 'RU_RU'
+  /** Russian (Ukraine) */
   | 'RU_UA'
+  /** Kinyarwanda */
   | 'RW'
+  /** Rwa */
   | 'RWK'
+  /** Rwa (Tanzania) */
   | 'RWK_TZ'
+  /** Kinyarwanda (Rwanda) */
   | 'RW_RW'
+  /** Sakha */
   | 'SAH'
+  /** Sakha (Russia) */
   | 'SAH_RU'
+  /** Samburu */
   | 'SAQ'
+  /** Samburu (Kenya) */
   | 'SAQ_KE'
+  /** Santali */
   | 'SAT'
+  /** Santali (Ol Chiki) */
   | 'SAT_OLCK'
+  /** Santali (Ol Chiki, India) */
   | 'SAT_OLCK_IN'
+  /** Sangu */
   | 'SBP'
+  /** Sangu (Tanzania) */
   | 'SBP_TZ'
+  /** Sindhi */
   | 'SD'
+  /** Sindhi (Arabic) */
   | 'SD_ARAB'
+  /** Sindhi (Arabic, Pakistan) */
   | 'SD_ARAB_PK'
+  /** Sindhi (Devanagari) */
   | 'SD_DEVA'
+  /** Sindhi (Devanagari, India) */
   | 'SD_DEVA_IN'
+  /** Northern Sami */
   | 'SE'
+  /** Sena */
   | 'SEH'
+  /** Sena (Mozambique) */
   | 'SEH_MZ'
+  /** Koyraboro Senni */
   | 'SES'
+  /** Koyraboro Senni (Mali) */
   | 'SES_ML'
+  /** Northern Sami (Finland) */
   | 'SE_FI'
+  /** Northern Sami (Norway) */
   | 'SE_NO'
+  /** Northern Sami (Sweden) */
   | 'SE_SE'
+  /** Sango */
   | 'SG'
+  /** Sango (Central African Republic) */
   | 'SG_CF'
+  /** Tachelhit */
   | 'SHI'
+  /** Tachelhit (Latin) */
   | 'SHI_LATN'
+  /** Tachelhit (Latin, Morocco) */
   | 'SHI_LATN_MA'
+  /** Tachelhit (Tifinagh) */
   | 'SHI_TFNG'
+  /** Tachelhit (Tifinagh, Morocco) */
   | 'SHI_TFNG_MA'
+  /** Sinhala */
   | 'SI'
+  /** Sinhala (Sri Lanka) */
   | 'SI_LK'
+  /** Slovak */
   | 'SK'
+  /** Slovak (Slovakia) */
   | 'SK_SK'
+  /** Slovenian */
   | 'SL'
+  /** Slovenian (Slovenia) */
   | 'SL_SI'
+  /** Inari Sami */
   | 'SMN'
+  /** Inari Sami (Finland) */
   | 'SMN_FI'
+  /** Shona */
   | 'SN'
+  /** Shona (Zimbabwe) */
   | 'SN_ZW'
+  /** Somali */
   | 'SO'
+  /** Somali (Djibouti) */
   | 'SO_DJ'
+  /** Somali (Ethiopia) */
   | 'SO_ET'
+  /** Somali (Kenya) */
   | 'SO_KE'
+  /** Somali (Somalia) */
   | 'SO_SO'
+  /** Albanian */
   | 'SQ'
+  /** Albanian (Albania) */
   | 'SQ_AL'
+  /** Albanian (North Macedonia) */
   | 'SQ_MK'
+  /** Albanian (Kosovo) */
   | 'SQ_XK'
+  /** Serbian */
   | 'SR'
+  /** Serbian (Cyrillic) */
   | 'SR_CYRL'
+  /** Serbian (Cyrillic, Bosnia & Herzegovina) */
   | 'SR_CYRL_BA'
+  /** Serbian (Cyrillic, Montenegro) */
   | 'SR_CYRL_ME'
+  /** Serbian (Cyrillic, Serbia) */
   | 'SR_CYRL_RS'
+  /** Serbian (Cyrillic, Kosovo) */
   | 'SR_CYRL_XK'
+  /** Serbian (Latin) */
   | 'SR_LATN'
+  /** Serbian (Latin, Bosnia & Herzegovina) */
   | 'SR_LATN_BA'
+  /** Serbian (Latin, Montenegro) */
   | 'SR_LATN_ME'
+  /** Serbian (Latin, Serbia) */
   | 'SR_LATN_RS'
+  /** Serbian (Latin, Kosovo) */
   | 'SR_LATN_XK'
+  /** Sundanese */
   | 'SU'
+  /** Sundanese (Latin) */
   | 'SU_LATN'
+  /** Sundanese (Latin, Indonesia) */
   | 'SU_LATN_ID'
+  /** Swedish */
   | 'SV'
+  /** Swedish (Åland Islands) */
   | 'SV_AX'
+  /** Swedish (Finland) */
   | 'SV_FI'
+  /** Swedish (Sweden) */
   | 'SV_SE'
+  /** Swahili */
   | 'SW'
+  /** Swahili (Congo - Kinshasa) */
   | 'SW_CD'
+  /** Swahili (Kenya) */
   | 'SW_KE'
+  /** Swahili (Tanzania) */
   | 'SW_TZ'
+  /** Swahili (Uganda) */
   | 'SW_UG'
+  /** Tamil */
   | 'TA'
+  /** Tamil (India) */
   | 'TA_IN'
+  /** Tamil (Sri Lanka) */
   | 'TA_LK'
+  /** Tamil (Malaysia) */
   | 'TA_MY'
+  /** Tamil (Singapore) */
   | 'TA_SG'
+  /** Telugu */
   | 'TE'
+  /** Teso */
   | 'TEO'
+  /** Teso (Kenya) */
   | 'TEO_KE'
+  /** Teso (Uganda) */
   | 'TEO_UG'
+  /** Telugu (India) */
   | 'TE_IN'
+  /** Tajik */
   | 'TG'
+  /** Tajik (Tajikistan) */
   | 'TG_TJ'
+  /** Thai */
   | 'TH'
+  /** Thai (Thailand) */
   | 'TH_TH'
+  /** Tigrinya */
   | 'TI'
+  /** Tigrinya (Eritrea) */
   | 'TI_ER'
+  /** Tigrinya (Ethiopia) */
   | 'TI_ET'
+  /** Turkmen */
   | 'TK'
+  /** Turkmen (Turkmenistan) */
   | 'TK_TM'
+  /** Tongan */
   | 'TO'
+  /** Tongan (Tonga) */
   | 'TO_TO'
+  /** Turkish */
   | 'TR'
+  /** Turkish (Cyprus) */
   | 'TR_CY'
+  /** Turkish (Turkey) */
   | 'TR_TR'
+  /** Tatar */
   | 'TT'
+  /** Tatar (Russia) */
   | 'TT_RU'
+  /** Tasawaq */
   | 'TWQ'
+  /** Tasawaq (Niger) */
   | 'TWQ_NE'
+  /** Central Atlas Tamazight */
   | 'TZM'
+  /** Central Atlas Tamazight (Morocco) */
   | 'TZM_MA'
+  /** Uyghur */
   | 'UG'
+  /** Uyghur (China) */
   | 'UG_CN'
+  /** Ukrainian */
   | 'UK'
+  /** Ukrainian (Ukraine) */
   | 'UK_UA'
+  /** Urdu */
   | 'UR'
+  /** Urdu (India) */
   | 'UR_IN'
+  /** Urdu (Pakistan) */
   | 'UR_PK'
+  /** Uzbek */
   | 'UZ'
+  /** Uzbek (Arabic) */
   | 'UZ_ARAB'
+  /** Uzbek (Arabic, Afghanistan) */
   | 'UZ_ARAB_AF'
+  /** Uzbek (Cyrillic) */
   | 'UZ_CYRL'
+  /** Uzbek (Cyrillic, Uzbekistan) */
   | 'UZ_CYRL_UZ'
+  /** Uzbek (Latin) */
   | 'UZ_LATN'
+  /** Uzbek (Latin, Uzbekistan) */
   | 'UZ_LATN_UZ'
+  /** Vai */
   | 'VAI'
+  /** Vai (Latin) */
   | 'VAI_LATN'
+  /** Vai (Latin, Liberia) */
   | 'VAI_LATN_LR'
+  /** Vai (Vai) */
   | 'VAI_VAII'
+  /** Vai (Vai, Liberia) */
   | 'VAI_VAII_LR'
+  /** Vietnamese */
   | 'VI'
+  /** Vietnamese (Vietnam) */
   | 'VI_VN'
+  /** Volapük */
   | 'VO'
+  /** Vunjo */
   | 'VUN'
+  /** Vunjo (Tanzania) */
   | 'VUN_TZ'
+  /** Walser */
   | 'WAE'
+  /** Walser (Switzerland) */
   | 'WAE_CH'
+  /** Wolof */
   | 'WO'
+  /** Wolof (Senegal) */
   | 'WO_SN'
+  /** Xhosa */
   | 'XH'
+  /** Xhosa (South Africa) */
   | 'XH_ZA'
+  /** Soga */
   | 'XOG'
+  /** Soga (Uganda) */
   | 'XOG_UG'
+  /** Yangben */
   | 'YAV'
+  /** Yangben (Cameroon) */
   | 'YAV_CM'
+  /** Yiddish */
   | 'YI'
+  /** Yoruba */
   | 'YO'
+  /** Yoruba (Benin) */
   | 'YO_BJ'
+  /** Yoruba (Nigeria) */
   | 'YO_NG'
+  /** Cantonese */
   | 'YUE'
+  /** Cantonese (Simplified) */
   | 'YUE_HANS'
+  /** Cantonese (Simplified, China) */
   | 'YUE_HANS_CN'
+  /** Cantonese (Traditional) */
   | 'YUE_HANT'
+  /** Cantonese (Traditional, Hong Kong SAR China) */
   | 'YUE_HANT_HK'
+  /** Standard Moroccan Tamazight */
   | 'ZGH'
+  /** Standard Moroccan Tamazight (Morocco) */
   | 'ZGH_MA'
+  /** Chinese */
   | 'ZH'
+  /** Chinese (Simplified) */
   | 'ZH_HANS'
+  /** Chinese (Simplified, China) */
   | 'ZH_HANS_CN'
+  /** Chinese (Simplified, Hong Kong SAR China) */
   | 'ZH_HANS_HK'
+  /** Chinese (Simplified, Macao SAR China) */
   | 'ZH_HANS_MO'
+  /** Chinese (Simplified, Singapore) */
   | 'ZH_HANS_SG'
+  /** Chinese (Traditional) */
   | 'ZH_HANT'
+  /** Chinese (Traditional, Hong Kong SAR China) */
   | 'ZH_HANT_HK'
+  /** Chinese (Traditional, Macao SAR China) */
   | 'ZH_HANT_MO'
+  /** Chinese (Traditional, Taiwan) */
   | 'ZH_HANT_TW'
+  /** Zulu */
   | 'ZU'
+  /** Zulu (South Africa) */
   | 'ZU_ZA';
 
 export type LanguageDisplay = {
@@ -10143,6 +11200,8 @@ export type Margin = {
  *
  *     PAYMENT_FLOW - new orders marked as paid will receive a
  *     `Payment` object, that will cover the `order.total`.
+ *
+ *
  */
 export type MarkAsPaidStrategyEnum =
   | 'PAYMENT_FLOW'
@@ -10848,6 +11907,7 @@ export type MetadataFilter = {
  *           Matches objects where the metadata key "color" is set to either "blue" or "green".
  *         - `{key: "status", value: {eq: "active"}}`
  *           Matches objects where the metadata key "status" is set to "active".
+ *
  */
 export type MetadataFilterInput = {
   /** Key to filter by. If not other fields provided - checking the existence of the key in metadata. */
@@ -11072,6 +12132,22 @@ export type Mutation = {
   appFetchManifest: Maybe<AppFetchManifest>;
   /** Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS. */
   appInstall: Maybe<AppInstall>;
+  /**
+   * Add a problem to the calling app.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP.
+   */
+  appProblemCreate: Maybe<AppProblemCreate>;
+  /**
+   * Dismiss problems for an app.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+   */
+  appProblemDismiss: Maybe<AppProblemDismiss>;
   /**
    * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
    *
@@ -11619,24 +12695,28 @@ export type Mutation = {
    * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContentCreate: Maybe<DigitalContentCreate>;
   /**
    * Remove digital content assigned to given variant.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContentDelete: Maybe<DigitalContentDelete>;
   /**
    * Updates digital content.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContentUpdate: Maybe<DigitalContentUpdate>;
   /**
    * Generate new URL to digital content.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContentUrlCreate: Maybe<DigitalContentUrlCreate>;
   /**
@@ -12710,6 +13790,22 @@ export type Mutation = {
    */
   requestPasswordReset: Maybe<RequestPasswordReset>;
   /**
+   * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
+   */
+  returnReasonReferenceClear: Maybe<ReturnReasonReferenceTypeClear>;
+  /**
+   * Update return settings across all channels.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
+   */
+  returnSettingsUpdate: Maybe<ReturnSettingsUpdate>;
+  /**
    * Deletes sales.
    *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
@@ -13049,7 +14145,7 @@ export type Mutation = {
   transactionEventReport: Maybe<TransactionEventReport>;
   /** Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. There is a limit of 100 transaction items per checkout / order. */
   transactionInitialize: Maybe<TransactionInitialize>;
-  /** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`. */
+  /** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`.  */
   transactionProcess: Maybe<TransactionProcess>;
   /**
    * Request an action for payment transaction.
@@ -13340,6 +14436,16 @@ export type MutationAppFetchManifestArgs = {
 
 export type MutationAppInstallArgs = {
   input: AppInstallInput;
+};
+
+
+export type MutationAppProblemCreateArgs = {
+  input: AppProblemCreateInput;
+};
+
+
+export type MutationAppProblemDismissArgs = {
+  input: AppProblemDismissInput;
 };
 
 
@@ -14724,6 +15830,11 @@ export type MutationRequestPasswordResetArgs = {
 };
 
 
+export type MutationReturnSettingsUpdateArgs = {
+  input: ReturnSettingsUpdateInput;
+};
+
+
 export type MutationSaleBulkDeleteArgs = {
   ids: Array<Scalars['ID']>;
 };
@@ -15482,7 +16593,11 @@ export type Order = Node & ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_ORDERS.
    */
   totalRemainingGrant: Money;
-  /** Google Analytics tracking client ID. */
+  /**
+   * Google Analytics tracking client ID.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   trackingClientId: Scalars['String'];
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions: Array<TransactionItem>;
@@ -15587,6 +16702,7 @@ export type OrderAddNoteInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     FULL - the funds that are authorized and charged fully cover the
  *     `order.total`-`order.totalGrantedRefund`
+ *
  */
 export type OrderAuthorizeStatusEnum =
   | 'FULL'
@@ -15990,6 +17106,7 @@ export type OrderCapture = {
  *     `order.total`-`order.totalGrantedRefund`
  *     OVERCHARGED - the charged funds are bigger than the
  *     `order.total`-`order.totalGrantedRefund`
+ *
  */
 export type OrderChargeStatusEnum =
   | 'FULL'
@@ -16409,7 +17526,7 @@ export type OrderEventsEmailsEnum =
   | 'SHIPPING_CONFIRMATION'
   | 'TRACKING_UPDATED';
 
-/** The different order event types. */
+/** The different order event types.  */
 export type OrderEventsEnum =
   | 'ADDED_PRODUCTS'
   | 'CANCELED'
@@ -16690,6 +17807,12 @@ export type OrderGrantRefundCreateLineInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` to reference as reason for this line. When provided, must match the configured `PageType` in refund settings. Always optional for both staff and apps.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
 };
 
 /**
@@ -16762,6 +17885,12 @@ export type OrderGrantRefundUpdateLineAddInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` to reference as reason for this line. When provided, must match the configured `PageType` in refund settings. Always optional for both staff and apps.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
 };
 
 export type OrderGrantRefundUpdateLineError = {
@@ -16841,6 +17970,12 @@ export type OrderGrantedRefundLine = {
   quantity: Scalars['Int'];
   /** Reason for refunding the line. */
   reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this refund line.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: Maybe<Page>;
 };
 
 /**
@@ -16850,6 +17985,7 @@ export type OrderGrantedRefundLine = {
  *     PENDING - the refund on related transactionItem is pending
  *     FULL - the refund on related transactionItem is fully processed
  *     FAIL - the refund on related transactionItem failed
+ *
  */
 export type OrderGrantedRefundStatusEnum =
   | 'FAILURE'
@@ -16991,12 +18127,12 @@ export type OrderLinePrivateMetafieldsArgs = {
 
 /** Represents order line of particular order. */
 export type OrderLineThumbnailArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
 export type OrderLineCreateInput = {
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
   forceNewLine: InputMaybe<Scalars['Boolean']>;
   /** Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used. */
   price: InputMaybe<Scalars['PositiveDecimal']>;
@@ -17299,6 +18435,18 @@ export type OrderReturnFulfillmentLineInput = {
   fulfillmentLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning the line.
+   *
+   * Added in Saleor 3.22.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` to reference as reason for returning this line. When provided, must match the configured `PageType` in refund settings. Always optional for both staff and apps.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace: InputMaybe<Scalars['Boolean']>;
 };
@@ -17308,6 +18456,18 @@ export type OrderReturnLineInput = {
   orderLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning the line.
+   *
+   * Added in Saleor 3.22.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` to reference as reason for returning this line. When provided, must match the configured `PageType` in refund settings. Always optional for both staff and apps.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace: InputMaybe<Scalars['Boolean']>;
 };
@@ -17321,6 +18481,18 @@ export type OrderReturnProductsInput = {
   includeShippingCosts: InputMaybe<Scalars['Boolean']>;
   /** List of unfulfilled lines to return. */
   orderLines: InputMaybe<Array<OrderReturnLineInput>>;
+  /**
+   * Global reason for the return.
+   *
+   * Added in Saleor 3.22.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` to reference as reason for the return. Required for staff users when refund reason reference type is configured. Always optional for apps.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** If true, Saleor will call refund action for all lines. */
   refund: InputMaybe<Scalars['Boolean']>;
 };
@@ -17917,7 +19089,8 @@ export type PageCreateInput = {
   pageType: Scalars['ID'];
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Use `publishedAt` field instead.
+   *
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
@@ -18030,7 +19203,8 @@ export type PageInput = {
   isPublished: InputMaybe<Scalars['Boolean']>;
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Use `publishedAt` field instead.
+   *
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
@@ -18872,13 +20046,14 @@ export type PaymentGatewayInitializeTokenizationErrorCode =
  *     SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
  *     FAILED_TO_INITIALIZE - The payment gateway was not initialized.
  *     FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
+ *
  */
 export type PaymentGatewayInitializeTokenizationResult =
   | 'FAILED_TO_DELIVER'
   | 'FAILED_TO_INITIALIZE'
   | 'SUCCESSFULLY_INITIALIZED';
 
-/** Event sent to initialize a new session in payment gateway to store the payment method. */
+/** Event sent to initialize a new session in payment gateway to store the payment method.  */
 export type PaymentGatewayInitializeTokenizationSession = Event & {
   __typename: 'PaymentGatewayInitializeTokenizationSession';
   /** Channel related to the requested action. */
@@ -19126,6 +20301,7 @@ export type PaymentMethodRequestDeleteError = {
  *     PENDING - The payment method is pending tokenization.
  *     FAILED_TO_TOKENIZE - The payment method was not tokenized.
  *     FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
+ *
  */
 export type PaymentMethodTokenizationResult =
   | 'ADDITIONAL_ACTION_REQUIRED'
@@ -19140,6 +20316,8 @@ export type PaymentMethodTokenizationResult =
  *     The following types are possible:
  *     CARD - represents a card payment method.
  *     OTHER - represents any payment method that is not a card payment.
+ *
+ *
  */
 export type PaymentMethodTypeEnum =
   | 'CARD'
@@ -19903,7 +21081,7 @@ export type ProductProductVariantsArgs = {
 
 /** Represents an individual item for sale in the storefront. */
 export type ProductThumbnailArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -20040,7 +21218,8 @@ export type ProductBulkCreateInput = {
   channelListings: InputMaybe<Array<ProductChannelListingCreateInput>>;
   /**
    * Determine if taxes are being charged for the product.
-   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   *
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -20081,7 +21260,8 @@ export type ProductBulkCreateInput = {
   taxClass: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   *
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode: InputMaybe<Scalars['String']>;
   /** Input list of product variants to create. */
@@ -20211,7 +21391,8 @@ export type ProductChannelListingAddInput = {
   availableForPurchaseAt: InputMaybe<Scalars['DateTime']>;
   /**
    * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
-   * @deprecated Use `availableForPurchaseAt` field instead.
+   *
+   * DEPRECATED: this field will be removed. Use `availableForPurchaseAt` field instead.
    */
   availableForPurchaseDate: InputMaybe<Scalars['Date']>;
   /** ID of a channel. */
@@ -20222,7 +21403,8 @@ export type ProductChannelListingAddInput = {
   isPublished: InputMaybe<Scalars['Boolean']>;
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Use `publishedAt` field instead.
+   *
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
@@ -20324,7 +21506,8 @@ export type ProductCreateInput = {
   category: InputMaybe<Scalars['ID']>;
   /**
    * Determine if taxes are being charged for the product.
-   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   *
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -20363,7 +21546,8 @@ export type ProductCreateInput = {
   taxClass: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   *
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
@@ -20452,6 +21636,7 @@ export type ProductErrorCode =
   | 'DUPLICATED_INPUT_ITEM'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
+  | 'INVALID_FILE_TYPE'
   | 'INVALID_PRICE'
   | 'MEDIA_ALREADY_ASSIGNED'
   | 'NOT_FOUND'
@@ -20463,6 +21648,7 @@ export type ProductErrorCode =
   | 'REQUIRED'
   | 'UNIQUE'
   | 'UNSUPPORTED_MEDIA_PROVIDER'
+  | 'UNSUPPORTED_MIME_TYPE'
   | 'VARIANT_NO_DIGITAL_CONTENT';
 
 /** Event sent when product export is completed. */
@@ -20501,7 +21687,8 @@ export type ProductFilterInput = {
   categories: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Specifies the channel by which the data should be filtered.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   collections: InputMaybe<Array<Scalars['ID']>>;
@@ -20547,7 +21734,7 @@ export type ProductImage = {
 
 /** Represents a product image. */
 export type ProductImageUrlArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -20558,7 +21745,8 @@ export type ProductInput = {
   category: InputMaybe<Scalars['ID']>;
   /**
    * Determine if taxes are being charged for the product.
-   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   *
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -20595,7 +21783,8 @@ export type ProductInput = {
   taxClass: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   *
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
@@ -20668,7 +21857,7 @@ export type ProductMediaPrivateMetafieldsArgs = {
 
 /** Represents a product media. */
 export type ProductMediaUrlArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -20838,7 +22027,8 @@ export type ProductOrder = {
   attributeId: InputMaybe<Scalars['ID']>;
   /**
    * Specifies the channel in which to sort the data.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort products. */
@@ -21285,7 +22475,8 @@ export type ProductTypeInput = {
   taxClass: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   *
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode: InputMaybe<Scalars['String']>;
   /** List of attributes used to distinguish between different variants of a product. */
@@ -21596,7 +22787,11 @@ export type ProductVariantBulkCreate = {
   /** Returns how many objects were created. */
   count: Scalars['Int'];
   errors: Array<BulkProductError>;
-  /** List of the created variants. */
+  /**
+   * List of the created variants.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   productVariants: Array<ProductVariant>;
   /** List of the created variants. */
   results: Array<ProductVariantBulkResult>;
@@ -23385,7 +24580,8 @@ export type PublishableChannelListingInput = {
   isPublished: InputMaybe<Scalars['Boolean']>;
   /**
    * Publication date. ISO 8601 standard.
-   * @deprecated Use `publishedAt` field instead.
+   *
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
@@ -23482,12 +24678,14 @@ export type Query = {
    * Look up digital content by ID.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContent: Maybe<DigitalContent>;
   /**
    * List of digital content.
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * @deprecated Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.
    */
   digitalContents: Maybe<DigitalContentCountableConnection>;
   /**
@@ -23659,6 +24857,8 @@ export type Query = {
    * @deprecated Field no longer supported
    */
   reportProductSales: Maybe<ProductVariantCountableConnection>;
+  /** Returns related settings. Returns `ReturnSettings` configuration, global for the entire shop. */
+  returnSettings: ReturnSettings;
   /**
    * Look up a sale by ID.
    *
@@ -23735,7 +24935,11 @@ export type Query = {
    * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
    */
   taxCountryConfiguration: Maybe<TaxCountryConfiguration>;
-  /** \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP. */
+  /**
+   *
+   *
+   * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+   */
   taxCountryConfigurations: Maybe<Array<TaxCountryConfiguration>>;
   /**
    * List of all tax rates available from tax gateway.
@@ -23745,9 +24949,17 @@ export type Query = {
   /**
    * Look up a transaction by ID.
    *
-   * Requires one of the following permissions: HANDLE_PAYMENTS.
+   * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
    */
   transaction: Maybe<TransactionItem>;
+  /**
+   * List of transactions. For apps with `MANAGE_ORDERS` permission, returns all transactions. For apps with just `HANDLE_PAYMENTS` permission, returns only transactions created by that app. For staff users, returns transactions from orders and checkouts in channels they have access to.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+   */
+  transactions: Maybe<TransactionCountableConnection>;
   /**
    * Lookup a translatable item by ID.
    *
@@ -24354,6 +25566,15 @@ export type QueryTransactionArgs = {
 };
 
 
+export type QueryTransactionsArgs = {
+  after: InputMaybe<Scalars['String']>;
+  before: InputMaybe<Scalars['String']>;
+  first: InputMaybe<Scalars['Int']>;
+  last: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TransactionWhereInput>;
+};
+
+
 export type QueryTranslationArgs = {
   id: Scalars['ID'];
   kind: TranslatableKinds;
@@ -24566,6 +25787,83 @@ export type RequestPasswordReset = {
   /** @deprecated Use `errors` field instead. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
+};
+
+/**
+ * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type ReturnReasonReferenceTypeClear = {
+  __typename: 'ReturnReasonReferenceTypeClear';
+  errors: Array<ReturnReasonReferenceTypeClearError>;
+  /** Return settings. */
+  returnSettings: ReturnSettings;
+  /** @deprecated Use `errors` field instead. */
+  returnSettingsErrors: Array<ReturnReasonReferenceTypeClearError>;
+};
+
+export type ReturnReasonReferenceTypeClearError = {
+  __typename: 'ReturnReasonReferenceTypeClearError';
+  /** Failed to clear return reason reference type */
+  code: ReturnSettingsErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+/**
+ * Return related settings from site settings.
+ *
+ * Added in Saleor 3.22.
+ */
+export type ReturnSettings = {
+  __typename: 'ReturnSettings';
+  /** Model type used for return reasons. */
+  reasonReferenceType: Maybe<PageType>;
+};
+
+export type ReturnSettingsErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'REQUIRED';
+
+/**
+ * Update return settings across all channels.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type ReturnSettingsUpdate = {
+  __typename: 'ReturnSettingsUpdate';
+  errors: Array<ReturnSettingsUpdateError>;
+  /** Return settings. */
+  returnSettings: ReturnSettings;
+  /** @deprecated Use `errors` field instead. */
+  returnSettingsErrors: Array<ReturnSettingsUpdateError>;
+};
+
+export type ReturnSettingsUpdateError = {
+  __typename: 'ReturnSettingsUpdateError';
+  /** Failed to update Return Settings */
+  code: ReturnSettingsErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+export type ReturnSettingsUpdateInput = {
+  /**
+   * The ID of a model type, that will be used to reference return reasons. All models with of this type will be accepted as return reasons.
+   *
+   * Added in Saleor 3.22.
+   */
+  returnReasonReferenceType: Scalars['ID'];
 };
 
 export type RewardTypeEnum =
@@ -25008,7 +26306,8 @@ export type SaleSortField =
 export type SaleSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort sales. */
@@ -26406,7 +27705,8 @@ export type ShopSettingsInput = {
   automaticFulfillmentDigitalProducts: InputMaybe<Scalars['Boolean']>;
   /**
    * Charge taxes on shipping.
-   * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+   *
+   * DEPRECATED: this field will be removed. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
    */
   chargeTaxesOnShipping: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
@@ -26425,7 +27725,8 @@ export type ShopSettingsInput = {
   description: InputMaybe<Scalars['String']>;
   /**
    * Display prices with tax in store.
-   * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   *
+   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
   displayGrossPrices: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic account confirmation by email. */
@@ -26438,7 +27739,8 @@ export type ShopSettingsInput = {
   headerText: InputMaybe<Scalars['String']>;
   /**
    * Include taxes in prices.
-   * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   *
+   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
   includeTaxesInPrices: InputMaybe<Scalars['Boolean']>;
   /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
@@ -26465,7 +27767,8 @@ export type ShopSettingsInput = {
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
    * Added in Saleor 3.22.
-   * @deprecated Field no longer supported
+   *
+   * DEPRECATED: this field will be removed.
    */
   useLegacyUpdateWebhookEmission: InputMaybe<Scalars['Boolean']>;
 };
@@ -26972,6 +28275,7 @@ export type StockUpdateInput = {
  *     SKIP - stocks are not checked and not updated.
  *     UPDATE - only do update, if there is enough stock.
  *     FORCE - force update, if there is not enough stock.
+ *
  */
 export type StockUpdatePolicyEnum =
   | 'FORCE'
@@ -27056,6 +28360,7 @@ export type StoredPaymentMethodRequestDeleteErrorCode =
  *     FAILED_TO_DELETE - The stored payment method was not deleted.
  *     FAILED_TO_DELIVER - The request to delete the stored payment method was not
  *     delivered.
+ *
  */
 export type StoredPaymentMethodRequestDeleteResult =
   | 'FAILED_TO_DELETE'
@@ -27992,6 +29297,7 @@ export type TimePeriodTypeEnum =
  *     The following flows are possible:
  *     INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in
  *     checkout form (might require additional authentication from user)
+ *
  */
 export type TokenizedPaymentFlowEnum =
   | 'INTERACTIVE';
@@ -28039,6 +29345,7 @@ export type TransactionAction = {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+ *
  */
 export type TransactionActionEnum =
   | 'CANCEL'
@@ -28077,6 +29384,23 @@ export type TransactionChargeRequested = Event & {
   transaction: Maybe<TransactionItem>;
   /** Saleor version that triggered the event. */
   version: Maybe<Scalars['String']>;
+};
+
+export type TransactionCountableConnection = {
+  __typename: 'TransactionCountableConnection';
+  edges: Array<TransactionCountableEdge>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  /** A total count of items in the collection. */
+  totalCount: Maybe<Scalars['Int']>;
+};
+
+export type TransactionCountableEdge = {
+  __typename: 'TransactionCountableEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: TransactionItem;
 };
 
 /**
@@ -28248,6 +29572,7 @@ export type TransactionEventReportErrorCode =
  *     CANCEL_FAILURE - represents failure cancel.
  *     CANCEL_REQUEST - represents cancel request.
  *     INFO - represents info event.
+ *
  */
 export type TransactionEventTypeEnum =
   | 'AUTHORIZATION_ACTION_REQUIRED'
@@ -28275,6 +29600,12 @@ export type TransactionFilterInput = {
   metadata: InputMaybe<MetadataFilterInput>;
   /** Filter by payment method details used to pay for the order. */
   paymentMethodDetails: InputMaybe<PaymentMethodDetailsFilterInput>;
+  /**
+   * Filter by PSP reference of transactions.
+   *
+   * Added in Saleor 3.22.
+   */
+  pspReference: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -28282,6 +29613,7 @@ export type TransactionFilterInput = {
  *
  *     AUTHORIZATION - the processed transaction should be only authorized
  *     CHARGE - the processed transaction should be charged.
+ *
  */
 export type TransactionFlowStrategyEnum =
   | 'AUTHORIZATION'
@@ -28479,7 +29811,7 @@ export type TransactionKind =
   | 'REFUND_ONGOING'
   | 'VOID';
 
-/** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`. */
+/** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`.  */
 export type TransactionProcess = {
   __typename: 'TransactionProcess';
   /** The json data required to finalize the payment. */
@@ -28693,6 +30025,18 @@ export type TransactionUpdateInput = {
   pspReference: InputMaybe<Scalars['String']>;
 };
 
+export type TransactionWhereInput = {
+  /** List of conditions that must be met. */
+  AND: InputMaybe<Array<TransactionWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR: InputMaybe<Array<TransactionWhereInput>>;
+  /** Filter by app identifier. */
+  appIdentifier: InputMaybe<StringFilterInput>;
+  ids: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by PSP reference. */
+  pspReference: InputMaybe<StringFilterInput>;
+};
+
 export type TranslatableItem = AttributeTranslatableContent | AttributeValueTranslatableContent | CategoryTranslatableContent | CollectionTranslatableContent | MenuItemTranslatableContent | PageTranslatableContent | ProductTranslatableContent | ProductVariantTranslatableContent | PromotionRuleTranslatableContent | PromotionTranslatableContent | SaleTranslatableContent | ShippingMethodTranslatableContent | VoucherTranslatableContent;
 
 export type TranslatableItemConnection = {
@@ -28853,7 +30197,9 @@ export type UploadError = {
 };
 
 export type UploadErrorCode =
-  | 'GRAPHQL_ERROR';
+  | 'GRAPHQL_ERROR'
+  | 'INVALID_FILE_TYPE'
+  | 'UNSUPPORTED_MIME_TYPE';
 
 /** Represents user data. */
 export type User = Node & ObjectWithMetadata & {
@@ -28959,7 +30305,7 @@ export type User = Node & ObjectWithMetadata & {
 
 /** Represents user data. */
 export type UserAvatarArgs = {
-  format?: InputMaybe<ThumbnailFormatEnum>;
+  format: InputMaybe<ThumbnailFormatEnum>;
   size: InputMaybe<Scalars['Int']>;
 };
 
@@ -29115,7 +30461,10 @@ export type UserCreateInput = {
   isActive: InputMaybe<Scalars['Boolean']>;
   /**
    * User account is confirmed.
-   * @deprecated The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
+   *
+   * DEPRECATED: this field will be removed.
+   *
+   * The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
    */
   isConfirmed: InputMaybe<Scalars['Boolean']>;
   /** User language code. */
@@ -29303,7 +30652,11 @@ export type Voucher = Node & ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    */
   channelListings: Maybe<Array<VoucherChannelListing>>;
-  /** The code of the voucher. */
+  /**
+   * The code of the voucher.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   code: Maybe<Scalars['String']>;
   /**
    * List of codes available for this voucher.
@@ -29799,7 +31152,8 @@ export type VoucherInput = {
   categories: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Code to use the voucher.
-   * @deprecated Use `addCodes` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `addCodes` instead.
    */
   code: InputMaybe<Scalars['String']>;
   /** Collections discounted by the voucher. */
@@ -29909,7 +31263,8 @@ export type VoucherSortField =
 export type VoucherSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
-   * @deprecated Use root-level channel argument instead.
+   *
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort vouchers. */
@@ -30157,7 +31512,8 @@ export type WarehouseCreateInput = {
   name: Scalars['String'];
   /**
    * Shipping zones supported by the warehouse.
-   * @deprecated Providing the zone ids will raise a ValidationError.
+   *
+   * DEPRECATED: this field will be removed. Providing the zone ids will raise a ValidationError.
    */
   shippingZones: InputMaybe<Array<Scalars['ID']>>;
   /** Warehouse slug. */
@@ -30402,7 +31758,8 @@ export type WebhookCreateInput = {
   customHeaders: InputMaybe<Scalars['JSONString']>;
   /**
    * The events that webhook wants to subscribe.
-   * @deprecated Use `asyncEvents` or `syncEvents` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
    */
   events: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
@@ -30413,7 +31770,8 @@ export type WebhookCreateInput = {
   query: InputMaybe<Scalars['String']>;
   /**
    * The secret key used to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   *
+   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
@@ -31393,7 +32751,8 @@ export type WebhookUpdateInput = {
   customHeaders: InputMaybe<Scalars['JSONString']>;
   /**
    * The events that webhook wants to subscribe.
-   * @deprecated Use `asyncEvents` or `syncEvents` instead.
+   *
+   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
    */
   events: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
@@ -31404,7 +32763,8 @@ export type WebhookUpdateInput = {
   query: InputMaybe<Scalars['String']>;
   /**
    * Use to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   *
+   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */

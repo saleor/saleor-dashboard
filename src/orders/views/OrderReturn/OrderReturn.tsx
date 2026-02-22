@@ -2,6 +2,8 @@ import {
   OrderErrorCode,
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
+  useRefundSettingsQuery,
+  useReturnSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -32,6 +34,13 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       id: orderId,
     },
   });
+  const { data: returnSettingsData } = useReturnSettingsQuery();
+  const modelForReturnReasonRefId =
+    returnSettingsData?.returnSettings.reasonReferenceType?.id ?? null;
+
+  const { data: refundSettingsData } = useRefundSettingsQuery();
+  const refundReasonConfigured = !!refundSettingsData?.refundSettings.reasonReferenceType;
+
   const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
     onCompleted: data => {
       if (!data.orderFulfillmentReturnProducts?.errors.length) {
@@ -70,7 +79,7 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       return;
     }
 
-    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData);
+    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData, data.order);
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
 
     if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
@@ -106,6 +115,8 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
       submitStatus={returnCreateOpts.status}
+      modelForReturnReasonRefId={modelForReturnReasonRefId}
+      refundReasonConfigured={refundReasonConfigured}
     />
   );
 };

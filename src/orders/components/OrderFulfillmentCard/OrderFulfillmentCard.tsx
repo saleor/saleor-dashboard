@@ -16,6 +16,7 @@ import {
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
+import { LineReasonDisplay } from "../OrderDetailsDatagrid/datagrid";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import { ActionButtons } from "./ActionButtons";
 
@@ -47,6 +48,12 @@ const fulfillmentLineToLine = ({
   // 'orderLine.quantity' has the total number of items in the order
   quantity,
 });
+const fulfillmentLineToReason = (
+  line: OrderDetailsFragment["fulfillments"][0]["lines"][0],
+): LineReasonDisplay => ({
+  reason: line.reason,
+  reasonType: line.reasonReference?.title ?? null,
+});
 
 export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   const {
@@ -66,13 +73,14 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     return null;
   }
 
-  const getLines = () => {
-    if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines).map(fulfillmentLineToLine);
-    }
+  const hasLineReasons = statusesToMergeLines.includes(fulfillment?.status);
+  const resolvedLines = hasLineReasons
+    ? mergeRepeatedOrderLines(fulfillment.lines)
+    : (fulfillment?.lines ?? []);
 
-    return fulfillment?.lines.map(fulfillmentLineToLine) || [];
-  };
+  const getLines = () => resolvedLines.map(fulfillmentLineToLine);
+  const getLineReasons = (): LineReasonDisplay[] | undefined =>
+    hasLineReasons ? resolvedLines.map(fulfillmentLineToReason) : undefined;
 
   return (
     <Box data-test-id={dataTestId} backgroundColor={"default2"}>
@@ -142,11 +150,25 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
+      {(fulfillment.reason || fulfillment.reasonReference) && (
+        <Box paddingX={6} paddingY={4} backgroundColor="default2">
+          <Text size={2}>
+            {fulfillment.reasonReference && (
+              <Text as="span" size={2} fontWeight="bold">
+                {fulfillment.reasonReference.title}
+                {fulfillment.reason ? ": " : ""}
+              </Text>
+            )}
+            {fulfillment.reason}
+          </Text>
+        </Box>
+      )}
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
+          lineReasons={getLineReasons()}
           datagridCustomTheme={{
             bgHeader: themeValues.colors.background.default2,
           }}

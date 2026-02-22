@@ -52,12 +52,14 @@ export const getRefundEditOrderLinesToRefund = (
       return {
         quantity: refundLine.quantity,
         reason: refundLine.reason ?? "",
+        reasonReference: refundLine.reasonReference?.id ?? "",
       };
     }
 
     return {
       quantity: "",
       reason: "",
+      reasonReference: "",
     };
   });
 };
@@ -68,6 +70,7 @@ const getRefundCreateOrderLinesToRefund = (
   return order?.lines.map(() => ({
     quantity: "",
     reason: "",
+    reasonReference: "",
   }));
 };
 

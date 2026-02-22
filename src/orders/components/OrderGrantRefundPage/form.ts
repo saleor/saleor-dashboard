@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export interface OrderGrantRefundFormData {
   amount: number | undefined;
   reason: string;
+  reasonReference: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping?: boolean;
   transactionId: string;
@@ -15,6 +16,7 @@ export interface OrderGrantRefundFormData {
 const defaultInitialData: OrderGrantRefundFormData = {
   amount: 0,
   reason: "",
+  reasonReference: "",
   transactionId: "",
   lines: [],
   grantRefundForShipping: false,

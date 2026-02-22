@@ -53,6 +53,7 @@ const transactionSubmitCardProps = {
   onAmountChange: () => undefined,
   isAmountDirty: false,
   transactionId: "VHJhbnNhY3Rpb25JdGVtOmZjNzhhZDkwLWQ3NDgtNDdlNi04YWM4LWE0YjdiNjRlMmE1MQ==",
+  orderId: "T3JkZXI6MQ==",
 };
 
 describe("TransactionSubmitCard", () => {

@@ -17,9 +17,15 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
+export interface LineReasonDisplay {
+  reason: string | null;
+  reasonType: string | null;
+}
+
 export const orderDetailsStaticColumnsAdapter = (
   intl: IntlShape,
   emptyColumn: AvailableColumn,
+  { withReasonColumn }: { withReasonColumn?: boolean } = {},
 ): AvailableColumn[] => [
   emptyColumn,
   {
@@ -57,6 +63,15 @@ export const orderDetailsStaticColumnsAdapter = (
     title: intl.formatMessage(columnsMessages.isGift),
     width: 150,
   },
+  ...(withReasonColumn
+    ? [
+        {
+          id: "reason",
+          title: intl.formatMessage(columnsMessages.reason),
+          width: 200,
+        },
+      ]
+    : []),
 ];
 
 interface GetCellContentProps {
@@ -65,10 +80,11 @@ interface GetCellContentProps {
   loading: boolean;
   intl: IntlShape;
   onOrderLineShowMetadata: (id: string) => void;
+  lineReasons?: LineReasonDisplay[];
 }
 
 export const createGetCellContent =
-  ({ columns, data, loading, onOrderLineShowMetadata, intl }: GetCellContentProps) =>
+  ({ columns, data, loading, onOrderLineShowMetadata, intl, lineReasons }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -116,6 +132,12 @@ export const createGetCellContent =
           readonly: true,
           allowOverlay: false,
         });
+      case "reason": {
+        const lineReason = lineReasons?.[getDatagridRowDataIndex(row, removed)];
+        const parts = [lineReason?.reasonType, lineReason?.reason].filter(Boolean);
+
+        return readonlyTextCell(parts.join(": "), false);
+      }
       case "metadata":
         return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
           onOrderLineShowMetadata(rowData.id);
