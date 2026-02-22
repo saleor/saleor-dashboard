@@ -1,4 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import * as React from "react";
 
 interface ManualRefundHookProps {
@@ -31,8 +32,8 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
   const handleChangeDescription: React.ChangeEventHandler<HTMLInputElement> = e => {
     setDescription(e.target.value);
   };
-  const handleChangeAmount: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const value = parseFloat(e.target.value);
+  const handleChangeAmount = (e: PriceFieldChangeEvent) => {
+    const value = parseFloat(e.target.value ?? "");
 
     if (!Number.isNaN(value)) {
       setAmount(value);

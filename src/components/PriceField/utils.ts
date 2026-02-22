@@ -1,106 +1,160 @@
-import { SEPARATOR_CHARACTERS } from "./consts";
-
 const FALLBACK_MAX_FRACTION_DIGITS = 2;
 
-const resolveDigitsFromCurrencyOrFallback = (currency = "USD"): number => {
+/**
+ * Formats percent input (e.g., tax rates).
+ * Simpler than price input - no thousand separator handling needed.
+ *
+ * @param value - Raw input value
+ * @param maxDecimalPlaces - Maximum decimal places (default: 3 for tax precision)
+ * @returns Normalized percent string with dot decimal separator
+ */
+export const formatPercentInput = (value: string, maxDecimalPlaces = 3): string => {
+  // Filter to only digits and one decimal separator
+  const filtered = value.replace(/[^\d.,]/g, "");
+
+  if (!filtered) {
+    return "";
+  }
+
+  // Normalize comma to dot, keep only first separator
+  const withDot = filtered.replace(/,/g, ".");
+  const firstDotIndex = withDot.indexOf(".");
+
+  if (firstDotIndex === -1) {
+    return withDot;
+  }
+
+  const integerPart = withDot.slice(0, firstDotIndex);
+  const decimalPart = withDot.slice(firstDotIndex + 1).replace(/\./g, "");
+
+  if (!decimalPart) {
+    return `${integerPart}.`;
+  }
+
+  return `${integerPart}.${decimalPart.slice(0, maxDecimalPlaces)}`;
+};
+
+/**
+ * Gets the number of decimal places for a currency using Intl API.
+ * Examples: USD → 2, JPY → 0, KWD → 3
+ */
+export const getCurrencyDecimalPoints = (currency?: string): number => {
   try {
     return (
       new Intl.NumberFormat("en-GB", {
         style: "currency",
-        currency,
+        currency: currency || "USD",
       }).resolvedOptions().maximumFractionDigits ?? FALLBACK_MAX_FRACTION_DIGITS
     );
-  } catch (e) {
-    try {
-      // fallback to "USD" if currency wasn't recognised
-      return (
-        new Intl.NumberFormat("en-GB", {
-          style: "currency",
-          currency: "USD",
-        }).resolvedOptions().maximumFractionDigits ?? FALLBACK_MAX_FRACTION_DIGITS
-      );
-    } catch {
-      // everything is broken - try to return something that makes sense
-      return FALLBACK_MAX_FRACTION_DIGITS;
-    }
+  } catch {
+    return FALLBACK_MAX_FRACTION_DIGITS;
   }
 };
 
-export const getCurrencyDecimalPoints = (currency?: string) => {
-  return resolveDigitsFromCurrencyOrFallback(currency);
-};
-
-export const findPriceSeparator = (input: string) =>
-  SEPARATOR_CHARACTERS.find(separator => input.includes(separator));
+// Max digits to prevent overflow issues with float64 precision
+const MAX_INTEGER_DIGITS = 15;
 
 /**
- * Normalizes decimal separator to JavaScript standard (dot).
- * Handles different locale formats:
- * - European: "1.234,56" → "1234.56" (comma decimal, dot thousand)
- * - US: "1,234.56" → "1234.56" (dot decimal, comma thousand)
- * - Simple: "10,50" or "10.50" → "10.50"
- * - US thousands only: "1,234,567" → "1234567"
- * - European thousands only: "1.234.567" → "1234567"
+ * Formats price input for controlled input fields.
+ *
+ * Handles two scenarios:
+ * 1. **Typing** (same separator type): First separator wins, rest are accidents
+ *    - "10.5.6" → "10.56" (double-tap accident)
+ * 2. **Paste** (mixed separators): Smart detection of thousands format
+ *    - "1,234.56" → "1234.56" (US format)
+ *    - "1.234,56" → "1234.56" (EU format)
+ *
+ * @param value - Raw input value
+ * @param maxDecimalPlaces - Maximum decimal places allowed (e.g., 2 for USD, 0 for JPY)
+ * @returns Normalized price string with dot decimal separator
  */
-export const normalizeDecimalSeparator = (value: string): string => {
-  const commaCount = (value.match(/,/g) || []).length;
-  const dotCount = (value.match(/\./g) || []).length;
+export const formatPriceInput = (value: string, maxDecimalPlaces: number): string => {
+  // Filter to only allow digits and decimal separators
+  const filtered = value.replace(/[^\d.,]/g, "");
 
-  if (commaCount > 0 && dotCount > 0) {
-    // Both separators present - last one is decimal, other is thousand
-    const lastComma = value.lastIndexOf(",");
-    const lastDot = value.lastIndexOf(".");
+  if (!filtered) {
+    return "";
+  }
+
+  // Just separators with no digits = empty
+  if (!/\d/.test(filtered)) {
+    return "";
+  }
+
+  const commaCount = (filtered.match(/,/g) || []).length;
+  const dotCount = (filtered.match(/\./g) || []).length;
+  const hasComma = commaCount > 0;
+  const hasDot = dotCount > 0;
+
+  let integerPart: string;
+  let decimalPart: string | undefined;
+
+  // Mixed separators = pasted formatted number (smart detection)
+  // Valid formats have ONE type as decimal (last position) and other type as thousands
+  // - US: "1,234.56" or "1,234,567.89" (dot is last, commas before)
+  // - EU: "1.234,56" or "1.234.567,89" (comma is last, dots before)
+  const lastComma = filtered.lastIndexOf(",");
+  const lastDot = filtered.lastIndexOf(".");
+  const lastSeparatorIndex = Math.max(lastComma, lastDot);
+  const afterLastSeparator = filtered.slice(lastSeparatorIndex + 1);
+
+  // Clean format: after the last separator, only digits (no more separators)
+  const isCleanMixedFormat =
+    hasComma &&
+    hasDot &&
+    /^\d*$/.test(afterLastSeparator) && // Only digits after last separator
+    ((dotCount === 1 && lastDot > lastComma) || // US: one dot at end
+      (commaCount === 1 && lastComma > lastDot)); // EU: one comma at end
+
+  if (isCleanMixedFormat) {
+    // Clean mixed format - detect US vs EU by last separator
 
     if (lastComma > lastDot) {
-      // European format: 1.234,56 → remove dots, convert comma to dot
-      return value.replace(/\./g, "").replace(",", ".");
+      // EU format: "1.234,56" or "1.234.567,89" → comma is decimal
+      integerPart = filtered.slice(0, lastComma).replace(/\./g, "");
+      decimalPart = filtered.slice(lastComma + 1);
     } else {
-      // US format: 1,234.56 → remove commas
-      return value.replace(/,/g, "");
+      // US format: "1,234.56" or "1,234,567.89" → dot is decimal
+      integerPart = filtered.slice(0, lastDot).replace(/,/g, "");
+      decimalPart = filtered.slice(lastDot + 1);
+    }
+  } else {
+    // Same separator type = typing, first separator wins
+    const withDots = filtered.replace(/,/g, ".");
+    const firstDotIndex = withDots.indexOf(".");
+
+    if (firstDotIndex === -1) {
+      integerPart = withDots;
+      decimalPart = undefined;
+    } else {
+      integerPart = withDots.slice(0, firstDotIndex);
+      // Remove any extra dots from decimal part
+      decimalPart = withDots.slice(firstDotIndex + 1).replace(/\./g, "");
     }
   }
 
-  // Multiple commas = US thousands separators (e.g., "1,234,567")
-  if (commaCount > 1) {
-    return value.replace(/,/g, "");
+  // Add leading zero for ".50" → "0.50"
+  if (!integerPart && decimalPart !== undefined) {
+    integerPart = "0";
   }
 
-  // Multiple dots = European thousands separators (e.g., "1.234.567")
-  if (dotCount > 1) {
-    return value.replace(/\./g, "");
+  // Limit integer part to prevent float64 precision issues
+  if (integerPart.length > MAX_INTEGER_DIGITS) {
+    integerPart = integerPart.slice(0, MAX_INTEGER_DIGITS);
   }
 
-  // Single comma (European decimal) or single dot (US decimal) or no separator
-  return value.replace(",", ".");
-};
-
-/**
- * Parses a decimal string value to a number, handling locale-specific separators.
- * Returns 0 if the value cannot be parsed.
- */
-export const parseDecimalValue = (value: string): number =>
-  parseFloat(normalizeDecimalSeparator(value)) || 0;
-
-/**
- * Limits decimal places in a string value, preserving the user's original separator.
- * Useful for input validation while typing.
- */
-export const limitDecimalPlaces = (value: string, maxDecimalPlaces: number): string => {
-  const normalized = normalizeDecimalSeparator(value);
-  const separator = value.includes(",") ? "," : ".";
-  const [integerPart, decimalPart] = normalized.split(".");
-
-  if (!decimalPart) {
-    return value;
+  // No decimal - return integer
+  if (decimalPart === undefined) {
+    return integerPart;
   }
 
+  // Currency doesn't support decimals (e.g., JPY)
   if (maxDecimalPlaces === 0) {
     return integerPart;
   }
 
-  if (decimalPart.length > maxDecimalPlaces) {
-    return `${integerPart}${separator}${decimalPart.slice(0, maxDecimalPlaces)}`;
-  }
+  // Truncate and format
+  const truncated = decimalPart.slice(0, maxDecimalPlaces);
 
-  return value;
+  return `${integerPart}.${truncated}`;
 };
