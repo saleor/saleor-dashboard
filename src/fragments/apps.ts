@@ -202,7 +202,7 @@ export const InstalledAppDetails = gql`
     isActive
     name
     type
-    problems(limit: 3) {
+    problems {
       __typename
       key
       message

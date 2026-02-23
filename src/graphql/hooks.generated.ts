@@ -198,7 +198,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
-  problems(limit: 3) {
+  problems {
     __typename
     key
     message
