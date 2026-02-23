@@ -1,0 +1,45 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemTimestamps.tsx
+  d9cbf3f38628edc7 5
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsHeaderBadge/ProblemsHeaderBadge.module.css
+  d9cbf3f38628edc7 1-25
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemTypeBadge/ProblemTypeBadge.tsx
+  d9cbf3f38628edc7 7
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsHeaderBadge/ProblemsHeaderBadge.tsx
+  d9cbf3f38628edc7 5
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList/ProblemsList.tsx
+  d9cbf3f38628edc7 16
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList/ProblemsList.module.css
+  d9cbf3f38628edc7 1-102
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsBadge/ProblemsBadge.module.css
+  d9cbf3f38628edc7 1-25
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemTypeBadge/ProblemTypeBadge.module.css
+  d9cbf3f38628edc7 1-22
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/DismissedLabel.tsx
+  d9cbf3f38628edc7 6
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.module.css
+  d9cbf3f38628edc7 1-47
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/TimestampWithTooltip.tsx
+  d9cbf3f38628edc7 7
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsBadge/ProblemsBadge.tsx
+  d9cbf3f38628edc7 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "7607f699c52d3f06ac521cb61ff50235a804cb01",
+  "prompts": {
+    "d9cbf3f38628edc7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "629f1998-7059-426c-bae7-30af8a01fa44",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 229,
+      "total_deletions": 8,
+      "accepted_lines": 229,
+      "overriden_lines": 0
+    }
+  }
+}
