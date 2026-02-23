@@ -1,25 +1,24 @@
 // @ts-strict-ignore
-import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
-import { filterSelectedAsyncEvents, IntrospectionNode } from "@dashboard/extensions/utils";
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
+import { filterSelectedAsyncEvents, type IntrospectionNode } from "@dashboard/extensions/utils";
+import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
 import { toggle } from "@dashboard/utils/lists";
 import {
-  DocumentNode,
-  FieldNode,
-  InlineFragmentNode,
+  type DocumentNode,
+  type FieldNode,
+  type InlineFragmentNode,
   Kind,
-  ObjectFieldNode,
-  OperationDefinitionNode,
+  type ObjectFieldNode,
+  type OperationDefinitionNode,
   parse,
   print,
-  SelectionNode,
+  type SelectionNode,
   visit,
 } from "graphql";
 import isEmpty from "lodash/isEmpty";
-import * as React from "react";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 interface CreateSyncEventsSelectHandler {
   change: (event: ChangeEvent, cb?: () => void) => void;
