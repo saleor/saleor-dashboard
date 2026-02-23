@@ -74,6 +74,6 @@ export const useSidebarDotState = (): SidebarDotState => {
   return {
     handleAppsListItemClick: handleClick,
     handleFailedAttempt,
-    hasNewFailedAttempts,
+    hasProblems: hasNewFailedAttempts,
   };
 };

@@ -77,10 +77,10 @@ describe("SidebarAppAlert", () => {
     const { result } = renderHook(() => useAppsAlert());
 
     await waitFor(() => {
-      expect(result.current.hasNewFailedAttempts).toBe(true);
+      expect(result.current.hasProblems).toBe(true);
     });
 
-    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasProblems} />);
 
     const trigger = screen.getByTestId("sidebar-app-alert-trigger");
 
@@ -146,7 +146,7 @@ describe("SidebarAppAlert", () => {
 
     // Assert
     await waitFor(() => {
-      expect(result.current.hasNewFailedAttempts).toBe(true);
+      expect(result.current.hasProblems).toBe(true);
     });
   });
 
@@ -187,10 +187,10 @@ describe("SidebarAppAlert", () => {
     const { result } = renderHook(() => useAppsAlert());
 
     await waitFor(() => {
-      expect(result.current.hasNewFailedAttempts).toBe(false);
+      expect(result.current.hasProblems).toBe(false);
     });
 
-    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasProblems} />);
 
     // Assert
     expect(screen.queryByTestId("sidebar-app-alert-trigger")).not.toBeInTheDocument();

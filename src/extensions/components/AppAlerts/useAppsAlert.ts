@@ -17,7 +17,7 @@ export const useAppsAlert = () => {
     useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
-  const [fetchAppProblems, { data: appProblemsData }] = useAppHasProblemsLazyQuery({
+  const [fetchHasAppsAnyProblems, { data: appProblemsData }] = useAppHasProblemsLazyQuery({
     fetchPolicy: "no-cache",
   });
 
@@ -30,10 +30,8 @@ export const useAppsAlert = () => {
   const fetchAll = useCallback(() => {
     fetchAppsWebhooks();
 
-    if (hasManagedAppsPermission) {
-      fetchAppProblems({ variables: { first: 100 } });
-    }
-  }, [fetchAppsWebhooks, hasManagedAppsPermission, fetchAppProblems]);
+    fetchHasAppsAnyProblems({ variables: { first: 100 } });
+  }, [fetchAppsWebhooks, fetchHasAppsAnyProblems]);
 
   // Fetch immediately on mount
   useEffect(() => {
@@ -41,7 +39,7 @@ export const useAppsAlert = () => {
   }, [fetchAll]);
 
   useIntervalActionWithState({
-    action: fetchAll,
+    action: fetchAppsWebhooks,
     interval: DELIVERIES_FETCHING_INTERVAL,
     key: "webhook_deliveries_last_fetched",
     skip: !hasManagedAppsPermission,
@@ -53,17 +51,8 @@ export const useAppsAlert = () => {
     }
   }, [lastFailedWebhookDate, handleFailedAttempt]);
 
-  useEffect(() => {
-    // When any app reports problems, mark as a failed attempt so the sidebar dot appears.
-    if (hasAppProblems) {
-      handleFailedAttempt(new Date().toISOString());
-    }
-  }, [hasAppProblems, handleFailedAttempt]);
-
   return {
-    // Merge all issues to detect if there is any problem
-    // todo change name
-    hasNewFailedAttempts: hasNewFailedAttempts || hasAppProblems,
+    hasProblems: hasNewFailedAttempts || hasAppProblems,
     handleAppsListItemClick,
   };
 };
