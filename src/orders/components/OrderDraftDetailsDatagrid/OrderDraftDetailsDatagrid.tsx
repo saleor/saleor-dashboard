@@ -4,13 +4,13 @@ import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColum
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
-  DatagridChangeOpts,
+  type DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
@@ -20,7 +20,7 @@ import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
+import { type FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { OrderDraftDetailsRowActions } from "./OrderDraftDetailsRowActions";

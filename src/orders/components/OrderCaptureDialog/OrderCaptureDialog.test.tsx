@@ -1,10 +1,10 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
-import { IMoney } from "@dashboard/utils/intl";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
+import { type IMoney } from "@dashboard/utils/intl";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import { OrderCaptureDialog, OrderCaptureDialogProps } from "./OrderCaptureDialog";
+import { OrderCaptureDialog, type OrderCaptureDialogProps } from "./OrderCaptureDialog";
 
 const createMoney = (amount: number, currency = "USD"): IMoney => ({
   amount,

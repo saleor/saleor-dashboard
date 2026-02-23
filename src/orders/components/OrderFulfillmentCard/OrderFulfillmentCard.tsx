@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import {

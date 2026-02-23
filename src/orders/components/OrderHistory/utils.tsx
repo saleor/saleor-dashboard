@@ -1,4 +1,4 @@
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 
 // Date group labels - keys are used internally, labels are internationalized in component

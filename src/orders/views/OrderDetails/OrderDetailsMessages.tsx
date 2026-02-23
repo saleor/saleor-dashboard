@@ -3,28 +3,28 @@ import { handleNestedMutationErrors } from "@dashboard/auth/utils";
 import { formatMoney } from "@dashboard/components/Money";
 import messages from "@dashboard/containers/BackgroundTasks/messages";
 import {
-  CreateManualTransactionCaptureMutation,
-  InvoiceEmailSendMutation,
-  InvoiceRequestMutation,
-  OrderCancelMutation,
-  OrderCaptureMutation,
-  OrderDraftCancelMutation,
-  OrderDraftFinalizeMutation,
-  OrderDraftUpdateMutation,
+  type CreateManualTransactionCaptureMutation,
+  type InvoiceEmailSendMutation,
+  type InvoiceRequestMutation,
+  type OrderCancelMutation,
+  type OrderCaptureMutation,
+  type OrderDraftCancelMutation,
+  type OrderDraftFinalizeMutation,
+  type OrderDraftUpdateMutation,
   OrderErrorCode,
-  OrderFulfillmentApproveMutation,
-  OrderFulfillmentCancelMutation,
-  OrderFulfillmentUpdateTrackingMutation,
-  OrderLineDeleteMutation,
-  OrderLinesAddMutation,
-  OrderLineUpdateMutation,
-  OrderMarkAsPaidMutation,
-  OrderNoteAddMutation,
-  OrderNoteUpdateMutation,
-  OrderShippingMethodUpdateMutation,
-  OrderTransactionRequestActionMutation,
-  OrderUpdateMutation,
-  OrderVoidMutation,
+  type OrderFulfillmentApproveMutation,
+  type OrderFulfillmentCancelMutation,
+  type OrderFulfillmentUpdateTrackingMutation,
+  type OrderLineDeleteMutation,
+  type OrderLinesAddMutation,
+  type OrderLineUpdateMutation,
+  type OrderMarkAsPaidMutation,
+  type OrderNoteAddMutation,
+  type OrderNoteUpdateMutation,
+  type OrderShippingMethodUpdateMutation,
+  type OrderTransactionRequestActionMutation,
+  type OrderUpdateMutation,
+  type OrderVoidMutation,
   TransactionActionEnum,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -38,10 +38,10 @@ import {
   transactionRequestMessages as transactionMessages,
 } from "@dashboard/utils/errors/transaction";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { orderUrl, OrderUrlQueryParams } from "../../urls";
+import { orderUrl, type OrderUrlQueryParams } from "../../urls";
 
 interface OrderDetailsMessages {
   children: (props: {

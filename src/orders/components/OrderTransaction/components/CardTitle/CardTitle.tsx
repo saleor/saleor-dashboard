@@ -5,8 +5,8 @@ import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink, MoreVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionProps } from "../../OrderTransaction";
-import { ExtendedOrderTransaction } from "../../types";
+import { type OrderTransactionProps } from "../../OrderTransaction";
+import { type ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
 import { PaymentMethodDetails } from "../PaymentMethodDetails";
 import { EventTime } from "../TransactionEvents/components/EventTime";

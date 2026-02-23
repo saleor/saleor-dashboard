@@ -1,5 +1,5 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import * as React from "react";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import type * as React from "react";
 
 import { ManualTransactionContext } from "./context";
 import { useManualRefund } from "./hooks";

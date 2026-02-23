@@ -1,11 +1,11 @@
 import {
   DiscountValueTypeEnum,
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   OrderDiscountType,
-  OrderLinesUpdateFragment,
+  type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
 import { prepareMoney } from "@dashboard/orders/fixtures";
-import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

@@ -1,5 +1,5 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
-import { FakeTransaction } from "@dashboard/orders/types";
+import { type TransactionItemFragment } from "@dashboard/graphql";
+import { type FakeTransaction } from "@dashboard/orders/types";
 
 type OrderTransaction = TransactionItemFragment | FakeTransaction;
 

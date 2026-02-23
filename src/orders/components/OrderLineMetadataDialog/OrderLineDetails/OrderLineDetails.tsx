@@ -1,4 +1,4 @@
-import { OrderLineMetadataDetailsFragment } from "@dashboard/graphql";
+import { type OrderLineMetadataDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

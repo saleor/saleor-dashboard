@@ -1,4 +1,4 @@
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 

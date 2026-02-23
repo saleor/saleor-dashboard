@@ -1,5 +1,5 @@
 import { UserAvatar } from "@dashboard/components/UserAvatar";
-import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql";
+import { type AppAvatarFragment, type StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, vars } from "@saleor/macaw-ui-next";
 import { LayoutGridIcon, ZapIcon } from "lucide-react";

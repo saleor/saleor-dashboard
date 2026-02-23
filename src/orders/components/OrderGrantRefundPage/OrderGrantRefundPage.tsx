@@ -1,14 +1,14 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
-  OrderDetailsGrantedRefundFragment,
-  OrderDetailsGrantRefundFragment,
-  OrderLineGrantRefundFragment,
+  type OrderDetailsGrantedRefundFragment,
+  type OrderDetailsGrantRefundFragment,
+  type OrderLineGrantRefundFragment,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -22,7 +22,7 @@ import { getOrderTitleMessage } from "../OrderCardTitle/utils";
 import { ProductsCard } from "./components/ProductCard";
 import { ShippingIncluded } from "./components/ShippingInluded";
 import { GrantRefundContext } from "./context";
-import { OrderGrantRefundFormData, useGrantRefundForm } from "./form";
+import { type OrderGrantRefundFormData, useGrantRefundForm } from "./form";
 import { grantRefundPageMessages } from "./messages";
 import {
   getGrantRefundReducerInitialState,

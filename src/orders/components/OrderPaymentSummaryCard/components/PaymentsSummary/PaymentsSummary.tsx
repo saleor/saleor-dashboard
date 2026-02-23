@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { FormattedMessage } from "react-intl";
 

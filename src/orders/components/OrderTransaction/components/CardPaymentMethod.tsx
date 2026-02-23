@@ -1,5 +1,5 @@
 import { getAppMountUri } from "@dashboard/config";
-import { CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
+import { type CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 

@@ -1,6 +1,6 @@
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { Pill } from "@dashboard/components/Pill";
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
