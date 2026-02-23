@@ -1,3 +1,9 @@
+import {
+  criticalProblemFixture,
+  dismissedProblemFixture,
+  warningProblemFixture,
+} from "@dashboard/extensions/fixtures";
+import { useInstalledAppsListQuery } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
@@ -178,6 +184,75 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
 
     // Loading state should be false when apps are loaded, even without MANAGE_PLUGINS permission
     expect(result.current.installedAppsLoading).toBe(false);
+  });
+
+  it("should compute activeProblemCount and criticalProblemCount per app", () => {
+    // Arrange
+    (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "1",
+                name: "App With Problems",
+                isActive: true,
+                type: "THIRDPARTY",
+                problems: [criticalProblemFixture, warningProblemFixture, dismissedProblemFixture],
+              },
+            },
+          ],
+        },
+      },
+      refetch: jest.fn(),
+    });
+
+    // Act
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    const app = result.current.installedExtensions.find(ext => ext.id === "1");
+
+    expect(app?.activeProblemCount).toBe(2); // 2 active (dismissed excluded)
+    expect(app?.criticalProblemCount).toBe(1); // 1 critical
+  });
+
+  it("should aggregate totalCount and criticalCount across all apps", () => {
+    // Arrange
+    (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "1",
+                name: "App A",
+                isActive: true,
+                type: "THIRDPARTY",
+                problems: [criticalProblemFixture],
+              },
+            },
+            {
+              node: {
+                id: "2",
+                name: "App B",
+                isActive: true,
+                type: "THIRDPARTY",
+                problems: [warningProblemFixture, criticalProblemFixture],
+              },
+            },
+          ],
+        },
+      },
+      refetch: jest.fn(),
+    });
+
+    // Act
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    expect(result.current.totalCount).toBe(3); // 1 + 2
+    expect(result.current.criticalCount).toBe(2); // 1 + 1
   });
 });
 

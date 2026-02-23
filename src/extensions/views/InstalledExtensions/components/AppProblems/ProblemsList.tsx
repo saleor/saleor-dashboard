@@ -31,7 +31,7 @@ interface ProblemsListProps {
   onFetchAllProblems?: (appId: string) => void;
 }
 
-const sortProblems = (problems: AppProblem[]): AppProblem[] =>
+export const sortProblems = (problems: AppProblem[]): AppProblem[] =>
   [...problems].sort((a, b) => {
     const aDismissed = isProblemDismissed(a);
     const bDismissed = isProblemDismissed(b);
@@ -53,7 +53,7 @@ const sortProblems = (problems: AppProblem[]): AppProblem[] =>
     return new Date(getProblemSortDate(b)).getTime() - new Date(getProblemSortDate(a)).getTime();
   });
 
-const getActionLink = (
+export const getActionLink = (
   problem: AppProblem,
   appId: string,
   appType?: AppTypeEnum | null,

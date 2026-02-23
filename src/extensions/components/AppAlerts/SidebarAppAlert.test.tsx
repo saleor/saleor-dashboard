@@ -95,6 +95,61 @@ describe("SidebarAppAlert", () => {
     ).toBeInTheDocument();
   });
 
+  it("sets hasNewFailedAttempts when apps have problems (no webhook failures)", async () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue({
+      hasManagedAppsPermission: true,
+    });
+    // No webhook failures
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      jest.fn(),
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [] },
+                      pendingDelivers: { edges: [] },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+    // App has problems
+    (useAppHasProblemsLazyQuery as jest.Mock).mockReturnValue([
+      jest.fn(),
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  id: "app-1",
+                  problems: [{ __typename: "AppProblem" }],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsAlert());
+
+    // Assert
+    await waitFor(() => {
+      expect(result.current.hasNewFailedAttempts).toBe(true);
+    });
+  });
+
   it("doesn't display sidebar alert dot when there are no webhook failures", async () => {
     // Arrange
     (useHasManagedAppsPermission as jest.Mock).mockReturnValue({
