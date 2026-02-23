@@ -21,7 +21,7 @@ import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { AddExtensionDropdown } from "./components/AddExtensionDropdown/AddExtensionDropdown";
-import { ProblemsHeaderBadge } from "./components/AppProblems/ProblemsHeaderBadge";
+import { ProblemsHeaderBadge } from "./components/AppProblems/ProblemsHeaderBadge/ProblemsHeaderBadge";
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
 import { InstalledExtensionsList } from "./components/InstalledExtensionsList/InstalledExtensionsList";
 import { useInstalledExtensions } from "./hooks/useInstalledExtensions";

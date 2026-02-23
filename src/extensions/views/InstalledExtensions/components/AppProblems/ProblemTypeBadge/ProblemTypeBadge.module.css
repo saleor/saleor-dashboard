@@ -1,0 +1,22 @@
+.typeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.typeBadgeCustom {
+  composes: typeBadge;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+.typeBadgeWebhook {
+  composes: typeBadge;
+  background-color: var(--mu-colors-background-warning1);
+  color: var(--mu-colors-foreground-text-warning-default);
+}

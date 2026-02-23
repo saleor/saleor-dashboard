@@ -2,7 +2,7 @@ import { problemMessages } from "@dashboard/extensions/messages";
 import { CircleAlert } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import styles from "./AppProblems.module.css";
+import styles from "./ProblemsHeaderBadge.module.css";
 
 interface ProblemsHeaderBadgeProps {
   totalCount: number;

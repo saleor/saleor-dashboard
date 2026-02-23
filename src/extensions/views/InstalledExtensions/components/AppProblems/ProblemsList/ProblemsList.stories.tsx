@@ -7,7 +7,7 @@ import {
   extraWarningProblem,
   warningAppProblem,
   webhookDeliveryError,
-} from "./fixtures";
+} from "../fixtures";
 import { ProblemsList } from "./ProblemsList";
 
 const meta: Meta<typeof ProblemsList> = {

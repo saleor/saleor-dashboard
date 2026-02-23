@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 
 import {
   criticalAppProblem,
   dismissedByUserProblem,
   warningAppProblem,
   webhookDeliveryError,
-} from "./fixtures";
-import { ProblemCard } from "./ProblemCard/ProblemCard";
+} from "../fixtures";
+import { ProblemCard } from "./ProblemCard";
 
 const meta: Meta<typeof ProblemCard> = {
   title: "Extensions/AppProblems/ProblemCard",
@@ -20,7 +21,7 @@ type Story = StoryObj<typeof ProblemCard>;
 export const Critical: Story = {
   args: {
     problem: criticalAppProblem,
-    onForceClear: () => {},
+    onForceClear: fn,
   },
 };
 

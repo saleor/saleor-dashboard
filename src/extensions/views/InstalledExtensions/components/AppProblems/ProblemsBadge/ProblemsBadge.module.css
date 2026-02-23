@@ -1,0 +1,25 @@
+.problemsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.problemsBadgeError {
+  composes: problemsBadge;
+  background-color: var(--mu-colors-background-critical1);
+}
+
+.problemsBadgeWarning {
+  composes: problemsBadge;
+  background-color: var(--mu-colors-background-warning1);
+}

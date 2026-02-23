@@ -2,7 +2,7 @@ import { problemMessages } from "@dashboard/extensions/messages";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import styles from "./AppProblems.module.css";
+import styles from "./ProblemsBadge.module.css";
 
 interface ProblemsBadgeProps {
   totalCount: number;

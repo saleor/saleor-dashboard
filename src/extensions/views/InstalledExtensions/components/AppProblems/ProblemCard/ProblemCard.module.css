@@ -1,0 +1,47 @@
+.problemRow {
+  padding: 8px 16px 8px 16px;
+}
+
+.problemRow:last-child {
+  padding-bottom: 14px;
+}
+
+.problemRowDismissed {
+  opacity: 0.5;
+}
+
+.problemRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.problemMessage {
+  font-size: 14px;
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+.timestamp {
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 12px;
+}
+
+.timestampHoverable {
+  cursor: default;
+  border-bottom: 1px dotted var(--mu-colors-border-default2);
+}
+
+.timestampTooltip {
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.dismissedLabel {
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}

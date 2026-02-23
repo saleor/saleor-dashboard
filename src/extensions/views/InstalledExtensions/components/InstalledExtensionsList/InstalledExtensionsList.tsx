@@ -10,8 +10,8 @@ import { CircleAlert } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProblemsBadge } from "../AppProblems/ProblemsBadge";
-import { ProblemsList } from "../AppProblems/ProblemsList";
+import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
+import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
 import { useExtensionProblems } from "./useExtensionProblems";
 
 interface InstalledExtensionsListProps {

@@ -13,9 +13,9 @@ import { ExternalLink, Maximize2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import styles from "./AppProblems.module.css";
-import { ProblemCard } from "./ProblemCard/ProblemCard";
-import { ProblemTypeBadge } from "./ProblemTypeBadge";
+import { ProblemCard } from "../ProblemCard/ProblemCard";
+import { ProblemTypeBadge } from "../ProblemTypeBadge/ProblemTypeBadge";
+import styles from "./ProblemsList.module.css";
 
 const MAX_VISIBLE_PROBLEMS = 3;
 

@@ -1,0 +1,102 @@
+.problemsContainer {
+  background-color: var(--mu-colors-background-default1);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  margin: 18px 63px;
+  overflow: hidden;
+}
+
+.severityError {
+  border-left: 3px solid var(--mu-colors-background-critical1);
+}
+
+.severityWarning {
+  border-left: 3px solid var(--mu-colors-background-warning1);
+}
+
+.severityDismissed {
+  border-left: 3px solid var(--mu-colors-border-default1);
+}
+
+.problemHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
+}
+
+.criticalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--mu-colors-background-critical1);
+  color: var(--mu-colors-foreground-text-critical-default);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--mu-colors-border-critical1);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-foreground-text-neutral-default);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.groupDivider {
+  border: none;
+  border-top: 1px solid var(--mu-colors-border-default1);
+  margin: 4px 16px;
+}
+
+.groupActionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mu-colors-foreground-text-neutral-default);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.groupActionLink:hover {
+  text-decoration: underline;
+}
+
+.showMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--mu-colors-border-default1);
+  cursor: pointer;
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 14px;
+  padding: 8px 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.showMoreButton:hover {
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+.popupProblemsList {
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: 0 24px 24px;
+}

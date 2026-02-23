@@ -2,7 +2,7 @@ import { problemMessages } from "@dashboard/extensions/messages";
 import { AppProblem } from "@dashboard/extensions/types";
 import { useIntl } from "react-intl";
 
-import styles from "../AppProblems.module.css";
+import styles from "./ProblemCard.module.css";
 import { TimestampWithTooltip } from "./TimestampWithTooltip";
 
 export const ProblemTimestamps = ({ problem }: { problem: AppProblem }) => {

@@ -3,8 +3,8 @@ import { AppProblem } from "@dashboard/extensions/types";
 import { Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import styles from "../AppProblems.module.css";
 import { DismissedLabel } from "./DismissedLabel";
+import styles from "./ProblemCard.module.css";
 import { ProblemTimestamps } from "./ProblemTimestamps";
 
 interface ProblemCardProps {

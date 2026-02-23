@@ -3,7 +3,7 @@ import { AppProblem } from "@dashboard/extensions/types";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import styles from "../AppProblems.module.css";
+import styles from "./ProblemCard.module.css";
 
 const useDismissedByText = (problem: AppProblem): string | null => {
   const intl = useIntl();

@@ -4,7 +4,7 @@ import { Tooltip } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import styles from "../AppProblems.module.css";
+import styles from "./ProblemCard.module.css";
 
 const useFormattedDates = (date: string) => {
   const { locale } = useLocale();

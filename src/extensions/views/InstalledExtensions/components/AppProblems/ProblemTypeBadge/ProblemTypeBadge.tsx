@@ -4,7 +4,7 @@ import { Tooltip } from "@saleor/macaw-ui-next";
 import { Package, Radio } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import styles from "./AppProblems.module.css";
+import styles from "./ProblemTypeBadge.module.css";
 
 interface ProblemTypeBadgeProps {
   typename: AppProblem["__typename"];
