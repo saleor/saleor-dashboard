@@ -1,10 +1,10 @@
 import {
   TransactionCreateErrorCode,
-  TransactionCreateErrorFragment,
+  type TransactionCreateErrorFragment,
   TransactionRequestActionErrorCode,
-  TransactionRequestActionErrorFragment,
+  type TransactionRequestActionErrorFragment,
 } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

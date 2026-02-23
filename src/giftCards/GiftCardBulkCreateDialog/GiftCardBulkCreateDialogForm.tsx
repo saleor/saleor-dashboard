@@ -1,6 +1,9 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
@@ -19,9 +22,9 @@ import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/Gif
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {
-  GiftCardBulkCreateFormCommonProps,
-  GiftCardBulkCreateFormData,
-  GiftCardBulkCreateFormErrors,
+  type GiftCardBulkCreateFormCommonProps,
+  type GiftCardBulkCreateFormData,
+  type GiftCardBulkCreateFormErrors,
 } from "./types";
 
 const initialData: GiftCardBulkCreateFormData = {

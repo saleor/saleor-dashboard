@@ -3,17 +3,17 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { PageErrorFragment } from "@dashboard/graphql";
+import { type PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { PageData } from "../PageDetailsPage/form";
+import { type PageData } from "../PageDetailsPage/form";
 
 interface PageInfoProps {
   data: PageData;

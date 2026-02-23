@@ -1,38 +1,38 @@
-import { ApolloQueryResult } from "@apollo/client";
+import { type ApolloQueryResult } from "@apollo/client";
 import {
-  _GetChannelOperandsQuery,
-  _GetLegacyChannelOperandsQuery,
-  _SearchAttributeOperandsQuery,
-  _SearchCategoriesOperandsQuery,
-  _SearchCollectionsOperandsQuery,
-  _SearchCustomersOperandsQuery,
-  _SearchPageTypesOperandsQuery,
-  _SearchProductOperandsQuery,
-  _SearchProductTypesOperandsQuery,
-  _SearchWarehouseOperandsQuery,
-  ChannelCurrenciesQuery,
+  type _GetChannelOperandsQuery,
+  type _GetLegacyChannelOperandsQuery,
+  type _SearchAttributeOperandsQuery,
+  type _SearchCategoriesOperandsQuery,
+  type _SearchCollectionsOperandsQuery,
+  type _SearchCustomersOperandsQuery,
+  type _SearchPageTypesOperandsQuery,
+  type _SearchProductOperandsQuery,
+  type _SearchProductTypesOperandsQuery,
+  type _SearchWarehouseOperandsQuery,
+  type ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
 import { createBooleanOptions } from "../../constants";
-import { AttributeInputType } from "../../FilterElement/ConditionOptions";
-import { ItemOption } from "../../FilterElement/ConditionValue";
+import { type AttributeInputType } from "../../FilterElement/ConditionOptions";
+import { type ItemOption } from "../../FilterElement/ConditionValue";
 import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
-import { InitialAttributesState } from "./attributes/InitialAttributesState";
-import { InitialCollectionState } from "./collections/InitialCollectionState";
-import { InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
-import { InitialOrderState } from "./orders/InitialOrderState";
-import { InitialPageState } from "./page/InitialPageState";
-import { AttributeDTO, InitialProductState } from "./product/InitialProductStateResponse";
+import { type InitialAttributesState } from "./attributes/InitialAttributesState";
+import { type InitialCollectionState } from "./collections/InitialCollectionState";
+import { type InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
+import { type InitialOrderState } from "./orders/InitialOrderState";
+import { type InitialPageState } from "./page/InitialPageState";
+import { type AttributeDTO, type InitialProductState } from "./product/InitialProductStateResponse";
 import {
-  InitialAttributesAPIResponse,
-  InitialCollectionAPIResponse,
-  InitialGiftCardsAPIResponse,
-  InitialOrderAPIResponse,
-  InitialPageAPIResponse,
-  InitialProductAPIResponse,
-  InitialVoucherAPIResponse,
+  type InitialAttributesAPIResponse,
+  type InitialCollectionAPIResponse,
+  type InitialGiftCardsAPIResponse,
+  type InitialOrderAPIResponse,
+  type InitialPageAPIResponse,
+  type InitialProductAPIResponse,
+  type InitialVoucherAPIResponse,
 } from "./types";
-import { InitialVouchersState } from "./vouchers/InitialVouchersState";
+import { type InitialVouchersState } from "./vouchers/InitialVouchersState";
 
 // Helper function to convert ItemOption[] to AttributeDTO choices format
 const convertItemOptionsToAttributeChoices = (

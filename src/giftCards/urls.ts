@@ -1,8 +1,8 @@
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
-import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
+import { type GiftCardListUrlQueryParams } from "./GiftCardsList/types";
+import { type GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 
 export const giftCardsSectionUrlName = "/gift-cards";
 

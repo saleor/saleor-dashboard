@@ -1,5 +1,8 @@
-import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import { UpdateMetadataMutationFn, UpdatePrivateMetadataMutationFn } from "@dashboard/graphql";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import {
+  type UpdateMetadataMutationFn,
+  type UpdatePrivateMetadataMutationFn,
+} from "@dashboard/graphql";
 
 import { filterMetadataArray } from "./filterMetadataArray";
 

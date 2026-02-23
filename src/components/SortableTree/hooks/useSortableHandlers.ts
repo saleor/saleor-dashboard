@@ -1,14 +1,19 @@
 import {
-  DragEndEvent,
-  DragMoveEvent,
-  DragOverEvent,
-  DragStartEvent,
-  UniqueIdentifier,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+  type UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
-import { CurrentPosition, DataTypePlaceholder, FlattenedItems, TreeItems } from "../types";
+import {
+  type CurrentPosition,
+  type DataTypePlaceholder,
+  type FlattenedItems,
+  type TreeItems,
+} from "../types";
 import { buildTree, flattenTree, getProjection } from "../utils";
 
 interface UseSortableHandlersProps<T extends DataTypePlaceholder> {

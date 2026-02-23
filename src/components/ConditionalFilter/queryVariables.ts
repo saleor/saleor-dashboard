@@ -1,21 +1,21 @@
 import {
-  AttributeFilterInput,
-  CategoryFilterInput,
-  CollectionFilterInput,
-  CustomerFilterInput,
-  GiftCardFilterInput,
-  OrderDraftFilterInput,
-  OrderWhereInput,
-  PageFilterInput,
-  ProductFilterInput,
-  ProductTypeFilterInput,
-  ProductWhereInput,
-  PromotionWhereInput,
-  StaffUserInput,
-  VoucherFilterInput,
+  type AttributeFilterInput,
+  type CategoryFilterInput,
+  type CollectionFilterInput,
+  type CustomerFilterInput,
+  type GiftCardFilterInput,
+  type OrderDraftFilterInput,
+  type OrderWhereInput,
+  type PageFilterInput,
+  type ProductFilterInput,
+  type ProductTypeFilterInput,
+  type ProductWhereInput,
+  type PromotionWhereInput,
+  type StaffUserInput,
+  type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { FilterContainer } from "./FilterElement";
+import { type FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";

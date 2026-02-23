@@ -1,6 +1,6 @@
 import { findPriceSeparator } from "@dashboard/components/PriceField/utils";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { InputAdornment, TextField, type TextFieldProps } from "@material-ui/core";
 
 import { useStyles } from "./styles";
 

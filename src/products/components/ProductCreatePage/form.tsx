@@ -4,7 +4,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps,
+  type RichTextProps,
 } from "@dashboard/attributes/utils/data";
 import {
   createAttributeChangeHandler,
@@ -16,36 +16,36 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
-import { ChannelData, ChannelPriceArgs } from "@dashboard/channels/utils";
-import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
+import { type ChannelData, type ChannelPriceArgs } from "@dashboard/channels/utils";
+import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  ProductErrorWithAttributesFragment,
-  ProductTypeQuery,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
-  SearchProductTypesQuery,
+  type ProductErrorWithAttributesFragment,
+  type ProductTypeQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
+  type SearchProductTypesQuery,
 } from "@dashboard/graphql";
 import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  FormErrors,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type FormErrors,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
-  FormsetAdditionalDataChange,
-  FormsetChange,
-  FormsetData,
+  type FormsetAdditionalDataChange,
+  type FormsetChange,
+  type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { errorMessages } from "@dashboard/intl";
 import {
-  AttributeValuesMetadata,
+  type AttributeValuesMetadata,
   getAttributeInputFromProductType,
-  ProductType,
+  type ProductType,
 } from "@dashboard/products/utils/data";
 import {
   createChannelsChangeHandler,
@@ -59,19 +59,19 @@ import {
   validateProductCreateData,
 } from "@dashboard/products/utils/validation";
 import { PRODUCT_CREATE_FORM_ID } from "@dashboard/products/views/ProductCreate/consts";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import createMultiselectChangeHandler from "@dashboard/utils/handlers/multiselectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
-import { Option } from "@saleor/macaw-ui-next";
-import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { type OutputData } from "@editorjs/editorjs";
+import { type Option } from "@saleor/macaw-ui-next";
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { type ProductStockFormsetData, type ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;

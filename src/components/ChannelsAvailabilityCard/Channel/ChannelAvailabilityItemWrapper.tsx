@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Accordion, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 
-import { Messages } from "../types";
+import { type Messages } from "../types";
 
 interface ChannelContentWrapperProps {
   data: ChannelData;

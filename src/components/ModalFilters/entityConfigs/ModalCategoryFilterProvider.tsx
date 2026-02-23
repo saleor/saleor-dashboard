@@ -1,8 +1,8 @@
-import { CategoryFilterInput } from "@dashboard/graphql";
-import { createContext, FC, ReactNode, useContext, useMemo } from "react";
+import { type CategoryFilterInput } from "@dashboard/graphql";
+import { createContext, type FC, type ReactNode, useContext, useMemo } from "react";
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
-import { ModalFilterResult } from "../types";
+import { type ModalFilterResult } from "../types";
 import { useModalFilters } from "../useModalFilters";
 import { categoryFilterConfig } from "./categoryFilterConfig";
 

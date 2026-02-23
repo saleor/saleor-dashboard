@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { buttonMessages } from "@dashboard/intl";
-import { RecursiveMenuItem } from "@dashboard/structures/types";
+import { type RecursiveMenuItem } from "@dashboard/structures/types";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuItemType } from "../MenuItemDialog";
+import { type MenuItemType } from "../MenuItemDialog";
 import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
 import { getNodeData } from "../MenuItemsSortableTree/utils";
-import { getDiff, TreeOperation } from "./tree";
+import { getDiff, type TreeOperation } from "./tree";
 
 interface MenuItemsProps {
   canUndo: boolean;

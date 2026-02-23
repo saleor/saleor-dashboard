@@ -1,4 +1,4 @@
-import { PermissionEnum } from "@dashboard/graphql";
+import { type PermissionEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 
 export const useGetAvailableAppPermissions = () => {

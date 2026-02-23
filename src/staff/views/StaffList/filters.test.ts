@@ -1,6 +1,6 @@
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { createFilterStructure } from "@dashboard/staff/components/StaffListPage";
-import { StaffListUrlFilters } from "@dashboard/staff/urls";
+import { type StaffListUrlFilters } from "@dashboard/staff/urls";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

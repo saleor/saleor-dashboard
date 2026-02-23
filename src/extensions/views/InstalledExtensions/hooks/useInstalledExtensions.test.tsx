@@ -1,9 +1,9 @@
-import { LatestWebhookDeliveryWithMoment } from "@dashboard/extensions/components/AppAlerts/utils";
+import { type LatestWebhookDeliveryWithMoment } from "@dashboard/extensions/components/AppAlerts/utils";
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import moment from "moment-timezone";
-import * as React from "react";
+import type * as React from "react";
 
 import { getExtensionInfo, useInstalledExtensions } from "./useInstalledExtensions";
 

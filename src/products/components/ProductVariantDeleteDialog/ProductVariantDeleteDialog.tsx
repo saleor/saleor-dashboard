@@ -1,5 +1,8 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

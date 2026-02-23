@@ -1,8 +1,8 @@
 import { TableCell } from "@material-ui/core";
-import { TableCellProps } from "@material-ui/core/TableCell";
+import { type TableCellProps } from "@material-ui/core/TableCell";
 import clsx from "clsx";
 
-import Avatar, { AvatarProps } from "./Avatar";
+import Avatar, { type AvatarProps } from "./Avatar";
 import { useStyles } from "./styles";
 
 interface TableCellAvatarProps extends TableCellProps, Omit<AvatarProps, "children"> {

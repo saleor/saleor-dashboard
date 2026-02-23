@@ -1,5 +1,5 @@
-import { ReorderEvent } from "@dashboard/types";
-import { DragOverEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { type ReorderEvent } from "@dashboard/types";
+import { type DragOverEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { useMemo } from "react";
 
 interface Item {

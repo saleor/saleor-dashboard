@@ -1,11 +1,11 @@
-import { AttributeInputTypeEnum, VariantAttributeFragment } from "@dashboard/graphql";
+import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
 
 import {
-  AttributeData,
-  ExistingVariantData,
-  GeneratorDefaults,
-  NonSelectionAttributeValues,
-  SelectionState,
+  type AttributeData,
+  type ExistingVariantData,
+  type GeneratorDefaults,
+  type NonSelectionAttributeValues,
+  type SelectionState,
 } from "./types";
 import {
   cartesianProduct,

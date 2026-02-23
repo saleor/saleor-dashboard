@@ -3,30 +3,30 @@ import { stringify } from "qs";
 import { useEffect, useMemo, useState } from "react";
 import useRouter from "use-react-router";
 
-import { InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
-import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
-import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
-import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
-import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
-import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
-import { InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
-import { InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
-import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
-import { FilterContainer, FilterElement } from "../FilterElement";
-import { FilterValueProvider } from "../FilterValueProvider";
-import { FilterProviderType, InitialAPIState } from "../types";
+import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
+import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { type InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
+import { type InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
+import { type InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { type InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { type InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { type InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
+import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
+import { type FilterContainer, FilterElement } from "../FilterElement";
+import { type FilterValueProvider } from "../FilterValueProvider";
+import { type FilterProviderType, type InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
-  AttributesFetchingParams,
-  CollectionFetchingParams,
-  FetchingParams,
+  type AttributesFetchingParams,
+  type CollectionFetchingParams,
+  type FetchingParams,
   getEmptyFetchingPrams,
-  GiftCardsFetchingParams,
-  OrderFetchingParams,
-  PageFetchingParams,
-  ProductTypesFetchingParams,
-  StaffMembersFetchingParams,
-  VoucherFetchingParams,
+  type GiftCardsFetchingParams,
+  type OrderFetchingParams,
+  type PageFetchingParams,
+  type ProductTypesFetchingParams,
+  type StaffMembersFetchingParams,
+  type VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
 import { prepareStructure } from "./utils";
 

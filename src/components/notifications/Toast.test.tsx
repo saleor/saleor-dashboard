@@ -2,7 +2,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { toast } from "sonner";
 
-import { Toast, ToastProps } from "./Toast";
+import { Toast, type ToastProps } from "./Toast";
 
 jest.mock("sonner", () => ({
   toast: {

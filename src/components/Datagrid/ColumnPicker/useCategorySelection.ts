@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { ColumnCategory } from "./useColumns";
+import { type ColumnCategory } from "./useColumns";
 
 export const useCategorySelection = (columnCategories: ColumnCategory[]) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

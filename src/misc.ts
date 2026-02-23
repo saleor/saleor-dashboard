@@ -1,6 +1,6 @@
-import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
+import { type FetchResult, type MutationFunction, type MutationResult } from "@apollo/client";
 import {
-  AddressInput,
+  type AddressInput,
   CountryCode,
   OrderChargeStatusEnum,
   OrderStatus,
@@ -8,25 +8,25 @@ import {
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import {
-  MutationResultAdditionalProps,
-  Node,
-  PartialMutationProviderOutput,
-  SlugNode,
+  type MutationResultAdditionalProps,
+  type Node,
+  type PartialMutationProviderOutput,
+  type SlugNode,
   StatusType,
-  UserError,
+  type UserError,
 } from "@dashboard/types";
-import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, type ThemeTokensValues } from "@saleor/macaw-ui-next";
 import Fuse from "fuse.js";
 import moment from "moment-timezone";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import {
   hueToPillColorDark,
   hueToPillColorLight,
 } from "./components/Datagrid/customCells/PillCell";
-import { DotStatus } from "./components/StatusDot/StatusDot";
-import { AddressType, AddressTypeInput } from "./customers/types";
+import { type DotStatus } from "./components/StatusDot/StatusDot";
+import { type AddressType, type AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
   errorMessages,

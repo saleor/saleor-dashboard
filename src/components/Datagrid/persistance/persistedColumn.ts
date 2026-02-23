@@ -1,4 +1,4 @@
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 
 // Representation of PersistedColumn in the metadata
 export interface RawColumn {

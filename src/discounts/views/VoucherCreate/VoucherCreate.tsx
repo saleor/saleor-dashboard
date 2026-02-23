@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
+import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
-  CategoryFilterInput,
-  ProductWhereInput,
+  type CategoryFilterInput,
+  type ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
@@ -29,9 +29,9 @@ import { useIntl } from "react-intl";
 import VoucherCreatePage from "../../components/VoucherCreatePage";
 import {
   voucherAddUrl,
-  VoucherCreateUrlQueryParams,
+  type VoucherCreateUrlQueryParams,
   voucherUrl,
-  VoucherUrlDialog,
+  type VoucherUrlDialog,
 } from "../../urls";
 import { createHandler } from "./handlers";
 import { VOUCHER_CREATE_FORM_ID } from "./types";

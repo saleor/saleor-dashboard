@@ -1,13 +1,13 @@
-import { Announcements, UniqueIdentifier } from "@dnd-kit/core";
+import { type Announcements, type UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 import {
-  CurrentPosition,
-  DataTypePlaceholder,
-  FlattenedItem,
-  Projected,
-  TreeItems,
+  type CurrentPosition,
+  type DataTypePlaceholder,
+  type FlattenedItem,
+  type Projected,
+  type TreeItems,
 } from "../types";
 import { flattenTree } from "../utils";
 

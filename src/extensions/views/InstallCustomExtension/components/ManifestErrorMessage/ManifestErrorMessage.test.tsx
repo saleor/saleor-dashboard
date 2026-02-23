@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { FieldError } from "react-hook-form";
+import { type FieldError } from "react-hook-form";
 import { IntlProvider } from "react-intl";
 
 import { AppErrorCode } from "../../../../../graphql/types.generated";

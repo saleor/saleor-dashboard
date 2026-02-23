@@ -1,12 +1,16 @@
 // @ts-strict-ignore
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
+import { type FilterElement, type FilterElementRegular } from "@dashboard/components/Filter/types";
 import {
   VoucherFilterKeys,
-  VoucherListFilterOpts,
+  type VoucherListFilterOpts,
 } from "@dashboard/discounts/components/VoucherListPage";
-import { DiscountStatusEnum, VoucherDiscountType, VoucherFilterInput } from "@dashboard/graphql";
+import {
+  DiscountStatusEnum,
+  VoucherDiscountType,
+  type VoucherFilterInput,
+} from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
@@ -17,7 +21,7 @@ import {
   getSingleValueQueryParam,
 } from "../../../utils/filters";
 import {
-  VoucherListUrlFilters,
+  type VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,
   VoucherListUrlFiltersWithMultipleValues,
 } from "../../urls";

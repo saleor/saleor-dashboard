@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

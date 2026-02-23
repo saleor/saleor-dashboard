@@ -1,10 +1,10 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
-import { BooleanValuesHandler, ChannelHandler, EnumValuesHandler, Handler } from "../Handler";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
+import { BooleanValuesHandler, ChannelHandler, EnumValuesHandler, type Handler } from "../Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

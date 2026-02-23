@@ -1,9 +1,9 @@
-import { Box, Checkbox, CheckedState, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type CheckedState, Input, Text } from "@saleor/macaw-ui-next";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
-import { GeneratorDefaults } from "../types";
+import { type GeneratorDefaults } from "../types";
 import styles from "./DefaultsSection.module.css";
 
 interface DefaultsSectionProps {

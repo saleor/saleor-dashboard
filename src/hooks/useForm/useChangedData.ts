@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { FormData } from "./types";
+import { type FormData } from "./types";
 
 /** @deprfecated use react-hook-form instead */
 export const useChangedData = <T extends FormData>(formData: T) => {

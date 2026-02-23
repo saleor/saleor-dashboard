@@ -2,7 +2,7 @@
 import Grid from "@dashboard/components/Grid";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
-import { useTriggerWebhookDryRunMutation, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import { useTriggerWebhookDryRunMutation, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { capitalize } from "@material-ui/core";
 import {
   Alert,
@@ -14,7 +14,7 @@ import {
   ListItemCell,
 } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";

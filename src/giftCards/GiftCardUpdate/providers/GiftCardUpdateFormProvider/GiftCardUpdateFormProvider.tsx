@@ -1,16 +1,16 @@
 // @ts-strict-ignore
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import {
-  GiftCardErrorFragment,
-  GiftCardUpdateMutation,
+  type GiftCardErrorFragment,
+  type GiftCardUpdateMutation,
   useGiftCardUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
-import useForm, { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
+import { type MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
+import useForm, { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
@@ -20,12 +20,12 @@ import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import difference from "lodash/difference";
+import type * as React from "react";
 import { createContext } from "react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  GiftCardCreateFormData,
+  type GiftCardCreateFormData,
   initialData as emptyFormData,
 } from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";

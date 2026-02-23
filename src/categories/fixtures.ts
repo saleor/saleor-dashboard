@@ -1,4 +1,4 @@
-import { CategoryDetailsQuery, CategoryFragment } from "@dashboard/graphql";
+import { type CategoryDetailsQuery, type CategoryFragment } from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

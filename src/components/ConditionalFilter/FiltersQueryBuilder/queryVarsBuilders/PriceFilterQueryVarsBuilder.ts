@@ -1,7 +1,7 @@
-import { DecimalFilterInput, PriceFilterInput } from "@dashboard/graphql";
+import { type DecimalFilterInput, type PriceFilterInput } from "@dashboard/graphql";
 
-import { Handler, NoopValuesHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, NoopValuesHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 

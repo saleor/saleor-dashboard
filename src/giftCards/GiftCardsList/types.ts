@@ -1,12 +1,12 @@
 import {
-  ActiveTab,
-  Dialog,
-  Filters,
-  FiltersWithMultipleValues,
-  Pagination,
-  Search,
-  SingleAction,
-  Sort,
+  type ActiveTab,
+  type Dialog,
+  type Filters,
+  type FiltersWithMultipleValues,
+  type Pagination,
+  type Search,
+  type SingleAction,
+  type Sort,
 } from "@dashboard/types";
 
 export type GiftCardListColummns = "giftCardCode" | "tag" | "balance" | "usedBy" | "product";

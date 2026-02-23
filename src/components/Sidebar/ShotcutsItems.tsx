@@ -2,7 +2,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { memo } from "react";
 
 import { ShortcutItem } from "./shortcuts/ShortcutItem";
-import { Shortcut } from "./shortcuts/useShortcuts";
+import { type Shortcut } from "./shortcuts/useShortcuts";
 
 interface ShortcutsItemsProps {
   items: Shortcut[];

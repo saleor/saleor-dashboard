@@ -5,9 +5,9 @@ import { useIntl } from "react-intl";
 import { useConditionalFilterContext } from "../context";
 import { QueryApiType } from "../FiltersQueryBuilder/types";
 import { metadataInputMessages } from "../intl";
-import { FilterEventEmitter } from "./EventEmitter";
+import { type FilterEventEmitter } from "./EventEmitter";
 import styles from "./MetadataInput.module.css";
-import { DoubleTextOperator } from "./types";
+import { type DoubleTextOperator } from "./types";
 
 interface MetadataInputProps {
   index: number;

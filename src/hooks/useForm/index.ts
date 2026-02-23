@@ -1,18 +1,18 @@
 import {
-  CheckIfSaveIsDisabledFnType,
-  FormId,
+  type CheckIfSaveIsDisabledFnType,
+  type FormId,
   useExitFormDialog,
-  UseExitFormDialogResult,
+  type UseExitFormDialogResult,
 } from "@dashboard/components/Form";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
-import * as React from "react";
+import type * as React from "react";
 import { useEffect, useState } from "react";
 
 import useStateFromProps from "./../useStateFromProps";
-import { FormData } from "./types";
+import { type FormData } from "./types";
 import { useChangedData } from "./useChangedData";
 
 /** @deprecated Use react-hook-form instead */

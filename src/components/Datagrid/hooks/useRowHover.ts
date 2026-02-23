@@ -1,4 +1,4 @@
-import { GridMouseEventArgs } from "@glideapps/glide-data-grid";
+import { type GridMouseEventArgs } from "@glideapps/glide-data-grid";
 import { useCallback, useState } from "react";
 
 export const useRowHover = ({

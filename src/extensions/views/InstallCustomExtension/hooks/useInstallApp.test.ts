@@ -1,4 +1,8 @@
-import { AppManifestFragment, PermissionEnum, useAppInstallMutation } from "@dashboard/graphql";
+import {
+  type AppManifestFragment,
+  PermissionEnum,
+  useAppInstallMutation,
+} from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";

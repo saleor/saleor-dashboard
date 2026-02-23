@@ -1,4 +1,4 @@
-import { Box, Button, ButtonProps, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box, Button, type ButtonProps, type PropsWithBox } from "@saleor/macaw-ui-next";
 
 import { useFilterContext } from "./context";
 

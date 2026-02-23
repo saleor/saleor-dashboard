@@ -1,10 +1,10 @@
 import { isExternalURL } from "@dashboard/utils/urls";
-import { TableRow, TableRowTypeMap } from "@material-ui/core";
+import { TableRow, type TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
+import type * as React from "react";
 import { forwardRef } from "react";
-import * as React from "react";
-import { Link, LinkProps } from "react-router-dom";
+import { Link, type LinkProps } from "react-router-dom";
 
 type MaterialTableRowPropsType = TableRowTypeMap["props"];
 

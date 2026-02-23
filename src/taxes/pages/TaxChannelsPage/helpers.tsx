@@ -1,7 +1,7 @@
 import {
   TaxCalculationStrategy,
-  TaxConfigurationFragment,
-  TaxConfigurationPerCountryFragment,
+  type TaxConfigurationFragment,
+  type TaxConfigurationPerCountryFragment,
 } from "@dashboard/graphql";
 
 const isStrategyFlatRates = (strategy: string | null) =>

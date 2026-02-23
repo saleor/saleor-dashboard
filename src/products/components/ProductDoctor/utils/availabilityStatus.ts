@@ -1,4 +1,4 @@
-import { ChannelSummary } from "./types";
+import { type ChannelSummary } from "./types";
 
 /**
  * Determines the visibility status of a product in a channel.

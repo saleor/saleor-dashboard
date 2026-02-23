@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 import { messages } from "../messages";
 // Note: Parent component (ProductVariantGenerator) only renders this when canShowMatrix is true
 import {
-  AttributeData,
-  AttributeValue,
-  ExistingVariantCombination,
-  SelectionState,
+  type AttributeData,
+  type AttributeValue,
+  type ExistingVariantCombination,
+  type SelectionState,
 } from "../types";
 import styles from "./VariantMatrix.module.css";
 

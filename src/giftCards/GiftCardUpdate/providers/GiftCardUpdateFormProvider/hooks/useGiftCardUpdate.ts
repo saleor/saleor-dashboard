@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import {
-  GiftCardUpdateFormConsumerData,
+  type GiftCardUpdateFormConsumerData,
   GiftCardUpdateFormContext,
 } from "../GiftCardUpdateFormProvider";
 

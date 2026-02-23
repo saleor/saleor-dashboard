@@ -7,11 +7,11 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { DiscountListUrlSortField, discountUrl } from "@dashboard/discounts/discountsUrls";
-import { PromotionFragment } from "@dashboard/graphql";
+import { type DiscountListUrlSortField, discountUrl } from "@dashboard/discounts/discountsUrls";
+import { type PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { ListProps, SortPage } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
+import { type ListProps, type SortPage } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

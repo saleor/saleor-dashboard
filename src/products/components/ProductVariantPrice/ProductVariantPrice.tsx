@@ -1,20 +1,23 @@
 // @ts-strict-ignore
 import {
-  ChannelData,
-  ChannelPriceAndPreorderArgs,
-  ChannelPriceArgs,
+  type ChannelData,
+  type ChannelPriceAndPreorderArgs,
+  type ChannelPriceArgs,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";
+import {
+  type ProductChannelListingErrorFragment,
+  type ProductErrorFragment,
+} from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
   productVariantChannelListings?: ChannelData[];

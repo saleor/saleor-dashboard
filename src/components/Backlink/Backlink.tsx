@@ -1,7 +1,7 @@
 import { isExternalURL } from "@dashboard/utils/urls";
-import { Backlink as MacawBacklink, BacklinkProps } from "@saleor/macaw-ui";
-import * as React from "react";
-import { Link, LinkProps } from "react-router-dom";
+import { Backlink as MacawBacklink, type BacklinkProps } from "@saleor/macaw-ui";
+import type * as React from "react";
+import { Link, type LinkProps } from "react-router-dom";
 
 type LinkType = React.FunctionComponent<LinkProps>;
 

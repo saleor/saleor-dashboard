@@ -1,5 +1,5 @@
 import { getApiUrl } from "@dashboard/config";
-import { createGraphiQLFetcher, FetcherOpts } from "@graphiql/toolkit";
+import { createGraphiQLFetcher, type FetcherOpts } from "@graphiql/toolkit";
 import { createFetch } from "@saleor/sdk";
 
 import { getFetcher } from "./utils";

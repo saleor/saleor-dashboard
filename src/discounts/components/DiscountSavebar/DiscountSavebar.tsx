@@ -1,4 +1,4 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useFormContext } from "react-hook-form";

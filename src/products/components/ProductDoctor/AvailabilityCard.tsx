@@ -1,10 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
-  ChannelFragment,
-  ProductChannelListingAddInput,
-  ProductChannelListingErrorFragment,
+  type ChannelFragment,
+  type ProductChannelListingAddInput,
+  type ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
@@ -15,7 +15,7 @@ import { useIntl } from "react-intl";
 
 import { AvailabilityChannelItem } from "./AvailabilityChannelItem";
 import {
-  ChannelVerificationResult,
+  type ChannelVerificationResult,
   usePublicApiVerification,
 } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
@@ -27,7 +27,7 @@ import {
   paginateItems,
 } from "./utils/channelUtils";
 import { mergeFormDataWithChannelSummaries } from "./utils/mergeChannelSummaries";
-import { DiagnosticsPermissions, DiagnosticsResult } from "./utils/types";
+import { type DiagnosticsPermissions, type DiagnosticsResult } from "./utils/types";
 
 interface AvailabilityCardProps {
   diagnostics: DiagnosticsResult;

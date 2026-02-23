@@ -1,4 +1,4 @@
-import { OutputBlockData, OutputData } from "@editorjs/editorjs";
+import { type OutputBlockData, type OutputData } from "@editorjs/editorjs";
 
 interface ListBlockDataNew {
   style: "ordered" | "unordered";

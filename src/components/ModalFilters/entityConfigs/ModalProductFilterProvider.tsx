@@ -1,8 +1,8 @@
-import { ProductWhereInput } from "@dashboard/graphql";
-import { createContext, FC, ReactNode, useContext, useMemo } from "react";
+import { type ProductWhereInput } from "@dashboard/graphql";
+import { createContext, type FC, type ReactNode, useContext, useMemo } from "react";
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
-import { LockedFilter, ModalFilterResult } from "../types";
+import { type LockedFilter, type ModalFilterResult } from "../types";
 import { useModalFilters } from "../useModalFilters";
 import { productFilterConfig } from "./productFilterConfig";
 

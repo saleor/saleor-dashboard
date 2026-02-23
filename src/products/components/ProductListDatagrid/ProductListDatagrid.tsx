@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { LazyQueryResult } from "@apollo/client/react";
+import { type LazyQueryResult } from "@apollo/client/react";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -9,21 +9,27 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import { ProductListColumns } from "@dashboard/config";
+import { type ProductListColumns } from "@dashboard/config";
 import {
   AttributeTypeEnum,
-  Exact,
-  GridAttributesQuery,
-  ProductListQuery,
-  useAvailableColumnAttributesLazyQuery,
+  type Exact,
+  type GridAttributesQuery,
+  type ProductListQuery,
+  type useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
-import { ChannelProps, ListProps, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import {
+  type ChannelProps,
+  type ListProps,
+  type PageListProps,
+  type RelayToFlat,
+  type SortPage,
+} from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Item } from "@glideapps/glide-data-grid";
+import { type Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";

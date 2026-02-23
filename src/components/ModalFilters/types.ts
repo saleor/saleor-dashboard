@@ -1,11 +1,14 @@
-import { FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
-import { FilterContainer } from "../ConditionalFilter/FilterElement";
-import { QueryApiType } from "../ConditionalFilter/FiltersQueryBuilder/types";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
-import { LeftOperand, LeftOperandsProvider } from "../ConditionalFilter/LeftOperandsProvider";
-import { FilterProviderType, InitialResponseType } from "../ConditionalFilter/types";
-import { useContainerState } from "../ConditionalFilter/useContainerState";
-import { FilterWindow } from "../ConditionalFilter/useFilterWindow";
+import { type FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
+import { type FilterContainer } from "../ConditionalFilter/FilterElement";
+import { type QueryApiType } from "../ConditionalFilter/FiltersQueryBuilder/types";
+import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import {
+  type LeftOperand,
+  type LeftOperandsProvider,
+} from "../ConditionalFilter/LeftOperandsProvider";
+import { type FilterProviderType, type InitialResponseType } from "../ConditionalFilter/types";
+import { type useContainerState } from "../ConditionalFilter/useContainerState";
+import { type FilterWindow } from "../ConditionalFilter/useFilterWindow";
 
 export interface LockedFilter {
   field: string;

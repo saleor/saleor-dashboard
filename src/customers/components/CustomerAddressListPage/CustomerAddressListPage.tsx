@@ -2,7 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { customerUrl } from "@dashboard/customers/urls";
-import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
+import { type AddressTypeEnum, type CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";

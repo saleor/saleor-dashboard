@@ -2,18 +2,18 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   modelTypesPath,
   pageTypeAddPath,
-  PageTypeListUrlQueryParams,
+  type PageTypeListUrlQueryParams,
   PageTypeListUrlSortField,
   pageTypePath,
-  PageTypeUrlQueryParams,
+  type PageTypeUrlQueryParams,
 } from "./urls";
 import PageTypeCreate from "./views/PageTypeCreate";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";

@@ -1,7 +1,7 @@
 import { stringifyQs } from "@dashboard/utils/urls";
 import { createContext, useContext, useMemo } from "react";
 
-import { Pagination } from "../types";
+import { type Pagination } from "../types";
 
 export interface PageInfo {
   endCursor: string | null;

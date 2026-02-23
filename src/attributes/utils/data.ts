@@ -1,30 +1,33 @@
-import { FetchResult } from "@apollo/client";
-import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
+import { type FetchResult } from "@apollo/client";
+import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
-  AttributeErrorFragment,
+  type AttributeErrorFragment,
   AttributeInputTypeEnum,
-  AttributeValueDeleteMutation,
-  AttributeValueFragment,
-  AttributeValueInput,
-  FileUploadMutation,
-  PageSelectedAttributeFragment,
-  ProductFragment,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
-  SelectedVariantAttributeFragment,
-  UploadErrorFragment,
+  type AttributeValueDeleteMutation,
+  type AttributeValueFragment,
+  type AttributeValueInput,
+  type FileUploadMutation,
+  type PageSelectedAttributeFragment,
+  type ProductFragment,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
+  type SelectedVariantAttributeFragment,
+  type UploadErrorFragment,
 } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
-import { Container, RelayToFlat } from "@dashboard/types";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { type Container, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { RichTextContextValues } from "@dashboard/utils/richText/context";
-import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
+import { type RichTextContextValues } from "@dashboard/utils/richText/context";
+import {
+  type GetRichTextValues,
+  type RichTextGetters,
+} from "@dashboard/utils/richText/useMultipleRichText";
 
-import { AttributePageFormData } from "../components/AttributePage";
+import { type AttributePageFormData } from "../components/AttributePage";
 import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;

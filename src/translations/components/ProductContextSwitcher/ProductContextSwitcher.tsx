@@ -1,5 +1,5 @@
 import { useProductVariantListQuery } from "@dashboard/graphql";
-import { Select, SelectProps } from "@saleor/macaw-ui-next";
+import { Select, type SelectProps } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 type ProductOrVariantId = string;

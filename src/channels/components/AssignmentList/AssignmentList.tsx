@@ -1,4 +1,4 @@
-import { ReorderEvent } from "@dashboard/types";
+import { type ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -6,7 +6,7 @@ import { AssignmentListFooter } from "./AssignmentListFooter";
 import Item from "./Item";
 import SortableContainer from "./SortableContainer";
 import { useStyles } from "./styles";
-import { AssignmentListProps } from "./types";
+import { type AssignmentListProps } from "./types";
 
 const messages = defineMessages({
   allSelectedMessage: {

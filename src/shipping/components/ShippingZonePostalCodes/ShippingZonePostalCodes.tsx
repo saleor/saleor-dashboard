@@ -5,7 +5,10 @@ import { Placeholder } from "@dashboard/components/Placeholder";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from "@dashboard/graphql";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  type ShippingMethodTypeFragment,
+} from "@dashboard/graphql";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";

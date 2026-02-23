@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
 import {
-  MetadataInput,
-  MetadataItemFragment,
+  type MetadataInput,
+  type MetadataItemFragment,
   useUserAccountUpdateMutation,
 } from "@dashboard/graphql";
 

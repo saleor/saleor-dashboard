@@ -1,7 +1,7 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { Button } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { type ReactNode } from "react";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import { WelcomePageCheckGraphQLButton } from "../components/WelcomePageCheckGraphQLButton";
 import { WelcomePageCreateProductButton } from "../components/WelcomePageCreateProductButton";
@@ -9,7 +9,7 @@ import { WelcomePageInviteStaffButton } from "../components/WelcomePageInviteSta
 import { WelcomePageOrdersButton } from "../components/WelcomePageOrdersButton";
 import { WelcomePageWebhooksButton } from "../components/WelcomePageWebhooksButton";
 import { useOnboarding } from "../onboardingContext";
-import { OnboardingStepsIDs } from "../onboardingContext/types";
+import { type OnboardingStepsIDs } from "../onboardingContext/types";
 
 interface OnboardingStepData {
   id: OnboardingStepsIDs;

@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
+import { type WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
 import {
   CopyIcon,
   GraphiQLProvider,
-  GraphiQLProviderProps,
+  type GraphiQLProviderProps,
   PlayIcon,
   PrettifyIcon,
   QueryEditor,
@@ -12,16 +12,16 @@ import {
   UnStyledButton,
   useCopyQuery,
   useEditorContext,
-  UseHeaderEditorArgs,
+  type UseHeaderEditorArgs,
   usePluginContext,
   usePrettifyEditors,
-  UseQueryEditorArgs,
-  UseResponseEditorArgs,
-  UseVariableEditorArgs,
-  WriteableEditorProps,
+  type UseQueryEditorArgs,
+  type UseResponseEditorArgs,
+  type UseVariableEditorArgs,
+  type WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { type ComponentType, type PropsWithChildren, type ReactNode, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 

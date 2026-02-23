@@ -1,5 +1,5 @@
 import { createFilterStructure } from "@dashboard/discounts/components/SaleListPage";
-import { SaleListUrlFilters } from "@dashboard/discounts/urls";
+import { type SaleListUrlFilters } from "@dashboard/discounts/urls";
 import { date } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
 import { getFilterQueryParams } from "@dashboard/utils/filters";

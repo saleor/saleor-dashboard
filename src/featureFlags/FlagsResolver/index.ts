@@ -1,6 +1,6 @@
-import * as AvailableFlags from "./../availableFlags";
+import type * as AvailableFlags from "./../availableFlags";
 import { DefaultsStrategy } from "./../strategies/DefaultsStrategy";
-import { Strategy } from "./../Strategy";
+import { type Strategy } from "./../Strategy";
 import { reduceFlagListArray } from "./reduceFlagListArray";
 
 export class FlagsResolver {

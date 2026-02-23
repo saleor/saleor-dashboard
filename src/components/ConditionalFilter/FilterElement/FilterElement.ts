@@ -1,15 +1,15 @@
-import { AttributeEntityTypeEnum } from "@dashboard/graphql";
+import { type AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
-import { RowType, STATIC_OPTIONS } from "../constants";
-import { LeftOperand } from "../LeftOperandsProvider";
-import { InitialResponseType } from "../types";
-import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
+import { type InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
+import { type RowType, STATIC_OPTIONS } from "../constants";
+import { type LeftOperand } from "../LeftOperandsProvider";
+import { type InitialResponseType } from "../types";
+import { TokenType, UrlEntry, type UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
+import { type ConditionItem, ConditionOptions, type StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
-import { ConditionValue, ItemOption } from "./ConditionValue";
+import { type ConditionValue, type ItemOption } from "./ConditionValue";
 import { Constraint } from "./Constraint";
 
 export class ExpressionValue {

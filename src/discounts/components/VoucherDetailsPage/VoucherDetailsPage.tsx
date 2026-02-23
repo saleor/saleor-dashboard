@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
+import { Metadata, type MetadataFormData } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
@@ -25,16 +25,16 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForVoucherDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  DiscountErrorFragment,
+  type DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
-  SearchProductFragment,
-  VoucherDetailsFragment,
+  type SearchProductFragment,
+  type VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
+import { type UseListSettings } from "@dashboard/hooks/useListSettings";
+import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
@@ -46,15 +46,15 @@ import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
-import { ChannelProps, ListProps, TabListActions } from "../../../types";
+import { type ChannelProps, type ListProps, type TabListActions } from "../../../types";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
 import DiscountVariants from "../DiscountVariants";
 import { VoucherCodes } from "../VoucherCodes";
-import { VoucherCode } from "../VoucherCodesDatagrid/types";
-import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { type VoucherCode } from "../VoucherCodesDatagrid/types";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";

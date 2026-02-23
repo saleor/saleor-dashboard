@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { PageInfoFragment } from "@dashboard/graphql";
-import { DocumentNode } from "graphql";
+import { type PageInfoFragment } from "@dashboard/graphql";
+import { type DocumentNode } from "graphql";
 
-import makeSearch, { BaseSearchVariables, UseSearchHook } from "../makeSearch";
+import makeSearch, { type BaseSearchVariables, type UseSearchHook } from "../makeSearch";
 
 export interface SearchData {
   search: {

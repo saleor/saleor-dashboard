@@ -1,4 +1,4 @@
-import { CountryFragment } from "@dashboard/graphql";
+import { type CountryFragment } from "@dashboard/graphql";
 
 import { groupCountriesByStartingLetter } from "./utils";
 

@@ -4,7 +4,7 @@ import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import DiscountListPage from "@dashboard/discounts/components/DiscountListPage/DiscountListPage";
-import { PromotionFragment, usePromotionsListQuery } from "@dashboard/graphql";
+import { type PromotionFragment, usePromotionsListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -25,8 +25,8 @@ import { useIntl } from "react-intl";
 
 import {
   discountListUrl,
-  DiscountListUrlDialog,
-  DiscountListUrlQueryParams,
+  type DiscountListUrlDialog,
+  type DiscountListUrlQueryParams,
 } from "../../discountsUrls";
 import { storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";

@@ -3,7 +3,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -12,9 +12,13 @@ import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCategoryDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { CategoryDetailsQuery, PermissionEnum, ProductErrorFragment } from "@dashboard/graphql";
+import {
+  type CategoryDetailsQuery,
+  PermissionEnum,
+  type ProductErrorFragment,
+} from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
@@ -23,12 +27,12 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListProps, ListViews, RelayToFlat } from "../../../types";
+import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryBackground from "../CategoryBackground";
 import { CategoryProducts } from "../CategoryProducts";
 import { CategorySubcategories } from "../CategorySubcategories";
-import CategoryUpdateForm, { CategoryUpdateData } from "./form";
+import CategoryUpdateForm, { type CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
   categories = "categories",

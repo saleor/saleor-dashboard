@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models";
 import { Chip } from "@saleor/macaw-ui-next";
 
 interface RuleChannelChipsProps {

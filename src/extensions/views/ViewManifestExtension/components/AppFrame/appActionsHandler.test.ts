@@ -1,7 +1,7 @@
 import * as dashboardConfig from "@dashboard/config";
 import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import * as ExternalAppContext from "../ExternalAppContext/ExternalAppContext";
 import { AppActionsHandler } from "./appActionsHandler";

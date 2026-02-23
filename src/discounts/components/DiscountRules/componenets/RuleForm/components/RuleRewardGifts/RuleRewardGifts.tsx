@@ -1,9 +1,9 @@
 import { Multiselect } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models";
 import { formatGiftsLabels } from "@dashboard/discounts/views/DiscountDetails/hooks/useFetchGiftLables";
-import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
+import { type CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";

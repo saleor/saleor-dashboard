@@ -2,16 +2,16 @@ import placeholderImage from "@assets/images/placeholder60x60.png";
 import { channelsList } from "@dashboard/channels/fixtures";
 import {
   DiscountValueTypeEnum,
-  PromotionDetailsFragment,
-  PromotionFragment,
+  type PromotionDetailsFragment,
+  type PromotionFragment,
   PromotionTypeEnum,
   RewardTypeEnum,
   RewardValueTypeEnum,
-  SaleDetailsFragment,
-  SaleFragment,
-  SaleType,
-  VoucherDetailsFragment,
-  VoucherFragment,
+  type SaleDetailsFragment,
+  type SaleFragment,
+  type SaleType,
+  type VoucherDetailsFragment,
+  type VoucherFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 

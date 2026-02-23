@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useIntl } from "react-intl";
 
-import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
+import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
 type Collections = {

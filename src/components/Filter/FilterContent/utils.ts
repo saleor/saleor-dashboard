@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type Option } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { FilterType } from "../types";
 

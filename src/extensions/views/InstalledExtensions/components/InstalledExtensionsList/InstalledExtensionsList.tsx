@@ -3,10 +3,10 @@ import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { type InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface InstalledExtensionsListProps {

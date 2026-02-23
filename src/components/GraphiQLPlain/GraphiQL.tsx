@@ -16,7 +16,7 @@ import {
   Dialog,
   ExecuteButton,
   GraphiQLProvider,
-  GraphiQLProviderProps,
+  type GraphiQLProviderProps,
   HeaderEditor,
   MergeIcon,
   PlusIcon,
@@ -34,20 +34,20 @@ import {
   useDragResize,
   useEditorContext,
   useExecutionContext,
-  UseHeaderEditorArgs,
+  type UseHeaderEditorArgs,
   useMergeQuery,
   usePluginContext,
   usePrettifyEditors,
-  UseQueryEditorArgs,
-  UseResponseEditorArgs,
+  type UseQueryEditorArgs,
+  type UseResponseEditorArgs,
   useSchemaContext,
   useStorageContext,
   useTheme,
-  UseVariableEditorArgs,
+  type UseVariableEditorArgs,
   VariableEditor,
-  WriteableEditorProps,
+  type WriteableEditorProps,
 } from "@graphiql/react";
-import { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { type ComponentType, type PropsWithChildren, type ReactNode, useState } from "react";
 import * as React from "react";
 
 import { useDashboardTheme, useGraphiQLThemeSwitcher } from "../GraphiQL/styles";

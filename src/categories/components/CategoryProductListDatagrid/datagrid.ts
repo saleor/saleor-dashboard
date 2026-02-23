@@ -1,9 +1,9 @@
 import { readonlyTextCell, thumbnailCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { CategoryDetailsQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { IntlShape } from "react-intl";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type CategoryDetailsQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

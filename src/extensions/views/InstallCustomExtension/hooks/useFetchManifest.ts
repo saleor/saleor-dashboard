@@ -1,9 +1,9 @@
 import { AppErrorCode, useAppFetchMutation } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { useState } from "react";
-import { SubmitHandler, UseFormGetValues, UseFormSetError } from "react-hook-form";
+import { type SubmitHandler, type UseFormGetValues, type UseFormSetError } from "react-hook-form";
 
-import { ExtensionInstallFormData, Manifest } from "../types";
+import { type ExtensionInstallFormData, type Manifest } from "../types";
 
 export const useFetchManifest = ({
   getValues,

@@ -1,7 +1,7 @@
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 
-import { Actor } from "./types";
+import { type Actor } from "./types";
 
 /**
  * Safely stringify an object for display, handling circular references

@@ -1,6 +1,6 @@
-import { OutputData } from "@editorjs/editorjs";
-import { EditorCore } from "@react-editor-js/core";
-import { MutableRefObject, useMemo, useRef, useState } from "react";
+import { type OutputData } from "@editorjs/editorjs";
+import { type EditorCore } from "@react-editor-js/core";
+import { type MutableRefObject, useMemo, useRef, useState } from "react";
 
 export interface UseRichTextOptions {
   initial: string | null | undefined;

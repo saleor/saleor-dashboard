@@ -1,8 +1,8 @@
-import { ApolloClient, ApolloQueryResult } from "@apollo/client";
+import { type ApolloClient, type ApolloQueryResult } from "@apollo/client";
 import {
   _GetWarehouseChoicesDocument,
-  _GetWarehouseChoicesQuery,
-  _GetWarehouseChoicesQueryVariables,
+  type _GetWarehouseChoicesQuery,
+  type _GetWarehouseChoicesQueryVariables,
 } from "@dashboard/graphql";
 
 import { WarehouseHandler } from "./Handler";

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeFileUploadErrors,
@@ -8,29 +8,29 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeErrorFragment,
-  FileUploadMutation,
-  FileUploadMutationVariables,
-  ProductChannelListingErrorFragment,
-  ProductChannelListingUpdateMutation,
-  ProductChannelListingUpdateMutationVariables,
-  ProductCreateMutation,
-  ProductCreateMutationVariables,
-  ProductDeleteMutation,
-  ProductDeleteMutationVariables,
-  ProductErrorFragment,
-  ProductTypeQuery,
-  ProductVariantChannelListingUpdateMutation,
-  ProductVariantChannelListingUpdateMutationVariables,
-  UploadErrorFragment,
-  VariantCreateMutation,
-  VariantCreateMutationVariables,
+  type AttributeErrorFragment,
+  type FileUploadMutation,
+  type FileUploadMutationVariables,
+  type ProductChannelListingErrorFragment,
+  type ProductChannelListingUpdateMutation,
+  type ProductChannelListingUpdateMutationVariables,
+  type ProductCreateMutation,
+  type ProductCreateMutationVariables,
+  type ProductDeleteMutation,
+  type ProductDeleteMutationVariables,
+  type ProductErrorFragment,
+  type ProductTypeQuery,
+  type ProductVariantChannelListingUpdateMutation,
+  type ProductVariantChannelListingUpdateMutationVariables,
+  type UploadErrorFragment,
+  type VariantCreateMutation,
+  type VariantCreateMutationVariables,
 } from "@dashboard/graphql";
 import { weight } from "@dashboard/misc";
-import { ProductCreateData } from "@dashboard/products/components/ProductCreatePage/form";
+import { type ProductCreateData } from "@dashboard/products/components/ProductCreatePage/form";
 import { getAvailabilityVariables } from "@dashboard/products/utils/handlers";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 

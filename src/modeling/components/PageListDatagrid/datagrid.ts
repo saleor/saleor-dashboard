@@ -1,13 +1,13 @@
 import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { getStatusColor } from "@dashboard/misc";
-import { Pages } from "@dashboard/modeling/types";
-import { PageListUrlSortField } from "@dashboard/modeling/urls";
-import { Sort } from "@dashboard/types";
+import { type Pages } from "@dashboard/modeling/types";
+import { type PageListUrlSortField } from "@dashboard/modeling/urls";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
 

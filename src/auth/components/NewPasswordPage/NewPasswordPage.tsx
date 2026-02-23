@@ -1,7 +1,7 @@
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { AccountErrorFragment } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type AccountErrorFragment } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";

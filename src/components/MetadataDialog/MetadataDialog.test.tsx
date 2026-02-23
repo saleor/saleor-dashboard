@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { MetadataDialog, MetadataDialogProps } from "./MetadataDialog";
+import { MetadataDialog, type MetadataDialogProps } from "./MetadataDialog";
 
 const defaultProps: MetadataDialogProps = {
   open: true,

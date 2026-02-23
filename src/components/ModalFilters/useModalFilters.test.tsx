@@ -1,8 +1,8 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { ComponentType, ReactNode } from "react";
+import { type ComponentType, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import { FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
+import { type FilterAPIProvider } from "../ConditionalFilter/API/FilterAPIProvider";
 import { InitialProductStateResponse } from "../ConditionalFilter/API/initialState/product/InitialProductStateResponse";
 import { STATIC_PRODUCT_OPTIONS } from "../ConditionalFilter/constants";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
@@ -10,14 +10,14 @@ import { ConditionOptions } from "../ConditionalFilter/FilterElement/ConditionOp
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import {
   ExpressionValue,
-  FilterContainer,
+  type FilterContainer,
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { QueryApiType } from "../ConditionalFilter/FiltersQueryBuilder/types";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
-import { FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
-import { InitialStateAPI, LockedFilter, ModalFilterConfig } from "./types";
-import { useModalFilters, UseModalFiltersOptions } from "./useModalFilters";
+import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { type FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type InitialStateAPI, type LockedFilter, type ModalFilterConfig } from "./types";
+import { useModalFilters, type UseModalFiltersOptions } from "./useModalFilters";
 
 const mockContainerState = {
   value: [] as FilterContainer,

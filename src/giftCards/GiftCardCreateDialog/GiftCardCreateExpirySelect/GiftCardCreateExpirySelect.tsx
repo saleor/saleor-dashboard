@@ -1,16 +1,16 @@
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
-  GiftCardBulkCreateFormErrors,
-  GiftCardCreateCommonFormData,
+  type GiftCardBulkCreateFormErrors,
+  type GiftCardCreateCommonFormData,
 } from "@dashboard/giftCards/GiftCardBulkCreateDialog/types";
-import { GiftCardExpiryType } from "@dashboard/giftCards/GiftCardCreateDialog/types";
+import { type GiftCardExpiryType } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCreateDialog/utils";
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardCreateExpirySelectMessages as messages } from "./messages";
 

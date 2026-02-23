@@ -1,18 +1,18 @@
 // @ts-strict-ignore
 import { updateAtIndex } from "@dashboard/utils/lists";
-import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
+import { type EditableGridCell, type Item } from "@glideapps/glide-data-grid";
 import {
   createContext,
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
   useCallback,
   useContext,
   useRef,
   useState,
 } from "react";
 
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 
 export interface DatagridChange {
   data: any;

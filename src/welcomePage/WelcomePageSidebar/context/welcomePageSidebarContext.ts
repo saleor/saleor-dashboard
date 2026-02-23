@@ -1,4 +1,4 @@
-import { ChannelFragment } from "@dashboard/graphql";
+import { type ChannelFragment } from "@dashboard/graphql";
 import { createContext, useContext } from "react";
 
 export interface WelcomePageSidebarContext {

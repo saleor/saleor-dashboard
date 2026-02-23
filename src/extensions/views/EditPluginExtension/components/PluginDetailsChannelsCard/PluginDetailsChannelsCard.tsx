@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import {
   PluginDetailsChannelsCardContent,
-  PluginDetailsChannelsCardProps,
+  type PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
 export const PluginDetailsChannelsCard = (props: PluginDetailsChannelsCardProps) => {
