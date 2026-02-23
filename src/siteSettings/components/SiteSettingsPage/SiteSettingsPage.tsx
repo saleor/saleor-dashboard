@@ -40,6 +40,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
+  useLegacyUpdateWebhookEmission: boolean;
 }
 
 interface SiteSettingsPageProps {
@@ -92,6 +93,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
+    useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
   };
 
   return (
@@ -115,6 +117,9 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
         const handleEmailConfirmationChange = isEnabled => {
           change({ target: { name: "emailConfirmation", value: isEnabled } });
+        };
+        const handleWebhookEmissionChange = isEnabled => {
+          change({ target: { name: "useLegacyUpdateWebhookEmission", value: isEnabled } });
         };
 
         return (
@@ -191,6 +196,36 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                         onCheckedChange={handleEmailConfirmationChange}
                       >
                         <Text>{intl.formatMessage(messages.sectionEmailConfirmationHeader)}</Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionWebhookEmissionTitle)}
+                    description={intl.formatMessage(messages.sectionWebhookEmissionDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionWebhookEmissionHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Checkbox
+                        data-test-id="legacy-webhook-emission-checkbox"
+                        checked={data.useLegacyUpdateWebhookEmission}
+                        onCheckedChange={handleWebhookEmissionChange}
+                      >
+                        <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>

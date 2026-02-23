@@ -478,6 +478,10 @@
     "context": "dialog title",
     "string": "Capture Payment"
   },
+  "0g0LHg": {
+    "context": "card header and checkbox label",
+    "string": "Emit update webhooks for metadata changes"
+  },
   "0iMYc+": {
     "context": "field is optional",
     "string": "(Optional)"
@@ -3163,6 +3167,10 @@
   "GJwcSd": {
     "string": "PSP Reference (optional)"
   },
+  "GK6pQa": {
+    "context": "section description",
+    "string": "When enabled, update webhooks (e.g. customerUpdated) are sent even when only metadata changes. When disabled, only metadata-specific webhooks are sent. This legacy behavior will be removed in a future version."
+  },
   "GLX9II": {
     "context": "billing address",
     "string": "Same as shipping address"
@@ -5158,6 +5166,10 @@
   },
   "R4gIJc": {
     "string": "Search by model name..."
+  },
+  "R8+DNv": {
+    "context": "section title",
+    "string": "Webhook emission"
   },
   "R98JLZ": {
     "context": "OrderCustomer Fulfillment from All Warehouses",

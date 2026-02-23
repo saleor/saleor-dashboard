@@ -65,6 +65,7 @@ const SiteSettings = () => {
               data.reserveStockDurationAuthenticatedUser || null,
             enableAccountConfirmationByEmail: data.emailConfirmation,
             limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
+            useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
           },
         },
       }),
