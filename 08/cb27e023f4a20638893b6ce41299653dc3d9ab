@@ -1,0 +1,23 @@
+eslint.config.mjs
+  81dc0fc64af94a62 36-43,299-315
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "08cb27e023f4a20638893b6ce41299653dc3d9ab",
+  "prompts": {
+    "81dc0fc64af94a62": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2c60aed7-5951-4292-ba96-439127f4e756",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 12,
+      "accepted_lines": 25,
+      "overriden_lines": 0
+    }
+  }
+}
