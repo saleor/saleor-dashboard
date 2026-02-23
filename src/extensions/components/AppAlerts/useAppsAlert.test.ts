@@ -20,7 +20,7 @@ const mockHandleFailedAttempt = jest.fn();
 const mockHandleAppsListItemClick = jest.fn();
 
 const setupMocks = ({
-  hasNewFailedAttempts = false,
+  hasProblems = false,
   lastFailedWebhookDate = null as moment.Moment | null,
   hasManagedAppsPermission = true,
   appProblemsData = null as Record<string, unknown> | null,
@@ -30,7 +30,7 @@ const setupMocks = ({
   });
 
   (useSidebarDotState as jest.Mock).mockReturnValue({
-    hasNewFailedAttempts,
+    hasProblems,
     handleFailedAttempt: mockHandleFailedAttempt,
     handleAppsListItemClick: mockHandleAppsListItemClick,
   });
@@ -84,9 +84,9 @@ describe("useAppsAlert", () => {
     expect(result.current.hasProblems).toBe(false);
   });
 
-  it("should return hasProblems: true when hasNewFailedAttempts is true", () => {
+  it("should return hasProblems: true when hasProblems is true", () => {
     // Arrange
-    setupMocks({ hasNewFailedAttempts: true });
+    setupMocks({ hasProblems: true });
 
     // Act
     const { result } = renderHook(() => useAppsAlert());
@@ -115,7 +115,7 @@ describe("useAppsAlert", () => {
   it("should return hasProblems: true when both failed attempts and app problems exist", () => {
     // Arrange
     setupMocks({
-      hasNewFailedAttempts: true,
+      hasProblems: true,
       appProblemsData: {
         apps: {
           edges: [{ node: { id: "1", problems: [{ __typename: "AppProblem" }] } }],

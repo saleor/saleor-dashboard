@@ -17,13 +17,13 @@ const shouldShowDotCheck = (
 interface SidebarDotState {
   handleAppsListItemClick: (clickDate: string) => void;
   handleFailedAttempt: (failedAttemptDate: string) => void;
-  hasNewFailedAttempts: boolean;
+  hasProblems: boolean;
 }
 
 export const useSidebarDotState = (): SidebarDotState => {
   const { persist, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
 
-  const [hasNewFailedAttempts, setHasNewFailedAttempts] = useState(false);
+  const [hasProblems, setHasProblems] = useState(false);
   const lastClickDateRef = useRef<string | null>(null);
   const lastFailedAttemptDateRef = useRef<string | null>(null);
 
@@ -38,7 +38,7 @@ export const useSidebarDotState = (): SidebarDotState => {
         lastFailedAttemptDateRef.current,
       );
 
-      setHasNewFailedAttempts(shouldShowDot);
+      setHasProblems(shouldShowDot);
     }
   }, [sidebarDotRemoteState]);
 
@@ -64,7 +64,7 @@ export const useSidebarDotState = (): SidebarDotState => {
 
       // Show dot if no clicks or failed attempt is newer
       if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
-        setHasNewFailedAttempts(true);
+        setHasProblems(true);
       }
     } catch (error) {
       errorTracker.captureException(error as Error);
@@ -74,6 +74,6 @@ export const useSidebarDotState = (): SidebarDotState => {
   return {
     handleAppsListItemClick: handleClick,
     handleFailedAttempt,
-    hasProblems: hasNewFailedAttempts,
+    hasProblems,
   };
 };

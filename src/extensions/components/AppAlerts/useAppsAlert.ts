@@ -13,8 +13,11 @@ const DELIVERIES_FETCHING_INTERVAL = 5 * 60 * 1000; // 5 minutes
 /** @todo Move to extensions/* or sidebar */
 export const useAppsAlert = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { hasNewFailedAttempts, handleFailedAttempt, handleAppsListItemClick } =
-    useSidebarDotState();
+  const {
+    hasProblems: hasAppFailedDeliveries,
+    handleFailedAttempt,
+    handleAppsListItemClick,
+  } = useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
   const [fetchHasAppsAnyProblems, { data: appProblemsData }] = useAppHasProblemsLazyQuery({
@@ -52,7 +55,7 @@ export const useAppsAlert = () => {
   }, [lastFailedWebhookDate, handleFailedAttempt]);
 
   return {
-    hasProblems: hasNewFailedAttempts || hasAppProblems,
+    hasProblems: hasAppFailedDeliveries || hasAppProblems,
     handleAppsListItemClick,
   };
 };
