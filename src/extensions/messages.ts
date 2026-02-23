@@ -341,107 +341,130 @@ export const messages = defineMessages({
 export const problemMessages = defineMessages({
   problemCount: {
     defaultMessage: "{count, plural, one {{count} problem} other {{count} problems}}",
-    id: "QKrtDC",
+    description: "Badge label showing total number of app problems",
+    id: "R5r0+F",
+  },
+  problemSummary: {
+    defaultMessage:
+      "{count, plural, one {{count} problem} other {{count} problems}}{hasCritical, select, true {, including {criticalCount} critical} other {}}",
+    description: "Full badge label with optional critical count suffix",
+    id: "lQofIt",
   },
   errorCount: {
     defaultMessage: "{count, plural, one {{count} error} other {{count} errors}}",
-    id: "ectAk7",
+    description: "Badge label showing number of errors",
+    id: "qVT7rt",
   },
   includingCritical: {
     defaultMessage: "including {count} critical",
-    id: "TEOp+x",
+    description: "Suffix appended to problem count when critical problems exist",
+    id: "y/vChh",
   },
   showMoreProblems: {
     defaultMessage: "Show {count} more {count, plural, one {problem} other {problems}}",
-    id: "tdcGPK",
+    description: "Button label to expand and show additional hidden problems",
+    id: "W/Qs4m",
   },
   showMoreIncludingActiveAndCritical: {
     defaultMessage: ", including {active} active and {critical} critical",
-    id: "1aAwu4",
+    description:
+      "Suffix for show-more button when hidden problems include both active and critical",
+    id: "kRnxj2",
   },
   showMoreIncludingActive: {
     defaultMessage: ", including {active} active",
-    id: "CyYBH5",
-  },
-  showMoreIncludingCritical: {
-    defaultMessage: ", including {critical} critical",
-    id: "3OiSHe",
+    description: "Suffix for show-more button when hidden problems include active ones",
+    id: "0+sGhF",
   },
   allProblems: {
     defaultMessage: "All problems ({count})",
-    id: "mI+leH",
-  },
-  circuitBreakerType: {
-    defaultMessage: "CircuitBreaker",
-    id: "OYWn0V",
+    description: "Modal header showing total problem count for an app",
+    id: "qIVtUd",
   },
   customType: {
     defaultMessage: "App",
-    id: "2rUVsU",
+    description: "Badge label for problems reported by the app itself",
+    id: "5SdrZT",
   },
   customTypeTooltip: {
     defaultMessage: "This message comes from the app",
-    id: "lRtZ2L",
+    description: "Tooltip explaining the app-reported problem badge",
+    id: "ygPAC7",
   },
   webhookDeliveryType: {
     defaultMessage: "Webhook delivery",
-    id: "MGxwn/",
+    description: "Badge label for webhook delivery error problems",
+    id: "ki2FY7",
   },
   checkWebhooks: {
     defaultMessage: "Check webhooks",
-    id: "Pv6Tq8",
+    description: "Link label to navigate to webhook settings for an app",
+    id: "m9ndUn",
   },
   openTheApp: {
     defaultMessage: "Open the app",
-    id: "lN6B54",
+    description: "Link label to navigate to the app page",
+    id: "hhXK05",
   },
   forceClear: {
     defaultMessage: "Dismiss",
-    id: "TDaF6J",
+    description: "Button label to dismiss a single app problem",
+    id: "SW4GYL",
   },
   forceClearTooltip: {
     defaultMessage: "Force clear this error. Use if you know what you are doing",
-    id: "pkS9/B",
+    description: "Tooltip for the dismiss problem button",
+    id: "sQMS4n",
   },
   clearAllAppProblems: {
     defaultMessage: "Dismiss all problems raised by the app",
-    id: "PUxbpJ",
+    description: "Button label to dismiss all problems for an app",
+    id: "MFirbo",
   },
   openAppProblems: {
     defaultMessage: "Open app problems",
-    id: "xEUTvE",
+    description: "Button label to open the full problems modal for an app",
+    id: "vazr6V",
   },
   localTime: {
     defaultMessage: "Local: {time}",
-    id: "Vyv8xK",
+    description: "Tooltip line showing local timestamp of a problem event",
+    id: "wabGCe",
   },
   utcTime: {
     defaultMessage: "UTC: {time}",
-    id: "LZIpXn",
+    description: "Tooltip line showing UTC timestamp of a problem event",
+    id: "KJPsls",
   },
   startedAt: {
     defaultMessage: "Started at",
-    id: "LaIqAi",
+    description: "Label prefix for the creation date of a recurring problem",
+    id: "d3jlO3",
   },
   lastOccurredAt: {
     defaultMessage: "last occurred at",
-    id: "wPgEIA",
+    description: "Label prefix for the last occurrence date of a recurring problem",
+    id: "OutAI7",
   },
   dismissedByUser: {
     defaultMessage: "Dismissed by {email}",
-    id: "8LqsLj",
+    description: "Tooltip showing which user dismissed a problem",
+    id: "YVsbL4",
   },
   dismissedByApp: {
     defaultMessage: "Dismissed by app",
-    id: "N+jVKe",
+    description: "Tooltip indicating a problem was dismissed by the app itself",
+    id: "aHoX+i",
   },
   dismissed: {
     defaultMessage: "Dismissed",
-    id: "1MnSfo",
+    description: "Label shown on dismissed problems",
+    id: "71NpbR",
   },
   critical: {
     defaultMessage: "Critical",
-    id: "2pzTGC",
+    description: "Badge label for critical severity problems",
+    id: "WPKADj",
   },
 });
 

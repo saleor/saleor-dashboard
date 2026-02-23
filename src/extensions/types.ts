@@ -105,6 +105,8 @@ export type InstalledExtension = {
   actions?: ReactNode;
   problems?: AppProblem[];
   appType?: AppTypeEnum | null;
+  activeProblemCount: number;
+  criticalProblemCount: number;
 };
 
 export interface Extension {

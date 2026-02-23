@@ -158,6 +158,8 @@ export const useInstalledExtensions = () => {
             : []),
         ];
 
+        const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
+
         return {
           id: id,
           name: name ?? "",
@@ -173,6 +175,8 @@ export const useInstalledExtensions = () => {
           href: resolveExtensionHref({ id, type, isActive }),
           problems: allProblems,
           appType: type,
+          activeProblemCount: activeProblemsForApp.length,
+          criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
@@ -186,16 +190,14 @@ export const useInstalledExtensions = () => {
         logo: <PluginIcon />,
         info: null,
         href: ExtensionsUrls.resolveEditPluginExtensionUrl(plugin.id),
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
       })),
     [installedPluginsData],
   );
 
-  const activeProblems = installedApps.flatMap(
-    app => app.problems?.filter(p => !isProblemDismissed(p)) ?? [],
-  );
-
-  const totalCount = activeProblems.length;
-  const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
+  const totalCount = installedApps.reduce((sum, app) => sum + app.activeProblemCount, 0);
+  const criticalCount = installedApps.reduce((sum, app) => sum + app.criticalProblemCount, 0);
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),

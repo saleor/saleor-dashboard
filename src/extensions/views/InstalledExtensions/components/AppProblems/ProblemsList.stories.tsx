@@ -1,6 +1,4 @@
-import { LocaleContext } from "@dashboard/components/Locale/Locale";
-import type { Decorator, Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import {
   criticalAppProblem,
@@ -12,16 +10,9 @@ import {
 } from "./fixtures";
 import { ProblemsList } from "./ProblemsList";
 
-const withLocale: Decorator = (Story: React.FC) => (
-  <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
-    <Story />
-  </LocaleContext.Provider>
-);
-
 const meta: Meta<typeof ProblemsList> = {
   title: "Extensions/AppProblems/ProblemsList",
   component: ProblemsList,
-  decorators: [withLocale],
 };
 
 export default meta;
@@ -33,7 +24,7 @@ export const SingleProblem: Story = {
     problems: [warningAppProblem],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => alert("Clear problem"),
+    onClearProblem: () => {},
   },
 };
 
@@ -42,7 +33,7 @@ export const MixedProblems: Story = {
     problems: [criticalAppProblem, warningAppProblem, webhookDeliveryError],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => alert("Clear problem"),
+    onClearProblem: () => {},
   },
 };
 
@@ -58,7 +49,7 @@ export const ManyProblemsWithShowMore: Story = {
     ],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => alert("Clear problem"),
+    onClearProblem: () => {},
   },
 };
 

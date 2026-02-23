@@ -198,7 +198,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
-  problems {
+  problems(limit: 3) {
     __typename
     key
     message
@@ -9721,6 +9721,97 @@ export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.
 export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
 export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
+export const AppHasProblemsDocument = gql`
+    query AppHasProblems($first: Int!) {
+  apps(first: $first, filter: {isActive: true}) {
+    edges {
+      node {
+        id
+        problems(limit: 1) {
+          __typename
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppHasProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppHasProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppHasProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppHasProblemsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useAppHasProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+      }
+export function useAppHasProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+        }
+export type AppHasProblemsQueryHookResult = ReturnType<typeof useAppHasProblemsQuery>;
+export type AppHasProblemsLazyQueryHookResult = ReturnType<typeof useAppHasProblemsLazyQuery>;
+export type AppHasProblemsQueryResult = Apollo.QueryResult<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>;
+export const AppAllProblemsDocument = gql`
+    query AppAllProblems($id: ID!) {
+  app(id: $id) {
+    id
+    problems {
+      __typename
+      key
+      message
+      createdAt
+      count
+      isCritical
+      dismissed {
+        by
+        userEmail
+      }
+      updatedAt
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppAllProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppAllProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppAllProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppAllProblemsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppAllProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+      }
+export function useAppAllProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+        }
+export type AppAllProblemsQueryHookResult = ReturnType<typeof useAppAllProblemsQuery>;
+export type AppAllProblemsLazyQueryHookResult = ReturnType<typeof useAppAllProblemsLazyQuery>;
+export type AppAllProblemsQueryResult = Apollo.QueryResult<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>;
 export const WebhookDetailsDocument = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {

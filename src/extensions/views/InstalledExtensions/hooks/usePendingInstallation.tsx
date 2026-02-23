@@ -85,6 +85,8 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : null,
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
       };
     },
   );

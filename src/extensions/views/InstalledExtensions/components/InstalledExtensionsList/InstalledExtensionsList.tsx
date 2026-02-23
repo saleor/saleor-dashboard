@@ -3,20 +3,16 @@ import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages, problemMessages } from "@dashboard/extensions/messages";
-import {
-  InstalledExtension,
-  isProblemCritical,
-  isProblemDismissed,
-} from "@dashboard/extensions/types";
+import { InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CircleAlert } from "lucide-react";
 import * as React from "react";
-import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList";
+import { useExtensionProblems } from "./useExtensionProblems";
 
 interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
@@ -25,6 +21,7 @@ interface InstalledExtensionsListProps {
   searchQuery?: string;
   hasManagedAppsPermission?: boolean;
   onClearProblem?: (problemId: string) => void;
+  onFetchAllProblems?: (appId: string) => void;
 }
 
 const ExtensionName = ({
@@ -67,24 +64,27 @@ interface ExtensionRowProps {
   extension: InstalledExtension;
   hasManagedAppsPermission?: boolean;
   onClearProblem?: (problemId: string) => void;
+  onFetchAllProblems?: (appId: string) => void;
 }
 
 const ExtensionRow = ({
   extension,
   hasManagedAppsPermission,
   onClearProblem,
+  onFetchAllProblems,
 }: ExtensionRowProps) => {
   const intl = useIntl();
   const problems = extension.problems ?? [];
-  const activeProblems = problems.filter(p => !isProblemDismissed(p));
-  const totalCount = activeProblems.length;
-  const criticalCount = activeProblems.filter(p => isProblemCritical(p)).length;
-
-  const hasActiveProblems = totalCount > 0;
-  const hasAnyProblems = problems.length > 0;
-
-  const [problemsVisible, setProblemsVisible] = useState(hasActiveProblems);
-  const [modalOpen, setModalOpen] = useState(false);
+  const {
+    totalCount,
+    criticalCount,
+    hasActiveProblems,
+    hasAnyProblems,
+    problemsVisible,
+    modalOpen,
+    setModalOpen,
+    toggleProblems,
+  } = useExtensionProblems(problems);
 
   return (
     <>
@@ -124,7 +124,7 @@ const ExtensionRow = ({
                   totalCount={totalCount}
                   criticalCount={criticalCount}
                   expanded={problemsVisible}
-                  onToggle={() => setProblemsVisible(prev => !prev)}
+                  onToggle={toggleProblems}
                 />
               )}
             </Box>
@@ -157,6 +157,7 @@ const ExtensionRow = ({
               hasManagedAppsPermission={hasManagedAppsPermission}
               modalOpen={modalOpen}
               onModalOpenChange={setModalOpen}
+              onFetchAllProblems={onFetchAllProblems}
             />
           </GridTable.Cell>
         </GridTable.Row>
@@ -171,6 +172,7 @@ const ExtensionRow = ({
             showInline={false}
             modalOpen={modalOpen}
             onModalOpenChange={setModalOpen}
+            onFetchAllProblems={onFetchAllProblems}
           />
         )
       )}
@@ -185,6 +187,7 @@ export const InstalledExtensionsList = ({
   searchQuery,
   hasManagedAppsPermission,
   onClearProblem,
+  onFetchAllProblems,
 }: InstalledExtensionsListProps) => {
   const intl = useIntl();
 
@@ -227,6 +230,7 @@ export const InstalledExtensionsList = ({
               extension={extension}
               hasManagedAppsPermission={hasManagedAppsPermission}
               onClearProblem={onClearProblem}
+              onFetchAllProblems={onFetchAllProblems}
             />
           ))}
         </GridTable.Body>

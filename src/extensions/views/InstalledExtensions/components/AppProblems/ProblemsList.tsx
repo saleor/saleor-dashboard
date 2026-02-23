@@ -10,11 +10,11 @@ import {
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppTypeEnum } from "@dashboard/graphql";
 import { ExternalLink, Maximize2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import styles from "./AppProblems.module.css";
-import { ProblemCard } from "./ProblemCard";
+import { ProblemCard } from "./ProblemCard/ProblemCard";
 import { ProblemTypeBadge } from "./ProblemTypeBadge";
 
 const MAX_VISIBLE_PROBLEMS = 3;
@@ -28,6 +28,7 @@ interface ProblemsListProps {
   showInline?: boolean;
   modalOpen?: boolean;
   onModalOpenChange?: (open: boolean) => void;
+  onFetchAllProblems?: (appId: string) => void;
 }
 
 const sortProblems = (problems: AppProblem[]): AppProblem[] =>
@@ -74,6 +75,14 @@ const getActionLink = (
   return null;
 };
 
+const getSeverityClass = ({ dismissed, critical }: { dismissed: boolean; critical: boolean }) => {
+  if (dismissed) return styles.severityDismissed;
+
+  if (critical) return styles.severityError;
+
+  return styles.severityWarning;
+};
+
 interface ProblemItemProps {
   problem: AppProblem;
   appId: string;
@@ -98,11 +107,7 @@ const ProblemItem = ({
   const canForceClear =
     hasManagedAppsPermission && problem.__typename === "AppProblem" && !!onClearProblem;
 
-  const borderClass = dismissed
-    ? styles.severityDismissed
-    : critical
-      ? styles.severityError
-      : styles.severityWarning;
+  const borderClass = getSeverityClass({ dismissed, critical });
 
   return (
     <div
@@ -153,8 +158,12 @@ export const ProblemsList = ({
   showInline = true,
   modalOpen,
   onModalOpenChange,
+  onFetchAllProblems,
 }: ProblemsListProps) => {
   const intl = useIntl();
+
+  // Modal state can be controlled externally (via modalOpen/onModalOpenChange props from the parent
+  // row's "Open app problems" button) or internally (via the inline "Show more" button).
   const [internalPopupOpen, setInternalPopupOpen] = useState(false);
 
   const isPopupOpen = modalOpen ?? internalPopupOpen;
@@ -165,6 +174,12 @@ export const ProblemsList = ({
       setInternalPopupOpen(open);
     }
   };
+
+  useEffect(() => {
+    if (isPopupOpen && onFetchAllProblems) {
+      onFetchAllProblems(appId);
+    }
+  }, [isPopupOpen, onFetchAllProblems, appId]);
 
   const sorted = useMemo(() => sortProblems(problems), [problems]);
 
@@ -224,9 +239,9 @@ export const ProblemsList = ({
                       active: activeInHidden,
                     })
                   : criticalInHidden > 0
-                    ? intl.formatMessage(problemMessages.showMoreIncludingCritical, {
-                        critical: criticalInHidden,
-                      })
+                    ? `, ${intl.formatMessage(problemMessages.includingCritical, {
+                        count: criticalInHidden,
+                      })}`
                     : null}
             </button>
           )}

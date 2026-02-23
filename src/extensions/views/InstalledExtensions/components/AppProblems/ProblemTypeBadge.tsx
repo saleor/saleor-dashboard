@@ -15,7 +15,7 @@ export const ProblemTypeBadge = ({ typename }: ProblemTypeBadgeProps) => {
 
   if (typename === "WebhookDeliveryError") {
     return (
-      <span className={styles.webhookBadge}>
+      <span className={styles.typeBadgeWebhook}>
         <Radio size={12} />
         {intl.formatMessage(problemMessages.webhookDeliveryType)}
       </span>
@@ -25,7 +25,7 @@ export const ProblemTypeBadge = ({ typename }: ProblemTypeBadgeProps) => {
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <span className={styles.customBadge}>
+        <span className={styles.typeBadgeCustom}>
           <Package size={12} />
           {intl.formatMessage(problemMessages.customType)}
         </span>

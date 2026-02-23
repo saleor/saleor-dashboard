@@ -1,6 +1,4 @@
-import { LocaleContext } from "@dashboard/components/Locale/Locale";
-import type { Decorator, Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import {
   criticalAppProblem,
@@ -8,18 +6,11 @@ import {
   warningAppProblem,
   webhookDeliveryError,
 } from "./fixtures";
-import { ProblemCard } from "./ProblemCard";
-
-const withLocale: Decorator = (Story: React.FC) => (
-  <LocaleContext.Provider value={{ locale: "en" as any, setLocale: () => {} }}>
-    <Story />
-  </LocaleContext.Provider>
-);
+import { ProblemCard } from "./ProblemCard/ProblemCard";
 
 const meta: Meta<typeof ProblemCard> = {
   title: "Extensions/AppProblems/ProblemCard",
   component: ProblemCard,
-  decorators: [withLocale],
 };
 
 export default meta;
@@ -29,7 +20,7 @@ type Story = StoryObj<typeof ProblemCard>;
 export const Critical: Story = {
   args: {
     problem: criticalAppProblem,
-    onForceClear: () => alert("Force clear clicked"),
+    onForceClear: () => {},
   },
 };
 

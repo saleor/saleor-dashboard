@@ -125,6 +125,8 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           href: expect.any(String),
           problems: [],
           appType: "THIRDPARTY",
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
         },
         {
           id: "2",
@@ -134,6 +136,8 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           href: expect.any(String),
           problems: [],
           appType: "THIRDPARTY",
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
         },
         {
           id: "plug1",
@@ -141,6 +145,8 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           logo: expect.any(Object),
           info: null,
           href: expect.any(String),
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
         },
       ],
       installedAppsLoading: false,

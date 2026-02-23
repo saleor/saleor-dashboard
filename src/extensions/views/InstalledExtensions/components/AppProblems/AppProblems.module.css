@@ -1,21 +1,21 @@
 .problemsContainer {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--mu-colors-background-default1);
+  border: 1px solid var(--mu-colors-border-default1);
   border-radius: 8px;
   margin: 18px 63px;
   overflow: hidden;
 }
 
 .severityError {
-  border-left: 3px solid #dc2626;
+  border-left: 3px solid var(--mu-colors-background-critical1);
 }
 
 .severityWarning {
-  border-left: 3px solid #d97706;
+  border-left: 3px solid var(--mu-colors-background-warning1);
 }
 
 .severityDismissed {
-  border-left: 3px solid #d1d5db;
+  border-left: 3px solid var(--mu-colors-border-default1);
 }
 
 .problemHeader {
@@ -25,105 +25,75 @@
   padding: 10px 16px 4px;
 }
 
-.groupHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px 4px;
-}
-
-.errorIcon {
-  color: #dc2626;
-  flex-shrink: 0;
-}
-
 .criticalBadge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #fef2f2;
-  color: #dc2626;
+  background-color: var(--mu-colors-background-critical1);
+  color: var(--mu-colors-foreground-text-critical-default);
   font-size: 11px;
   font-weight: 600;
   padding: 1px 6px;
   border-radius: 4px;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--mu-colors-border-critical1);
   line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 
-.circuitBreakerBadge {
+.typeBadge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #dc2626;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.typeBadgeCircuitBreaker {
+  composes: typeBadge;
+  background-color: var(--mu-colors-background-critical1);
+  color: var(--mu-colors-foreground-text-critical-default);
+}
+
+.typeBadgeCustom {
+  composes: typeBadge;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+.typeBadgeWebhook {
+  composes: typeBadge;
+  background-color: var(--mu-colors-background-warning1);
+  color: var(--mu-colors-foreground-text-warning-default);
+}
+
+.problemsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   color: #ffffff;
   font-size: 12px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 2px 10px;
+  border-radius: 12px;
   line-height: 1.4;
-}
-
-.customBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: #f3f4f6;
-  color: #374151;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-  line-height: 1.4;
-}
-
-.webhookBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: #fef3c7;
-  color: #92400e;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-  line-height: 1.4;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .problemsBadgeError {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: #dc2626;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 12px;
-  line-height: 1.4;
-  white-space: nowrap;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
+  composes: problemsBadge;
+  background-color: var(--mu-colors-background-critical1);
 }
 
 .problemsBadgeWarning {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: #d97706;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 12px;
-  line-height: 1.4;
-  white-space: nowrap;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
+  composes: problemsBadge;
+  background-color: var(--mu-colors-background-warning1);
 }
 
 .problemRow {
@@ -145,21 +115,16 @@
   margin-bottom: 4px;
 }
 
-.forceClearButton:hover {
-  color: #374151;
-  border-color: #9ca3af;
-}
-
 .timestamp {
-  color: #6b7280;
+  color: var(--mu-colors-foreground-text-neutral-subtle);
   font-size: 12px;
 }
 
 .countBadge {
   display: inline-flex;
   align-items: center;
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-foreground-text-neutral-default);
   font-size: 12px;
   font-weight: 600;
   padding: 2px 8px;
@@ -169,7 +134,7 @@
 
 .timestampHoverable {
   cursor: default;
-  border-bottom: 1px dotted #9ca3af;
+  border-bottom: 1px dotted var(--mu-colors-border-default2);
 }
 
 .timestampTooltip {
@@ -179,7 +144,7 @@
 }
 
 .dismissedLabel {
-  color: #9ca3af;
+  color: var(--mu-colors-foreground-text-neutral-subtle);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -188,7 +153,7 @@
 
 .problemMessage {
   font-size: 14px;
-  color: #111827;
+  color: var(--mu-colors-foreground-text-neutral-default);
 }
 
 .showMoreButton {
@@ -198,9 +163,9 @@
   gap: 4px;
   background: none;
   border: none;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--mu-colors-border-default1);
   cursor: pointer;
-  color: #6b7280;
+  color: var(--mu-colors-foreground-text-neutral-subtle);
   font-size: 14px;
   padding: 8px 0;
   width: 100%;
@@ -208,12 +173,12 @@
 }
 
 .showMoreButton:hover {
-  color: #374151;
+  color: var(--mu-colors-foreground-text-neutral-default);
 }
 
 .groupDivider {
   border: none;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--mu-colors-border-default1);
   margin: 4px 16px;
 }
 
@@ -224,7 +189,7 @@
   margin-left: auto;
   font-size: 12px;
   font-weight: 600;
-  color: #4b5563;
+  color: var(--mu-colors-foreground-text-neutral-default);
   text-decoration: none;
   cursor: pointer;
 }
@@ -239,32 +204,28 @@
   padding: 0 24px 24px;
 }
 
-.headerBadgeError {
+.headerBadge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #fef2f2;
-  color: #dc2626;
   font-size: 13px;
   font-weight: 600;
   padding: 2px 10px;
   border-radius: 12px;
-  border: 1px solid #fecaca;
   line-height: 1.4;
   white-space: nowrap;
 }
 
+.headerBadgeError {
+  composes: headerBadge;
+  background-color: var(--mu-colors-background-critical1);
+  color: var(--mu-colors-foreground-text-critical-default);
+  border: 1px solid var(--mu-colors-border-critical1);
+}
+
 .headerBadgeWarning {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: #fffbeb;
-  color: #92400e;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 12px;
-  border: 1px solid #fde68a;
-  line-height: 1.4;
-  white-space: nowrap;
+  composes: headerBadge;
+  background-color: var(--mu-colors-background-warning1);
+  color: var(--mu-colors-foreground-text-warning-default);
+  border: 1px solid var(--mu-colors-border-warning1);
 }

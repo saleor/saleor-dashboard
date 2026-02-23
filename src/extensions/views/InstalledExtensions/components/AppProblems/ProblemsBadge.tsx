@@ -23,10 +23,11 @@ export const ProblemsBadge = ({
     return null;
   }
 
-  const label =
-    criticalCount > 0
-      ? `${intl.formatMessage(problemMessages.problemCount, { count: totalCount })}, ${intl.formatMessage(problemMessages.includingCritical, { count: criticalCount })}`
-      : intl.formatMessage(problemMessages.problemCount, { count: totalCount });
+  const label = intl.formatMessage(problemMessages.problemSummary, {
+    count: totalCount,
+    hasCritical: criticalCount > 0 ? "true" : "false",
+    criticalCount,
+  });
 
   return (
     <button

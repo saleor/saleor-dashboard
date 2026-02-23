@@ -1,9 +1,9 @@
-import { useInstalledAppsListLazyQuery } from "@dashboard/graphql";
+import { useAppHasProblemsLazyQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useIntervalActionWithState } from "@dashboard/hooks/useIntervalActionWithState";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import moment from "moment-timezone";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 import { useSidebarDotState } from "./useSidebarDotState";
@@ -17,30 +17,28 @@ export const useAppsAlert = () => {
     useSidebarDotState();
   const { lastFailedWebhookDate, fetchAppsWebhooks } = useAppsFailedDeliveries();
 
-  const [fetchInstalledApps, { data: installedAppsData }] = useInstalledAppsListLazyQuery({
+  const [fetchAppProblems, { data: appProblemsData }] = useAppHasProblemsLazyQuery({
     fetchPolicy: "no-cache",
   });
 
   const hasAppProblems = useMemo(() => {
-    const apps = mapEdgesToItems(installedAppsData?.apps) ?? [];
+    const apps = mapEdgesToItems(appProblemsData?.apps) ?? [];
 
     return apps.some(app => (app.problems?.length ?? 0) > 0);
-  }, [installedAppsData?.apps]);
+  }, [appProblemsData?.apps]);
 
-  const fetchAll = () => {
+  const fetchAll = useCallback(() => {
     fetchAppsWebhooks();
 
     if (hasManagedAppsPermission) {
-      fetchInstalledApps({ variables: { first: 100 } });
+      fetchAppProblems({ variables: { first: 100 } });
     }
-  };
+  }, [fetchAppsWebhooks, hasManagedAppsPermission, fetchAppProblems]);
 
   // Fetch immediately on mount
   useEffect(() => {
-    if (hasManagedAppsPermission) {
-      fetchAll();
-    }
-  }, [hasManagedAppsPermission]);
+    fetchAll();
+  }, [fetchAll]);
 
   useIntervalActionWithState({
     action: fetchAll,
@@ -53,15 +51,18 @@ export const useAppsAlert = () => {
     if (lastFailedWebhookDate && lastFailedWebhookDate instanceof moment) {
       handleFailedAttempt(lastFailedWebhookDate.toISOString());
     }
-  }, [lastFailedWebhookDate]);
+  }, [lastFailedWebhookDate, handleFailedAttempt]);
 
   useEffect(() => {
+    // When any app reports problems, mark as a failed attempt so the sidebar dot appears.
     if (hasAppProblems) {
       handleFailedAttempt(new Date().toISOString());
     }
-  }, [hasAppProblems]);
+  }, [hasAppProblems, handleFailedAttempt]);
 
   return {
+    // Merge all issues to detect if there is any problem
+    // todo change name
     hasNewFailedAttempts: hasNewFailedAttempts || hasAppProblems,
     handleAppsListItemClick,
   };

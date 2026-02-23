@@ -10853,6 +10853,20 @@ export type AppWebhookDeliveriesQueryVariables = Exact<{
 
 export type AppWebhookDeliveriesQuery = { __typename: 'Query', app: { __typename: 'App', webhooks: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', name: string }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', name: string }>, eventDeliveries: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, status: EventDeliveryStatusEnum, eventType: WebhookEventTypeEnum, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, createdAt: any, status: EventDeliveryStatusEnum, response: string | null, responseStatusCode: number | null } }> } | null } }> } | null }> | null } | null };
 
+export type AppHasProblemsQueryVariables = Exact<{
+  first: Scalars['Int'];
+}>;
+
+
+export type AppHasProblemsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, problems: Array<{ __typename: 'AppProblem' }> | null } }> } | null };
+
+export type AppAllProblemsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppAllProblemsQuery = { __typename: 'Query', app: { __typename: 'App', id: string, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null } | null };
+
 export type WebhookDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;

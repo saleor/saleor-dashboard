@@ -64,6 +64,17 @@ import type {
   AppManifestExtension,
   AppManifestRequiredSaleorVersion,
   AppManifestWebhook,
+  AppProblem,
+  AppProblemCreate,
+  AppProblemCreateError,
+  AppProblemCreateInput,
+  AppProblemDismiss,
+  AppProblemDismissByAppInput,
+  AppProblemDismissByStaffWithIdsInput,
+  AppProblemDismissByStaffWithKeysInput,
+  AppProblemDismissError,
+  AppProblemDismissInput,
+  AppProblemDismissed,
   AppReenableSyncWebhooks,
   AppRetryInstall,
   AppSortingInput,
@@ -1060,6 +1071,8 @@ import type {
   TransactionAction,
   TransactionCancelationRequested,
   TransactionChargeRequested,
+  TransactionCountableConnection,
+  TransactionCountableEdge,
   TransactionCreate,
   TransactionCreateError,
   TransactionCreateInput,
@@ -1085,6 +1098,7 @@ import type {
   TransactionUpdate,
   TransactionUpdateError,
   TransactionUpdateInput,
+  TransactionWhereInput,
   TranslatableItemConnection,
   TranslatableItemEdge,
   TranslationCreated,
@@ -2237,6 +2251,14 @@ export type OptionalApp = {
   privateMetafield?: App['privateMetafield'] | undefined;
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields?: App['privateMetafields'] | undefined;
+  /**
+ * List of problems associated with this app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+ */
+  problems?: Maybe<OptionalAppProblem[]> | undefined;
   /** Support page for the app. */
   supportUrl?: App['supportUrl'] | undefined;
   /**
@@ -2970,6 +2992,311 @@ export type OptionalAppManifestWebhook = {
  */
 export const defineAppManifestWebhookFactory: DefineTypeFactoryInterface<
   OptionalAppManifestWebhook,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents a problem associated with an app.
+ *
+ * Added in Saleor 3.22.
+ */
+export type OptionalAppProblem = {
+  __typename?: 'AppProblem';
+  /**
+ * Number of occurrences.
+ *
+ * Added in Saleor 3.22.
+ */
+  count?: AppProblem['count'] | undefined;
+  /**
+ * The date and time when the problem was created.
+ *
+ * Added in Saleor 3.22.
+ */
+  createdAt?: AppProblem['createdAt'] | undefined;
+  /**
+ * Dismissal information. Null if the problem has not been dismissed.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+ */
+  dismissed?: Maybe<OptionalAppProblemDismissed> | undefined;
+  /**
+ * The ID of the app problem.
+ *
+ * Added in Saleor 3.22.
+ */
+  id?: AppProblem['id'] | undefined;
+  /**
+ * Whether the problem has reached critical threshold.
+ *
+ * Added in Saleor 3.22.
+ */
+  isCritical?: AppProblem['isCritical'] | undefined;
+  /**
+ * Key identifying the type of problem.
+ *
+ * Added in Saleor 3.22.
+ */
+  key?: AppProblem['key'] | undefined;
+  /**
+ * The problem message.
+ *
+ * Added in Saleor 3.22.
+ */
+  message?: AppProblem['message'] | undefined;
+  /**
+ * The date and time when the problem was last updated.
+ *
+ * Added in Saleor 3.22.
+ */
+  updatedAt?: AppProblem['updatedAt'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblem} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemFactoryInterface}
+ */
+export const defineAppProblemFactory: DefineTypeFactoryInterface<
+  OptionalAppProblem,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Add a problem to the calling app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type OptionalAppProblemCreate = {
+  __typename?: 'AppProblemCreate';
+  /** The created or updated app problem. */
+  appProblem?: Maybe<OptionalAppProblem> | undefined;
+  errors?: OptionalAppProblemCreateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemCreate} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemCreateFactoryInterface}
+ */
+export const defineAppProblemCreateFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemCreate,
+  {}
+> = defineTypeFactory;
+
+export type OptionalAppProblemCreateError = {
+  __typename?: 'AppProblemCreateError';
+  /** The error code. */
+  code?: AppProblemCreateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: AppProblemCreateError['field'] | undefined;
+  /** The error message. */
+  message?: AppProblemCreateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemCreateError} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemCreateErrorFactoryInterface}
+ */
+export const defineAppProblemCreateErrorFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemCreateError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalAppProblemCreateInput = {
+  __typename?: 'AppProblemCreateInput';
+  /** Time window in minutes for aggregating problems with the same key. Defaults to 60. If 0, a new problem is always created. */
+  aggregationPeriod?: AppProblemCreateInput['aggregationPeriod'] | undefined;
+  /** If set, the problem becomes critical when count reaches this value. If sent again with higher value than already counted, problem can be de-escalated. */
+  criticalThreshold?: AppProblemCreateInput['criticalThreshold'] | undefined;
+  /** Key identifying the type of problem. App can add multiple problems under the same key, to merge them together or delete them in batch. Must be between 3 and 128 characters. */
+  key?: AppProblemCreateInput['key'] | undefined;
+  /** The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix. */
+  message?: AppProblemCreateInput['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemCreateInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemCreateInputFactoryInterface}
+ */
+export const defineAppProblemCreateInputFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemCreateInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Dismiss problems for an app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+ */
+export type OptionalAppProblemDismiss = {
+  __typename?: 'AppProblemDismiss';
+  errors?: OptionalAppProblemDismissError[] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismiss} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissFactoryInterface}
+ */
+export const defineAppProblemDismissFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismiss,
+  {}
+> = defineTypeFactory;
+
+/** Input for app callers to dismiss their own problems. */
+export type OptionalAppProblemDismissByAppInput = {
+  __typename?: 'AppProblemDismissByAppInput';
+  /** List of problem IDs to dismiss. Cannot be combined with keys. Max 100. */
+  ids?: AppProblemDismissByAppInput['ids'] | undefined;
+  /** List of problem keys to dismiss. Cannot be combined with ids. Max 100. */
+  keys?: AppProblemDismissByAppInput['keys'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissByAppInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissByAppInputFactoryInterface}
+ */
+export const defineAppProblemDismissByAppInputFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissByAppInput,
+  {}
+> = defineTypeFactory;
+
+/** Input for staff callers to dismiss problems by IDs. */
+export type OptionalAppProblemDismissByStaffWithIdsInput = {
+  __typename?: 'AppProblemDismissByStaffWithIdsInput';
+  /** List of problem IDs to dismiss. Max 100. */
+  ids?: AppProblemDismissByStaffWithIdsInput['ids'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissByStaffWithIdsInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissByStaffWithIdsInputFactoryInterface}
+ */
+export const defineAppProblemDismissByStaffWithIdsInputFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissByStaffWithIdsInput,
+  {}
+> = defineTypeFactory;
+
+/** Input for staff callers to dismiss problems by keys. */
+export type OptionalAppProblemDismissByStaffWithKeysInput = {
+  __typename?: 'AppProblemDismissByStaffWithKeysInput';
+  /** ID of the app whose problems to dismiss. */
+  app?: AppProblemDismissByStaffWithKeysInput['app'] | undefined;
+  /** List of problem keys to dismiss. Max 100. */
+  keys?: AppProblemDismissByStaffWithKeysInput['keys'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissByStaffWithKeysInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissByStaffWithKeysInputFactoryInterface}
+ */
+export const defineAppProblemDismissByStaffWithKeysInputFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissByStaffWithKeysInput,
+  {}
+> = defineTypeFactory;
+
+export type OptionalAppProblemDismissError = {
+  __typename?: 'AppProblemDismissError';
+  /** The error code. */
+  code?: AppProblemDismissError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: AppProblemDismissError['field'] | undefined;
+  /** The error message. */
+  message?: AppProblemDismissError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissError} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissErrorFactoryInterface}
+ */
+export const defineAppProblemDismissErrorFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissError,
+  {}
+> = defineTypeFactory;
+
+/** Input for dismissing app problems. Only one can be specified. */
+export type OptionalAppProblemDismissInput = {
+  __typename?: 'AppProblemDismissInput';
+  /** For app callers only - dismiss own problems. */
+  byApp?: Maybe<OptionalAppProblemDismissByAppInput> | undefined;
+  /** For staff callers - dismiss problems by IDs. */
+  byStaffWithIds?: Maybe<OptionalAppProblemDismissByStaffWithIdsInput> | undefined;
+  /** For staff callers - dismiss problems by keys for specified app. */
+  byStaffWithKeys?: Maybe<OptionalAppProblemDismissByStaffWithKeysInput> | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissInput} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissInputFactoryInterface}
+ */
+export const defineAppProblemDismissInputFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Dismissal information for an app problem.
+ *
+ * Added in Saleor 3.22.
+ */
+export type OptionalAppProblemDismissed = {
+  __typename?: 'AppProblemDismissed';
+  /**
+ * Whether the problem was dismissed by an App or a User.
+ *
+ * Added in Saleor 3.22.
+ */
+  by?: AppProblemDismissed['by'] | undefined;
+  /**
+ * The user who dismissed this problem. Null if dismissed by an app or the user was deleted.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_STAFF.
+ */
+  user?: Maybe<OptionalUser> | undefined;
+  /**
+ * Email of the user who dismissed this problem. Preserved even if the user is deleted.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+ */
+  userEmail?: AppProblemDismissed['userEmail'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppProblemDismissed} model.
+ *
+ * @param options
+ * @returns factory {@link AppProblemDismissedFactoryInterface}
+ */
+export const defineAppProblemDismissedFactory: DefineTypeFactoryInterface<
+  OptionalAppProblemDismissed,
   {}
 > = defineTypeFactory;
 
@@ -15083,6 +15410,22 @@ export type OptionalMutation = {
   /** Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS. */
   appInstall?: Maybe<OptionalAppInstall> | undefined;
   /**
+ * Add a problem to the calling app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+  appProblemCreate?: Maybe<OptionalAppProblemCreate> | undefined;
+  /**
+ * Dismiss problems for an app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+ */
+  appProblemDismiss?: Maybe<OptionalAppProblemDismiss> | undefined;
+  /**
  * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
  *
  * Added in Saleor 3.21.
@@ -17276,7 +17619,7 @@ export const defineNewTabTargetOptionsFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** An object with an ID */
-export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalDigitalContent | OptionalDigitalContentUrl | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
+export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalDigitalContent | OptionalDigitalContentUrl | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
 /**
  * An object with attributes.
@@ -28461,9 +28804,17 @@ export type OptionalQuery = {
   /**
  * Look up a transaction by ID.
  *
- * Requires one of the following permissions: HANDLE_PAYMENTS.
+ * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
  */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
+  /**
+ * List of transactions. For apps with `MANAGE_ORDERS` permission, returns all transactions. For apps with just `HANDLE_PAYMENTS` permission, returns only transactions created by that app. For staff users, returns transactions from orders and checkouts in channels they have access to.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+ */
+  transactions?: Maybe<OptionalTransactionCountableConnection> | undefined;
   /**
  * Lookup a translatable item by ID.
  *
@@ -33300,6 +33651,45 @@ export const defineTransactionChargeRequestedFactory: DefineTypeFactoryInterface
   {}
 > = defineTypeFactory;
 
+export type OptionalTransactionCountableConnection = {
+  __typename?: 'TransactionCountableConnection';
+  edges?: OptionalTransactionCountableEdge[] | undefined;
+  /** Pagination data for this connection. */
+  pageInfo?: OptionalPageInfo | undefined;
+  /** A total count of items in the collection. */
+  totalCount?: TransactionCountableConnection['totalCount'] | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionCountableConnection} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionCountableConnectionFactoryInterface}
+ */
+export const defineTransactionCountableConnectionFactory: DefineTypeFactoryInterface<
+  OptionalTransactionCountableConnection,
+  {}
+> = defineTypeFactory;
+
+export type OptionalTransactionCountableEdge = {
+  __typename?: 'TransactionCountableEdge';
+  /** A cursor for use in pagination. */
+  cursor?: TransactionCountableEdge['cursor'] | undefined;
+  /** The item at the end of the edge. */
+  node?: OptionalTransactionItem | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionCountableEdge} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionCountableEdgeFactoryInterface}
+ */
+export const defineTransactionCountableEdgeFactory: DefineTypeFactoryInterface<
+  OptionalTransactionCountableEdge,
+  {}
+> = defineTypeFactory;
+
 /**
  * Creates transaction for checkout or order.
  *
@@ -33513,6 +33903,12 @@ export type OptionalTransactionFilterInput = {
   metadata?: Maybe<OptionalMetadataFilterInput> | undefined;
   /** Filter by payment method details used to pay for the order. */
   paymentMethodDetails?: Maybe<OptionalPaymentMethodDetailsFilterInput> | undefined;
+  /**
+ * Filter by PSP reference of transactions.
+ *
+ * Added in Saleor 3.22.
+ */
+  pspReference?: Maybe<OptionalStringFilterInput> | undefined;
 };
 
 /**
@@ -34041,6 +34437,30 @@ export type OptionalTransactionUpdateInput = {
  */
 export const defineTransactionUpdateInputFactory: DefineTypeFactoryInterface<
   OptionalTransactionUpdateInput,
+  {}
+> = defineTypeFactory;
+
+export type OptionalTransactionWhereInput = {
+  __typename?: 'TransactionWhereInput';
+  /** List of conditions that must be met. */
+  AND?: Maybe<OptionalTransactionWhereInput[]> | undefined;
+  /** A list of conditions of which at least one must be met. */
+  OR?: Maybe<OptionalTransactionWhereInput[]> | undefined;
+  /** Filter by app identifier. */
+  appIdentifier?: Maybe<OptionalStringFilterInput> | undefined;
+  ids?: TransactionWhereInput['ids'] | undefined;
+  /** Filter by PSP reference. */
+  pspReference?: Maybe<OptionalStringFilterInput> | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionWhereInput} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionWhereInputFactoryInterface}
+ */
+export const defineTransactionWhereInputFactory: DefineTypeFactoryInterface<
+  OptionalTransactionWhereInput,
   {}
 > = defineTypeFactory;
 

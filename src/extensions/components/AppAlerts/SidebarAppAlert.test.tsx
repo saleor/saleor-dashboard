@@ -1,6 +1,6 @@
 import {
   useAppFailedPendingWebhooksLazyQuery,
-  useInstalledAppsListLazyQuery,
+  useAppHasProblemsLazyQuery,
   useUserAccountUpdateMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
@@ -22,7 +22,7 @@ describe("SidebarAppAlert", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useUserAccountUpdateMutation as jest.Mock).mockReturnValue([jest.fn()]);
-    (useInstalledAppsListLazyQuery as jest.Mock).mockReturnValue([jest.fn(), { data: undefined }]);
+    (useAppHasProblemsLazyQuery as jest.Mock).mockReturnValue([jest.fn(), { data: undefined }]);
   });
 
   it("displays sidebar alert dot when there are webhook failures, TC_ID: D_INT_01", async () => {

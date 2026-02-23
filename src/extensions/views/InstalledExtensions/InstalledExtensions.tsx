@@ -10,7 +10,7 @@ import {
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";
 import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/InstalledExtensions/hooks/useInstalledExtensionsFilter";
-import { useAppProblemDismissMutation } from "@dashboard/graphql";
+import { useAppAllProblemsLazyQuery, useAppProblemDismissMutation } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -62,6 +62,17 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   } = useInstalledExtensions();
   const { query, handleQueryChange, filteredInstalledExtensions } =
     useInstalledExtensionsFilter(installedExtensions);
+
+  const [fetchAllProblems] = useAppAllProblemsLazyQuery({
+    fetchPolicy: "network-only",
+  });
+
+  const handleFetchAllProblems = useCallback(
+    (appId: string) => {
+      fetchAllProblems({ variables: { id: appId } });
+    },
+    [fetchAllProblems],
+  );
 
   const [appProblemDismiss] = useAppProblemDismissMutation({
     onCompleted: data => {
@@ -139,6 +150,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           searchQuery={query}
           hasManagedAppsPermission={hasManagedAppsPermission}
           onClearProblem={handleClearProblem}
+          onFetchAllProblems={handleFetchAllProblems}
         />
 
         <DeleteFailedInstallationDialog
