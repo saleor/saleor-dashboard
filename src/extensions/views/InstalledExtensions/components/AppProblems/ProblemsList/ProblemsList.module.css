@@ -7,7 +7,7 @@
 }
 
 .severityError {
-  border-left: 3px solid var(--mu-colors-background-critical1);
+  border-left: 3px solid var(--mu-colors-background-critical2);
 }
 
 .severityWarning {
