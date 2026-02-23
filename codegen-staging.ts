@@ -1,4 +1,4 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: "./schema-staging.graphql",
@@ -21,7 +21,19 @@ const config: CodegenConfig = {
       plugins: ["typescript-apollo-client-helpers"],
     },
     "./src/graphql/typesStaging.generated.ts": {
-      plugins: ["typescript", "typescript-operations"],
+      plugins: [
+        {
+          "typescript-operations": {
+            preResolveTypes: true,
+            omitObjectTypes: true,
+          },
+        },
+        {
+          "graphql-codegen-typescript-operation-types": {
+            enumsAsTypes: true,
+          },
+        },
+      ],
       config: {
         nonOptionalTypename: true,
         avoidOptionals: {
