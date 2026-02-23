@@ -3715,6 +3715,10 @@
     "context": "Number of shipping zones configured",
     "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
   },
+  "JDvxO6": {
+    "context": "search gift card placeholder",
+    "string": "Search Gift Cards (e.g. by code, email, user name)"
+  },
   "JDz5h8": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -6909,10 +6913,6 @@
   "b2DlTO": {
     "context": "Taxes section title",
     "string": "Channels"
-  },
-  "b2qX/b": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards"
   },
   "b6L9n7": {
     "context": "voucher is active until date",
