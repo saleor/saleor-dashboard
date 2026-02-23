@@ -1,0 +1,23 @@
+src/extensions/components/AppAlerts/useAppsAlert.test.ts
+  d446902e316f6aa4 1-74,76-102,104-120,122-148,150-165,167-262
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "e968440055c9670e2ba16022fd6ade62b8c3d2dd",
+  "prompts": {
+    "d446902e316f6aa4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "041f60c8-2849-4a6d-b168-79a624246c63",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 273,
+      "total_deletions": 0,
+      "accepted_lines": 257,
+      "overriden_lines": 5
+    }
+  }
+}
