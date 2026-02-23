@@ -3401,6 +3401,7 @@ export const ShopFragmentDoc = gql`
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
   useLegacyUpdateWebhookEmission
+  preserveAllAddressFields
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`

@@ -1145,6 +1145,10 @@
     "context": "order history message",
     "string": "Other event"
   },
+  "4k38A6": {
+    "context": "card header and checkbox label",
+    "string": "Preserve non-standard address fields"
+  },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
@@ -1524,6 +1528,10 @@
   "6sjBvJ": {
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
+  },
+  "6vf8AS": {
+    "context": "section title",
+    "string": "Address Validation"
   },
   "6xC/Ls": {
     "context": "informations about product seo, header",
@@ -4826,6 +4834,10 @@
   "PJDcQs": {
     "context": "set balance button label",
     "string": "Set Balance"
+  },
+  "PJGv35": {
+    "context": "section description",
+    "string": "Controls how address fields that are not part of a country's standard format are handled. By default, such fields are removed during validation — enabling this setting preserves them as entered."
   },
   "PKJqcq": {
     "string": "Invoice is Generating"
