@@ -1,0 +1,29 @@
+src/extensions/components/AppAlerts/useSidebarDotState.test.ts
+  236788fc4cf68e20 25,46,62,77,94,122,150
+src/extensions/components/AppAlerts/useSidebarDotState.ts
+  236788fc4cf68e20 20,26,41,67,77
+src/extensions/components/AppAlerts/useAppsAlert.test.ts
+  236788fc4cf68e20 23,33,87,89,118
+src/extensions/components/AppAlerts/useAppsAlert.ts
+  236788fc4cf68e20 17,58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "6370c7b56a454566fc9fe0cbf860055dbb42a68f",
+  "prompts": {
+    "236788fc4cf68e20": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1c59742f-8c09-4896-b87e-f4ae2b719ae5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 19,
+      "total_deletions": 19,
+      "accepted_lines": 19,
+      "overriden_lines": 0
+    }
+  }
+}
