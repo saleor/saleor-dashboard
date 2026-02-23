@@ -1,0 +1,23 @@
+src/fragments/apps.ts
+  8486d717be693762 205
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "575a5037216378c719e2cee169d327fc10ab3b32",
+  "prompts": {
+    "8486d717be693762": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3e0c8a18-0a00-46b2-afb6-11bc3c391b7c",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
