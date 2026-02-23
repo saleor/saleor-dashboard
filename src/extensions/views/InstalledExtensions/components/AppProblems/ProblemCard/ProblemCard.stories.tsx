@@ -1,3 +1,4 @@
+import { AppTypeEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
@@ -12,6 +13,10 @@ import { ProblemCard } from "./ProblemCard";
 const meta: Meta<typeof ProblemCard> = {
   title: "Extensions/AppProblems/ProblemCard",
   component: ProblemCard,
+  args: {
+    appId: "app-123",
+    index: 0,
+  },
 };
 
 export default meta;
@@ -21,7 +26,8 @@ type Story = StoryObj<typeof ProblemCard>;
 export const Critical: Story = {
   args: {
     problem: criticalAppProblem,
-    onForceClear: fn,
+    onClearProblem: fn(),
+    hasManagedAppsPermission: true,
   },
 };
 
@@ -34,12 +40,12 @@ export const Warning: Story = {
 export const Dismissed: Story = {
   args: {
     problem: dismissedByUserProblem,
-    dismissed: true,
   },
 };
 
 export const WebhookError: Story = {
   args: {
     problem: webhookDeliveryError,
+    appType: AppTypeEnum.THIRDPARTY,
   },
 };

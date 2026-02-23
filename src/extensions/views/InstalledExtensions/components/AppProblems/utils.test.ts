@@ -7,9 +7,9 @@ import {
 } from "@dashboard/extensions/fixtures";
 import { AppTypeEnum } from "@dashboard/graphql";
 
-import { getActionLink, sortProblems } from "./ProblemsList";
+import { getActionLink, sortProblems } from "./utils";
 
-describe("AppProblems / ProblemsList / sortProblems", () => {
+describe("AppProblems / utils / sortProblems", () => {
   it("places dismissed problems after non-dismissed", () => {
     // Arrange
     const problems = [dismissedProblemFixture, warningProblemFixture, criticalProblemFixture];
@@ -88,7 +88,7 @@ describe("AppProblems / ProblemsList / sortProblems", () => {
   });
 });
 
-describe("AppProblems / ProblemsList / getActionLink", () => {
+describe("AppProblems / utils / getActionLink", () => {
   it("returns 'checkWebhooks' link for WebhookDeliveryError", () => {
     // Act
     const result = getActionLink(webhookErrorFixture, "app-123");
