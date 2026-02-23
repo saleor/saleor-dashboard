@@ -1,8 +1,8 @@
-import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import {
   collectionUrl,
-  CollectionUrlDialog,
-  CollectionUrlQueryParams,
+  type CollectionUrlDialog,
+  type CollectionUrlQueryParams,
 } from "@dashboard/collections/urls";
 import {
   getAssignedProductIdsToCollection,
@@ -13,8 +13,8 @@ import AssignProductDialog from "@dashboard/components/AssignProductDialog/Assig
 import { DashboardCard } from "@dashboard/components/Card";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
-  CollectionDetailsQuery,
-  ProductWhereInput,
+  type CollectionDetailsQuery,
+  type ProductWhereInput,
   useCollectionAssignProductMutation,
   useCollectionProductsQuery,
   useUnassignCollectionProductMutation,
@@ -26,7 +26,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useProductSearch from "@dashboard/searches/useProductSearch";
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";

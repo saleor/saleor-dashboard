@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
-import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
-import { UseFormsetOutput } from "@dashboard/hooks/useFormset";
+import { type ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
+import { type ProductVariantCreateDataQuery } from "@dashboard/graphql";
+import { type UseFormsetOutput } from "@dashboard/hooks/useFormset";
 import { getChannelsInput } from "@dashboard/products/utils/handlers";
 
-import { VariantChannelListing } from "./types";
+import { type VariantChannelListing } from "./types";
 
 type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 

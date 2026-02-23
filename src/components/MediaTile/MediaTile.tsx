@@ -4,7 +4,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 
 import { SaleorThrobber } from "../Throbber";
 

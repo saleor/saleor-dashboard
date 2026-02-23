@@ -1,4 +1,4 @@
-import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import { type Actions, type DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";
 

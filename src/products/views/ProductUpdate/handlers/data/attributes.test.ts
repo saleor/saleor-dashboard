@@ -1,4 +1,4 @@
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { variantAttributes } from "@dashboard/products/fixtures";
 
 import { getAttributeData } from "./attributes";

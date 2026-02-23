@@ -1,8 +1,8 @@
-import { FilterContainer, FilterElement } from "../FilterElement";
+import { type FilterContainer, FilterElement } from "../FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import {
-  FilterQuery,
-  QueryVarsBuilder,
+  type FilterQuery,
+  type QueryVarsBuilder,
   supportsFilterApi,
   supportsWhereApi,
 } from "./queryVarsBuilders/types";

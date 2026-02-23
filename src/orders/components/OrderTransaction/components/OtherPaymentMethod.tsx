@@ -1,5 +1,5 @@
 import { getAppMountUri } from "@dashboard/config";
-import { OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
+import { type OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { getIsFilterMultipleChoices } from "@dashboard/components/Filter/FilterContent/utils";
-import { FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter/types";
+import { type FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter/types";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import { useIntl } from "react-intl";

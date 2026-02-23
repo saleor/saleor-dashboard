@@ -5,14 +5,14 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, voucherCodesStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
-import { VoucherCode } from "./types";
+import { type VoucherCode } from "./types";
 
 export interface VoucherCodesDatagridProps {
   codes: VoucherCode[];

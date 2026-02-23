@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { SearchProductsQuery } from "@dashboard/graphql";
+import { type SearchProductsQuery } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
 

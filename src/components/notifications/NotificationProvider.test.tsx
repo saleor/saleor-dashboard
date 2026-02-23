@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { renderHook } from "@testing-library/react-hooks";
-import { PropsWithChildren, useContext } from "react";
+import { type PropsWithChildren, useContext } from "react";
 
 import { NotificationContext } from ".";
 import { NotificationProvider } from "./NotificationProvider";

@@ -1,9 +1,15 @@
-import { ChannelsAction } from "@dashboard/channels/urls";
-import { ShippingMethodTypeEnum } from "@dashboard/graphql";
+import { type ChannelsAction } from "@dashboard/channels/urls";
+import { type ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, Search, SingleAction } from "../types";
+import {
+  type BulkAction,
+  type Dialog,
+  type Pagination,
+  type Search,
+  type SingleAction,
+} from "../types";
 
 const shippingSection = "/shipping/";
 

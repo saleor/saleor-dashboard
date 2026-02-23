@@ -2,10 +2,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage";
 
 interface AttributeOrganizationProps {
   canChangeType: boolean;

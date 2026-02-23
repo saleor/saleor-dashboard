@@ -1,4 +1,4 @@
-import { SearchProductsQuery } from "@dashboard/graphql";
+import { type SearchProductsQuery } from "@dashboard/graphql";
 
 import { getProductsFromSearchResults } from "./utils";
 

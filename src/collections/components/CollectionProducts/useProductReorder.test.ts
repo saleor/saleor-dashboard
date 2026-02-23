@@ -3,7 +3,7 @@ import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { Product } from "./types";
+import { type Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
 

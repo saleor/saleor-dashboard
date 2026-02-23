@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import {
-  CountryCode,
-  CountryRateInput,
-  TaxClassCreateInput,
-  TaxClassFragment,
-  TaxClassUpdateInput,
+  type CountryCode,
+  type CountryRateInput,
+  type TaxClassCreateInput,
+  type TaxClassFragment,
+  type TaxClassUpdateInput,
 } from "@dashboard/graphql";
-import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 
-import { TaxClassesPageFormData } from "../types";
+import { type TaxClassesPageFormData } from "../types";
 
 export const getTaxClassInitialFormData = (taxClass?: TaxClassFragment): TaxClassesPageFormData => {
   const initialCountries = taxClass?.countries

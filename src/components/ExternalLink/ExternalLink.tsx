@@ -1,7 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, TextProps } from "@saleor/macaw-ui-next";
-import { HTMLAttributes } from "react";
-import * as React from "react";
+import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { type HTMLAttributes } from "react";
 
 const useStyles = makeStyles(
   {

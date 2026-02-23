@@ -1,10 +1,10 @@
-import { MetadataInput } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type MetadataInput } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import { memo } from "react";
 
-import { MetadataCard, MetadataCardProps } from "./MetadataCard";
+import { MetadataCard, type MetadataCardProps } from "./MetadataCard";
 import { MetadataLoadingCard } from "./MetadataLoadingCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";

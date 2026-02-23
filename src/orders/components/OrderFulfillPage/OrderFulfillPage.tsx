@@ -2,36 +2,36 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
-  FulfillOrderMutation,
+  type FulfillOrderMutation,
   OrderErrorCode,
-  OrderFulfillDataQuery,
-  OrderFulfillLineFragment,
-  OrderFulfillStockInput,
-  ShopOrderSettingsFragment,
+  type OrderFulfillDataQuery,
+  type OrderFulfillLineFragment,
+  type OrderFulfillStockInput,
+  type ShopOrderSettingsFragment,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
 import {
-  OrderFulfillUrlDialog,
-  OrderFulfillUrlQueryParams,
+  type OrderFulfillUrlDialog,
+  type OrderFulfillUrlQueryParams,
   orderUrl,
 } from "@dashboard/orders/urls";
 import {
   getAttributesCaption,
   getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
-  OrderFulfillLineFormData,
+  type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";

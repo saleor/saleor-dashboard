@@ -1,12 +1,11 @@
+import { type GraphQLAppProblem, type WebhookDeliveryProblem } from "@dashboard/extensions/types";
 import {
-  AppAvatarFragment,
+  type AppAvatarFragment,
   AppProblemDismissedByEnum,
-  AppQuery,
+  type AppQuery,
   AppTypeEnum,
   PermissionEnum,
 } from "@dashboard/graphql";
-
-import { GraphQLAppProblem, WebhookDeliveryProblem } from "./types";
 
 export const appDetails: NonNullable<AppQuery["app"]> = {
   __typename: "App",

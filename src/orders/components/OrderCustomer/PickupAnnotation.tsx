@@ -1,5 +1,5 @@
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { OrderDetailsFragment, WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
+import { type OrderDetailsFragment, WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

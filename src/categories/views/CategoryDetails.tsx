@@ -2,10 +2,10 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CategoryBulkDeleteMutation,
-  CategoryDeleteMutation,
-  CategoryInput,
-  CategoryUpdateMutation,
+  type CategoryBulkDeleteMutation,
+  type CategoryDeleteMutation,
+  type CategoryInput,
+  type CategoryUpdateMutation,
   useCategoryBulkDeleteMutation,
   useCategoryDeleteMutation,
   useCategoryDetailsQuery,
@@ -40,8 +40,13 @@ import {
   CategoryPageTab,
   CategoryUpdatePage,
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
-import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
+import { type CategoryUpdateData } from "../components/CategoryUpdatePage/form";
+import {
+  categoryListUrl,
+  categoryUrl,
+  type CategoryUrlDialog,
+  type CategoryUrlQueryParams,
+} from "../urls";
 
 interface CategoryDetailsProps {
   params: CategoryUrlQueryParams;

@@ -1,6 +1,6 @@
 import {
   PromotionDetailsDocument,
-  PromotionDetailsFragment,
+  type PromotionDetailsFragment,
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";

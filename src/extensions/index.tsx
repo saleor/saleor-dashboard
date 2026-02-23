@@ -2,11 +2,11 @@ import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  AppDetailsUrlQueryParams,
-  CustomAppDetailsUrlQueryParams,
-  ExtensionInstallQueryParams,
+  type AppDetailsUrlQueryParams,
+  type CustomAppDetailsUrlQueryParams,
+  type ExtensionInstallQueryParams,
   ExtensionsPaths,
-  PluginUrlQueryParams,
+  type PluginUrlQueryParams,
 } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension/InstallCustomExtension";
@@ -16,7 +16,7 @@ import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension/AddCustomExtension";

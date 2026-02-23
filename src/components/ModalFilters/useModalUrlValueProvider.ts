@@ -1,14 +1,14 @@
 import { stringify } from "qs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
-import { FilterProviderType, InitialResponseType } from "../ConditionalFilter/types";
+import { type FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
+import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { type FilterProviderType, type InitialResponseType } from "../ConditionalFilter/types";
 import { TokenArray } from "../ConditionalFilter/ValueProvider/TokenArray";
-import { FetchingParamsType } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
-import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
+import { type FetchingParamsType } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { prepareStructure } from "../ConditionalFilter/ValueProvider/utils";
-import { InitialStateAPI } from "./types";
+import { type InitialStateAPI } from "./types";
 import { useUrlFilterStore } from "./useUrlFilterStore";
 
 /*

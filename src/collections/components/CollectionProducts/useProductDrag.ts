@@ -1,9 +1,15 @@
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
-import { DragEndEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import {
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
 
-import { Product } from "./types";
+import { type Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
 
 interface ProductDragProps {

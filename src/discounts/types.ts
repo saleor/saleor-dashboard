@@ -1,9 +1,9 @@
-import { DecimalFilterInput, PromotionTypeEnum } from "@dashboard/graphql";
-import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
-import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
+import { type DecimalFilterInput, type PromotionTypeEnum } from "@dashboard/graphql";
+import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
+import { type useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
+import type useProductSearch from "@dashboard/searches/useProductSearch";
 
-import { Rule } from "./models";
+import { type Rule } from "./models";
 
 export enum RequirementsPicker {
   ORDER = "ORDER",

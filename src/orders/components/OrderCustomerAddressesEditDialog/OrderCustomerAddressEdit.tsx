@@ -3,13 +3,17 @@ import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
-import { AddressTypeInput } from "@dashboard/customers/types";
-import { AccountErrorFragment, AddressFragment, OrderErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type AddressTypeInput } from "@dashboard/customers/types";
+import {
+  type AccountErrorFragment,
+  type AddressFragment,
+  type OrderErrorFragment,
+} from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { Box, Option, Skeleton } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, type Option, Skeleton } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { AddressInputOptionEnum } from "./form";

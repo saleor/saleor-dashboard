@@ -1,4 +1,4 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { type TransactionItemFragment } from "@dashboard/graphql";
 
 import { CardPaymentMethod } from "./CardPaymentMethod";
 import { OtherPaymentMethod } from "./OtherPaymentMethod";

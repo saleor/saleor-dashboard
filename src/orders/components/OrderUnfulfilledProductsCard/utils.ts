@@ -1,4 +1,4 @@
-import { OrderLineFragment } from "@dashboard/graphql";
+import { type OrderLineFragment } from "@dashboard/graphql";
 
 export const toLineWithUnfulfilledQuantity = (lines: OrderLineFragment[]) =>
   lines.map(({ quantityToFulfill, ...rest }) => ({

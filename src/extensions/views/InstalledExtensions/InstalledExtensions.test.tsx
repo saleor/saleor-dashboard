@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import { useInstalledExtensionsFilter } from "./hooks/useInstalledExtensionsFilter";
 import { usePendingInstallation } from "./hooks/usePendingInstallation";
-import { InstalledExtensions, InstalledExtensionsProps } from "./InstalledExtensions";
+import { InstalledExtensions, type InstalledExtensionsProps } from "./InstalledExtensions";
 
 const mockMarkOnboardingStepAsCompleted = jest.fn();
 const mockHandleRemoveInProgress = jest.fn();

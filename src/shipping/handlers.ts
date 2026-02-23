@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { ChannelShippingData } from "@dashboard/channels/utils";
+import { type ChannelShippingData } from "@dashboard/channels/utils";
 import {
-  CountryFragment,
-  CreateShippingRateMutationVariables,
+  type CountryFragment,
+  type CreateShippingRateMutationVariables,
   PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodChannelListingUpdateMutationVariables,
+  type ShippingMethodChannelListingUpdateMutationVariables,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment,
-  ShippingPostalCodeRulesCreateInputRange,
-  UpdateShippingRateMutationVariables,
+  type ShippingMethodTypeFragment,
+  type ShippingPostalCodeRulesCreateInputRange,
+  type UpdateShippingRateMutationVariables,
   useCreateShippingRateMutation,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
@@ -21,7 +21,7 @@ import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc"
 import differenceBy from "lodash/differenceBy";
 import { useIntl } from "react-intl";
 
-import { ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
+import { type ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import { shippingRateEditUrl } from "./urls";
 
 export const createChannelsChangeHandler =

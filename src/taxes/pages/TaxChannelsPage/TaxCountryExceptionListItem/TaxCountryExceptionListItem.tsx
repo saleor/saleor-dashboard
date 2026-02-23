@@ -2,16 +2,16 @@
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Select } from "@dashboard/components/Select";
-import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Box, Button, Option } from "@saleor/macaw-ui-next";
+import { Box, Button, type Option } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 
 import { useStyles } from "../styles";
-import { TaxCountryConfiguration } from "../TaxChannelsPage";
+import { type TaxCountryConfiguration } from "../TaxChannelsPage";
 
 interface TaxCountryExceptionListItemProps {
   country: TaxCountryConfiguration | undefined;

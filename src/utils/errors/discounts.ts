@@ -1,5 +1,5 @@
-import { DiscountErrorCode, DiscountErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphql";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

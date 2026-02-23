@@ -21,9 +21,9 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import { CreditCard } from "lucide-react";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { MenuSection } from "./types";
+import { type MenuSection } from "./types";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [

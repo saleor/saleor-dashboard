@@ -1,8 +1,8 @@
-import ActionDialog, { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import ActionDialog, { type ActionDialogProps } from "@dashboard/components/ActionDialog";
 import DeleteWarningDialogConsentContent from "@dashboard/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
-import { GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDataFragment } from "@dashboard/graphql";
+import { type GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
+import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { type GiftCardDataFragment } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";

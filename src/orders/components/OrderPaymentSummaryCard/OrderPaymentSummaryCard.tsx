@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderAction, type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

@@ -1,4 +1,4 @@
-import { GrantRefundInputLine, squashLines } from "./useRefundWithinReturn";
+import { type GrantRefundInputLine, squashLines } from "./useRefundWithinReturn";
 
 describe("squashLines", () => {
   it("merges items with the same ID", () => {

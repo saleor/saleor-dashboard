@@ -3,22 +3,22 @@ import {
   readonlyTextCell,
   tagsCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
-  ExtendedGiftCard,
-  GiftCardBase,
+  type ExtendedGiftCard,
+  type GiftCardBase,
 } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { PLACEHOLDER } from "@dashboard/giftCards/GiftCardUpdate/types";
-import { GiftCardDataFragment, GiftCardListQuery } from "@dashboard/graphql";
+import { type GiftCardDataFragment, type GiftCardListQuery } from "@dashboard/graphql";
 import { getStatusColor } from "@dashboard/misc";
-import { Sort } from "@dashboard/types";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
-import { GiftCardUrlSortField } from "../types";
+import { type GiftCardUrlSortField } from "../types";
 import { columnsMessages, messages } from "./messages";
 
 export const getColumns = (intl: IntlShape, sort?: Sort<GiftCardUrlSortField>): AvailableColumn[] =>

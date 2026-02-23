@@ -2,7 +2,7 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
-import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
+import { type AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";

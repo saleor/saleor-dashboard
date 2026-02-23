@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 
 const useStyles = makeStyles(
   theme => ({

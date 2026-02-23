@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";

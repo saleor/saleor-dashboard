@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import TextWithSelectField from "@dashboard/components/TextWithSelectField";
-import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 import * as React from "react";
@@ -8,8 +8,8 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
-  GiftCardBulkCreateFormErrors,
-  GiftCardCreateCommonFormData,
+  type GiftCardBulkCreateFormErrors,
+  type GiftCardCreateCommonFormData,
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { useChannelCurrenciesWithCache } from "../hooks/useChannelCurrenciesWithCache";

@@ -14,12 +14,12 @@ import {
 } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import Avatar from "../TableCellAvatar/Avatar";
 import { messages } from "./messages";
-import { DocumentMap, TData, TVariables } from "./utils";
+import { DocumentMap, type TData, type TVariables } from "./utils";
 
 interface DryRunItemsListProps {
   objectId: string;

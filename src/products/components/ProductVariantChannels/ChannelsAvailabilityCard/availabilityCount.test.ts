@@ -1,9 +1,12 @@
 import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
+  type ChannelPriceAndPreorderData,
+  type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
-import { ProductVariantCreateDataQuery, ProductVariantFragment } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import {
+  type ProductVariantCreateDataQuery,
+  type ProductVariantFragment,
+} from "@dashboard/graphql";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 
 import {
   getAvailabilityCountForProduct,

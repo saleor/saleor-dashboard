@@ -8,7 +8,7 @@ import { useMemo } from "react";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
-import { LanguageEntitiesUrlQueryParams, TranslatableEntities } from "../urls";
+import { type LanguageEntitiesUrlQueryParams, TranslatableEntities } from "../urls";
 import TranslationsAttributeList from "./EntityLists/TranslationsAttributeList";
 import TranslationsCategoryList from "./EntityLists/TranslationsCategoryList";
 import TranslationsCollectionList from "./EntityLists/TranslationsCollectionList";

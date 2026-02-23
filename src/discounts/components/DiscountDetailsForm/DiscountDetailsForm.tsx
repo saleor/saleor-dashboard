@@ -1,18 +1,18 @@
-import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { type Rule } from "@dashboard/discounts/models";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import {
-  PromotionDetailsFragment,
-  PromotionRuleCreateErrorFragment,
-  PromotionRuleUpdateErrorFragment,
+  type PromotionDetailsFragment,
+  type PromotionRuleCreateErrorFragment,
+  type PromotionRuleUpdateErrorFragment,
   PromotionTypeEnum,
 } from "@dashboard/graphql";
 import { splitDateTime } from "@dashboard/misc";
-import { CommonError } from "@dashboard/utils/errors/common";
+import { type CommonError } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 

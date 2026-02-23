@@ -13,12 +13,16 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  StaffDetailsFormData,
+  type StaffDetailsFormData,
   StaffDetailsPage,
 } from "../components/StaffDetailsPage/StaffDetailsPage";
 import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog/StaffPasswordResetDialog";
 import { useProfileOperations, useStaffUserOperations } from "../hooks";
-import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from "../urls";
+import {
+  staffListUrl,
+  staffMemberDetailsUrl,
+  type StaffMemberDetailsUrlQueryParams,
+} from "../urls";
 import { groupsDiff } from "../utils";
 
 interface OrderListProps {

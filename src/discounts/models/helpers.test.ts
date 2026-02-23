@@ -1,4 +1,4 @@
-import { CataloguePredicateAPI, OrderPredicateAPI } from "../types";
+import { type CataloguePredicateAPI, type OrderPredicateAPI } from "../types";
 import { hasPredicateNestedConditions } from "./helpers";
 
 describe("Rule Model - hasPredicateCreatedViaApi", () => {

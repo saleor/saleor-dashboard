@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import PriceField from "@dashboard/components/PriceField";
-import { OrderErrorFragment } from "@dashboard/graphql";
+import { type OrderErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import type * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { OrderRefundFormData } from "../../../OrderRefundPage/form";
+import { type OrderRefundFormData } from "../../../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => ({

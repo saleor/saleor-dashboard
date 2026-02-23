@@ -5,7 +5,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import type * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(

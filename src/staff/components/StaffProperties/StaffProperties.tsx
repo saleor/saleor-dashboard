@@ -1,7 +1,11 @@
 // @ts-strict-ignore
 import photoIcon from "@assets/images/photo-icon.svg";
 import { DashboardCard } from "@dashboard/components/Card";
-import { StaffErrorFragment, StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
+import {
+  type StaffErrorFragment,
+  type StaffMemberDetailsFragment,
+  type UserFragment,
+} from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getUserInitials } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";

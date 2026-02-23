@@ -1,15 +1,15 @@
-import { PillCell } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type PillCell } from "@dashboard/components/Datagrid/customCells/PillCell";
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
-  OrderChargeStatusEnum,
-  OrderListQuery,
-  OrderStatus,
-  PaymentChargeStatusEnum,
+  type OrderChargeStatusEnum,
+  type OrderListQuery,
+  type OrderStatus,
+  type PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { getStatusColor } from "@dashboard/misc";
-import { RelayToFlat } from "@dashboard/types";
-import { TextCell } from "@glideapps/glide-data-grid";
+import { type RelayToFlat } from "@dashboard/types";
+import { type TextCell } from "@glideapps/glide-data-grid";
 import { testIntlInstance } from "@test/intl";
 import { renderHook } from "@testing-library/react-hooks";
 

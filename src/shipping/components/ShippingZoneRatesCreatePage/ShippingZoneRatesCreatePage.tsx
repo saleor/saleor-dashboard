@@ -1,22 +1,22 @@
 // @ts-strict-ignore
-import { ChannelShippingData } from "@dashboard/channels/utils";
+import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { WithFormId } from "@dashboard/components/Form";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type WithFormId } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingChannelsErrorFragment,
-  ShippingErrorFragment,
+  type PostalCodeRuleInclusionTypeEnum,
+  type ShippingChannelsErrorFragment,
+  type ShippingErrorFragment,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment,
-  TaxClassBaseFragment,
+  type ShippingMethodTypeFragment,
+  type TaxClassBaseFragment,
 } from "@dashboard/graphql";
-import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { validatePrice } from "@dashboard/products/utils/validation";
@@ -26,15 +26,15 @@ import OrderWeight from "@dashboard/shipping/components/OrderWeight";
 import PricingCard from "@dashboard/shipping/components/PricingCard";
 import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { FormEventHandler, useState } from "react";
+import { type FormEventHandler, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
-import { ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
+import { type ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 
 interface ShippingZoneRatesCreatePageProps extends WithFormId {
   allChannelsCount?: number;

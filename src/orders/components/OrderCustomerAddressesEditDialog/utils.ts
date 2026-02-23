@@ -1,18 +1,21 @@
 import {
-  AccountErrorFragment,
-  AddressFragment,
-  AddressInput,
+  type AccountErrorFragment,
+  type AddressFragment,
+  type AddressInput,
   AddressTypeEnum,
-  Node,
-  OrderErrorFragment,
+  type Node,
+  type OrderErrorFragment,
 } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { flatten, getById } from "@dashboard/misc";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers } from "./form";
-import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
-import { OrderCustomerSearchAddressState } from "./types";
+import {
+  type OrderCustomerAddressesEditData,
+  type OrderCustomerAddressesEditHandlers,
+} from "./form";
+import { type OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
+import { type OrderCustomerSearchAddressState } from "./types";
 
 interface AddressEditCommonProps {
   showCard: boolean;

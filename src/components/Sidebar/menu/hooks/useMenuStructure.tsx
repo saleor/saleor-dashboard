@@ -40,10 +40,9 @@ import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
-import { SidebarMenuItem } from "../types";
+import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {

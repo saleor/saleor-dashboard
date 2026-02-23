@@ -1,6 +1,6 @@
 import {
-  CollectionChannelListingErrorFragment,
-  ProductChannelListingErrorFragment,
+  type CollectionChannelListingErrorFragment,
+  type ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 
 export interface ChannelOpts {

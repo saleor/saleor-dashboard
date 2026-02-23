@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
-import { ExitFormDialogData, FormData, FormsData } from "./types";
+import { type ExitFormDialogData, type FormData, type FormsData } from "./types";
 
 const defaultValues = {
   isDirty: false,

@@ -2,8 +2,8 @@ import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid";
 import { Select } from "@dashboard/components/Select";
-import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import {
@@ -15,10 +15,10 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { TaxConfigurationFormData } from "../TaxChannelsPage";
+import { type TaxConfigurationFormData } from "../TaxChannelsPage";
 import { useStyles } from "./styles";
 
 interface TaxSettingsCardProps {

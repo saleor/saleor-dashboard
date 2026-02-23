@@ -1,8 +1,8 @@
-import { MetadataInput } from "@dashboard/graphql";
+import { type MetadataInput } from "@dashboard/graphql";
 import {
-  OnboardingState,
-  OnboardingStep,
-  OnboardingStepsIDs,
+  type OnboardingState,
+  type OnboardingStep,
+  type OnboardingStepsIDs,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
 
 import {

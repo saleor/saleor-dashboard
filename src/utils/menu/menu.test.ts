@@ -2,7 +2,7 @@ import {
   fromFlat,
   getMenuItemByPath,
   getMenuItemByValue,
-  IMenu,
+  type IMenu,
   toFlat,
   validateMenuOptions,
   walkToMenuItem,

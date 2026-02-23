@@ -1,16 +1,16 @@
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
 import {
-  AttributeValueFragment,
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type AttributeValueFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeInput } from "./Attributes";
-import { AttributeRowHandlers } from "./types";
+import { type AttributeInput } from "./Attributes";
+import { type AttributeRowHandlers } from "./types";
 import { useAttributeDropdown } from "./useAttributeDropdown";
 
 type DropdownRowProps = Pick<

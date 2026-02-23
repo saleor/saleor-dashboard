@@ -1,4 +1,4 @@
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
@@ -6,7 +6,7 @@ import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { AssignItem, AssignmentListProps } from "./types";
+import { type AssignItem, type AssignmentListProps } from "./types";
 
 const messages = defineMessages({
   addItemTitle: {

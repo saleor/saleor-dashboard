@@ -1,12 +1,12 @@
 import {
   MarkAsPaidStrategyEnum,
-  OrderDetailsFragment,
-  OrderDraftListQuery,
-  OrderRefundDataQuery,
-  TransactionEventFragment,
-  TransactionItemFragment,
+  type OrderDetailsFragment,
+  type OrderDraftListQuery,
+  type OrderRefundDataQuery,
+  type TransactionEventFragment,
+  type TransactionItemFragment,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 /** Check if order has transactions & feature flag enabled */
 export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>

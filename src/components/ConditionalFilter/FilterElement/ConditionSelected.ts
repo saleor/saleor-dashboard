@@ -1,6 +1,6 @@
 import { getDefaultByControlName } from "../controlsType";
-import { ConditionItem } from "./ConditionOptions";
-import { ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
+import { type ConditionItem } from "./ConditionOptions";
+import { type ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
 
 export class ConditionSelected {
   public constructor(

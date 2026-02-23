@@ -9,12 +9,12 @@ import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
   defaultListSettings,
-  ProductListColumns,
+  type ProductListColumns,
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   AttributeTypeEnum,
-  ProductListQueryVariables,
+  type ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
   useProductBulkDeleteMutation,
@@ -45,9 +45,9 @@ import ProductTypePickerDialog from "@dashboard/products/components/ProductTypeP
 import {
   productAddUrl,
   productListUrl,
-  ProductListUrlDialog,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField,
+  type ProductListUrlDialog,
+  type ProductListUrlQueryParams,
+  type ProductListUrlSortField,
 } from "@dashboard/products/urls";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";

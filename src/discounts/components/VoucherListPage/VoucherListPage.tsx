@@ -7,28 +7,32 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { voucherAddUrl, VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import { voucherAddUrl, type VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForVoucherOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { VoucherFragment } from "@dashboard/graphql";
+import { type VoucherFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
-  ChannelProps,
-  FilterPagePropsWithPresets,
-  PageListProps,
-  SortPage,
+  type ChannelProps,
+  type FilterPagePropsWithPresets,
+  type PageListProps,
+  type SortPage,
 } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherListDatagrid } from "../VoucherListDatagrid";
-import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
+import {
+  createFilterStructure,
+  type VoucherFilterKeys,
+  type VoucherListFilterOpts,
+} from "./filters";
 
 interface VoucherListPageProps
   extends PageListProps,

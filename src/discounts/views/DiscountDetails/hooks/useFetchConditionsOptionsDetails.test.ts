@@ -1,6 +1,6 @@
 import {
-  PromotionDetailsQuery,
-  RuleConditionsSelectedOptionsDetailsQuery,
+  type PromotionDetailsQuery,
+  type RuleConditionsSelectedOptionsDetailsQuery,
 } from "@dashboard/graphql";
 
 import {

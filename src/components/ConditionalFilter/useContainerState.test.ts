@@ -4,7 +4,7 @@ import { Condition, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
-import { FilterValueProvider } from "./FilterValueProvider";
+import { type FilterValueProvider } from "./FilterValueProvider";
 import { useContainerState } from "./useContainerState";
 
 describe("ConditionalFilter / useContainerState", () => {

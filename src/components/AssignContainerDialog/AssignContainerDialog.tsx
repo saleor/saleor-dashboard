@@ -1,12 +1,15 @@
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
+import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { ChangeEvent, ReactNode } from "react";
+import { type ChangeEvent, type ReactNode } from "react";
 
 import BackButton from "../BackButton";
 import { MultiSelectionRows, SingleSelectionRows } from "./AssignContainerRows";

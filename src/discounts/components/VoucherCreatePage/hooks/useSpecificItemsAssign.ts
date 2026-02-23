@@ -1,15 +1,15 @@
 import {
-  FormData,
-  VoucherCreatePageTab,
-  VoucherCreateProductVariant,
+  type FormData,
+  type VoucherCreatePageTab,
+  type VoucherCreateProductVariant,
 } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import {
-  CategoryWithTotalProductsFragment,
-  CollectionWithTotalProductsFragment,
-  CountryWithCodeFragment,
-  SearchProductFragment,
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type CountryWithCodeFragment,
+  type SearchProductFragment,
 } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import uniqBy from "lodash/uniqBy";
 import { useMemo } from "react";
 

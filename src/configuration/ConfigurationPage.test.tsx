@@ -4,9 +4,9 @@ import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { useUser } from "../auth/useUser";
-import { PermissionEnum, UserFragment } from "../graphql";
+import { PermissionEnum, type UserFragment } from "../graphql";
 import { ConfigurationPage } from "./ConfigurationPage";
-import { MenuSection } from "./types";
+import { type MenuSection } from "./types";
 
 jest.mock("@material-ui/core/useMediaQuery", () => jest.fn());
 jest.mock("@dashboard/featureFlags", () => ({

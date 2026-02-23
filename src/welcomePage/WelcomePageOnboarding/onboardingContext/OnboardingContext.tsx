@@ -12,10 +12,10 @@ import {
   TOTAL_STEPS_COUNT,
 } from "./initialOnboardingState";
 import {
-  OnboardingContextType,
-  OnboardingProviderProps,
-  OnboardingState,
-  OnboardingStepsIDs,
+  type OnboardingContextType,
+  type OnboardingProviderProps,
+  type OnboardingState,
+  type OnboardingStepsIDs,
 } from "./types";
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 import { useOnboardingStorage } from "./useOnboardingStorage";

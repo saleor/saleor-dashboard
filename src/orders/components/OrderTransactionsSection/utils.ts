@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 
 /** Returns paymetns from order that were used to pay for the order */
 export function getFilteredPayments(order: OrderDetailsFragment) {

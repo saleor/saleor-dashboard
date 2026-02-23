@@ -1,8 +1,8 @@
-import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { Option } from "@saleor/macaw-ui-next";
+import { type GiftCardErrorFragment, type TimePeriodTypeEnum } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
+import { type GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
 type GiftCardErrorKey =
   | "tags"

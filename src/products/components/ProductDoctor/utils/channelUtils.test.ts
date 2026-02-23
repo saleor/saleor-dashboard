@@ -1,4 +1,4 @@
-import { ProductChannelListingAddInput } from "@dashboard/graphql";
+import { type ProductChannelListingAddInput } from "@dashboard/graphql";
 
 import {
   countIssuesBySeverity,
@@ -7,7 +7,7 @@ import {
   groupIssuesByChannel,
   paginateItems,
 } from "./channelUtils";
-import { AvailabilityIssue, ChannelSummary } from "./types";
+import { type AvailabilityIssue, type ChannelSummary } from "./types";
 
 const createMockSummary = (overrides?: Partial<ChannelSummary>): ChannelSummary => ({
   id: "channel-1",

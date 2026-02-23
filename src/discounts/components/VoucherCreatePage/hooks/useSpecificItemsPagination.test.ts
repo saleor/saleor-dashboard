@@ -1,4 +1,4 @@
-import { SpecificItemsData } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
+import { type SpecificItemsData } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { VoucherCreatePageTab } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { renderHook } from "@testing-library/react-hooks";
 

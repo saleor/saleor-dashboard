@@ -8,11 +8,11 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useCustomSidebarBreakpoint } from "@dashboard/components/Sidebar/SidebarContext";
 import {
-  OrderDetailsGrantRefundFragment,
+  type OrderDetailsGrantRefundFragment,
   PermissionEnum,
   useModelsOfTypeQuery,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { pageListUrl } from "@dashboard/modeling/urls";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
@@ -20,17 +20,23 @@ import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReaso
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { type ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
+import {
+  type Control,
+  type SubmitHandler,
+  useController,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
-  OrderRefundTransactionDatagridError,
+  type OrderRefundTransactionDatagridError,
   OrderTransactionRefundTable,
 } from "./components/OrderTransactionRefundTable/OrderTransactionRefundTable";
 import { OrderTransactionTiles } from "./components/OrderTransactionTiles/OrderTransactionTiles";
@@ -45,7 +51,7 @@ import {
   getSelectedProductsValue,
   handleLinesToRefundChange,
   handleReasonChange,
-  RefundQuantityChange,
+  type RefundQuantityChange,
   useRecalculateTotalAmount,
 } from "./utils";
 

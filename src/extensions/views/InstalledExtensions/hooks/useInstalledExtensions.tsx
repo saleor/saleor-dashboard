@@ -2,14 +2,14 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   getLatestFailedAttemptFromWebhooks,
-  LatestWebhookDeliveryWithMoment,
+  type LatestWebhookDeliveryWithMoment,
 } from "@dashboard/extensions/components/AppAlerts/utils";
 import { infoMessages } from "@dashboard/extensions/messages";
 import {
-  InstalledExtension,
+  type InstalledExtension,
   isProblemCritical,
   isProblemDismissed,
-  WebhookDeliveryProblem,
+  type WebhookDeliveryProblem,
 } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";

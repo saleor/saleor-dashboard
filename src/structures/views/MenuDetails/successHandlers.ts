@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import {
-  MenuDeleteMutation,
-  MenuItemCreateMutation,
-  MenuItemUpdateMutation,
-  MenuUpdateMutation,
+  type MenuDeleteMutation,
+  type MenuItemCreateMutation,
+  type MenuItemUpdateMutation,
+  type MenuUpdateMutation,
 } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { UseNavigatorResult } from "../../../hooks/useNavigator";
-import { UseNotifierResult } from "../../../hooks/useNotifier";
+import { type UseNavigatorResult } from "../../../hooks/useNavigator";
+import { type UseNotifierResult } from "../../../hooks/useNotifier";
 import { menuListUrl, menuUrl } from "../../urls";
 
 export function handleItemCreate(

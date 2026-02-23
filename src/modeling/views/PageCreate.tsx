@@ -4,13 +4,13 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
-  PageErrorWithAttributesFragment,
-  PageWhereInput,
+  type PageErrorWithAttributesFragment,
+  type PageWhereInput,
   useFileUploadMutation,
   usePageCreateMutation,
   usePageTypeQuery,
@@ -36,8 +36,8 @@ import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
-import { PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from "../urls";
+import { type PageSubmitData } from "../components/PageDetailsPage/form";
+import { pageCreateUrl, type PageCreateUrlQueryParams, pageUrl } from "../urls";
 
 interface PageCreateProps {
   id: string;

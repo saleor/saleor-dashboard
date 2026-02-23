@@ -1,5 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
+import { type CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useVariantWithProductDataSearch } from "@dashboard/searches/useVariantSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";

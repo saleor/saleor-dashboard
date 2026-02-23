@@ -1,12 +1,12 @@
-import { AttributeInput } from "../../../graphql";
-import { FilterElement } from "../FilterElement";
+import { type AttributeInput } from "../../../graphql";
+import { type FilterElement } from "../FilterElement";
 import {
-  ConditionValue,
+  type ConditionValue,
   isItemOption,
   isItemOptionArray,
-  ItemOption,
+  type ItemOption,
 } from "../FilterElement/ConditionValue";
-import { StaticQueryPart } from "./types";
+import { type StaticQueryPart } from "./types";
 
 type ProcessedConditionValue =
   | string

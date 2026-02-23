@@ -1,10 +1,14 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { ExtensionsUrls, PluginUrlDialog, PluginUrlQueryParams } from "@dashboard/extensions/urls";
 import {
-  ConfigurationItemFragment,
-  ConfigurationItemInput,
+  ExtensionsUrls,
+  type PluginUrlDialog,
+  type PluginUrlQueryParams,
+} from "@dashboard/extensions/urls";
+import {
+  type ConfigurationItemFragment,
+  type ConfigurationItemInput,
   usePluginQuery,
   usePluginUpdateMutation,
 } from "@dashboard/graphql";
@@ -15,7 +19,10 @@ import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PluginDetailsPageFormData, PluginsDetailsPage } from "./components/PluginsDetailsPage";
+import {
+  type PluginDetailsPageFormData,
+  PluginsDetailsPage,
+} from "./components/PluginsDetailsPage";
 import { PluginSecretFieldDialog } from "./components/PluginSecretFieldDialog";
 import { getConfigByChannelId, isPluginGlobal, isSecretField } from "./utils";
 

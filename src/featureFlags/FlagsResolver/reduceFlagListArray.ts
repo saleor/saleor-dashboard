@@ -1,5 +1,5 @@
 import * as AvailableFlags from "./../availableFlags";
-import { FlagValue } from "./../FlagContent";
+import { type FlagValue } from "./../FlagContent";
 
 const byNotEmpty = (p: AvailableFlags.GeneralFlagList) => Object.keys(p).length > 0;
 const toFlagEntries = (

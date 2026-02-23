@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
-import { ProductListQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type ProductListQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 import { Box, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 

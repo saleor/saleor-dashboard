@@ -1,7 +1,7 @@
 import { Pill } from "@dashboard/components/Pill";
 import {
-  ExtendedGiftCard,
-  GiftCardBase,
+  type ExtendedGiftCard,
+  type GiftCardBase,
 } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { useIntl } from "react-intl";
 

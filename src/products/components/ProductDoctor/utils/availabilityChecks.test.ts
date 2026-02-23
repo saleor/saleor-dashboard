@@ -1,7 +1,7 @@
-import { IntlShape, MessageDescriptor } from "react-intl";
+import { type IntlShape, type MessageDescriptor } from "react-intl";
 
 import { runAvailabilityChecks } from "./availabilityChecks";
-import { ChannelDiagnosticData, ProductDiagnosticData } from "./types";
+import { type ChannelDiagnosticData, type ProductDiagnosticData } from "./types";
 
 // Mock intl for testing - validates that message placeholders are provided
 const createMockIntl = (): IntlShape =>

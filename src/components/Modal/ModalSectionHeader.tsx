@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface ModalSectionHeaderProps {
   children: ReactNode;

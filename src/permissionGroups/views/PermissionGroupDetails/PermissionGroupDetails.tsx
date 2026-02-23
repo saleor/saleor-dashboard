@@ -3,8 +3,8 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  PermissionGroupDetailsQuery,
-  PermissionGroupErrorFragment,
+  type PermissionGroupDetailsQuery,
+  type PermissionGroupErrorFragment,
   usePermissionGroupDeleteMutation,
   usePermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
@@ -28,13 +28,13 @@ import { useIntl } from "react-intl";
 import AssignMembersDialog from "../../components/AssignMembersDialog";
 import {
   PermissionGroupDetailsPage,
-  PermissionGroupDetailsPageFormData,
+  type PermissionGroupDetailsPageFormData,
 } from "../../components/PermissionGroupDetailsPage";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import {
   permissionGroupDetailsUrl,
-  PermissionGroupDetailsUrlDialog,
-  PermissionGroupDetailsUrlQueryParams,
+  type PermissionGroupDetailsUrlDialog,
+  type PermissionGroupDetailsUrlQueryParams,
   permissionGroupListUrl,
 } from "../../urls";
 import {

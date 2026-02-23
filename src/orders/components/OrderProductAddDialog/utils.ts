@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { SearchOrderVariantQuery } from "@dashboard/graphql";
+import { type SearchOrderVariantQuery } from "@dashboard/graphql";
 
 type SetVariantsAction = (
   data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],

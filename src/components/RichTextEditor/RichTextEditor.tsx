@@ -1,7 +1,7 @@
-import { LogLevels, OutputData } from "@editorjs/editorjs";
+import { type LogLevels, type OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
+import { type EditorCore, type Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";

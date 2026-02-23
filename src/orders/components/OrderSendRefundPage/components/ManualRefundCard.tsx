@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   OrderManualTransactionForm,
-  OrderManualTransactionFormProps,
+  type OrderManualTransactionFormProps,
 } from "../../OrderManualTransactionForm";
 import { manualRefundMessages, refundPageMessages } from "../messages";
 import { useManualRefundCardStyles } from "../styles";

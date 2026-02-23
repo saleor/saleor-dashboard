@@ -4,18 +4,18 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   customerAddPath,
   customerAddressesPath,
-  CustomerAddressesUrlQueryParams,
+  type CustomerAddressesUrlQueryParams,
   customerListPath,
-  CustomerListUrlQueryParams,
+  type CustomerListUrlQueryParams,
   CustomerListUrlSortField,
   customerPath,
-  CustomerUrlQueryParams,
+  type CustomerUrlQueryParams,
 } from "./urls";
 import CustomerAddressesViewComponent from "./views/CustomerAddresses";
 import CustomerCreateView from "./views/CustomerCreate";

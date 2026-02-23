@@ -1,5 +1,11 @@
-import { forwardRef, MutableRefObject, ReactNode, Ref, RefCallback, useCallback } from "react";
-import * as React from "react";
+import {
+  forwardRef,
+  type MutableRefObject,
+  type ReactNode,
+  type Ref,
+  type RefCallback,
+  useCallback,
+} from "react";
 
 /** This is exact copy of React.forwardRef but with re-defined types
  * that allow using it with components that expect a TypeScript generic

@@ -1,4 +1,4 @@
-import { Box, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, type ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
 
 interface ButtonWithDropdownProps extends ButtonProps {

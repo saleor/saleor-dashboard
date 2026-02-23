@@ -1,5 +1,5 @@
-import { TreeItem } from "@dashboard/components/SortableTree/types";
-import { MenuItemFragment } from "@dashboard/graphql";
+import { type TreeItem } from "@dashboard/components/SortableTree/types";
+import { type MenuItemFragment } from "@dashboard/graphql";
 
 export type RecursiveMenuItem = MenuItemFragment & {
   children?: RecursiveMenuItem[];

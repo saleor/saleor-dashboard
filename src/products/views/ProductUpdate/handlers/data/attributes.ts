@@ -1,10 +1,10 @@
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   AttributeInputTypeEnum,
-  AttributeValueDetailsFragment,
-  AttributeValueInput,
-  BulkAttributeValueInput,
-  VariantAttributeFragment,
+  type AttributeValueDetailsFragment,
+  type AttributeValueInput,
+  type BulkAttributeValueInput,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { getColumnAttribute, isCurrentRow } from "@dashboard/products/utils/datagrid";
 

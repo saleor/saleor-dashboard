@@ -5,8 +5,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
-  ExtensionsListUrlDialog,
-  ExtensionsListUrlQueryParams,
+  type ExtensionsListUrlDialog,
+  type ExtensionsListUrlQueryParams,
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";
 import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/InstalledExtensions/hooks/useInstalledExtensionsFilter";

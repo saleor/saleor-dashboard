@@ -1,4 +1,4 @@
-import { AppExtensionManifest, appExtensionManifest } from "./app-extension-manifest";
+import { type AppExtensionManifest, appExtensionManifest } from "./app-extension-manifest";
 
 describe("App Extension Manifest Schema", () => {
   describe("Valid cases - basic structure", () => {

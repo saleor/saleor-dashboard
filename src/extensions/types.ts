@@ -1,15 +1,15 @@
-import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
-import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import {
-  AppTypeEnum,
-  ExtensionListQuery,
-  InstalledAppDetailsFragment,
-  PermissionEnum,
+  type AppTypeEnum,
+  type ExtensionListQuery,
+  type InstalledAppDetailsFragment,
+  type PermissionEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { ReactNode } from "react";
+import { type RelayToFlat } from "@dashboard/types";
+import { type ReactNode } from "react";
 
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { type AppDetailsUrlMountQueryParams } from "./urls";
 
 export type GraphQLAppProblem = NonNullable<InstalledAppDetailsFragment["problems"]>[number];
 
