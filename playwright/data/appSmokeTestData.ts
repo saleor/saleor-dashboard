@@ -1,4 +1,4 @@
-import { expect, FrameLocator } from "@playwright/test";
+import { expect, type FrameLocator } from "@playwright/test";
 
 type ContentAssertion = (iframe: FrameLocator, timeout: number) => Promise<void>;
 
