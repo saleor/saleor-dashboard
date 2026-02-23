@@ -1,0 +1,33 @@
+src/extensions/views/InstalledExtensions/components/AppProblems/utils.ts
+  d9cbf3f38628edc7 1-53
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList/ProblemsList.tsx
+  d9cbf3f38628edc7 3,5,10,80,134
+src/extensions/views/InstalledExtensions/components/AppProblems/utils.test.ts
+  d9cbf3f38628edc7 10,12,91
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.stories.tsx
+  d9cbf3f38628edc7 1,16-19,29-30,49
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.module.css
+  d9cbf3f38628edc7 1-73,98,115
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.tsx
+  d9cbf3f38628edc7 1,4,6,10,19-22,25-26,29,32-33,38-39,41-42,45-47,51-52,54-60,62-64,66-71,73-77,82-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "c3cc60233788b979f2df342ee65f4e9d6c8e55f2",
+  "prompts": {
+    "d9cbf3f38628edc7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "629f1998-7059-426c-bae7-30af8a01fa44",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 351,
+      "total_deletions": 228,
+      "accepted_lines": 336,
+      "overriden_lines": 0
+    }
+  }
+}
