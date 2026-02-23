@@ -1,9 +1,9 @@
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
-import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";

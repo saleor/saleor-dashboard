@@ -4,7 +4,7 @@ import { Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import {
-  LoginUrlQueryParams,
+  type LoginUrlQueryParams,
   newPasswordPath,
   passwordResetPath,
   passwordResetSuccessPath,

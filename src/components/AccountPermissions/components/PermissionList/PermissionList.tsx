@@ -1,4 +1,4 @@
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import { type PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import { Box, Checkbox, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

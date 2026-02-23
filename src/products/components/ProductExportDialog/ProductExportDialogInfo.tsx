@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import Accordion, { AccordionProps } from "@dashboard/components/Accordion";
+import Accordion, { type AccordionProps } from "@dashboard/components/Accordion";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
 import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper";
@@ -7,16 +7,20 @@ import Checkbox from "@dashboard/components/Checkbox";
 import Chip from "@dashboard/components/Chip";
 import Hr from "@dashboard/components/Hr";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ChannelFragment, ExportProductsInput, ProductFieldEnum } from "@dashboard/graphql";
-import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import {
+  type ChannelFragment,
+  type ExportProductsInput,
+  ProductFieldEnum,
+} from "@dashboard/graphql";
+import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { sectionNames } from "@dashboard/intl";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
 import { Button, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
-import { PropsWithChildren } from "react";
+import { type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
+import { type PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useProductExportFieldMessages from "./messages";

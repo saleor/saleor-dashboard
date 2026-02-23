@@ -11,14 +11,14 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { createVariantChannels } from "@dashboard/channels/utils";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
-  PageWhereInput,
-  ProductErrorWithAttributesFragment,
+  type PageWhereInput,
+  type ProductErrorWithAttributesFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductVariantDetailsQuery,
@@ -57,13 +57,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
+import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
 import {
   productUrl,
   productVariantEditUrl,
-  ProductVariantEditUrlDialog,
-  ProductVariantEditUrlQueryParams,
+  type ProductVariantEditUrlDialog,
+  type ProductVariantEditUrlQueryParams,
 } from "../../urls";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
 import { useSubmitChannels } from "./useSubmitChannels";

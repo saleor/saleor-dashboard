@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ListProps } from "../../../types";
+import { type ListProps } from "../../../types";
 
 export interface TranslatableEntity {
   id: string;

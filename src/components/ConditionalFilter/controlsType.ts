@@ -1,4 +1,4 @@
-import { ConditionValue } from "./FilterElement/ConditionValue";
+import { type ConditionValue } from "./FilterElement/ConditionValue";
 
 export const CONTROL_DEFAULTS = {
   text: "",

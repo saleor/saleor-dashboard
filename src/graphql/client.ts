@@ -8,7 +8,7 @@ import { createUploadLink } from "apollo-upload-client";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
 import { isStagingSchema } from "./schemaVersion";
-import { TypedTypePolicies } from "./typePolicies.generated";
+import { type TypedTypePolicies } from "./typePolicies.generated";
 
 // Select the appropriate fragmentTypes and typePolicies based on schema version
 const introspectionData = isStagingSchema()

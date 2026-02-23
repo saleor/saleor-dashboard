@@ -1,57 +1,57 @@
 // @ts-strict-ignore
-import { QueryResult } from "@apollo/client";
+import { type QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   handleContainerReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
-  AssignAttributeValueDialogFilterChangeMap,
+  type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
-import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   PermissionEnum,
-  ProductChannelListingErrorFragment,
-  ProductErrorWithAttributesFragment,
-  ProductTypeQuery,
-  SearchAttributeValuesQuery,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
-  SearchProductTypesQuery,
-  SearchWarehousesQuery,
-  TaxClassBaseFragment,
+  type ProductChannelListingErrorFragment,
+  type ProductErrorWithAttributesFragment,
+  type ProductTypeQuery,
+  type SearchAttributeValuesQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
+  type SearchProductTypesQuery,
+  type SearchWarehousesQuery,
+  type TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
-import { ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products/urls";
+import { type ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Option } from "@saleor/macaw-ui-next";
+import { Box, type Option } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { FetchMoreProps, RelayToFlat } from "../../../types";
+import { type FetchMoreProps, type RelayToFlat } from "../../../types";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import ProductCreateForm, {
-  ProductCreateData,
-  ProductCreateFormData,
-  ProductCreateHandlers,
+  type ProductCreateData,
+  type ProductCreateFormData,
+  type ProductCreateHandlers,
 } from "./form";
 
 interface ProductCreatePageProps {

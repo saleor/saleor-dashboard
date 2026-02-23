@@ -1,20 +1,20 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
-  FileUploadMutation,
-  ProductChannelListingAddInput,
-  ProductChannelListingUpdateInput,
-  ProductChannelListingUpdateMutationVariables,
-  ProductFragment,
-  ProductUpdateMutationVariables,
-  ProductVariantBulkUpdateInput,
-  VariantAttributeFragment,
+  type FileUploadMutation,
+  type ProductChannelListingAddInput,
+  type ProductChannelListingUpdateInput,
+  type ProductChannelListingUpdateMutationVariables,
+  type ProductFragment,
+  type ProductUpdateMutationVariables,
+  type ProductVariantBulkUpdateInput,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { weight } from "@dashboard/misc";
-import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import pick from "lodash/pick";

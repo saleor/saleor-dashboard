@@ -1,11 +1,11 @@
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import {
-  CustomCell,
-  CustomRenderer,
+  type CustomCell,
+  type CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  Rectangle,
-  Theme,
+  type Rectangle,
+  type Theme,
 } from "@glideapps/glide-data-grid";
 
 const numberCellEmptyValue = Symbol("date-cell-empty-value");

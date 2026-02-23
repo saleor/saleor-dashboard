@@ -3,17 +3,17 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  GridAttributesQuery,
-  ProductFragment,
-  ProductListQuery,
+  type GridAttributesQuery,
+  type ProductFragment,
+  type ProductListQuery,
   ProductMediaType,
-  ProductVariantCreateDataQuery,
-  ProductVariantFragment,
-  VariantAttributeFragment,
+  type ProductVariantCreateDataQuery,
+  type ProductVariantFragment,
+  type VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { ProductType } from "@saleor/sdk/dist/apollo/types";
+import { type RelayToFlat } from "@dashboard/types";
+import { type ProductType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

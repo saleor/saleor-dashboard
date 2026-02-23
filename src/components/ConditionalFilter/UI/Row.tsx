@@ -3,11 +3,11 @@ import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 
 import { getItemConstraint } from "./constrains";
-import { ErrorLookup } from "./errors";
-import { FilterEventEmitter } from "./EventEmitter";
+import { type ErrorLookup } from "./errors";
+import { type FilterEventEmitter } from "./EventEmitter";
 import { RightOperator } from "./RightOperator";
-import { ExperimentalFiltersProps } from "./Root";
-import { LeftOperatorOption, Row } from "./types";
+import { type ExperimentalFiltersProps } from "./Root";
+import { type LeftOperatorOption, type Row } from "./types";
 
 interface RowProps {
   item: Row;

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { ProductFragment } from "@dashboard/graphql";
-import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
 import { product, variantAttributes } from "../../../fixtures";
 import {

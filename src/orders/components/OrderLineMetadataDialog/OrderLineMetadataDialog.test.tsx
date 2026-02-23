@@ -1,7 +1,10 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import { OrderLineMetadataDialog, OrderLineMetadataDialogData } from "./OrderLineMetadataDialog";
+import {
+  OrderLineMetadataDialog,
+  type OrderLineMetadataDialogData,
+} from "./OrderLineMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 
 const mockOnSubmit = jest.fn();

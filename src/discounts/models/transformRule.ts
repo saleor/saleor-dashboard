@@ -1,6 +1,6 @@
 import {
-  PromotionRuleDetailsFragment,
-  PromotionRuleInput,
+  type PromotionRuleDetailsFragment,
+  type PromotionRuleInput,
   PromotionTypeEnum,
   RewardTypeEnum,
 } from "@dashboard/graphql";
@@ -14,7 +14,7 @@ import {
 } from "./helpers";
 import { prepareOrderConditions } from "./OrderRule/prepareConditions";
 import { prepareOrderPredicate } from "./OrderRule/preparePredicate";
-import { Rule } from "./Rule";
+import { type Rule } from "./Rule";
 
 export const mapAPIRuleToForm = (
   type: PromotionTypeEnum | null | undefined,

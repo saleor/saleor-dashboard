@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { getErrorMessage } from "@dashboard/components/Attributes/utils";
 import {
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";

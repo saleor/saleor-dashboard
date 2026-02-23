@@ -3,16 +3,16 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
   categoryListPath,
-  CategoryListUrlQueryParams,
+  type CategoryListUrlQueryParams,
   CategoryListUrlSortField,
   categoryPath,
-  CategoryUrlQueryParams,
+  type CategoryUrlQueryParams,
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView from "./views/CategoryDetails";

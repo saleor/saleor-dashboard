@@ -1,4 +1,4 @@
-import { FilterContainer, FilterElement } from "../FilterElement";
+import { type FilterContainer, type FilterElement } from "../FilterElement";
 
 export const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

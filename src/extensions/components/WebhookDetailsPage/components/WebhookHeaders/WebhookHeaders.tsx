@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableCell, TableHead } from "@material-ui/core";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -8,7 +8,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from "../../WebhookDetailsPage";
+import { type WebhookFormData } from "../../WebhookDetailsPage";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { hasEmptyHeader, mapHeaders, stringifyHeaders } from "./utils";

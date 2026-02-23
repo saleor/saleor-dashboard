@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
+import { type SearchPermissionGroupsQuery, type StaffErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { type Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox";

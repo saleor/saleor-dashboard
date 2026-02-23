@@ -10,7 +10,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import OrderRefundPage from "@dashboard/orders/components/OrderRefundPage";
 import {
   OrderRefundAmountCalculationMode,
-  OrderRefundSubmitData,
+  type OrderRefundSubmitData,
   OrderRefundType,
 } from "@dashboard/orders/components/OrderRefundPage/form";
 import { orderUrl } from "@dashboard/orders/urls";

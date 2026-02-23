@@ -1,8 +1,8 @@
-import { PermissionFragment } from "@dashboard/graphql";
+import { type PermissionFragment } from "@dashboard/graphql";
 import { useMemo } from "react";
-import { Control, UseFormSetValue, useWatch } from "react-hook-form";
+import { type Control, type UseFormSetValue, useWatch } from "react-hook-form";
 
-import { CustomExtensionFormData } from "../AddCustomExtension";
+import { type CustomExtensionFormData } from "../AddCustomExtension";
 import { getAllPermissionsObject, getNoPermissionsObject } from "../utils";
 
 export const useFullAccessToggle = ({

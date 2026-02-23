@@ -1,5 +1,5 @@
-import { ExtensionWithParams } from "./types";
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { type ExtensionWithParams } from "./types";
+import { type AppDetailsUrlMountQueryParams } from "./urls";
 
 export interface ExtensionMenuItem {
   label: string;

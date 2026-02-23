@@ -7,11 +7,11 @@ import useForm from "@dashboard/hooks/useForm";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
 import {
-  ExportSettingsFormData,
+  type ExportSettingsFormData,
   exportSettingsInitialFormData,
   exportSettingsInitialFormDataWithIds,
 } from "@dashboard/products/components/ProductExportDialog/types";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

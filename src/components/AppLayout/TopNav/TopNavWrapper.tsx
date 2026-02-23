@@ -1,5 +1,5 @@
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 
 import { topBarHeight, topBarHeightSubtitle } from "../consts";
 

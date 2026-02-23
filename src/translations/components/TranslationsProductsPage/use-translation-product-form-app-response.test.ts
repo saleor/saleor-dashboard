@@ -1,4 +1,4 @@
-import { ProductTranslationFragment } from "@dashboard/graphql";
+import { type ProductTranslationFragment } from "@dashboard/graphql";
 import { TranslationInputFieldName } from "@dashboard/translations/types";
 import { renderHook } from "@testing-library/react-hooks";
 

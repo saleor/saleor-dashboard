@@ -4,9 +4,13 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import { PermissionEnum, TransactionItemFragment, useModelsOfTypeQuery } from "@dashboard/graphql";
+import {
+  PermissionEnum,
+  type TransactionItemFragment,
+  useModelsOfTypeQuery,
+} from "@dashboard/graphql";
 import { pageListUrl } from "@dashboard/modeling/urls";
-import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
+import { type ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
 import { OrderTransactionReasonUi } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";

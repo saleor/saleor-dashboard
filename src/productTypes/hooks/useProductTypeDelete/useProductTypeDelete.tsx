@@ -1,16 +1,16 @@
-import { TypeBaseData } from "@dashboard/components/TypeDeleteWarningDialog/types";
+import { type TypeBaseData } from "@dashboard/components/TypeDeleteWarningDialog/types";
 import {
-  ProductTypeBaseData,
+  type ProductTypeBaseData,
   useViewProducts,
 } from "@dashboard/components/TypeDeleteWarningDialog/useViewProducts";
-import { ProductCountQueryVariables, useProductCountQuery } from "@dashboard/graphql";
+import { type ProductCountQueryVariables, useProductCountQuery } from "@dashboard/graphql";
 import {
-  UseTypeDeleteData,
-  UseTypeDeleteProps,
+  type UseTypeDeleteData,
+  type UseTypeDeleteProps,
 } from "@dashboard/modelTypes/hooks/usePageTypeDelete/types";
 import {
-  ProductTypeListUrlQueryParams,
-  ProductTypeUrlQueryParams,
+  type ProductTypeListUrlQueryParams,
+  type ProductTypeUrlQueryParams,
 } from "@dashboard/productTypes/urls";
 import { useMemo } from "react";
 

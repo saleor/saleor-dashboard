@@ -1,4 +1,4 @@
-import { ProductChannels, SelectedChannel } from "./types";
+import { type ProductChannels, type SelectedChannel } from "./types";
 
 export const isProductAvailableInVoucherChannels = (
   productChannels?: ProductChannels,

@@ -1,4 +1,4 @@
-import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 
 import { validateChannelListing } from "./handlers";

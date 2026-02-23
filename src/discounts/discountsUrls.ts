@@ -1,4 +1,4 @@
-import { Dialog, Pagination, Sort, TabActionDialog } from "@dashboard/types";
+import { type Dialog, type Pagination, type Sort, type TabActionDialog } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 

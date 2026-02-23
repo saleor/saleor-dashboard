@@ -1,20 +1,20 @@
-import { attributeAddUrl, AttributeListUrlSortField } from "@dashboard/attributes/urls";
+import { attributeAddUrl, type AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { AttributeFragment } from "@dashboard/graphql";
+import { type AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../types";
+import { type FilterPagePropsWithPresets, type PageListProps, type SortPage } from "../../../types";
 import { AttributeListDatagrid } from "../AttributeListDatagrid";
-import { AttributeFilterKeys, AttributeListFilterOpts } from "./filters";
+import { type AttributeFilterKeys, type AttributeListFilterOpts } from "./filters";
 
 interface AttributeListPageProps
   extends PageListProps,

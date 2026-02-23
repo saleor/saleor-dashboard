@@ -1,9 +1,9 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Button } from "@saleor/macaw-ui-next";
-import { FieldArrayWithId } from "react-hook-form";
+import { type FieldArrayWithId } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { type OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 import { refundTableMessages } from "./messages";
 
 interface RefundTableReasonCellProps {

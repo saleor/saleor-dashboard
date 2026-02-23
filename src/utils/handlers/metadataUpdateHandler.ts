@@ -1,14 +1,14 @@
-import { FetchResult } from "@apollo/client";
-import { MetadataFormData } from "@dashboard/components/Metadata/types";
+import { type FetchResult } from "@apollo/client";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
-  MetadataErrorFragment,
-  MetadataInput,
-  UpdateMetadataMutation,
-  UpdateMetadataMutationVariables,
-  UpdatePrivateMetadataMutation,
-  UpdatePrivateMetadataMutationVariables,
+  type MetadataErrorFragment,
+  type MetadataInput,
+  type UpdateMetadataMutation,
+  type UpdateMetadataMutationVariables,
+  type UpdatePrivateMetadataMutation,
+  type UpdatePrivateMetadataMutationVariables,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { arrayDiff } from "@dashboard/utils/arrays";
 
 import { filterMetadataArray } from "./filterMetadataArray";

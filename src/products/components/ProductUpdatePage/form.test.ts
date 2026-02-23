@@ -1,8 +1,8 @@
-import { ProductFragment } from "@dashboard/graphql";
+import { type ProductFragment } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useProductUpdateForm } from "./form";
-import { UseProductUpdateFormOpts } from "./types";
+import { type UseProductUpdateFormOpts } from "./types";
 
 jest.mock("@dashboard/utils/richText/useRichText", () => {
   return {

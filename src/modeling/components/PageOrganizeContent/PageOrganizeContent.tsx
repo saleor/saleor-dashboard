@@ -1,16 +1,16 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type PageDetailsFragment, type PageErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Box, DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageFormData } from "../PageDetailsPage/form";
+import { type PageFormData } from "../PageDetailsPage/form";
 
 interface PageOrganizeContentProps {
   canChangeType: boolean;

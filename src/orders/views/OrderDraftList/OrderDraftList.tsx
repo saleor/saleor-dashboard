@@ -33,8 +33,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
   orderDraftListUrl,
-  OrderDraftListUrlDialog,
-  OrderDraftListUrlQueryParams,
+  type OrderDraftListUrlDialog,
+  type OrderDraftListUrlQueryParams,
   orderUrl,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";

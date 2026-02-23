@@ -9,9 +9,9 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { CollectionWithTotalProductsFragment } from "@dashboard/graphql";
+import { type CollectionWithTotalProductsFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import { ListActions, ListProps } from "@dashboard/types";
+import { type ListActions, type ListProps } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";

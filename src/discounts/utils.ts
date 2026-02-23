@@ -1,13 +1,17 @@
 import {
-  PromotionRuleDetailsFragment,
-  SaleDetailsQuery,
-  VoucherDetailsQuery,
+  type PromotionRuleDetailsFragment,
+  type SaleDetailsQuery,
+  type VoucherDetailsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { sortAlphabetically } from "@dashboard/utils/sort";
 
-import { Rule } from "./models";
-import { SearchCategoriesOpts, SearchCollectionOpts, SearchProductsOpts } from "./types";
+import { type Rule } from "./models";
+import {
+  type SearchCategoriesOpts,
+  type SearchCollectionOpts,
+  type SearchProductsOpts,
+} from "./types";
 
 type SaleOrVoucherData = SaleDetailsQuery | VoucherDetailsQuery;
 

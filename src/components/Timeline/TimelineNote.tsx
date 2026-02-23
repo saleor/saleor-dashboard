@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { DateTime } from "../Date/DateTime";
 import styles from "./TimelineNote.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
-import { Actor } from "./types";
+import { type Actor } from "./types";
 import { getActorDisplayName, getActorLink, safeStringify } from "./utils";
 
 interface TimelineNoteProps {

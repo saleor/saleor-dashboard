@@ -1,5 +1,5 @@
-import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
-import { Box, Input, Option, Select, Spinner } from "@saleor/macaw-ui-next";
+import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
+import { Box, Input, type Option, Select, Spinner } from "@saleor/macaw-ui-next";
 
 interface CommonFieldProps {
   name: string;

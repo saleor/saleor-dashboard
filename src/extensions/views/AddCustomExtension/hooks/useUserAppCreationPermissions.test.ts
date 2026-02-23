@@ -1,6 +1,6 @@
-import { UserContext } from "@dashboard/auth/types";
+import { type UserContext } from "@dashboard/auth/types";
 import { useUser } from "@dashboard/auth/useUser";
-import { PermissionEnum, PermissionFragment, UserFragment } from "@dashboard/graphql";
+import { PermissionEnum, type PermissionFragment, type UserFragment } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { renderHook } from "@testing-library/react-hooks";
 

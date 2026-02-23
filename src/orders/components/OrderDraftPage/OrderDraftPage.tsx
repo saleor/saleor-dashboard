@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
@@ -10,28 +10,28 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForDraftOrderDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderLineInput,
-  OrderNoteUpdateMutation,
-  SearchCustomersQuery,
+  type ChannelUsabilityDataQuery,
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderLineInput,
+  type OrderNoteUpdateMutation,
+  type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Divider } from "@saleor/macaw-ui-next";
 import { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
+import OrderCustomer, { type CustomerEditData } from "../OrderCustomer";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import OrderHistory, { type FormData as HistoryFormData } from "../OrderHistory";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 

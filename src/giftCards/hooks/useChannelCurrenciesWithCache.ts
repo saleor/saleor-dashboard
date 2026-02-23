@@ -1,8 +1,8 @@
 import { useApolloClient } from "@apollo/client";
 import {
   ChannelCurrenciesDocument,
-  ChannelCurrenciesQuery,
-  ChannelCurrenciesQueryVariables,
+  type ChannelCurrenciesQuery,
+  type ChannelCurrenciesQueryVariables,
   useChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 import { useMemo } from "react";

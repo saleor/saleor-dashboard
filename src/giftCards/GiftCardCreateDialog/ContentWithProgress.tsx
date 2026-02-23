@@ -1,7 +1,7 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 interface ContentWithProgressProps {
   containerClassName?: string;

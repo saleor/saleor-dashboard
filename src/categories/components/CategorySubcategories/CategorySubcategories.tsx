@@ -2,8 +2,8 @@ import { categoryAddUrl } from "@dashboard/categories/urls";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
-import { CategoryDetailsQuery } from "@dashboard/graphql";
-import { ListProps, ListViews, RelayToFlat } from "@dashboard/types";
+import { type CategoryDetailsQuery } from "@dashboard/graphql";
+import { type ListProps, type ListViews, type RelayToFlat } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

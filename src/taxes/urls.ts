@@ -1,4 +1,4 @@
-import { Dialog } from "@dashboard/types";
+import { type Dialog } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 

@@ -1,10 +1,13 @@
 import { GridTable } from "@dashboard/components/GridTable";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import * as React from "react";
-import { Control, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
+import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import type * as React from "react";
+import { type Control, type FieldArrayWithId, type UseFieldArrayUpdate } from "react-hook-form";
 
-import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
-import { RefundQuantityChange, validateQty } from "../../utils";
+import {
+  type LineToRefund,
+  type OrderTransactionRefundPageFormData,
+} from "../../OrderTransactionRefundPage";
+import { type RefundQuantityChange, validateQty } from "../../utils";
 import { RefundTableInputCell } from "./RefundTableInputCell";
 import { RefundTablePriceCell } from "./RefundTablePriceCell";
 import { RefundTableProductCell } from "./RefundTableProductCell";

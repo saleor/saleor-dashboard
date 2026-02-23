@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { QueryResult } from "@apollo/client";
-import { DocumentNode } from "graphql";
+import { type QueryResult } from "@apollo/client";
+import { type DocumentNode } from "graphql";
 import { useState } from "react";
 
-import makeQuery, { UseQueryResult } from "./makeQuery";
+import makeQuery, { type UseQueryResult } from "./makeQuery";
 import useDebounce from "./useDebounce";
 
 export interface BaseSearchVariables {

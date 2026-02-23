@@ -1,10 +1,10 @@
 import {
   GiftCardEventsEnum,
-  OrderDetailsFragment,
-  OrderGiftCardEventBalanceFragment,
+  type OrderDetailsFragment,
+  type OrderGiftCardEventBalanceFragment,
 } from "@dashboard/graphql";
 import compact from "lodash/compact";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { orderSummaryMessages } from "./messages";
 

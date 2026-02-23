@@ -3,10 +3,10 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { isArrayOfOptions, Rule } from "@dashboard/discounts/models";
-import { DefaultTheme, Option } from "@saleor/macaw-ui-next";
+import { isArrayOfOptions, type Rule } from "@dashboard/discounts/models";
+import { type DefaultTheme, type Option } from "@saleor/macaw-ui-next";
 
-import { EnrichCondition } from "./components/RuleConditionsChips/useEnrichConditions";
+import { type EnrichCondition } from "./components/RuleConditionsChips/useEnrichConditions";
 
 const MAX_ITEMS_TO_SHOW = 3;
 

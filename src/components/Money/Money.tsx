@@ -1,5 +1,5 @@
 import useLocale from "@dashboard/hooks/useLocale";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 
 import { formatMoneyAmount } from ".";

@@ -1,21 +1,21 @@
-import { FetchResult } from "@apollo/client";
-import { Rule, toAPI } from "@dashboard/discounts/models";
+import { type FetchResult } from "@apollo/client";
+import { type Rule, toAPI } from "@dashboard/discounts/models";
 import {
-  PromotionDetailsFragment,
-  PromotionRuleCreateErrorFragment,
-  PromotionRuleCreateMutation,
-  PromotionRuleCreateMutationVariables,
-  PromotionRuleUpdateErrorFragment,
-  PromotionRuleUpdateMutation,
-  PromotionRuleUpdateMutationVariables,
-  PromotionUpdateMutation,
-  PromotionUpdateMutationVariables,
+  type PromotionDetailsFragment,
+  type PromotionRuleCreateErrorFragment,
+  type PromotionRuleCreateMutation,
+  type PromotionRuleCreateMutationVariables,
+  type PromotionRuleUpdateErrorFragment,
+  type PromotionRuleUpdateMutation,
+  type PromotionRuleUpdateMutationVariables,
+  type PromotionUpdateMutation,
+  type PromotionUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
-import { CommonError } from "@dashboard/utils/errors/common";
+import { type CommonError } from "@dashboard/utils/errors/common";
 import difference from "lodash/difference";
 
-import { DiscoutFormData } from "../../types";
+import { type DiscoutFormData } from "../../types";
 
 export const createUpdateHandler = (
   promotion: PromotionDetailsFragment | undefined | null,

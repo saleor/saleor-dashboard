@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
+  type ChannelPriceAndPreorderData,
+  type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { toggle } from "@dashboard/utils/lists";
 import { useState } from "react";
 
-import { ProductChannelListing } from "../types";
+import { type ProductChannelListing } from "../types";
 
 interface VariantChannelsDialogProps {
   channelListings: ProductChannelListing;

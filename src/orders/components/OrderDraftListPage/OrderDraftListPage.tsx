@@ -2,9 +2,14 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
-import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
-import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
-import { FilterPagePropsWithPresets, PageListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { type OrderDraftListQuery, type RefreshLimitsQuery } from "@dashboard/graphql";
+import { type OrderDraftListUrlSortField } from "@dashboard/orders/urls";
+import {
+  type FilterPagePropsWithPresets,
+  type PageListProps,
+  type RelayToFlat,
+  type SortPage,
+} from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Box } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -13,7 +18,7 @@ import { useIntl } from "react-intl";
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
-import { OrderDraftFilterKeys, OrderDraftListFilterOpts } from "./filters";
+import { type OrderDraftFilterKeys, type OrderDraftListFilterOpts } from "./filters";
 
 interface OrderDraftListPageProps
   extends PageListProps,

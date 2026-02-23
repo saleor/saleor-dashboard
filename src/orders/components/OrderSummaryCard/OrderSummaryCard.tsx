@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { makeStyles } from "@saleor/macaw-ui";

@@ -1,4 +1,4 @@
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { type ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { useMemo } from "react";
 
 /** This hook sorts plugin input controls received from Saleor and puts boolean (checkboxes) inputs at the end */

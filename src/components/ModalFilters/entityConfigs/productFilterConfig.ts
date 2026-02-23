@@ -1,6 +1,6 @@
-import { ProductWhereInput } from "@dashboard/graphql";
+import { type ProductWhereInput } from "@dashboard/graphql";
 
-import { InitialProductStateResponse } from "../../ConditionalFilter/API/initialState/product/InitialProductStateResponse";
+import { type InitialProductStateResponse } from "../../ConditionalFilter/API/initialState/product/InitialProductStateResponse";
 import { useProductInitialAPIState } from "../../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
 import { useProductFilterAPIProvider } from "../../ConditionalFilter/API/providers/ProductFilterAPIProvider";
 import { STATIC_PRODUCT_OPTIONS } from "../../ConditionalFilter/constants";
@@ -10,9 +10,9 @@ import {
 } from "../../ConditionalFilter/queryVariables";
 import {
   emptyFetchingParams,
-  FetchingParams,
+  type FetchingParams,
 } from "../../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
-import { ModalFilterConfig } from "../types";
+import { type ModalFilterConfig } from "../types";
 
 export const productFilterConfig: ModalFilterConfig<
   ProductWhereInput,

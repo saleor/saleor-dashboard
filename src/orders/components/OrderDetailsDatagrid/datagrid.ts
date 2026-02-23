@@ -7,13 +7,13 @@ import {
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderLineFragment } from "@dashboard/graphql";
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

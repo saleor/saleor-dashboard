@@ -1,7 +1,7 @@
-import { OrderPredicateAPI } from "@dashboard/discounts/types";
-import { DecimalFilterInput } from "@dashboard/graphql";
+import { type OrderPredicateAPI } from "@dashboard/discounts/types";
+import { type DecimalFilterInput } from "@dashboard/graphql";
 
-import { Condition } from "../Condition";
+import { type Condition } from "../Condition";
 import { getConditionType, getConditionValue } from "../helpers";
 
 export const prepareOrderConditions = (

@@ -1,4 +1,4 @@
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 
 import { convertEditorJSListBlocks } from "./utils";
 

@@ -3,15 +3,15 @@ import {
   messages as extensionMessages,
 } from "@dashboard/extensions/messages";
 import { getAppErrorMessageDescriptor } from "@dashboard/extensions/utils";
-import { AppErrorCode } from "@dashboard/graphql";
+import { type AppErrorCode } from "@dashboard/graphql";
 import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { commonMessages } from "@dashboard/intl";
 import { getSpecificManifestErrorDocLink } from "@dashboard/links";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { FieldError } from "react-hook-form";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import type * as React from "react";
+import { type FieldError } from "react-hook-form";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
   MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT,

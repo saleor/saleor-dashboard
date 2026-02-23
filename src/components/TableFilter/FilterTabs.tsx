@@ -1,6 +1,6 @@
 import { Tabs } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import type * as React from "react";
 
 const useStyles = makeStyles(
   theme => ({

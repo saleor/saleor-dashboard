@@ -1,5 +1,5 @@
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 import { useState } from "react";
 
 interface UseAssignDialogSingleSelectionProps {

@@ -8,8 +8,8 @@ import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTa
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
-import { AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
-import { ListActions, ReorderAction } from "@dashboard/types";
+import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";

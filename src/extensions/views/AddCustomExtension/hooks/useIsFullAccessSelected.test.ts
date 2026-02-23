@@ -1,8 +1,8 @@
-import { PermissionEnum, PermissionFragment } from "@dashboard/graphql";
+import { PermissionEnum, type PermissionFragment } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
-import { CustomExtensionFormData } from "../AddCustomExtension";
+import { type CustomExtensionFormData } from "../AddCustomExtension";
 import { useFullAccessToggle } from "./useIsFullAccessSelected";
 
 describe("useFullAccessToggle", () => {

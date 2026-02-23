@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { AddressTypeInput } from "@dashboard/customers/types";
-import { AddressFragment, CountryWithCodeFragment, Node } from "@dashboard/graphql";
+import { type AddressTypeInput } from "@dashboard/customers/types";
+import { type AddressFragment, type CountryWithCodeFragment, type Node } from "@dashboard/graphql";
 import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { useEffect, useState } from "react";
-import * as React from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",

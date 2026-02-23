@@ -1,5 +1,5 @@
 import {
-  OrderLineMetadataDetailsFragment,
+  type OrderLineMetadataDetailsFragment,
   useOrderLinesMetadataLazyQuery,
 } from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";

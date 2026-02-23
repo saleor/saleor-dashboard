@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ProductErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type ProductErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

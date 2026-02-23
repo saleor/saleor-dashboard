@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -9,11 +9,11 @@ import { Savebar } from "@dashboard/components/Savebar";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
-  CountryCode,
-  CountryFragment,
-  TaxConfigurationFragment,
-  TaxConfigurationPerCountryFragment,
-  TaxConfigurationUpdateInput,
+  type CountryCode,
+  type CountryFragment,
+  type TaxConfigurationFragment,
+  type TaxConfigurationPerCountryFragment,
+  type TaxConfigurationUpdateInput,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import TaxCountryDialog from "@dashboard/taxes/components/TaxCountryDialog";

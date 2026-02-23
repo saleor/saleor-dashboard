@@ -1,4 +1,4 @@
-import { AppQuery } from "@dashboard/graphql";
+import { type AppQuery } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { ErrorBoundary } from "react-error-boundary";

@@ -1,17 +1,17 @@
 import { useApolloClient } from "@apollo/client";
 import {
   _GetChannelOperandsDocument,
-  _GetChannelOperandsQuery,
-  _GetChannelOperandsQueryVariables,
+  type _GetChannelOperandsQuery,
+  type _GetChannelOperandsQueryVariables,
   AttributeTypeEnum,
 } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { type AttributesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
 import { createInitialAttributeState } from "../helpers";
-import { InitialAttributesAPIResponse } from "../types";
+import { type InitialAttributesAPIResponse } from "../types";
 import { InitialAttributesStateResponse } from "./InitialAttributesState";
 
 export interface InitialAttributesAPIState {

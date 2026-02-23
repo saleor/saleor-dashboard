@@ -1,35 +1,39 @@
-import { ApolloError } from "@apollo/client";
+import { type ApolloError } from "@apollo/client";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { IFilter } from "@dashboard/components/Filter/types";
-import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { type IFilter } from "@dashboard/components/Filter/types";
+import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import {
-  GiftCardListQuery,
-  GiftCardListQueryVariables,
+  type GiftCardListQuery,
+  type GiftCardListQueryVariables,
   useGiftCardListQuery,
 } from "@dashboard/graphql";
-import { UseFilterPresets, useFilterPresets } from "@dashboard/hooks/useFilterPresets";
-import useListSettings, { UseListSettings } from "@dashboard/hooks/useListSettings";
+import { type UseFilterPresets, useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import useListSettings, { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import { createPaginationState, PageInfo, PaginationState } from "@dashboard/hooks/usePaginator";
-import { UseRowSelection, useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { ListViews, SortPage } from "@dashboard/types";
+import {
+  createPaginationState,
+  type PageInfo,
+  type PaginationState,
+} from "@dashboard/hooks/usePaginator";
+import { type UseRowSelection, useRowSelection } from "@dashboard/hooks/useRowSelection";
+import { ListViews, type SortPage } from "@dashboard/types";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import { createContext, type Dispatch, type SetStateAction, useContext, useState } from "react";
 import * as React from "react";
 
 import { getFilterQueryParam, storageUtils } from "../../filters";
 import {
-  GiftCardListColummns,
-  GiftCardListUrlQueryParams,
-  GiftCardUrlSortField,
+  type GiftCardListColummns,
+  type GiftCardListUrlQueryParams,
+  type GiftCardUrlSortField,
 } from "../../types";
 import { getSortQueryVariables } from "./sort";
 

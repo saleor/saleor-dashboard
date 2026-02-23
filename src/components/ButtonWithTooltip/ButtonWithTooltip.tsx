@@ -1,5 +1,5 @@
-import { Button, ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Button, type ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 
 interface ButtonWithTooltipProps extends ButtonProps {
   tooltip?: React.ReactNode;

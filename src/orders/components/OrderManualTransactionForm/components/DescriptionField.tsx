@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { TextField, TextFieldProps } from "@material-ui/core";
+import { TextField, type TextFieldProps } from "@material-ui/core";
 
 import { useManualTransactionContext } from "../context";
 

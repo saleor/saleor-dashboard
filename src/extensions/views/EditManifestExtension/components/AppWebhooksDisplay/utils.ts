@@ -1,4 +1,4 @@
-import { AppWebhookDeliveriesQuery } from "@dashboard/graphql";
+import { type AppWebhookDeliveriesQuery } from "@dashboard/graphql";
 
 export type Webhook = NonNullable<NonNullable<AppWebhookDeliveriesQuery["app"]>["webhooks"]>[0];
 

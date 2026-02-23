@@ -1,4 +1,4 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import {
@@ -8,7 +8,7 @@ import {
   ProductVariantHandler,
 } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
