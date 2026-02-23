@@ -1,0 +1,23 @@
+.knip.json
+  216ecbc157477ff9 22-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "307aaca8007afd16cbe4549e1afb007a0239b40e",
+  "prompts": {
+    "216ecbc157477ff9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "44bc10b9-df60-4672-a27d-c359fdef116b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
