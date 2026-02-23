@@ -57,5 +57,6 @@ export const shopFragment = gql`
     limitQuantityPerCheckout
     enableAccountConfirmationByEmail
     useLegacyUpdateWebhookEmission
+    preserveAllAddressFields
   }
 `;

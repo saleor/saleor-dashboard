@@ -41,6 +41,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
+  preserveAllAddressFields: boolean;
 }
 
 interface SiteSettingsPageProps {
@@ -94,6 +95,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
+    preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
   };
 
   return (
@@ -120,6 +122,9 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
         };
         const handleWebhookEmissionChange = isEnabled => {
           change({ target: { name: "useLegacyUpdateWebhookEmission", value: isEnabled } });
+        };
+        const handlePreserveAddressFieldsChange = isEnabled => {
+          change({ target: { name: "preserveAllAddressFields", value: isEnabled } });
         };
 
         return (
@@ -226,6 +231,36 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                         onCheckedChange={handleWebhookEmissionChange}
                       >
                         <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionAddressValidationTitle)}
+                    description={intl.formatMessage(messages.sectionAddressValidationDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionAddressValidationHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Checkbox
+                        data-test-id="preserve-all-address-fields-checkbox"
+                        checked={data.preserveAllAddressFields}
+                        onCheckedChange={handlePreserveAddressFieldsChange}
+                      >
+                        <Text>{intl.formatMessage(messages.sectionAddressValidationHeader)}</Text>
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>
