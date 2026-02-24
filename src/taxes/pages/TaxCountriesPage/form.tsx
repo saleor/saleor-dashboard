@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { TaxClassRateInput, TaxCountryConfigurationFragment } from "@dashboard/graphql";
-import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
+import { type TaxClassRateInput, type TaxCountryConfigurationFragment } from "@dashboard/graphql";
+import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import * as React from "react";

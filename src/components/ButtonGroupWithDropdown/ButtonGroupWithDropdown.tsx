@@ -1,5 +1,13 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  type BoxProps,
+  Button,
+  type ButtonProps,
+  Dropdown,
+  List,
+  Text,
+} from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
 
 interface ButtonGroupWithDropdownProps extends BoxProps {

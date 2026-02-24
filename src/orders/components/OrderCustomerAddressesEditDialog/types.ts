@@ -1,4 +1,4 @@
-import { AddressInput, AddressTypeEnum } from "@dashboard/graphql";
+import { type AddressInput, type AddressTypeEnum } from "@dashboard/graphql";
 
 export interface OrderCustomerSearchAddressState {
   open: boolean;

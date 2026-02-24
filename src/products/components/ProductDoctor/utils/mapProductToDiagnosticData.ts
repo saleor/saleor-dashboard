@@ -1,4 +1,4 @@
-import { ProductDiagnosticData } from "./types";
+import { type ProductDiagnosticData } from "./types";
 
 /**
  * Minimal input type declaring only the fields used by mapProductToDiagnosticData.

@@ -9,9 +9,9 @@ import { appMessages, notifyMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { getAppInstallErrorMessage, getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import {
-  AppTokenCreateMutation,
-  AppTokenDeleteMutation,
-  AppUpdateMutation,
+  type AppTokenCreateMutation,
+  type AppTokenDeleteMutation,
+  type AppUpdateMutation,
   useAppActivateMutation,
   useAppDeactivateMutation,
   useAppDeleteMutation,
@@ -20,7 +20,7 @@ import {
   useAppTokenDeleteMutation,
   useAppUpdateMutation,
   useWebhookDeleteMutation,
-  WebhookDeleteMutation,
+  type WebhookDeleteMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -32,13 +32,13 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
-  CustomExtensionDetailsUrlDialog,
-  CustomExtensionDetailsUrlQueryParams,
+  type CustomExtensionDetailsUrlDialog,
+  type CustomExtensionDetailsUrlQueryParams,
   ExtensionsUrls,
 } from "../../urls";
 import {
   CustomExtensionDetailsPage,
-  CustomExtensionDetailsPageFormData,
+  type CustomExtensionDetailsPageFormData,
 } from "./components/CustomExtensionDetailsPage/CustomExtensionDetailsPage";
 import { TokenCreateDialog } from "./components/TokenCreateDialog/TokenCreateDialog";
 import { TokenDeleteDialog } from "./components/TokenDeleteDialog/TokenDeleteDialog";

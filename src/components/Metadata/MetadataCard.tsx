@@ -1,5 +1,5 @@
-import { MetadataInput } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type MetadataInput } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Accordion, Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

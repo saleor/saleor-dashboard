@@ -1,13 +1,21 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
-import { IMoney } from "@dashboard/utils/intl";
-import { Box, BoxProps, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { Control, FieldError, useController } from "react-hook-form";
+import { type IMoney } from "@dashboard/utils/intl";
+import {
+  Box,
+  type BoxProps,
+  Checkbox,
+  Input,
+  Skeleton,
+  Text,
+  Tooltip,
+} from "@saleor/macaw-ui-next";
+import { type Control, type FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import {
-  OrderTransactionRefundError,
-  OrderTransactionRefundPageFormData,
+  type OrderTransactionRefundError,
+  type OrderTransactionRefundPageFormData,
 } from "../../OrderTransactionRefundPage";
 import { orderTransactionRefundSummaryMessages as messages } from "./messages";
 

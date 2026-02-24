@@ -7,18 +7,21 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
-  ChannelFragment,
-  PermissionEnum,
-  PermissionGroupDetailsFragment,
-  PermissionGroupErrorFragment,
-  UserPermissionFragment,
+  type ChannelFragment,
+  type PermissionEnum,
+  type PermissionGroupDetailsFragment,
+  type PermissionGroupErrorFragment,
+  type UserPermissionFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { MembersListUrlSortField, permissionGroupListPath } from "@dashboard/permissionGroups/urls";
-import { ListActions, SortPage } from "@dashboard/types";
+import {
+  type MembersListUrlSortField,
+  permissionGroupListPath,
+} from "@dashboard/permissionGroups/urls";
+import { type ListActions, type SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { Box } from "@saleor/macaw-ui-next";

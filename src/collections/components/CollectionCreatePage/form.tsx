@@ -1,21 +1,21 @@
 // @ts-strict-ignore
-import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { createChannelsChangeHandler } from "@dashboard/collections/utils";
 import { COLLECTION_CREATE_FORM_ID } from "@dashboard/collections/views/consts";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
+import { RichTextContext, type RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
+import type * as React from "react";
 import { useEffect } from "react";
-import * as React from "react";
 
 interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {

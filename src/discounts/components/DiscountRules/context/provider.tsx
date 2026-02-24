@@ -1,5 +1,5 @@
-import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
-import { ReactNode } from "react";
+import { type ChannelFragment, type PromotionTypeEnum } from "@dashboard/graphql";
+import { type ReactNode } from "react";
 
 import { discountRulesContext } from "./context";
 

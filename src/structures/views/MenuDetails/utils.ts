@@ -1,12 +1,12 @@
 import {
-  MenuItemCreateInput,
-  MenuItemFragment,
-  MenuItemInput,
-  MenuItemMoveInput,
+  type MenuItemCreateInput,
+  type MenuItemFragment,
+  type MenuItemInput,
+  type MenuItemMoveInput,
 } from "@dashboard/graphql";
 
-import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
-import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
+import { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import { type MenuItemDialogFormData } from "../../components/MenuItemDialog";
 import { unknownTypeError } from "../../components/MenuItemsSortableTree/utils";
 
 export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInput {

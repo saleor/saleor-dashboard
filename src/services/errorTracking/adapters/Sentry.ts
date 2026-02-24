@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/react";
-import { History } from "history";
+import { type History } from "history";
 
-import { TrackerMethods } from "../types";
+import { type TrackerMethods } from "../types";
 
 interface Config {
   dsn: string;

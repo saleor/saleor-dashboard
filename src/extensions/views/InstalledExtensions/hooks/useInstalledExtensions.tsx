@@ -2,9 +2,15 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   getLatestFailedAttemptFromWebhooks,
-  LatestWebhookDeliveryWithMoment,
+  type LatestWebhookDeliveryWithMoment,
 } from "@dashboard/extensions/components/AppAlerts/utils";
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { infoMessages } from "@dashboard/extensions/messages";
+import {
+  type InstalledExtension,
+  isProblemCritical,
+  isProblemDismissed,
+  type WebhookDeliveryProblem,
+} from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
@@ -21,20 +27,16 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 import { useMemo } from "react";
+import { useIntl } from "react-intl";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
-import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
 
 export const getExtensionInfo = ({
   loading,
   isActive,
-  id,
-  lastFailedAttempt,
 }: {
-  id: string;
   isActive: boolean | null;
   loading: boolean;
-  lastFailedAttempt?: LatestWebhookDeliveryWithMoment | null;
 }) => {
   if (!isActive) {
     return <AppDisabledInfo />;
@@ -42,15 +44,6 @@ export const getExtensionInfo = ({
 
   if (loading) {
     return <Skeleton data-test-id="loading-skeleton" __width="200px" />;
-  }
-
-  if (lastFailedAttempt) {
-    return (
-      <FailedWebhookInfo
-        link={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}
-        date={lastFailedAttempt.createdAt}
-      />
-    );
   }
 
   return null;
@@ -100,9 +93,19 @@ const resolveExtensionHref = ({
   return ExtensionsUrls.resolveViewManifestExtensionUrl(id);
 };
 
+const buildWebhookProblem = (
+  lastFailedAttempt: LatestWebhookDeliveryWithMoment,
+  message: string,
+): WebhookDeliveryProblem => ({
+  __typename: "WebhookDeliveryError",
+  message,
+  createdAt: lastFailedAttempt.createdAt.toISOString(),
+});
+
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const userPermissions = useUserPermissions();
+  const intl = useIntl();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
   );
@@ -140,11 +143,22 @@ export const useInstalledExtensions = () => {
   const eventDeliveries = mapEdgesToItems(eventDeliveriesData?.apps) ?? [];
   const eventDeliveriesMap = new Map(eventDeliveries.map(app => [app.id, app]));
 
+  const webhookErrorMessage = intl.formatMessage(infoMessages.webhookErrorDetected);
+
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type }) => {
+      installedAppsData.map(({ id, name, isActive, brand, type, problems }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
+
+        const allProblems = [
+          ...(problems ?? []),
+          ...(lastFailedAttempt
+            ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
+            : []),
+        ];
+
+        const activeProblemsForApp = allProblems.filter(p => !isProblemDismissed(p));
 
         return {
           id: id,
@@ -155,15 +169,17 @@ export const useInstalledExtensions = () => {
             name: name ?? "",
           }),
           info: getExtensionInfo({
-            id,
             isActive,
             loading: !eventDeliveriesData?.apps,
-            lastFailedAttempt,
           }),
           href: resolveExtensionHref({ id, type, isActive }),
+          problems: allProblems,
+          appType: type,
+          activeProblemCount: activeProblemsForApp.length,
+          criticalProblemCount: activeProblemsForApp.filter(p => isProblemCritical(p)).length,
         };
       }),
-    [eventDeliveries, eventDeliveriesData, installedAppsData],
+    [eventDeliveries, eventDeliveriesData, installedAppsData, webhookErrorMessage],
   );
 
   const installedPlugins = useMemo<InstalledExtension[]>(
@@ -174,13 +190,20 @@ export const useInstalledExtensions = () => {
         logo: <PluginIcon />,
         info: null,
         href: ExtensionsUrls.resolveEditPluginExtensionUrl(plugin.id),
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
       })),
     [installedPluginsData],
   );
+
+  const totalCount = installedApps.reduce((sum, app) => sum + app.activeProblemCount, 0);
+  const criticalCount = installedApps.reduce((sum, app) => sum + app.criticalProblemCount, 0);
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
     installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
+    totalCount,
+    criticalCount,
   };
 };

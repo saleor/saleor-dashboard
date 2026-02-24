@@ -1,7 +1,7 @@
-import { History } from "history";
+import { type History } from "history";
 
 import { ErrorTrackerFactory } from "./trackerFactory";
-import { TrackerMethods, TrackerPermission } from "./types";
+import { type TrackerMethods, TrackerPermission } from "./types";
 
 const testErrorId = "testId";
 const initMockFn = jest.fn();

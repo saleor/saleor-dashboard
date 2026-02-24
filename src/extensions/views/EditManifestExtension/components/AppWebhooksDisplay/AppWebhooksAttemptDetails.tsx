@@ -1,5 +1,5 @@
 import EventTime from "@dashboard/components/EventTime/EventTime";
-import { EventDeliveryAttemptFragment } from "@dashboard/graphql";
+import { type EventDeliveryAttemptFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 
 interface AppWebhooksAttemptDetailsProps {

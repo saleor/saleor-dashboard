@@ -1,7 +1,7 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 

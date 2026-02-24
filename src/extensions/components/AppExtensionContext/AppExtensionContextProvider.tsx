@@ -5,9 +5,12 @@ import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/com
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
-import { AppExtensionActiveParams, useAppExtensionPopup } from "../../app-extension-popup-state";
+import {
+  type AppExtensionActiveParams,
+  useAppExtensionPopup,
+} from "../../app-extension-popup-state";
 
 export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   const { setInactive, state } = useAppExtensionPopup();

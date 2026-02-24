@@ -1,4 +1,4 @@
-import { Name } from "@dashboard/featureFlags/availableFlags";
+import { type Name } from "@dashboard/featureFlags/availableFlags";
 import { Button, Spinner } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 

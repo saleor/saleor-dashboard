@@ -1,4 +1,4 @@
-import { LeftOperand } from "@dashboard/components/ConditionalFilter/LeftOperandsProvider";
+import { type LeftOperand } from "@dashboard/components/ConditionalFilter/LeftOperandsProvider";
 import {
   AttributeTypeEnum,
   CollectionPublished,
@@ -6,14 +6,14 @@ import {
   FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderStatusFilter,
+  type OrderStatusFilter,
   PaymentMethodTypeEnum,
   ProductTypeEnum,
   StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
   attributeTypesMessages,

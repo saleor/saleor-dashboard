@@ -19,8 +19,8 @@ import CustomerAddressDialog from "../components/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
   customerAddressesUrl,
-  CustomerAddressesUrlDialog,
-  CustomerAddressesUrlQueryParams,
+  type CustomerAddressesUrlDialog,
+  type CustomerAddressesUrlQueryParams,
 } from "../urls";
 
 interface CustomerAddressesProps {

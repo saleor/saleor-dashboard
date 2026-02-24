@@ -5,13 +5,13 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { ShippingZoneFragment } from "@dashboard/graphql";
+import { type ShippingZoneFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
-import { ListProps } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
+import { type ListProps } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";

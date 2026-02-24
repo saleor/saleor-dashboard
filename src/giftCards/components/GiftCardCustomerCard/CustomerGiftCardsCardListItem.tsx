@@ -1,11 +1,11 @@
-import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
+import CardMenu, { type CardMenuItem } from "@dashboard/components/CardMenu";
 import {
   bulkEnableDisableSectionMessages,
   giftCardsListTableMessages,
 } from "@dashboard/giftCards/GiftCardsList/messages";
 import useGiftCardActivateToggle from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
-import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { CustomerGiftCardFragment } from "@dashboard/graphql";
+import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { type CustomerGiftCardFragment } from "@dashboard/graphql";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

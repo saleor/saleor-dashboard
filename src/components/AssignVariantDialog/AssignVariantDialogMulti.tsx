@@ -1,18 +1,18 @@
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ProductWhereInput, SearchProductsQuery } from "@dashboard/graphql";
+import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { renderCollection } from "@dashboard/misc";
-import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
@@ -24,7 +24,7 @@ import {
   handleVariantAssign,
   hasAllVariantsSelected,
   isVariantSelected,
-  VariantWithProductLabel,
+  type VariantWithProductLabel,
 } from "./utils";
 
 interface AssignVariantDialogMultiProps extends FetchMoreProps {

@@ -1,16 +1,16 @@
 import {
   buildClientSchema,
-  DocumentNode,
-  GraphQLField,
+  type DocumentNode,
+  type GraphQLField,
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLType,
-  IntrospectionQuery,
-  Location,
+  type GraphQLSchema,
+  type GraphQLType,
+  type IntrospectionQuery,
+  type Location,
   parse,
-  Token,
+  type Token,
   visit,
 } from "graphql";
 

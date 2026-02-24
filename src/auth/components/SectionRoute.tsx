@@ -1,6 +1,6 @@
 import { Route } from "@dashboard/components/Router";
-import { PermissionEnum } from "@dashboard/graphql";
-import { RouteProps } from "react-router-dom";
+import { type PermissionEnum } from "@dashboard/graphql";
+import { type RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
 import { hasAllPermissions, hasAnyPermissions } from "../misc";

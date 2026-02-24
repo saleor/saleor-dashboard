@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Form from "@dashboard/components/Form";
@@ -8,8 +8,12 @@ import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeli
 import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
 import { toActor } from "@dashboard/components/Timeline/utils";
-import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import {
+  type OrderEventFragment,
+  OrderEventsEnum,
+  type OrderNoteUpdateMutation,
+} from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { orderUrl } from "@dashboard/orders/urls";

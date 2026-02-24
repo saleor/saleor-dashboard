@@ -2,15 +2,15 @@ import { categoryUrl } from "@dashboard/categories/urls";
 import { collectionUrl } from "@dashboard/collections/urls";
 import {
   AttributeEntityTypeEnum,
-  CountryFragment,
-  CountryWithCodeFragment,
-  MetadataInput,
-  MetadataItemFragment,
+  type CountryFragment,
+  type CountryWithCodeFragment,
+  type MetadataInput,
+  type MetadataItemFragment,
 } from "@dashboard/graphql";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
-import { Node, SlugNode } from "@dashboard/types";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Node, type SlugNode } from "@dashboard/types";
+import { type Option } from "@saleor/macaw-ui-next";
 
 interface Edge<T> {
   node: T;

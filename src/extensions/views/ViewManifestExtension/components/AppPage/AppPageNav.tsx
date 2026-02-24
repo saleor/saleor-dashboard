@@ -1,6 +1,6 @@
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
-import { AppLogo } from "@dashboard/extensions/types";
+import { type AppLogo } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";

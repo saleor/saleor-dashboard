@@ -1,8 +1,8 @@
 import { useIntl } from "react-intl";
 
-import { ProductCreateData } from "../components/ProductCreatePage";
+import { type ProductCreateData } from "../components/ProductCreatePage";
 import {
-  ProductVariantType,
+  type ProductVariantType,
   validateProductCreateData,
   validateProductVariant,
 } from "./validation";

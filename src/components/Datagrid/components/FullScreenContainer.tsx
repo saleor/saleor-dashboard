@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useTheme } from "@saleor/macaw-ui";
-import { CSSProperties, FC, PropsWithChildren } from "react";
+import { type CSSProperties, type FC, type PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 
 import { useDelayedState } from "../hooks/useDelayedState";

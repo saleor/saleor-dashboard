@@ -1,8 +1,8 @@
-import { FormData } from "@dashboard/channels/components/ChannelForm";
-import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { type FormData } from "@dashboard/channels/components/ChannelForm";
+import { type SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
-import { ReorderAction, ReorderEvent } from "@dashboard/types";
+import { type ReorderAction, type ReorderEvent } from "@dashboard/types";
 import { move } from "@dashboard/utils/lists";
 
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";

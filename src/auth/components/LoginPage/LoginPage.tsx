@@ -1,11 +1,11 @@
-import { LastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
-import { UserContextError } from "@dashboard/auth/types";
+import { type LastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
+import { type UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { getExternalAuthenticationMethodName } from "@dashboard/auth/utils";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
-import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
@@ -14,7 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
-import LoginForm, { LoginFormData } from "./form";
+import LoginForm, { type LoginFormData } from "./form";
 import { LastLoginIndicator } from "./LastLoginIndicator";
 import { getErrorMessage } from "./messages";
 

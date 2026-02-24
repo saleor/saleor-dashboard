@@ -1,4 +1,4 @@
-import { Theme } from "@glideapps/glide-data-grid";
+import { type Theme } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";

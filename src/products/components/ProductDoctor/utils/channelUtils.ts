@@ -1,7 +1,7 @@
-import { ProductChannelListingAddInput } from "@dashboard/graphql";
+import { type ProductChannelListingAddInput } from "@dashboard/graphql";
 import { areChannelFieldsDifferent } from "@dashboard/products/components/ProductUpdatePage/formChannels";
 
-import { AvailabilityIssue, ChannelSummary } from "./types";
+import { type AvailabilityIssue, type ChannelSummary } from "./types";
 
 /**
  * Groups availability issues by channel ID for efficient lookup.

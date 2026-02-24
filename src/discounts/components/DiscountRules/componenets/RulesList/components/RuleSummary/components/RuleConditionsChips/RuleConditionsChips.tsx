@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models";
 
 import { mapConditionToOption, splitConditions } from "../../utils";
 import { RuleSummaryChips } from "../RuleSummaryChips";

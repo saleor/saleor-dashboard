@@ -1,4 +1,4 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { type TransactionItemFragment } from "@dashboard/graphql";
 import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

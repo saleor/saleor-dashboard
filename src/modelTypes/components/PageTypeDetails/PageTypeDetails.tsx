@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { PageErrorFragment } from "@dashboard/graphql";
+import { type PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 interface PageTypeDetailsProps {

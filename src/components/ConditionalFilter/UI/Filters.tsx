@@ -1,8 +1,8 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 
-import { ExperimentalFiltersProps } from ".";
+import { type ExperimentalFiltersProps } from ".";
 import { createErrorLookup, getErrorByRowIndex } from "./errors";
-import { FilterEventEmitter } from "./EventEmitter";
+import { type FilterEventEmitter } from "./EventEmitter";
 import { RowComponent } from "./Row";
 
 type FiltersProps = Pick<ExperimentalFiltersProps, "value" | "leftOptions" | "error"> & {

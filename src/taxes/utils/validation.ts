@@ -1,6 +1,6 @@
-import { CommonError, CommonErrorCode } from "@dashboard/utils/errors/common";
+import { type CommonError, CommonErrorCode } from "@dashboard/utils/errors/common";
 
-import { TaxClassesPageFormData } from "../types";
+import { type TaxClassesPageFormData } from "../types";
 
 const createEmptyRequiredError = (field: string): CommonError<CommonErrorCode> => ({
   code: CommonErrorCode.REQUIRED,

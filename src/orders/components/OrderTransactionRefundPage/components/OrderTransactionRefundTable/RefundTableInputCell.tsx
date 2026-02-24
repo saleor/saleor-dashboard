@@ -1,10 +1,10 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { Control, Controller } from "react-hook-form";
+import type * as React from "react";
+import { type Control, Controller } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { type OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 import { refundTableMessages } from "./messages";
 
 interface RefundTableInputCellProps {

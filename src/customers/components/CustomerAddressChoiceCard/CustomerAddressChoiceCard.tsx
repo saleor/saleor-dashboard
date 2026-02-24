@@ -2,7 +2,7 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { AddressFragment } from "@dashboard/graphql";
+import { type AddressFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

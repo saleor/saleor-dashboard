@@ -1,5 +1,5 @@
-import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
-import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
+import { type ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import { type UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
 interface InitialCategoryState {
   metadata: ItemOption[];

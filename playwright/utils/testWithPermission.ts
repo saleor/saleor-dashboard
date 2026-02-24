@@ -1,4 +1,4 @@
-import { UserPermission } from "@data/userPermissions";
+import { type UserPermission } from "@data/userPermissions";
 import { test as base } from "@playwright/test";
 
 import { getStorageState } from "./auth";

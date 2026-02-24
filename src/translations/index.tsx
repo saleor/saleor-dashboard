@@ -4,7 +4,7 @@ import { LanguageCodeEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -14,32 +14,34 @@ import {
   TranslatableEntities,
 } from "./urls";
 import TranslationsAttributesComponent, {
-  TranslationsAttributesQueryParams,
+  type TranslationsAttributesQueryParams,
 } from "./views/TranslationsAttributes";
 import TranslationsCategoriesComponent, {
-  TranslationsCategoriesQueryParams,
+  type TranslationsCategoriesQueryParams,
 } from "./views/TranslationsCategories";
 import TranslationsCollectionsComponent, {
-  TranslationsCollectionsQueryParams,
+  type TranslationsCollectionsQueryParams,
 } from "./views/TranslationsCollections";
 import TranslationsEntitiesComponent from "./views/TranslationsEntities";
 import TranslationsLanguageList from "./views/TranslationsLanguageList";
 import TranslationsMenuItemComponent from "./views/TranslationsMenuItem";
 import TranslationsPagesComponent, {
-  TranslationsPagesQueryParams,
+  type TranslationsPagesQueryParams,
 } from "./views/TranslationsPages";
 import TranslationsProductsComponent, {
-  TranslationsProductsQueryParams,
+  type TranslationsProductsQueryParams,
 } from "./views/TranslationsProducts";
 import TranslationsProductVariantsComponent, {
-  TranslationsProductVariantsQueryParams,
+  type TranslationsProductVariantsQueryParams,
 } from "./views/TranslationsProductVariants";
-import TranslationsSaleComponent, { TranslationsSalesQueryParams } from "./views/TranslationsSales";
+import TranslationsSaleComponent, {
+  type TranslationsSalesQueryParams,
+} from "./views/TranslationsSales";
 import TranslationsShippingMethodComponent, {
-  TranslationsShippingMethodQueryParams,
+  type TranslationsShippingMethodQueryParams,
 } from "./views/TranslationsShippingMethod";
 import TranslationsVouchersComponent, {
-  TranslationsVouchersQueryParams,
+  type TranslationsVouchersQueryParams,
 } from "./views/TranslationsVouchers";
 
 type TranslationsEntitiesRouteProps = RouteComponentProps<{

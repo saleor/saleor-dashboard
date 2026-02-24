@@ -1,8 +1,8 @@
-import { PageWhereInput } from "@dashboard/graphql";
-import { createContext, FC, ReactNode, useContext, useMemo } from "react";
+import { type PageWhereInput } from "@dashboard/graphql";
+import { createContext, type FC, type ReactNode, useContext, useMemo } from "react";
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
-import { LockedFilter, ModalFilterResult } from "../types";
+import { type LockedFilter, type ModalFilterResult } from "../types";
 import { useModalFilters } from "../useModalFilters";
 import { pageFilterConfig } from "./pageFilterConfig";
 

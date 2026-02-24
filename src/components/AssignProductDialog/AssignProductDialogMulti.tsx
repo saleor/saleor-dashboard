@@ -1,11 +1,11 @@
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ProductWhereInput } from "@dashboard/graphql";
+import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { Container, FetchMoreProps } from "@dashboard/types";
+import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,7 +15,7 @@ import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/Moda
 import { ModalFilters } from "../ModalFilters/ModalFilters";
 import styles from "./AssignProductDialog.module.css";
 import { messages } from "./messages";
-import { Products, SelectedChannel } from "./types";
+import { type Products, type SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
 interface AssignProductDialogMultiProps extends FetchMoreProps {

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { hasAllPermissions, hasAnyPermissions } from "@dashboard/auth/misc";
-import { PermissionEnum, UserFragment } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type PermissionEnum, type UserFragment } from "@dashboard/graphql";
+import { type IntlShape } from "react-intl";
 
 import { createConfigurationMenu } from "./createConfigurationMenu";
-import { MenuItem } from "./types";
+import { type MenuItem } from "./types";
 
 export const getConfigMenuItemsPermissions = (intl: IntlShape): PermissionEnum[] =>
   createConfigurationMenu(intl)

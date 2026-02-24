@@ -4,10 +4,10 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import {
   AttributeEntityTypeEnum,
-  AttributeErrorFragment,
+  type AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
+import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
@@ -17,7 +17,7 @@ import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
-import { AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage";
 import { inputTypeMessages, messages } from "./messages";
 
 const entityTypeMessages = defineMessages({

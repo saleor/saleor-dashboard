@@ -1,14 +1,14 @@
 import { RequirementsPicker } from "@dashboard/discounts/types";
 import {
-  ChannelDetailsFragment,
-  ChannelFragment,
-  CollectionDetailsFragment,
-  ProductVariantDetailsQuery,
-  ShippingMethodTypeFragment,
-  ShippingZoneQuery,
-  VoucherDetailsFragment,
+  type ChannelDetailsFragment,
+  type ChannelFragment,
+  type CollectionDetailsFragment,
+  type ProductVariantDetailsQuery,
+  type ShippingMethodTypeFragment,
+  type ShippingZoneQuery,
+  type VoucherDetailsFragment,
 } from "@dashboard/graphql";
-import { RequireOnlyOne } from "@dashboard/misc";
+import { type RequireOnlyOne } from "@dashboard/misc";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import uniqBy from "lodash/uniqBy";

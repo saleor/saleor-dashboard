@@ -1,4 +1,4 @@
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { useMemo } from "react";
 
 export type AuthorizationStatus = "full" | "partial" | "none" | "charged";

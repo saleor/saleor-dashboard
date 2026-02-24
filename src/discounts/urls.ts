@@ -1,16 +1,16 @@
-import { ChannelsAction } from "@dashboard/channels/urls";
+import { type ChannelsAction } from "@dashboard/channels/urls";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
-  ActiveTab,
-  BulkAction,
-  Dialog,
-  Filters,
-  FiltersWithMultipleValues,
-  Pagination,
-  Sort,
-  TabActionDialog,
+  type ActiveTab,
+  type BulkAction,
+  type Dialog,
+  type Filters,
+  type FiltersWithMultipleValues,
+  type Pagination,
+  type Sort,
+  type TabActionDialog,
 } from "../types";
 
 const discountSection = "/discounts/";

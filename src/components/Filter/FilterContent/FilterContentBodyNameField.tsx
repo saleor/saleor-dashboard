@@ -1,8 +1,8 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 
-import { FilterElement } from "../types";
-import { FilterDispatchFunction } from "../useFilter";
+import { type FilterElement } from "../types";
+import { type FilterDispatchFunction } from "../useFilter";
 
 const useStyles = makeStyles(
   theme => ({

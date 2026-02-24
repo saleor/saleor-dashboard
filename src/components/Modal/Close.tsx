@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Button, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Button, Modal, type PropsWithBox } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 
 export const Close = ({ onClose, ...rest }: PropsWithBox<{ onClose: () => void }>) => {

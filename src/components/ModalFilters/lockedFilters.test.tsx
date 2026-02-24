@@ -5,19 +5,19 @@ import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionS
 import { Constraint, GLOBAL } from "../ConditionalFilter/FilterElement/Constraint";
 import {
   ExpressionValue,
-  FilterContainer,
+  type FilterContainer,
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
-import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
-import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
+import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { type LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
+import { type UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import {
   createLockedFilterElement,
   createWrappedValueProvider,
   getFilteredOptions,
   stripGlobalConstraints,
 } from "./lockedFilters";
-import { LockedFilter } from "./types";
+import { type LockedFilter } from "./types";
 
 // Helper to create a LockedFilter for productType (for test compatibility)
 const createProductTypeLockedFilter = (

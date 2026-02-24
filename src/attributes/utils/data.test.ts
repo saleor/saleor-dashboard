@@ -1,16 +1,16 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  SelectedVariantAttributeFragment,
+  type SelectedVariantAttributeFragment,
 } from "@dashboard/graphql";
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 
 import {
   getReferenceAttributeDisplayData,
   getSelectedAttributeValues,
   handleContainerReferenceAssignment,
   handleMetadataReferenceAssignment,
-  ReferenceEntitiesSearch,
+  type ReferenceEntitiesSearch,
 } from "./data";
 
 // Helper function to create mock reference data with minimal required properties

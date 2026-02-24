@@ -1,4 +1,4 @@
-import { FilterElement } from "../FilterElement";
+import { type FilterElement } from "../FilterElement";
 import {
   AttributeQueryVarsBuilder,
   AttributeTypeQueryVarsBuilder,
@@ -13,7 +13,7 @@ import {
   VoucherStatusQueryVarsBuilder,
   VoucherTimesUsedQueryVarsBuilder,
 } from "./queryVarsBuilders";
-import { FilterQuery, QueryVarsBuilder } from "./queryVarsBuilders/types";
+import { type FilterQuery, type QueryVarsBuilder } from "./queryVarsBuilders/types";
 
 export class FilterQueryVarsBuilderResolver<TQuery extends FilterQuery> {
   private queryVarsBuilders: Array<QueryVarsBuilder<TQuery>>;

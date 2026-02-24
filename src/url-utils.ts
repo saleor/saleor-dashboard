@@ -1,4 +1,4 @@
-import { BooleanOptional, IParseOptions, parse, ParsedQs } from "qs";
+import { type BooleanOptional, type IParseOptions, parse, type ParsedQs } from "qs";
 
 /**
  * Use default pre-configured parser with pre-set details

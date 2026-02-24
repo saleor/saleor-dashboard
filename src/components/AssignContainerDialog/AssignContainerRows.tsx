@@ -1,4 +1,4 @@
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 import { Box, Checkbox, RadioGroup } from "@saleor/macaw-ui-next";
 
 interface SingleSelectionRowsProps {

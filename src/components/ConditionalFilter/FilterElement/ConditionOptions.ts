@@ -1,4 +1,4 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { type AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { ATTRIBUTE_INPUT_TYPE_CONDITIONS, STATIC_CONDITIONS } from "../constants";
 

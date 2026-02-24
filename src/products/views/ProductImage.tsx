@@ -11,7 +11,12 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductMediaPage from "../components/ProductMediaPage";
-import { productImageUrl, ProductImageUrlQueryParams, productListUrl, productUrl } from "../urls";
+import {
+  productImageUrl,
+  type ProductImageUrlQueryParams,
+  productListUrl,
+  productUrl,
+} from "../urls";
 
 interface ProductMediaProps {
   mediaId: string;

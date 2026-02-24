@@ -1,13 +1,13 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
-import useForm, { CommonUseFormResult, FormChange } from "@dashboard/hooks/useForm";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
+import useForm, { type CommonUseFormResult, type FormChange } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
+import { RichTextContext, type RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
+import type * as React from "react";
 import { useEffect } from "react";
-import * as React from "react";
 
 interface CategoryCreateFormData extends MetadataFormData {
   name: string;

@@ -1,4 +1,4 @@
-import { BaseListItemProps, ListItem, makeStyles } from "@saleor/macaw-ui";
+import { type BaseListItemProps, ListItem, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 
 import Link from "../Link";

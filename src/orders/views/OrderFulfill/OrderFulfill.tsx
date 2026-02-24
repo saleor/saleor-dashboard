@@ -10,12 +10,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import OrderFulfillPage, {
-  OrderFulfillSubmitData,
+  type OrderFulfillSubmitData,
 } from "@dashboard/orders/components/OrderFulfillPage";
 import {
   orderFulfillUrl,
-  OrderFulfillUrlDialog,
-  OrderFulfillUrlQueryParams,
+  type OrderFulfillUrlDialog,
+  type OrderFulfillUrlQueryParams,
   orderUrl,
 } from "@dashboard/orders/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

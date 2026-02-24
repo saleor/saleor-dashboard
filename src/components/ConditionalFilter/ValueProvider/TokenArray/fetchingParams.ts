@@ -1,5 +1,5 @@
-import { FilterProviderType } from "../../types";
-import { TokenType, UrlToken } from "../UrlToken";
+import { type FilterProviderType } from "../../types";
+import { TokenType, type UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
   category: string[];

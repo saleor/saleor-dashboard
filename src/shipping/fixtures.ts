@@ -1,12 +1,12 @@
 import {
   PostalCodeRuleInclusionTypeEnum,
-  SearchProductsQuery,
+  type SearchProductsQuery,
   ShippingMethodTypeEnum,
-  ShippingZoneFragment,
-  ShippingZoneQuery,
+  type ShippingZoneFragment,
+  type ShippingZoneQuery,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 export const shippingZones: ShippingZoneFragment[] = [
   {

@@ -1,17 +1,21 @@
-import { AttributeInput, AttributeRowHandlers, Attributes } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeRowHandlers,
+  Attributes,
+} from "@dashboard/components/Attributes";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import {
-  AttributeValueFragment,
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type AttributeValueFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
+import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleHelp } from "lucide-react";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface VariantAttributesSectionProps extends AttributeRowHandlers {

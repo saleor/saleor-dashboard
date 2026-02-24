@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { MetadataIdSchema } from "@dashboard/components/Metadata";
-import { OrderDetailsFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 
 import {

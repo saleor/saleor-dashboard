@@ -1,15 +1,18 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import PriceField from "@dashboard/components/PriceField";
 import {
-  OrderDetailsFragment,
-  OrderGrantRefundCreateErrorFragment,
-  TransactionRequestRefundForGrantedRefundErrorFragment,
+  type OrderDetailsFragment,
+  type OrderGrantRefundCreateErrorFragment,
+  type TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
-import { IMoney } from "@dashboard/utils/intl";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
+import { type IMoney } from "@dashboard/utils/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";

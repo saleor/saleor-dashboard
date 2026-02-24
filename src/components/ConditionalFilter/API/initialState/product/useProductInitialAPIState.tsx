@@ -1,43 +1,43 @@
 import { useApolloClient } from "@apollo/client";
 import {
   _GetChannelOperandsDocument,
-  _GetChannelOperandsQuery,
-  _GetChannelOperandsQueryVariables,
+  type _GetChannelOperandsQuery,
+  type _GetChannelOperandsQueryVariables,
   _SearchAttributeOperandsDocument,
-  _SearchAttributeOperandsQuery,
-  _SearchAttributeOperandsQueryVariables,
+  type _SearchAttributeOperandsQuery,
+  type _SearchAttributeOperandsQueryVariables,
   _SearchCategoriesOperandsDocument,
-  _SearchCategoriesOperandsQuery,
-  _SearchCategoriesOperandsQueryVariables,
+  type _SearchCategoriesOperandsQuery,
+  type _SearchCategoriesOperandsQueryVariables,
   _SearchCollectionsOperandsDocument,
-  _SearchCollectionsOperandsQuery,
-  _SearchCollectionsOperandsQueryVariables,
+  type _SearchCollectionsOperandsQuery,
+  type _SearchCollectionsOperandsQueryVariables,
   _SearchPageOperandsDocument,
-  _SearchPageOperandsQuery,
-  _SearchPageOperandsQueryVariables,
+  type _SearchPageOperandsQuery,
+  type _SearchPageOperandsQueryVariables,
   _SearchProductOperandsDocument,
-  _SearchProductOperandsQuery,
-  _SearchProductOperandsQueryVariables,
+  type _SearchProductOperandsQuery,
+  type _SearchProductOperandsQueryVariables,
   _SearchProductTypesOperandsDocument,
-  _SearchProductTypesOperandsQuery,
-  _SearchProductTypesOperandsQueryVariables,
+  type _SearchProductTypesOperandsQuery,
+  type _SearchProductTypesOperandsQueryVariables,
   _SearchProductVariantOperandsDocument,
-  _SearchProductVariantOperandsQuery,
-  _SearchProductVariantOperandsQueryVariables,
+  type _SearchProductVariantOperandsQuery,
+  type _SearchProductVariantOperandsQueryVariables,
   AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { type FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../../Handler";
 import {
   createInitialProductStateFromData,
   mergeInitialProductsStateReferenceAttributes,
-  ReferenceAttributeChoices,
+  type ReferenceAttributeChoices,
 } from "../helpers";
-import { InitialProductAPIResponse } from "../types";
+import { type InitialProductAPIResponse } from "../types";
 import { InitialProductStateResponse } from "./InitialProductStateResponse";
 
 export interface InitialProductAPIState {

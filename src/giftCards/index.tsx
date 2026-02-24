@@ -5,13 +5,13 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import GiftCardSettings from "./GiftCardSettings";
 import GiftCardListComponent from "./GiftCardsList";
-import { GiftCardListUrlQueryParams, GiftCardUrlSortField } from "./GiftCardsList/types";
+import { type GiftCardListUrlQueryParams, GiftCardUrlSortField } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
-import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
+import { type GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
 
 const GiftCardUpdatePage = ({ match }: RouteComponentProps<{ id: string }>) => {

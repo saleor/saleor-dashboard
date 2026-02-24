@@ -1,23 +1,23 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  CategoryFilterInput,
-  PageWhereInput,
-  ProductWhereInput,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
+  type CategoryFilterInput,
+  type PageWhereInput,
+  type ProductWhereInput,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
 import AssignCollectionDialog from "../AssignCollectionDialog";
 import AssignModelDialog from "../AssignModelDialog";
-import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
+import AssignProductDialog, { type AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
-import { AttributeInput } from "../Attributes";
-import { InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { type AttributeInput } from "../Attributes";
+import { type InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import {
   filterCategoriesByAttributeValues,
   filterCollectionsByAttributeValues,

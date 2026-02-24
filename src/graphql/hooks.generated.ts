@@ -198,6 +198,20 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  problems {
+    __typename
+    key
+    message
+    createdAt
+    count
+    isCritical
+    dismissed {
+      by
+      userEmail
+    }
+    updatedAt
+    id
+  }
   brand {
     logo {
       default(format: WEBP, size: 64)
@@ -9259,6 +9273,41 @@ export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+export const AppProblemDismissDocument = gql`
+    mutation appProblemDismiss($input: AppProblemDismissInput!) {
+  appProblemDismiss(input: $input) {
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type AppProblemDismissMutationFn = Apollo.MutationFunction<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
+
+/**
+ * __useAppProblemDismissMutation__
+ *
+ * To run a mutation, you first call `useAppProblemDismissMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppProblemDismissMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appProblemDismissMutation, { data, loading, error }] = useAppProblemDismissMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppProblemDismissMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>(AppProblemDismissDocument, options);
+      }
+export type AppProblemDismissMutationHookResult = ReturnType<typeof useAppProblemDismissMutation>;
+export type AppProblemDismissMutationResult = Apollo.MutationResult<Types.AppProblemDismissMutation>;
+export type AppProblemDismissMutationOptions = Apollo.BaseMutationOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
 export const AppUpdatePermissionsDocument = gql`
     mutation AppUpdatePermissions($id: ID!, $permissions: [PermissionEnum!]!) {
   appUpdate(id: $id, input: {permissions: $permissions}) {
@@ -9673,6 +9722,97 @@ export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.
 export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
 export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
+export const AppHasProblemsDocument = gql`
+    query AppHasProblems($first: Int!) {
+  apps(first: $first, filter: {isActive: true}) {
+    edges {
+      node {
+        id
+        problems(limit: 1) {
+          __typename
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppHasProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppHasProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppHasProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppHasProblemsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useAppHasProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+      }
+export function useAppHasProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+        }
+export type AppHasProblemsQueryHookResult = ReturnType<typeof useAppHasProblemsQuery>;
+export type AppHasProblemsLazyQueryHookResult = ReturnType<typeof useAppHasProblemsLazyQuery>;
+export type AppHasProblemsQueryResult = Apollo.QueryResult<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>;
+export const AppAllProblemsDocument = gql`
+    query AppAllProblems($id: ID!) {
+  app(id: $id) {
+    id
+    problems {
+      __typename
+      key
+      message
+      createdAt
+      count
+      isCritical
+      dismissed {
+        by
+        userEmail
+      }
+      updatedAt
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppAllProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppAllProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppAllProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppAllProblemsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppAllProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+      }
+export function useAppAllProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+        }
+export type AppAllProblemsQueryHookResult = ReturnType<typeof useAppAllProblemsQuery>;
+export type AppAllProblemsLazyQueryHookResult = ReturnType<typeof useAppAllProblemsLazyQuery>;
+export type AppAllProblemsQueryResult = Apollo.QueryResult<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>;
 export const WebhookDetailsDocument = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {
@@ -10562,7 +10702,7 @@ export type BulkDeleteGiftCardMutationHookResult = ReturnType<typeof useBulkDele
 export type BulkDeleteGiftCardMutationResult = Apollo.MutationResult<Types.BulkDeleteGiftCardMutation>;
 export type BulkDeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>;
 export const GiftCardListDocument = gql`
-    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput) {
+    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput, $search: String) {
   giftCards(
     first: $first
     after: $after
@@ -10570,6 +10710,7 @@ export const GiftCardListDocument = gql`
     last: $last
     filter: $filter
     sortBy: $sort
+    search: $search
   ) {
     edges {
       node {
@@ -10623,6 +10764,7 @@ ${MoneyFragmentDoc}`;
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      search: // value for 'search'
  *   },
  * });
  */

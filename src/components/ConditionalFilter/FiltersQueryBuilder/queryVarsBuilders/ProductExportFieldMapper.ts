@@ -1,10 +1,15 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { CategoryHandler, CollectionHandler, Handler, ProductTypeHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import {
+  CategoryHandler,
+  CollectionHandler,
+  type Handler,
+  ProductTypeHandler,
+} from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
-import { FilterOnlyQueryVarsBuilder } from "./types";
+import { type FilterOnlyQueryVarsBuilder } from "./types";
 
 type ProductExportFieldQueryPart = {
   collections?: string[];

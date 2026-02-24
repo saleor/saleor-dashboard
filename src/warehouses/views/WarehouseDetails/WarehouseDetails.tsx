@@ -18,13 +18,13 @@ import {
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
-  WarehouseDetailsPageFormData,
+  type WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage";
 import { WarehouseMetadataDialog } from "@dashboard/warehouses/components/WarehouseMetadataDialog/WarehouseMetadataDialog";
 import {
   warehouseListUrl,
   warehouseUrl,
-  WarehouseUrlQueryParams,
+  type WarehouseUrlQueryParams,
 } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 

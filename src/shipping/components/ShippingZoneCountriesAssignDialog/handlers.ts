@@ -1,4 +1,4 @@
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { type UseFormGetValues, type UseFormSetValue } from "react-hook-form";
 
 interface FormData {
   countries: string[];

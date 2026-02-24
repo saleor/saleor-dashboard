@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import {
-  AppInstallationFragment,
-  AppsInstallationsQuery,
+  type AppInstallationFragment,
+  type AppsInstallationsQuery,
   JobStatusEnum,
   useAppDeleteFailedInstallationMutation,
   useAppRetryInstallMutation,

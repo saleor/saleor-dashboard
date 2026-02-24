@@ -1,4 +1,4 @@
-import { OrderDraft } from "@dashboard/orders/types";
+import { type OrderDraft } from "@dashboard/orders/types";
 
 import { getCustomerName } from "./datagrid";
 

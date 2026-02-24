@@ -1,6 +1,6 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Button, ButtonProps } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { Button, type ButtonProps } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface BackButtonProps extends ButtonProps {

@@ -1,7 +1,7 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 
-import { ChannelHandler, Handler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { ChannelHandler, type Handler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 

@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./TaxMenu.module.css";

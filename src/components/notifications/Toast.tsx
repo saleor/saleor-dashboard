@@ -1,6 +1,6 @@
 import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
-import { AlertTriangle, CheckCircle2, Info, LucideIcon, X, XCircle } from "lucide-react";
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, CheckCircle2, Info, type LucideIcon, X, XCircle } from "lucide-react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 type ToastType = "success" | "error" | "warning" | "info";

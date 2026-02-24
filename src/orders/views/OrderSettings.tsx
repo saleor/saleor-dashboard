@@ -6,7 +6,7 @@ import { extractMutationErrors, getMutationState } from "@dashboard/misc";
 import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
 import { useIntl } from "react-intl";
 
-import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
+import { type OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
 const OrderSettings = () => {
   const intl = useIntl();

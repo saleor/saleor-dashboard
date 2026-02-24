@@ -1,21 +1,21 @@
 // @ts-strict-ignore
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
-import { AddressTypeInput } from "@dashboard/customers/types";
+import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
-  AccountErrorFragment,
-  ShopErrorFragment,
-  WarehouseErrorFragment,
+  type AccountErrorFragment,
+  type ShopErrorFragment,
+  type WarehouseErrorFragment,
 } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Combobox, Option } from "@saleor/macaw-ui-next";
-import { IntlShape, useIntl } from "react-intl";
+import { Combobox, type Option } from "@saleor/macaw-ui-next";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { useAddressValidation } from "../AddressEdit/useAddressValidation";
 

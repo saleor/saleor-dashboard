@@ -1,8 +1,8 @@
 import { useIntl } from "react-intl";
 
-import { FilterContainer, FilterElement } from "./FilterElement";
+import { type FilterContainer, FilterElement } from "./FilterElement";
 import { leftOperatorsMessages } from "./intl";
-import { LeftOperand } from "./LeftOperandsProvider";
+import { type LeftOperand } from "./LeftOperandsProvider";
 
 type TranslationKeys = keyof typeof leftOperatorsMessages;
 

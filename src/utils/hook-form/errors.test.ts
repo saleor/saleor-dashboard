@@ -1,4 +1,4 @@
-import { FieldError, FieldErrors } from "react-hook-form";
+import { type FieldError, type FieldErrors } from "react-hook-form";
 
 import { flattenErrors } from "./errors";
 

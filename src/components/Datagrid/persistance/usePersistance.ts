@@ -1,9 +1,9 @@
-import { MetadataItemFragment } from "@dashboard/graphql";
+import { type MetadataItemFragment } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { useRef } from "react";
 
 import { byDuplicates } from "./byDuplicates";
-import { PersistedColumn, RawColumn } from "./persistedColumn";
+import { PersistedColumn, type RawColumn } from "./persistedColumn";
 import { useMetadata } from "./useMetadata";
 
 const parseGridMetadata = (metadata?: MetadataItemFragment) => {

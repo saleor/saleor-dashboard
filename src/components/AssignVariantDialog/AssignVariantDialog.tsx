@@ -1,12 +1,17 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ProductWhereInput, SearchProductsQuery } from "@dashboard/graphql";
-import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
+import {
+  type Container,
+  type DialogProps,
+  type FetchMoreProps,
+  type RelayToFlat,
+} from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
-import { AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
-  InitialConstraints,
+  type InitialConstraints,
   ModalProductFilterProvider,
 } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";

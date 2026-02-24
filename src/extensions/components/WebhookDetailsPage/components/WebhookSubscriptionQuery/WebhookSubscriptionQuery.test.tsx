@@ -1,5 +1,5 @@
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
-import { Fetcher } from "@graphiql/toolkit";
+import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import { type Fetcher } from "@graphiql/toolkit";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";

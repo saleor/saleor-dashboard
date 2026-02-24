@@ -1,4 +1,7 @@
-import { mapProductToDiagnosticData, ProductDiagnosticInput } from "./mapProductToDiagnosticData";
+import {
+  mapProductToDiagnosticData,
+  type ProductDiagnosticInput,
+} from "./mapProductToDiagnosticData";
 
 /**
  * Factory function to create test product input data.

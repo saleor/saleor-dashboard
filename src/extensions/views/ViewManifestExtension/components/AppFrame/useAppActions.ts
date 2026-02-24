@@ -1,4 +1,4 @@
-import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import { type Actions, type DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";
 
@@ -66,8 +66,7 @@ export const useAppActions = (
         return handlePopupClose(action);
       }
       default: {
-        // @ts-expect-error this is for runtime checking
-        const actionType = action?.type as string | undefined;
+        const actionType = (action as unknown as { type?: string })?.type;
 
         captureMessage("Unknown action type requested by the App", scope => {
           scope.setLevel("warning");

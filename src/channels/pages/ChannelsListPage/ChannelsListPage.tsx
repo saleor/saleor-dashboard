@@ -10,7 +10,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { ChannelDetailsFragment, RefreshLimitsQuery } from "@dashboard/graphql";
+import { type ChannelDetailsFragment, type RefreshLimitsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";

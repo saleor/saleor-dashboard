@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { GiftCardEventsEnum, OrderGiftCardFragment } from "@dashboard/graphql";
+import { GiftCardEventsEnum, type OrderGiftCardFragment } from "@dashboard/graphql";
 
 export const getUsedInGiftCardEvents = (giftCard: OrderGiftCardFragment, orderId: string) => {
   if (!giftCard.events || !orderId) {

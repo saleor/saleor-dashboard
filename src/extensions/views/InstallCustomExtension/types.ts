@@ -1,4 +1,4 @@
-import { AppManifestFragment } from "@dashboard/graphql";
+import { type AppManifestFragment } from "@dashboard/graphql";
 
 export type Manifest = AppManifestFragment;
 export { ExtensionInstallFormData } from "./schema";

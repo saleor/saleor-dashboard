@@ -1,8 +1,8 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
+import type * as React from "react";
 import { forwardRef, useState } from "react";
-import * as React from "react";
 
 interface ProductListDeleteButtonProps {
   onClick: () => void;

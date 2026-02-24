@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import {
-  CutOffDateComparison,
+  type CutOffDateComparison,
   useAutomaticCompletionWarnings,
-  UseAutomaticCompletionWarningsParams,
+  type UseAutomaticCompletionWarningsParams,
 } from "./useAutomaticCompletionWarnings";
 import * as utils from "./utils";
 

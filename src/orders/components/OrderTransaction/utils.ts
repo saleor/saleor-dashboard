@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import {
-  TransactionActionEnum,
-  TransactionBaseEventFragment,
-  TransactionEventFragment,
-  TransactionEventTypeEnum,
-  TransactionItemFragment,
+  type TransactionActionEnum,
+  type TransactionBaseEventFragment,
+  type TransactionEventFragment,
+  type TransactionEventTypeEnum,
+  type TransactionItemFragment,
 } from "@dashboard/graphql";
 import {
-  FakeTransaction,
-  TransactionFakeEvent,
-  TransactionMappingResult,
+  type FakeTransaction,
+  type TransactionFakeEvent,
+  type TransactionMappingResult,
 } from "@dashboard/orders/types";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { transactionActionMessages } from "./messages";
 

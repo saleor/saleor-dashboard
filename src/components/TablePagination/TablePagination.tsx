@@ -3,16 +3,16 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { TableCell } from "@material-ui/core";
 import {
-  PaginationProps as MacawPaginationProps,
+  type PaginationProps as MacawPaginationProps,
   PaginationRowNumberSelect,
-  PaginationRowNumberSelectLabels,
+  type PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { ListSettings } from "../../types";
+import { type ListSettings } from "../../types";
 
 export type ListSettingsUpdate = <T extends keyof ListSettings>(
   key: T,

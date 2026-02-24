@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
-import { PermissionEnum } from "@dashboard/graphql";
+import { type Channel as ChannelList, type ChannelData } from "@dashboard/channels/utils";
+import { type PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { RequireOnlyOne } from "@dashboard/misc";
+import { type RequireOnlyOne } from "@dashboard/misc";
 import { Box, Divider, Text } from "@saleor/macaw-ui-next";
 import { Fragment } from "react";
 import { useIntl } from "react-intl";
@@ -10,9 +10,9 @@ import { useIntl } from "react-intl";
 import { ChannelAvailabilityItemContent, ChannelAvailabilityItemWrapper } from "./Channel";
 import {
   ChannelsAvailabilityCardWrapper,
-  ChannelsAvailabilityWrapperProps,
+  type ChannelsAvailabilityWrapperProps,
 } from "./ChannelsAvailabilityCardWrapper";
-import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
+import { type ChannelOpts, type ChannelsAvailabilityError, type Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
 interface ChannelsAvailability

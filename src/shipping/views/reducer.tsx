@@ -1,6 +1,6 @@
 import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodWithPostalCodesFragment,
+  type PostalCodeRuleInclusionTypeEnum,
+  type ShippingMethodWithPostalCodesFragment,
 } from "@dashboard/graphql";
 
 interface PostalCodesState {

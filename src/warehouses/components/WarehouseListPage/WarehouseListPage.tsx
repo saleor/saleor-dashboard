@@ -4,12 +4,17 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { type RefreshLimitsQuery, type WarehouseWithShippingFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
+import {
+  type PageListProps,
+  type SearchPageProps,
+  type SortPage,
+  type TabPageProps,
+} from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { warehouseAddUrl, WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
+import { warehouseAddUrl, type WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

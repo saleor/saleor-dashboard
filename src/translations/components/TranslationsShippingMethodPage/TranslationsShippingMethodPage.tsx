@@ -5,13 +5,13 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { LanguageCodeEnum, ShippingMethodTranslationFragment } from "@dashboard/graphql";
+import { LanguageCodeEnum, type ShippingMethodTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
+  type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,

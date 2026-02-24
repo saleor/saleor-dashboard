@@ -1,22 +1,22 @@
 import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
 import {
-  ConditionItem,
+  type ConditionItem,
   ConditionOptions,
 } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
-import { ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import { type ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import {
   ExpressionValue,
-  FilterContainer,
+  type FilterContainer,
 } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import {
-  ProductListUrlFilters,
+  type ProductListUrlFilters,
   ProductListUrlFiltersAsDictWithMultipleValues,
 } from "@dashboard/products/urls";
 
-import { FilterParam, getAttributeValuesFromParams, parseFilterValue } from "./filters";
+import { type FilterParam, getAttributeValuesFromParams, parseFilterValue } from "./filters";
 
 describe("Get attribute values from URL params", () => {
   type GetAttributeValuesFromParams = Parameters<typeof getAttributeValuesFromParams>;

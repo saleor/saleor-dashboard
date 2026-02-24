@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import GiftCardSettingsExpirySelect, {
-  GiftCardSettingsExpirySelectProps,
+  type GiftCardSettingsExpirySelectProps,
 } from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardSettingsFormData } from "../types";
+import { type GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
 interface GiftCardExpirySettingsCardProps

@@ -1,12 +1,12 @@
 import { getBooleanDropdownOptions } from "@dashboard/components/Attributes/utils";
-import { AttributeInputTypeEnum, VariantAttributeFragment } from "@dashboard/graphql";
-import { Box, DynamicCombobox, Input, Option, Select, Text } from "@saleor/macaw-ui-next";
-import { ReactNode, useMemo, useState } from "react";
+import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
+import { Box, DynamicCombobox, Input, type Option, Select, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
 import styles from "../ProductVariantGenerator.module.css";
-import { AttributeError, NonSelectionAttributeValues } from "../types";
+import { type AttributeError, type NonSelectionAttributeValues } from "../types";
 
 interface RequiredAttributesSectionProps {
   attributes: VariantAttributeFragment[];
