@@ -6,7 +6,7 @@ import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 import * as faker from "faker";
 import path from "path";
 

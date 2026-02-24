@@ -1,4 +1,8 @@
-import { AppProblem, GraphQLAppProblem, WebhookDeliveryProblem } from "@dashboard/extensions/types";
+import {
+  type AppProblem,
+  type GraphQLAppProblem,
+  type WebhookDeliveryProblem,
+} from "@dashboard/extensions/types";
 import { AppProblemDismissedByEnum } from "@dashboard/graphql";
 
 const now = new Date().toISOString();

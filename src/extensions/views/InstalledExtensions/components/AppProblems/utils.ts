@@ -1,6 +1,6 @@
-import { problemMessages } from "@dashboard/extensions/messages";
+import { type problemMessages } from "@dashboard/extensions/messages";
 import {
-  AppProblem,
+  type AppProblem,
   getProblemSortDate,
   isProblemCritical,
   isProblemDismissed,

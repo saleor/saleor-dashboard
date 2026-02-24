@@ -1,7 +1,11 @@
 import Link from "@dashboard/components/Link";
 import { problemMessages } from "@dashboard/extensions/messages";
-import { AppProblem, isProblemCritical, isProblemDismissed } from "@dashboard/extensions/types";
-import { AppTypeEnum } from "@dashboard/graphql";
+import {
+  type AppProblem,
+  isProblemCritical,
+  isProblemDismissed,
+} from "@dashboard/extensions/types";
+import { type AppTypeEnum } from "@dashboard/graphql";
 import { Button } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { useIntl } from "react-intl";

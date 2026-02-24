@@ -1,4 +1,8 @@
-import { AppProblem, isProblemCritical, isProblemDismissed } from "@dashboard/extensions/types";
+import {
+  type AppProblem,
+  isProblemCritical,
+  isProblemDismissed,
+} from "@dashboard/extensions/types";
 import { useMemo, useState } from "react";
 
 export const useExtensionProblems = (problems: AppProblem[]) => {

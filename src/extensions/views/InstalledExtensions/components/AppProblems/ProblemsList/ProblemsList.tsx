@@ -1,7 +1,11 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { problemMessages } from "@dashboard/extensions/messages";
-import { AppProblem, isProblemCritical, isProblemDismissed } from "@dashboard/extensions/types";
-import { AppTypeEnum } from "@dashboard/graphql";
+import {
+  type AppProblem,
+  isProblemCritical,
+  isProblemDismissed,
+} from "@dashboard/extensions/types";
+import { type AppTypeEnum } from "@dashboard/graphql";
 import { Maximize2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

@@ -1,5 +1,5 @@
 import { problemMessages } from "@dashboard/extensions/messages";
-import { AppProblem } from "@dashboard/extensions/types";
+import { type AppProblem } from "@dashboard/extensions/types";
 import { useIntl } from "react-intl";
 
 import styles from "./ProblemCard.module.css";
