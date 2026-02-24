@@ -10,6 +10,7 @@ export const giftCardList = gql`
     $before: String
     $filter: GiftCardFilterInput
     $sort: GiftCardSortingInput
+    $search: String
   ) {
     giftCards(
       first: $first
@@ -18,6 +19,7 @@ export const giftCardList = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      search: $search
     ) {
       edges {
         node {

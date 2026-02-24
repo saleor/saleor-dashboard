@@ -360,6 +360,10 @@
   "/zFGgP": {
     "string": "+{count} more"
   },
+  "0+sGhF": {
+    "context": "Suffix for show-more button when hidden problems include active ones",
+    "string": ", including {active} active"
+  },
   "0+zatS": {
     "string": "Hello {userName}, welcome to your Store Dashboard"
   },
@@ -1271,6 +1275,10 @@
   "5SPHkk": {
     "string": "Order #{orderId} was fully paid"
   },
+  "5SdrZT": {
+    "context": "Badge label for problems reported by the app itself",
+    "string": "App"
+  },
   "5ShHx2": {
     "context": "tooltip for disabled buttons",
     "string": "You don't have permission to manage extensions"
@@ -1542,6 +1550,10 @@
   "71Agnt": {
     "context": "deactivate app billing info",
     "string": "You will be still billed for the extension."
+  },
+  "71NpbR": {
+    "context": "Label shown on dismissed problems",
+    "string": "Dismissed"
   },
   "720c51": {
     "context": "tax classes name input placeholder",
@@ -3723,6 +3735,10 @@
     "context": "Number of shipping zones configured",
     "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
   },
+  "JDvxO6": {
+    "context": "search gift card placeholder",
+    "string": "Search Gift Cards (e.g. by code, email, user name)"
+  },
   "JDz5h8": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -3924,6 +3940,10 @@
   },
   "KHZlmi": {
     "string": "Discount Type"
+  },
+  "KJPsls": {
+    "context": "Tooltip line showing UTC timestamp of a problem event",
+    "string": "UTC: {time}"
   },
   "KMxiiF": {
     "context": "button",
@@ -4210,6 +4230,10 @@
   "MFUQrr": {
     "context": "Placeholder for date picker",
     "string": "dd/mm/yyyy, --:--"
+  },
+  "MFirbo": {
+    "context": "Button label to dismiss all problems for an app",
+    "string": "Dismiss all problems raised by the app"
   },
   "MH1qA1": {
     "string": "Test Action"
@@ -4716,6 +4740,10 @@
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
   },
+  "OutAI7": {
+    "context": "Label prefix for the last occurrence date of a recurring problem",
+    "string": "last occurred at"
+  },
   "Oy1LhB": {
     "context": "button error state label",
     "string": "Try again"
@@ -5134,6 +5162,10 @@
   "R4gIJc": {
     "string": "Search by model name..."
   },
+  "R5r0+F": {
+    "context": "Badge label showing total number of app problems",
+    "string": "{count, plural, one {{count} problem} other {{count} problems}}"
+  },
   "R8+DNv": {
     "context": "section title",
     "string": "Webhook emission"
@@ -5390,6 +5422,10 @@
   "SV0FRm": {
     "context": "attribute is filterable in storefront",
     "string": "Filterable in storefront"
+  },
+  "SW4GYL": {
+    "context": "Button label to dismiss a single app problem",
+    "string": "Dismiss"
   },
   "SZH0fw": {
     "context": "set variant as default, button",
@@ -5962,6 +5998,10 @@
     "context": "column category descriptor",
     "string": "Channels"
   },
+  "W/Qs4m": {
+    "context": "Button label to expand and show additional hidden problems",
+    "string": "Show {count} more {count, plural, one {problem} other {problems}}"
+  },
   "W/lDQA": {
     "string": "Model type deleted"
   },
@@ -6040,6 +6080,10 @@
   },
   "WMNtD2": {
     "string": "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve."
+  },
+  "WPKADj": {
+    "context": "Badge label for critical severity problems",
+    "string": "Critical"
   },
   "WQMTKI": {
     "context": "list of warehouses",
@@ -6436,6 +6480,10 @@
     "context": "product field",
     "string": "Description"
   },
+  "YVsbL4": {
+    "context": "Tooltip showing which user dismissed a problem",
+    "string": "Dismissed by {email}"
+  },
   "YXhaCZ": {
     "string": "Assign Product Types"
   },
@@ -6771,6 +6819,10 @@
   "aHc89n": {
     "context": "select warehouse to restock items",
     "string": "Select Warehouse"
+  },
+  "aHoX+i": {
+    "context": "Tooltip indicating a problem was dismissed by the app itself",
+    "string": "Dismissed by app"
   },
   "aI80kg": {
     "string": "Properties"
@@ -7317,6 +7369,10 @@
   "d1PvC8": {
     "context": "checkbox",
     "string": "Grant refund for returned items"
+  },
+  "d3jlO3": {
+    "context": "Label prefix for the creation date of a recurring problem",
+    "string": "Started at"
   },
   "d68yq7": {
     "string": "Delete gift cards"
@@ -8002,6 +8058,10 @@
   "hh0xW7": {
     "string": "Channel Name"
   },
+  "hhXK05": {
+    "context": "Link label to navigate to the app page",
+    "string": "Open the app"
+  },
   "hjEkEH": {
     "string": "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed."
   },
@@ -8300,10 +8360,6 @@
     "context": "product availability",
     "string": "Hide in product listings"
   },
-  "jY80Gs": {
-    "context": "search gift card placeholder",
-    "string": "Search by code, e.g {exampleGiftCardCode}"
-  },
   "ja+tNj": {
     "string": "requests access to new permissions."
   },
@@ -8490,6 +8546,10 @@
     "context": "info when addresses search is unsuccessful",
     "string": "No results found"
   },
+  "kRnxj2": {
+    "context": "Suffix for show-more button when hidden problems include both active and critical",
+    "string": ", including {active} active and {critical} critical"
+  },
   "kS5Qgk": {
     "context": "used by label",
     "string": "Used by"
@@ -8550,6 +8610,10 @@
   },
   "kgVqk1": {
     "string": "Category name"
+  },
+  "ki2FY7": {
+    "context": "Badge label for webhook delivery error problems",
+    "string": "Webhook delivery"
   },
   "ki7Mr8": {
     "context": "product export to csv file, header",
@@ -8686,6 +8750,10 @@
     "context": "selectt all options",
     "string": "Select All"
   },
+  "lQofIt": {
+    "context": "Full badge label with optional critical count suffix",
+    "string": "{count, plural, one {{count} problem} other {{count} problems}}{hasCritical, select, true {, including {criticalCount} critical} other {}}"
+  },
   "lSOmbK": {
     "context": "fulfillment status fulfilled",
     "string": "Fulfilled"
@@ -8809,6 +8877,10 @@
   },
   "m9Q2yf": {
     "string": "Plugin settings updated"
+  },
+  "m9ndUn": {
+    "context": "Link label to navigate to webhook settings for an app",
+    "string": "Check webhooks"
   },
   "mCP0UD": {
     "context": "order draft creation date",
@@ -9491,6 +9563,10 @@
   "qGwKT/": {
     "string": "Extension disabled. Activate the extension from the settings."
   },
+  "qIVtUd": {
+    "context": "Modal header showing total problem count for an app",
+    "string": "All problems ({count})"
+  },
   "qJedl0": {
     "context": "product label",
     "string": "Published"
@@ -9554,6 +9630,10 @@
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
+  },
+  "qVT7rt": {
+    "context": "Badge label showing number of errors",
+    "string": "{count, plural, one {{count} error} other {{count} errors}}"
   },
   "qYukJi": {
     "context": "Status when product is partially configured",
@@ -9861,6 +9941,10 @@
   "sOlOZB": {
     "context": "gift cards page subheader",
     "string": "Learn more about {giftCards}"
+  },
+  "sQMS4n": {
+    "context": "Tooltip for the dismiss problem button",
+    "string": "Force clear this error. Use if you know what you are doing"
   },
   "sR0urA": {
     "context": "dialog content",
@@ -10488,6 +10572,10 @@
   "vaFjs6": {
     "string": "No warehouses available to add"
   },
+  "vazr6V": {
+    "context": "Button label to open the full problems modal for an app",
+    "string": "Open app problems"
+  },
   "vbop3G": {
     "string": "Create new model"
   },
@@ -10689,6 +10777,10 @@
   "wXFttp": {
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
+  },
+  "wabGCe": {
+    "context": "Tooltip line showing local timestamp of a problem event",
+    "string": "Local: {time}"
   },
   "wbsq7O": {
     "string": "Usage"
@@ -10902,6 +10994,10 @@
   "y/UWBR": {
     "string": "There is no address to show for this customer"
   },
+  "y/vChh": {
+    "context": "Suffix appended to problem count when critical problems exist",
+    "string": "including {count} critical"
+  },
   "y08GTW": {
     "string": "Channel is required"
   },
@@ -10981,6 +11077,10 @@
   "yeX6fA": {
     "context": "extensions page subheader",
     "string": "Learn more about {extensions}"
+  },
+  "ygPAC7": {
+    "context": "Tooltip explaining the app-reported problem badge",
+    "string": "This message comes from the app"
   },
   "ygxco/": {
     "context": "tooltip, submit form",
