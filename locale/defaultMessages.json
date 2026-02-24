@@ -35,10 +35,6 @@
     "context": "aria label for grid view button",
     "string": "Grid view"
   },
-  "+CeEe3": {
-    "context": "order shipping method name",
-    "string": "Shipping"
-  },
   "+G2N98": {
     "string": "Install from manifest"
   },
@@ -61,10 +57,6 @@
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
-  },
-  "+PbHKD": {
-    "context": "dialog header",
-    "string": "Capture Payment"
   },
   "+PclgM": {
     "context": "tabel column header",
@@ -375,9 +367,6 @@
     "context": "info about variant metadata with link to edit",
     "string": "The read-only metadata of the actual variant used in this order. {link}"
   },
-  "01+5kQ": {
-    "string": "Mark as paid"
-  },
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
@@ -586,9 +575,6 @@
     "context": "section header",
     "string": "Fulfilled"
   },
-  "16sza6": {
-    "string": "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction."
-  },
   "19/lwV": {
     "string": "Determine attributes used to create product types"
   },
@@ -618,10 +604,6 @@
   "1LiVhv": {
     "context": "section header",
     "string": "Recent Orders"
-  },
-  "1N8lSy": {
-    "context": "Order summary payment header",
-    "string": "Payments summary"
   },
   "1T1fP8": {
     "context": "range input label",
@@ -784,9 +766,6 @@
   "2W4EBM": {
     "context": "button",
     "string": "Set maximal quantities"
-  },
-  "2WenNh": {
-    "string": "Send refund"
   },
   "2Xt+sw": {
     "context": "dialog header",
@@ -1243,10 +1222,6 @@
     "context": "field label, refund amount",
     "string": "Refund amount"
   },
-  "5Jo3C5": {
-    "context": "vat not included in order price",
-    "string": "does not apply"
-  },
   "5KS3f4": {
     "string": "Structure title"
   },
@@ -1373,10 +1348,6 @@
   "5tMkmJ": {
     "context": "dialog header",
     "string": "Assign Collection"
-  },
-  "5te3Tp": {
-    "context": "order payment",
-    "string": "Outstanding Balance"
   },
   "5u7b3V": {
     "context": "voucher is active from date",
@@ -2737,10 +2708,6 @@
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
   },
-  "E9Dz18": {
-    "context": "Order summary refunds header",
-    "string": "Refunds"
-  },
   "E9E5Eh": {
     "string": "Please remember that conditions will not be updated when you change the channel."
   },
@@ -3226,10 +3193,6 @@
     "context": "model types section name",
     "string": "Model Types"
   },
-  "GcbFa9": {
-    "context": "aria-label, negative money amount",
-    "string": "minus"
-  },
   "Ge+dUe": {
     "context": "currency channel",
     "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
@@ -3554,9 +3517,6 @@
     "context": "onboarding step title",
     "string": "Create a new product"
   },
-  "IF2KbT": {
-    "string": "Saleor Cloud"
-  },
   "IFWHn0": {
     "context": "error message",
     "string": "Billing address is not set"
@@ -3656,10 +3616,6 @@
     "context": "variant created success message",
     "string": "Variant created"
   },
-  "IfiR4M": {
-    "context": "heading, sum of all pending refunds from transactions in order",
-    "string": "Pending"
-  },
   "IhK1F3": {
     "string": "No shipping zones found"
   },
@@ -3696,10 +3652,6 @@
   "Irflxf": {
     "context": "window title",
     "string": "Create category"
-  },
-  "IyV8CY": {
-    "context": "all authorized amount from transactions in order",
-    "string": "Authorized"
   },
   "IzECoP": {
     "string": "Search draft orders..."
@@ -4472,10 +4424,6 @@
     "context": "success deactivate alert message",
     "string": "{count,plural,one{Gift card} other{{count} gift cards}} deactivated"
   },
-  "NPIBGp": {
-    "context": "heading, sum of all granted refunds from transactions in order",
-    "string": "Granted"
-  },
   "NPT+At": {
     "context": "order returned success message",
     "string": "Products returned, refund granted"
@@ -4707,10 +4655,6 @@
   "OhFGpX": {
     "context": "button",
     "string": "Assign members"
-  },
-  "OhdPS1": {
-    "context": "amount of refunded money",
-    "string": "Amount"
   },
   "Om1LKj": {
     "context": "stock input label",
@@ -5298,10 +5242,6 @@
   "RrCui3": {
     "string": "Summary"
   },
-  "Rsknyh": {
-    "context": "order does not require shipping",
-    "string": "does not apply"
-  },
   "RyZd9J": {
     "context": "error message",
     "string": "Please wait a moment before trying again."
@@ -5361,10 +5301,6 @@
   "SBlTvZ": {
     "context": "Refund status pending",
     "string": "Pending"
-  },
-  "SC/eNC": {
-    "context": "Payment card title",
-    "string": "Payment status"
   },
   "SDgGcU": {
     "context": "Button to manually mark order as paid without actual payment",
@@ -5460,10 +5396,6 @@
     "context": "sale status",
     "string": "Status"
   },
-  "Sxzua5": {
-    "context": "order payment",
-    "string": "Settled"
-  },
   "Sz6CRr": {
     "string": "Create new product"
   },
@@ -5480,10 +5412,6 @@
   },
   "T1f2Yl": {
     "string": "Variant Name"
-  },
-  "T34dJq": {
-    "context": "Displayed when order has no payment",
-    "string": "This order has no payment yet."
   },
   "T3cLGs": {
     "context": "alert link message",
@@ -5510,10 +5438,6 @@
   },
   "T83iU7": {
     "string": "Search categories..."
-  },
-  "T8rvXs": {
-    "context": "order subtotal price",
-    "string": "Subtotal"
   },
   "TBdxTP": {
     "context": "promotion type order discount",
@@ -5855,10 +5779,6 @@
   "V+fkAO": {
     "context": "number of products in category",
     "string": "Products"
-  },
-  "V+gwx7": {
-    "context": "order payment",
-    "string": "Captured amount"
   },
   "V+h02n": {
     "context": "issued by label",
@@ -7321,10 +7241,6 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
-  "cpnYcM": {
-    "context": "Order summary card title",
-    "string": "Order summary"
-  },
   "cqZ5UH": {
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
@@ -7402,10 +7318,6 @@
   },
   "dHAwu8": {
     "string": "Code already exists"
-  },
-  "dJVXIb": {
-    "context": "vat included in order price",
-    "string": "VAT included"
   },
   "dLIeRH": {
     "context": "charge status none",
@@ -7577,10 +7489,6 @@
     "context": "page title - creating custom app",
     "string": "Add extension manually"
   },
-  "egBBQ/": {
-    "context": "all captured amount from transactions in order",
-    "string": "Captured"
-  },
   "empNV9": {
     "context": "add products button tooltip",
     "string": "Add products from {channelName}"
@@ -7723,10 +7631,6 @@
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"
-  },
-  "flnL3R": {
-    "context": "sum of pending amount (any status) in order's transactions",
-    "string": "Pending"
   },
   "fo7nfa": {
     "context": "fixed amount",
@@ -7889,10 +7793,6 @@
   },
   "gfRbEV": {
     "string": "Note updated"
-  },
-  "ghGLbJ": {
-    "context": "OrderPayment click&collect shipping method",
-    "string": "click&collect"
   },
   "ghje1I": {
     "context": "numeric attribute unit system",
@@ -8089,10 +7989,6 @@
     "context": "status label deactivated",
     "string": "Deactivated"
   },
-  "hoii+4": {
-    "context": "heading, sum of all completed refunds from transactions in order",
-    "string": "Refunded"
-  },
   "hpBWnU": {
     "context": "Warning when scheduling a visible product for the future",
     "string": "Product will be hidden until {date}."
@@ -8195,9 +8091,6 @@
   "iK8hZU": {
     "context": "activate app",
     "string": "Are you sure you want to activate this extension? Activating will start gathering events."
-  },
-  "iOOPMd": {
-    "string": "A summary of all payments from registered transactions"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -8579,9 +8472,6 @@
     "context": "badge for variant that already exists",
     "string": "Exists"
   },
-  "kWw0fr": {
-    "string": "Grant refund"
-  },
   "kXqn6A": {
     "context": "table header column",
     "string": "Charge taxes"
@@ -8833,10 +8723,6 @@
   "lqkgFU": {
     "context": "webhook input help text",
     "string": "Secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "lrdAIY": {
-    "context": "amount of all cancelled transactions in order",
-    "string": "Cancelled"
   },
   "lrq8O6": {
     "context": "order refund amount, input label",
@@ -9371,10 +9257,6 @@
     "context": "search label",
     "string": "Search Countries"
   },
-  "pGfO2i": {
-    "context": "empty option",
-    "string": "None"
-  },
   "pGwvpX": {
     "context": "status",
     "string": "Deactivated"
@@ -9396,10 +9278,6 @@
   "pOUOnw": {
     "context": "tab name",
     "string": "All vouchers"
-  },
-  "pPef6L": {
-    "context": "order payment",
-    "string": "Included in subtotal"
   },
   "pRYGUR": {
     "context": "section description",
@@ -9467,10 +9345,6 @@
     "context": "success gift card disable message",
     "string": "Gift card disabled"
   },
-  "pr513b": {
-    "context": "ordered products",
-    "string": "{quantity} items"
-  },
   "ps+h1G": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
@@ -9508,10 +9382,6 @@
   "pzSF+b": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
-  },
-  "q+gCyP": {
-    "context": "order payment",
-    "string": "Refunded amount"
   },
   "q/FMPM": {
     "context": "dialog header",
@@ -9728,9 +9598,6 @@
   "r+8q4B": {
     "context": "error message",
     "string": "Only draft orders can be edited"
-  },
-  "r+dgiv": {
-    "string": "Taxes"
   },
   "r1aQ2f": {
     "context": "dialog header",
@@ -10215,10 +10082,6 @@
   "u/vOPu": {
     "string": "Paid"
   },
-  "u0S2be": {
-    "context": "order discount",
-    "string": "Discount"
-  },
   "u0V06N": {
     "string": "Max. Order Weight"
   },
@@ -10310,10 +10173,6 @@
     "context": "note about customer",
     "string": "Note"
   },
-  "uUsZ7m": {
-    "context": "order payment",
-    "string": "Preauthorized amount"
-  },
   "uX+Vg7": {
     "string": "Voucher updated"
   },
@@ -10360,10 +10219,6 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
-  },
-  "ukYopn": {
-    "context": "order payment",
-    "string": "Included in prices"
   },
   "ukdRUv": {
     "context": "delete variant dialog subtitle",
@@ -10413,10 +10268,6 @@
   "uy+tB8": {
     "context": "voucher status",
     "string": "Status"
-  },
-  "uzAPCt": {
-    "context": "OrderPayment does not require shipping",
-    "string": "does not apply"
   },
   "v/1VA6": {
     "context": "add order note, button",
@@ -11260,10 +11111,6 @@
   "zb1rmx": {
     "context": "alert message",
     "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
-  },
-  "zb4eBO": {
-    "context": "order total price",
-    "string": "Total"
   },
   "zbJHl7": {
     "context": "attribute type",

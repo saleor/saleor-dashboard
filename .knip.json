@@ -19,8 +19,8 @@
   "entry": [
     "src/index.tsx!",
     "assets/**!",
-    "src/**/queries.ts",
-    "src/**/mutations.ts",
+    "src/**/queries*.ts",
+    "src/**/mutations*.ts",
     "src/**/fragments/*.ts",
     "src/searches/*.ts",
     "src/**/fixtures.ts",
