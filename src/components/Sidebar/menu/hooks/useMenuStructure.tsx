@@ -40,14 +40,13 @@ import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
-import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
+  const { handleAppsListItemClick, hasProblems } = useAppsAlert();
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
@@ -67,14 +66,14 @@ export function useMenuStructure() {
     id: "installed-extensions",
     url: ExtensionsPaths.installedExtensions,
     type: "itemGroup",
-    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />,
+    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasProblems} />,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
         label: (
           <Box display="flex" alignItems="center" gap={3}>
             {intl.formatMessage(sectionNames.installedExtensions)}
-            <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />
+            <SidebarAppAlert hasNewFailedAttempts={hasProblems} small />
           </Box>
         ),
         id: "installed-extensions",

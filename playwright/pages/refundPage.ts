@@ -1,7 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { AddLineRefundReasonDialog } from "@pages/dialogs/lineRefundReasonDialog";
 import { OrdersPage } from "@pages/ordersPage";
-import { expect, Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class RefundPage extends OrdersPage {
   addLineRefundReasonDialog: AddLineRefundReasonDialog;

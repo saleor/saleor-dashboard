@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { APIRequestContext, expect } from "@playwright/test";
+import { type APIRequestContext, expect } from "@playwright/test";
 
 const mailpitUrl = process.env.MAILPITURL || "no mailpit url provided";
 

@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { permissions, UserPermission } from "@data/userPermissions";
+import { permissions, type UserPermission } from "@data/userPermissions";
 import { AppDetailsPage } from "@pages/appDetailsPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { ExtensionsPage } from "@pages/extensionsPage";

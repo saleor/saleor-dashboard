@@ -3,7 +3,7 @@ import { AddVoucherCodeDialog } from "@dialogs/addVoucherCodeDialog";
 import { AssignSpecificProductsDialog } from "@dialogs/assignSpecificProductsDialog";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
-import { expect, Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
 
