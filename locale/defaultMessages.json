@@ -943,6 +943,9 @@
     "context": "ProductTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products"
   },
+  "3eR8iC": {
+    "string": "Show me"
+  },
   "3evXPj": {
     "string": "Leave your note here..."
   },
