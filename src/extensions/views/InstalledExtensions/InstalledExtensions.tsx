@@ -4,6 +4,7 @@ import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
+import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import {
   type ExtensionsListUrlDialog,
   type ExtensionsListUrlQueryParams,
@@ -14,6 +15,7 @@ import { useAppAllProblemsLazyQuery, useAppProblemDismissMutation } from "@dashb
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -126,7 +128,14 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
             <Text size={6} fontWeight="regular">
               {intl.formatMessage(headerTitles.installedExtensions)}
             </Text>
-            <ProblemsHeaderBadge totalCount={totalCount} criticalCount={criticalCount} />
+            <Box position="relative">
+              <ProblemsHeaderBadge totalCount={totalCount} criticalCount={criticalCount} />
+              {totalCount > 0 && (
+                <Box position="absolute" __top="-4px" __right="-4px">
+                  <Ripple model={rippleAppProblems} />
+                </Box>
+              )}
+            </Box>
           </Box>
         </Box>
         <Box display="flex" gap={4} alignItems="center">
