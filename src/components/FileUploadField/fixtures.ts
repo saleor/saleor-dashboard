@@ -1,4 +1,4 @@
-import { FileFragment } from "@dashboard/graphql";
+import { type FileFragment } from "@dashboard/graphql";
 
 export const UPLOADED_FILE: FileFragment = {
   __typename: "File",

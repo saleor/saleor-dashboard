@@ -2,7 +2,7 @@ import { ConditionOptions } from "@dashboard/components/ConditionalFilter/Filter
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
 import { ExpressionValue } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 
-import { Condition, FilterContainer, FilterElement } from "../FilterElement";
+import { Condition, type FilterContainer, FilterElement } from "../FilterElement";
 import { getFilterElement } from "./utils";
 
 describe("ConditionalFilter / API / utils / getFilterElement", () => {

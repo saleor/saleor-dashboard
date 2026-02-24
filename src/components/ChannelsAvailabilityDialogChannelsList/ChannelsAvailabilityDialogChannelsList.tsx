@@ -1,4 +1,4 @@
-import { Channel } from "@dashboard/channels/utils";
+import { type Channel } from "@dashboard/channels/utils";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import { makeStyles } from "@saleor/macaw-ui";

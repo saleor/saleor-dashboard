@@ -7,11 +7,11 @@ import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
-  AssignAttributeValueDialogFilterChangeMap,
+  type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
-import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -21,32 +21,32 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemForPageDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  PageDetailsFragment,
-  PageErrorWithAttributesFragment,
+  type PageDetailsFragment,
+  type PageErrorWithAttributesFragment,
   PermissionEnum,
-  SearchAttributeValuesQuery,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchPageTypesQuery,
-  SearchProductsQuery,
+  type SearchAttributeValuesQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchPageTypesQuery,
+  type SearchProductsQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { modelingSection } from "@dashboard/modeling/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import PageInfo from "../PageInfo";
 import { PageOrganizeContent } from "../PageOrganizeContent/PageOrganizeContent";
-import PageForm, { PageData, PageUpdateHandlers } from "./form";
+import PageForm, { type PageData, type PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
 
 interface PageDetailsPageProps {

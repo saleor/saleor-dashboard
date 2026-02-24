@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { IntlProvider } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
-import { ProductDiagnosticData } from "../utils/types";
+import { type ProductDiagnosticData } from "../utils/types";
 import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagnostics";
 
 // Mock Apollo's useQuery

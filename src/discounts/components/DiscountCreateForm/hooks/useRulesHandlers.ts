@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models";
 import { sortRules } from "@dashboard/discounts/utils";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { useEffect, useState } from "react";

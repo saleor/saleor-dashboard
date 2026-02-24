@@ -2,10 +2,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderSettingsFormData } from "../OrderSettingsPage/types";
+import { type OrderSettingsFormData } from "../OrderSettingsPage/types";
 
 interface OrderSettingsProps {
   data: OrderSettingsFormData;

@@ -1,4 +1,4 @@
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 
 export const rippleOrderMetadata: Ripple = {
   type: "improvement",

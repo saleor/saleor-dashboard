@@ -5,8 +5,8 @@ import {
 import { ProductTypeEnum } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
-import { FilterContainer } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
+import { type FilterContainer } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
 import { getFilterElement } from "../utils";
 
 export const useProductTypesFilterAPIProvider = (): FilterAPIProvider => {

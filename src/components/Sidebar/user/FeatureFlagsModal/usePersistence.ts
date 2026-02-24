@@ -1,4 +1,4 @@
-import { flagInfoToFlagList, Name } from "@dashboard/featureFlags/availableFlags";
+import { flagInfoToFlagList, type Name } from "@dashboard/featureFlags/availableFlags";
 import { flagListToMetadata } from "@dashboard/featureFlags/strategies/MetadataStrategy";
 import { useFlagsInfo } from "@dashboard/featureFlags/useFlagsInfo";
 import { useUserAccountUpdateMutation } from "@dashboard/graphql";

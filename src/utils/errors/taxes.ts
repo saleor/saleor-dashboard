@@ -1,11 +1,11 @@
 import {
-  TaxClassCreateErrorFragment,
-  TaxClassDeleteErrorFragment,
-  TaxClassUpdateErrorFragment,
+  type TaxClassCreateErrorFragment,
+  type TaxClassDeleteErrorFragment,
+  type TaxClassUpdateErrorFragment,
 } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { CommonError, CommonErrorCode, getCommonFormFieldErrorMessage } from "./common";
+import { type CommonError, type CommonErrorCode, getCommonFormFieldErrorMessage } from "./common";
 
 export type TaxClassError =
   | TaxClassUpdateErrorFragment

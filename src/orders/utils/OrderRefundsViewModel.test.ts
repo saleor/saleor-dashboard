@@ -1,13 +1,13 @@
 import {
-  OrderGrantedRefundFragment,
+  type OrderGrantedRefundFragment,
   OrderGrantedRefundStatusEnum,
   TransactionActionEnum,
-  TransactionEventFragment,
+  type TransactionEventFragment,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
-import { OrderRefundDisplay, OrderRefundsViewModel } from "./OrderRefundsViewModel";
+import { type OrderRefundDisplay, OrderRefundsViewModel } from "./OrderRefundsViewModel";
 
 const createTransactionEvent = (
   overrides: Partial<TransactionEventFragment> = {},

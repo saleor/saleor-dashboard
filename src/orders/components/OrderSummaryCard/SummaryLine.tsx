@@ -1,8 +1,8 @@
 import Money from "@dashboard/components/Money";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { orderSummaryMessages } from "./messages";

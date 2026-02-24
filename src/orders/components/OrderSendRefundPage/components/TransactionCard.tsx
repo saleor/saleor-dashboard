@@ -2,9 +2,9 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import {
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   TransactionActionEnum,
-  TransactionItemFragment,
+  type TransactionItemFragment,
 } from "@dashboard/graphql";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";

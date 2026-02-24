@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { FilterContainer } from "../ConditionalFilter/FilterElement";
-import { InitialResponseType } from "../ConditionalFilter/types";
+import { type FilterContainer } from "../ConditionalFilter/FilterElement";
+import { type InitialResponseType } from "../ConditionalFilter/types";
 import { useContainerState } from "../ConditionalFilter/useContainerState";
 import { useFilterLeftOperandsProvider } from "../ConditionalFilter/useFilterLeftOperands";
 import { useFilterWindow } from "../ConditionalFilter/useFilterWindow";
@@ -11,11 +11,11 @@ import {
   getFilteredOptions,
 } from "./lockedFilters";
 import {
-  InitialStateAPI,
-  LockedFilter,
-  ModalFilterConfig,
-  ModalFilterContext,
-  ModalFilterResult,
+  type InitialStateAPI,
+  type LockedFilter,
+  type ModalFilterConfig,
+  type ModalFilterContext,
+  type ModalFilterResult,
 } from "./types";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 

@@ -1,9 +1,9 @@
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
-import { FilterAPIProvider } from "../../API/FilterAPIProvider";
+import { type FilterAPIProvider } from "../../API/FilterAPIProvider";
 import { EnumValuesHandler } from "../../API/Handler";
-import { FilterContainer, FilterElement } from "../../FilterElement";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];

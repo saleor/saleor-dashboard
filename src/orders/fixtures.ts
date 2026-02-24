@@ -1,44 +1,44 @@
 // @ts-strict-ignore
 import {
-  AppAvatarFragment,
-  ChannelUsabilityDataQuery,
-  CountryWithCodeFragment,
+  type AppAvatarFragment,
+  type ChannelUsabilityDataQuery,
+  type CountryWithCodeFragment,
   FulfillmentStatus,
-  InvoiceFragment,
+  type InvoiceFragment,
   JobStatusEnum,
   MarkAsPaidStrategyEnum,
   OrderAction,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  OrderDetailsWithMetadataFragment,
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+  type OrderDetailsWithMetadataFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
-  OrderFulfillLineFragment,
-  OrderGrantedRefundFragment,
+  type OrderFulfillLineFragment,
+  type OrderGrantedRefundFragment,
   OrderGrantedRefundStatusEnum,
-  OrderListQuery,
-  OrderPaymentFragment,
-  OrderSettingsFragment,
+  type OrderListQuery,
+  type OrderPaymentFragment,
+  type OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
-  PaymentGatewayFragment,
-  SearchCustomersQuery,
-  SearchOrderVariantQuery,
-  SearchWarehousesQuery,
-  ShopOrderSettingsFragment,
+  type PaymentGatewayFragment,
+  type SearchCustomersQuery,
+  type SearchOrderVariantQuery,
+  type SearchWarehousesQuery,
+  type ShopOrderSettingsFragment,
   TransactionActionEnum,
-  TransactionEventFragment,
+  type TransactionEventFragment,
   TransactionEventTypeEnum,
-  TransactionItemFragment,
+  type TransactionItemFragment,
   TransactionKind,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 

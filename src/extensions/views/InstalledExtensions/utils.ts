@@ -1,5 +1,5 @@
-import { InstalledExtension } from "@dashboard/extensions/types";
-import { PluginBaseFragment } from "@dashboard/graphql";
+import { type InstalledExtension } from "@dashboard/extensions/types";
+import { type PluginBaseFragment } from "@dashboard/graphql";
 
 export const byActivePlugin = (plugin: PluginBaseFragment) => {
   return (

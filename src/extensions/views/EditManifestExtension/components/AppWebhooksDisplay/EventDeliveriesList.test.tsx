@@ -1,7 +1,7 @@
 import { EventDeliveryStatusEnum, WebhookEventTypeEnum } from "@dashboard/graphql";
 import { render } from "@testing-library/react";
 
-import { EventDeliveriesList, EventDelivery } from "./EventDeliveriesList";
+import { EventDeliveriesList, type EventDelivery } from "./EventDeliveriesList";
 
 describe("EventDeliveriesList", () => {
   const mockEventDeliveries: EventDelivery[] = [

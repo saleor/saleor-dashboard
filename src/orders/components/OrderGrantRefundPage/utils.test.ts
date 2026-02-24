@@ -1,6 +1,10 @@
-import { OrderDetailsGrantedRefundFragment } from "@dashboard/graphql";
+import { type OrderDetailsGrantedRefundFragment } from "@dashboard/graphql";
 
-import { calculateCanRefundShipping, getRefundAmountValue, OrderGrantRefundData } from "./utils";
+import {
+  calculateCanRefundShipping,
+  getRefundAmountValue,
+  type OrderGrantRefundData,
+} from "./utils";
 
 describe("OrderGrantRefundPage utils", () => {
   describe("calculateCanRefundShipping", () => {

@@ -1,25 +1,25 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 import {
   AttributeEntityTypeEnum,
-  AttributeInput,
+  type AttributeInput,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
 
 import {
   AttributeChoicesHandler,
-  Handler,
+  type Handler,
   PageHandler,
   ProductsHandler,
   ProductVariantHandler,
 } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement";
 import {
-  ConditionValue,
+  type ConditionValue,
   isItemOption,
   isItemOptionArray,
 } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
-import { WhereOnlyQueryVarsBuilder } from "./types";
+import { type WhereOnlyQueryVarsBuilder } from "./types";
 
 type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 

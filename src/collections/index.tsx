@@ -4,17 +4,17 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   collectionAddPath,
-  CollectionCreateUrlQueryParams,
+  type CollectionCreateUrlQueryParams,
   collectionListPath,
-  CollectionListUrlQueryParams,
+  type CollectionListUrlQueryParams,
   CollectionListUrlSortField,
   collectionPath,
-  CollectionUrlQueryParams,
+  type CollectionUrlQueryParams,
 } from "./urls";
 import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";

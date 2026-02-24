@@ -1,6 +1,6 @@
 import {
   areChannelFieldsDifferent,
-  ChannelAvailabilityFields,
+  type ChannelAvailabilityFields,
   updateChannelsInput,
 } from "./formChannels";
 

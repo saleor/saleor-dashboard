@@ -1,13 +1,18 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { PageWhereInput, SearchPagesQuery } from "@dashboard/graphql";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type PageWhereInput, type SearchPagesQuery } from "@dashboard/graphql";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import {
+  type Container,
+  type DialogProps,
+  type FetchMoreProps,
+  type RelayToFlat,
+} from "@dashboard/types";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
+import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
-  InitialPageConstraints,
+  type InitialPageConstraints,
   ModalPageFilterProvider,
   useModalPageFilterContext,
 } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";

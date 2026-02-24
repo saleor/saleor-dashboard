@@ -11,7 +11,7 @@ import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
-import { Item } from "@glideapps/glide-data-grid";
+import { type Item } from "@glideapps/glide-data-grid";
 import { useTheme } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
@@ -21,7 +21,7 @@ import { useLocation } from "react-router";
 import { messages as filterLabels } from "../filters";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { canBeSorted } from "../sort";
-import { GiftCardListColummns, GiftCardUrlSortField } from "../types";
+import { type GiftCardListColummns, GiftCardUrlSortField } from "../types";
 import { createGetCellContent, getColumns } from "./datagrid";
 import { messages } from "./messages";
 

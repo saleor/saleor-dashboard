@@ -1,8 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
-import { ColgroupHTMLAttributes } from "react";
+import { type ColgroupHTMLAttributes } from "react";
 import * as React from "react";
 
-import { GridTableProps } from "./types";
+import { type GridTableProps } from "./types";
 
 type GridTableColgroupElement = React.ElementRef<"colgroup">;
 type GridTableColgroupProps = GridTableProps<ColgroupHTMLAttributes<HTMLElement>>;

@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
+import { type LazyQueryResult, type QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
   getChannelAvailabilityLabel,
   getChannelAvailabilityStatus,
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dateCell,
   moneyCell,
@@ -20,27 +20,27 @@ import {
   hueToPillColorLight,
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
-import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
+import { type ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Locale } from "@dashboard/components/Locale";
 import {
   AttributeTypeEnum,
-  AvailableColumnAttributesQuery,
-  Exact,
-  GridAttributesQuery,
-  ProductListQuery,
-  SearchAvailableInGridAttributesQuery,
+  type AvailableColumnAttributesQuery,
+  type Exact,
+  type GridAttributesQuery,
+  type ProductListQuery,
+  type SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { type RelayToFlat, type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";

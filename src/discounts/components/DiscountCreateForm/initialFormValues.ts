@@ -1,4 +1,4 @@
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 
 export const initialFormValues: DiscoutFormData = {

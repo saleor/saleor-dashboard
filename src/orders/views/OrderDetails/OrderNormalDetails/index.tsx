@@ -1,20 +1,20 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CreateManualTransactionCaptureMutation,
-  CreateManualTransactionCaptureMutationVariables,
-  FulfillmentFragment,
+  type CreateManualTransactionCaptureMutation,
+  type CreateManualTransactionCaptureMutationVariables,
+  type FulfillmentFragment,
   FulfillmentStatus,
-  OrderDetailsWithMetadataQueryResult,
-  OrderFulfillmentApproveMutation,
-  OrderFulfillmentApproveMutationVariables,
-  OrderNoteUpdateMutation,
-  OrderNoteUpdateMutationVariables,
-  OrderTransactionRequestActionMutation,
-  OrderTransactionRequestActionMutationVariables,
-  OrderUpdateMutation,
-  OrderUpdateMutationVariables,
+  type OrderDetailsWithMetadataQueryResult,
+  type OrderFulfillmentApproveMutation,
+  type OrderFulfillmentApproveMutationVariables,
+  type OrderNoteUpdateMutation,
+  type OrderNoteUpdateMutationVariables,
+  type OrderTransactionRequestActionMutation,
+  type OrderTransactionRequestActionMutationVariables,
+  type OrderUpdateMutation,
+  type OrderUpdateMutationVariables,
   TransactionActionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
@@ -27,7 +27,7 @@ import {
   getStringOrPlaceholder,
 } from "@dashboard/misc";
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
-import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
+import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import { OrderFulfillmentMetadataDialog } from "@dashboard/orders/components/OrderFulfillmentMetadataDialog/OrderFulfillmentMetadataDialog";
 import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
@@ -41,10 +41,10 @@ import {
   isAnyAddressEditModalOpen,
   transformFuflillmentLinesToStockFormsetData,
 } from "@dashboard/orders/utils/data";
-import { PartialMutationProviderOutput } from "@dashboard/types";
+import { type PartialMutationProviderOutput } from "@dashboard/types";
 import {
-  CloseModalFunction,
-  OpenModalFunction,
+  type CloseModalFunction,
+  type OpenModalFunction,
 } from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useEffect, useMemo, useState } from "react";
@@ -67,8 +67,8 @@ import {
   orderReturnUrl,
   orderTransactionRefundUrl,
   orderUrl,
-  OrderUrlDialog,
-  OrderUrlQueryParams,
+  type OrderUrlDialog,
+  type OrderUrlQueryParams,
 } from "../../../urls";
 
 interface OrderNormalDetailsProps {

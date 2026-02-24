@@ -1,9 +1,9 @@
 import { useModalContext } from "@dashboard/components/Modal/context";
 import { Box } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { Close } from "./Close";
-import { Title, TitleProps } from "./Title";
+import { Title, type TitleProps } from "./Title";
 
 interface HeaderProps extends TitleProps {
   children: ReactNode;

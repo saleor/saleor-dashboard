@@ -1,6 +1,6 @@
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { getRelativeDate, RelativeDateResult } from "./OrderHistoryDate";
+import { getRelativeDate, type RelativeDateResult } from "./OrderHistoryDate";
 
 describe("getRelativeDate", () => {
   // Simple mock - just needs to return strings and track calls

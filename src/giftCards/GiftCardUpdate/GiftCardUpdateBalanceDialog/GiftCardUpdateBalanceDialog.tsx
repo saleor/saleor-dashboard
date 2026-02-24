@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useGiftCardUpdateMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { Input, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

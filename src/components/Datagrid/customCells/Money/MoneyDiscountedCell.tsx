@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import OrderDiscountCommonModal from "@dashboard/orders/components/OrderDiscountCommonModal/OrderDiscountCommonModal";
 import {
   ORDER_LINE_DISCOUNT,
-  OrderDiscountCommonInput,
+  type OrderDiscountCommonInput,
 } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { CustomCell, CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
+import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 import { useCallback } from "react";
 
 import { cellHeight } from "../../styles";

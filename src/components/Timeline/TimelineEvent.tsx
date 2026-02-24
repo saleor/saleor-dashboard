@@ -1,7 +1,7 @@
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
-import { getStatusColor, PillStatusType } from "@dashboard/misc";
+import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { Accordion, Box, sprinkles, Text, Tooltip, useTheme, vars } from "@saleor/macaw-ui-next";
 import {
   AlertTriangleIcon,
@@ -17,7 +17,7 @@ import {
   FileIcon,
   FileTextIcon,
   InfoIcon,
-  LucideIcon,
+  type LucideIcon,
   MailIcon,
   MapPinIcon,
   PackageIcon,
@@ -32,8 +32,8 @@ import {
 import * as React from "react";
 
 import styles from "./TimelineEvent.module.css";
-import { TimelineEventHeader, TitleElement } from "./TimelineEventHeader";
-import { Actor } from "./types";
+import { TimelineEventHeader, type TitleElement } from "./TimelineEventHeader";
+import { type Actor } from "./types";
 import { safeStringify } from "./utils";
 
 // Custom icon type that includes both Lucide icons and custom icons

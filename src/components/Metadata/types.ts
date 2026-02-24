@@ -1,4 +1,4 @@
-import { MetadataInput } from "@dashboard/graphql";
+import { type MetadataInput } from "@dashboard/graphql";
 
 export enum EventDataAction {
   add = "add",

@@ -5,7 +5,10 @@ import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeData } from "./form";
+import OrderCustomerChangeForm, {
+  CustomerChangeActionEnum,
+  type OrderCustomerChangeData,
+} from "./form";
 import messages from "./messages";
 import { useStyles } from "./styles";
 

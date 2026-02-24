@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { ProductFragment } from "@dashboard/graphql";
+import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type ProductFragment } from "@dashboard/graphql";
 
 import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./channel";
 

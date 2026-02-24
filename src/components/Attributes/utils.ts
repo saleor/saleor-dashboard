@@ -1,17 +1,17 @@
 // @ts-strict-ignore
-import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
-import { FileChoiceType } from "@dashboard/components/FileUploadField";
-import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { type FileChoiceType } from "@dashboard/components/FileUploadField";
+import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import {
-  AttributeValueFragment,
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type AttributeValueFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { getEntityUrl } from "@dashboard/utils/maps";
-import { Option } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type Option } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({

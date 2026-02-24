@@ -24,8 +24,8 @@ import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDel
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage";
 import {
   warehouseListUrl,
-  WarehouseListUrlDialog,
-  WarehouseListUrlQueryParams,
+  type WarehouseListUrlDialog,
+  type WarehouseListUrlQueryParams,
 } from "@dashboard/warehouses/urls";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";

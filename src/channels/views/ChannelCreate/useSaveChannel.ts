@@ -1,12 +1,12 @@
-import { MutationFunction } from "@apollo/client";
+import { type MutationFunction } from "@apollo/client";
 import { useUser } from "@dashboard/auth/useUser";
-import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { type ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import {
-  ChannelCreateInput,
-  ChannelCreateMutation,
-  ChannelReorderWarehousesMutation,
-  Exact,
-  ReorderInput,
+  type ChannelCreateInput,
+  type ChannelCreateMutation,
+  type ChannelReorderWarehousesMutation,
+  type Exact,
+  type ReorderInput,
 } from "@dashboard/graphql";
 import { extractMutationErrors } from "@dashboard/misc";
 

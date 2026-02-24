@@ -6,11 +6,11 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { VoucherCode } from "../VoucherCodesDatagrid/types";
-import { VoucherCodes, VoucherCodesProps } from "./VoucherCodes";
+import { type VoucherCode } from "../VoucherCodesDatagrid/types";
+import { VoucherCodes, type VoucherCodesProps } from "./VoucherCodes";
 
 jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
   usePersistance: () => ({

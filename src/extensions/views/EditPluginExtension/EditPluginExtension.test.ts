@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
-  ConfigurationItemFragment,
-  ConfigurationItemInput,
+  type ConfigurationItemFragment,
+  type ConfigurationItemInput,
   ConfigurationTypeFieldEnum,
 } from "@dashboard/graphql";
 

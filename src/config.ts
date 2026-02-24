@@ -1,6 +1,6 @@
 import packageInfo from "../package.json";
-import { SearchVariables } from "./hooks/makeSearch";
-import { ListSettings, ListViews, Pagination } from "./types";
+import { type SearchVariables } from "./hooks/makeSearch";
+import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();

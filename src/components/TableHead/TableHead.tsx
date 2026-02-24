@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell, TableHead as MuiTableHead } from "@material-ui/core";
-import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
+import { type TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { Node } from "../../types";
+import { type Node } from "../../types";
 import Checkbox from "../Checkbox";
 
 interface TableHeadProps extends MuiTableHeadProps {

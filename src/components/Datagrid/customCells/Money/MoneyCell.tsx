@@ -1,10 +1,10 @@
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import {
-  CustomCell,
-  CustomRenderer,
+  type CustomCell,
+  type CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  ProvideEditorCallback,
+  type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 
 import { usePriceField } from "../../../PriceField/usePriceField";

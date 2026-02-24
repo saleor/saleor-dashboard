@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { ExtensionData } from "@dashboard/extensions/types";
+import { type ExtensionData } from "@dashboard/extensions/types";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 
 import { InstalledBadge } from "./components/InstalledBadge";

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { MetadataIdSchema } from "@dashboard/components/Metadata";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
@@ -21,7 +21,7 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { useIntl } from "react-intl";
 
 import OrderOperations from "../../containers/OrderOperations";
-import { orderListUrl, orderUrl, OrderUrlDialog, OrderUrlQueryParams } from "../../urls";
+import { orderListUrl, orderUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";

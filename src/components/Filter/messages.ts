@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-import { ValidationErrorCode } from "./types";
+import { type ValidationErrorCode } from "./types";
 
 export const validationMessages = defineMessages<ValidationErrorCode>({
   VALUE_REQUIRED: {

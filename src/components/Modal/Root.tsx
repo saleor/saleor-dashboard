@@ -1,5 +1,5 @@
 import { ModalContextProvider } from "@dashboard/components/Modal/context";
-import { Modal, ModalRootProps } from "@saleor/macaw-ui-next";
+import { Modal, type ModalRootProps } from "@saleor/macaw-ui-next";
 
 type RootProps = ModalRootProps;
 

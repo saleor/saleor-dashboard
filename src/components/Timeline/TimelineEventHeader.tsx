@@ -1,11 +1,10 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
-import * as React from "react";
+import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date/DateTime";
 import styles from "./TimelineEvent.module.css";
-import { Actor } from "./types";
+import { type Actor } from "./types";
 import { getActorDisplayName, getActorLink } from "./utils";
 
 export interface TitleElement {

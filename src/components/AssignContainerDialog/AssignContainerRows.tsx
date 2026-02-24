@@ -1,4 +1,4 @@
-import { Container } from "@dashboard/types";
+import { type Container } from "@dashboard/types";
 import { Radio, TableCell } from "@material-ui/core";
 
 import Checkbox from "../Checkbox";

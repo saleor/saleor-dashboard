@@ -3,7 +3,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { CountryFragment } from "@dashboard/graphql";
+import { type CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";

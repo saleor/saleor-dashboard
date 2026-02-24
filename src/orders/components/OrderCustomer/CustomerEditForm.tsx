@@ -1,13 +1,13 @@
 import Form from "@dashboard/components/Form";
-import { OrderDetailsFragment, SearchCustomersQuery } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type OrderDetailsFragment, type SearchCustomersQuery } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { DynamicCombobox } from "@saleor/macaw-ui-next";
-import React from "react";
+import type React from "react";
 import { useIntl } from "react-intl";
 
-import { CustomerEditData } from "./OrderCustomer";
+import { type CustomerEditData } from "./OrderCustomer";
 
 interface CustomerEditFormProps extends FetchMoreProps {
   currentUser: OrderDetailsFragment["user"] | null;

@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
-import { ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
+import { type ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
 
 interface OrderManualTransactionRefundAmountProps {
   currency: string;

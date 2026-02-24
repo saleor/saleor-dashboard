@@ -1,8 +1,8 @@
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import {
-  Option,
+  type Option,
   Select as SelectComponent,
-  SelectProps as SelectComponentProps,
+  type SelectProps as SelectComponentProps,
 } from "@saleor/macaw-ui-next";
 
 interface SelectProps<T, V> extends Omit<SelectComponentProps<T, V>, "onChange"> {

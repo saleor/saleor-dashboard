@@ -17,9 +17,9 @@ import {
 import { Button, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
 import { HelpCircle } from "lucide-react";
 import SVG from "react-inlinesvg";
-import { FormattedMessage, IntlShape } from "react-intl";
+import { FormattedMessage, type IntlShape } from "react-intl";
 
-import { WelcomePageInfoTileProps } from "./WelcomePageInfoTile";
+import { type WelcomePageInfoTileProps } from "./WelcomePageInfoTile";
 
 const noShrink = sprinkles({ flexShrink: "0" });
 

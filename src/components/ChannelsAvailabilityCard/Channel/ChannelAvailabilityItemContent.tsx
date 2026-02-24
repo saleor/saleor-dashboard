@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
@@ -9,7 +9,7 @@ import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next"
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
+import { type ChannelOpts, type ChannelsAvailabilityError, type Messages } from "../types";
 import { availabilityItemMessages } from "./messages";
 
 interface ChannelContentProps {

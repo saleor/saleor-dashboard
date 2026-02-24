@@ -1,8 +1,8 @@
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
-import { EventDataAction, EventDataField, MetadataFormData } from "../Metadata/types";
+import { EventDataAction, EventDataField, type MetadataFormData } from "../Metadata/types";
 import { useMetadataFormControls } from "./useMetadataFormControls";
 
 describe("useMetadataFormControls", () => {

@@ -1,11 +1,11 @@
 import {
-  CategoryWithTotalProductsFragment,
-  CollectionWithTotalProductsFragment,
-  CountryWithCodeFragment,
-  SearchProductFragment,
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type CountryWithCodeFragment,
+  type SearchProductFragment,
 } from "@dashboard/graphql";
 
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 export type VoucherCreateProductVariant = NonNullable<SearchProductFragment["variants"]>[number];
 

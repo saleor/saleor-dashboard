@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import * as React from "react";
 
 interface FilterPresetItemProps {

@@ -1,4 +1,4 @@
-import { CachedSearchProduct, productVariantCacheManager } from "./productVariantCache";
+import { type CachedSearchProduct, productVariantCacheManager } from "./productVariantCache";
 
 describe("ProductVariantCacheManager", () => {
   beforeEach(() => {

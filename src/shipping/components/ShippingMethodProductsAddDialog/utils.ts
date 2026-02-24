@@ -1,4 +1,4 @@
-import { Products } from "./types";
+import { type Products } from "./types";
 
 export const isProductSelected = (selectedProducts: Products, productId?: string) => {
   if (!productId) return false;

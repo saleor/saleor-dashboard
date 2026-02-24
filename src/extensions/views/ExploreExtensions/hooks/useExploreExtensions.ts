@@ -1,10 +1,10 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { getExtensionsConfig } from "@dashboard/config";
-import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
+import { type ExtensionData, type ExtensionsGroups } from "@dashboard/extensions/types";
 import {
-  InstalledAppFragment,
+  type InstalledAppFragment,
   PermissionEnum,
-  PluginBaseFragment,
+  type PluginBaseFragment,
   useInstalledAppsQuery,
   usePluginsQuery,
 } from "@dashboard/graphql";

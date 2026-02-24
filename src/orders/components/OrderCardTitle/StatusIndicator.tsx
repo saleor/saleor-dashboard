@@ -1,12 +1,12 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { getStatusColor, PillStatusType } from "@dashboard/misc";
+import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { Box, useTheme } from "@saleor/macaw-ui-next";
 import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { ReturnedIcon } from "../../../icons/ReturnedIcon";
-import { CardTitleStatus } from "./OrderCardTitle";
+import { type CardTitleStatus } from "./OrderCardTitle";
 import { getOrderTitleMessage } from "./utils";
 
 const ICON_SIZE = 16;

@@ -2,11 +2,11 @@
 import { gql } from "@apollo/client";
 import {
   SearchCollectionsDocument,
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables,
+  type SearchCollectionsQuery,
+  type SearchCollectionsQueryVariables,
   SearchCollectionsWithTotalProductsDocument,
-  SearchCollectionsWithTotalProductsQuery,
-  SearchCollectionsWithTotalProductsQueryVariables,
+  type SearchCollectionsWithTotalProductsQuery,
+  type SearchCollectionsWithTotalProductsQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 

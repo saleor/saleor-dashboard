@@ -1,4 +1,4 @@
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { Text } from "@saleor/macaw-ui-next";
 
 import Money from "../Money";

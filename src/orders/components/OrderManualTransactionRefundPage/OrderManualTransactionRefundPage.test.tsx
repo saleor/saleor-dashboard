@@ -1,17 +1,17 @@
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { MockedProvider, type MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
   ModelsOfTypeDocument,
   OrderTransactionRequestActionDocument,
   TransactionActionEnum,
-  TransactionItemFragment,
+  type TransactionItemFragment,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { OrderManualTransactionRefundPage } from "./OrderManualTransactionRefundPage";

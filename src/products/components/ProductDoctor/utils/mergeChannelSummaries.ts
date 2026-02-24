@@ -1,6 +1,6 @@
-import { ChannelFragment, ProductChannelListingAddInput } from "@dashboard/graphql";
+import { type ChannelFragment, type ProductChannelListingAddInput } from "@dashboard/graphql";
 
-import { ChannelSummary } from "./types";
+import { type ChannelSummary } from "./types";
 
 /**
  * Merges form data with diagnostic channel summaries to reflect pending (unsaved) changes.

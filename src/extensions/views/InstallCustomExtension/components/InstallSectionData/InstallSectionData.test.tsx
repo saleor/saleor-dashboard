@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { Control, useWatch } from "react-hook-form";
+import { type Control, useWatch } from "react-hook-form";
 
-import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
+import { type ExtensionInstallFormData, type InstallDetailsManifestData } from "../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 import { InstallSectionData } from "./InstallSectionData";
 

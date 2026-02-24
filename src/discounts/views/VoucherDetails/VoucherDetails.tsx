@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  ChannelVoucherData,
+  type ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
   createSortedChannelsDataFromVoucher,
 } from "@dashboard/channels/utils";
@@ -16,13 +16,13 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
-  VoucherTabItemsCount,
+  type VoucherTabItemsCount,
 } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   voucherListUrl,
   voucherUrl,
-  VoucherUrlDialog,
-  VoucherUrlQueryParams,
+  type VoucherUrlDialog,
+  type VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
 import {
   getFilteredCategories,
@@ -31,8 +31,8 @@ import {
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
 import {
-  CategoryFilterInput,
-  ProductWhereInput,
+  type CategoryFilterInput,
+  type ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
@@ -41,7 +41,7 @@ import {
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
-  VoucherDetailsQueryVariables,
+  type VoucherDetailsQueryVariables,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";

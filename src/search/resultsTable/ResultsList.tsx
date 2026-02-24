@@ -1,4 +1,4 @@
-import { GlobalSearchQuery } from "@dashboard/graphql";
+import { type GlobalSearchQuery } from "@dashboard/graphql";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

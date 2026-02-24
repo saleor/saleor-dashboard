@@ -1,6 +1,6 @@
-import { AttributeErrorCode, AttributeErrorFragment } from "@dashboard/graphql";
+import { AttributeErrorCode, type AttributeErrorFragment } from "@dashboard/graphql";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 const messages = defineMessages({
   attributeSlugUnique: {

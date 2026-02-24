@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { type ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";

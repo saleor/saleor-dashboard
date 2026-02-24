@@ -1,13 +1,13 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
 
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
 import {
   BooleanValuesHandler,
   CurrencyHandler,
   CustomerHandler,
   GiftCardTagsHandler,
-  Handler,
+  type Handler,
   ProductsHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";

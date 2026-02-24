@@ -1,5 +1,5 @@
 import {
-  WebhookDetailsFragment,
+  type WebhookDetailsFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
 } from "@dashboard/graphql";

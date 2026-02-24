@@ -8,20 +8,20 @@ import {
   getExtensionsItemsForPageTypeOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { PageTypeFragment } from "@dashboard/graphql";
+import { type PageTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
+import { pageTypeAddUrl, type PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  ListActions,
-  PageListProps,
-  SearchPageProps,
-  SortPage,
-  TabPageProps,
+  type ListActions,
+  type PageListProps,
+  type SearchPageProps,
+  type SortPage,
+  type TabPageProps,
 } from "../../../types";
 import PageTypeList from "../PageTypeList";
 

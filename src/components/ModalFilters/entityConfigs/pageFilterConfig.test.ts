@@ -1,4 +1,8 @@
-import { Condition, FilterContainer, FilterElement } from "../../ConditionalFilter/FilterElement";
+import {
+  Condition,
+  type FilterContainer,
+  FilterElement,
+} from "../../ConditionalFilter/FilterElement";
 import { ConditionOptions } from "../../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../ConditionalFilter/FilterElement/ConditionSelected";
 import { ExpressionValue } from "../../ConditionalFilter/FilterElement/FilterElement";

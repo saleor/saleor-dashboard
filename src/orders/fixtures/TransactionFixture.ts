@@ -1,5 +1,5 @@
 import {
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";

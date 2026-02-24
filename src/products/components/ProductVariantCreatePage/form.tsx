@@ -4,7 +4,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps,
+  type RichTextProps,
 } from "@dashboard/attributes/utils/data";
 import {
   createAttributeFileChangeHandler,
@@ -16,35 +16,35 @@ import {
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
+  type ChannelPriceAndPreorderData,
+  type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  ProductErrorWithAttributesFragment,
-  ProductVariantCreateDataQuery,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
+  type ProductErrorWithAttributesFragment,
+  type ProductVariantCreateDataQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
 } from "@dashboard/graphql";
 import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  FormErrors,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type FormErrors,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
-  FormsetAdditionalDataChange,
-  FormsetChange,
-  FormsetData,
+  type FormsetAdditionalDataChange,
+  type FormsetChange,
+  type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { errorMessages } from "@dashboard/intl";
 import {
-  AttributeValuesMetadata,
+  type AttributeValuesMetadata,
   getVariantAttributeInputFromProduct,
 } from "@dashboard/products/utils/data";
 import {
@@ -52,14 +52,14 @@ import {
   getChannelsInput,
 } from "@dashboard/products/utils/handlers";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
+import type * as React from "react";
 import { useEffect, useState } from "react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
-import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { type ProductStockFormsetData, type ProductStockInput } from "../ProductStocks";
 import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 const useStyles = makeStyles(
   theme => ({

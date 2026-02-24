@@ -3,7 +3,7 @@ import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { PrimaryActionProps } from "./type";
+import { type PrimaryActionProps } from "./type";
 
 export const WelcomePageWebhooksButton = ({ onClick }: PrimaryActionProps) => {
   return (

@@ -3,7 +3,7 @@ import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   ProductMediaType,
-  ProductVariantFragment,
+  type ProductVariantFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { render, screen, waitFor } from "@testing-library/react";

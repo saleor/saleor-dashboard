@@ -1,5 +1,5 @@
 import { formatMoney } from "@dashboard/components/Money";
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { type TransactionItemFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 
 import Arrow from "@dashboard/components/Filter/Arrow";
-import { FieldType, FilterFieldBaseProps } from "@dashboard/components/Filter/types";
+import { FieldType, type FilterFieldBaseProps } from "@dashboard/components/Filter/types";
 import { splitDateTime } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { FormattedMessage } from "react-intl";

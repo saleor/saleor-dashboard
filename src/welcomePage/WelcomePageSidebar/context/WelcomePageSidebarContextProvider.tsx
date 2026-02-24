@@ -1,5 +1,5 @@
-import { ChannelFragment } from "@dashboard/graphql";
-import * as React from "react";
+import { type ChannelFragment } from "@dashboard/graphql";
+import type * as React from "react";
 
 import { WelcomePageSidebarContext } from "./welcomePageSidebarContext";
 

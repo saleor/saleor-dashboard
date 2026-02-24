@@ -1,4 +1,4 @@
-import { TokenType, UrlToken } from "../UrlToken";
+import { TokenType, type UrlToken } from "../UrlToken";
 import {
   emptyFetchingParams,
   getEmptyFetchingPrams,

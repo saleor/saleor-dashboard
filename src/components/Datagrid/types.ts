@@ -1,4 +1,4 @@
-import { Theme } from "@glideapps/glide-data-grid";
+import { type Theme } from "@glideapps/glide-data-grid";
 
 export interface AvailableColumn {
   id: string;

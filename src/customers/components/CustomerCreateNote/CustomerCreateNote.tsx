@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
-import { AccountErrorFragment } from "@dashboard/graphql";
+import { type AccountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface CustomerCreateNoteProps {

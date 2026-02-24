@@ -1,8 +1,8 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
 
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
-import { BooleanValuesHandler, ChannelHandler, Handler, NoopValuesHandler } from "../Handler";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
+import { BooleanValuesHandler, ChannelHandler, type Handler, NoopValuesHandler } from "../Handler";
 import { getFilterElement } from "../utils";
 
 const createAPIHandler = (

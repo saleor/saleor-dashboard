@@ -1,7 +1,7 @@
-import { ParsedQs } from "qs";
+import { type ParsedQs } from "qs";
 
 import { getAttributeInputType } from "../constants";
-import { ConditionSelected } from "../FilterElement/ConditionSelected";
+import { type ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];

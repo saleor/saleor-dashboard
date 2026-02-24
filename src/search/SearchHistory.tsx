@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Search, X } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 export const SearchHistory = ({

@@ -1,26 +1,26 @@
-import { FetchResult } from "@apollo/client";
-import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
+import { type FetchResult } from "@apollo/client";
+import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  AttributeValueDeleteMutation,
-  AttributeValueDeleteMutationVariables,
-  AttributeValueInput,
-  FileUploadMutation,
-  FileUploadMutationVariables,
-  PageSelectedAttributeFragment,
-  ProductFragment,
-  ProductVariantDetailsQuery,
+  type AttributeValueDeleteMutation,
+  type AttributeValueDeleteMutationVariables,
+  type AttributeValueInput,
+  type FileUploadMutation,
+  type FileUploadMutationVariables,
+  type PageSelectedAttributeFragment,
+  type ProductFragment,
+  type ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
-  FormsetAdditionalDataChange,
-  FormsetAtomicData,
-  FormsetChange,
-  FormsetData,
-  UseFormsetOutput,
+  type FormsetAdditionalDataChange,
+  type FormsetAtomicData,
+  type FormsetChange,
+  type FormsetData,
+  type UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
-import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
 import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";

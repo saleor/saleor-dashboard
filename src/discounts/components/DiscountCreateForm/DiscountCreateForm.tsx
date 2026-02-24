@@ -1,11 +1,11 @@
-import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import { PromotionTypeEnum } from "@dashboard/graphql";
+import { type Rule } from "@dashboard/discounts/models";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
+import { type PromotionTypeEnum } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ReactNode } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { type ReactNode } from "react";
+import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { useRulesHandlers } from "./hooks/useRulesHandlers";

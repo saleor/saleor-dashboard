@@ -1,10 +1,10 @@
-import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
-import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { ReactNode } from "react";
+import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type ExtensionListQuery, type PermissionEnum } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
+import { type ReactNode } from "react";
 
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { type AppDetailsUrlMountQueryParams } from "./urls";
 
 interface CommonExtensionData {
   id: string;

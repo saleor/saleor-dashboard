@@ -1,10 +1,10 @@
-import { IFilter } from "@dashboard/components/Filter/types";
+import { type IFilter } from "@dashboard/components/Filter/types";
 import { CollectionPublished } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { FilterOpts } from "@dashboard/types";
+import { type FilterOpts } from "@dashboard/types";
 import { createOptionsField } from "@dashboard/utils/filters/fields";
-import { Option } from "@saleor/macaw-ui-next";
-import { defineMessages, IntlShape } from "react-intl";
+import { type Option } from "@saleor/macaw-ui-next";
+import { defineMessages, type IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;

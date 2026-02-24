@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
 import { EllipsisVertical } from "lucide-react";
 
-import CardMenu, { CardMenuItem } from "../../CardMenu";
+import CardMenu, { type CardMenuItem } from "../../CardMenu";
 import useStyles from "../styles";
 
 interface RowActionsProps {

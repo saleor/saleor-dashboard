@@ -1,12 +1,12 @@
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
-import { MetadataInput, MetadataItemFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type MetadataInput, type MetadataItemFragment } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useMemo } from "react";
-import { FieldError, useFieldArray, useForm, UseFormReset } from "react-hook-form";
+import { type FieldError, useFieldArray, useForm, type UseFormReset } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { getValidateMetadata } from "./validation";

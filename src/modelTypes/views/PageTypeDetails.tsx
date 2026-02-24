@@ -22,16 +22,16 @@ import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { ReorderEvent } from "@dashboard/types";
+import { type ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
-import PageTypeDetailsPage, { PageTypeForm } from "../components/PageTypeDetailsPage";
+import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
 import usePageTypeDelete from "../hooks/usePageTypeDelete";
-import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
+import { pageTypeListUrl, pageTypeUrl, type PageTypeUrlQueryParams } from "../urls";
 
 interface PageTypeDetailsProps {
   id: string;

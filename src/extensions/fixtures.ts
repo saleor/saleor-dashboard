@@ -1,4 +1,9 @@
-import { AppAvatarFragment, AppQuery, AppTypeEnum, PermissionEnum } from "@dashboard/graphql";
+import {
+  type AppAvatarFragment,
+  type AppQuery,
+  AppTypeEnum,
+  PermissionEnum,
+} from "@dashboard/graphql";
 
 export const appDetails: NonNullable<AppQuery["app"]> = {
   __typename: "App",

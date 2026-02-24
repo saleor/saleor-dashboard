@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { ProductOrder, ProductOrderField } from "@dashboard/graphql";
-import { ProductListUrlQueryParams, ProductListUrlSortField } from "@dashboard/products/urls";
+import { type ProductOrder, ProductOrderField } from "@dashboard/graphql";
+import { type ProductListUrlQueryParams, ProductListUrlSortField } from "@dashboard/products/urls";
 import { getOrderDirection } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = ProductListUrlSortField.name;

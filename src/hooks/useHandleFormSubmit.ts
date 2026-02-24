@@ -1,6 +1,6 @@
-import { FormId, useExitFormDialog } from "@dashboard/components/Form";
+import { type FormId, useExitFormDialog } from "@dashboard/components/Form";
 import { NotificationContext } from "@dashboard/components/notifications";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { useContext } from "react";
 
 interface UseHandleFormSubmitProps<TData, TError> {

@@ -1,9 +1,9 @@
-import { PermissionEnum } from "@dashboard/graphql";
-import { FetchMoreProps, KeyValue, SearchPageProps } from "@dashboard/types";
-import { Option } from "@saleor/macaw-ui-next";
-import { MessageDescriptor } from "react-intl";
+import { type PermissionEnum } from "@dashboard/graphql";
+import { type FetchMoreProps, type KeyValue, type SearchPageProps } from "@dashboard/types";
+import { type Option } from "@saleor/macaw-ui-next";
+import { type MessageDescriptor } from "react-intl";
 
-import { FilterDispatchFunction } from "./useFilter";
+import { type FilterDispatchFunction } from "./useFilter";
 
 export enum FieldType {
   autocomplete = "autocomplete",

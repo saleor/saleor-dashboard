@@ -8,10 +8,10 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { StaffMember, StaffMembers } from "@dashboard/staff/types";
+import { type StaffMember, type StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { ListProps, SortPage } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
+import { type ListProps, type SortPage } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";

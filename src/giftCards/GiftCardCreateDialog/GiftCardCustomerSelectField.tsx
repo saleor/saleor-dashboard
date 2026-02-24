@@ -6,7 +6,7 @@ import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";
-import { GiftCardCreateFormCustomer } from "./types";
+import { type GiftCardCreateFormCustomer } from "./types";
 
 interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;

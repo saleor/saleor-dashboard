@@ -1,6 +1,6 @@
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import { CommonError } from "@dashboard/utils/errors/common";
-import { ChangeEvent } from "react";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
+import { type CommonError } from "@dashboard/utils/errors/common";
+import { type ChangeEvent } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 import DiscountDates from "./DiscountDates";

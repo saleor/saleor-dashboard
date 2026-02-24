@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import compact from "lodash/compact";
 
-import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from "./types";
+import { FieldType, type FilterElement, type InvalidFilters, ValidationErrorCode } from "./types";
 
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
   obj.name === nameToCompare;

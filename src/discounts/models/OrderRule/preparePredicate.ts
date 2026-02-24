@@ -1,6 +1,6 @@
-import { DiscountedObjectWhereInput, OrderPredicateInput } from "@dashboard/graphql";
+import { type DiscountedObjectWhereInput, type OrderPredicateInput } from "@dashboard/graphql";
 
-import { Condition } from "../Condition";
+import { type Condition } from "../Condition";
 import { createAPIWhereInput } from "../helpers";
 
 export function prepareOrderPredicate(conditions: Condition[]): OrderPredicateInput {

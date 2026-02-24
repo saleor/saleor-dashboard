@@ -16,12 +16,12 @@ import {
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import {
-  DatagridChangeOpts,
+  type DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { ProductFragment } from "@dashboard/graphql";
+import { type ProductFragment } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
@@ -43,12 +43,12 @@ import * as React from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
-  ProductUpdateData,
-  ProductUpdateFormProps,
-  ProductUpdateSubmitData,
-  SubmitResult,
-  UseProductUpdateFormOpts,
-  UseProductUpdateFormOutput,
+  type ProductUpdateData,
+  type ProductUpdateFormProps,
+  type ProductUpdateSubmitData,
+  type SubmitResult,
+  type UseProductUpdateFormOpts,
+  type UseProductUpdateFormOutput,
 } from "./types";
 import { prepareVariantChangeData } from "./utils";
 

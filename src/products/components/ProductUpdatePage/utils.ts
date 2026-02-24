@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import {
-  DatagridChange,
-  DatagridChangeOpts,
+  type DatagridChange,
+  type DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import {
-  ChannelFragment,
-  ProductChannelListingAddInput,
-  ProductFragment,
+  type ChannelFragment,
+  type ProductChannelListingAddInput,
+  type ProductFragment,
 } from "@dashboard/graphql";
 
 const getFractionDigits = (locale: Locale, currency: string) => {

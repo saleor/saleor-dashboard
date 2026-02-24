@@ -1,10 +1,10 @@
 import {
-  BulkAction,
-  Dialog,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
+  type BulkAction,
+  type Dialog,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+  type TabActionDialog,
 } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";

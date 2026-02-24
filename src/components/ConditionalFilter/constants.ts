@@ -1,6 +1,6 @@
-import { ConditionItem } from "./FilterElement/ConditionOptions";
-import { ItemOption } from "./FilterElement/ConditionValue";
-import { LeftOperand } from "./LeftOperandsProvider";
+import { type ConditionItem } from "./FilterElement/ConditionOptions";
+import { type ItemOption } from "./FilterElement/ConditionValue";
+import { type LeftOperand } from "./LeftOperandsProvider";
 
 export const STATIC_CONDITIONS = {
   category: [
