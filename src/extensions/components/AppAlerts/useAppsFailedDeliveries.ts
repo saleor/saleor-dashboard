@@ -1,6 +1,6 @@
 import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
 import type moment from "moment-timezone";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { getLatestFailedAttemptFromWebhooks, type LatestWebhookDeliveryWithMoment } from "./utils";
 
@@ -33,14 +33,14 @@ export const useAppsFailedDeliveries = (): AppsFailedDeliveries => {
     [data?.apps?.edges],
   );
 
-  const handleFetchAppsWebhooks = () => {
+  const handleFetchAppsWebhooks = useCallback(() => {
     // Permissions are checked outside of this hook
     fetchAppsWebhooks({
       variables: {
         canFetchAppEvents: true,
       },
     });
-  };
+  }, [fetchAppsWebhooks]);
 
   return {
     hasFailed: !!lastFailedWebhookDate,
