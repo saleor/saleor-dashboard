@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.22.33
+
+### Patch Changes
+
+- [#6326](https://github.com/saleor/saleor-dashboard/pull/6326) [`4238398`](https://github.com/saleor/saleor-dashboard/commit/42383986648ce40c1d113a41aa191b6d62797a43) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Category" modals based on categories query filter options, similar to existing filters on category list page.
+
+- [#6355](https://github.com/saleor/saleor-dashboard/pull/6355) [`80b93f6`](https://github.com/saleor/saleor-dashboard/commit/80b93f6d79fd7f54d46b0609d6bd927ce4e4a20d) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Added "Address Validation" setting to the site settings page, allowing admins to preserve address fields that fall outside a country's standard format instead of having them removed during validation.
+
+  Requires Saleor [3.22.38](https://github.com/saleor/saleor/releases/tag/3.22.38)
+
+- [#6350](https://github.com/saleor/saleor-dashboard/pull/6350) [`51575d1`](https://github.com/saleor/saleor-dashboard/commit/51575d12910355e23c1982a7836bf15083d45a1a) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Extend site settings with webhook emission section - allow changing `useLegacyUpdateWebhookEmission` flag
+
+- [#6352](https://github.com/saleor/saleor-dashboard/pull/6352) [`3b4e59c`](https://github.com/saleor/saleor-dashboard/commit/3b4e59c737c52f9ab473e80e0b2fdb4ae594057a) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Fix Gift Cards search to use `giftCards.search` query parameter instead of filtering by `code`. This enables searching gift cards by email, user name, and code rather than only by exact code match.
+
+- [#6356](https://github.com/saleor/saleor-dashboard/pull/6356) [`8c5f075`](https://github.com/saleor/saleor-dashboard/commit/8c5f0754d863a7f4a25487982ea3fbc892bb822e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fix pnpm audit security vulnerabilities by adding dependency overrides for ajv, and bumping qs to a patched version. Suppress minimatch CVE-2026-26996 (ReDoS) via auditConfig since upgrading to minimatch 10.x breaks Jest coverage instrumentation.
+
+- [#6348](https://github.com/saleor/saleor-dashboard/pull/6348) [`49308be`](https://github.com/saleor/saleor-dashboard/commit/49308be632e06e0d041087b1042fbc9a16296ffc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix mapping VISA payment method in Transaction view. Now VISA logo is displayed correctly
+
+- [#6349](https://github.com/saleor/saleor-dashboard/pull/6349) [`496f688`](https://github.com/saleor/saleor-dashboard/commit/496f6888e22d442a47f77c575c479d06717fbef5) Thanks [@chrislaai](https://github.com/chrislaai)! - Update the API_URL in .env.template
+
+- [#6283](https://github.com/saleor/saleor-dashboard/pull/6283) [`fca0cbf`](https://github.com/saleor/saleor-dashboard/commit/fca0cbf41abc46b5f05da3d607bbfecc6cd62b00) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added app problems display to the installed extensions list. Each app now shows reported problems with severity badges, timestamps, and dismissal support. The "Open the app" action link is only shown for third-party apps. Requires Saleor 3.22+.
+
+  :::warning
+  This release _requires_ Saleor core [`3.22.36`](https://github.com/saleor/saleor/releases/tag/3.22.36). Used with older version, Extensions page will break
+  :::
+
 ## 3.22.32
 
 ### Patch Changes
