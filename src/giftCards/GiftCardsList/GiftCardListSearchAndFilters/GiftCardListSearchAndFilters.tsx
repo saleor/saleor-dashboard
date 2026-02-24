@@ -31,9 +31,7 @@ const GiftCardListSearchAndFilters = () => {
         type="expression-filter"
         initialSearch={params?.query || ""}
         onSearchChange={handleSearchChange}
-        searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
-          exampleGiftCardCode: "21F1-39DY-V4U2",
-        })}
+        searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
         actions={
           <Box display="flex" gap={4}>
             {selectedRowIds.length > 0 && (
