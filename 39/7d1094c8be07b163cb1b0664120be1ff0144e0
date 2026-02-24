@@ -1,0 +1,37 @@
+src/utils/misc.test.ts
+  c3c6afe572879114 1,28-104
+src/products/utils/handlers.test.ts
+  c3c6afe572879114 2,4,158-215
+src/hooks/useDateLocalize.test.tsx
+  c3c6afe572879114 1,7-8,13-17,29,41,53,77
+src/discounts/components/VoucherListDatagrid/datagrid.test.ts
+  c3c6afe572879114 1-137
+src/components/Date/DateTime.test.tsx
+  c3c6afe572879114 1-56
+src/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils.test.ts
+  c3c6afe572879114 1-45
+src/giftCards/GiftCardCreateDialog/utils.test.ts
+  c3c6afe572879114 1-149
+src/orders/components/OrderDraftListDatagrid/datagrid.test.ts
+  c3c6afe572879114 1-2,5-35,37-101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "397d1094c8be07b163cb1b0664120be1ff0144e0",
+  "prompts": {
+    "c3c6afe572879114": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7426eb80-396a-4794-ad03-addcca33bc60",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 773,
+      "total_deletions": 106,
+      "accepted_lines": 733,
+      "overriden_lines": 0
+    }
+  }
+}
