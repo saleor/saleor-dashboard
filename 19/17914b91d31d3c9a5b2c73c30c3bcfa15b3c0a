@@ -1,0 +1,37 @@
+src/ripples/components/Ripple.stories.tsx
+  9c41ff5361b66c92 3
+  1c8c95be6e2d3440 1-2,5-53,55-75,77-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "1917914b91d31d3c9a5b2c73c30c3bcfa15b3c0a",
+  "prompts": {
+    "1c8c95be6e2d3440": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a9ab5b9c-da08-43a3-9fb2-36366144a7f4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 160,
+      "total_deletions": 35,
+      "accepted_lines": 120,
+      "overriden_lines": 2
+    },
+    "9c41ff5361b66c92": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61190688-8263-48df-8f7a-9ece22706e4d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
