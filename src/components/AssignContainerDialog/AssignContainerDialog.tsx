@@ -4,11 +4,9 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
-import { TableBody, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, type ReactNode } from "react";
 
 import BackButton from "../BackButton";
@@ -84,20 +82,18 @@ const AssignContainerDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto" gap={3}>
         <DashboardModal.Header>{labels.title}</DashboardModal.Header>
 
-        <TextField
+        <Input
           name="query"
           value={query}
           onChange={onQueryChange}
           label={labels.label}
           placeholder={labels.placeholder}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
+          width="100%"
+          endAdornment={loading ? <SaleorThrobber size={16} /> : undefined}
+          autoComplete="off"
         />
 
         {filtersSlot}
@@ -110,28 +106,32 @@ const AssignContainerDialog = ({
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
         >
-          <ResponsiveTable>
-            <TableBody>
-              {!loading && itemCount === 0 && (
-                <Text>
-                  <Text>{emptyMessage}</Text>
-                </Text>
-              )}
-              {selectionMode === "single" ? (
+          <Box display="flex" flexDirection="column">
+            {!loading && itemCount === 0 && (
+              <Text>
+                <Text>{emptyMessage}</Text>
+              </Text>
+            )}
+            {selectionMode === "single" ? (
+              <RadioGroup
+                value={singleSelection.selectedItemId}
+                display="flex"
+                flexDirection="column"
+              >
                 <SingleSelectionRows
                   containers={containers}
                   selectedItemId={singleSelection.selectedItemId}
                   onSelect={singleSelection.handleSelect}
                 />
-              ) : (
-                <MultiSelectionRows
-                  containers={containers}
-                  isSelected={multiSelection.isSelected}
-                  onToggle={multiSelection.handleToggle}
-                />
-              )}
-            </TableBody>
-          </ResponsiveTable>
+              </RadioGroup>
+            ) : (
+              <MultiSelectionRows
+                containers={containers}
+                isSelected={multiSelection.isSelected}
+                onToggle={multiSelection.handleToggle}
+              />
+            )}
+          </Box>
         </InfiniteScroll>
 
         <DashboardModal.Actions>

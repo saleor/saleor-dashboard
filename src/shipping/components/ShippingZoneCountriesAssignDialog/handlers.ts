@@ -1,47 +1,48 @@
-// @ts-strict-ignore
-import { type FormChange } from "@dashboard/hooks/useForm";
+import { type UseFormGetValues, type UseFormSetValue } from "react-hook-form";
 
-export function createCountryChangeHandler(selectedCountries: string[], change: FormChange) {
+interface FormData {
+  countries: string[];
+  query: string;
+}
+
+export function createCountryChangeHandler(
+  getValues: UseFormGetValues<FormData>,
+  setValue: UseFormSetValue<FormData>,
+) {
   return (countryCode: string, checked: boolean) => {
+    const selectedCountries = getValues("countries");
     const updatedCountries = checked
       ? [...selectedCountries, countryCode]
       : selectedCountries.filter(selectedCountry => selectedCountry !== countryCode);
 
-    change({
-      target: {
-        name: "countries" as keyof FormData,
-        value: updatedCountries,
-      },
-    } as any);
+    setValue("countries", updatedCountries);
   };
 }
 
 export function createRestOfTheWorldChangeHandler(
   countrySelectionMap: Record<string, boolean>,
-  selectedCountries: string[],
+  getValues: UseFormGetValues<FormData>,
   restWorldCountries: string[],
-  change: FormChange,
+  setValue: UseFormSetValue<FormData>,
 ) {
   return (restOfTheWorld: boolean) => {
+    const selectedCountries = getValues("countries");
+
     if (restOfTheWorld) {
-      change({
-        target: {
-          name: "countries" as keyof FormData,
-          value: restWorldCountries
-            .filter(countryCode => !countrySelectionMap[countryCode])
-            .concat(selectedCountries),
-        },
-      } as any);
+      setValue(
+        "countries",
+        restWorldCountries
+          .filter(countryCode => !countrySelectionMap[countryCode])
+          .concat(selectedCountries),
+      );
     } else {
-      change({
-        target: {
-          name: "countries" as keyof FormData,
-          value: selectedCountries.filter(
-            countryCode =>
-              !(countrySelectionMap[countryCode] && restWorldCountries.includes(countryCode)),
-          ),
-        },
-      } as any);
+      setValue(
+        "countries",
+        selectedCountries.filter(
+          countryCode =>
+            !(countrySelectionMap[countryCode] && restWorldCountries.includes(countryCode)),
+        ),
+      );
     }
   };
 }

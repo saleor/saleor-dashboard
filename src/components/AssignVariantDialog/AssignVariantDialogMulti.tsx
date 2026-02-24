@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
@@ -6,27 +5,22 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { maybe, renderCollection } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
-import Checkbox from "../Checkbox";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
+import styles from "./AssignVariantDialog.module.css";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import {
   getCompositeLabel,
   handleProductAssign,
@@ -66,7 +60,6 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     onSubmit,
     open,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   const { combinedFilters, clearFilters } = useModalProductFilterContext();
@@ -78,22 +71,31 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   });
 
   const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
-  const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
-  const selectedVariantsToProductsMap = productChoices
-    ? productChoices.map(product =>
-        product.variants.map(variant => isVariantSelected(variant, variants)),
-      )
-    : [];
-  const productsWithAllVariantsSelected = productChoices
-    ? productChoices.map(product => hasAllVariantsSelected(product.variants, variants))
-    : [];
+  const productChoices = (products ?? []).filter(
+    (product): product is NonNullable<typeof product> => (product?.variants?.length ?? 0) > 0,
+  );
+  const selectedVariantsToProductsMap = productChoices.map(product =>
+    (product?.variants ?? [])
+      .filter((variant): variant is NonNullable<typeof variant> => !!variant)
+      .map(variant => isVariantSelected(variant, variants)),
+  );
+  const productsWithAllVariantsSelected = productChoices.map(product =>
+    hasAllVariantsSelected(
+      (product?.variants ?? []).filter(
+        (variant): variant is NonNullable<typeof variant> => !!variant,
+      ),
+      variants,
+    ),
+  );
   const handleSubmit = () =>
     onSubmit(
-      variants.map(variant => ({
-        name: getCompositeLabel(variant),
-        id: variant.id,
-        ...variant,
-      })),
+      variants
+        .filter((variant): variant is VariantWithProductLabel & { id: string } => "id" in variant)
+        .map(variant => ({
+          ...variant,
+          name: getCompositeLabel(variant),
+          id: variant.id,
+        })),
     );
 
   const handleClose = () => {
@@ -112,17 +114,15 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
 
   return (
     <>
-      <TextField
+      <Input
         name="query"
         value={query}
         onChange={onQueryChange}
         label={intl.formatMessage(messages.assignVariantDialogSearch)}
         placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
+        width="100%"
+        endAdornment={loading ? <SaleorThrobber size={16} /> : undefined}
+        autoComplete="off"
       />
 
       <ModalFilters />
@@ -135,18 +135,33 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
         scrollThreshold="100px"
         scrollableTarget={scrollableTargetId}
       >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {renderCollection(
-              productChoices,
-              (product, productIndex) => (
+        <Box display="flex" flexDirection="column">
+          {renderCollection(
+            productChoices,
+            (product, productIndex) => {
+              if (!product || productIndex === undefined) return null;
+
+              const productVariants = (product?.variants ?? []).filter(
+                (variant): variant is NonNullable<typeof variant> => !!variant,
+              );
+
+              return (
                 <Fragment key={product ? product.id : "skeleton"}>
-                  <TableRowLink>
-                    <TableCell padding="checkbox">
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={3}
+                    paddingX={3}
+                    paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
+                  >
+                    <Box className={styles.checkboxCell}>
                       <Checkbox
                         checked={productsWithAllVariantsSelected[productIndex]}
                         disabled={loading}
-                        onChange={() =>
+                        onCheckedChange={() =>
                           handleProductAssign(
                             product,
                             productIndex,
@@ -156,22 +171,41 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                           )
                         }
                       />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
-                    />
-                    <TableCell colSpan={2}>{maybe(() => product.name)}</TableCell>
-                  </TableRowLink>
-                  {maybe(() => product.variants, []).map((variant, variantIndex) => (
-                    <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
-                      <TableCell />
-                      <TableCell className={classes.colVariantCheckbox}>
+                    </Box>
+                    <Box className={styles.avatar}>
+                      {product?.thumbnail?.url ? (
+                        <img
+                          src={product.thumbnail.url}
+                          alt={product?.name}
+                          className={styles.thumbnailImg}
+                        />
+                      ) : (
+                        <Box className={styles.thumbnailPlaceholder} />
+                      )}
+                    </Box>
+                    <Box flexGrow="1">
+                      <Text size={3}>{product?.name}</Text>
+                    </Box>
+                  </Box>
+                  {productVariants.map((variant, variantIndex) => (
+                    <Box
+                      key={variant.id}
+                      display="flex"
+                      alignItems="center"
+                      gap={3}
+                      paddingX={3}
+                      paddingY={1}
+                      borderBottomWidth={1}
+                      borderBottomStyle="solid"
+                      borderColor="default1"
+                      data-test-id="assign-variant-table-row"
+                    >
+                      <Box className={styles.checkboxCell} />
+                      <Box className={styles.variantCheckboxCell}>
                         <Checkbox
-                          className={classes.variantCheckbox}
                           checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
                           disabled={loading}
-                          onChange={() =>
+                          onCheckedChange={() =>
                             handleVariantAssign(
                               variant,
                               product,
@@ -183,37 +217,39 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                             )
                           }
                         />
-                      </TableCell>
-                      <TableCell>
-                        <div>{variant.name}</div>
-                        <div className={classes.grayText}>
+                      </Box>
+                      <Box flexGrow="1">
+                        <Text size={3}>{variant.name}</Text>
+                        <Text size={2} color="default2">
                           <FormattedMessage
                             {...messages.assignVariantDialogSKU}
                             values={{
                               sku: variant.sku,
                             }}
                           />
-                        </div>
-                      </TableCell>
-                      <TableCell className={classes.textRight}>
-                        {variant?.channelListings[0]?.price && (
+                        </Text>
+                      </Box>
+                      <Box className={styles.priceCell}>
+                        {variant?.channelListings?.[0]?.price && (
                           <Money money={variant.channelListings[0].price} />
                         )}
-                      </TableCell>
-                    </TableRowLink>
+                      </Box>
+                    </Box>
                   ))}
                 </Fragment>
-              ),
-              () => (
-                <Text className={classes.noContentText}>
+              );
+            },
+            () => (
+              <Box paddingX={3} paddingY={2}>
+                <Text>
                   {query
                     ? intl.formatMessage(messages.noProductsInQuery)
                     : intl.formatMessage(messages.noProductsInChannel)}
                 </Text>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
+              </Box>
+            ),
+          )}
+        </Box>
       </InfiniteScroll>
 
       <DashboardModal.Actions>

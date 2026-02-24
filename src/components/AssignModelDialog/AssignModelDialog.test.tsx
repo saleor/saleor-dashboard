@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type React from "react";
 
@@ -188,13 +188,8 @@ describe("AssignModelDialog", () => {
   it("should show loading indicator when loading is true", () => {
     // Arrange & Act
     render(<AssignModelDialog {...defaultProps} loading={true} />);
-
-    // Assert
-    const searchInput = screen.getByPlaceholderText("Search Models");
-    const inputContainer = searchInput.closest(".MuiInputBase-root") as HTMLElement;
-
-    expect(inputContainer).toBeInTheDocument();
-    expect(within(inputContainer).getByRole("progressbar")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Search Models")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
   it("should show 'no models available' message when pages array is empty", () => {

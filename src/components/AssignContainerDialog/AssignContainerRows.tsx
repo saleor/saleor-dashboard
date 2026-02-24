@@ -1,8 +1,5 @@
 import { type Container } from "@dashboard/types";
-import { Radio, TableCell } from "@material-ui/core";
-
-import Checkbox from "../Checkbox";
-import TableRowLink from "../TableRowLink";
+import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 
 interface SingleSelectionRowsProps {
   containers: Container[];
@@ -20,23 +17,28 @@ export const SingleSelectionRows = ({
       const isSelected = selectedItemId === container.id;
 
       return (
-        <TableRowLink
+        <Box
           key={container.id}
+          display="flex"
+          alignItems="center"
+          gap={3}
+          cursor="pointer"
+          paddingX={3}
+          paddingY={2}
+          borderBottomWidth={1}
+          borderBottomStyle="solid"
+          borderColor="default1"
           data-test-id="dialog-row"
+          data-selected={isSelected}
           onClick={() => onSelect(container.id)}
         >
-          <TableCell padding="checkbox">
-            <Radio
-              checked={isSelected}
-              onChange={() => onSelect(container.id)}
-              value={container.id}
-              name="container-selection"
-            />
-          </TableCell>
-          <TableCell style={{ width: "100%" }} data-test-id={container.name}>
-            {container.name}
-          </TableCell>
-        </TableRowLink>
+          <RadioGroup.Item value={container.id} id={container.id} name="container-selection">
+            {null}
+          </RadioGroup.Item>
+          <Box flexGrow="1" data-test-id={container.name}>
+            <Text size={3}>{container.name}</Text>
+          </Box>
+        </Box>
       );
     })}
   </>
@@ -55,14 +57,27 @@ export const MultiSelectionRows = ({
 }: MultiSelectionRowsProps) => (
   <>
     {containers?.map(container => (
-      <TableRowLink key={container.id} data-test-id="dialog-row">
-        <TableCell padding="checkbox">
-          <Checkbox checked={isSelected(container.id)} onChange={() => onToggle(container)} />
-        </TableCell>
-        <TableCell style={{ width: "100%" }} data-test-id={container.name}>
-          {container.name}
-        </TableCell>
-      </TableRowLink>
+      <Box
+        key={container.id}
+        display="flex"
+        alignItems="center"
+        gap={3}
+        cursor="pointer"
+        paddingX={3}
+        paddingY={2}
+        borderBottomWidth={1}
+        borderBottomStyle="solid"
+        borderColor="default1"
+        data-test-id="dialog-row"
+        onClick={() => onToggle(container)}
+      >
+        <Box __transform="scale(1.2)">
+          <Checkbox checked={isSelected(container.id)} />
+        </Box>
+        <Box flexGrow="1" data-test-id={container.name}>
+          <Text size={3}>{container.name}</Text>
+        </Box>
+      </Box>
     ))}
   </>
 );

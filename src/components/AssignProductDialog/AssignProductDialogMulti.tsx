@@ -1,30 +1,23 @@
-// @ts-strict-ignore
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { maybe } from "@dashboard/misc";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
-import Checkbox from "../Checkbox";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
+import styles from "./AssignProductDialog.module.css";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import { type Products, type SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
@@ -66,7 +59,6 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     labels,
     open,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const [productsDict, setProductsDict] = useState(selectedIds || {});
   const { combinedFilters, clearFilters } = useModalProductFilterContext();
@@ -102,17 +94,18 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     onSubmit(
       selectedProductsAsArray.map(id => {
         const productDetails = productsData.current.find(product => product.id === id);
+        const { name: productName, ...productRest } = productDetails ?? {};
 
         return {
+          ...productRest,
           id,
-          name: productDetails?.name,
-          ...(productDetails ?? {}),
+          name: productName ?? "",
         };
       }),
     );
   };
 
-  const handleChange = productId => {
+  const handleChange = (productId: string) => {
     const productData = products.find(product => product.id === productId);
 
     if (productData) {
@@ -142,17 +135,15 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
 
   return (
     <>
-      <TextField
+      <Input
         name="query"
         value={query}
         onChange={onQueryChange}
         label={intl.formatMessage(messages.assignProductDialogSearch)}
         placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
+        width="100%"
+        endAdornment={loading ? <SaleorThrobber size={16} /> : undefined}
+        autoComplete="off"
       />
 
       <ModalFilters />
@@ -165,50 +156,63 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
         scrollThreshold="100px"
         scrollableTarget={scrollableTargetId}
       >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {products &&
-              products.map(product => {
-                const isSelected = productsDict[product.id] || false;
-                const isProductAvailable = isProductAvailableInVoucherChannels(
-                  product.channelListings,
-                  selectedChannels,
-                );
+        <Box display="flex" flexDirection="column">
+          {products &&
+            products.map(product => {
+              const isSelected = productsDict[product.id] || false;
+              const isProductAvailable = isProductAvailableInVoucherChannels(
+                product.channelListings ?? undefined,
+                selectedChannels,
+              );
 
-                return (
-                  <TableRowLink key={product.id} data-test-id="assign-product-table-row">
-                    <TableCell padding="checkbox" className={classes.checkboxCell}>
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={!isProductAvailable}
-                        onChange={() => handleChange(product.id)}
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
-                      style={{
-                        opacity: !isProductAvailable ? 0.5 : 1,
-                      }}
+              return (
+                <Box
+                  key={product.id}
+                  display="flex"
+                  alignItems="center"
+                  gap={3}
+                  paddingX={3}
+                  paddingY={2}
+                  borderBottomWidth={1}
+                  borderBottomStyle="solid"
+                  borderColor="default1"
+                  data-test-id="assign-product-table-row"
+                >
+                  <Box className={styles.checkboxCell}>
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={!isProductAvailable}
+                      onCheckedChange={() => handleChange(product.id)}
                     />
-                    <TableCell>
-                      {product.name}
-                      {!isProductAvailable && productUnavailableText && (
-                        <Text display="block" size={1} color="default2">
-                          {productUnavailableText}
-                        </Text>
-                      )}
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-            {!loading && (products?.length ?? 0) === 0 && (
-              <Text>
-                <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
-              </Text>
-            )}
-          </TableBody>
-        </ResponsiveTable>
+                  </Box>
+                  <Box className={styles.avatar} __opacity={!isProductAvailable ? 0.5 : 1}>
+                    {product.thumbnail?.url ? (
+                      <img
+                        src={product.thumbnail.url}
+                        alt={product.name}
+                        className={styles.thumbnailImg}
+                      />
+                    ) : (
+                      <Box className={styles.thumbnailPlaceholder} />
+                    )}
+                  </Box>
+                  <Box flexGrow="1">
+                    <Text size={3}>{product.name}</Text>
+                    {!isProductAvailable && productUnavailableText && (
+                      <Text display="block" size={2} color="default2">
+                        {productUnavailableText}
+                      </Text>
+                    )}
+                  </Box>
+                </Box>
+              );
+            })}
+          {!loading && (products?.length ?? 0) === 0 && (
+            <Text>
+              <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
+            </Text>
+          )}
+        </Box>
       </InfiniteScroll>
 
       <DashboardModal.Actions>

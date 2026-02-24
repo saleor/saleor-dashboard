@@ -1,0 +1,8 @@
+.clickableRow {
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxScaled {
+  transform: scale(1.2);
+}

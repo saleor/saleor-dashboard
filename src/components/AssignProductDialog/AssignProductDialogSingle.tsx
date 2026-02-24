@@ -4,25 +4,20 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { maybe } from "@dashboard/misc";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
-import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
+import styles from "./AssignProductDialog.module.css";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 import { type Products, type SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
@@ -64,7 +59,6 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     labels,
     open,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const [selectedProductId, setSelectedProductId] = useState<string>(selectedId ?? "");
   const { combinedFilters, clearFilters } = useModalProductFilterContext();
@@ -119,17 +113,15 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
 
   return (
     <>
-      <TextField
+      <Input
         name="query"
         value={query}
         onChange={onQueryChange}
         label={intl.formatMessage(messages.assignProductDialogSearch)}
         placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
+        width="100%"
+        endAdornment={loading ? <SaleorThrobber size={16} /> : undefined}
+        autoComplete="off"
       />
 
       <ModalFilters />
@@ -142,56 +134,69 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
         scrollThreshold="100px"
         scrollableTarget={scrollableTargetId}
       >
-        <ResponsiveTable key="table">
-          <TableBody>
+        <Box display="flex" flexDirection="column">
+          <RadioGroup value={selectedProductId} display="flex" flexDirection="column">
             {products &&
               products.map(product => {
-                const isSelected = selectedProductId === product.id;
                 const isProductAvailable = isProductAvailableInVoucherChannels(
                   product.channelListings ?? [],
                   selectedChannels,
                 );
 
                 return (
-                  <TableRowLink
+                  <Box
                     key={product.id}
+                    display="flex"
+                    alignItems="center"
+                    gap={3}
+                    paddingX={3}
+                    paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
+                    cursor={isProductAvailable ? "pointer" : "auto"}
                     data-test-id="assign-product-table-row"
-                    onClick={() => (!isProductAvailable ? null : handleChange(product.id))}
+                    onClick={() => (isProductAvailable ? handleChange(product.id) : null)}
                   >
-                    <TableCell padding="checkbox" className={classes.checkboxCell}>
-                      <Radio
-                        checked={isSelected}
-                        disabled={!isProductAvailable}
-                        onChange={() => handleChange(product.id)}
+                    <Box className={styles.checkboxCell}>
+                      <RadioGroup.Item
                         value={product.id}
+                        id={product.id}
                         name="product-selection"
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail?.url)}
-                      style={{
-                        opacity: !isProductAvailable ? 0.5 : 1,
-                      }}
-                    />
-                    <TableCell>
-                      {product.name}
+                        disabled={!isProductAvailable}
+                      >
+                        {null}
+                      </RadioGroup.Item>
+                    </Box>
+                    <Box className={styles.avatar} __opacity={!isProductAvailable ? 0.5 : 1}>
+                      {product?.thumbnail?.url ? (
+                        <img
+                          src={product.thumbnail.url}
+                          alt={product?.name}
+                          className={styles.thumbnailImg}
+                        />
+                      ) : (
+                        <Box className={styles.thumbnailPlaceholder} />
+                      )}
+                    </Box>
+                    <Box flexGrow="1">
+                      <Text size={3}>{product?.name}</Text>
                       {!isProductAvailable && productUnavailableText && (
-                        <Text display="block" size={1} color="default2">
+                        <Text display="block" size={2} color="default2">
                           {productUnavailableText}
                         </Text>
                       )}
-                    </TableCell>
-                  </TableRowLink>
+                    </Box>
+                  </Box>
                 );
               })}
-            {!loading && (products?.length ?? 0) === 0 && (
-              <Text>
-                <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
-              </Text>
-            )}
-          </TableBody>
-        </ResponsiveTable>
+          </RadioGroup>
+          {!loading && (products?.length ?? 0) === 0 && (
+            <Box>
+              <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
+            </Box>
+          )}
+        </Box>
       </InfiniteScroll>
 
       <DashboardModal.Actions>
