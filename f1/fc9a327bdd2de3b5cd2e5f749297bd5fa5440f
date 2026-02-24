@@ -1,0 +1,27 @@
+src/extensions/components/AppAlerts/useSidebarWebhookAlertMetadata.ts
+  449a124a38b06929 3,22,32-33,35-38
+src/extensions/components/AppAlerts/useAppsFailedDeliveries.ts
+  449a124a38b06929 3,36,43
+src/extensions/components/AppAlerts/useSidebarDotState.ts
+  449a124a38b06929 2,45,56-58,60,72-74,76-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "f1fc9a327bdd2de3b5cd2e5f749297bd5fa5440f",
+  "prompts": {
+    "449a124a38b06929": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9dade8f1-7882-4a65-b361-c098a2f1ca0e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 52,
+      "total_deletions": 43,
+      "accepted_lines": 23,
+      "overriden_lines": 0
+    }
+  }
+}
