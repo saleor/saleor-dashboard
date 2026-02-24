@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
+import { type ProductErrorFragment, type WarehouseFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type FormsetAtomicData, type FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";

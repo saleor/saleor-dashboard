@@ -1,5 +1,5 @@
 import { messages } from "@dashboard/extensions/messages";
-import { APIExtensionsResponse, ExtensionsGroups } from "@dashboard/extensions/types";
+import { type APIExtensionsResponse, type ExtensionsGroups } from "@dashboard/extensions/types";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

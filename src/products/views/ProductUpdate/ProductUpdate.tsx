@@ -1,21 +1,21 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
-  CategoryFilterInput,
+  type CategoryFilterInput,
   ErrorPolicyEnum,
-  PageWhereInput,
-  ProductMediaCreateMutationVariables,
-  ProductVariantBulkCreateInput,
-  ProductWhereInput,
+  type PageWhereInput,
+  type ProductMediaCreateMutationVariables,
+  type ProductVariantBulkCreateInput,
+  type ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
@@ -49,8 +49,8 @@ import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
   productListUrl,
   productUrl,
-  ProductUrlDialog,
-  ProductUrlQueryParams,
+  type ProductUrlDialog,
+  type ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
 import { createImageReorderHandler, createImageUploadHandler } from "./handlers";

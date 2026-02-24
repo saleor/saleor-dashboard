@@ -1,7 +1,10 @@
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { toAPI } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
-import { PromotionCreateMutation, PromotionCreateMutationVariables } from "@dashboard/graphql";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
+import {
+  type PromotionCreateMutation,
+  type PromotionCreateMutationVariables,
+} from "@dashboard/graphql";
 import { getMutationErrors, joinDateTime } from "@dashboard/misc";
 
 export const useDiscountCreate = (

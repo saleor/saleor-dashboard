@@ -5,11 +5,11 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { CategoryDetailsQuery } from "@dashboard/graphql";
+import { type CategoryDetailsQuery } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
-import { PageListProps, RelayToFlat } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
-import { ReactNode, useCallback, useMemo } from "react";
+import { type PageListProps, type RelayToFlat } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
+import { type ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";

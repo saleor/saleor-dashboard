@@ -1,13 +1,13 @@
-import { PageWhereInput } from "@dashboard/graphql";
+import { type PageWhereInput } from "@dashboard/graphql";
 
-import { InitialPageStateResponse } from "../../ConditionalFilter/API/initialState/page/InitialPageState";
+import { type InitialPageStateResponse } from "../../ConditionalFilter/API/initialState/page/InitialPageState";
 import { useInitialPageState } from "../../ConditionalFilter/API/initialState/page/useInitialPageState";
 import { usePageAPIProvider } from "../../ConditionalFilter/API/providers/PageFilterAPIProvider";
 import { STATIC_PAGE_OPTIONS } from "../../ConditionalFilter/constants";
-import { FilterContainer } from "../../ConditionalFilter/FilterElement";
+import { type FilterContainer } from "../../ConditionalFilter/FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "../../ConditionalFilter/FiltersQueryBuilder";
-import { PageFetchingParams } from "../../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
-import { ModalFilterConfig } from "../types";
+import { type PageFetchingParams } from "../../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type ModalFilterConfig } from "../types";
 
 const emptyPageFetchingParams: PageFetchingParams = {
   pageTypes: [],

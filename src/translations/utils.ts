@@ -1,19 +1,19 @@
 // @ts-strict-ignore
 import {
-  AttributeTranslationDetailsFragment,
-  AttributeValueTranslatableFragment,
-  AttributeValueTranslationInput,
+  type AttributeTranslationDetailsFragment,
+  type AttributeValueTranslatableFragment,
+  type AttributeValueTranslationInput,
 } from "@dashboard/graphql";
 import {
   PageTranslationInputFieldName,
-  TranslationField,
+  type TranslationField,
   TranslationFieldType,
   TranslationInputFieldName,
 } from "@dashboard/translations/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { OutputData } from "@editorjs/editorjs";
-import { IntlShape } from "react-intl";
+import { type OutputData } from "@editorjs/editorjs";
+import { type IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";

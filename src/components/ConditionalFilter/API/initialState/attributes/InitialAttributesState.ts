@@ -1,5 +1,5 @@
-import { ItemOption } from "../../../FilterElement/ConditionValue";
-import { UrlToken } from "../../../ValueProvider/UrlToken";
+import { type ItemOption } from "../../../FilterElement/ConditionValue";
+import { type UrlToken } from "../../../ValueProvider/UrlToken";
 
 export interface InitialAttributesState {
   channels: ItemOption[];

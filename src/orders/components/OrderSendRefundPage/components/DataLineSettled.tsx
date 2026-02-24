@@ -1,4 +1,4 @@
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import clsx from "clsx";
 import { FormattedMessage } from "react-intl";
 

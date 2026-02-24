@@ -1,12 +1,17 @@
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { useMemo } from "react";
-import { FieldArrayPath, FieldError, useFieldArray, UseFormReturn } from "react-hook-form";
+import {
+  type FieldArrayPath,
+  type FieldError,
+  useFieldArray,
+  type UseFormReturn,
+} from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { OrderLineAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
+import { type OrderLineAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
 import { getValidateMetadata } from "./utils";
 
 type UseOrderLineMetadataFormControlsParams = Pick<

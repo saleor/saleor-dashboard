@@ -1,13 +1,13 @@
 import {
-  AppAvatarFragment,
-  OrderDetailsFragment,
-  OrderGrantedRefundFragment,
+  type AppAvatarFragment,
+  type OrderDetailsFragment,
+  type OrderGrantedRefundFragment,
   OrderGrantedRefundStatusEnum,
-  StaffMemberAvatarFragment,
+  type StaffMemberAvatarFragment,
   TransactionActionEnum,
-  TransactionEventFragment,
+  type TransactionEventFragment,
   TransactionEventTypeEnum,
-  UserBaseAvatarFragment,
+  type UserBaseAvatarFragment,
 } from "@dashboard/graphql";
 import { getUserInitials } from "@dashboard/misc";
 

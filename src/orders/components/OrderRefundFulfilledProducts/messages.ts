@@ -1,5 +1,5 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 const messages = defineMessages({
   fulfillment: {

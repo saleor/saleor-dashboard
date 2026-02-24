@@ -1,5 +1,5 @@
-import { ProductTranslationFragment } from "@dashboard/graphql";
-import { FormPayloadProductTranslate } from "@saleor/app-sdk/app-bridge";
+import { type ProductTranslationFragment } from "@dashboard/graphql";
+import { type FormPayloadProductTranslate } from "@saleor/app-sdk/app-bridge";
 
 export const createProductTranslateFormPayloadEvent = ({
   languageCode,

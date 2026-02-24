@@ -1,7 +1,7 @@
-import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
-import { Option } from "@saleor/macaw-ui-next";
+import { type RewardTypeEnum, type RewardValueTypeEnum } from "@dashboard/graphql";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { Condition } from "./Condition";
+import { type Condition } from "./Condition";
 
 export interface Rule {
   id: string;

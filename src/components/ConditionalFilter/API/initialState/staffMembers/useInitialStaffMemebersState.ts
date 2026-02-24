@@ -2,7 +2,7 @@ import { StaffMemberStatus } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { StaffMembersFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { type StaffMembersFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
 import { InitialStaffMembersStateResponse } from "./InitialStaffMembersState";
 

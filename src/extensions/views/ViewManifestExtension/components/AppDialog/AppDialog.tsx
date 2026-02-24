@@ -1,6 +1,6 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Box } from "@saleor/macaw-ui-next";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 interface AppDialogProps {
   title?: string;

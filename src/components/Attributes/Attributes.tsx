@@ -1,24 +1,24 @@
-import { AttributeReference } from "@dashboard/attributes/utils/data";
+import { type AttributeReference } from "@dashboard/attributes/utils/data";
 import {
-  AttributeEntityTypeEnum,
-  AttributeInputTypeEnum,
-  AttributeValueDetailsFragment,
-  AttributeValueFragment,
-  MeasurementUnitsEnum,
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type AttributeEntityTypeEnum,
+  type AttributeInputTypeEnum,
+  type AttributeValueDetailsFragment,
+  type AttributeValueFragment,
+  type MeasurementUnitsEnum,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
-import { FetchMoreProps } from "@dashboard/types";
-import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
+import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { type FetchMoreProps } from "@dashboard/types";
+import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 import { Accordion, Box, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { AttributeListItem } from "./AttributeListItem";
-import { AttributeRowHandlers, VariantAttributeScope } from "./types";
+import { type AttributeRowHandlers, type VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;

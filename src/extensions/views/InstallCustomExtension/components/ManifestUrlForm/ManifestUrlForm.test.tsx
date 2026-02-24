@@ -1,7 +1,7 @@
 import { fireEvent, logRoles, render, screen } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 
-import { ExtensionInstallFormData } from "../../types";
+import { type ExtensionInstallFormData } from "../../types";
 import { ManifestUrlForm } from "./ManifestUrlForm";
 
 describe("ManifestUrlForm", () => {

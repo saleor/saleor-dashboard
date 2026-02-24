@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { RecursiveMenuItem } from "@dashboard/structures/types";
+import { type RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { menu } from "../../fixtures";
-import { TreeOperation } from "../MenuItems";
+import { type TreeOperation } from "../MenuItems";
 import { computeRelativeTree } from "./tree";
 
 const relativeOutput: RecursiveMenuItem[][] = [

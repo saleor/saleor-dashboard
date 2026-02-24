@@ -1,10 +1,10 @@
 import {
-  FulfillmentFragment,
-  FulfillmentStatus,
+  type FulfillmentFragment,
+  type FulfillmentStatus,
   GiftCardEventsEnum,
   OrderAction,
-  OrderDetailsFragment,
-  OrderStatus,
+  type OrderDetailsFragment,
+  type OrderStatus,
 } from "@dashboard/graphql";
 import compact from "lodash/compact";
 

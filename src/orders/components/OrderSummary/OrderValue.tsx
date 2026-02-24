@@ -1,20 +1,20 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
 import {
   DiscountValueTypeEnum,
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderLinesUpdateFragment,
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
-import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Popover, PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { Box, Popover, type PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import { ORDER_DISCOUNT, OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
+import { ORDER_DISCOUNT, type OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 import { OrderValueHeader } from "./OrderValueHeader";

@@ -1,15 +1,15 @@
 import { GridTable } from "@dashboard/components/GridTable";
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { renderCollection } from "@dashboard/misc";
-import { Node } from "@dashboard/types";
+import { type Node } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Box, Button, Checkbox, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ProductTableItem } from "./ProductTableItem";
-import { Product } from "./types";
+import { type Product } from "./types";
 import { useProductDrag } from "./useProductDrag";
 
 interface ProductsTableProps {

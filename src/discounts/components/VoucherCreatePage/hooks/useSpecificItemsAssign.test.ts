@@ -1,14 +1,14 @@
 import { VoucherCreatePageTab } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import {
-  CategoryWithTotalProductsFragment,
-  CollectionWithTotalProductsFragment,
-  CountryWithCodeFragment,
-  SearchProductFragment,
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type CountryWithCodeFragment,
+  type SearchProductFragment,
 } from "@dashboard/graphql";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { SpecificItemsData, useSpecificItemsAssign } from "./useSpecificItemsAssign";
+import { type SpecificItemsData, useSpecificItemsAssign } from "./useSpecificItemsAssign";
 
 describe("VoucherCreatePage / hooks / useSpecificItemsAssign", () => {
   const onChange = jest.fn();

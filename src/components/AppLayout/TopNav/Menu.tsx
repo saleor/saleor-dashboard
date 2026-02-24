@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, Button, Dropdown, List, Text, TextProps } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { Settings } from "lucide-react";
 
 interface TopNavMenuItem {

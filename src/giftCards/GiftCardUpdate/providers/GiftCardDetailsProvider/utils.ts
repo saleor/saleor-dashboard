@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import moment from "moment";
 
-import { ExtendedGiftCard, GiftCardBase } from "./types";
+import { type ExtendedGiftCard, type GiftCardBase } from "./types";
 
 function isGiftCardExpired<T extends GiftCardBase>(giftCard: T): boolean {
   if (!giftCard?.expiryDate) {

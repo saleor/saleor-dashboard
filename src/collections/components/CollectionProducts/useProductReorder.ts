@@ -1,9 +1,9 @@
 import { useReorderProductsInCollectionMutation } from "@dashboard/graphql";
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
-import { Product } from "./types";
+import { type Product } from "./types";
 import { useCollectionId } from "./useCollectionId";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
 

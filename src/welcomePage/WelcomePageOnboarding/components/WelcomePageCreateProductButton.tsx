@@ -6,7 +6,7 @@ import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { PrimaryActionProps } from "./type";
+import { type PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
 export const WelcomePageCreateProductButton = ({ onClick }: PrimaryActionProps) => {

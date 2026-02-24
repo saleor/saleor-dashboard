@@ -1,13 +1,13 @@
 import {
-  AttributeValueFragment,
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type AttributeValueFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import { FormsetChange } from "@dashboard/hooks/useFormset";
-import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
-import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
+import { type FormsetChange } from "@dashboard/hooks/useFormset";
+import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
+import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { AttributeInput } from "./Attributes";
+import { type AttributeInput } from "./Attributes";
 
 export enum VariantAttributeScope {
   ALL = "ALL",

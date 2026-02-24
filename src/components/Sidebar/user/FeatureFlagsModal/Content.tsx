@@ -1,4 +1,4 @@
-import { Name } from "@dashboard/featureFlags/availableFlags";
+import { type Name } from "@dashboard/featureFlags/availableFlags";
 import { Box, Text } from "@saleor/macaw-ui-next";
 
 import { ToggleButton } from "./ToggleButton";

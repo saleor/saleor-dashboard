@@ -1,4 +1,4 @@
-import { PermissionEnum } from "@dashboard/graphql";
+import { type PermissionEnum } from "@dashboard/graphql";
 
 export interface AppPermission {
   code: PermissionEnum;

@@ -1,6 +1,6 @@
-import { CataloguePredicateAPI } from "@dashboard/discounts/types";
+import { type CataloguePredicateAPI } from "@dashboard/discounts/types";
 
-import { Condition, ConditionType } from "../Condition";
+import { type Condition, type ConditionType } from "../Condition";
 
 export function prepareCatalogueRuleConditions(
   cataloguePredicate: CataloguePredicateAPI,

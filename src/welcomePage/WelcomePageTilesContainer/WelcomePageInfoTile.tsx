@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { BoxProps } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { type BoxProps } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 
 export type WelcomePageInfoTileProps = {
   id: string;

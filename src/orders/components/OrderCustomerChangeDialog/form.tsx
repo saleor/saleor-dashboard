@@ -1,6 +1,6 @@
-import useForm, { CommonUseFormResult } from "@dashboard/hooks/useForm";
+import useForm, { type CommonUseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import * as React from "react";
+import type * as React from "react";
 
 export enum CustomerChangeActionEnum {
   KEEP_ADDRESS = "keepAddress",

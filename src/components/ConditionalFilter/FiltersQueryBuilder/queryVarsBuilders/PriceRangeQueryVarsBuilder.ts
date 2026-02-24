@@ -1,9 +1,9 @@
-import { PriceRangeInput } from "@dashboard/graphql";
+import { type PriceRangeInput } from "@dashboard/graphql";
 
-import { Handler, NoopValuesHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, NoopValuesHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
-import { FilterOnlyQueryVarsBuilder } from "./types";
+import { type FilterOnlyQueryVarsBuilder } from "./types";
 
 const SUPPORTED_PRICE_RANGE_FILTERS = new Set(["price", "minimalPrice"] as const);
 

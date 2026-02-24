@@ -1,4 +1,4 @@
-import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
+import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 
 import { getAttributeValueFields } from "./utils";
 

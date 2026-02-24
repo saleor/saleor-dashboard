@@ -1,12 +1,12 @@
 import { PAGINATE_BY } from "@dashboard/config";
 import {
-  CategoryWithTotalProductsFragment,
-  CollectionWithTotalProductsFragment,
-  SearchProductFragment,
+  type CategoryWithTotalProductsFragment,
+  type CollectionWithTotalProductsFragment,
+  type SearchProductFragment,
 } from "@dashboard/graphql";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 
-import { VoucherCreatePageTab } from "../types";
+import { type VoucherCreatePageTab } from "../types";
 
 type ProductVariant = NonNullable<SearchProductFragment["variants"]>[number];
 

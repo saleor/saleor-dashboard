@@ -1,8 +1,8 @@
-import { UseFormResult } from "@dashboard/hooks/useForm";
+import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { createContext, useContext } from "react";
 
-import { OrderGrantRefundFormData } from "./form";
-import { GrantRefundAction, GrantRefundState } from "./reducer";
+import { type OrderGrantRefundFormData } from "./form";
+import { type GrantRefundAction, type GrantRefundState } from "./reducer";
 
 interface GrantRefundContext {
   state: GrantRefundState;

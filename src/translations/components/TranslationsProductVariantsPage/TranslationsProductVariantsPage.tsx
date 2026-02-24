@@ -2,13 +2,13 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
-import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@dashboard/graphql";
+import { LanguageCodeEnum, type ProductVariantTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
+  type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,

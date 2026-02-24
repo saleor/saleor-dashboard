@@ -1,5 +1,5 @@
 import { createFilterStructure } from "@dashboard/discounts/components/VoucherListPage";
-import { VoucherListUrlFilters } from "@dashboard/discounts/urls";
+import { type VoucherListUrlFilters } from "@dashboard/discounts/urls";
 import { date } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { getFilterQueryParams } from "@dashboard/utils/filters";

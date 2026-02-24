@@ -3,25 +3,25 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
-import { AttributeInput, VariantAttributeScope } from "@dashboard/components/Attributes";
+import { type AttributeInput, VariantAttributeScope } from "@dashboard/components/Attributes";
 import {
-  ProductDetailsVariantFragment,
-  ProductFragment,
-  ProductMediaFragment,
-  ProductTypeQuery,
-  ProductVariantCreateDataQuery,
-  ProductVariantFragment,
-  SelectedVariantAttributeFragment,
-  StockInput,
-  VariantAttributeFragment,
+  type ProductDetailsVariantFragment,
+  type ProductFragment,
+  type ProductMediaFragment,
+  type ProductTypeQuery,
+  type ProductVariantCreateDataQuery,
+  type ProductVariantFragment,
+  type SelectedVariantAttributeFragment,
+  type StockInput,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
-import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
+import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { ProductStockInput } from "../components/ProductStocks";
-import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
+import { type ProductStockInput } from "../components/ProductStocks";
+import { type ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 interface Node {
   id: string;

@@ -2,14 +2,14 @@ import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
-  ActiveTab,
-  BulkAction,
-  Dialog,
-  Filters,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
+  type ActiveTab,
+  type BulkAction,
+  type Dialog,
+  type Filters,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+  type TabActionDialog,
 } from "../types";
 
 const modelTypesSection = "/model-types/";

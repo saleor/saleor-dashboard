@@ -1,8 +1,12 @@
 import { channelUrl } from "@dashboard/channels/urls";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { messages } from "../messages";
-import { AvailabilityIssue, ChannelDiagnosticData, ProductDiagnosticData } from "./types";
+import {
+  type AvailabilityIssue,
+  type ChannelDiagnosticData,
+  type ProductDiagnosticData,
+} from "./types";
 
 interface CheckContext {
   product: ProductDiagnosticData;

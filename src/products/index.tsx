@@ -5,23 +5,23 @@ import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
 import { useIntl } from "react-intl";
-import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productAddPath,
-  ProductCreateUrlQueryParams,
+  type ProductCreateUrlQueryParams,
   productImagePath,
-  ProductImageUrlQueryParams,
+  type ProductImageUrlQueryParams,
   productListPath,
-  ProductListUrlQueryParams,
+  type ProductListUrlQueryParams,
   ProductListUrlSortField,
   productPath,
-  ProductUrlQueryParams,
+  type ProductUrlQueryParams,
   productVariantAddPath,
-  ProductVariantAddUrlQueryParams,
+  type ProductVariantAddUrlQueryParams,
   productVariantEditPath,
-  ProductVariantEditUrlQueryParams,
+  type ProductVariantEditUrlQueryParams,
   productVariantLegacyEditPath,
 } from "./urls";
 import ProductCreateComponent from "./views/ProductCreate";

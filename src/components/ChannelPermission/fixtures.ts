@@ -1,4 +1,4 @@
-import { AllocationStrategyEnum, ChannelFragment } from "@dashboard/graphql";
+import { AllocationStrategyEnum, type ChannelFragment } from "@dashboard/graphql";
 
 export const allChannels: ChannelFragment[] = [
   {

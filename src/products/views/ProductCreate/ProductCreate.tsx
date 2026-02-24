@@ -1,15 +1,15 @@
 // @ts-strict-ignore
-import { ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
+import { type ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   AttributeEntityTypeEnum,
-  PageWhereInput,
-  ProductChannelListingErrorFragment,
-  ProductErrorWithAttributesFragment,
+  type PageWhereInput,
+  type ProductChannelListingErrorFragment,
+  type ProductErrorWithAttributesFragment,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductCreateMutation,
@@ -27,12 +27,12 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {
-  ProductCreateData,
+  type ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
 import {
   productAddUrl,
-  ProductCreateUrlDialog,
-  ProductCreateUrlQueryParams,
+  type ProductCreateUrlDialog,
+  type ProductCreateUrlQueryParams,
   productUrl,
 } from "@dashboard/products/urls";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";

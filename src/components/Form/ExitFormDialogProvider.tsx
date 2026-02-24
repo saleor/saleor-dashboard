@@ -2,7 +2,7 @@
 import { createContext } from "react";
 
 import ExitFormDialog from "./ExitFormDialog";
-import { ExitFormDialogData } from "./types";
+import { type ExitFormDialogData } from "./types";
 import useBeforeUnload from "./useBeforeUnload";
 import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 

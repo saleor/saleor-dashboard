@@ -1,23 +1,23 @@
 // @ts-strict-ignore
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
-  MoneyFragment,
-  OrderDetailsFragment,
+  type MoneyFragment,
+  type OrderDetailsFragment,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getById } from "@dashboard/misc";
-import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import type * as React from "react";
 import { createContext, useContext, useState } from "react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  GetOrderLineDiscountContextConsumerProps,
-  OrderDiscountConsumerCommonProps,
-  OrderLineDiscountData,
+  type GetOrderLineDiscountContextConsumerProps,
+  type OrderDiscountConsumerCommonProps,
+  type OrderLineDiscountData,
 } from "./types";
 import { getOrderLineDiscount, getParsedDiscountData, useDiscountDialog } from "./utils";
 

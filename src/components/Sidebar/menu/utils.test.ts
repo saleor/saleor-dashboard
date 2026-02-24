@@ -1,9 +1,9 @@
-import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
-import { Extension } from "@dashboard/extensions/types";
-import { PermissionEnum } from "@dashboard/graphql";
+import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { type Extension } from "@dashboard/extensions/types";
+import { type PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
-import { SidebarMenuItem } from "./types";
+import { type SidebarMenuItem } from "./types";
 import { getMenuItemExtension, isMenuActive, mapToExtensionsItems } from "./utils";
 
 jest.mock("@dashboard/extensions/urls", () => ({

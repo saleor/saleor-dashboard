@@ -2,10 +2,10 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { MenuItemTypeWithOptions } from "../types";
+import { type MenuItemTypeWithOptions } from "../types";
 
 export const useLinkValue = (linkType: MenuItemTypeWithOptions) => {
   const categorySearch = useCategorySearch({

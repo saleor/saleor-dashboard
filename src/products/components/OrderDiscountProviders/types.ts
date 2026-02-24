@@ -1,7 +1,7 @@
-import { MoneyFragment, TaxedMoneyFragment } from "@dashboard/graphql";
-import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { type MoneyFragment, type TaxedMoneyFragment } from "@dashboard/graphql";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 
-import { OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
+import { type OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 
 export interface OrderDiscountData extends OrderDiscountCommonInput {
   amount: MoneyFragment;

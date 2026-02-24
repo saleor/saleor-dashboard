@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   useShippingMethodTranslationDetailsQuery,
   useUpdateShippingMethodTranslationsMutation,
 } from "@dashboard/graphql";
@@ -12,7 +12,7 @@ import { stringifyQs } from "@dashboard/utils/urls";
 import { useIntl } from "react-intl";
 
 import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
+import { type TranslationField, type TranslationInputFieldName } from "../types";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsShippingMethodQueryParams {

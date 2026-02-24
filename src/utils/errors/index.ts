@@ -1,4 +1,4 @@
-import { UserError } from "@dashboard/types";
+import { type UserError } from "@dashboard/types";
 
 export function getFieldError<T extends UserError>(errors: T[], field: string): T | undefined {
   return errors.find(err => err.field === field);

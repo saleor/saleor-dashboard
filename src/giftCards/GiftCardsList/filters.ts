@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FilterElement } from "@dashboard/components/Filter/types";
+import { type FilterElement } from "@dashboard/components/Filter/types";
 import {
   createFilterTabUtils,
   getMinMaxQueryParam,
@@ -10,7 +10,7 @@ import { defineMessages } from "react-intl";
 
 import {
   GiftCardListFilterKeys,
-  GiftCardListUrlFilters,
+  type GiftCardListUrlFilters,
   GiftCardListUrlFiltersEnum,
 } from "./types";
 

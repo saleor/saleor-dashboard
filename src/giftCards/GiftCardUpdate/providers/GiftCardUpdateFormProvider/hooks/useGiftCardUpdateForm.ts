@@ -1,11 +1,11 @@
-import { UseFormResult } from "@dashboard/hooks/useForm";
+import { type UseFormResult } from "@dashboard/hooks/useForm";
 import omit from "lodash/omit";
 import { useContext } from "react";
 
 import {
   GiftCardUpdateFormContext,
-  GiftCardUpdateFormData,
-  GiftCardUpdateFormErrors,
+  type GiftCardUpdateFormData,
+  type GiftCardUpdateFormErrors,
 } from "../GiftCardUpdateFormProvider";
 
 type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> & GiftCardUpdateFormErrors;

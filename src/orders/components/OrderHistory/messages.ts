@@ -1,6 +1,10 @@
 // @ts-strict-ignore
-import { OrderEventFragment, OrderEventsEmailsEnum, OrderEventsEnum } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import {
+  type OrderEventFragment,
+  OrderEventsEmailsEnum,
+  OrderEventsEnum,
+} from "@dashboard/graphql";
+import { type IntlShape } from "react-intl";
 
 const getUserOrApp = (event: OrderEventFragment) => {
   if (event.user) {

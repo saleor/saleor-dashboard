@@ -1,4 +1,4 @@
-import { DragOverEvent } from "@dnd-kit/core";
+import { type DragOverEvent } from "@dnd-kit/core";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useSortableDragOver } from "./useSortableDragOver";

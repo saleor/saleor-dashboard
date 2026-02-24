@@ -3723,6 +3723,10 @@
     "context": "Number of shipping zones configured",
     "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
   },
+  "JDvxO6": {
+    "context": "search gift card placeholder",
+    "string": "Search Gift Cards (e.g. by code, email, user name)"
+  },
   "JDz5h8": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -8299,10 +8303,6 @@
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
-  },
-  "jY80Gs": {
-    "context": "search gift card placeholder",
-    "string": "Search by code, e.g {exampleGiftCardCode}"
   },
   "ja+tNj": {
     "string": "requests access to new permissions."

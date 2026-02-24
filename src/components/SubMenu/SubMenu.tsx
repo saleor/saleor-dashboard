@@ -1,5 +1,5 @@
 import { Box, List, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export interface MenuItem {
   id: string;

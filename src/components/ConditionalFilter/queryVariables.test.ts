@@ -5,7 +5,7 @@ import {
   ProductTypeEnum,
 } from "@dashboard/graphql";
 
-import { Condition, FilterContainer, FilterElement } from "./FilterElement";
+import { Condition, type FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";

@@ -1,4 +1,7 @@
-import { AddressValidationRulesQuery, useAddressValidationRulesQuery } from "@dashboard/graphql";
+import {
+  type AddressValidationRulesQuery,
+  useAddressValidationRulesQuery,
+} from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { selectRules, useAddressValidation } from "./useAddressValidation";

@@ -1,5 +1,5 @@
-import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

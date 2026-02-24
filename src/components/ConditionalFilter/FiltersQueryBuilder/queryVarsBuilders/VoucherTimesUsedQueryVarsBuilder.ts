@@ -1,10 +1,10 @@
-import { VoucherFilterInput } from "@dashboard/graphql";
+import { type VoucherFilterInput } from "@dashboard/graphql";
 
-import { Handler, NoopValuesHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, NoopValuesHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
-import { FilterOnlyQueryVarsBuilder } from "./types";
+import { type FilterOnlyQueryVarsBuilder } from "./types";
 
 type VoucherTimesUsedQuery = Pick<VoucherFilterInput, "timesUsed">;
 

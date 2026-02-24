@@ -1,8 +1,7 @@
-import { MetadataItemFragment } from "@dashboard/graphql";
+import { type MetadataItemFragment } from "@dashboard/graphql";
 
-import { asFlagValue, FlagList } from "../availableFlags";
-import * as AvailableFlags from "../availableFlags";
-import { Strategy } from "../Strategy";
+import { asFlagValue, type FlagList, type Name } from "../availableFlags";
+import { type Strategy } from "../Strategy";
 
 const METADATA_KEY = "feature_flags";
 
@@ -21,10 +20,10 @@ const flagListFromMetadata = (
   const flagList = rawFlags ? JSON.parse(rawFlags.value) : (defaultsList as FlagList);
 
   return Object.keys(defaultsList).reduce((list: FlagList, key: string) => {
-    list[key as AvailableFlags.Name] = defaultsList[key as AvailableFlags.Name];
+    list[key as Name] = defaultsList[key as Name];
 
     if (flagList[key]) {
-      list[key as AvailableFlags.Name] = flagList[key];
+      list[key as Name] = flagList[key];
     }
 
     return list;
@@ -34,7 +33,7 @@ const flagListFromMetadata = (
 export class MetadataStrategy implements Strategy {
   constructor(public metadata: MetadataItemFragment[]) {}
 
-  fetchAll(): Promise<AvailableFlags.FlagList> {
+  fetchAll(): Promise<FlagList> {
     return Promise.resolve(flagListFromMetadata(this.metadata));
   }
 }

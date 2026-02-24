@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { StatusDotProps } from "@dashboard/components/StatusDot/StatusDot";
-import { ProductFragment } from "@dashboard/graphql";
+import { type StatusDotProps } from "@dashboard/components/StatusDot/StatusDot";
+import { type ProductFragment } from "@dashboard/graphql";
 
 export const getTileStatus = (
   productChannelListings: ProductFragment["channelListings"],

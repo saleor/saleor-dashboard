@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { defineMessages, useIntl } from "react-intl";
 
-import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
+import { type OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
 
 interface OrderRefundProps {
   data: OrderRefundFormData;

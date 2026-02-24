@@ -1,5 +1,5 @@
-import { ApolloClient, ApolloError } from "@apollo/client";
-import { INotificationCallback } from "@dashboard/components/notifications";
+import { type ApolloClient, ApolloError } from "@apollo/client";
+import { type INotificationCallback } from "@dashboard/components/notifications";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -11,19 +11,24 @@ import {
   saveCredentials,
 } from "@dashboard/utils/credentialsManagement";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { GetExternalAccessTokenData, LoginData, useAuth, useAuthState } from "@saleor/sdk";
+import {
+  type GetExternalAccessTokenData,
+  type LoginData,
+  useAuth,
+  useAuthState,
+} from "@saleor/sdk";
 import isEmpty from "lodash/isEmpty";
 import { useEffect, useRef, useState } from "react";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { parseAuthError } from "../errors";
 import {
-  ExternalLoginInput,
-  RequestExternalLoginInput,
-  RequestExternalLogoutInput,
-  UserContext,
-  UserContextError,
+  type ExternalLoginInput,
+  type RequestExternalLoginInput,
+  type RequestExternalLogoutInput,
+  type UserContext,
+  type UserContextError,
 } from "../types";
 import { useLastLoginMethod } from "./useLastLoginMethod";
 

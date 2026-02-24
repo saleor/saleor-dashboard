@@ -3,26 +3,26 @@ import AccountPermissionGroups from "@dashboard/components/AccountPermissionGrou
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
-  SearchPermissionGroupsQuery,
-  StaffErrorFragment,
-  StaffMemberDetailsFragment,
-  UserFragment,
+  type SearchPermissionGroupsQuery,
+  type StaffErrorFragment,
+  type StaffMemberDetailsFragment,
+  type UserFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getUserName } from "@dashboard/misc";
 import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Button, Option, Text } from "@saleor/macaw-ui-next";
+import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
+import { Button, type Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { StaffPreferences } from "../StaffPreferences/StaffPreferences";

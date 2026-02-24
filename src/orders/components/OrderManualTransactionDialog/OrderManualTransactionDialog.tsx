@@ -1,13 +1,13 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { commonMessages } from "@dashboard/intl";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
   OrderManualTransactionForm,
-  OrderManualTransactionFormProps,
+  type OrderManualTransactionFormProps,
 } from "../OrderManualTransactionForm";
 import { manualTransactionMessages } from "./messages";
 

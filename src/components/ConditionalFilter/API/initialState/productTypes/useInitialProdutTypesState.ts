@@ -4,7 +4,7 @@ import { ProductTypeEnum } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { ProductTypesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { type ProductTypesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
 
 export interface InitialProductTypesAPIState {

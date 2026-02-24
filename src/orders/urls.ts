@@ -1,4 +1,4 @@
-import { TransactionActionEnum } from "@dashboard/graphql";
+import { type TransactionActionEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { stringify } from "qs";
 import urlJoin from "url-join";
@@ -12,16 +12,16 @@ import {
 } from "../components/ConditionalFilter/FilterElement/FilterElement";
 import { prepareStructure } from "../components/ConditionalFilter/ValueProvider/utils";
 import {
-  ActiveTab,
-  BulkAction,
-  Dialog,
-  Filters,
-  FiltersWithKeyValueValues,
-  FiltersWithMultipleValues,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
+  type ActiveTab,
+  type BulkAction,
+  type Dialog,
+  type Filters,
+  type FiltersWithKeyValueValues,
+  type FiltersWithMultipleValues,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+  type TabActionDialog,
 } from "../types";
 
 const orderSectionUrl = "/orders";

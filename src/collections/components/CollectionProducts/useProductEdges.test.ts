@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import { PaginationState } from "@dashboard/hooks/usePaginator";
+import { type PaginationState } from "@dashboard/hooks/usePaginator";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useCollectionId } from "./useCollectionId";

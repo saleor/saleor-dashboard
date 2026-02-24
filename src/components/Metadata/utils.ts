@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
-import { EventData, EventDataAction, EventDataField } from "./types";
+import { type EventData, EventDataAction, EventDataField } from "./types";
 
 export const nameSeparator = ":";
 export const nameInputPrefix = EventDataField.name;

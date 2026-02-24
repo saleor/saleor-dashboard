@@ -1,5 +1,5 @@
-import { ChannelCollectionData } from "@dashboard/channels/utils";
-import { CollectionDetailsQuery, SearchProductsQuery } from "@dashboard/graphql";
+import { type ChannelCollectionData } from "@dashboard/channels/utils";
+import { type CollectionDetailsQuery, type SearchProductsQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const createChannelsChangeHandler =

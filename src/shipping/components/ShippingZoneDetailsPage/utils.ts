@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { ShippingZoneQuery } from "@dashboard/graphql";
+import { type ShippingZoneQuery } from "@dashboard/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 
-import { ShippingZoneUpdateFormData } from "./types";
+import { type ShippingZoneUpdateFormData } from "./types";
 
 export const getInitialFormData = (
   shippingZone?: ShippingZoneQuery["shippingZone"],

@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 
 import { ConditionalFilterContext } from "../ConditionalFilter/context/context";
-import { InitialResponseType } from "../ConditionalFilter/types";
-import { LockedFilter, ModalFilterConfig, ModalFilterResult } from "./types";
+import { type InitialResponseType } from "../ConditionalFilter/types";
+import { type LockedFilter, type ModalFilterConfig, type ModalFilterResult } from "./types";
 import { useModalFilters } from "./useModalFilters";
 
 interface ModalFiltersProviderProps<

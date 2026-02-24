@@ -4,15 +4,15 @@ import {
   numberCell,
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
-import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
-import { VoucherFragment } from "@dashboard/graphql";
-import { Sort } from "@dashboard/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Locale } from "@dashboard/components/Locale";
+import { type VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import { type VoucherFragment } from "@dashboard/graphql";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import moment from "moment";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

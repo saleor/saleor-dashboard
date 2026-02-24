@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
+import { type GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
 import { createContext } from "react";
 import * as React from "react";
 
 import { useGiftCardPermissions } from "../../../hooks/useGiftCardPermissions";
-import { ExtendedGiftCard } from "./types";
+import { type ExtendedGiftCard } from "./types";
 import { getExtendedGiftCard } from "./utils";
 
 interface GiftCardDetailsProviderProps {

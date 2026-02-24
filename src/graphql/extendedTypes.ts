@@ -1,4 +1,4 @@
-import { PermissionEnum } from "./types.generated";
+import { type PermissionEnum } from "./types.generated";
 
 export interface Node {
   id: string;

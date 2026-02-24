@@ -6,8 +6,8 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CollectionInput,
-  CollectionUpdateMutation,
+  type CollectionInput,
+  type CollectionUpdateMutation,
   useCollectionChannelListingUpdateMutation,
   useCollectionDetailsQuery,
   useCollectionUpdateMutation,
@@ -28,12 +28,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
-import { CollectionUpdateData } from "../components/CollectionDetailsPage/form";
+import { type CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
   collectionListUrl,
   collectionUrl,
-  CollectionUrlDialog,
-  CollectionUrlQueryParams,
+  type CollectionUrlDialog,
+  type CollectionUrlQueryParams,
 } from "../urls";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 

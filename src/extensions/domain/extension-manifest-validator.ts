@@ -1,5 +1,5 @@
-import { AppManifest, appManifestSchema } from "@dashboard/extensions/domain/app-manifest";
-import { ZodIssue } from "zod";
+import { type AppManifest, appManifestSchema } from "@dashboard/extensions/domain/app-manifest";
+import { type ZodIssue } from "zod";
 
 export class ExtensionManifestValidator {
   validateAppManifest(manifestJson: unknown): AppManifest | { issues: ZodIssue[] } {

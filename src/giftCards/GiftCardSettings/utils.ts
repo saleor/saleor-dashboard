@@ -1,6 +1,9 @@
-import { GiftCardSettingsExpiryTypeEnum, GiftCardSettingsUpdateInput } from "@dashboard/graphql";
+import {
+  GiftCardSettingsExpiryTypeEnum,
+  type GiftCardSettingsUpdateInput,
+} from "@dashboard/graphql";
 
-import { GiftCardSettingsFormData } from "./types";
+import { type GiftCardSettingsFormData } from "./types";
 
 export const getGiftCardSettingsInputData = ({
   expiryPeriodActive,

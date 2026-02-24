@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import { ComponentProps, ReactNode } from "react";
+import { type ComponentProps, type ReactNode } from "react";
 
 import { TablePaginationWithContext } from "./TablePaginationWithContext";
 

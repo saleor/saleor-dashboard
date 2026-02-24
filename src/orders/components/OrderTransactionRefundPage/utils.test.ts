@@ -1,9 +1,12 @@
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
+import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
 import { getRefundEditOrderLinesToRefund } from "./formDefaults";
-import { LineToRefund, OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
+import {
+  type LineToRefund,
+  type OrderTransactionRefundPageFormData,
+} from "./OrderTransactionRefundPage";
 import { canRefundShipping, getMaxQtyToRefund, useRecalculateTotalAmount } from "./utils";
 
 describe("getMaxQtyToRefund", () => {

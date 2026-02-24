@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
+import { type MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
 import { useMemo } from "react";
 
 export const DELIVERY_ATTEMPT_KEY = "sidebar_app_webhook_alert_state";

@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getBySlug } from "@dashboard/misc";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import {
@@ -15,7 +15,7 @@ import {
   Checkbox,
   DynamicCombobox,
   Input,
-  Option,
+  type Option,
   Spinner,
   Text,
 } from "@saleor/macaw-ui-next";

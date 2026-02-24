@@ -1,5 +1,5 @@
-import { ListCustomersQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type ListCustomersQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 
 export interface AddressTypeInput {
   city: string;

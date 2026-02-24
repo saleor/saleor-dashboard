@@ -1,26 +1,26 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  CreateManualTransactionCaptureMutation,
-  CreateManualTransactionCaptureMutationVariables,
+  type CreateManualTransactionCaptureMutation,
+  type CreateManualTransactionCaptureMutationVariables,
   FulfillmentStatus,
-  OrderFulfillmentApproveMutation,
-  OrderFulfillmentApproveMutationVariables,
-  OrderNoteUpdateMutation,
-  OrderNoteUpdateMutationVariables,
-  OrderTransactionRequestActionMutation,
-  OrderTransactionRequestActionMutationVariables,
-  OrderUpdateMutation,
-  OrderUpdateMutationVariables,
+  type OrderFulfillmentApproveMutation,
+  type OrderFulfillmentApproveMutationVariables,
+  type OrderNoteUpdateMutation,
+  type OrderNoteUpdateMutationVariables,
+  type OrderTransactionRequestActionMutation,
+  type OrderTransactionRequestActionMutationVariables,
+  type OrderUpdateMutation,
+  type OrderUpdateMutationVariables,
   TransactionActionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
-import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
+import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
@@ -32,7 +32,7 @@ import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
-import { PartialMutationProviderOutput } from "@dashboard/types";
+import { type PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -62,7 +62,7 @@ import {
   orderReturnUrl,
   orderTransactionRefundUrl,
   orderUrl,
-  OrderUrlQueryParams,
+  type OrderUrlQueryParams,
 } from "../../../urls";
 
 interface OrderUnconfirmedDetailsProps {

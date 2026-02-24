@@ -1,16 +1,16 @@
 // @ts-strict-ignore
 import { DashboardModal } from "@dashboard/components/Modal";
-import { GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graphql";
+import { type GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
-import GiftCardCreateDialogForm, { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import GiftCardCreateDialogForm, { type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
-import { GiftCardCreateFormCustomer } from "./types";
+import { type GiftCardCreateFormCustomer } from "./types";
 import { getGiftCardCreateOnCompletedMessage, getGiftCardExpiryInputData } from "./utils";
 
 interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> {

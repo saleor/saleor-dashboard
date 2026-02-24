@@ -8,7 +8,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   discountAddUrl,
-  DiscountListUrlSortField,
+  type DiscountListUrlSortField,
   discountUrl,
 } from "@dashboard/discounts/discountsUrls";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -17,11 +17,11 @@ import {
   getExtensionsItemsForDiscountOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { PromotionFragment } from "@dashboard/graphql";
+import { type PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
-import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
+import { type FilterPresetsProps, type PageListProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

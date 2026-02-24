@@ -1,15 +1,18 @@
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ProductWhereInput } from "@dashboard/graphql";
+import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { maybe } from "@dashboard/misc";
-import { Container, FetchMoreProps } from "@dashboard/types";
+import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
@@ -20,7 +23,7 @@ import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/Moda
 import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { Products, SelectedChannel } from "./types";
+import { type Products, type SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
 interface AssignProductDialogSingleProps extends FetchMoreProps {

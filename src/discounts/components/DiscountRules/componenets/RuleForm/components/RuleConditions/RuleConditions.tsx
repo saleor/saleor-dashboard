@@ -1,6 +1,6 @@
 import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
-import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition, type Rule } from "@dashboard/discounts/models";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";

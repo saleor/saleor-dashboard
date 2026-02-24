@@ -1,8 +1,11 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { MenuErrorFragment } from "@dashboard/graphql";
+import { type MenuErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -16,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemDialogLinkValue } from "./MenuItemDialogLinkValue";
 import { getLinkTypeOptions } from "./options";
-import { MenuItemDialogFormData } from "./types";
+import { type MenuItemDialogFormData } from "./types";
 import { getValidationSchema } from "./validationSchema";
 
 interface MenuItemDialogProps {

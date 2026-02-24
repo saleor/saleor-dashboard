@@ -1,4 +1,4 @@
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 
 import { getDateGroupKey, groupEventsByDate } from "./utils";
 

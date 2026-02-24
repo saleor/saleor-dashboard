@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { FilterEventEmitter } from "./EventEmitter";
-import { FilterEvent } from "./types";
+import { type FilterEvent } from "./types";
 
 interface UseEventsProps {
   onChange?: (event: FilterEvent["detail"]) => void;

@@ -1,14 +1,14 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import {
   PermissionEnum,
-  TransactionRequestRefundForGrantedRefundErrorFragment,
+  type TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Checkbox, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { OrderReturnData } from "../../form";
-import { CanSendRefund } from "../../utils";
+import { type OrderReturnData } from "../../form";
+import { type CanSendRefund } from "../../utils";
 import { submitCardMessages } from "./messages";
 
 interface SendRefundCheckboxProps {

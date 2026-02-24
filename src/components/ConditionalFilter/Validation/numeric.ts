@@ -1,4 +1,4 @@
-import { FilterElement } from "../FilterElement";
+import { type FilterElement } from "../FilterElement";
 
 const isTooLong = (value: string, row: number) => {
   if (value.length > 25) {

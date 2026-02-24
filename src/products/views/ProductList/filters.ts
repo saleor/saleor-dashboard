@@ -1,13 +1,17 @@
 // @ts-strict-ignore
-import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import {
+  type AttributeFragment,
+  AttributeInputTypeEnum,
+  StockAvailability,
+} from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {
-  FilterElement,
-  FilterElementKeyValue,
-  FilterElementRegular,
+  type FilterElement,
+  type FilterElementKeyValue,
+  type FilterElementRegular,
 } from "../../../components/Filter/types";
 import {
   createFilterTabUtils,
@@ -17,10 +21,10 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-  GteLte,
+  type GteLte,
 } from "../../../utils/filters";
 import {
-  ProductListUrlFilters,
+  type ProductListUrlFilters,
   ProductListUrlFiltersAsDictWithMultipleValues,
   ProductListUrlFiltersEnum,
   ProductListUrlFiltersWithKeyValueValues,

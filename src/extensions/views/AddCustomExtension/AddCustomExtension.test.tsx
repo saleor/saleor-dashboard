@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as React from "react";
+import type * as React from "react";
 
 import { AddCustomExtension } from "./AddCustomExtension";
 import { useHandleCreateAppSubmit } from "./hooks/useHandleCreateAppSubmit";

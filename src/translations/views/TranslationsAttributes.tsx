@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
   useUpdateAttributeTranslationsMutation,
   useUpdateAttributeValueTranslationsMutation,
@@ -11,14 +11,14 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
-import { ListViews, Pagination } from "@dashboard/types";
+import { ListViews, type Pagination } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
 import TranslationsAttributesPage, { fieldNames } from "../components/TranslationsAttributesPage";
-import { TranslationField } from "../types";
+import { type TranslationField } from "../types";
 
 type HandleSubmitData = string | OutputData;
 

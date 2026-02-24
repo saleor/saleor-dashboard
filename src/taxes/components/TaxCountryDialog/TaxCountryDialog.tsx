@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardModal } from "@dashboard/components/Modal";
-import { CountryFragment } from "@dashboard/graphql";
+import { type CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";

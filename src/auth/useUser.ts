@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { UserContext as Context } from "./types";
+import { type UserContext as Context } from "./types";
 
 export const UserContext = createContext<Context>({
   login: undefined,

@@ -30,8 +30,8 @@ import { useIntl } from "react-intl";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
   orderListUrl,
-  OrderListUrlDialog,
-  OrderListUrlQueryParams,
+  type OrderListUrlDialog,
+  type OrderListUrlQueryParams,
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
