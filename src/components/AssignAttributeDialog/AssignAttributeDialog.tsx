@@ -1,43 +1,18 @@
-// @ts-strict-ignore
-import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { AvailableAttributeFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { maybe, renderCollection } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import { messages } from "./messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    checkboxCell: {
-      paddingLeft: 0,
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      marginTop: theme.spacing(2),
-      height: theme.spacing(3),
-      justifyContent: "center",
-    },
-    wideCell: {
-      width: "100%",
-    },
-  }),
-  { name: "AssignAttributeDialog" },
-);
 
 interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -69,7 +44,6 @@ const AssignAttributeDialog = ({
   onToggle,
 }: AssignAttributeDialogProps) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
 
@@ -85,18 +59,16 @@ const AssignAttributeDialog = ({
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 
-        <TextField
+        <Input
           data-test-id="attribute-search-input"
           name="query"
           value={query}
           onChange={onQueryChange}
           label={intl.formatMessage(messages.searchInputLabel)}
           placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
+          width="100%"
+          endAdornment={loading ? <SaleorThrobber size={16} /> : undefined}
+          autoComplete="off"
         />
 
         <InfiniteScroll
@@ -107,44 +79,48 @@ const AssignAttributeDialog = ({
           scrollThreshold="100px"
           scrollableTarget={scrollableTargetId}
         >
-          <ResponsiveTable key="table">
-            <TableBody data-test-id="attributes-list">
-              {renderCollection(
-                attributes,
-                attribute => {
-                  if (!attribute) {
-                    return null;
-                  }
+          <Box display="flex" flexDirection="column" data-test-id="attributes-list">
+            {renderCollection(
+              attributes,
+              attribute => {
+                if (!attribute) {
+                  return null;
+                }
 
-                  const isChecked = !!selected.find(
-                    selectedAttribute => selectedAttribute === attribute.id,
-                  );
+                const isChecked = !!selected.find(
+                  selectedAttribute => selectedAttribute === attribute.id,
+                );
 
-                  return (
-                    <TableRowLink key={maybe(() => attribute.id)}>
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
-                      </TableCell>
-                      <TableCell className={classes.wideCell}>
-                        {attribute.name}
-                        <Text size={2} fontWeight="light" display="block">
-                          {attribute.slug}
-                        </Text>
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                },
-                () =>
-                  !loading && (
-                    <TableRowLink>
-                      <TableCell colSpan={2}>
-                        <FormattedMessage {...messages.noMembersFound} />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
+                return (
+                  <Box
+                    key={attribute.id}
+                    display="flex"
+                    alignItems="center"
+                    gap={3}
+                    cursor="pointer"
+                    paddingX={3}
+                    paddingY={2}
+                    data-test-id="dialog-row"
+                    onClick={() => onToggle(attribute.id)}
+                  >
+                    <Checkbox checked={isChecked} />
+                    <Box flexGrow="1">
+                      {attribute.name}
+                      <Text size={2} fontWeight="light" display="block">
+                        {attribute.slug}
+                      </Text>
+                    </Box>
+                  </Box>
+                );
+              },
+              () =>
+                !loading && (
+                  <Box paddingX={3} paddingY={2}>
+                    <FormattedMessage {...messages.noMembersFound} />
+                  </Box>
+                ),
+            )}
+          </Box>
         </InfiniteScroll>
 
         <Box>
