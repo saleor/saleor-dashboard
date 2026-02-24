@@ -1,5 +1,5 @@
 import { errorTracker } from "@dashboard/services/errorTracking";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
 
@@ -42,34 +42,40 @@ export const useSidebarDotState = (): SidebarDotState => {
     }
   }, [sidebarDotRemoteState]);
 
-  const handleClick = async (clickDate: string) => {
-    try {
-      await persist({
-        lastClickDate: clickDate,
-        lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
-      });
-      lastClickDateRef.current = clickDate;
-    } catch (error) {
-      errorTracker.captureException(error as Error);
-    }
-  };
-
-  const handleFailedAttempt = async (failedAttemptDate: string) => {
-    try {
-      await persist({
-        lastClickDate: lastClickDateRef.current ?? "",
-        lastFailedAttemptDate: failedAttemptDate,
-      });
-      lastFailedAttemptDateRef.current = failedAttemptDate;
-
-      // Show dot if no clicks or failed attempt is newer
-      if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
-        setHasProblems(true);
+  const handleClick = useCallback(
+    async (clickDate: string) => {
+      try {
+        await persist({
+          lastClickDate: clickDate,
+          lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
+        });
+        lastClickDateRef.current = clickDate;
+      } catch (error) {
+        errorTracker.captureException(error as Error);
       }
-    } catch (error) {
-      errorTracker.captureException(error as Error);
-    }
-  };
+    },
+    [persist],
+  );
+
+  const handleFailedAttempt = useCallback(
+    async (failedAttemptDate: string) => {
+      try {
+        await persist({
+          lastClickDate: lastClickDateRef.current ?? "",
+          lastFailedAttemptDate: failedAttemptDate,
+        });
+        lastFailedAttemptDateRef.current = failedAttemptDate;
+
+        // Show dot if no clicks or failed attempt is newer
+        if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
+          setHasProblems(true);
+        }
+      } catch (error) {
+        errorTracker.captureException(error as Error);
+      }
+    },
+    [persist],
+  );
 
   return {
     handleAppsListItemClick: handleClick,

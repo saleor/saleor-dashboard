@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { type MetadataInput, useUserAccountUpdateMutation } from "@dashboard/graphql";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export const DELIVERY_ATTEMPT_KEY = "sidebar_app_webhook_alert_state";
 
@@ -19,20 +19,23 @@ export const useSidebarWebhookAlertMetadata = (): SidebarWebhookAlertMetadata =>
 
   const [saveMetadata] = useUserAccountUpdateMutation();
 
-  const persist = async (metadataInput: Record<string, string>) => {
-    await saveMetadata({
-      variables: {
-        input: {
-          metadata: [
-            {
-              key: DELIVERY_ATTEMPT_KEY,
-              value: JSON.stringify(metadataInput),
-            } satisfies MetadataInput,
-          ],
+  const persist = useCallback(
+    async (metadataInput: Record<string, string>) => {
+      await saveMetadata({
+        variables: {
+          input: {
+            metadata: [
+              {
+                key: DELIVERY_ATTEMPT_KEY,
+                value: JSON.stringify(metadataInput),
+              } satisfies MetadataInput,
+            ],
+          },
         },
-      },
-    });
-  };
+      });
+    },
+    [saveMetadata],
+  );
 
   const sidebarDotRemoteState = useMemo(() => {
     const webhookAlertMetadata = user?.metadata.find(m => m.key === DELIVERY_ATTEMPT_KEY) ?? null;
