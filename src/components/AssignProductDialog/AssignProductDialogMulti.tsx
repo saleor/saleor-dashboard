@@ -1,4 +1,7 @@
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -170,6 +173,9 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
                   gap={3}
                   paddingX={3}
                   paddingY={2}
+                  borderBottomWidth={1}
+                  borderBottomStyle="solid"
+                  borderColor="default1"
                   data-test-id="assign-product-table-row"
                 >
                   <Box className={styles.checkboxCell}>
@@ -191,9 +197,9 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
                     )}
                   </Box>
                   <Box flexGrow="1">
-                    {product.name}
+                    <Text size={3}>{product.name}</Text>
                     {!isProductAvailable && productUnavailableText && (
-                      <Text display="block" size={1} color="default2">
+                      <Text display="block" size={2} color="default2">
                         {productUnavailableText}
                       </Text>
                     )}

@@ -1,4 +1,7 @@
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
@@ -144,7 +147,16 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
 
               return (
                 <Fragment key={product ? product.id : "skeleton"}>
-                  <Box display="flex" alignItems="center" gap={3} paddingX={3} paddingY={2}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={3}
+                    paddingX={3}
+                    paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
+                  >
                     <Box className={styles.checkboxCell}>
                       <Checkbox
                         checked={productsWithAllVariantsSelected[productIndex]}
@@ -172,7 +184,7 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                       )}
                     </Box>
                     <Box flexGrow="1">
-                      <Text>{product?.name}</Text>
+                      <Text size={3}>{product?.name}</Text>
                     </Box>
                   </Box>
                   {productVariants.map((variant, variantIndex) => (
@@ -183,6 +195,9 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                       gap={3}
                       paddingX={3}
                       paddingY={1}
+                      borderBottomWidth={1}
+                      borderBottomStyle="solid"
+                      borderColor="default1"
                       data-test-id="assign-variant-table-row"
                     >
                       <Box className={styles.checkboxCell} />
@@ -204,8 +219,8 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                         />
                       </Box>
                       <Box flexGrow="1">
-                        <Text>{variant.name}</Text>
-                        <Text size={1} color="default2">
+                        <Text size={3}>{variant.name}</Text>
+                        <Text size={2} color="default2">
                           <FormattedMessage
                             {...messages.assignVariantDialogSKU}
                             values={{

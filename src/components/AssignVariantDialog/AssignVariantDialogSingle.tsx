@@ -1,4 +1,7 @@
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
@@ -154,7 +157,16 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
               productChoices,
               product => (
                 <Fragment key={product ? product.id : "skeleton"}>
-                  <Box display="flex" alignItems="center" gap={3} paddingX={3} paddingY={2}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={3}
+                    paddingX={3}
+                    paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
+                  >
                     <Box className={styles.checkboxCell} />
                     <Box className={styles.avatar}>
                       {product?.thumbnail?.url ? (
@@ -168,7 +180,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                       )}
                     </Box>
                     <Box flexGrow="1">
-                      <Text>{product?.name}</Text>
+                      <Text size={3}>{product?.name}</Text>
                     </Box>
                   </Box>
                   {(product?.variants ?? [])
@@ -181,6 +193,9 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                         gap={3}
                         paddingX={3}
                         paddingY={1}
+                        borderBottomWidth={1}
+                        borderBottomStyle="solid"
+                        borderColor="default1"
                         cursor="pointer"
                         data-test-id="assign-variant-table-row"
                         onClick={() => handleVariantSelect(variant.id)}
@@ -197,8 +212,8 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                           </RadioGroup.Item>
                         </Box>
                         <Box flexGrow="1">
-                          <Text>{variant.name}</Text>
-                          <Text size={1} color="default2">
+                          <Text size={3}>{variant.name}</Text>
+                          <Text size={2} color="default2">
                             <FormattedMessage
                               {...messages.assignVariantDialogSKU}
                               values={{ sku: variant.sku }}

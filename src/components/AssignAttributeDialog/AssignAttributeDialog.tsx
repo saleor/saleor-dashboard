@@ -1,4 +1,7 @@
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -54,7 +57,7 @@ const AssignAttributeDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto auto" gap={3}>
         <DashboardModal.Header>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
@@ -100,12 +103,17 @@ const AssignAttributeDialog = ({
                     cursor="pointer"
                     paddingX={3}
                     paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
                     data-test-id="dialog-row"
                     onClick={() => onToggle(attribute.id)}
                   >
-                    <Checkbox checked={isChecked} />
+                    <Box __transform="scale(1.2)">
+                      <Checkbox checked={isChecked} />
+                    </Box>
                     <Box flexGrow="1">
-                      {attribute.name}
+                      <Text size={3}>{attribute.name}</Text>
                       <Text size={2} fontWeight="light" display="block">
                         {attribute.slug}
                       </Text>

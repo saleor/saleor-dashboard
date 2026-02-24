@@ -1,4 +1,7 @@
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -79,7 +82,7 @@ const AssignContainerDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto" gap={3}>
         <DashboardModal.Header>{labels.title}</DashboardModal.Header>
 
         <Input

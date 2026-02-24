@@ -60,7 +60,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto" gap={3}>
         <ModalProductFilterProvider
           excludedFilters={excludedFilters}
           initialConstraints={initialConstraints}

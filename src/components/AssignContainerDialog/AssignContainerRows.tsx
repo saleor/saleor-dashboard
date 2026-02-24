@@ -1,5 +1,5 @@
 import { type Container } from "@dashboard/types";
-import { Box, Checkbox, RadioGroup } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 
 interface SingleSelectionRowsProps {
   containers: Container[];
@@ -25,6 +25,9 @@ export const SingleSelectionRows = ({
           cursor="pointer"
           paddingX={3}
           paddingY={2}
+          borderBottomWidth={1}
+          borderBottomStyle="solid"
+          borderColor="default1"
           data-test-id="dialog-row"
           data-selected={isSelected}
           onClick={() => onSelect(container.id)}
@@ -33,7 +36,7 @@ export const SingleSelectionRows = ({
             {null}
           </RadioGroup.Item>
           <Box flexGrow="1" data-test-id={container.name}>
-            {container.name}
+            <Text size={3}>{container.name}</Text>
           </Box>
         </Box>
       );
@@ -62,12 +65,17 @@ export const MultiSelectionRows = ({
         cursor="pointer"
         paddingX={3}
         paddingY={2}
+        borderBottomWidth={1}
+        borderBottomStyle="solid"
+        borderColor="default1"
         data-test-id="dialog-row"
         onClick={() => onToggle(container)}
       >
-        <Checkbox checked={isSelected(container.id)} />
+        <Box __transform="scale(1.2)">
+          <Checkbox checked={isSelected(container.id)} />
+        </Box>
         <Box flexGrow="1" data-test-id={container.name}>
-          {container.name}
+          <Text size={3}>{container.name}</Text>
         </Box>
       </Box>
     ))}

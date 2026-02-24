@@ -1,5 +1,8 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
@@ -57,9 +60,9 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="sm" gap={3}>
         <form onSubmit={handleSubmit(onConfirm)}>
-          <DashboardModal.Grid>
+          <DashboardModal.Grid gap={3}>
             <DashboardModal.Header>
               <FormattedMessage {...messages.assignCountriesTitle} />
             </DashboardModal.Header>
@@ -82,7 +85,7 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
 
             {restWorldCountries.length > 0 && (
               <>
-                <Text fontSize={3}>
+                <Text size={3}>
                   <FormattedMessage {...messages.quickPickSubtitle} />
                 </Text>
 
@@ -91,6 +94,9 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                   alignItems="center"
                   paddingX={3}
                   paddingY={2}
+                  borderBottomWidth={1}
+                  borderBottomStyle="solid"
+                  borderColor="default1"
                   className={styles.clickableRow}
                   data-test-id="rest-of-the-world-row"
                   onClick={() => handleRestOfTheWorldChange(!isRestOfTheWorldSelected)}
@@ -103,12 +109,14 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                       <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
                     </Text>
                   </Box>
-                  <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
+                  <Box className={styles.checkboxScaled}>
+                    <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
+                  </Box>
                 </Box>
               </>
             )}
 
-            <Text fontSize={3}>
+            <Text size={3}>
               <FormattedMessage {...messages.countriesSubtitle} />
             </Text>
 
@@ -124,12 +132,19 @@ const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDia
                       alignItems="center"
                       paddingX={3}
                       paddingY={2}
+                      borderBottomWidth={1}
+                      borderBottomStyle="solid"
+                      borderColor="default1"
                       className={styles.clickableRow}
                       data-test-id="country-row"
                       onClick={() => handleCountryChange(country.code, !isChecked)}
                     >
-                      <Box flexGrow="1">{country.country}</Box>
-                      <Checkbox checked={isChecked} />
+                      <Box flexGrow="1">
+                        <Text size={3}>{country.country}</Text>
+                      </Box>
+                      <Box className={styles.checkboxScaled}>
+                        <Checkbox checked={isChecked} />
+                      </Box>
                     </Box>
                   );
                 })}

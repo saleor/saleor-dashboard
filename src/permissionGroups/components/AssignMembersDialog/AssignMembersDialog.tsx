@@ -1,5 +1,8 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -8,7 +11,12 @@ import { type SearchStaffMembersQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
-import { type DialogProps, type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
+import {
+  type DialogProps,
+  type FetchMoreProps,
+  type RelayToFlat,
+  type SearchPageProps,
+} from "@dashboard/types";
 import { Box, Checkbox, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -60,7 +68,7 @@ const AssignMembersDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr" gap={3}>
         <DashboardModal.Header>
           <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
@@ -107,6 +115,9 @@ const AssignMembersDialog = ({
                     cursor="pointer"
                     paddingX={3}
                     paddingY={2}
+                    borderBottomWidth={1}
+                    borderBottomStyle="solid"
+                    borderColor="default1"
                     data-test-id="user-row"
                     onClick={() =>
                       handleStaffMemberAssign(
@@ -117,10 +128,12 @@ const AssignMembersDialog = ({
                       )
                     }
                   >
-                    <Checkbox checked={isSelected} />
+                    <Box __transform="scale(1.2)">
+                      <Checkbox checked={isSelected} />
+                    </Box>
                     <UserAvatar url={member?.avatar?.url} initials={getUserInitials(member)} />
                     <Box display="flex" flexDirection="column" justifyContent="center" flexGrow="1">
-                      <Text>{getUserName(member) || <Skeleton />}</Text>
+                      <Text size={3}>{getUserName(member) || <Skeleton />}</Text>
                       <Text size={2} color="default2">
                         {member.isActive
                           ? intl.formatMessage(messages.staffActive)

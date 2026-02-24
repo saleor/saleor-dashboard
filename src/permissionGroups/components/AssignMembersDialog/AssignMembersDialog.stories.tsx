@@ -1,6 +1,7 @@
-import { SearchStaffMembersQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import type { SearchStaffMembersQuery } from "@dashboard/graphql";
+import type { RelayToFlat } from "@dashboard/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useRef } from "react";
 import { fn } from "storybook/test";
 
 import AssignMembersDialog from "./AssignMembersDialog";
@@ -65,6 +66,17 @@ const staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]> = [
 const meta: Meta<typeof AssignMembersDialog> = {
   title: "Components/Dialogs/AssignMembersDialog",
   component: AssignMembersDialog,
+  render: args => {
+    const onSearchChangeRef = useRef(args.onSearchChange);
+
+    onSearchChangeRef.current = args.onSearchChange;
+
+    const stableOnSearchChange = useRef((query: string) => {
+      setTimeout(() => onSearchChangeRef.current?.(query), 0);
+    });
+
+    return <AssignMembersDialog {...args} onSearchChange={stableOnSearchChange.current} />;
+  },
   argTypes: {
     confirmButtonState: {
       control: "inline-radio",

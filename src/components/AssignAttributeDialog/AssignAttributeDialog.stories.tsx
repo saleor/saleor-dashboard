@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AttributeFactory } from "@storybookUtils/AssignDialogShared/factories";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
+import { useRef } from "react";
 import { fn } from "storybook/test";
 
 import AssignAttributeDialog from "./AssignAttributeDialog";
@@ -11,9 +12,23 @@ const meta: Meta<typeof AssignAttributeDialog> = {
   title: "Components/Dialogs/AssignAttributeDialog",
   component: AssignAttributeDialog,
   loaders: [async () => ({ attributes: await AttributeFactory.buildList(6) })],
-  render: (args: Props, { loaded }: { loaded: { attributes: Props["attributes"] } }) => (
-    <AssignAttributeDialog {...args} attributes={args.attributes ?? loaded.attributes} />
-  ),
+  render: (args: Props, { loaded }: { loaded: { attributes: Props["attributes"] } }) => {
+    const onFetchRef = useRef(args.onFetch);
+
+    onFetchRef.current = args.onFetch;
+
+    const stableOnFetch = useRef((query: string) => {
+      setTimeout(() => onFetchRef.current?.(query), 0);
+    });
+
+    return (
+      <AssignAttributeDialog
+        {...args}
+        attributes={args.attributes ?? loaded.attributes}
+        onFetch={stableOnFetch.current}
+      />
+    );
+  },
   argTypes: {
     confirmButtonState: {
       control: "inline-radio",
