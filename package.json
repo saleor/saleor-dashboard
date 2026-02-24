@@ -201,6 +201,7 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "front-matter": "^4.0.2",
     "globals": "^16.5.0",
+    "graphql-codegen-typescript-operation-types": "2.0.2",
     "graphql-config": "^5.1.5",
     "html-to-react": "^1.7.0",
     "identity-obj-proxy": "^3.0.0",
