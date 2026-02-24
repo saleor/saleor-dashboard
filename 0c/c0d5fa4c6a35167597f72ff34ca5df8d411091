@@ -1,0 +1,29 @@
+.changeset/long-fish-land.md
+  94334117b92d36c1 1-5
+src/extensions/ripples/appProblems.tsx
+  94334117b92d36c1 1-14
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  94334117b92d36c1 18,131-138
+src/ripples/allRipples.ts
+  94334117b92d36c1 4,42-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "0cc0d5fa4c6a35167597f72ff34ca5df8d411091",
+  "prompts": {
+    "94334117b92d36c1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b109d0bf-180c-4181-b23f-0c1754b9dd61",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 33,
+      "total_deletions": 1,
+      "accepted_lines": 32,
+      "overriden_lines": 0
+    }
+  }
+}
