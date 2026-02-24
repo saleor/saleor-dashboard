@@ -1,0 +1,4 @@
+.clickableRow {
+  cursor: pointer;
+  user-select: none;
+}
