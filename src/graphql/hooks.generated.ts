@@ -16953,11 +16953,11 @@ export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollec
 export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
 export type SearchCollectionsQueryResult = Apollo.QueryResult<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>;
 export const SearchCollectionsWithTotalProductsDocument = gql`
-    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $filter: CollectionFilterInput, $channel: String) {
   search: collections(
     after: $after
     first: $first
-    filter: {search: $query}
+    filter: $filter
     channel: $channel
   ) {
     edges {
@@ -16987,7 +16987,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *      channel: // value for 'channel'
  *   },
  * });

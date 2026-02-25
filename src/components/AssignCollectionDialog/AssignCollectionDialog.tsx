@@ -1,7 +1,15 @@
-// @ts-strict-ignore
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { CollectionFilterInput } from "@dashboard/graphql";
+import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import {
+  ModalCollectionFilterProvider,
+  useModalCollectionFilterContext,
+} from "../ModalFilters/entityConfigs/ModalCollectionFilterProvider";
+import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 
 type Collections = {
@@ -9,30 +17,78 @@ type Collections = {
   name: string;
 }[];
 
-interface AssignCollectionDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+interface AssignCollectionDialogProps extends FetchMoreProps, DialogProps {
+  confirmButtonState: ConfirmButtonTransitionState;
   collections: Collections | null;
+  loading: boolean;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
+  onFilterChange?: (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
+  onFetch: (value: string) => void;
+  onSubmit: (data: Container[]) => void;
+  selectionMode?: "single" | "multiple";
+  selectedId?: string;
+  excludedFilters?: string[];
 }
 
-const AssignCollectionDialog = ({ collections, labels, ...rest }: AssignCollectionDialogProps) => {
+const AssignCollectionDialogInner = ({
+  collections,
+  onFilterChange,
+  onFetch,
+  labels: labelOverrides,
+  open,
+  onClose,
+  ...restProps
+}: AssignCollectionDialogProps) => {
   const intl = useIntl();
+  const { combinedFilters, clearFilters } = useModalCollectionFilterContext();
+
+  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+    filterVariables: combinedFilters,
+    open,
+    onFetch: (filters, query) => {
+      if (onFilterChange) {
+        onFilterChange(filters.filter, filters.channel, query);
+
+        return;
+      }
+
+      onFetch(query);
+    },
+  });
+
+  const labels: AssignContainerDialogProps["labels"] = {
+    title: intl.formatMessage(messages.assignCollectionDialogHeader),
+    label: intl.formatMessage(messages.assignCollectionDialogLabel),
+    placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
+    confirmBtn: intl.formatMessage(messages.confirmBtn),
+    ...labelOverrides,
+  };
 
   return (
     <AssignContainerDialog
-      containers={collections}
+      {...restProps}
+      containers={collections ?? []}
+      labels={labels}
+      open={open}
+      onClose={onClose}
+      onFetch={() => {}}
       emptyMessage={intl.formatMessage(messages.noCollectionsFound)}
-      labels={{
-        title: intl.formatMessage(messages.assignCollectionDialogHeader),
-        label: intl.formatMessage(messages.assignCollectionDialogLabel),
-        placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
-        confirmBtn: intl.formatMessage(messages.confirmBtn),
-        ...labels,
-      }}
-      {...rest}
+      search={{ query, onQueryChange, resetQuery }}
+      filtersSlot={<ModalFilters />}
+      onResetFilters={clearFilters}
     />
   );
 };
+
+const AssignCollectionDialog = ({ excludedFilters, ...props }: AssignCollectionDialogProps) => (
+  <ModalCollectionFilterProvider excludedFilters={excludedFilters}>
+    <AssignCollectionDialogInner {...props} />
+  </ModalCollectionFilterProvider>
+);
 
 AssignCollectionDialog.displayName = "AssignCollectionDialog";
 export default AssignCollectionDialog;
