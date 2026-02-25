@@ -10,14 +10,16 @@ import { OrderUsedGiftCards } from "./OrderUsedGiftCards";
 
 const mockGiftCards = [
   {
-    id: "1",
-    last4CodeChars: "LTD2",
+    __typename: "GiftCardApplied" as const,
+    giftCard: { __typename: "GiftCard" as const, id: "1", last4CodeChars: "LTD2" },
+    amount: { __typename: "Money" as const, amount: 50, currency: "USD" },
   },
   {
-    id: "2",
-    last4CodeChars: "FRTG",
+    __typename: "GiftCardApplied" as const,
+    giftCard: { __typename: "GiftCard" as const, id: "2", last4CodeChars: "FRTG" },
+    amount: { __typename: "Money" as const, amount: 50, currency: "USD" },
   },
-] as OrderDetailsFragment["giftCards"];
+] satisfies OrderDetailsFragment["giftCardsApplied"];
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (

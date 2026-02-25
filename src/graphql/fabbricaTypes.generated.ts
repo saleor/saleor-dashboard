@@ -8773,6 +8773,19 @@ export type GiftCardAddNoteInput = {
 };
 
 /**
+ * Represents a gift card applied to an order with the amount used.
+ *
+ * Added in Saleor 3.22.
+ */
+export type GiftCardApplied = {
+  __typename: 'GiftCardApplied';
+  /** Amount of money spent from the gift card. */
+  amount: Money;
+  /** Gift card used in the order. */
+  giftCard: GiftCard;
+};
+
+/**
  * Activate gift cards.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD.
@@ -16609,6 +16622,12 @@ export type Order = Node & ObjectWithMetadata & {
   fulfillments: Array<Fulfillment>;
   /** List of user gift cards. */
   giftCards: Array<GiftCard>;
+  /**
+   * List of gift cards applied to this order with the amount used from each.
+   *
+   * Added in Saleor 3.22.
+   */
+  giftCardsApplied: Array<GiftCardApplied>;
   /**
    * List of granted refunds.
    *

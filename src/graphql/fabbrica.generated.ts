@@ -408,6 +408,7 @@ import type {
   GiftCardActivate,
   GiftCardAddNote,
   GiftCardAddNoteInput,
+  GiftCardApplied,
   GiftCardBulkActivate,
   GiftCardBulkCreate,
   GiftCardBulkCreateInput,
@@ -12512,6 +12513,30 @@ export const defineGiftCardAddNoteInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /**
+ * Represents a gift card applied to an order with the amount used.
+ *
+ * Added in Saleor 3.22.
+ */
+export type OptionalGiftCardApplied = {
+  __typename?: 'GiftCardApplied';
+  /** Amount of money spent from the gift card. */
+  amount?: OptionalMoney | undefined;
+  /** Gift card used in the order. */
+  giftCard?: OptionalGiftCard | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardApplied} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardAppliedFactoryInterface}
+ */
+export const defineGiftCardAppliedFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardApplied,
+  {}
+> = defineTypeFactory;
+
+/**
  * Activate gift cards.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD.
@@ -17681,6 +17706,12 @@ export type OptionalOrder = {
   fulfillments?: OptionalFulfillment[] | undefined;
   /** List of user gift cards. */
   giftCards?: OptionalGiftCard[] | undefined;
+  /**
+ * List of gift cards applied to this order with the amount used from each.
+ *
+ * Added in Saleor 3.22.
+ */
+  giftCardsApplied?: OptionalGiftCardApplied[] | undefined;
   /**
  * List of granted refunds.
  *

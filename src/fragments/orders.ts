@@ -348,8 +348,8 @@ export const fragmentOrderDetails = gql`
     payments {
       ...OrderPayment
     }
-    giftCards {
-      ...OrderGiftCard
+    giftCardsApplied {
+      ...GiftCardApplied
     }
     grantedRefunds {
       ...OrderGrantedRefund
@@ -727,35 +727,15 @@ export const fragmentPayment = gql`
   }
 `;
 
-export const fragmentOrderGiftcard = gql`
-  fragment OrderGiftCard on GiftCard {
-    id
-    last4CodeChars
-    events {
+export const fragmentGiftCardApplied = gql`
+  fragment GiftCardApplied on GiftCardApplied {
+    giftCard {
       id
-      type
-      orderId
-      date
-      balance {
-        ...OrderGiftCardEventBalance
-      }
+      last4CodeChars
     }
-  }
-`;
-
-export const fragmentOrderGiftCardEventBalance = gql`
-  fragment OrderGiftCardEventBalance on GiftCardEventBalance {
-    initialBalance {
-      ...Money
-    }
-    currentBalance {
-      ...Money
-    }
-    oldInitialBalance {
-      ...Money
-    }
-    oldCurrentBalance {
-      ...Money
+    amount {
+      amount
+      currency
     }
   }
 `;

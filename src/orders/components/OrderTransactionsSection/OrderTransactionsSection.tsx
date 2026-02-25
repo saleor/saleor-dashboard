@@ -39,7 +39,7 @@ export const OrderTransactionsSection = ({
 }: OrderTransactionsSectionProps): JSX.Element => {
   const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
 
-  const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
+  const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCardsApplied].some(
     arr => arr?.length > 0,
   );
 
@@ -85,8 +85,12 @@ export const OrderTransactionsSection = ({
             onVoid={onPaymentVoid}
           />
         ))}
-        {order?.giftCards?.map(giftCard => (
-          <OrderTransactionGiftCard key={giftCard.id} order={order} giftCard={giftCard} />
+        {order?.giftCardsApplied?.map(application => (
+          <OrderTransactionGiftCard
+            key={application.giftCard.id}
+            order={order}
+            application={application}
+          />
         ))}
 
         {!hasAnyTransactions && (

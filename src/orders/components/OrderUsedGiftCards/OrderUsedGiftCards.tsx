@@ -8,7 +8,7 @@ import { messages } from "./messages";
 import { showComma } from "./utils";
 
 interface OrderUsedGiftCardsProps {
-  giftCards: OrderDetailsFragment["giftCards"];
+  giftCards: OrderDetailsFragment["giftCardsApplied"];
 }
 
 export const OrderUsedGiftCards = ({ giftCards }: OrderUsedGiftCardsProps) => {
@@ -16,13 +16,13 @@ export const OrderUsedGiftCards = ({ giftCards }: OrderUsedGiftCardsProps) => {
     <FormattedMessage
       {...messages.usedGiftCard}
       values={{
-        link: giftCards.map(({ id, last4CodeChars }, index) => {
+        link: giftCards.map(({ giftCard }, index) => {
           const hasComma = showComma(giftCards.length, index);
 
           return (
-            <Link key={id} href={giftCardPath(id)}>
+            <Link key={giftCard.id} href={giftCardPath(giftCard.id)}>
               <Box as="span" marginRight={hasComma ? 1 : 0}>
-                {last4CodeChars}
+                {giftCard.last4CodeChars}
                 {hasComma && ", "}
               </Box>
             </Link>

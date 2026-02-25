@@ -22,7 +22,7 @@ type BaseOrderValueProps = {
   shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
   shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
   giftCardsAmount: number | null;
-  usedGiftCards: OrderDetailsFragment["giftCards"] | null;
+  usedGiftCards: OrderDetailsFragment["giftCardsApplied"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
 };
 
@@ -466,11 +466,9 @@ describe("OrderValue", () => {
         giftCardsAmount: 25,
         usedGiftCards: [
           {
-            __typename: "GiftCard" as const,
-            id: "gc-1",
-            last4CodeChars: "ABCD",
-            currentBalance: { __typename: "Money" as const, amount: 25, currency: "USD" },
-            events: [],
+            __typename: "GiftCardApplied" as const,
+            giftCard: { __typename: "GiftCard" as const, id: "gc-1", last4CodeChars: "ABCD" },
+            amount: { __typename: "Money" as const, amount: 25, currency: "USD" },
           },
         ],
       };
@@ -494,18 +492,14 @@ describe("OrderValue", () => {
         giftCardsAmount: 50,
         usedGiftCards: [
           {
-            __typename: "GiftCard" as const,
-            id: "gc-1",
-            last4CodeChars: "ABCD",
-            currentBalance: { __typename: "Money" as const, amount: 25, currency: "USD" },
-            events: [],
+            __typename: "GiftCardApplied" as const,
+            giftCard: { __typename: "GiftCard" as const, id: "gc-1", last4CodeChars: "ABCD" },
+            amount: { __typename: "Money" as const, amount: 25, currency: "USD" },
           },
           {
-            __typename: "GiftCard" as const,
-            id: "gc-2",
-            last4CodeChars: "WXYZ",
-            currentBalance: { __typename: "Money" as const, amount: 25, currency: "USD" },
-            events: [],
+            __typename: "GiftCardApplied" as const,
+            giftCard: { __typename: "GiftCard" as const, id: "gc-2", last4CodeChars: "WXYZ" },
+            amount: { __typename: "Money" as const, amount: 25, currency: "USD" },
           },
         ],
       };

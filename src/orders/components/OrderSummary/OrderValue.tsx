@@ -124,7 +124,7 @@ type LineUpdateFields = {
 // Fields that don't change on line mutations (from OrderDetailsFragment)
 type StaticFields = {
   giftCardsAmount: number | null;
-  usedGiftCards: OrderDetailsFragment["giftCards"] | null;
+  usedGiftCards: OrderDetailsFragment["giftCardsApplied"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
 };
 
@@ -499,7 +499,7 @@ export const OrderValue = (props: Props): ReactNode => {
                 usedGiftCards: usedGiftCards.length,
                 giftCardCodesList: (
                   <Text fontWeight="medium" color="default2" size={3}>
-                    ({usedGiftCards.map(card => card.last4CodeChars).join(", ")})
+                    ({usedGiftCards.map(card => card.giftCard.last4CodeChars).join(", ")})
                   </Text>
                 ),
               },

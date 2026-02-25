@@ -1,9 +1,4 @@
-import {
-  GiftCardEventsEnum,
-  OrderAction,
-  type OrderDetailsFragment,
-  OrderStatus,
-} from "@dashboard/graphql";
+import { OrderAction, type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 
 import { prepareMoney } from "../fixtures";
 import { OrderDetailsViewModel, type OrderTotalAmounts } from "./OrderDetailsViewModel";
@@ -197,380 +192,51 @@ describe("OrderModel", () => {
   });
 
   describe("getGiftCardAmountUsed", () => {
-    // Arrange
-    const orderId = "test-order-123";
-    const giftCardBalance = {
-      __typename: "GiftCardEventBalance" as const,
-      initialBalance: prepareMoney(0),
-      currentBalance: prepareMoney(50),
-      oldInitialBalance: prepareMoney(0),
-      oldCurrentBalance: prepareMoney(100),
-    };
+    const makeApplication = (
+      id: string,
+      last4CodeChars: string,
+      amount: number,
+      currency = "USD",
+    ): OrderDetailsFragment["giftCardsApplied"][0] => ({
+      __typename: "GiftCardApplied",
+      giftCard: { __typename: "GiftCard", id, last4CodeChars },
+      amount: { __typename: "Money", amount, currency },
+    });
 
     it("should return null when no gift cards are provided", () => {
       // Arrange
-      const args = {
-        id: orderId,
-        giftCards: [],
-      };
+      const giftCardsApplied: OrderDetailsFragment["giftCardsApplied"] = [];
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(giftCardsApplied);
 
       // Assert
       expect(result).toBe(null);
     });
 
-    it("should return null when gift cards have no USED_IN_ORDER events", () => {
+    it("should return amount used when single gift card was applied", () => {
       // Arrange
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.ACTIVATED,
-              orderId: null,
-              date: "2024-01-01",
-              balance: giftCardBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
+      const giftCardsApplied = [makeApplication("gc-1", "1234", 50)];
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(giftCardsApplied);
 
       // Assert
-      expect(result).toBe(null);
+      expect(result).toBe(50);
     });
 
-    it("should return null when USED_IN_ORDER events don't match the order ID", () => {
+    it("should return total amount when multiple gift cards were applied", () => {
       // Arrange
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId: "different-order-456",
-              date: "2024-01-01",
-              balance: giftCardBalance,
-            },
-          ],
-        },
+      const giftCardsApplied = [
+        makeApplication("gc-1", "1234", 50),
+        makeApplication("gc-2", "5678", 50),
       ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(giftCardsApplied);
 
       // Assert
-      expect(result).toBe(null);
-    });
-
-    it("should return amount used when single gift card was used in order", () => {
-      // Arrange
-      const usedAmount = 50;
-      const balance = {
-        __typename: "GiftCardEventBalance" as const,
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(50),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: prepareMoney(100),
-      };
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-01",
-              balance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
-
-      // Assert
-      expect(result).toBe(usedAmount);
-    });
-
-    it("should return total amount used when multiple gift cards were used in order", () => {
-      // Arrange
-      const firstCardBalance = {
-        __typename: "GiftCardEventBalance" as const,
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(50),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: prepareMoney(100),
-      };
-      const secondCardBalance = {
-        __typename: "GiftCardEventBalance" as const,
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(25),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: prepareMoney(75),
-      };
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-01",
-              balance: firstCardBalance,
-            },
-          ],
-        },
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-2",
-          last4CodeChars: "5678",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-2",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-01",
-              balance: secondCardBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
-
-      // Assert
-      expect(result).toBe(100); // 50 + 50 = 100
-    });
-
-    it("should handle gift card with multiple events and only use USED_IN_ORDER event for the specific order", () => {
-      // Arrange
-      const usedBalance = {
-        __typename: "GiftCardEventBalance" as const,
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(30),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: prepareMoney(80),
-      };
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.ACTIVATED,
-              orderId: null,
-              date: "2024-01-01",
-              balance: giftCardBalance,
-            },
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-2",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-02",
-              balance: usedBalance,
-            },
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-3",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId: "different-order-456",
-              date: "2024-01-03",
-              balance: giftCardBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
-
-      // Assert
-      expect(result).toBe(50); // Only the event for this specific order
-    });
-
-    it("should throw error when balance is missing", () => {
-      // Arrange
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-01",
-              balance: null,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
-        "[extractOrderGiftCardUsedAmount] Missing balance",
-      );
-    });
-
-    it("should throw error when balance is missing", () => {
-      // Arrange
-      const incompleteBalance: OrderDetailsFragment["giftCards"][0]["events"][0]["balance"] = null;
-      const giftCards: OrderDetailsFragment["giftCards"] = [
-        {
-          __typename: "GiftCard",
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent",
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId: orderId,
-              date: "2024-01-01",
-              balance: incompleteBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
-        "[extractOrderGiftCardUsedAmount] Missing balance",
-      );
-    });
-
-    it("should throw error when oldCurrentBalance is missing", () => {
-      // Arrange
-      const incompleteBalance: OrderDetailsFragment["giftCards"][0]["events"][0]["balance"] = {
-        __typename: "GiftCardEventBalance",
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(50),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: null,
-      };
-
-      const giftCards: OrderDetailsFragment["giftCards"] = [
-        {
-          __typename: "GiftCard",
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent",
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId: orderId,
-              date: "2024-01-01",
-              balance: incompleteBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
-        "[extractOrderGiftCardUsedAmount] Missing balance",
-      );
-    });
-
-    it("should return 0 when gift card balance didn't change", () => {
-      // Arrange
-      const unchangedBalance = {
-        __typename: "GiftCardEventBalance" as const,
-        initialBalance: prepareMoney(0),
-        currentBalance: prepareMoney(100),
-        oldInitialBalance: prepareMoney(0),
-        oldCurrentBalance: prepareMoney(100),
-      };
-      const giftCards = [
-        {
-          __typename: "GiftCard" as const,
-          id: "gift-card-1",
-          last4CodeChars: "1234",
-          events: [
-            {
-              __typename: "GiftCardEvent" as const,
-              id: "event-1",
-              type: GiftCardEventsEnum.USED_IN_ORDER,
-              orderId,
-              date: "2024-01-01",
-              balance: unchangedBalance,
-            },
-          ],
-        },
-      ];
-      const args = {
-        id: orderId,
-        giftCards,
-      };
-
-      // Act
-      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
-
-      // Assert
-      expect(result).toBe(0);
+      expect(result).toBe(100);
     });
   });
 

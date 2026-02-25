@@ -35,11 +35,8 @@ type Props = PropsWithBox<
 export const OrderSummary = (props: Props) => {
   const { order, onMarkAsPaid, useLegacyPaymentsApi = false, isEditable = false } = props;
   const intl = useIntl();
-  const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed({
-    id: order.id,
-    giftCards: order.giftCards,
-  });
-  const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
+  const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed(order.giftCardsApplied);
+  const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(order.giftCardsApplied);
   const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions);
   const canAnyRefund = OrderDetailsViewModel.canAnyRefund(order);
   const hasGiftCards = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);

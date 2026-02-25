@@ -1,12 +1,10 @@
 import {
   type FulfillmentFragment,
   type FulfillmentStatus,
-  GiftCardEventsEnum,
   OrderAction,
   type OrderDetailsFragment,
   type OrderStatus,
 } from "@dashboard/graphql";
-import compact from "lodash/compact";
 
 export interface OrderTotalAmounts {
   total: OrderDetailsFragment["total"];
@@ -94,50 +92,16 @@ export abstract class OrderDetailsViewModel {
     );
   }
 
-  static getGiftCardsAmountUsed(args: {
-    id: string;
-    giftCards: OrderDetailsFragment["giftCards"];
-  }): number | null {
-    if (!args.giftCards) {
-      return null;
-    }
+  static getGiftCardsAmountUsed(
+    giftCardsApplied: OrderDetailsFragment["giftCardsApplied"],
+  ): number | null {
+    if (!giftCardsApplied?.length) return null;
 
-    const usedInOrderEvents = compact(
-      args.giftCards.map(({ events }) =>
-        events.find(
-          ({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === args.id,
-        ),
-      ),
-    );
-
-    if (!usedInOrderEvents.length) {
-      return null;
-    }
-
-    return usedInOrderEvents.reduce((resultAmount, { balance }) => {
-      /**
-       * Instead of uncaught access error, explicitly throw.
-       * If this is actually an issue (not just wrong schema), Sentry will be notified and we can fix the issue properly
-       */
-      if (!balance || !balance.currentBalance || !balance.oldCurrentBalance) {
-        throw new Error("[extractOrderGiftCardUsedAmount] Missing balance", {
-          cause: JSON.stringify(balance),
-        });
-      }
-
-      const { currentBalance, oldCurrentBalance } = balance;
-      const amountToAdd = oldCurrentBalance.amount - currentBalance.amount;
-
-      return resultAmount + amountToAdd;
-    }, 0);
+    return giftCardsApplied.reduce((sum, { amount }) => sum + amount.amount, 0);
   }
 
-  static getUsedGiftCards(giftCards: OrderDetailsFragment["giftCards"]) {
-    if (giftCards && giftCards.length > 0) {
-      return giftCards;
-    }
-
-    return null;
+  static getUsedGiftCards(giftCardsApplied: OrderDetailsFragment["giftCardsApplied"]) {
+    return giftCardsApplied?.length ? giftCardsApplied : null;
   }
 
   static getShouldDisplayAmounts(orderAmounts: OrderTotalAmounts | null): {

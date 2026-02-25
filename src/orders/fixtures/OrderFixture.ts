@@ -3,7 +3,6 @@ import {
   DiscountValueTypeEnum,
   type FulfillmentFragment,
   FulfillmentStatus,
-  GiftCardEventsEnum,
   type InvoiceFragment,
   MarkAsPaidStrategyEnum,
   OrderAuthorizeStatusEnum,
@@ -45,7 +44,7 @@ export class OrderFixture {
     authorizeStatus: OrderAuthorizeStatusEnum.NONE,
     transactions: [],
     payments: [],
-    giftCards: [],
+    giftCardsApplied: [],
     grantedRefunds: [],
     discounts: [],
     events: [],
@@ -411,82 +410,34 @@ export class OrderFixture {
     privateMetadata: [],
   } satisfies FulfillmentFragment;
 
-  private static giftCards = [
+  private static giftCardsApplied = [
     {
-      __typename: "GiftCard",
-      id: "gift-card-id-1",
-      last4CodeChars: "4321",
-      events: [
-        {
-          type: GiftCardEventsEnum.USED_IN_ORDER,
-          __typename: "GiftCardEvent",
-          id: "",
-          orderId: "",
-          date: undefined,
-          balance: {
-            __typename: "GiftCardEventBalance",
-            initialBalance: {
-              __typename: "Money",
-              amount: 0,
-              currency: "USD",
-            },
-            currentBalance: {
-              __typename: "Money",
-              amount: 234.33,
-              currency: "USD",
-            },
-            oldInitialBalance: {
-              __typename: "Money",
-              amount: 0,
-              currency: "USD",
-            },
-            oldCurrentBalance: {
-              __typename: "Money",
-              amount: 500,
-              currency: "USD",
-            },
-          },
-        },
-      ],
+      __typename: "GiftCardApplied" as const,
+      giftCard: {
+        __typename: "GiftCard" as const,
+        id: "gift-card-id-1",
+        last4CodeChars: "4321",
+      },
+      amount: {
+        __typename: "Money" as const,
+        amount: 265.67,
+        currency: "USD",
+      },
     },
     {
-      __typename: "GiftCard",
-      id: "gift-card-id-1",
-      last4CodeChars: "2345",
-      events: [
-        {
-          type: GiftCardEventsEnum.USED_IN_ORDER,
-          __typename: "GiftCardEvent",
-          id: "",
-          orderId: "",
-          date: undefined,
-          balance: {
-            __typename: "GiftCardEventBalance",
-            initialBalance: {
-              __typename: "Money",
-              amount: 0,
-              currency: "USD",
-            },
-            currentBalance: {
-              __typename: "Money",
-              amount: 234.33,
-              currency: "USD",
-            },
-            oldInitialBalance: {
-              __typename: "Money",
-              amount: 0,
-              currency: "USD",
-            },
-            oldCurrentBalance: {
-              __typename: "Money",
-              amount: 500,
-              currency: "USD",
-            },
-          },
-        },
-      ],
+      __typename: "GiftCardApplied" as const,
+      giftCard: {
+        __typename: "GiftCard" as const,
+        id: "gift-card-id-2",
+        last4CodeChars: "2345",
+      },
+      amount: {
+        __typename: "Money" as const,
+        amount: 265.67,
+        currency: "USD",
+      },
     },
-  ] satisfies OrderDetailsFragment["giftCards"];
+  ] satisfies OrderDetailsFragment["giftCardsApplied"];
 
   private order: OrderDetailsFragment;
 
@@ -682,17 +633,9 @@ export class OrderFixture {
   }
 
   withGiftCards(): OrderFixture {
-    const giftCardsWithOrderId = OrderFixture.giftCards.map(giftCard => ({
-      ...giftCard,
-      events: giftCard.events.map(event => ({
-        ...event,
-        orderId: this.order.id,
-      })),
-    }));
-
     this.order = {
       ...this.order,
-      giftCards: giftCardsWithOrderId,
+      giftCardsApplied: OrderFixture.giftCardsApplied,
     };
 
     return this;
