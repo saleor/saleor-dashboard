@@ -51,7 +51,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
               onFilterAttributeFocus={props.onFilterAttributeFocus}
             />
           )}
-          <Box __width="320px">
+          <Box __width="360px">
             <SearchInput
               initialSearch={initialSearch}
               placeholder={searchPlaceholder}
