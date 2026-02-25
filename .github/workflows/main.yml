@@ -113,3 +113,4 @@ jobs:
           exitZeroOnChanges: true
           autoAcceptChanges: main
           onlyChanged: true
+          zip: true
