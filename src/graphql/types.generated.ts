@@ -11877,7 +11877,7 @@ export type SearchAvailableProductAttributesQuery = { __typename: 'Query', produ
 export type SearchCategoriesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  query: Scalars['String'];
+  filter?: InputMaybe<CategoryFilterInput>;
 }>;
 
 

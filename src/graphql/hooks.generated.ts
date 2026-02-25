@@ -16812,8 +16812,8 @@ export type SearchAvailableProductAttributesQueryHookResult = ReturnType<typeof 
 export type SearchAvailableProductAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesLazyQuery>;
 export type SearchAvailableProductAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>;
 export const SearchCategoriesDocument = gql`
-    query SearchCategories($after: String, $first: Int!, $query: String!) {
-  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCategories($after: String, $first: Int!, $filter: CategoryFilterInput) {
+  search: categories(after: $after, first: $first, filter: $filter) {
     edges {
       node {
         ...CategoryWithAncestors
@@ -16841,7 +16841,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
