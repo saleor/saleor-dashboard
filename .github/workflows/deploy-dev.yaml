@@ -49,7 +49,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Package
         timeout-minutes: 15
@@ -68,19 +68,19 @@ jobs:
 
       - name: Deploy dev
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}

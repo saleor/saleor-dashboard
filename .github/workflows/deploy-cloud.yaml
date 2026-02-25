@@ -71,14 +71,14 @@ jobs:
         if: needs.determine-build.outputs.use-pnpm == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Setup Node (Legacy NPM)
         if: needs.determine-build.outputs.use-pnpm == 'false'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "npm"
 
       - name: Set sentry release
