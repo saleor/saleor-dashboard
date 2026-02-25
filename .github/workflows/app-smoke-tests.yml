@@ -13,17 +13,7 @@ on:
         default: ""
         description: "Comma-separated app identifiers to test (empty = all)"
     secrets:
-      STAGING_TOKEN:
-        required: true
-      E2E_USER_NAME:
-        required: true
-      E2E_USER_PASSWORD:
-        required: true
-      E2E_PERMISSIONS_USERS_PASSWORD:
-        required: true
-      MAILPITURL:
-        required: true
-      TESTS_RESULT_PASSWORD:
+      OP_SERVICE_ACCOUNT_TOKEN:
         required: true
     outputs:
       TESTS_CONCLUSION:
@@ -66,15 +56,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Install deps
         run: pnpm install
 
       - name: Load secrets from 1Password
-        # load secrets when NOT called from external repo
-        if: github.event_name == 'workflow_dispatch'
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         with:
           export-env: true
@@ -85,25 +73,6 @@ jobs:
           E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
           MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
-
-      - name: Export caller secrets
-        if: github.event_name != 'workflow_dispatch'
-        shell: bash
-        env:
-          # Export from workflow secrets -> env variables
-          _STAGING_TOKEN: ${{ secrets.STAGING_TOKEN }}
-          _E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          _E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          _E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          _MAILPITURL: ${{ secrets.MAILPITURL }}
-        run: |
-          {
-            echo "STAGING_TOKEN=${_STAGING_TOKEN}"
-            echo "E2E_USER_NAME=${_E2E_USER_NAME}"
-            echo "E2E_USER_PASSWORD=${_E2E_USER_PASSWORD}"
-            echo "E2E_PERMISSIONS_USERS_PASSWORD=${_E2E_PERMISSIONS_USERS_PASSWORD}"
-            echo "MAILPITURL=${_MAILPITURL}"
-          } >> "$GITHUB_ENV"
 
       # This is used by prepare accounts and by restore accounts (in run playwright tests)
       - name: Generate ephemeral encode password
@@ -164,21 +133,12 @@ jobs:
           repository: saleor/saleor-dashboard
 
       - name: Load secrets from 1Password
-        # load secrets when NOT called from external repo
-        if: github.event_name == 'workflow_dispatch'
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         with:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
-
-      - name: Export caller secrets
-        if: github.event_name != 'workflow_dispatch'
-        shell: bash
-        env:
-          _TESTS_RESULT_PASSWORD: ${{ secrets.TESTS_RESULT_PASSWORD }}
-        run: echo "TESTS_RESULT_PASSWORD=${_TESTS_RESULT_PASSWORD}" >> "$GITHUB_ENV"
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports

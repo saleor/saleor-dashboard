@@ -163,7 +163,7 @@
     "@playwright/test": "1.56.1",
     "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
-    "@storybook/react-vite": "10.2.4",
+    "@storybook/react-vite": "10.2.12",
     "@swc/jest": "^0.2.39",
     "@types/apollo-upload-client": "^17.0.5",
     "@types/chroma-js": "^2.4.5",
@@ -198,7 +198,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-react-you-might-not-need-an-effect": "^0.5.6",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-storybook": "10.2.4",
+    "eslint-plugin-storybook": "10.2.12",
     "eslint-plugin-unicorn": "^61.0.2",
     "eslint-plugin-unused-imports": "^4.3.0",
     "front-matter": "^4.0.2",
@@ -211,7 +211,7 @@
     "playwright-ctrf-json-reporter": "0.0.26",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "sort-package-json": "3.4.0",
-    "storybook": "10.2.4",
+    "storybook": "10.2.12",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.46.4",
     "typescript-strict-plugin": "^2.4.4",
@@ -239,7 +239,7 @@
   },
   "packageManager": "pnpm@10.28.1",
   "engines": {
-    "node": "^20 || ^22",
+    "node": ">=22.15 <23",
     "pnpm": ">=10"
   }
 }
