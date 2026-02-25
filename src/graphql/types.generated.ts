@@ -11895,8 +11895,8 @@ export type SearchCategoriesWithTotalProductsQuery = { __typename: 'Query', sear
 export type SearchCollectionsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  query: Scalars['String'];
   channel?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CollectionFilterInput>;
 }>;
 
 

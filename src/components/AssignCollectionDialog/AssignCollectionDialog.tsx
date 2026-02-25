@@ -1,7 +1,7 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CollectionFilterInput } from "@dashboard/graphql";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type CollectionFilterInput } from "@dashboard/graphql";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
-import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
+import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -17,16 +17,18 @@ type Collections = {
   name: string;
 }[];
 
+export type AssignCollectionFilterChangeHandler = (
+  filterVariables: CollectionFilterInput,
+  channel: string | undefined,
+  query: string,
+) => void;
+
 interface AssignCollectionDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   collections: Collections | null;
   loading: boolean;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
-  onFilterChange?: (
-    filterVariables: CollectionFilterInput,
-    channel: string | undefined,
-    query: string,
-  ) => void;
+  onFilterChange?: AssignCollectionFilterChangeHandler;
   onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
   selectionMode?: "single" | "multiple";

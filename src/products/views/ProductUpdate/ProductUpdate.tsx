@@ -11,6 +11,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/conf
 import {
   AttributeEntityTypeEnum,
   type CategoryFilterInput,
+  type CollectionFilterInput,
   ErrorPolicyEnum,
   type PageWhereInput,
   type ProductMediaCreateMutationVariables,
@@ -389,6 +390,21 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     [searchReferenceCategoriesOpts.refetch],
   );
 
+  const handleCollectionFilterChange = useCallback(
+    (filterVariables: CollectionFilterInput, channel: string | undefined, query: string) => {
+      searchCollectionsOpts.refetch({
+        after: DEFAULT_INITIAL_SEARCH_DATA.after,
+        first: DEFAULT_INITIAL_SEARCH_DATA.first,
+        filter: {
+          ...filterVariables,
+          search: query,
+        },
+        channel,
+      });
+    },
+    [searchCollectionsOpts.refetch],
+  );
+
   const handlePageFilterChange = useCallback(
     (where: PageWhereInput, query: string) => {
       searchPagesOpts.refetch({
@@ -493,6 +509,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
           [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
           [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
+          [AttributeEntityTypeEnum.COLLECTION]: handleCollectionFilterChange,
         }}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}

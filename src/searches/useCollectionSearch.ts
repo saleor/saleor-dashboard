@@ -11,13 +11,13 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCollections = gql`
-  query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
-    search: collections(
-      after: $after
-      first: $first
-      filter: { search: $query }
-      channel: $channel
-    ) {
+  query SearchCollections(
+    $after: String
+    $first: Int!
+    $channel: String
+    $filter: CollectionFilterInput
+  ) {
+    search: collections(after: $after, first: $first, filter: $filter, channel: $channel) {
       edges {
         node {
           id
@@ -63,4 +63,10 @@ export const useCollectionWithTotalProductsSearch = makeTopLevelSearch<
 
 export default makeTopLevelSearch<SearchCollectionsQuery, SearchCollectionsQueryVariables>(
   SearchCollectionsDocument,
+  {
+    mapSearchToVariables: (searchQuery, variables) => ({
+      ...variables,
+      filter: { ...variables.filter, search: searchQuery },
+    }),
+  },
 );
