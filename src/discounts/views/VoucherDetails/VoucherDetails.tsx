@@ -95,7 +95,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     search: searchCollections,
     result: searchCollectionsOpts,
   } = useCollectionWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,

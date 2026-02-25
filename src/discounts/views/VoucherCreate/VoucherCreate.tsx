@@ -96,7 +96,10 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     },
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const productsSearch = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
