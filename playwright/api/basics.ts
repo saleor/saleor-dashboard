@@ -1,4 +1,4 @@
-import { APIRequestContext } from "@playwright/test";
+import { type APIRequestContext } from "@playwright/test";
 
 interface User {
   email: string;

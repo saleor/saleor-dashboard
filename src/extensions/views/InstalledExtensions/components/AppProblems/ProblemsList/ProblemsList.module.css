@@ -1,0 +1,33 @@
+.problemsContainer {
+  background-color: var(--mu-colors-background-default1);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  margin: 18px 63px;
+  overflow: hidden;
+}
+
+.showMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--mu-colors-border-default1);
+  cursor: pointer;
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 14px;
+  padding: 8px 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.showMoreButton:hover {
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+.popupProblemsList {
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: 0 24px 24px;
+}
