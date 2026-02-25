@@ -131,7 +131,7 @@ export default defineConfig(({ command, mode }) => {
     server: {
       port: 9000,
       fs: {
-        allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
+        allow: [searchForWorkspaceRoot(process.cwd()), path.resolve(__dirname)],
       },
     },
     define: {
