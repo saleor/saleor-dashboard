@@ -1,0 +1,27 @@
+src/fragments/categories.ts
+  a87ca7183f1b0f73 31-38
+src/categories/components/CategoryUpdatePage/CategoryUpdatePage.tsx
+  a87ca7183f1b0f73 27-29,31,109-129
+src/categories/fixtures.ts
+  a87ca7183f1b0f73 108-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "bc522751187cc36888e8470b030aa4889a0948fa",
+  "prompts": {
+    "a87ca7183f1b0f73": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fdc4c5c1-5bd0-4d12-ae8e-4bf1ed135d7b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 45,
+      "total_deletions": 2,
+      "accepted_lines": 37,
+      "overriden_lines": 0
+    }
+  }
+}
