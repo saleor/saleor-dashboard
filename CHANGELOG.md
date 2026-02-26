@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.22.34
+
+### Patch Changes
+
+- [#6371](https://github.com/saleor/saleor-dashboard/pull/6371) [`ab46371`](https://github.com/saleor/saleor-dashboard/commit/ab463717010f780c74ef7472e5bb013a8a054926) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated minimal Node version to 22.15
+
+- [#6372](https://github.com/saleor/saleor-dashboard/pull/6372) [`05d8ab2`](https://github.com/saleor/saleor-dashboard/commit/05d8ab248cd9dcf68460182aeb1796cddb93b71f) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated Storybook to 10.2.12
+
+- [#6374](https://github.com/saleor/saleor-dashboard/pull/6374) [`053c6ca`](https://github.com/saleor/saleor-dashboard/commit/053c6ca47b912002647fdf95e5e742f8d2e96cf5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed path to payment methods assets
+
+- [#6371](https://github.com/saleor/saleor-dashboard/pull/6371) [`ab46371`](https://github.com/saleor/saleor-dashboard/commit/ab463717010f780c74ef7472e5bb013a8a054926) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Removed .nvmrc, in favor of pacakge.json engines filed
+
+- [#6370](https://github.com/saleor/saleor-dashboard/pull/6370) [`271928b`](https://github.com/saleor/saleor-dashboard/commit/271928ba0e673d79cb85ae15e266e5b056cca78b) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Extend search input width to prevent placeholder text from being cut off
+
 ## 3.22.33
 
 ### Patch Changes
