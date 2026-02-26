@@ -5,9 +5,10 @@ import {
 } from "@dashboard/extensions/types";
 import { AppProblemDismissedByEnum } from "@dashboard/graphql";
 
-const now = new Date().toISOString();
-const hourAgo = new Date(Date.now() - 3600_000).toISOString();
-const dayAgo = new Date(Date.now() - 86400_000).toISOString();
+const now = new Date(2026, 1, 1, 20, 0, 0);
+const nowIso = now.toISOString();
+const hourAgo = new Date(now.getTime() - 3600_000).toISOString();
+const dayAgo = new Date(now.getTime() - 86400_000).toISOString();
 
 export const criticalAppProblem: GraphQLAppProblem = {
   __typename: "AppProblem",
@@ -80,7 +81,7 @@ export const extraWarningProblem: GraphQLAppProblem = {
 export const webhookDeliveryError: WebhookDeliveryProblem = {
   __typename: "WebhookDeliveryError",
   message: "Webhook delivery failed: 502 Bad Gateway from https://app.example.com/webhooks",
-  createdAt: now,
+  createdAt: nowIso,
 };
 
 /** Collection of all fixture problems for use in tests and stories */
