@@ -105,6 +105,10 @@ export const category: (placeholderImage: string) => CategoryDetailsQuery["categ
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
   },
+  ancestors: {
+    __typename: "CategoryCountableConnection",
+    edges: [],
+  },
   description: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
   metadata: [
