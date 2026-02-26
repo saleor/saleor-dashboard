@@ -1,0 +1,23 @@
+src/components/AppLayout/TopNav/TopNav.stories.tsx
+  af0162005031c6e0 1-4,6-105
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "2546d3bec81b1d8cab9fbe81bfbd2bfeb1460475",
+  "prompts": {
+    "af0162005031c6e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6f7dffcb-eb7d-434b-a105-c111471e419c",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 217,
+      "total_deletions": 112,
+      "accepted_lines": 104,
+      "overriden_lines": 0
+    }
+  }
+}
