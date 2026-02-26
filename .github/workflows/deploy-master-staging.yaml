@@ -47,7 +47,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Package
         timeout-minutes: 15
@@ -66,14 +66,14 @@ jobs:
 
       - name: Deploy master staging
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
 
       - name: Deploy fake production
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
