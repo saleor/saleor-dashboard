@@ -9,13 +9,9 @@ import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeEntityTypeEnum,
-  type CategoryFilterInput,
   ErrorPolicyEnum,
-  type PageWhereInput,
   type ProductMediaCreateMutationVariables,
   type ProductVariantBulkCreateInput,
-  type ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
@@ -28,9 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
-import useCategorySearch, {
-  useCategoryWithTotalProductsSearch,
-} from "@dashboard/searches/useCategorySearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
   useReferencePageSearch,
@@ -44,6 +38,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
@@ -77,10 +72,11 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     loadMore: loadMoreReferenceCategories,
     search: searchReferenceCategories,
     result: searchReferenceCategoriesOpts,
-  } = useCategoryWithTotalProductsSearch({
+  } = useCategorySearch({
     variables: {
-      after: null,
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
       first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
     },
   });
   const {
@@ -363,53 +359,15 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const handleProductFilterChange = useCallback(
-    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
-      searchProductsOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where: filterVariables,
-        channel,
-        query,
-      });
-    },
-    [searchProductsOpts.refetch],
-  );
-
-  const handleCategoryFilterChange = useCallback(
-    (filterVariables: CategoryFilterInput, query: string) => {
-      searchReferenceCategoriesOpts.refetch({
-        after: DEFAULT_INITIAL_SEARCH_DATA.after,
-        first: DEFAULT_INITIAL_SEARCH_DATA.first,
-        filter: {
-          ...filterVariables,
-          search: query,
-        },
-      });
-    },
-    [searchReferenceCategoriesOpts.refetch],
-  );
-
-  const handlePageFilterChange = useCallback(
-    (where: PageWhereInput, query: string) => {
-      searchPagesOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where,
-        query,
-      });
-    },
-    [searchPagesOpts.refetch],
-  );
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchReferenceCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+  });
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
-  const referenceCategories =
-    mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search)?.map(category => ({
-      __typename: "Category" as const,
-      id: category.id,
-      name: category.name,
-      level: 0,
-      parent: null,
-      ancestors: null,
-    })) || [];
+  const referenceCategories = mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
@@ -488,12 +446,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onFilterChange={{
-          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
-          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
-          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
-          [AttributeEntityTypeEnum.CATEGORY]: handleCategoryFilterChange,
-        }}
+        onFilterChange={onFilterChange}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

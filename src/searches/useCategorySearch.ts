@@ -11,8 +11,8 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCategories = gql`
-  query SearchCategories($after: String, $first: Int!, $query: String!) {
-    search: categories(after: $after, first: $first, filter: { search: $query }) {
+  query SearchCategories($after: String, $first: Int!, $filter: CategoryFilterInput) {
+    search: categories(after: $after, first: $first, filter: $filter) {
       edges {
         node {
           ...CategoryWithAncestors
@@ -56,4 +56,10 @@ export const useCategoryWithTotalProductsSearch = makeTopLevelSearch<
 
 export default makeTopLevelSearch<SearchCategoriesQuery, SearchCategoriesQueryVariables>(
   SearchCategoriesDocument,
+  {
+    mapSearchToVariables: (searchQuery, variables) => ({
+      ...variables,
+      filter: { ...variables.filter, search: searchQuery },
+    }),
+  },
 );

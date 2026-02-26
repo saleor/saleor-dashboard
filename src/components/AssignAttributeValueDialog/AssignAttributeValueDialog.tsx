@@ -11,7 +11,9 @@ import {
 import { type RelayToFlat } from "@dashboard/types";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
-import AssignCollectionDialog from "../AssignCollectionDialog";
+import AssignCollectionDialog, {
+  type AssignCollectionFilterChangeHandler,
+} from "../AssignCollectionDialog";
 import AssignModelDialog from "../AssignModelDialog";
 import AssignProductDialog, { type AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
@@ -39,10 +41,11 @@ export type CategoryFilterChangeHandler = (
 ) => void;
 
 export type AssignAttributeValueDialogFilterChangeMap = {
-  [AttributeEntityTypeEnum.PRODUCT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PRODUCT_VARIANT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
-  [AttributeEntityTypeEnum.CATEGORY]?: CategoryFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PAGE]: PageFilterChangeHandler;
+  [AttributeEntityTypeEnum.CATEGORY]: CategoryFilterChangeHandler;
+  [AttributeEntityTypeEnum.COLLECTION]: AssignCollectionFilterChangeHandler;
 };
 
 type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {
@@ -92,6 +95,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
   const pageFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PAGE];
   const categoryFilterChange = onFilterChange?.[AttributeEntityTypeEnum.CATEGORY];
+  const collectionFilterChange = onFilterChange?.[AttributeEntityTypeEnum.COLLECTION];
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -128,6 +132,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignCollectionDialog
           collections={filteredCollections}
+          onFilterChange={collectionFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

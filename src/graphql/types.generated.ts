@@ -13014,7 +13014,7 @@ export type SearchAvailableProductAttributesQuery = { __typename: 'Query', produ
 export type SearchCategoriesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  query: Scalars['String'];
+  filter?: InputMaybe<CategoryFilterInput>;
 }>;
 
 
@@ -13032,8 +13032,8 @@ export type SearchCategoriesWithTotalProductsQuery = { __typename: 'Query', sear
 export type SearchCollectionsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  query: Scalars['String'];
   channel?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CollectionFilterInput>;
 }>;
 
 
@@ -13042,7 +13042,7 @@ export type SearchCollectionsQuery = { __typename: 'Query', search: { __typename
 export type SearchCollectionsWithTotalProductsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
-  query: Scalars['String'];
+  filter?: InputMaybe<CollectionFilterInput>;
   channel?: InputMaybe<Scalars['String']>;
 }>;
 

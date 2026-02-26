@@ -9,7 +9,11 @@ import { type MenuItemTypeWithOptions } from "../types";
 
 export const useLinkValue = (linkType: MenuItemTypeWithOptions) => {
   const categorySearch = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
     skip: linkType !== "category",
   });
   const collectionSearch = useCollectionSearch({

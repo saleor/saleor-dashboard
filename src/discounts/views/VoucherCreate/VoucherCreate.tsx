@@ -7,6 +7,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   type CategoryFilterInput,
+  type CollectionFilterInput,
   type ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -95,7 +96,10 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     },
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const productsSearch = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
@@ -123,6 +127,22 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         ...filterVariables,
         search: query,
       },
+    });
+  };
+
+  const handleCollectionFilterChange = (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    collectionsSearch.result.refetch({
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
+      channel,
     });
   };
 
@@ -182,6 +202,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         variantsSearch={variantsSearch}
         onProductFilterChange={handleProductFilterChange}
         onCategoryFilterChange={handleCategoryFilterChange}
+        onCollectionFilterChange={handleCollectionFilterChange}
         openModal={openModal}
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}

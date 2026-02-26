@@ -11,13 +11,13 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCollections = gql`
-  query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
-    search: collections(
-      after: $after
-      first: $first
-      filter: { search: $query }
-      channel: $channel
-    ) {
+  query SearchCollections(
+    $after: String
+    $first: Int!
+    $channel: String
+    $filter: CollectionFilterInput
+  ) {
+    search: collections(after: $after, first: $first, filter: $filter, channel: $channel) {
       edges {
         node {
           id
@@ -35,15 +35,10 @@ export const searchCollectionWithTotalProducts = gql`
   query SearchCollectionsWithTotalProducts(
     $after: String
     $first: Int!
-    $query: String!
+    $filter: CollectionFilterInput
     $channel: String
   ) {
-    search: collections(
-      after: $after
-      first: $first
-      filter: { search: $query }
-      channel: $channel
-    ) {
+    search: collections(after: $after, first: $first, filter: $filter, channel: $channel) {
       edges {
         node {
           ...CollectionWithTotalProducts
@@ -59,8 +54,19 @@ export const searchCollectionWithTotalProducts = gql`
 export const useCollectionWithTotalProductsSearch = makeTopLevelSearch<
   SearchCollectionsWithTotalProductsQuery,
   SearchCollectionsWithTotalProductsQueryVariables
->(SearchCollectionsWithTotalProductsDocument);
+>(SearchCollectionsWithTotalProductsDocument, {
+  mapSearchToVariables: (searchQuery, variables) => ({
+    ...variables,
+    filter: { ...variables.filter, search: searchQuery },
+  }),
+});
 
 export default makeTopLevelSearch<SearchCollectionsQuery, SearchCollectionsQueryVariables>(
   SearchCollectionsDocument,
+  {
+    mapSearchToVariables: (searchQuery, variables) => ({
+      ...variables,
+      filter: { ...variables.filter, search: searchQuery },
+    }),
+  },
 );
