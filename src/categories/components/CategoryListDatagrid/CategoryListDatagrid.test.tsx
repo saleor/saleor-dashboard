@@ -1,6 +1,6 @@
 import { categoryUrl } from "@dashboard/categories/urls";
-import { CategoryFragment } from "@dashboard/graphql";
-import { CompactSelection, GridSelection } from "@glideapps/glide-data-grid";
+import { type CategoryFragment } from "@dashboard/graphql";
+import { CompactSelection, type GridSelection } from "@glideapps/glide-data-grid";
 import { render } from "@testing-library/react";
 
 import { CategoryListDatagrid } from "./CategoryListDatagrid";

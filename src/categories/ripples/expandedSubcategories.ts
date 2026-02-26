@@ -1,4 +1,4 @@
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 
 export const rippleExpandedSubcategories: Ripple = {
   type: "feature",

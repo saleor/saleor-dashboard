@@ -5,9 +5,9 @@ import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
   type CategoryBulkDeleteMutation,
   CategoryChildrenDocument,
-  CategoryChildrenQuery,
-  CategoryChildrenQueryVariables,
-  CategoryFragment,
+  type CategoryChildrenQuery,
+  type CategoryChildrenQueryVariables,
+  type CategoryFragment,
   useCategoryBulkDeleteMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";

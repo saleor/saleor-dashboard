@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
+import { type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 
-import { ChevronCell } from "./cells";
+import { type ChevronCell } from "./cells";
 
 // lucide svg emulation
 const lucideChevronPoints = {

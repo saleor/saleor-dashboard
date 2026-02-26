@@ -11,7 +11,7 @@ import { type CategoryFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type PageListProps, type SortPage } from "@dashboard/types";
-import { CompactSelection, GridSelection, type Item } from "@glideapps/glide-data-grid";
+import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
 import { type ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";

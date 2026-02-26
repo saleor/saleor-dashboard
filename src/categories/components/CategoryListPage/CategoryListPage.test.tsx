@@ -1,8 +1,8 @@
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
-import { CategoryFragment } from "@dashboard/graphql";
+import { type CategoryFragment } from "@dashboard/graphql";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ComponentProps, ReactNode } from "react";
+import { type ComponentProps, type ReactNode } from "react";
 
 import { CategoryListPage } from "./CategoryListPage";
 

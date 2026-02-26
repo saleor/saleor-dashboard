@@ -24,7 +24,7 @@ import {
   type TabPageProps,
 } from "@dashboard/types";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
-import { ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";

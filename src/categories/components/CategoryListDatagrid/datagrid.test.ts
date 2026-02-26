@@ -1,4 +1,4 @@
-import { CategoryFragment } from "@dashboard/graphql";
+import { type CategoryFragment } from "@dashboard/graphql";
 import { GridCellKind } from "@glideapps/glide-data-grid";
 
 import { categoryListExpandColumn, createGetCellContent } from "./datagrid";
