@@ -3,6 +3,7 @@ import { CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 
 import { ChevronCell } from "./cells";
 
+// lucide svg emulation
 const lucideChevronPoints = {
   down: [
     [6, 9],

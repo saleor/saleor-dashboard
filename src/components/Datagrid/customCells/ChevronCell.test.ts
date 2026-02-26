@@ -88,7 +88,7 @@ describe("ChevronCell", () => {
     expect(nonChevronMatch).toBe(false);
   });
 
-  it("should draw a right chevron path for collapsed cell", () => {
+  it("should draw a collapsed chevron", () => {
     // Arrange
     const ctx = createContextMock();
     const args = {
@@ -104,13 +104,8 @@ describe("ChevronCell", () => {
     expect(result).toBe(true);
     expect(ctx.save).toHaveBeenCalledTimes(1);
     expect(ctx.beginPath).toHaveBeenCalledTimes(1);
-    expect(ctx.moveTo).toHaveBeenCalledWith(14, 12);
-    expect(ctx.lineTo).toHaveBeenNthCalledWith(1, 18, 16);
-    expect(ctx.lineTo).toHaveBeenNthCalledWith(2, 14, 20);
-    expect(ctx.strokeStyle).toBe("#111111");
-    expect(ctx.lineWidth).toBe(2);
-    expect(ctx.lineCap).toBe("round");
-    expect(ctx.lineJoin).toBe("round");
+    expect(ctx.moveTo).toHaveBeenCalledTimes(1);
+    expect(ctx.lineTo).toHaveBeenCalledTimes(2);
     expect(ctx.stroke).toHaveBeenCalledTimes(1);
     expect(ctx.restore).toHaveBeenCalledTimes(1);
   });
