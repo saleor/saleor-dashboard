@@ -1,0 +1,37 @@
+testUtils/setup.ts
+  a44ed8e94b685615 36
+vite.config.js
+  a44ed8e94b685615 86
+types.d.ts
+  a44ed8e94b685615 22
+src/orders/components/OrderTransaction/components/OtherPaymentMethod.tsx
+  a44ed8e94b685615 1,13
+src/index.html
+  a44ed8e94b685615 18
+src/config.ts
+  a44ed8e94b685615 7
+src/orders/components/OrderTransaction/components/CardPaymentMethod.tsx
+  a44ed8e94b685615 1,10
+.storybook/preview-head.html
+  a44ed8e94b685615 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "32177b85e35635279c71d09aa9063d6223f7f7c0",
+  "prompts": {
+    "a44ed8e94b685615": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2941c8f0-2035-420a-aee9-eea2fe6567bc",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 4,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    }
+  }
+}
