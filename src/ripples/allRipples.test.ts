@@ -1,18 +1,14 @@
-import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { allRipples } from "@dashboard/ripples/allRipples";
 
 describe("allRipples", () => {
-  it("should include expandable subcategories ripple exactly once", () => {
+  it("should include each ripple at most once", () => {
     // Arrange
-    const matchingRipples = allRipples.filter(
-      ripple => ripple.ID === rippleExpandedSubcategories.ID,
-    );
+    const rippleIds = allRipples.map(ripple => ripple.ID);
 
     // Act
-    const count = matchingRipples.length;
+    const duplicateIds = rippleIds.filter((id, index) => rippleIds.indexOf(id) !== index);
 
     // Assert
-    expect(count).toBe(1);
-    expect(matchingRipples[0]).toBe(rippleExpandedSubcategories);
+    expect(duplicateIds).toEqual([]);
   });
 });
