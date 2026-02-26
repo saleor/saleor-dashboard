@@ -4,8 +4,17 @@ import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
-export const getStaticUrl = () => window?.__SALEOR_CONFIG__?.STATIC_URL || "/";
+export const getStaticUrl = () => {
+  const staticUrl = window?.__SALEOR_CONFIG__?.STATIC_URL;
 
+  // Treat empty, null, or undefined as unset and fall back to root
+  if (!staticUrl) {
+    return "/";
+  }
+
+  // Ensure the returned URL always ends with a trailing slash
+  return staticUrl.endsWith("/") ? staticUrl : `${staticUrl}/`;
+};
 /**
  * Get the API URL.
  * The same API URL is used regardless of schema version (eg 3.22 or 3.23).
