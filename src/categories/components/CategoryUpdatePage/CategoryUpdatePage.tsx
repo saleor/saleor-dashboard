@@ -24,8 +24,11 @@ import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
@@ -103,11 +106,32 @@ export const CategoryUpdatePage = ({
     categoryId,
   );
 
+  const ancestors = mapEdgesToItems(category?.ancestors);
+  const breadcrumb =
+    ancestors && ancestors.length > 0 ? (
+      <Box display="flex" alignItems="center" gap={1}>
+        {ancestors.map((ancestor, index) => (
+          <Fragment key={ancestor.id}>
+            {index > 0 && (
+              <Text size={2} color="default2">
+                /
+              </Text>
+            )}
+            <Link to={categoryUrl(ancestor.id)} style={{ textDecoration: "none" }}>
+              <Text size={2} color="default2" textDecoration={{ hover: "underline" }}>
+                {ancestor.name}
+              </Text>
+            </Link>
+          </Fragment>
+        ))}
+      </Box>
+    ) : undefined;
+
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={backHref} title={category?.name}>
+          <TopNav href={backHref} title={category?.name} subtitleTop={breadcrumb}>
             {canTranslate && (
               <TranslationsButton
                 variant="secondary"

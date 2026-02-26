@@ -11,6 +11,7 @@ import { TopNavWrapper } from "./TopNavWrapper";
 interface TopNavProps {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
+  subtitleTop?: React.ReactNode;
   href?: string;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;
@@ -19,6 +20,7 @@ interface TopNavProps {
 export const Root = ({
   title,
   subtitle,
+  subtitleTop,
   href,
   withoutBorder = false,
   isAlignToRight = true,
@@ -29,8 +31,29 @@ export const Root = ({
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
 
+  if (subtitleTop && subtitle)
+    throw new Error(
+      "TopNav is not ready to support both subtitle and subtitleTop. Extend the component or use one of them",
+    );
+
   return (
-    <TopNavWrapper withoutBorder={withoutBorder} hasSubtitle={!!subtitle} {...wrapperProps}>
+    <TopNavWrapper
+      withoutBorder={withoutBorder}
+      hasSubtitleTop={!!subtitleTop}
+      hasSubtitle={!!subtitle}
+      {...wrapperProps}
+    >
+      {subtitleTop ? (
+        <ContextualLine
+          gridColumn="8"
+          // The subtitle should be aligned with the title, not back button
+          marginLeft={href ? 12 : 0}
+          paddingBottom={0}
+          __marginBottom="-10px"
+        >
+          {subtitleTop}
+        </ContextualLine>
+      ) : null}
       <Box display="flex" alignItems="center" width="100%">
         {href && <TopNavLink to={href} />}
         <Box

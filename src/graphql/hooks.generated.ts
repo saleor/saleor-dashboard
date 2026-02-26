@@ -325,6 +325,14 @@ export const CategoryDetailsFragmentDoc = gql`
   parent {
     id
   }
+  ancestors(first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
 }
     ${MetadataFragmentDoc}`;
 export const CategoryWithAncestorsFragmentDoc = gql`
