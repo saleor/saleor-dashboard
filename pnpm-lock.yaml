@@ -383,6 +383,9 @@ importers:
       "@vitejs/plugin-react-swc":
         specifier: ^3.11.0
         version: 3.11.0(vite@6.4.1(@types/node@20.19.32)(jiti@2.6.1)(terser@5.46.0))
+      chromatic:
+        specifier: ^15.2.0
+        version: 15.2.0
       code-inspector-plugin:
         specifier: ^0.6.5
         version: 0.6.5
@@ -6837,6 +6840,21 @@ packages:
       {
         integrity: sha512-BLHvCB9s8Z1EV4ethr6xnkl/P2YRFOGqfgvuMG/MyCbZPrTA+NeiByY6XvgF0zP4/2deU2CXnWyMa3zu1LqQ3A==,
       }
+
+  chromatic@15.2.0:
+    resolution:
+      {
+        integrity: sha512-c9tDfE62aiPVPnVab8jQLz+9c9II/CUFZ6T2Kk3hi2hSL+HLkRwX3zjwRYW1z9Shn57R/ORBEpQ3ftufp8EgWA==,
+      }
+    hasBin: true
+    peerDependencies:
+      "@chromatic-com/cypress": ^0.*.* || ^1.0.0
+      "@chromatic-com/playwright": ^0.*.* || ^1.0.0
+    peerDependenciesMeta:
+      "@chromatic-com/cypress":
+        optional: true
+      "@chromatic-com/playwright":
+        optional: true
 
   ci-info@3.9.0:
     resolution:
@@ -18600,6 +18618,8 @@ snapshots:
       fsevents: 2.3.3
 
   chroma-js@2.6.0: {}
+
+  chromatic@15.2.0: {}
 
   ci-info@3.9.0: {}
 
