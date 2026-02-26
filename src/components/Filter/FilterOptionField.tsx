@@ -5,7 +5,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 
 import Checkbox from "../Checkbox";
-import { FieldType, FilterFieldBaseProps } from "./types";
+import { type FieldType, type FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(
   theme => ({

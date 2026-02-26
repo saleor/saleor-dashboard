@@ -1,20 +1,21 @@
 import {
-  AttributeFilterInput,
-  CollectionFilterInput,
-  CustomerFilterInput,
-  GiftCardFilterInput,
-  OrderDraftFilterInput,
-  OrderWhereInput,
-  PageFilterInput,
-  ProductFilterInput,
-  ProductTypeFilterInput,
-  ProductWhereInput,
-  PromotionWhereInput,
-  StaffUserInput,
-  VoucherFilterInput,
+  type AttributeFilterInput,
+  type CategoryFilterInput,
+  type CollectionFilterInput,
+  type CustomerFilterInput,
+  type GiftCardFilterInput,
+  type OrderDraftFilterInput,
+  type OrderWhereInput,
+  type PageFilterInput,
+  type ProductFilterInput,
+  type ProductTypeFilterInput,
+  type ProductWhereInput,
+  type PromotionWhereInput,
+  type StaffUserInput,
+  type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { FilterContainer } from "./FilterElement";
+import { type FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
@@ -53,6 +54,9 @@ export const QUERY_API_TYPES = {
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
   ATTRIBUTE: QueryApiType.FILTER,
+  // TODO: Categories should use WHERE filter
+  // cannot be used because it's missing `search` input
+  CATEGORY: QueryApiType.FILTER,
 } as const;
 
 const productFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
@@ -244,6 +248,24 @@ export const createAttributesQueryVariables = (value: FilterContainer): Attribut
   const builder = new FiltersQueryBuilder<AttributeFilterInput>({
     apiType: QUERY_API_TYPES.ATTRIBUTE,
     filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+const categoryFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new DateTimeRangeQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
+export const createCategoryQueryVariables = (
+  filterContainer: FilterContainer,
+): CategoryFilterInput => {
+  const builder = new FiltersQueryBuilder<CategoryFilterInput>({
+    apiType: QUERY_API_TYPES.CATEGORY,
+    filterContainer,
+    filterDefinitionResolver: categoryFilterDefinitionResolver,
   });
   const { filters } = builder.build();
 

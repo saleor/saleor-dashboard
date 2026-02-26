@@ -1,8 +1,8 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { orderTitleMessages } from "./messages";
-import { CardTitleStatus } from "./OrderCardTitle";
+import { type CardTitleStatus } from "./OrderCardTitle";
 
 const STATUS_MESSAGE_MAP: Record<CardTitleStatus, MessageDescriptor> = {
   [FulfillmentStatus.CANCELED]: orderTitleMessages.canceled,

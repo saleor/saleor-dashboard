@@ -1,12 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { DiscountErrorFragment } from "@dashboard/graphql";
+import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherInfoProps {
   data: VoucherDetailsPageFormData;

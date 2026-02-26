@@ -2,6 +2,7 @@ import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attri
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
+import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -9,7 +10,7 @@ import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
@@ -41,6 +42,9 @@ export const allRipples: Ripple[] = [
 
   // Core
   rippleIntroducedRipples,
+
+  // Extensions
+  rippleAppProblems,
 
   // Channels
   checkoutAutocompleteSettings,

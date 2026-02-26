@@ -5,14 +5,14 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import {
   DashboardEventFactory,
-  DispatchResponseEvent,
-  FormPayloadUpdate,
-  NotificationAction,
-  NotifyReady,
-  PopupClose,
-  RedirectAction,
-  RequestPermissions,
-  UpdateRouting,
+  type DispatchResponseEvent,
+  type FormPayloadUpdate,
+  type NotificationAction,
+  type NotifyReady,
+  type PopupClose,
+  type RedirectAction,
+  type RequestPermissions,
+  type UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";

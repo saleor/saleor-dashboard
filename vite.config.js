@@ -84,6 +84,7 @@ export default defineConfig(({ command, mode }) => {
         data: {
           API_URL,
           APP_MOUNT_URI,
+          STATIC_URL,
           APPS_MARKETPLACE_API_URL,
           EXTENSIONS_API_URL,
           APPS_TUNNEL_URL_KEYWORDS,
@@ -127,6 +128,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     root: "src",
     base,
+    publicDir: "../public",
     envDir: "..",
     server: {
       port: PORT_DEVSERVER || 9000,

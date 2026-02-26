@@ -1,36 +1,36 @@
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import Datagrid, { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import {
-  DatagridChangeOpts,
+  type DatagridChangeOpts,
   DatagridChangeStateContext,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   AttributeInputTypeEnum,
-  ProductDetailsVariantFragment,
-  ProductFragment,
-  ProductVariantBulkCreateInput,
-  RefreshLimitsQuery,
+  type ProductDetailsVariantFragment,
+  type ProductFragment,
+  type ProductVariantBulkCreateInput,
+  type RefreshLimitsQuery,
   useWarehouseListQuery,
-  VariantAttributeFragment,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
-import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Item } from "@glideapps/glide-data-grid";
+import { type Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { type Option, Text } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantGenerator } from "../ProductVariantGenerator/ProductVariantGenerator";
 import {
-  BulkCreateResult,
+  type BulkCreateResult,
   getUnsupportedRequiredAttributes,
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";

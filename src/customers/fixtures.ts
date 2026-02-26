@@ -1,11 +1,11 @@
 import {
-  CustomerAddressesQuery,
-  CustomerDetailsQuery,
+  type CustomerAddressesQuery,
+  type CustomerDetailsQuery,
   OrderChargeStatusEnum,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 
-import { Customers } from "./types";
+import { type Customers } from "./types";
 
 export const customers = [
   {

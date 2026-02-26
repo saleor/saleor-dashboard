@@ -7,7 +7,7 @@ import { DashboardCard } from "../Card";
 import { ChannelsAvailabilityMenuContent } from "../ChannelsAvailabilityMenuContent/ChannelsAvailabilityMenuContent";
 import { Pill } from "../Pill";
 import { messages } from "./messages";
-import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
+import { type CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
 interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;

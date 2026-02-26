@@ -1,7 +1,7 @@
-import { FormChange } from "@dashboard/hooks/useForm";
-import { IMoney } from "@dashboard/utils/intl";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type IMoney } from "@dashboard/utils/intl";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import { CheckedState } from "@saleor/macaw-ui-next/dist/components/Checkbox/Checkbox";
+import { type CheckedState } from "@saleor/macaw-ui-next/dist/components/Checkbox/Checkbox";
 import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,20 +1,17 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeEntityTypeEnum,
   ErrorPolicyEnum,
-  PageWhereInput,
-  ProductMediaCreateMutationVariables,
-  ProductVariantBulkCreateInput,
-  ProductWhereInput,
+  type ProductMediaCreateMutationVariables,
+  type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
@@ -41,13 +38,14 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationState } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
   productListUrl,
   productUrl,
-  ProductUrlDialog,
-  ProductUrlQueryParams,
+  type ProductUrlDialog,
+  type ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
 import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
@@ -69,6 +67,17 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchCategoriesOpts,
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useCategorySearch({
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -350,34 +359,23 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const handleProductFilterChange = useCallback(
-    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
-      searchProductsOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where: filterVariables,
-        channel,
-        query,
-      });
-    },
-    [searchProductsOpts.refetch],
-  );
-
-  const handlePageFilterChange = useCallback(
-    (where: PageWhereInput, query: string) => {
-      searchPagesOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where,
-        query,
-      });
-    },
-    [searchPagesOpts.refetch],
-  );
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchReferenceCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+  });
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
+  const referenceCategories = mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
   const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
+  const fetchMoreReferenceCategories = getSearchFetchMoreProps(
+    searchReferenceCategoriesOpts,
+    loadMoreReferenceCategories,
+  );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const fetchMoreAttributeValues = {
@@ -434,25 +432,21 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
-        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
+        referenceCategories={referenceCategories}
         referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCategories}
+        fetchReferenceCategories={searchReferenceCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
         fetchReferenceCollections={searchCollections}
         fetchMoreReferenceCollections={fetchMoreCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        onFilterChange={{
-          [AttributeEntityTypeEnum.PRODUCT]: handleProductFilterChange,
-          [AttributeEntityTypeEnum.PRODUCT_VARIANT]: handleProductFilterChange,
-          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
-        }}
+        onFilterChange={onFilterChange}
         onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />

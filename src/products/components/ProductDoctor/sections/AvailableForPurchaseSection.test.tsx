@@ -1,7 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import { ChannelSummary } from "../utils/types";
+import { type ChannelSummary } from "../utils/types";
 import { AvailableForPurchaseSection } from "./AvailableForPurchaseSection";
 
 const createSummary = (overrides: Partial<ChannelSummary> = {}): ChannelSummary => ({

@@ -1,5 +1,5 @@
 import AssignContainerDialog, {
-  AssignContainerDialogProps,
+  type AssignContainerDialogProps,
 } from "@dashboard/components/AssignContainerDialog";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { useIntl } from "react-intl";

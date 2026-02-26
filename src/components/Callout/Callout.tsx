@@ -1,8 +1,8 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { getStatusColor, PillStatusType } from "@dashboard/misc";
+import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import { AlertTriangle, CircleAlert, Info, LucideIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { AlertTriangle, CircleAlert, Info, type LucideIcon } from "lucide-react";
+import { type ReactNode } from "react";
 
 type CalloutType = "info" | "warning" | "error";
 

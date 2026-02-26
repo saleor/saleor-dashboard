@@ -1,22 +1,25 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  PageWhereInput,
-  ProductWhereInput,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
+  type CategoryFilterInput,
+  type PageWhereInput,
+  type ProductWhereInput,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
-import AssignCollectionDialog from "../AssignCollectionDialog";
+import AssignCollectionDialog, {
+  type AssignCollectionFilterChangeHandler,
+} from "../AssignCollectionDialog";
 import AssignModelDialog from "../AssignModelDialog";
-import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
+import AssignProductDialog, { type AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
-import { AttributeInput } from "../Attributes";
-import { InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { type AttributeInput } from "../Attributes";
+import { type InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import {
   filterCategoriesByAttributeValues,
   filterCollectionsByAttributeValues,
@@ -32,10 +35,17 @@ export type ProductFilterChangeHandler = (
 
 export type PageFilterChangeHandler = (filterVariables: PageWhereInput, query: string) => void;
 
+export type CategoryFilterChangeHandler = (
+  filterVariables: CategoryFilterInput,
+  query: string,
+) => void;
+
 export type AssignAttributeValueDialogFilterChangeMap = {
-  [AttributeEntityTypeEnum.PRODUCT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PRODUCT_VARIANT]?: ProductFilterChangeHandler;
-  [AttributeEntityTypeEnum.PAGE]?: PageFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PRODUCT_VARIANT]: ProductFilterChangeHandler;
+  [AttributeEntityTypeEnum.PAGE]: PageFilterChangeHandler;
+  [AttributeEntityTypeEnum.CATEGORY]: CategoryFilterChangeHandler;
+  [AttributeEntityTypeEnum.COLLECTION]: AssignCollectionFilterChangeHandler;
 };
 
 type AssignAttributeValueDialogProps = Omit<AssignProductDialogProps, "onFilterChange"> & {
@@ -84,6 +94,8 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT_VARIANT] ??
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
   const pageFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PAGE];
+  const categoryFilterChange = onFilterChange?.[AttributeEntityTypeEnum.CATEGORY];
+  const collectionFilterChange = onFilterChange?.[AttributeEntityTypeEnum.COLLECTION];
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -120,6 +132,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignCollectionDialog
           collections={filteredCollections}
+          onFilterChange={collectionFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -128,6 +141,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignCategoryDialog
           categories={filteredCategories}
+          onFilterChange={categoryFilterChange}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

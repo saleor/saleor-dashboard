@@ -2,7 +2,7 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsDocument, type OrderDetailsFragment } from "@dashboard/graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 

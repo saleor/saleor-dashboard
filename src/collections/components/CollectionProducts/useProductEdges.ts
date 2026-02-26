@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
-import { CollectionProductsDocument, CollectionProductsQuery } from "@dashboard/graphql";
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import { CollectionProductsDocument, type CollectionProductsQuery } from "@dashboard/graphql";
+import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
 
 import { useCollectionId } from "./useCollectionId";
 

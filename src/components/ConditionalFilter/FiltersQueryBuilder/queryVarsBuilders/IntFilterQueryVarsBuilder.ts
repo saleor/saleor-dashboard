@@ -1,7 +1,7 @@
-import { IntFilterInput } from "@dashboard/graphql";
+import { type IntFilterInput } from "@dashboard/graphql";
 
-import { Handler, NoopValuesHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, NoopValuesHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
@@ -32,14 +32,13 @@ export class IntFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<IntF
     return element.value.value || element.value.label || "unknown";
   }
 
-  protected getConditionValue(element: FilterElement): IntFilterInput {
-    // These inputs require providing a number, not a string
+  protected getConditionValue(element: FilterElement): IntFilterInput | null {
     const parsedValue = QueryVarsBuilderUtils.getIntegerValueFromElement(element);
     const conditionLabel = element.condition.selected.conditionValue?.label || "";
 
-    return QueryVarsBuilderUtils.handleRangeCondition(
+    return QueryVarsBuilderUtils.buildNumericRangeCondition(
       parsedValue,
       conditionLabel,
-    ) as IntFilterInput;
+    ) as IntFilterInput | null;
   }
 }

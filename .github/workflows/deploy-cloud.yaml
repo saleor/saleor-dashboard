@@ -71,14 +71,14 @@ jobs:
         if: needs.determine-build.outputs.use-pnpm == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Setup Node (Legacy NPM)
         if: needs.determine-build.outputs.use-pnpm == 'false'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "npm"
 
       - name: Set sentry release
@@ -143,13 +143,14 @@ jobs:
     needs: build
     if: always()
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       type: deployment
       ref: ${{ github.event.client_payload.ref }}
       status: ${{ needs.build.result }}
       product: dashboard
       environment: ${{ needs.build.outputs.ENVIRONMENT }}
-      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      mention_on: failure
     secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
       slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}

@@ -1,10 +1,10 @@
-import { SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
+import { type SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
 } from "@dashboard/products/views/ProductList/utils";
-import { GetFilterTabsOutput, StorageUtils } from "@dashboard/utils/filters";
+import { type GetFilterTabsOutput, type StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";

@@ -1,20 +1,20 @@
 import { TopNav } from "@dashboard/components/AppLayout";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Rule } from "@dashboard/discounts/models";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { type Rule } from "@dashboard/discounts/models";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForDiscountDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  ChannelFragment,
-  PromotionDetailsFragment,
-  PromotionRuleCreateErrorFragment,
-  PromotionRuleUpdateErrorFragment,
-  PromotionUpdateErrorFragment,
+  type ChannelFragment,
+  type PromotionDetailsFragment,
+  type PromotionRuleCreateErrorFragment,
+  type PromotionRuleUpdateErrorFragment,
+  type PromotionUpdateErrorFragment,
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";

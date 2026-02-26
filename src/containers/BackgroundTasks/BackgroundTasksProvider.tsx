@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { ApolloClient, useApolloClient } from "@apollo/client";
-import { INotificationCallback } from "@dashboard/components/notifications";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
+import { type INotificationCallback } from "@dashboard/components/notifications";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { ReactNode, useEffect, useRef } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { type ReactNode, useEffect, useRef } from "react";
+import { type IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
 import { checkExportFileStatus, checkOrderInvoicesStatus } from "./queries";
 import { handleTask, queueCustom, queueExport, queueInvoiceGenerate } from "./tasks";
-import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
+import { type QueuedTask, Task, type TaskData, TaskStatus } from "./types";
 
 export const backgroundTasksRefreshTime = 15 * 1000;
 

@@ -1,6 +1,6 @@
 import { Select } from "@dashboard/components/Select";
-import { ChannelFragment } from "@dashboard/graphql";
-import { ChannelProps } from "@dashboard/types";
+import { type ChannelFragment } from "@dashboard/graphql";
+import { type ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 

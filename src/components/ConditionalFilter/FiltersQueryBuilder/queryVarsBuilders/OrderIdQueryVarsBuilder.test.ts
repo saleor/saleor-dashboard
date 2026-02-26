@@ -1,8 +1,8 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
-import { ConditionValue } from "../../FilterElement/ConditionValue";
+import { type ConditionValue } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { OrderIdQueryVarsBuilder } from "./OrderIdQueryVarsBuilder";
 

@@ -1,11 +1,11 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { ReorderAction } from "@dashboard/types";
+import { type ReorderAction } from "@dashboard/types";
 import {
   DndContext,
   DragOverlay,
   PointerSensor,
   pointerWithin,
-  UniqueIdentifier,
+  type UniqueIdentifier,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";

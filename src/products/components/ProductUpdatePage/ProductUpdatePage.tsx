@@ -5,19 +5,19 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
-  AssignAttributeValueDialogFilterChangeMap,
+  type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
-import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import { InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
@@ -26,25 +26,25 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  ChannelFragment,
+  type ChannelFragment,
   PermissionEnum,
-  ProductChannelListingErrorFragment,
-  ProductDetailsQuery,
-  ProductDetailsVariantFragment,
-  ProductErrorFragment,
-  ProductErrorWithAttributesFragment,
-  ProductFragment,
-  ProductVariantBulkCreateInput,
-  RefreshLimitsQuery,
-  SearchAttributeValuesQuery,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
-  TaxClassBaseFragment,
+  type ProductChannelListingErrorFragment,
+  type ProductDetailsQuery,
+  type ProductDetailsVariantFragment,
+  type ProductErrorFragment,
+  type ProductErrorWithAttributesFragment,
+  type ProductFragment,
+  type ProductVariantBulkCreateInput,
+  type RefreshLimitsQuery,
+  type SearchAttributeValuesQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
+  type TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
@@ -53,20 +53,20 @@ import { ProductOrganization } from "@dashboard/products/components/ProductOrgan
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
-import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
-import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
-import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
+import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { UseRichTextResult } from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
-import { Box, Divider, Option } from "@saleor/macaw-ui-next";
+import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
+import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
+import { type OutputData } from "@editorjs/editorjs";
+import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeValuesMetadata, getChoices } from "../../utils/data";
+import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
@@ -74,12 +74,16 @@ import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToD
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
-import { BulkCreateResult } from "../ProductVariantGenerator/types";
+import { type BulkCreateResult } from "../ProductVariantGenerator/types";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
-import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
+import {
+  type ProductUpdateData,
+  type ProductUpdateHandlers,
+  type ProductUpdateSubmitData,
+} from "./types";
 
 interface ProductUpdatePageProps {
   channels: ChannelFragment[];

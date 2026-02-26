@@ -1,15 +1,13 @@
 // @ts-strict-ignore
-import { ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
+import { type ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeEntityTypeEnum,
-  PageWhereInput,
-  ProductChannelListingErrorFragment,
-  ProductErrorWithAttributesFragment,
+  type ProductChannelListingErrorFragment,
+  type ProductErrorWithAttributesFragment,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductCreateMutation,
@@ -27,12 +25,12 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {
-  ProductCreateData,
+  type ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
 import {
   productAddUrl,
-  ProductCreateUrlDialog,
-  ProductCreateUrlQueryParams,
+  type ProductCreateUrlDialog,
+  type ProductCreateUrlQueryParams,
   productUrl,
 } from "@dashboard/products/urls";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
@@ -51,9 +49,10 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
 import { createHandler } from "./handlers";
 
@@ -85,7 +84,11 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -241,16 +244,12 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const handlePageFilterChange = useCallback(
-    (where: PageWhereInput, query: string) => {
-      searchPagesOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where,
-        query,
-      });
-    },
-    [searchPagesOpts.refetch],
-  );
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+  });
 
   const fetchMoreProductTypes = {
     hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -356,7 +355,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCollections}
+        fetchMoreReferenceCategories={fetchMoreCategories}
         fetchReferenceCollections={searchCollections}
         fetchMoreReferenceCollections={fetchMoreCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
@@ -367,9 +366,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
-        onFilterChange={{
-          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
-        }}
+        onFilterChange={onFilterChange}
       />
     </>
   );

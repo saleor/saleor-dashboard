@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { extractMutationErrors, findInEnum } from "../../misc";
 import SiteSettingsPage, {
   areAddressInputFieldsModified,
-  SiteSettingsPageFormData,
+  type SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
 
 const SiteSettings = () => {
@@ -65,6 +65,8 @@ const SiteSettings = () => {
               data.reserveStockDurationAuthenticatedUser || null,
             enableAccountConfirmationByEmail: data.emailConfirmation,
             limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
+            useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
+            preserveAllAddressFields: data.preserveAllAddressFields,
           },
         },
       }),

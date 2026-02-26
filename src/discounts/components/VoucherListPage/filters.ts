@@ -1,13 +1,13 @@
-import { IFilter } from "@dashboard/components/Filter/types";
+import { type IFilter } from "@dashboard/components/Filter/types";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
-import { FilterOpts, MinMax } from "@dashboard/types";
+import { type FilterOpts, type MinMax } from "@dashboard/types";
 import {
   createDateField,
   createNumberField,
   createOptionsField,
 } from "@dashboard/utils/filters/fields";
-import { Option } from "@saleor/macaw-ui-next";
-import { defineMessages, IntlShape } from "react-intl";
+import { type Option } from "@saleor/macaw-ui-next";
+import { defineMessages, type IntlShape } from "react-intl";
 
 export enum VoucherFilterKeys {
   saleType = "saleType",

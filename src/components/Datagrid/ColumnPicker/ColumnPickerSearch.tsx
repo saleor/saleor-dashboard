@@ -1,10 +1,10 @@
 import Debounce from "@dashboard/components/Debounce";
 import { SearchInput } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import messages from "./messages";
-import { ColumnCategory } from "./useColumns";
+import { type ColumnCategory } from "./useColumns";
 
 interface ColumnPickerSearchProps {
   currentCategory: ColumnCategory;

@@ -3,7 +3,7 @@ import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
-import { ChannelDetailsFragment } from "@dashboard/graphql/staging";
+import { type ChannelDetailsFragment } from "@dashboard/graphql/staging";
 
 export const channelsList: ChannelDetailsFragment[] = [
   {

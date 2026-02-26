@@ -1,19 +1,19 @@
-import { parse, ParsedQs } from "qs";
+import { parse, type ParsedQs } from "qs";
 
 import { InitialProductStateResponse } from "../../API/initialState/product/InitialProductStateResponse";
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterProviderType, InitialResponseType } from "../../types";
+import { type FilterContainer, FilterElement } from "../../FilterElement";
+import { type FilterProviderType, type InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
-  AttributesFetchingParams,
-  CollectionFetchingParams,
-  FetchingParams,
-  FetchingParamsType,
-  GiftCardsFetchingParams,
-  OrderFetchingParams,
-  PageFetchingParams,
-  ProductTypesFetchingParams,
-  StaffMembersFetchingParams,
+  type AttributesFetchingParams,
+  type CollectionFetchingParams,
+  type FetchingParams,
+  type FetchingParamsType,
+  type GiftCardsFetchingParams,
+  type OrderFetchingParams,
+  type PageFetchingParams,
+  type ProductTypesFetchingParams,
+  type StaffMembersFetchingParams,
   toAttributesFetchingParams,
   toCollectionFetchingParams,
   toFetchingParams,
@@ -23,7 +23,7 @@ import {
   toProductTypesFetchingParams,
   toStaffMembersFetchingParams,
   toVouchersFetchingParams,
-  VoucherFetchingParams,
+  type VoucherFetchingParams,
 } from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {

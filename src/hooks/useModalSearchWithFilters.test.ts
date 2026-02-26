@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 import {
   useModalSearchWithFilters,
-  UseModalSearchWithFiltersOptions,
+  type UseModalSearchWithFiltersOptions,
 } from "./useModalSearchWithFilters";
 
 const DEBOUNCE_MS = 200;

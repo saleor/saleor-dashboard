@@ -28,6 +28,7 @@ const config = {
     "^react-intl$": "<rootDir>/__mocks__/react-intl.ts",
     "@assets(.*)$": "<rootDir>/assets/$1",
     "@locale(.*)$": "<rootDir>/locale/$1",
+    "@dashboard/misc/getBaseUrl": "<rootDir>/testUtils/__mocks__/getBaseUrl.ts",
     "@dashboard(.*)$": "<rootDir>/src/$1",
     "@test/(.*)$": "<rootDir>/testUtils/$1",
     "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",

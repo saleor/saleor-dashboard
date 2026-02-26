@@ -171,6 +171,43 @@ export const appWebhookDeliveries = gql`
   }
 `;
 
+export const appHasProblems = gql`
+  query AppHasProblems($first: Int!) {
+    apps(first: $first, filter: { isActive: true }) {
+      edges {
+        node {
+          id
+          problems(limit: 1) {
+            __typename
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const appAllProblems = gql`
+  query AppAllProblems($id: ID!) {
+    app(id: $id) {
+      id
+      problems {
+        __typename
+        key
+        message
+        createdAt
+        count
+        isCritical
+        dismissed {
+          by
+          userEmail
+        }
+        updatedAt
+        id
+      }
+    }
+  }
+`;
+
 export const webhooksDetails = gql`
   query WebhookDetails($id: ID!) {
     webhook(id: $id) {

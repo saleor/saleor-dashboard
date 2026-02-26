@@ -10,18 +10,16 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
-  AttributeEntityTypeEnum,
-  AttributeErrorFragment,
-  AttributeValueInput,
-  PageDetailsFragment,
-  PageErrorFragment,
-  PageInput,
-  PageWhereInput,
-  UploadErrorFragment,
+  type AttributeErrorFragment,
+  type AttributeValueInput,
+  type PageDetailsFragment,
+  type PageErrorFragment,
+  type PageInput,
+  type UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   usePageDetailsQuery,
@@ -42,13 +40,13 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getStringOrPlaceholder, maybe } from "../../misc";
 import PageDetailsPage from "../components/PageDetailsPage";
-import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
+import { type PageData, type PageSubmitData } from "../components/PageDetailsPage/form";
+import { pageListUrl, pageUrl, type PageUrlQueryParams } from "../urls";
 import { getAttributeInputFromPage } from "../utils/data";
 
 interface PageDetailsProps {
@@ -176,7 +174,11 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
   });
   const {
     loadMore: loadMoreAttributeValues,
@@ -211,16 +213,12 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     onFetchMore: loadMoreAttributeValues,
   };
 
-  const handlePageFilterChange = useCallback(
-    (where: PageWhereInput, query: string) => {
-      searchPagesOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where,
-        query,
-      });
-    },
-    [searchPagesOpts.refetch],
-  );
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+  });
 
   return (
     <>
@@ -262,9 +260,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageUrl(id))}
         onAttributeSelectBlur={searchAttributeReset}
-        onFilterChange={{
-          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
-        }}
+        onFilterChange={onFilterChange}
       />
       <ActionDialog
         open={params.action === "remove"}

@@ -1,6 +1,6 @@
 import { OCCURRENCE_LIMITS } from "../constants";
-import { LeftOperand } from "../LeftOperandsProvider";
-import { FilterContainer, FilterElement } from "./FilterElement";
+import { type LeftOperand } from "../LeftOperandsProvider";
+import { type FilterContainer, FilterElement } from "./FilterElement";
 
 /** Limit input options availability on the list, based on occurrences in already selected filters
  * This is used, e.g. to limit address fields in Order where filter where user cannot specify the same filed multiple times

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { withFilterApolloMocks } from "@storybookUtils/AssignDialogShared/decorators";
 import { ProductFactory } from "@storybookUtils/AssignDialogShared/factories";
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 import { fn } from "storybook/test";
 
 import { AssignProductDialog } from "./AssignProductDialog";

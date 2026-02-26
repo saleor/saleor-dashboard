@@ -1,4 +1,4 @@
-import { WarehouseDetailsFragment } from "@dashboard/graphql";
+import { type WarehouseDetailsFragment } from "@dashboard/graphql";
 import { warehouse } from "@dashboard/warehouses/fixtures";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 

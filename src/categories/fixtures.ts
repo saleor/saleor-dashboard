@@ -1,4 +1,4 @@
-import { CategoryDetailsQuery, CategoryFragment } from "@dashboard/graphql";
+import { type CategoryDetailsQuery, type CategoryFragment } from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -104,6 +104,10 @@ export const category: (placeholderImage: string) => CategoryDetailsQuery["categ
       hasPreviousPage: false,
       startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
     },
+  },
+  ancestors: {
+    __typename: "CategoryCountableConnection",
+    edges: [],
   },
   description: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",

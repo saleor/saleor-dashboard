@@ -3,7 +3,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -12,23 +12,30 @@ import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCategoryDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { CategoryDetailsQuery, PermissionEnum, ProductErrorFragment } from "@dashboard/graphql";
+import {
+  type CategoryDetailsQuery,
+  PermissionEnum,
+  type ProductErrorFragment,
+} from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
-import { ListProps, ListViews, RelayToFlat } from "../../../types";
+import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryBackground from "../CategoryBackground";
 import { CategoryProducts } from "../CategoryProducts";
 import { CategorySubcategories } from "../CategorySubcategories";
-import CategoryUpdateForm, { CategoryUpdateData } from "./form";
+import CategoryUpdateForm, { type CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
   categories = "categories",
@@ -99,11 +106,32 @@ export const CategoryUpdatePage = ({
     categoryId,
   );
 
+  const ancestors = mapEdgesToItems(category?.ancestors);
+  const breadcrumb =
+    ancestors && ancestors.length > 0 ? (
+      <Box display="flex" alignItems="center" gap={1}>
+        {ancestors.map((ancestor, index) => (
+          <Fragment key={ancestor.id}>
+            {index > 0 && (
+              <Text size={2} color="default2">
+                /
+              </Text>
+            )}
+            <Link to={categoryUrl(ancestor.id)} style={{ textDecoration: "none" }}>
+              <Text size={2} color="default2" textDecoration={{ hover: "underline" }}>
+                {ancestor.name}
+              </Text>
+            </Link>
+          </Fragment>
+        ))}
+      </Box>
+    ) : undefined;
+
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={backHref} title={category?.name}>
+          <TopNav href={backHref} title={category?.name} subtitleTop={breadcrumb}>
             {canTranslate && (
               <TranslationsButton
                 variant="secondary"

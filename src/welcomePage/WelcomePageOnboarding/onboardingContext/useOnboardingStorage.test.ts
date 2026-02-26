@@ -3,7 +3,7 @@ import { useSaveOnBoardingStateMutation } from "@dashboard/graphql";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { OnboardingStepsIDs } from "./types";
+import { type OnboardingStepsIDs } from "./types";
 import { useOnboardingStorage } from "./useOnboardingStorage";
 
 jest.mock("@dashboard/auth/useUser", () => ({

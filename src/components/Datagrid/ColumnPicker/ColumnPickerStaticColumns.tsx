@@ -1,6 +1,6 @@
 import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
 
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
 interface ColumnPickerStaticColumnsProps {

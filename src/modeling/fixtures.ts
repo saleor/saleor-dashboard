@@ -1,4 +1,8 @@
-import { AttributeInputTypeEnum, AttributeTypeEnum, PageDetailsFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
+  type PageDetailsFragment,
+} from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

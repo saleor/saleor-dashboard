@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Install Dependencies
         run: pnpm install
@@ -114,7 +114,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Create check in prepare release PR
@@ -146,7 +146,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
           IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
@@ -193,15 +193,16 @@ jobs:
     needs: build
     if: always()
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       type: deployment
       ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
       status: ${{ needs.build.result }}
       product: dashboard
       environment: ${{ needs.build.outputs.ENVIRONMENT }}
-      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      mention_on: failure
     secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
       slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
 
   run-tests-on-release:

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  ProductTypeKindEnum,
+  type ProductTypeKindEnum,
   useProductTypeCreateDataQuery,
   useProductTypeCreateMutation,
   useUpdateMetadataMutation,
@@ -14,8 +14,8 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { useIntl } from "react-intl";
 
 import { getMutationErrors } from "../../misc";
-import ProductTypeCreatePage, { ProductTypeForm } from "../components/ProductTypeCreatePage";
-import { productTypeAddUrl, ProductTypeAddUrlQueryParams, productTypeUrl } from "../urls";
+import ProductTypeCreatePage, { type ProductTypeForm } from "../components/ProductTypeCreatePage";
+import { productTypeAddUrl, type ProductTypeAddUrlQueryParams, productTypeUrl } from "../urls";
 
 interface ProductTypeCreateProps {
   params: ProductTypeAddUrlQueryParams;

@@ -222,6 +222,7 @@
       "App",
       "AppExtension",
       "AppInstallation",
+      "AppProblem",
       "AppToken",
       "Attribute",
       "AttributeTranslatableContent",

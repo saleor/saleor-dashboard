@@ -11,14 +11,12 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { createVariantChannels } from "@dashboard/channels/utils";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  AttributeEntityTypeEnum,
-  PageWhereInput,
-  ProductErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductVariantDetailsQuery,
@@ -53,17 +51,18 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
+import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
 import {
   productUrl,
   productVariantEditUrl,
-  ProductVariantEditUrlDialog,
-  ProductVariantEditUrlQueryParams,
+  type ProductVariantEditUrlDialog,
+  type ProductVariantEditUrlQueryParams,
 } from "../../urls";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
 import { useSubmitChannels } from "./useSubmitChannels";
@@ -260,7 +259,11 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -275,16 +278,12 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const handlePageFilterChange = useCallback(
-    (where: PageWhereInput, query: string) => {
-      searchPagesOpts.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
-        where,
-        query,
-      });
-    },
-    [searchPagesOpts.refetch],
-  );
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+  });
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
@@ -361,9 +360,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
-        onFilterChange={{
-          [AttributeEntityTypeEnum.PAGE]: handlePageFilterChange,
-        }}
+        onFilterChange={onFilterChange}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

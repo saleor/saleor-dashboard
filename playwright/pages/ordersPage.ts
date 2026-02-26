@@ -8,7 +8,7 @@ import { AddProductsDialog } from "@pages/dialogs/addProductsDialog";
 import { AddressDialog } from "@pages/dialogs/addressDialog";
 import { OrderCreateDialog } from "@pages/dialogs/orderCreateDialog";
 import { ShippingAddressDialog } from "@pages/dialogs/shippingMethodDialog";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 import { OrderRefundDialog } from "./dialogs/orderRefundDialog";
 

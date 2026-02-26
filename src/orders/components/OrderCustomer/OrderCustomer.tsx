@@ -3,20 +3,20 @@ import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { AddressType } from "@dashboard/customers/types";
+import { type AddressType } from "@dashboard/customers/types";
 import { customerUrl } from "@dashboard/customers/urls";
 import {
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   OrderErrorCode,
-  OrderErrorFragment,
+  type OrderErrorFragment,
   PermissionEnum,
-  SearchCustomersQuery,
+  type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import * as React from "react";

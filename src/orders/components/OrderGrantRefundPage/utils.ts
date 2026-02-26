@@ -1,13 +1,13 @@
 import {
-  OrderDetailsGrantedRefundFragment,
-  OrderDetailsGrantRefundFragment,
-  OrderGrantedRefundFragment,
-  OrderGrantRefundCreateLineInput,
+  type OrderDetailsGrantedRefundFragment,
+  type OrderDetailsGrantRefundFragment,
+  type OrderGrantedRefundFragment,
+  type OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
 import currency from "currency.js";
 
-import { Line } from "./form";
-import { GrantRefundState, ReducerOrderLine } from "./reducer";
+import { type Line } from "./form";
+import { type GrantRefundState, type ReducerOrderLine } from "./reducer";
 
 export const calculateTotalPrice = (
   state: GrantRefundState,

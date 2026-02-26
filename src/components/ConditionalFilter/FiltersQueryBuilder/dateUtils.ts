@@ -1,4 +1,4 @@
-import { ConditionValue, isItemOption, isTuple } from "../FilterElement/ConditionValue";
+import { type ConditionValue, isItemOption, isTuple } from "../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "./utils";
 
 /**

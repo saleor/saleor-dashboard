@@ -1,7 +1,7 @@
-import { OrderLineFragment } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { type OrderLineFragment } from "@dashboard/graphql";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 
-import { LineItemData } from "../components/OrderReturnPage/form";
+import { type LineItemData } from "../components/OrderReturnPage/form";
 import { getItemPriceAndQuantity } from "./data";
 
 const mockedOrderLines = [

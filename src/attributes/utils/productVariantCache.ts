@@ -1,5 +1,5 @@
-import { SearchProductsQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type SearchProductsQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 
 export type CachedSearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
 type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];

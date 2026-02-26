@@ -6,7 +6,7 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { isUnnamed } from "@dashboard/extensions/utils";
-import { WebhookFragment } from "@dashboard/graphql";
+import { type WebhookFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";

@@ -1,4 +1,4 @@
-import { CategoryListUrlSortField, categoryUrl } from "@dashboard/categories/urls";
+import { type CategoryListUrlSortField, categoryUrl } from "@dashboard/categories/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -7,12 +7,12 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { CategoryFragment } from "@dashboard/graphql";
+import { type CategoryFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { PageListProps, SortPage } from "@dashboard/types";
-import { CompactSelection, GridSelection, Item } from "@glideapps/glide-data-grid";
-import { ReactNode, useCallback, useMemo } from "react";
+import { type PageListProps, type SortPage } from "@dashboard/types";
+import { CompactSelection, GridSelection, type Item } from "@glideapps/glide-data-grid";
+import { type ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 

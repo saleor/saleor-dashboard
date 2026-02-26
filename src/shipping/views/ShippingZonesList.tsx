@@ -28,8 +28,8 @@ import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog
 import ShippingZonesListPage from "../components/ShippingZonesListPage";
 import {
   shippingZonesListUrl,
-  ShippingZonesListUrlDialog,
-  ShippingZonesListUrlQueryParams,
+  type ShippingZonesListUrlDialog,
+  type ShippingZonesListUrlQueryParams,
 } from "../urls";
 
 interface ShippingZonesListProps {

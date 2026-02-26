@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import {
-  OrderPaymentFragment,
-  PaymentGatewayFragment,
+  type OrderPaymentFragment,
+  type PaymentGatewayFragment,
   TransactionActionEnum,
 } from "@dashboard/graphql";
 import OrderTransaction, {
-  OrderTransactionProps,
+  type OrderTransactionProps,
 } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
-import { FakeTransaction } from "@dashboard/orders/types";
+import { type FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import { useMemo } from "react";
 
@@ -54,6 +54,8 @@ const OrderTransactionPayment = ({
     chargePendingAmount: prepareMoney(0, currency),
     cancelPendingAmount: prepareMoney(0, currency),
     createdAt: fakeEvents[0]?.createdAt,
+    createdBy: null,
+    paymentMethodDetails: null,
     __typename: "FakeTransaction",
   };
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {

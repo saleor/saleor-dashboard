@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import useForm, { SubmitPromise, UseFormResult } from "@dashboard/hooks/useForm";
-import * as React from "react";
+import useForm, { type SubmitPromise, type UseFormResult } from "@dashboard/hooks/useForm";
+import type * as React from "react";
 
-import { FormId } from "./types";
+import { type FormId } from "./types";
 
 export type CheckIfSaveIsDisabledFnType<T> = (data: T) => boolean;
 

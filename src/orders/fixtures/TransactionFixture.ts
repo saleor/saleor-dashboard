@@ -1,5 +1,5 @@
 import {
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
@@ -56,6 +56,8 @@ export class TransactionFixture {
       amount: 0,
       currency: "USD",
     },
+    createdBy: null,
+    paymentMethodDetails: null,
   } satisfies OrderDetailsFragment["transactions"][number];
 
   static stripeApp = {

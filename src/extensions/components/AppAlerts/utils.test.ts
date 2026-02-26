@@ -1,6 +1,6 @@
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 
-import { getLatestFailedAttemptFromWebhooks, Webhook } from "./utils";
+import { getLatestFailedAttemptFromWebhooks, type Webhook } from "./utils";
 
 describe("getLatestFailedAttemptFromWebhook", () => {
   it("should return the latest failed attempt from failedDelivers", () => {

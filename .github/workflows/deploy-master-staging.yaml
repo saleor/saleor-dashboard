@@ -47,7 +47,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Package
         timeout-minutes: 15
@@ -66,14 +66,14 @@ jobs:
 
       - name: Deploy master staging
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
 
       - name: Deploy fake production
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
@@ -92,13 +92,14 @@ jobs:
     needs: build
     if: always()
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@cd1dfd59ee4486cceb63fa13b5e0c3b4f185712e # v1.9.0
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       type: deployment
       ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
       status: ${{ needs.build.result }}
       product: dashboard
       environment: saleor-master-staging
-      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      mention_on: failure
     secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
       slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}

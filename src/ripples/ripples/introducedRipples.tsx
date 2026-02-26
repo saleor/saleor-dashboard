@@ -1,6 +1,6 @@
 import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { allRipplesModalOpen } from "@dashboard/ripples/state";
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 import { getDefaultStore } from "jotai";
 
 const defaultStore = getDefaultStore();

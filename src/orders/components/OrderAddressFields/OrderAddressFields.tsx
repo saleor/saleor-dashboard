@@ -1,20 +1,20 @@
 // @ts-strict-ignore
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
-  AddressFragment,
-  CustomerAddressesQuery,
-  OrderDetailsQuery,
-  OrderErrorFragment,
+  type AddressFragment,
+  type CustomerAddressesQuery,
+  type OrderDetailsQuery,
+  type OrderErrorFragment,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { transformAddressToForm } from "@dashboard/misc";
 
 import OrderCustomerAddressesEditDialog, {
-  OrderCustomerAddressesEditDialogProps,
+  type OrderCustomerAddressesEditDialogProps,
 } from "../OrderCustomerAddressesEditDialog";
 import {
   AddressEditDialogVariant,
-  OrderCustomerAddressesEditDialogOutput,
+  type OrderCustomerAddressesEditDialogOutput,
 } from "../OrderCustomerAddressesEditDialog/types";
 
 interface OrderAddressFieldsProps {

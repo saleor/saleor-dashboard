@@ -1,16 +1,16 @@
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
-import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
+import { type ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import {
-  Control,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormSetError,
+  type Control,
+  type UseFormGetValues,
+  type UseFormHandleSubmit,
+  type UseFormSetError,
   useFormState,
-  UseFormTrigger,
+  type UseFormTrigger,
 } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,7 +18,7 @@ import { previousPagePath } from "../../consts";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
 import { useInstallApp } from "../../hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
-import { ExtensionInstallFormData } from "../../types";
+import { type ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";

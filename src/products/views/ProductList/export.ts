@@ -1,13 +1,13 @@
-import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import {
-  ExportInfoInput,
-  ExportProductsInput as ExportProductsInputType,
+  type ExportInfoInput,
+  type ExportProductsInput as ExportProductsInputType,
   ExportScope,
-  FileTypesEnum,
-  InputMaybe,
-  ProductFilterInput,
-  Scalars,
+  type FileTypesEnum,
+  type InputMaybe,
+  type ProductFilterInput,
+  type Scalars,
 } from "@dashboard/graphql";
 
 export class ProductsExportParameters {

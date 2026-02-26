@@ -1,4 +1,4 @@
-import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/AssignCategoryDialog";
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
@@ -6,7 +6,7 @@ import AssignProductDialog from "@dashboard/components/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import CountryList from "@dashboard/components/CountryList";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
@@ -23,32 +23,33 @@ import {
   createDiscountTypeChangeHandler,
 } from "@dashboard/discounts/handlers";
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
-import { VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
+import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
-  CategoryWithTotalProductsFragment,
-  CollectionWithTotalProductsFragment,
-  CountryWithCodeFragment,
-  DiscountErrorFragment,
+  type CategoryFilterInput,
+  type CategoryWithTotalProductsFragment,
+  type CollectionFilterInput,
+  type CollectionWithTotalProductsFragment,
+  type CountryWithCodeFragment,
+  type DiscountErrorFragment,
   PermissionEnum,
-  ProductWhereInput,
-  SearchCategoriesWithTotalProductsQuery,
-  SearchCategoriesWithTotalProductsQueryVariables,
-  SearchCollectionsWithTotalProductsQuery,
-  SearchCollectionsWithTotalProductsQueryVariables,
-  SearchProductFragment,
-  SearchProductsQuery,
-  SearchProductsQueryVariables,
-  VoucherDetailsFragment,
+  type ProductWhereInput,
+  type SearchCollectionsWithTotalProductsQuery,
+  type SearchCollectionsWithTotalProductsQueryVariables,
+  type SearchProductFragment,
+  type SearchProductsQuery,
+  type SearchProductsQueryVariables,
+  type VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
-import { UseSearchResult } from "@dashboard/hooks/makeSearch";
-import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type UseSearchResult } from "@dashboard/hooks/makeSearch";
+import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
-import { ListActionsWithoutToolbar } from "@dashboard/types";
+import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
+import { type ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -56,7 +57,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { RequirementsPicker } from "../../types";
 import DiscountVariants from "../DiscountVariants/DiscountVariants";
 import { VoucherCodes } from "../VoucherCodes";
-import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
@@ -67,7 +68,7 @@ import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
 import { useVoucherCodesSelection } from "./hooks/useVoucherCodesSelection";
-import { FormData, VoucherCreatePageTab, VoucherCreateProductVariant } from "./types";
+import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant } from "./types";
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
@@ -97,10 +98,13 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     channel: string | undefined,
     query: string,
   ) => void;
-  categoriesSearch: UseSearchResult<
-    SearchCategoriesWithTotalProductsQuery,
-    SearchCategoriesWithTotalProductsQueryVariables
-  >;
+  onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
+  onCollectionFilterChange?: (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
+  categoriesSearch: ReturnType<typeof useCategoryWithTotalProductsSearch>;
   collectionsSearch: UseSearchResult<
     SearchCollectionsWithTotalProductsQuery,
     SearchCollectionsWithTotalProductsQueryVariables
@@ -136,6 +140,8 @@ const VoucherCreatePage = ({
   collectionsSearch,
   variantsSearch,
   onProductFilterChange,
+  onCategoryFilterChange,
+  onCollectionFilterChange,
   countries,
   resetSelected,
 }: VoucherCreatePageProps) => {
@@ -471,6 +477,7 @@ const VoucherCreatePage = ({
             hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-category"}
             onFetch={categoriesSearch.search}
+            onFilterChange={onCategoryFilterChange}
             onFetchMore={categoriesSearch.loadMore}
             loading={categoriesSearch.result?.loading}
             onClose={closeModal}
@@ -494,6 +501,7 @@ const VoucherCreatePage = ({
             hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-collection"}
             onFetch={collectionsSearch.search}
+            onFilterChange={onCollectionFilterChange}
             onFetchMore={collectionsSearch.loadMore}
             loading={collectionsSearch.result.loading}
             onClose={closeModal}

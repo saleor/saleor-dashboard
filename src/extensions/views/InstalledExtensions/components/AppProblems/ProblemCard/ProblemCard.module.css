@@ -1,0 +1,122 @@
+/* Severity border (outer wrapper) */
+.severityError {
+  border-left: 3px solid var(--mu-colors-background-critical2);
+}
+
+.severityWarning {
+  border-left: 3px solid var(--mu-colors-background-warning1);
+}
+
+.severityDismissed {
+  border-left: 3px solid var(--mu-colors-border-default1);
+}
+
+/* Divider between cards */
+.groupDivider {
+  border: none;
+  border-top: 1px solid var(--mu-colors-border-default1);
+  margin: 4px 16px;
+}
+
+/* Header row: type badge, critical badge, count, action link */
+.problemHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 4px;
+}
+
+.criticalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--mu-colors-background-critical1);
+  color: var(--mu-colors-foreground-text-critical-default);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--mu-colors-border-critical1);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-foreground-text-neutral-default);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.groupActionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mu-colors-foreground-text-neutral-default);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.groupActionLink:hover {
+  text-decoration: underline;
+}
+
+/* Card body: timestamps, dismissed label, message */
+.problemRow {
+  padding: 8px 16px 8px 16px;
+}
+
+.problemRow:last-child {
+  padding-bottom: 14px;
+}
+
+.problemRowDismissed {
+  opacity: 0.5;
+}
+
+.problemRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.problemMessage {
+  font-size: 14px;
+  color: var(--mu-colors-foreground-text-neutral-default);
+}
+
+/* Timestamp helpers (used by TimestampWithTooltip, ProblemTimestamps) */
+.timestamp {
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 12px;
+}
+
+.timestampHoverable {
+  cursor: default;
+  border-bottom: 1px dotted var(--mu-colors-border-default2);
+}
+
+.timestampTooltip {
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* Dismissed label (used by DismissedLabel) */
+.dismissedLabel {
+  color: var(--mu-colors-foreground-text-neutral-subtle);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}

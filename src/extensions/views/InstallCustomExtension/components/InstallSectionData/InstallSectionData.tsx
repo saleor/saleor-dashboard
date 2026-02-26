@@ -1,8 +1,8 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import { Control, useWatch } from "react-hook-form";
-import { ZodIssue } from "zod";
+import { type Control, useWatch } from "react-hook-form";
+import { type ZodIssue } from "zod";
 
-import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
+import { type ExtensionInstallFormData, type InstallDetailsManifestData } from "../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 
 interface IInstallSectionDataProps {

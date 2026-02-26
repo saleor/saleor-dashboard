@@ -1,13 +1,13 @@
 import {
   AttributeInputTypeEnum,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
-import { AttributeInput } from "../Attributes";
+import { type AttributeInput } from "../Attributes";
 
 export type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
 export type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;

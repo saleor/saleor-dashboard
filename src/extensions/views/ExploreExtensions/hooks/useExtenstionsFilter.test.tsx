@@ -1,4 +1,4 @@
-import { ExtensionsGroups } from "@dashboard/extensions/types";
+import { type ExtensionsGroups } from "@dashboard/extensions/types";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 

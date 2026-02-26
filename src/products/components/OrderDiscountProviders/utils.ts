@@ -1,9 +1,13 @@
 // @ts-strict-ignore
-import { OrderDetailsFragment, OrderDetailsQuery, OrderDiscountType } from "@dashboard/graphql";
-import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import {
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+  OrderDiscountType,
+} from "@dashboard/graphql";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { useState } from "react";
 
-import { OrderLineDiscountData } from "./types";
+import { type OrderLineDiscountData } from "./types";
 
 export const useDiscountDialog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);

@@ -1,18 +1,23 @@
 import {
-  NumberCell,
+  type NumberCell,
   numberCellEmptyValue,
-  NumberCellProps,
+  type NumberCellProps,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
-import { Locale } from "@dashboard/components/Locale";
-import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { CustomCell, GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Locale } from "@dashboard/components/Locale";
+import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import {
+  type CustomCell,
+  type GridCell,
+  GridCellKind,
+  type TextCell,
+} from "@glideapps/glide-data-grid";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { DropdownCell, DropdownCellProps } from "./DropdownCell";
-import { MoneyCell, MoneyDiscuntedCell } from "./Money";
-import { hueToPillColorLight, PillCell, PillColor, stringToHue } from "./PillCell";
-import { StatusCell } from "./StatusCell";
-import { ThumbnailCell } from "./ThumbnailCell";
+import { type DropdownCell, type DropdownCellProps } from "./DropdownCell";
+import { type MoneyCell, type MoneyDiscuntedCell } from "./Money";
+import { hueToPillColorLight, type PillCell, type PillColor, stringToHue } from "./PillCell";
+import { type StatusCell } from "./StatusCell";
+import { type ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
   allowOverlay: true,

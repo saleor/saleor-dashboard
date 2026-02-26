@@ -1,5 +1,5 @@
 import { BasicApiService } from "@api/basics";
-import { USER_PERMISSION, UserPermission } from "@data/userPermissions";
+import { USER_PERMISSION, type UserPermission } from "@data/userPermissions";
 import { request } from "@playwright/test";
 import fs from "fs";
 import path from "path";

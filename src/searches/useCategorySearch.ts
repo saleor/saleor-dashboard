@@ -2,17 +2,17 @@
 import { gql } from "@apollo/client";
 import {
   SearchCategoriesDocument,
-  SearchCategoriesQuery,
-  SearchCategoriesQueryVariables,
+  type SearchCategoriesQuery,
+  type SearchCategoriesQueryVariables,
   SearchCategoriesWithTotalProductsDocument,
-  SearchCategoriesWithTotalProductsQuery,
-  SearchCategoriesWithTotalProductsQueryVariables,
+  type SearchCategoriesWithTotalProductsQuery,
+  type SearchCategoriesWithTotalProductsQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchCategories = gql`
-  query SearchCategories($after: String, $first: Int!, $query: String!) {
-    search: categories(after: $after, first: $first, filter: { search: $query }) {
+  query SearchCategories($after: String, $first: Int!, $filter: CategoryFilterInput) {
+    search: categories(after: $after, first: $first, filter: $filter) {
       edges {
         node {
           ...CategoryWithAncestors
@@ -26,8 +26,12 @@ export const searchCategories = gql`
 `;
 
 export const searchCategoriesWithTotalProducts = gql`
-  query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
-    search: categories(after: $after, first: $first, filter: { search: $query }) {
+  query SearchCategoriesWithTotalProducts(
+    $after: String
+    $first: Int!
+    $filter: CategoryFilterInput
+  ) {
+    search: categories(after: $after, first: $first, filter: $filter) {
       edges {
         node {
           ...CategoryWithTotalProducts
@@ -43,8 +47,19 @@ export const searchCategoriesWithTotalProducts = gql`
 export const useCategoryWithTotalProductsSearch = makeTopLevelSearch<
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables
->(SearchCategoriesWithTotalProductsDocument);
+>(SearchCategoriesWithTotalProductsDocument, {
+  mapSearchToVariables: (searchQuery, variables) => ({
+    ...variables,
+    filter: { ...variables.filter, search: searchQuery },
+  }),
+});
 
 export default makeTopLevelSearch<SearchCategoriesQuery, SearchCategoriesQueryVariables>(
   SearchCategoriesDocument,
+  {
+    mapSearchToVariables: (searchQuery, variables) => ({
+      ...variables,
+      filter: { ...variables.filter, search: searchQuery },
+    }),
+  },
 );

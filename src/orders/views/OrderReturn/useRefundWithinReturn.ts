@@ -1,13 +1,13 @@
 import {
-  OrderDetailsFragment,
-  OrderGrantRefundCreateErrorFragment,
-  TransactionRequestRefundForGrantedRefundErrorFragment,
+  type OrderDetailsFragment,
+  type OrderGrantRefundCreateErrorFragment,
+  type TransactionRequestRefundForGrantedRefundErrorFragment,
   useOrderGrantRefundAddWithOrderMutation,
   useOrderSendRefundForGrantedRefundMutation,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { extractMutationErrors } from "@dashboard/misc";
-import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
+import { type OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
 
 interface UseReturnWithinReturnOpts {
   orderId: string;

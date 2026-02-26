@@ -1,36 +1,55 @@
 // @ts-strict-ignore
-import { QueryResult } from "@apollo/client";
-import { DocumentNode } from "graphql";
+import { type QueryResult } from "@apollo/client";
+import { type DocumentNode } from "graphql";
 import { useState } from "react";
 
-import makeQuery, { UseQueryResult } from "./makeQuery";
+import makeQuery, { type UseQueryResult } from "./makeQuery";
 import useDebounce from "./useDebounce";
 
-export interface SearchVariables {
+export interface BaseSearchVariables {
   after?: string | null;
   first: number;
+}
+
+export interface SearchVariables extends BaseSearchVariables {
   query: string;
 }
 
-export interface UseSearchResult<TData, TVariables extends SearchVariables> {
+export interface UseSearchResult<TData, TVariables extends BaseSearchVariables> {
   loadMore: () => void;
   result: QueryResult<TData, TVariables>;
   search: (query: string) => void;
   query: string;
 }
-type UseSearchOpts<TVariables extends SearchVariables> = Partial<{
+type UseSearchOpts<TVariables extends BaseSearchVariables> = Partial<{
   skip: boolean;
   variables: TVariables;
 }>;
-export type UseSearchHook<TData, TVariables extends SearchVariables> = (
+export type UseSearchHook<TData, TVariables extends BaseSearchVariables> = (
   opts: UseSearchOpts<TVariables>,
 ) => UseSearchResult<TData, TVariables>;
 
-function makeSearch<TData, TVariables extends SearchVariables>(
+interface MakeSearchOptions<TVariables extends BaseSearchVariables> {
+  mapSearchToVariables?: (searchQuery: string, variables: TVariables) => TVariables;
+}
+
+const defaultMapSearchToVariables = <TVariables extends SearchVariables>(
+  searchQuery: string,
+  variables: TVariables,
+): TVariables => ({
+  ...variables,
+  query: searchQuery,
+});
+
+function makeSearch<TData, TVariables extends BaseSearchVariables>(
   query: DocumentNode,
   loadMoreFn: (result: UseQueryResult<TData, TVariables>) => void,
+  options?: MakeSearchOptions<TVariables>,
 ): UseSearchHook<TData, TVariables> {
   const useSearchQuery = makeQuery<TData, TVariables>(query);
+  const mapSearchToVariables =
+    options?.mapSearchToVariables ??
+    (defaultMapSearchToVariables as (searchQuery: string, variables: TVariables) => TVariables);
 
   function useSearch(opts: UseSearchOpts<TVariables>): UseSearchResult<TData, TVariables> {
     const [searchQuery, setSearchQuery] = useState("");
@@ -38,10 +57,7 @@ function makeSearch<TData, TVariables extends SearchVariables>(
     const result = useSearchQuery({
       ...opts,
       displayLoader: true,
-      variables: {
-        ...opts.variables,
-        query: searchQuery,
-      },
+      variables: mapSearchToVariables(searchQuery, opts.variables as TVariables),
     });
 
     return {

@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { ChannelCollectionData } from "@dashboard/channels/utils";
-import { collectionListPath, CollectionUrlQueryParams } from "@dashboard/collections/urls";
+import { type ChannelCollectionData } from "@dashboard/channels/utils";
+import { collectionListPath, type CollectionUrlQueryParams } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -16,13 +16,13 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForCollectionDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  CollectionChannelListingErrorFragment,
-  CollectionDetailsQuery,
-  CollectionErrorFragment,
+  type CollectionChannelListingErrorFragment,
+  type CollectionDetailsQuery,
+  type CollectionErrorFragment,
   PermissionEnum,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
@@ -30,11 +30,11 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, Divider } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { ChannelProps, PageListProps } from "../../../types";
+import { type ChannelProps, type PageListProps } from "../../../types";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
-import CollectionUpdateForm, { CollectionUpdateData } from "./form";
+import CollectionUpdateForm, { type CollectionUpdateData } from "./form";
 
 interface CollectionDetailsPageProps extends PageListProps, ChannelProps {
   channelsCount: number;

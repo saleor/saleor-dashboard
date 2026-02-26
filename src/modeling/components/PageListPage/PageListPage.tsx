@@ -14,15 +14,19 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Pages } from "@dashboard/modeling/types";
-import { PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
-import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
+import { type Pages } from "@dashboard/modeling/types";
+import { type PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
+import {
+  type FilterPagePropsWithPresets,
+  type PageListProps,
+  type SortPage,
+} from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { PageListFilterKeys, PageListFilterOpts } from "../../views/PageList/filters";
+import { type PageListFilterKeys, type PageListFilterOpts } from "../../views/PageList/filters";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 

@@ -1,4 +1,4 @@
-import { TaxConfigurationFragment } from "@dashboard/graphql";
+import { type TaxConfigurationFragment } from "@dashboard/graphql";
 import { TaxMenu } from "@dashboard/taxes/components/TaxMenu/TaxMenu";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";

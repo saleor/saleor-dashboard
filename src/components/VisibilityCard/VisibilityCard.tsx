@@ -4,14 +4,14 @@ import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { UserError } from "@dashboard/types";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import type * as React from "react";
 import { useState } from "react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";

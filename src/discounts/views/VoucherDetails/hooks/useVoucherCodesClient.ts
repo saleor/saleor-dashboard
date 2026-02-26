@@ -1,13 +1,13 @@
-import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
-import { GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
+import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { type GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
 import {
   generateMultipleVoucherCodes,
   voucherCodeExists,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
-import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
-import { ListSettings } from "@dashboard/types";
+import { type UseListSettings } from "@dashboard/hooks/useListSettings";
+import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
+import { type ListSettings } from "@dashboard/types";
 import { useState } from "react";
 
 interface UseVoucherCodesClient {

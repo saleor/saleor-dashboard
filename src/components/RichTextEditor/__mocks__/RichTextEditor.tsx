@@ -1,6 +1,6 @@
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 
-import { RichTextEditorProps } from "../RichTextEditor";
+import { type RichTextEditorProps } from "../RichTextEditor";
 
 export const HOLDER = "TEST_HOLDER";
 

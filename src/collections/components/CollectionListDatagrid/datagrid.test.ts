@@ -1,7 +1,7 @@
-import { Collection } from "@dashboard/collections/types";
-import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { type Collection } from "@dashboard/collections/types";
+import { type CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { getStatusColor } from "@dashboard/misc";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { getAvailabilityLabel, getAvailabilityLabelWhenSelectedChannel } from "./datagrid";
 

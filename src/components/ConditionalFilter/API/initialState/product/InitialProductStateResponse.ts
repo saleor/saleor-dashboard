@@ -1,9 +1,9 @@
-import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
+import { type AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { createBooleanOption } from "../../../constants";
-import { AttributeInputType } from "../../../FilterElement/ConditionOptions";
-import { ItemOption } from "../../../FilterElement/ConditionValue";
-import { UrlToken } from "../../../ValueProvider/UrlToken";
+import { type AttributeInputType } from "../../../FilterElement/ConditionOptions";
+import { type ItemOption } from "../../../FilterElement/ConditionValue";
+import { type UrlToken } from "../../../ValueProvider/UrlToken";
 
 export interface AttributeDTO {
   choices: Array<{

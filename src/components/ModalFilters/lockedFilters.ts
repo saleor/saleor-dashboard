@@ -3,21 +3,21 @@ import * as Sentry from "@sentry/react";
 import { STATIC_CONDITIONS } from "../ConditionalFilter/constants";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import {
-  AnyFilterElementName,
+  type AnyFilterElementName,
   ConditionOptions,
 } from "../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
-import { ItemOption } from "../ConditionalFilter/FilterElement/ConditionValue";
+import { type ItemOption } from "../ConditionalFilter/FilterElement/ConditionValue";
 import { Constraint, GLOBAL } from "../ConditionalFilter/FilterElement/Constraint";
 import {
   ExpressionValue,
-  FilterContainer,
+  type FilterContainer,
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
-import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
-import { LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
-import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
-import { LockedFilter } from "./types";
+import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { type LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
+import { type UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
+import { type LockedFilter } from "./types";
 
 const resolveFieldLabel = (field: string, staticOptions?: LeftOperand[]): string => {
   const match = staticOptions?.find(option => option.value === field);

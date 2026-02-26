@@ -1,6 +1,6 @@
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import useLocale from "@dashboard/hooks/useLocale";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 
 import { useDataLineMoneyStyles } from "../styles";
 

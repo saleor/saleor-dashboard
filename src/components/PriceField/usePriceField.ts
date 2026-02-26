@@ -1,5 +1,5 @@
-import { FormChange } from "@dashboard/hooks/useForm";
-import { TextFieldProps } from "@material-ui/core";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type TextFieldProps } from "@material-ui/core";
 import { useMemo } from "react";
 
 import { SEPARATOR_CHARACTERS } from "./consts";

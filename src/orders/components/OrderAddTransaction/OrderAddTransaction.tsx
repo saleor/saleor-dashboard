@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
 import { FormattedMessage } from "react-intl";

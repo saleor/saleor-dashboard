@@ -1,13 +1,13 @@
 import { TopNav } from "@dashboard/components/AppLayout";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
-import { DiscoutFormData } from "@dashboard/discounts/types";
+import { type DiscoutFormData } from "@dashboard/discounts/types";
 import {
-  ChannelFragment,
-  PromotionCreateErrorCode,
-  PromotionCreateErrorFragment,
+  type ChannelFragment,
+  type PromotionCreateErrorCode,
+  type PromotionCreateErrorFragment,
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
@@ -17,7 +17,7 @@ import { DiscountCreateForm } from "../DiscountCreateForm";
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDescription } from "../DiscountDescription";
 import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
-import { DiscountRules, DiscountRulesErrors } from "../DiscountRules";
+import { DiscountRules, type DiscountRulesErrors } from "../DiscountRules";
 
 interface DiscountCreatePageProps {
   channels: ChannelFragment[];

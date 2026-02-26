@@ -3,7 +3,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
-  CategoryBulkDeleteMutation,
+  type CategoryBulkDeleteMutation,
   CategoryChildrenDocument,
   CategoryChildrenQuery,
   CategoryChildrenQueryVariables,
@@ -36,9 +36,9 @@ import { useLocation } from "react-router";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
   categoryListUrl,
-  CategoryListUrlDialog,
-  CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
+  type CategoryListUrlDialog,
+  type CategoryListUrlFilters,
+  type CategoryListUrlQueryParams,
 } from "../../urls";
 import {
   CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,

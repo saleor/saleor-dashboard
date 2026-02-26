@@ -23,7 +23,7 @@ import { Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { DropdownRow } from "./DropdownRow";
 import { SingleReferenceField } from "./SingleReferenceField";
-import { AttributeRowProps } from "./types";
+import { type AttributeRowProps } from "./types";
 
 const AttributeRow = ({
   attribute,

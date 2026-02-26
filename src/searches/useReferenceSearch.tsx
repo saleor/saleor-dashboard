@@ -1,5 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { AttributeDetailsFragment, VariantAttributeFragment } from "@dashboard/graphql";
+import { type AttributeDetailsFragment, type VariantAttributeFragment } from "@dashboard/graphql";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { useMemo } from "react";

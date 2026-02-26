@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   useProductTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdateProductTranslationsMutation,
@@ -9,12 +9,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMultipleUrlValues, stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
 import { TranslationsProductsPage } from "../components/TranslationsProductsPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
+import { type TranslationField, type TranslationInputFieldName } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 
 type HandleSubmitAttributeValue = OutputData | string;

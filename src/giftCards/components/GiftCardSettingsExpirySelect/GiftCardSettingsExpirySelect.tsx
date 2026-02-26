@@ -1,8 +1,8 @@
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
-import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type GiftCardSettingsErrorFragment, type TimePeriodTypeEnum } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

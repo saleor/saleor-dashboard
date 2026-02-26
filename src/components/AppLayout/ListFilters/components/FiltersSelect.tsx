@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { FilterContent } from "@dashboard/components/Filter/FilterContent/FilterContent";
 import {
-  FilterElement,
-  FilterErrorMessages,
-  IFilter,
-  InvalidFilters,
+  type FilterElement,
+  type FilterErrorMessages,
+  type IFilter,
+  type InvalidFilters,
 } from "@dashboard/components/Filter/types";
 import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";

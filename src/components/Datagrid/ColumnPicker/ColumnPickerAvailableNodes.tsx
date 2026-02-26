@@ -1,11 +1,11 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerSearch } from "./ColumnPickerSearch";
 import messages from "./messages";
-import { ColumnCategory } from "./useColumns";
+import { type ColumnCategory } from "./useColumns";
 
 interface ColumnPickerAvailableNodesProps {
   currentCategory: ColumnCategory;

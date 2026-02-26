@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import {
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderGrantRefundCreateErrorFragment,
-  TransactionRequestRefundForGrantedRefundErrorFragment,
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderGrantRefundCreateErrorFragment,
+  type TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -20,7 +20,7 @@ import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
 import { TransactionSubmitCard } from "./components";
 import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
 import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
-import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import OrderRefundForm, { type OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {

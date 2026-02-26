@@ -1,4 +1,4 @@
-import { ShippingMethodTranslationsQuery } from "@dashboard/graphql";
+import { type ShippingMethodTranslationsQuery } from "@dashboard/graphql";
 
 import { mapTranslationsToEntities } from "./utils";
 

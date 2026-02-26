@@ -1,5 +1,64 @@
 # Changelog
 
+## 3.22.33
+
+### Patch Changes
+
+- [#6326](https://github.com/saleor/saleor-dashboard/pull/6326) [`4238398`](https://github.com/saleor/saleor-dashboard/commit/42383986648ce40c1d113a41aa191b6d62797a43) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Category" modals based on categories query filter options, similar to existing filters on category list page.
+
+- [#6355](https://github.com/saleor/saleor-dashboard/pull/6355) [`80b93f6`](https://github.com/saleor/saleor-dashboard/commit/80b93f6d79fd7f54d46b0609d6bd927ce4e4a20d) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Added "Address Validation" setting to the site settings page, allowing admins to preserve address fields that fall outside a country's standard format instead of having them removed during validation.
+
+  Requires Saleor [3.22.38](https://github.com/saleor/saleor/releases/tag/3.22.38)
+
+- [#6350](https://github.com/saleor/saleor-dashboard/pull/6350) [`51575d1`](https://github.com/saleor/saleor-dashboard/commit/51575d12910355e23c1982a7836bf15083d45a1a) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Extend site settings with webhook emission section - allow changing `useLegacyUpdateWebhookEmission` flag
+
+- [#6352](https://github.com/saleor/saleor-dashboard/pull/6352) [`3b4e59c`](https://github.com/saleor/saleor-dashboard/commit/3b4e59c737c52f9ab473e80e0b2fdb4ae594057a) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Fix Gift Cards search to use `giftCards.search` query parameter instead of filtering by `code`. This enables searching gift cards by email, user name, and code rather than only by exact code match.
+
+- [#6356](https://github.com/saleor/saleor-dashboard/pull/6356) [`8c5f075`](https://github.com/saleor/saleor-dashboard/commit/8c5f0754d863a7f4a25487982ea3fbc892bb822e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fix pnpm audit security vulnerabilities by adding dependency overrides for ajv, and bumping qs to a patched version. Suppress minimatch CVE-2026-26996 (ReDoS) via auditConfig since upgrading to minimatch 10.x breaks Jest coverage instrumentation.
+
+- [#6348](https://github.com/saleor/saleor-dashboard/pull/6348) [`49308be`](https://github.com/saleor/saleor-dashboard/commit/49308be632e06e0d041087b1042fbc9a16296ffc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix mapping VISA payment method in Transaction view. Now VISA logo is displayed correctly
+
+- [#6349](https://github.com/saleor/saleor-dashboard/pull/6349) [`496f688`](https://github.com/saleor/saleor-dashboard/commit/496f6888e22d442a47f77c575c479d06717fbef5) Thanks [@chrislaai](https://github.com/chrislaai)! - Update the API_URL in .env.template
+
+- [#6363](https://github.com/saleor/saleor-dashboard/pull/6363) [`1d78e48`](https://github.com/saleor/saleor-dashboard/commit/1d78e48300a47e832b37ba8be8b780ca053f13a0) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added a hint (Ripple) on the installed extensions page to notify users about the new app problems feature, which shows issues with apps directly in the extensions list.
+
+- [#6283](https://github.com/saleor/saleor-dashboard/pull/6283) [`fca0cbf`](https://github.com/saleor/saleor-dashboard/commit/fca0cbf41abc46b5f05da3d607bbfecc6cd62b00) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added app problems display to the installed extensions list. Each app now shows reported problems with severity badges, timestamps, and dismissal support. The "Open the app" action link is only shown for third-party apps. Requires Saleor 3.22+.
+
+  :::warning
+  This release _requires_ Saleor core [`3.22.36`](https://github.com/saleor/saleor/releases/tag/3.22.36). Used with older version, Extensions page will break
+  :::
+
+## 3.22.32
+
+### Patch Changes
+
+- [#6340](https://github.com/saleor/saleor-dashboard/pull/6340) [`ccc005a`](https://github.com/saleor/saleor-dashboard/commit/ccc005a715c5834291630ad19c3808f30fa6593a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed debugging messages (warnings in browser console) where Dashboard confused actions from 3rd party, like browser extensions signals with AppBridge actions. Now warnings should only occur, when proper frame is sent, but with invalid events inside
+
+- [#6323](https://github.com/saleor/saleor-dashboard/pull/6323) [`85e7f3f`](https://github.com/saleor/saleor-dashboard/commit/85e7f3f81e7f9c534ff7a8e9f87d9ed3a1d93cd4) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added new e2e tests for Saleor apps deployed in staging environment (internal). They check if app loads correctly and displays its settings
+
+- [#6254](https://github.com/saleor/saleor-dashboard/pull/6254) [`a0011cc`](https://github.com/saleor/saleor-dashboard/commit/a0011cc9bc7f23deca89df61eeaaffd358e495ab) Thanks [@iharshyadav](https://github.com/iharshyadav)! - Fix product export with "Current search" filter option. The export mutation now correctly includes filter parameters when exporting products with the "Current search" scope, allowing users to export only filtered products as intended.
+
+- [#6339](https://github.com/saleor/saleor-dashboard/pull/6339) [`23d946c`](https://github.com/saleor/saleor-dashboard/commit/23d946c24465d85c254aaf863e692e9d296e281d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Order Transaction will now display payment method details, like card brand or type.
+
+- [#6327](https://github.com/saleor/saleor-dashboard/pull/6327) [`4f81c86`](https://github.com/saleor/saleor-dashboard/commit/4f81c86b5e244fedb3908bbce538cefbe454b498) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering UI to "Assign Model" dialogs.
+  This allows filtering by "Model type" when assigning values to Model reference attributes in products and product variants.
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed issue when filtering products by parameters depending on channel (e.g. price) - previously filters didn't work correctly and always returned an empty list. Now filters will work correctly by passing correct channel value.
+
+- [#6318](https://github.com/saleor/saleor-dashboard/pull/6318) [`cf1c8aa`](https://github.com/saleor/saleor-dashboard/commit/cf1c8aa1b5db738b22415764b472bf448d1bb978) Thanks [@mirekm](https://github.com/mirekm)! - Product availability diagnostics now skip shipping zone warnings for non-shippable products (digital goods, activation codes, etc.). Products with isShippingRequired: false on their product type will no longer see false positive warnings about missing shipping zones or unreachable warehouses via shipping.
+
+- [#6333](https://github.com/saleor/saleor-dashboard/pull/6333) [`1739498`](https://github.com/saleor/saleor-dashboard/commit/1739498df428d728395436230df197b88ad4ade3) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed code splitting for `auth` and `configuration` chunks. Previously this code was included in the main bundle, skipping dynamic imports. Now it will only load when needed, which should improve performance.
+
+- [#6324](https://github.com/saleor/saleor-dashboard/pull/6324) [`9ab34dc`](https://github.com/saleor/saleor-dashboard/commit/9ab34dcd90515abd1468fd55f62059693f1bd0e4) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed icon in theme switcher not showing
+
+- [#6317](https://github.com/saleor/saleor-dashboard/pull/6317) [`160511f`](https://github.com/saleor/saleor-dashboard/commit/160511f88fa381e54f26d85c093dd586e03bab45) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated to storybook v10
+
+- [#6311](https://github.com/saleor/saleor-dashboard/pull/6311) [`61a484d`](https://github.com/saleor/saleor-dashboard/commit/61a484db5ff9891eb5e23533fd1765a649e55e7e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Variant" modals based on products query `where` options, similar to existing filters on product list page.
+
+- [#6334](https://github.com/saleor/saleor-dashboard/pull/6334) [`5669ef5`](https://github.com/saleor/saleor-dashboard/commit/5669ef5cdcc8ed86959a3e3677d2fac253623d1a) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Maintanance: Added stories for Assign attribute value modals and configuration for mocking GraphQL responses in Storybook.
+
+- [#6341](https://github.com/saleor/saleor-dashboard/pull/6341) [`4a45b49`](https://github.com/saleor/saleor-dashboard/commit/4a45b494c655ddd0ebd8b9abd96ed4a34e5f8c21) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added quick-paste of auth token to GraphQL Playground. Now to test queries as apps or specific users, you can paste bare token and full authorization header will be included.
+
 ## 3.22.31
 
 ### Patch Changes

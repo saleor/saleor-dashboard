@@ -1,7 +1,7 @@
 import { Toggle } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { WebhookFormData } from "../../WebhookDetailsPage";
+import { type WebhookFormData } from "../../WebhookDetailsPage";
 import { messages } from "./messages";
 
 interface WebhookStatusProps {

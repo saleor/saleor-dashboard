@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import { ListSettings } from "../../types";
+import { type ListSettings } from "../../types";
 import { TablePagination } from "./TablePagination";
 
 const mockNavigate = jest.fn();

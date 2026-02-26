@@ -1,8 +1,8 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
 import {
-  AnyFilterElementName,
-  ConditionItem,
+  type AnyFilterElementName,
+  type ConditionItem,
   ConditionOptions,
 } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";

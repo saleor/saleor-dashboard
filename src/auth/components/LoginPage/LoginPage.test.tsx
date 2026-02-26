@@ -1,7 +1,7 @@
-import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import * as React from "react";
+import type * as React from "react";
 
 import LoginPage from "./LoginPage";
 

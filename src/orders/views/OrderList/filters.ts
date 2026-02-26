@@ -2,9 +2,9 @@ import { OrderAuthorizeStatusEnum, OrderChargeStatusEnum, OrderStatus } from "@d
 import { OrderFilterKeys } from "@dashboard/orders/components/OrderListPage/filters";
 
 import {
-  FilterElement,
-  FilterElementKeyValue,
-  FilterElementRegular,
+  type FilterElement,
+  type FilterElementKeyValue,
+  type FilterElementRegular,
 } from "../../../components/Filter/types";
 import {
   createFilterTabUtils,
@@ -16,7 +16,7 @@ import {
 } from "../../../utils/filters";
 import {
   OrderListFitersWithKeyValueValues,
-  OrderListUrlFilters,
+  type OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
 } from "../../urls";

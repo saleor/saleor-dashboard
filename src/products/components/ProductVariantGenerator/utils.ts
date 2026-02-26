@@ -1,20 +1,20 @@
 import {
   AttributeInputTypeEnum,
-  BulkAttributeValueInput,
-  ProductVariantBulkCreateInput,
-  VariantAttributeFragment,
+  type BulkAttributeValueInput,
+  type ProductVariantBulkCreateInput,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import slugify from "slugify";
 
 import {
-  AttributeData,
-  AttributeValue,
-  ExistingVariantCombination,
-  ExistingVariantData,
-  GeneratedVariantPreview,
-  GeneratorDefaults,
-  NonSelectionAttributeValues,
-  SelectionState,
+  type AttributeData,
+  type AttributeValue,
+  type ExistingVariantCombination,
+  type ExistingVariantData,
+  type GeneratedVariantPreview,
+  type GeneratorDefaults,
+  type NonSelectionAttributeValues,
+  type SelectionState,
 } from "./types";
 
 // Safety limit to prevent browser freeze on huge combinations

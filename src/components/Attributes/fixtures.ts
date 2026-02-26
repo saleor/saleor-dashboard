@@ -4,7 +4,7 @@ import {
   MeasurementUnitsEnum,
 } from "@dashboard/graphql";
 
-import { AttributeInput } from "./Attributes";
+import { type AttributeInput } from "./Attributes";
 
 const DROPDOWN_ATTRIBUTE: AttributeInput = {
   data: {

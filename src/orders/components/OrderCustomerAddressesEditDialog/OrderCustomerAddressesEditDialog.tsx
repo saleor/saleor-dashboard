@@ -1,19 +1,22 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { AddressTypeInput } from "@dashboard/customers/types";
+import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
-  AddressFragment,
-  AddressInput,
+  type AddressFragment,
+  type AddressInput,
   AddressTypeEnum,
-  CountryWithCodeFragment,
-  Node,
-  OrderErrorFragment,
+  type CountryWithCodeFragment,
+  type Node,
+  type OrderErrorFragment,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getById, transformAddressToAddressInput } from "@dashboard/misc";
@@ -21,19 +24,19 @@ import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Divider, FormControlLabel } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
-  OrderCustomerAddressesEditFormData,
+  type OrderCustomerAddressesEditFormData,
 } from "./form";
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
 import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 import {
   AddressEditDialogVariant,
-  OrderCustomerAddressesEditDialogOutput,
-  OrderCustomerSearchAddressState,
+  type OrderCustomerAddressesEditDialogOutput,
+  type OrderCustomerSearchAddressState,
 } from "./types";
 import { getAddressEditProps, hasPreSubmitErrors, validateDefaultAddress } from "./utils";
 

@@ -1,12 +1,12 @@
 import { useApolloClient } from "@apollo/client";
-import { OrderFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type OrderFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetLegacyChannelOperandsDocument,
-  _GetLegacyChannelOperandsQuery,
-  _GetLegacyChannelOperandsQueryVariables,
+  type _GetLegacyChannelOperandsQuery,
+  type _GetLegacyChannelOperandsQueryVariables,
   _SearchWarehouseOperandsDocument,
-  _SearchWarehouseOperandsQuery,
-  _SearchWarehouseOperandsQueryVariables,
+  type _SearchWarehouseOperandsQuery,
+  type _SearchWarehouseOperandsQueryVariables,
   CountryCode,
   FulfillmentStatus,
   OrderAuthorizeStatusEnum,
@@ -19,7 +19,7 @@ import { useIntl } from "react-intl";
 
 import { EnumValuesHandler } from "../../Handler";
 import { createInitialOrderState } from "../helpers";
-import { InitialOrderAPIResponse } from "../types";
+import { type InitialOrderAPIResponse } from "../types";
 import { InitialOrderStateResponse } from "./InitialOrderState";
 
 const mapIDsToOptions = (ids: string[]) =>

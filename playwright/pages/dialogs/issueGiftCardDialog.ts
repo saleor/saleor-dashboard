@@ -1,5 +1,5 @@
 import { BasePage } from "@pages/basePage";
-import { expect, Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class IssueGiftCardDialog extends BasePage {
   constructor(

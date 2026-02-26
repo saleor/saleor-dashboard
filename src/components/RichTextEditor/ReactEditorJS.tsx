@@ -1,8 +1,12 @@
-import EditorJS, { EditorConfig, OutputData, ToolConstructable } from "@editorjs/editorjs";
+import EditorJS, {
+  type EditorConfig,
+  type OutputData,
+  type ToolConstructable,
+} from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph";
 import {
-  EditorCore,
-  Props as ReactEditorJSProps,
+  type EditorCore,
+  type Props as ReactEditorJSProps,
   ReactEditorJS as BaseReactEditorJS,
 } from "@react-editor-js/core";
 import { useCallback } from "react";

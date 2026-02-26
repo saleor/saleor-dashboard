@@ -1,5 +1,5 @@
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 interface ExternalSearch {
   query: string;

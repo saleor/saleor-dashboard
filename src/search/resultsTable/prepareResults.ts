@@ -1,4 +1,4 @@
-import { GlobalSearchQuery } from "@dashboard/graphql";
+import { type GlobalSearchQuery } from "@dashboard/graphql";
 
 export const prepareResults = (data: GlobalSearchQuery) => {
   const { __typename, ...resources } = data;

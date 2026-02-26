@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useEffect, useReducer } from "react";
 
-import reduceFilter, { FilterReducerAction } from "./reducer";
-import { FieldType, FilterElement, IFilter } from "./types";
+import reduceFilter, { type FilterReducerAction } from "./reducer";
+import { type FieldType, type FilterElement, type IFilter } from "./types";
 
 export type FilterDispatchFunction<K extends string = string> = <T extends FieldType>(
   value: FilterReducerAction<K, T>,

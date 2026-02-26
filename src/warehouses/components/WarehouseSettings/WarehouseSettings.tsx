@@ -3,20 +3,20 @@ import Link from "@dashboard/components/Link";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
-  WarehouseWithShippingFragment,
+  type WarehouseWithShippingFragment,
 } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import { ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
+import { type WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
 import messages from "./messages";
 
 const WarehouseRadioSubtitle = ({ children }: { children: ReactNode }) => (

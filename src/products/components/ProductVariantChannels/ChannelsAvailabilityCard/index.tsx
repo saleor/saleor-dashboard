@@ -1,10 +1,10 @@
 import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
+  type ChannelPriceAndPreorderData,
+  type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 
-import { Product, Variant } from "./../types";
+import { type Product, type Variant } from "./../types";
 import { AvailabilityCard } from "./AvailabilityCard";
 import {
   getAvailabilityCountForProduct,

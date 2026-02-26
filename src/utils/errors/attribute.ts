@@ -1,5 +1,5 @@
-import { AttributeErrorCode, AttributeErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { AttributeErrorCode, type AttributeErrorFragment } from "@dashboard/graphql";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

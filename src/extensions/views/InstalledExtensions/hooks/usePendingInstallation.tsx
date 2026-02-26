@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { type InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
@@ -85,6 +85,8 @@ export const usePendingInstallation = ({
             onRetry={() => handleAppInstallRetry(id)}
           />
         ) : null,
+        activeProblemCount: 0,
+        criticalProblemCount: 0,
       };
     },
   );

@@ -1,19 +1,19 @@
 // @ts-strict-ignore
 import {
-  ApolloError,
-  ApolloQueryResult,
-  LazyQueryHookOptions as BaseLazyQueryHookOptions,
-  OperationVariables,
-  QueryHookOptions as BaseQueryHookOptions,
-  QueryResult,
+  type ApolloError,
+  type ApolloQueryResult,
+  type LazyQueryHookOptions as BaseLazyQueryHookOptions,
+  type OperationVariables,
+  type QueryHookOptions as BaseQueryHookOptions,
+  type QueryResult,
   useQuery as useBaseQuery,
 } from "@apollo/client";
 import { useUser } from "@dashboard/auth/useUser";
 import { handleQueryAuthError } from "@dashboard/auth/utils";
-import { PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
-import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql/types.generated";
-import { RequireAtLeastOne } from "@dashboard/misc";
-import { DocumentNode } from "graphql";
+import { type PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
+import { PermissionEnum, type UserPermissionFragment } from "@dashboard/graphql/types.generated";
+import { type RequireAtLeastOne } from "@dashboard/misc";
+import { type DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 

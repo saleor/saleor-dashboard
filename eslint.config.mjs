@@ -31,8 +31,16 @@ export default tseslint.config(
     ".github/**/*.js",
     ".featureFlags/",
   ]),
-  eslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
+  eslint.configs.recommended,
   tseslint.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   reactHooks.configs.flat["recommended-latest"],
@@ -54,7 +62,6 @@ export default tseslint.config(
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-misused-promises": "off",
-      "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/no-confusing-void-expression": "off",
       "react/prop-types": "off",
       "react-hooks/exhaustive-deps": "warn",
@@ -289,6 +296,23 @@ export default tseslint.config(
         },
       ],
     },
+  }, // Type-checked rules (only for TypeScript files, not .graphql virtual files)
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "warn",
+        {
+          prefer: "type-imports",
+          fixStyle: "inline-type-imports",
+          disallowTypeAnnotations: true,
+        },
+      ],
+    },
+  }, // Disable type-checked linting for non-TypeScript files (no type information available)
+  {
+    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
+    ...tseslint.configs.disableTypeChecked,
   }, // Graphql plugin
   {
     /**

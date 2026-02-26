@@ -1,7 +1,7 @@
-import { ParsedQs } from "qs";
+import { type ParsedQs } from "qs";
 
 import { getAttributeInputType } from "../constants";
-import { ConditionSelected } from "../FilterElement/ConditionSelected";
+import { type ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
@@ -69,6 +69,8 @@ const ATTRIBUTES_STATICS = [
   "visibleInStorefront",
 ];
 
+const CATEGORY_STATICS = ["metadata", "updatedAt"];
+
 const STATIC_TO_LOAD = [
   ...PRODUCT_STATICS,
   ...ORDER_STATICS,
@@ -79,6 +81,7 @@ const STATIC_TO_LOAD = [
   ...PRODUCT_TYPES_STATICS,
   ...STAFF_MEMBERS_STATICS,
   ...ATTRIBUTES_STATICS,
+  ...CATEGORY_STATICS,
 ];
 
 export const TokenType = {

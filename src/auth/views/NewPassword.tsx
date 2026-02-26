@@ -1,12 +1,12 @@
-import { AccountErrorFragment } from "@dashboard/graphql";
+import { type AccountErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { parseQs } from "@dashboard/url-utils";
 import { useAuth } from "@saleor/sdk";
 import { useState } from "react";
-import { RouteComponentProps } from "react-router";
+import { type RouteComponentProps } from "react-router";
 
-import NewPasswordPage, { NewPasswordPageFormData } from "../components/NewPasswordPage";
-import { NewPasswordUrlQueryParams } from "../urls";
+import NewPasswordPage, { type NewPasswordPageFormData } from "../components/NewPasswordPage";
+import { type NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword = ({ location }: RouteComponentProps) => {
   const navigate = useNavigator();

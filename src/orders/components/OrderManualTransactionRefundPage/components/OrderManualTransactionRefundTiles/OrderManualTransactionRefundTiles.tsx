@@ -1,4 +1,4 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { type TransactionItemFragment } from "@dashboard/graphql";
 import { TileHeaderMoney } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionTiles/TileHeaderMoney";
 import { OrderTransactionTile } from "@dashboard/orders/components/OrderTransactionTile";
 import { Box, RadioGroup, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { isTransactionRefundable } from "../../utils";
-import { ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
+import { type ManualRefundForm } from "../OrderManualTransactionRefundForm/manualRefundValidationSchema";
 
 interface OrderManualTransactionRefundTilesProps {
   loading: boolean;

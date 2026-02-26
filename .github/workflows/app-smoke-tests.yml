@@ -12,6 +12,9 @@ on:
         required: false
         default: ""
         description: "Comma-separated app identifiers to test (empty = all)"
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN:
+        required: true
     outputs:
       TESTS_CONCLUSION:
         value: ${{ jobs.tests-complete.outputs.TESTS_CONCLUSION }}
@@ -53,19 +56,31 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Install deps
         run: pnpm install
 
-      - name: Load secrets
+      - name: Load secrets from 1Password
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         with:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+
+      # This is used by prepare accounts and by restore accounts (in run playwright tests)
+      - name: Generate ephemeral encode password
+        shell: bash
+        run: |
+          PASS=$(openssl rand -base64 32)
+          echo "::add-mask::$PASS"
+          echo "E2E_ENCODE_PASS=$PASS" >> "$GITHUB_ENV"
 
       - name: Generate variables
         id: cloud_variables
@@ -80,10 +95,10 @@ jobs:
         with:
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -91,12 +106,12 @@ jobs:
           SHARD: "1/1"
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
-          E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: "1"
           PW_RETRIES: "1"
           PROJECT: "app-smoke"
@@ -117,10 +132,18 @@ jobs:
         with:
           repository: saleor/saleor-dashboard
 
+      - name: Load secrets from 1Password
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
+
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
-          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
 
       - name: Determine conclusion
         id: conclusion

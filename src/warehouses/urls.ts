@@ -2,13 +2,13 @@ import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
-  ActiveTab,
-  Dialog,
-  Filters,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
+  type ActiveTab,
+  type Dialog,
+  type Filters,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+  type TabActionDialog,
 } from "../types";
 
 export const warehouseSection = "/warehouses/";

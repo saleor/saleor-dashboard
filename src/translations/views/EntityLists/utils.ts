@@ -1,5 +1,5 @@
-import { ShippingMethodTranslationsQuery } from "@dashboard/graphql";
-import { TranslatableEntity } from "@dashboard/translations/components/TranslationsEntitiesList";
+import { type ShippingMethodTranslationsQuery } from "@dashboard/graphql";
+import { type TranslatableEntity } from "@dashboard/translations/components/TranslationsEntitiesList";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export function mapTranslationsToEntities(
