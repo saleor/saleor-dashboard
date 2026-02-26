@@ -1,4 +1,4 @@
-import { getAppMountUri } from "@dashboard/config";
+import { getStaticUrl } from "@dashboard/config";
 import { type CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
@@ -7,12 +7,12 @@ const MASKED_GROUP = "****";
 const BRAND_LOGO_SIZE = 26;
 
 const getPaymentMethodIconUrl = (fileName: string) =>
-  `${getAppMountUri()}static/payment-methods/${fileName}.svg`;
+  `${getStaticUrl()}payment-methods/${fileName}.svg`;
 
 // Whitelist of card brands mapped to their icon file names
 // in the activemerchant/payment_icons repository
 const CARD_BRAND_ICONS: Record<string, string> = {
-  visa: "uaevisa",
+  visa: "visa",
   mastercard: "master",
   mc: "master",
   american_express: "american_express",

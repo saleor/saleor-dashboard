@@ -4,6 +4,7 @@ import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
+export const getStaticUrl = () => window?.__SALEOR_CONFIG__?.STATIC_URL || "/";
 
 /**
  * Get the API URL.

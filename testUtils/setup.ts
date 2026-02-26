@@ -33,6 +33,7 @@ document.createRange = () => {
 window.__SALEOR_CONFIG__ = {
   API_URL: "http://localhost:8000/graphql/",
   APP_MOUNT_URI: "/",
+  STATIC_URL: "/",
   APPS_MARKETPLACE_API_URL: "http://localhost:3000",
   EXTENSIONS_API_URL: "http://localhost:3000",
   APPS_TUNNEL_URL_KEYWORDS: ".ngrok.io;.saleor.live",
