@@ -10,7 +10,11 @@ export const useCategorieOptions = (channel: string | null, conditionId: string 
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
     skip: !channel || !conditionId || conditionId !== "category",
   });
   const fetchMoreCategories = getSearchFetchMoreProps(

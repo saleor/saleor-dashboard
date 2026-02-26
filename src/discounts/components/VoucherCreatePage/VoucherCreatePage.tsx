@@ -28,6 +28,7 @@ import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate
 import {
   type CategoryFilterInput,
   type CategoryWithTotalProductsFragment,
+  type CollectionFilterInput,
   type CollectionWithTotalProductsFragment,
   type CountryWithCodeFragment,
   type DiscountErrorFragment,
@@ -98,6 +99,11 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     query: string,
   ) => void;
   onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
+  onCollectionFilterChange?: (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   categoriesSearch: ReturnType<typeof useCategoryWithTotalProductsSearch>;
   collectionsSearch: UseSearchResult<
     SearchCollectionsWithTotalProductsQuery,
@@ -135,6 +141,7 @@ const VoucherCreatePage = ({
   variantsSearch,
   onProductFilterChange,
   onCategoryFilterChange,
+  onCollectionFilterChange,
   countries,
   resetSelected,
 }: VoucherCreatePageProps) => {
@@ -494,6 +501,7 @@ const VoucherCreatePage = ({
             hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-collection"}
             onFetch={collectionsSearch.search}
+            onFilterChange={onCollectionFilterChange}
             onFetchMore={collectionsSearch.loadMore}
             loading={collectionsSearch.result.loading}
             onClose={closeModal}

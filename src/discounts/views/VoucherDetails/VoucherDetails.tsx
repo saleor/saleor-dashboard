@@ -32,6 +32,7 @@ import {
 } from "@dashboard/discounts/utils";
 import {
   type CategoryFilterInput,
+  type CollectionFilterInput,
   type ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -94,7 +95,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     search: searchCollections,
     result: searchCollectionsOpts,
   } = useCollectionWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
@@ -121,6 +125,22 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         ...filterVariables,
         search: query,
       },
+    });
+  };
+
+  const handleCollectionFilterChange = (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    searchCollectionsOpts.refetch({
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
+      channel,
     });
   };
 
@@ -501,6 +521,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         open={params.action === "assign-collection"}
         onFetch={searchCollections}
         onFetchMore={loadMoreCollections}
+        onFilterChange={handleCollectionFilterChange}
         loading={searchCollectionsOpts.loading}
         onClose={closeModal}
         onSubmit={collections =>
