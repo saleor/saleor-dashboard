@@ -33,7 +33,7 @@ export const Root = ({
 
   if (subtitleTop && subtitle)
     throw new Error(
-      "TopNav is not ready to support both subitle and subtitleTop. Extend the component or use one of them",
+      "TopNav is not ready to support both subtitle and subtitleTop. Extend the component or use one of them",
     );
 
   return (
