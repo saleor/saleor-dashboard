@@ -289,6 +289,7 @@ export const CONSTRAINTS = {
 };
 
 export const OCCURRENCE_LIMITS = {
+  channel: { maxOccurrences: 1 },
   billingPhoneNumber: { maxOccurrences: 1 },
   billingCountry: { maxOccurrences: 1 },
   shippingPhoneNumber: { maxOccurrences: 1 },
