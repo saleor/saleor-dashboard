@@ -8,6 +8,7 @@ export interface LeftOperand {
   value: string;
   slug: string;
   entityType?: AttributeEntityTypeEnum;
+  maxOccurrences?: number;
 }
 
 export interface LeftOperandsProvider {

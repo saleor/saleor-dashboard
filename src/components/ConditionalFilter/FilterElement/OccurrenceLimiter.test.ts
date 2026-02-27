@@ -1,73 +1,77 @@
+import { type LeftOperand } from "../LeftOperandsProvider";
 import { Condition } from "./Condition";
 import { ExpressionValue } from "./FilterElement";
 import { type FilterContainer, FilterElement } from "./FilterElement";
 import { OccurrenceLimiter } from "./OccurrenceLimiter";
 
 describe("OccurrenceLimiter", () => {
-  describe("fromSlug", () => {
-    it("returns a limiter with maxOccurrences 1 for 'channel'", () => {
-      const limiter = OccurrenceLimiter.fromSlug("channel");
+  describe("fromOperand", () => {
+    it("returns a limiter when maxOccurrences is set", () => {
+      // Arrange
+      const operand: LeftOperand = {
+        value: "channel",
+        label: "Channel",
+        type: "channel",
+        slug: "channel",
+        maxOccurrences: 1,
+      };
 
+      // Act
+      const limiter = OccurrenceLimiter.fromOperand(operand);
+
+      // Assert
       expect(limiter).not.toBeNull();
       expect(limiter!.fieldName).toBe("channel");
       expect(limiter!.maxOccurrences).toBe(1);
     });
 
-    it("returns a limiter for existing address fields", () => {
-      const fields = [
-        "billingPhoneNumber",
-        "billingCountry",
-        "shippingPhoneNumber",
-        "shippingCountry",
-      ];
+    it("returns null when maxOccurrences is undefined", () => {
+      // Arrange
+      const operand: LeftOperand = {
+        value: "attribute",
+        label: "Attribute",
+        type: "attribute",
+        slug: "attribute",
+      };
 
-      for (const field of fields) {
-        const limiter = OccurrenceLimiter.fromSlug(field);
+      // Act
+      const limiter = OccurrenceLimiter.fromOperand(operand);
 
-        expect(limiter).not.toBeNull();
-        expect(limiter!.fieldName).toBe(field);
-        expect(limiter!.maxOccurrences).toBe(1);
-      }
-    });
-
-    it("returns null for slugs not in OCCURRENCE_LIMITS", () => {
-      expect(OccurrenceLimiter.fromSlug("price")).toBeNull();
-      expect(OccurrenceLimiter.fromSlug("category")).toBeNull();
-      expect(OccurrenceLimiter.fromSlug("nonexistent")).toBeNull();
-    });
-
-    it("returns null for 'channels' (plural, used by orders)", () => {
-      expect(OccurrenceLimiter.fromSlug("channels")).toBeNull();
+      // Assert
+      expect(limiter).toBeNull();
     });
   });
 
   describe("filterAvailableOperands", () => {
-    const channelOperand = {
+    const channelOperand: LeftOperand = {
       value: "channel",
       label: "Channel",
       type: "channel",
       slug: "channel",
+      maxOccurrences: 1,
     };
 
-    const priceOperand = {
+    const priceOperand: LeftOperand = {
       value: "price",
       label: "Price",
       type: "price",
       slug: "price",
+      maxOccurrences: 1,
     };
 
-    const categoryOperand = {
+    const categoryOperand: LeftOperand = {
       value: "category",
       label: "Category",
       type: "category",
       slug: "category",
+      maxOccurrences: 1,
     };
 
-    const channelsOperand = {
-      value: "channels",
-      label: "Channels",
-      type: "channels",
-      slug: "channels",
+    const attributeOperand: LeftOperand = {
+      value: "attribute",
+      label: "Attribute",
+      type: "attribute",
+      slug: "attribute",
     };
 
     function makeFilterElement(slug: string): FilterElement {
@@ -79,7 +83,7 @@ describe("OccurrenceLimiter", () => {
       );
     }
 
-    it("removes 'channel' from operands when it already exists in the container", () => {
+    it("removes limited operand when it already exists in the container", () => {
       // Arrange
       const operands = [channelOperand, priceOperand, categoryOperand];
       const container: FilterContainer = [makeFilterElement("channel")];
@@ -91,7 +95,7 @@ describe("OccurrenceLimiter", () => {
       expect(result).toEqual([priceOperand, categoryOperand]);
     });
 
-    it("keeps 'channel' in operands when it does NOT exist in the container", () => {
+    it("keeps limited operand when it does NOT exist in the container", () => {
       // Arrange
       const operands = [channelOperand, priceOperand, categoryOperand];
       const container: FilterContainer = [makeFilterElement("price")];
@@ -100,10 +104,10 @@ describe("OccurrenceLimiter", () => {
       const result = OccurrenceLimiter.filterAvailableOperands(operands, container);
 
       // Assert
-      expect(result).toEqual([channelOperand, priceOperand, categoryOperand]);
+      expect(result).toEqual([channelOperand, categoryOperand]);
     });
 
-    it("keeps 'channel' in operands when the container is empty", () => {
+    it("keeps all operands when the container is empty", () => {
       // Arrange
       const operands = [channelOperand, priceOperand];
       const container: FilterContainer = [];
@@ -115,27 +119,28 @@ describe("OccurrenceLimiter", () => {
       expect(result).toEqual([channelOperand, priceOperand]);
     });
 
-    it("does NOT limit 'channels' (plural, order filter slug)", () => {
+    it("does NOT limit operands without maxOccurrences", () => {
       // Arrange
-      const operands = [channelsOperand, priceOperand];
-      const container: FilterContainer = [makeFilterElement("channels")];
+      const operands = [attributeOperand, priceOperand];
+      const container: FilterContainer = [makeFilterElement("attribute")];
 
       // Act
       const result = OccurrenceLimiter.filterAvailableOperands(operands, container);
 
       // Assert
-      expect(result).toEqual([channelsOperand, priceOperand]);
+      expect(result).toEqual([attributeOperand, priceOperand]);
     });
 
-    it("removes multiple limited slugs when each is at max occurrences", () => {
+    it("removes multiple limited operands when each is at max occurrences", () => {
       // Arrange
-      const billingCountryOperand = {
+      const billingCountryOperand: LeftOperand = {
         value: "billingCountry",
         label: "Billing Country",
         type: "billingCountry",
         slug: "billingCountry",
+        maxOccurrences: 1,
       };
-      const operands = [channelOperand, billingCountryOperand, priceOperand];
+      const operands = [channelOperand, billingCountryOperand, attributeOperand];
       const container: FilterContainer = [
         makeFilterElement("channel"),
         makeFilterElement("billingCountry"),
@@ -145,7 +150,38 @@ describe("OccurrenceLimiter", () => {
       const result = OccurrenceLimiter.filterAvailableOperands(operands, container);
 
       // Assert
-      expect(result).toEqual([priceOperand]);
+      expect(result).toEqual([attributeOperand]);
+    });
+
+    it("handles same slug with different limits in different operand sets", () => {
+      // Arrange — metadata limited in order context
+      const orderMetadata: LeftOperand = {
+        value: "metadata",
+        label: "Metadata",
+        type: "metadata",
+        slug: "metadata",
+        maxOccurrences: 1,
+      };
+      // metadata unlimited in collection context
+      const collectionMetadata: LeftOperand = {
+        value: "metadata",
+        label: "Metadata",
+        type: "metadata",
+        slug: "metadata",
+      };
+      const container: FilterContainer = [makeFilterElement("metadata")];
+
+      // Act — order context: should remove
+      const orderResult = OccurrenceLimiter.filterAvailableOperands([orderMetadata], container);
+      // Act — collection context: should keep
+      const collectionResult = OccurrenceLimiter.filterAvailableOperands(
+        [collectionMetadata],
+        container,
+      );
+
+      // Assert
+      expect(orderResult).toEqual([]);
+      expect(collectionResult).toEqual([collectionMetadata]);
     });
   });
 });
