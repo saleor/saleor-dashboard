@@ -204,6 +204,40 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                   })),
               );
               break;
+            case AttributeEntityTypeEnum.CATEGORY:
+              referenceChoicePromises.push(
+                client
+                  .query<_SearchCategoriesOperandsQuery, _SearchCategoriesOperandsQueryVariables>({
+                    query: _SearchCategoriesOperandsDocument,
+                    variables: {
+                      first: values.length,
+                      categoriesSlugs: values,
+                    },
+                  })
+                  .then(result => ({
+                    slug,
+                    itemOptions: createOptionsFromAPI(result.data.categories?.edges ?? []),
+                  })),
+              );
+              break;
+            case AttributeEntityTypeEnum.COLLECTION:
+              referenceChoicePromises.push(
+                client
+                  .query<_SearchCollectionsOperandsQuery, _SearchCollectionsOperandsQueryVariables>(
+                    {
+                      query: _SearchCollectionsOperandsDocument,
+                      variables: {
+                        first: values.length,
+                        collectionsSlugs: values,
+                      },
+                    },
+                  )
+                  .then(result => ({
+                    slug,
+                    itemOptions: createOptionsFromAPI(result.data.collections?.edges ?? []),
+                  })),
+              );
+              break;
           }
         }
 
