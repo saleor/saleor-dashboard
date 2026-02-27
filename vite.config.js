@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
 import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
-import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 
@@ -165,6 +164,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     build: {
+      target: "es2022",
       sourcemap,
       minify: true,
       emptyOutDir: true,
@@ -178,7 +178,6 @@ export default defineConfig(({ command, mode }) => {
         transformMixedEsModules: true,
       },
       rollupOptions: {
-        plugins: [nodePolyfills()],
         maxParallelFileOps: 2,
         cache: false,
         output: {
