@@ -82,7 +82,7 @@ export default defineConfig(({ command, mode }) => {
           API_URL,
           APP_MOUNT_URI,
           STATIC_URL,
-          EXTENSIONS_API_URL,
+          EXTENSIONS_API_URL: EXTENSIONS_API_URL ?? "",
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
           POSTHOG_KEY,
