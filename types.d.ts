@@ -22,7 +22,6 @@ declare interface Window {
     STATIC_URL?: string;
     LOCALE_CODE?: string;
     EXTENSIONS_API_URL?: string;
-    APPS_TUNNEL_URL_KEYWORDS?: string;
     IS_CLOUD_INSTANCE?: string;
   };
 }

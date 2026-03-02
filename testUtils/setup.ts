@@ -35,7 +35,6 @@ window.__SALEOR_CONFIG__ = {
   APP_MOUNT_URI: "/",
   STATIC_URL: "/",
   EXTENSIONS_API_URL: "http://localhost:3000",
-  APPS_TUNNEL_URL_KEYWORDS: ".ngrok.io;.saleor.live",
   IS_CLOUD_INSTANCE: "true",
   LOCALE_CODE: "EN",
 };
