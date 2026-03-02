@@ -1,0 +1,27 @@
+Dockerfile
+  d141172a04bb0f05 33
+src/extensions/views/InstalledExtensions/components/AddExtensionDropdown/AddExtensionDropdown.tsx
+  d141172a04bb0f05 2,17-18,23-25
+src/components/NavigatorSearch/useActionTriggers.tsx
+  d141172a04bb0f05 601-602,606,613-615
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "659295ef34485951734016b5bcf91e7a8438d802",
+  "prompts": {
+    "d141172a04bb0f05": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9e923c7a-5ed9-4f87-baa8-5b8651e603f3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 27,
+      "total_deletions": 17,
+      "accepted_lines": 13,
+      "overriden_lines": 0
+    }
+  }
+}
