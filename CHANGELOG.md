@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.22.34
+
+### Patch Changes
+
+- [#6360](https://github.com/saleor/saleor-dashboard/pull/6360) [`8a3c66d`](https://github.com/saleor/saleor-dashboard/commit/8a3c66d2ec8b5e735b68d48d171048879647b0a3) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added filtering to "Assign Collection" modals based on collection query filter options (published status, metadata, channel), matching existing filters on the collection list page.
+
+- [#6371](https://github.com/saleor/saleor-dashboard/pull/6371) [`ab46371`](https://github.com/saleor/saleor-dashboard/commit/ab463717010f780c74ef7472e5bb013a8a054926) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated minimal Node version to 22.15
+
+- [#6372](https://github.com/saleor/saleor-dashboard/pull/6372) [`05d8ab2`](https://github.com/saleor/saleor-dashboard/commit/05d8ab248cd9dcf68460182aeb1796cddb93b71f) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated Storybook to 10.2.12
+
+- [#6374](https://github.com/saleor/saleor-dashboard/pull/6374) [`053c6ca`](https://github.com/saleor/saleor-dashboard/commit/053c6ca47b912002647fdf95e5e742f8d2e96cf5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed path to payment methods assets
+
+- [#6386](https://github.com/saleor/saleor-dashboard/pull/6386) [`5e22bb2`](https://github.com/saleor/saleor-dashboard/commit/5e22bb2384ea8909babdd64074b84e295778ee26) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed customer selection component in Draft Order page, where custom email could not have been added.
+
+- [#6371](https://github.com/saleor/saleor-dashboard/pull/6371) [`ab46371`](https://github.com/saleor/saleor-dashboard/commit/ab463717010f780c74ef7472e5bb013a8a054926) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Removed .nvmrc, in favor of pacakge.json engines filed
+
+- [#6367](https://github.com/saleor/saleor-dashboard/pull/6367) [`be5c413`](https://github.com/saleor/saleor-dashboard/commit/be5c413fc436c24904cbbbc0b1cffa434d9f6aaa) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Added deployment of Storybook to Chromaitc via GitHub actions
+
+- [#6360](https://github.com/saleor/saleor-dashboard/pull/6360) [`8a3c66d`](https://github.com/saleor/saleor-dashboard/commit/8a3c66d2ec8b5e735b68d48d171048879647b0a3) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Filtering in "Assign ..." modals is not available in all contexts. Previously filtering feature was available only in product update page.
+
+- [#6377](https://github.com/saleor/saleor-dashboard/pull/6377) [`d310e49`](https://github.com/saleor/saleor-dashboard/commit/d310e499fb6e3e5c15942ee4a4d8ffdbe2eb7630) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added breadcrumbs to Category Details page. Now entire category path will be visible, instead of only showing the current one (e.g. Apparel / Men / T-Shirts)
+
+- [#6383](https://github.com/saleor/saleor-dashboard/pull/6383) [`f25222b`](https://github.com/saleor/saleor-dashboard/commit/f25222bea7243be7428d2bda744007e88b342a85) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed filters that map to single-value fields (e.g. "Is published", boolean flags, date ranges) being added multiple times in the filter panel.
+  Duplicate rows silently overwrote each other, with only the last value taking effect. Single-value filters are now correctly limited to one occurrence, meaning they cannot be selected when adding new filter line.
+
+- [#6370](https://github.com/saleor/saleor-dashboard/pull/6370) [`271928b`](https://github.com/saleor/saleor-dashboard/commit/271928ba0e673d79cb85ae15e266e5b056cca78b) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Extend search input width to prevent placeholder text from being cut off
+
+- [#6384](https://github.com/saleor/saleor-dashboard/pull/6384) [`f820904`](https://github.com/saleor/saleor-dashboard/commit/f820904f754467cdb3ac3c85418ca0ea2fa03c00) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fix product attribute filters for `CATEGORY` and `COLLECTION` reference types showing empty dropdown.
+  Previously, filtering products by attributes that reference categories or collections would show no options in the value picker.
+
 ## 3.22.33
 
 ### Patch Changes
