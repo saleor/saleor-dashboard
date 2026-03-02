@@ -108,7 +108,7 @@ describe("CustomerEditForm", () => {
     expect(toggleEditModeMock).toHaveBeenCalled();
   });
 
-  it("calls onCustomerEdit with user ID when existing user is selected", async () => {
+  it("calls onCustomerEdit with user ID when existing user is selected", () => {
     // Arrange
     const onCustomerEditMock = jest.fn();
     const toggleEditModeMock = jest.fn();

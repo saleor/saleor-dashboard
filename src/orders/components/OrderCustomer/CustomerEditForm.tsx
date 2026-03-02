@@ -35,13 +35,11 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
     fetchUsers?.(query);
   }, 500);
 
-  const userChoices = (allUsers || []).map(user => ({
-    label: user.email,
-    value: user.id,
-  }));
-
   const options = useMemo(() => {
-    const opts = [...userChoices];
+    const opts = (allUsers || []).map(user => ({
+      label: user.email,
+      value: user.id,
+    }));
     const trimmed = inputValue.trim();
 
     if (trimmed && trimmed.includes("@")) {
@@ -59,7 +57,7 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
     }
 
     return opts;
-  }, [userChoices, inputValue, intl]);
+  }, [allUsers, inputValue, intl]);
 
   const handleSelect = (option: Option | null) => {
     if (!option?.value) {
