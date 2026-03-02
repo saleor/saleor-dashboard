@@ -7,6 +7,8 @@ import {
 
 import {
   AttributeChoicesHandler,
+  CategoryHandler,
+  CollectionHandler,
   type Handler,
   PageHandler,
   ProductsHandler,
@@ -44,6 +46,10 @@ export class AttributeQueryVarsBuilder
         return new ProductsHandler(client, inputValue);
       case AttributeEntityTypeEnum.PRODUCT_VARIANT:
         return new ProductVariantHandler(client, inputValue);
+      case AttributeEntityTypeEnum.CATEGORY:
+        return new CategoryHandler(client, inputValue);
+      case AttributeEntityTypeEnum.COLLECTION:
+        return new CollectionHandler(client, inputValue);
       default:
         return new AttributeChoicesHandler(client, id, inputValue);
     }

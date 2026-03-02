@@ -1,10 +1,9 @@
-import Form from "@dashboard/components/Form";
 import { type OrderDetailsFragment, type SearchCustomersQuery } from "@dashboard/graphql";
-import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { DynamicCombobox } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import type React from "react";
+import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type CustomerEditData } from "./OrderCustomer";
@@ -16,8 +15,6 @@ interface CustomerEditFormProps extends FetchMoreProps {
   fetchUsers?: (query: string) => void;
   onCustomerEdit?: (data: CustomerEditData) => void;
   toggleEditMode: () => void;
-  setUserDisplayName: (name: string) => void;
-  userDisplayName: string;
 }
 
 export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
@@ -30,77 +27,80 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
   hasMore,
   loading,
   toggleEditMode,
-  setUserDisplayName,
-  userDisplayName,
 }) => {
   const intl = useIntl();
+  const [inputValue, setInputValue] = useState("");
+  const hasFetchedRef = useRef(false);
+  const debouncedFetch = useDebounce((query: string) => {
+    fetchUsers?.(query);
+  }, 500);
+
+  const options = useMemo(() => {
+    const opts = (allUsers || []).map(user => ({
+      label: user.email,
+      value: user.id,
+    }));
+    const trimmed = inputValue.trim();
+
+    if (trimmed && trimmed.includes("@")) {
+      const hasExactMatch = opts.some(opt => opt.label.toLowerCase() === trimmed.toLowerCase());
+
+      if (!hasExactMatch) {
+        opts.unshift({
+          label: `${intl.formatMessage({
+            id: "9Z7LQq",
+            defaultMessage: "Use email:",
+          })} ${trimmed}`,
+          value: trimmed,
+        });
+      }
+    }
+
+    return opts;
+  }, [allUsers, inputValue, intl]);
+
+  const handleSelect = (option: Option | null) => {
+    if (!option?.value) {
+      return;
+    }
+
+    const value = String(option.value);
+
+    onCustomerEdit?.({
+      prevUser: currentUser?.id,
+      prevUserEmail: currentUserEmail || undefined,
+      [value.includes("@") ? "userEmail" : "user"]: value,
+    });
+    toggleEditMode();
+  };
 
   return (
-    <Form confirmLeave initial={{ query: "" }}>
-      {({ change, data }) => {
-        const handleChange = (event: ChangeEvent<string>) => {
-          change(event);
-
-          const value = event.target.value;
-
-          if (!value) {
-            return;
-          }
-
-          onCustomerEdit?.({
-            prevUser: currentUser?.id,
-            prevUserEmail: currentUserEmail || undefined,
-            [value.includes("@") ? "userEmail" : "user"]: value,
-          });
-          toggleEditMode();
-        };
-
-        const userChoices = (allUsers || []).map(user => ({
-          label: user.email,
-          value: user.id,
-        }));
-
-        const handleUserChange = createSingleAutocompleteSelectHandler(
-          handleChange,
-          setUserDisplayName,
-          userChoices,
-        );
-
-        return (
-          <DynamicCombobox
-            data-test-id="select-customer"
-            label={intl.formatMessage({
-              id: "hkSkNx",
-              defaultMessage: "Search Customers",
-            })}
-            options={userChoices}
-            onScrollEnd={() => {
-              if (hasMore && !loading) {
-                onFetchMore();
-              }
-            }}
-            onFocus={() => {
-              if (fetchUsers) {
-                fetchUsers("");
-              }
-            }}
-            name="query"
-            value={{
-              label: userDisplayName,
-              value: data.query,
-            }}
-            onChange={v =>
-              handleUserChange({
-                target: {
-                  value: v?.value,
-                  name: "query",
-                },
-              })
-            }
-          />
-        );
+    <DynamicCombobox
+      data-test-id="select-customer"
+      label={intl.formatMessage({
+        id: "hkSkNx",
+        defaultMessage: "Search Customers",
+      })}
+      options={options}
+      value={null}
+      onChange={handleSelect}
+      onInputValueChange={value => {
+        setInputValue(value);
+        debouncedFetch(value);
       }}
-    </Form>
+      onFocus={() => {
+        if (!hasFetchedRef.current) {
+          fetchUsers?.("");
+          hasFetchedRef.current = true;
+        }
+      }}
+      onScrollEnd={() => {
+        if (hasMore && !loading) {
+          onFetchMore();
+        }
+      }}
+      loading={loading}
+    />
   );
 };
 
