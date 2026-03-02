@@ -1,0 +1,25 @@
+nginx/replace-env-vars.sh
+  73b71af60d6bd2ca 16
+src/config.ts
+  73b71af60d6bd2ca 42-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "e09dabbc3b0a6b28ce36f0a334e0a29efe4f5285",
+  "prompts": {
+    "73b71af60d6bd2ca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a5cae203-e6a9-47d2-9546-40930785ca7e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 2,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    }
+  }
+}
