@@ -5,6 +5,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { type ComponentProps, type ReactNode } from "react";
 
 import { CategoryListPage } from "./CategoryListPage";
+import { type CategoryListPageState, CategoryListPageStateProvider } from "./categoryListPageState";
 
 const navigateMock = jest.fn();
 const rippleModelSpy = jest.fn();
@@ -106,7 +107,6 @@ const categoriesFixture: CategoryFragment[] = [
 ];
 
 const createProps = (overrides: Partial<ComponentProps<typeof CategoryListPage>> = {}) => ({
-  categories: categoriesFixture,
   currentTab: undefined,
   disabled: false,
   initialSearch: "",
@@ -118,9 +118,6 @@ const createProps = (overrides: Partial<ComponentProps<typeof CategoryListPage>>
   onTabSave: jest.fn(),
   onTabUpdate: jest.fn(),
   hasPresetsChanged: false,
-  onCategoriesDelete: jest.fn(),
-  onSelectCategoriesIds: jest.fn(),
-  selectedCategoriesIds: [],
   sort: {
     sort: CategoryListUrlSortField.name,
     asc: true,
@@ -131,12 +128,34 @@ const createProps = (overrides: Partial<ComponentProps<typeof CategoryListPage>>
     columns: [],
   },
   onUpdateListSettings: jest.fn(),
+  ...overrides,
+});
+const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryListPageState => ({
+  categories: categoriesFixture,
+  selectedCategoriesIds: [],
+  onCategoriesDelete: jest.fn(),
+  onSelectCategoriesIds: jest.fn(),
+  onSelectedCategoriesIdsChange: jest.fn(),
+  isCategoryExpanded: jest.fn(() => false),
+  onCategoryExpandToggle: jest.fn(),
+  isCategoryChildrenLoading: jest.fn(() => false),
+  getCategoryDepth: jest.fn(() => 0),
   subcategoryPageSize: 50,
   onSubcategoryPageSizeChange: jest.fn(),
   hasExpandedSubcategories: false,
   onCollapseAllSubcategories: jest.fn(),
   ...overrides,
 });
+
+const renderWithState = (
+  props: Partial<ComponentProps<typeof CategoryListPage>> = {},
+  state: Partial<CategoryListPageState> = {},
+) =>
+  render(
+    <CategoryListPageStateProvider value={createState(state)}>
+      <CategoryListPage {...createProps(props)} />
+    </CategoryListPageStateProvider>,
+  );
 
 describe("CategoryListPage", () => {
   beforeEach(() => {
@@ -146,7 +165,7 @@ describe("CategoryListPage", () => {
 
   it("should disable collapse all button when there are no expanded subcategories", () => {
     // Arrange
-    render(<CategoryListPage {...createProps({ hasExpandedSubcategories: false })} />);
+    renderWithState({}, { hasExpandedSubcategories: false });
 
     // Act
     const collapseButton = screen.getByRole("button", { name: "Collapse all" });
@@ -159,14 +178,7 @@ describe("CategoryListPage", () => {
     // Arrange
     const onCollapseAllSubcategories = jest.fn();
 
-    render(
-      <CategoryListPage
-        {...createProps({
-          hasExpandedSubcategories: true,
-          onCollapseAllSubcategories,
-        })}
-      />,
-    );
+    renderWithState({}, { hasExpandedSubcategories: true, onCollapseAllSubcategories });
 
     const collapseButton = screen.getByRole("button", { name: "Collapse all" });
 
@@ -179,12 +191,23 @@ describe("CategoryListPage", () => {
 
   it("should render ripple with expandable subcategories model", () => {
     // Arrange
-    render(<CategoryListPage {...createProps()} />);
+    renderWithState();
 
     // Act
     const renderedRippleModel = rippleModelSpy.mock.calls[0][0];
 
     // Assert
     expect(renderedRippleModel).toBe(rippleExpandedSubcategories);
+  });
+
+  it("should show bulk delete button when selected categories are present", () => {
+    // Arrange
+    renderWithState({}, { selectedCategoriesIds: ["cat-1"] });
+
+    // Act
+    const bulkDeleteButton = screen.getByRole("button", { name: "Delete categories" });
+
+    // Assert
+    expect(bulkDeleteButton).toBeInTheDocument();
   });
 });

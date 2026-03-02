@@ -13,7 +13,6 @@ import {
   getExtensionsItemsForCategoryOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { type CategoryFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
@@ -28,6 +27,7 @@ import { type ChangeEvent, useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
+import { useCategoryListPageState } from "./categoryListPageState";
 import { messages } from "./messages";
 
 interface CategoryTableProps
@@ -35,26 +35,12 @@ interface CategoryTableProps
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {
-  categories: CategoryFragment[];
   hasPresetsChanged: boolean;
-  selectedCategoriesIds: string[];
   onTabDelete: (tabIndex: number) => void;
   onTabUpdate: (tabName: string) => void;
-  onCategoriesDelete: () => void;
-  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
-  onSelectedCategoriesIdsChange?: (ids: string[]) => void;
-  isCategoryExpanded?: (categoryId: string) => boolean;
-  onCategoryExpandToggle?: (categoryId: string) => void;
-  isCategoryChildrenLoading?: (categoryId: string) => boolean;
-  getCategoryDepth?: (categoryId: string) => number;
-  subcategoryPageSize: number;
-  onSubcategoryPageSizeChange: (value: number) => void;
-  hasExpandedSubcategories: boolean;
-  onCollapseAllSubcategories: () => void;
 }
 
 export const CategoryListPage = ({
-  categories,
   currentTab,
   disabled,
   initialSearch,
@@ -66,20 +52,23 @@ export const CategoryListPage = ({
   onTabSave,
   onTabUpdate,
   hasPresetsChanged,
-  onCategoriesDelete,
-  onSelectCategoriesIds,
-  onSelectedCategoriesIdsChange,
-  selectedCategoriesIds,
-  isCategoryExpanded,
-  isCategoryChildrenLoading,
-  onCategoryExpandToggle,
-  getCategoryDepth,
-  subcategoryPageSize,
-  onSubcategoryPageSizeChange,
-  hasExpandedSubcategories,
-  onCollapseAllSubcategories,
   ...listProps
 }: CategoryTableProps): JSX.Element => {
+  const {
+    categories,
+    selectedCategoriesIds,
+    onCategoriesDelete,
+    onSelectCategoriesIds,
+    onSelectedCategoriesIdsChange,
+    isCategoryExpanded,
+    isCategoryChildrenLoading,
+    onCategoryExpandToggle,
+    getCategoryDepth,
+    subcategoryPageSize,
+    onSubcategoryPageSizeChange,
+    hasExpandedSubcategories,
+    onCollapseAllSubcategories,
+  } = useCategoryListPageState();
   const navigate = useNavigator();
 
   const intl = useIntl();

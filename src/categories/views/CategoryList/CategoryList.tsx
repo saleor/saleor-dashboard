@@ -26,6 +26,10 @@ import { useLocation } from "react-router";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
+  type CategoryListPageState,
+  CategoryListPageStateProvider,
+} from "../../components/CategoryListPage/categoryListPageState";
+import {
   categoryListUrl,
   type CategoryListUrlDialog,
   type CategoryListUrlFilters,
@@ -189,6 +193,9 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
   const navigateToList = useCallback((): void => {
     navigate(categoryListUrl(), { replace: true });
   }, [navigate]);
+  const handleOpenDeleteModal = useCallback((): void => {
+    openModal("delete");
+  }, [openModal]);
 
   const { categoryBulkDeleteOpts, handleCategoryBulkDelete } = useCategoryBulkDeleteController({
     selectedRowIds,
@@ -202,45 +209,66 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
     navigateToList,
     notifyDeleted,
   });
+  const categoryListPageState = useMemo<CategoryListPageState>(
+    () => ({
+      categories: visibleCategories,
+      selectedCategoriesIds: selectedRowIds,
+      onCategoriesDelete: handleOpenDeleteModal,
+      onSelectCategoriesIds: handleSetSelectedCategoryIds,
+      onSelectedCategoriesIdsChange: handleSelectedCategoryIdsChange,
+      isCategoryExpanded,
+      onCategoryExpandToggle: handleCategoryExpandToggle,
+      isCategoryChildrenLoading,
+      getCategoryDepth,
+      subcategoryPageSize,
+      onSubcategoryPageSizeChange: handleSubcategoryPageSizeChange,
+      hasExpandedSubcategories,
+      onCollapseAllSubcategories: handleCollapseAllSubcategories,
+    }),
+    [
+      getCategoryDepth,
+      handleCategoryExpandToggle,
+      handleCollapseAllSubcategories,
+      handleOpenDeleteModal,
+      handleSelectedCategoryIdsChange,
+      handleSetSelectedCategoryIds,
+      handleSubcategoryPageSizeChange,
+      hasExpandedSubcategories,
+      isCategoryChildrenLoading,
+      isCategoryExpanded,
+      selectedRowIds,
+      subcategoryPageSize,
+      visibleCategories,
+    ],
+  );
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
-      <CategoryListPage
-        hasPresetsChanged={hasPresetsChanged()}
-        categories={visibleCategories}
-        currentTab={selectedPreset}
-        initialSearch={params.query || ""}
-        onSearchChange={query => changeFilterField({ query })}
-        onAll={() => navigate(categoryListUrl())}
-        onTabChange={onPresetChange}
-        onTabDelete={(tabIndex: number) => {
-          setPresetIdToDelete(tabIndex);
-          openModal("delete-search");
-        }}
-        onTabUpdate={onPresetUpdate}
-        onTabSave={() => openModal("save-search")}
-        tabs={presets.map(tab => tab.name)}
-        settings={settings}
-        sort={getSortParams(params)}
-        onSort={handleSort}
-        disabled={!data}
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
-        selectedCategoriesIds={selectedRowIds}
-        onSelectCategoriesIds={handleSetSelectedCategoryIds}
-        onSelectedCategoriesIdsChange={handleSelectedCategoryIdsChange}
-        isCategoryChildrenLoading={isCategoryChildrenLoading}
-        onCategoriesDelete={() => openModal("delete")}
-        isCategoryExpanded={isCategoryExpanded}
-        onCategoryExpandToggle={handleCategoryExpandToggle}
-        getCategoryDepth={getCategoryDepth}
-        subcategoryPageSize={subcategoryPageSize}
-        onSubcategoryPageSizeChange={handleSubcategoryPageSizeChange}
-        hasExpandedSubcategories={hasExpandedSubcategories}
-        onCollapseAllSubcategories={handleCollapseAllSubcategories}
-      />
+      <CategoryListPageStateProvider value={categoryListPageState}>
+        <CategoryListPage
+          hasPresetsChanged={hasPresetsChanged()}
+          currentTab={selectedPreset}
+          initialSearch={params.query || ""}
+          onSearchChange={query => changeFilterField({ query })}
+          onAll={() => navigate(categoryListUrl())}
+          onTabChange={onPresetChange}
+          onTabDelete={(tabIndex: number) => {
+            setPresetIdToDelete(tabIndex);
+            openModal("delete-search");
+          }}
+          onTabUpdate={onPresetUpdate}
+          onTabSave={() => openModal("save-search")}
+          tabs={presets.map(tab => tab.name)}
+          settings={settings}
+          sort={getSortParams(params)}
+          onSort={handleSort}
+          disabled={!data}
+          onUpdateListSettings={(...props) => {
+            clearRowSelection();
+            updateListSettings(...props);
+          }}
+        />
+      </CategoryListPageStateProvider>
 
       <ActionDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
