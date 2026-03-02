@@ -1,0 +1,25 @@
+src/config.ts
+  d141172a04bb0f05 39-43
+vite.config.js
+  d141172a04bb0f05 85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "84205425455ae726480e66c25726d3d76ceb1cb0",
+  "prompts": {
+    "d141172a04bb0f05": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9e923c7a-5ed9-4f87-baa8-5b8651e603f3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 2,
+      "accepted_lines": 6,
+      "overriden_lines": 0
+    }
+  }
+}
