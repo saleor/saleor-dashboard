@@ -13,7 +13,6 @@ import {
   type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
@@ -117,7 +116,6 @@ const OrderCustomer = (props: OrderCustomerProps) => {
 
   const intl = useIntl();
   const user = maybe(() => order.user);
-  const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user?.email, ""));
   const [isInEditMode, setEditModeStatus] = React.useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
 
@@ -180,8 +178,6 @@ const OrderCustomer = (props: OrderCustomerProps) => {
             hasMore={hasMoreUsers}
             loading={loading}
             toggleEditMode={toggleEditMode}
-            setUserDisplayName={setUserDisplayName}
-            userDisplayName={userDisplayName}
           />
         </DashboardCard.Content>
       </DashboardCard>
