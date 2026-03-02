@@ -1841,6 +1841,9 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
   },
+  "8zbcLs": {
+    "string": "№ of subcategories"
+  },
   "9+iLpf": {
     "context": "link text to product type settings",
     "string": "Configure in product type settings"
@@ -10283,6 +10286,9 @@
   "v01/tY": {
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
+  },
+  "v0fBOU": {
+    "string": "Collapse all"
   },
   "v17Lly": {
     "context": "label",

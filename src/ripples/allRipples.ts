@@ -1,4 +1,5 @@
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
@@ -18,6 +19,9 @@ export const allRipples: Ripple[] = [
 
   // Modelling / pages
   ripplePagesAreModels,
+
+  // Categories
+  rippleExpandedSubcategories,
 
   // Orders
   rippleNewRefundReasons,

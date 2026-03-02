@@ -62,6 +62,7 @@ export default defineConfig(({ command, mode }) => {
     FF_USE_STAGING_SCHEMA,
 
     npm_package_version,
+    PORT_DEVSERVER,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -130,7 +131,7 @@ export default defineConfig(({ command, mode }) => {
     publicDir: "../public",
     envDir: "..",
     server: {
-      port: 9000,
+      port: PORT_DEVSERVER || 9000,
       fs: {
         allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
       },
