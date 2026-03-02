@@ -1,6 +1,7 @@
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { hasExtensionsApiUrl } from "@dashboard/config";
 import {
   type AppDetailsUrlQueryParams,
   type CustomAppDetailsUrlQueryParams,
@@ -124,7 +125,11 @@ export const ExtensionsSection = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.extensions)} />
       <Switch>
-        <Route exact path={ExtensionsPaths.exploreExtensions} component={ExploreExtensionsView} />
+        <Route
+          exact
+          path={ExtensionsPaths.exploreExtensions}
+          component={hasExtensionsApiUrl() ? ExploreExtensionsView : NotFound}
+        />
         <Route
           exact
           path={ExtensionsPaths.installedExtensions}

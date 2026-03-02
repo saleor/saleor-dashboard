@@ -22,7 +22,6 @@ replace_env_var() {
 # Replace each environment variable
 replace_env_var "API_URL"
 replace_env_var "APP_MOUNT_URI"
-replace_env_var "APPS_MARKETPLACE_API_URL"
 replace_env_var "EXTENSIONS_API_URL"
 replace_env_var "APPS_TUNNEL_URL_KEYWORDS"
 replace_env_var "IS_CLOUD_INSTANCE"
