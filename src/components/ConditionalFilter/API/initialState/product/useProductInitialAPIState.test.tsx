@@ -288,6 +288,200 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
     });
   });
 
+  describe("CATEGORY reference attribute", () => {
+    it("should fetch attribute definition first, then fetch category choices based on entity type", async () => {
+      // Arrange
+      mockQuery.mockImplementation(({ variables }) => {
+        // First call: fetch attribute definitions
+        if (variables?.attributesSlugs) {
+          return Promise.resolve({
+            data: {
+              attributes: {
+                edges: [
+                  {
+                    node: {
+                      slug: "category-ref-attr",
+                      inputType: "REFERENCE",
+                      entityType: AttributeEntityTypeEnum.CATEGORY,
+                      id: "category-attr-id",
+                      name: "Category Reference Attribute",
+                      choices: { edges: [] },
+                    },
+                  },
+                ],
+              },
+            },
+          });
+        }
+
+        // Second call: fetch category choices
+        if (variables?.categoriesSlugs) {
+          return Promise.resolve({
+            data: {
+              categories: {
+                edges: [
+                  {
+                    node: {
+                      id: "category-id-1",
+                      name: "Test Category",
+                      slug: "category-slug-1",
+                    },
+                  },
+                ],
+              },
+            },
+          });
+        }
+
+        return Promise.resolve({ data: {} });
+      });
+
+      const { result } = renderHook(() => useProductInitialAPIState());
+
+      // Act
+      await act(async () => {
+        await result.current.fetchQueries({
+          category: [],
+          collection: [],
+          productType: [],
+          channel: [],
+          attribute: {},
+          attributeReference: { "category-ref-attr": ["category-slug-1"] },
+        });
+      });
+
+      // Assert
+      expect(result.current.loading).toBe(false);
+      expect(mockQuery).toHaveBeenCalledTimes(2);
+
+      // First call should fetch attribute definitions
+      expect(mockQuery).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          variables: expect.objectContaining({
+            attributesSlugs: ["category-ref-attr"],
+            choicesIds: [],
+            first: 1,
+          }),
+        }),
+      );
+
+      // Second call should fetch category choices
+      expect(mockQuery).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          variables: expect.objectContaining({
+            categoriesSlugs: ["category-slug-1"],
+            first: 1,
+          }),
+        }),
+      );
+
+      // Check that the attribute was properly processed
+      expect(result.current.data.attribute["category-ref-attr"]).toBeDefined();
+      expect(result.current.data.attribute["category-ref-attr"].entityType).toBe(
+        AttributeEntityTypeEnum.CATEGORY,
+      );
+    });
+  });
+
+  describe("COLLECTION reference attribute", () => {
+    it("should fetch attribute definition first, then fetch collection choices based on entity type", async () => {
+      // Arrange
+      mockQuery.mockImplementation(({ variables }) => {
+        // First call: fetch attribute definitions
+        if (variables?.attributesSlugs) {
+          return Promise.resolve({
+            data: {
+              attributes: {
+                edges: [
+                  {
+                    node: {
+                      slug: "collection-ref-attr",
+                      inputType: "REFERENCE",
+                      entityType: AttributeEntityTypeEnum.COLLECTION,
+                      id: "collection-attr-id",
+                      name: "Collection Reference Attribute",
+                      choices: { edges: [] },
+                    },
+                  },
+                ],
+              },
+            },
+          });
+        }
+
+        // Second call: fetch collection choices
+        if (variables?.collectionsSlugs) {
+          return Promise.resolve({
+            data: {
+              collections: {
+                edges: [
+                  {
+                    node: {
+                      id: "collection-id-1",
+                      name: "Test Collection",
+                      slug: "collection-slug-1",
+                    },
+                  },
+                ],
+              },
+            },
+          });
+        }
+
+        return Promise.resolve({ data: {} });
+      });
+
+      const { result } = renderHook(() => useProductInitialAPIState());
+
+      // Act
+      await act(async () => {
+        await result.current.fetchQueries({
+          category: [],
+          collection: [],
+          productType: [],
+          channel: [],
+          attribute: {},
+          attributeReference: { "collection-ref-attr": ["collection-slug-1"] },
+        });
+      });
+
+      // Assert
+      expect(result.current.loading).toBe(false);
+      expect(mockQuery).toHaveBeenCalledTimes(2);
+
+      // First call should fetch attribute definitions
+      expect(mockQuery).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          variables: expect.objectContaining({
+            attributesSlugs: ["collection-ref-attr"],
+            choicesIds: [],
+            first: 1,
+          }),
+        }),
+      );
+
+      // Second call should fetch collection choices
+      expect(mockQuery).toHaveBeenNthCalledWith(
+        2,
+        expect.objectContaining({
+          variables: expect.objectContaining({
+            collectionsSlugs: ["collection-slug-1"],
+            first: 1,
+          }),
+        }),
+      );
+
+      // Check that the attribute was properly processed
+      expect(result.current.data.attribute["collection-ref-attr"]).toBeDefined();
+      expect(result.current.data.attribute["collection-ref-attr"].entityType).toBe(
+        AttributeEntityTypeEnum.COLLECTION,
+      );
+    });
+  });
+
   describe("unknown entity type", () => {
     it("should skip fetching choices for unknown entity type", async () => {
       // Arrange
