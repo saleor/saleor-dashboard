@@ -19,7 +19,7 @@ const lucideChevronPoints = {
 
 export const chevronCellRenderer: CustomRenderer<ChevronCell> = {
   kind: GridCellKind.Custom,
-  isMatch: (cell): cell is ChevronCell => (cell.data as { kind?: string }).kind === "chevron-cell",
+  isMatch: (cell): cell is ChevronCell => (cell.data as { kind?: string })?.kind === "chevron-cell",
   draw: (args, cell) => {
     const { ctx, rect, theme } = args;
     const cellData = cell.data;
