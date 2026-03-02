@@ -1,0 +1,25 @@
+src/orders/components/OrderCustomer/CustomerEditForm.tsx
+  a3b6b88fb6cf0414 39,60
+src/orders/components/OrderCustomer/CustomerEditForm.test.tsx
+  a3b6b88fb6cf0414 111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "5bd170852e0ecbc0edc568fe14e8e20fe7c863ae",
+  "prompts": {
+    "a3b6b88fb6cf0414": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3e36c629-e5e0-421e-9e54-cafcedc9196a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 8,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
