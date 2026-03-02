@@ -3,6 +3,7 @@ import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
 import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
+import { hasExtensionsApiUrl } from "@dashboard/config";
 import { customerAddPath, customerListUrl } from "@dashboard/customers/urls";
 import { saleAddUrl, saleListUrl, voucherAddUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -597,17 +598,21 @@ const allActions: TriggerDescriptor[] = [
       </Box>
     ),
   },
-  {
-    section: allMessages.extensionsSection,
-    name: allMessages.gotoExploreExtensions,
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
-        <ActionLinkItem href={ExtensionsUrls.resolveExploreExtensionsUrl()}>
-          <FormattedMessage {...allMessages.gotoExploreExtensions} />
-        </ActionLinkItem>
-      </Box>
-    ),
-  },
+  ...(hasExtensionsApiUrl()
+    ? [
+        {
+          section: allMessages.extensionsSection,
+          name: allMessages.gotoExploreExtensions,
+          Component: ({ onClick }: { onClick?: React.MouseEventHandler<HTMLAnchorElement> }) => (
+            <Box onClick={onClick}>
+              <ActionLinkItem href={ExtensionsUrls.resolveExploreExtensionsUrl()}>
+                <FormattedMessage {...allMessages.gotoExploreExtensions} />
+              </ActionLinkItem>
+            </Box>
+          ),
+        },
+      ]
+    : []),
   {
     section: allMessages.extensionsSection,
     name: allMessages.createWebhook,
