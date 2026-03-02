@@ -39,7 +39,17 @@ export const getExtensionsConfig = () => ({
 export const hasExtensionsApiUrl = () => {
   const url = window.__SALEOR_CONFIG__.EXTENSIONS_API_URL;
 
-  return !!url && url !== "undefined";
+  if (!url) {
+    return false;
+  }
+
+  try {
+    new URL(url);
+
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
