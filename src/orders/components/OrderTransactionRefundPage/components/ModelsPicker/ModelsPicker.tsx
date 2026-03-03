@@ -1,5 +1,6 @@
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
-import { Select, Skeleton } from "@saleor/macaw-ui-next";
+import { Select } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { type ControllerRenderProps } from "react-hook-form";
 
 interface ModelsPickerProps {
@@ -24,25 +25,24 @@ export const ModelsPicker = ({
     variables: {
       pageTypeId: referenceModelTypeId,
     },
-    skip,
+    skip: skip || disabled,
   });
 
-  if (loading) {
-    return <Skeleton />;
-  }
+  const options = useMemo(() => {
+    const edges = [...(data?.pages?.edges ?? [])];
 
-  const edges = [...(data?.pages?.edges ?? [])];
+    if (sortByName) {
+      edges.sort((a, b) => a.node.title.localeCompare(b.node.title));
+    }
 
-  if (sortByName) {
-    edges.sort((a, b) => a.node.title.localeCompare(b.node.title));
-  }
+    return [
+      { value: "", label: emptyOptionLabel },
+      ...edges.map(model => ({
+        value: model.node.id,
+        label: model.node.title,
+      })),
+    ];
+  }, [data, sortByName, emptyOptionLabel]);
 
-  const options = edges.map(model => ({
-    value: model.node.id,
-    label: model.node.title,
-  }));
-
-  const optionsWithEmpty = [{ value: "", label: emptyOptionLabel }, ...options];
-
-  return <Select disabled={disabled} options={optionsWithEmpty} {...field} />;
+  return <Select disabled={disabled || loading} options={options} {...field} />;
 };

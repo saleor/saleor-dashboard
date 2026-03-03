@@ -1,6 +1,8 @@
 import { ModelsOfTypeDocument } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type MockResponse, withApolloMocks } from "@storybookUtils/apollo";
+import { PageFactory } from "@storybookUtils/AssignDialogShared/factories";
+import { fn } from "storybook/test";
 
 import { ModelsPicker } from "./ModelsPicker";
 
@@ -15,24 +17,20 @@ const makeModelsOfTypeMock = (models: Array<{ id: string; title: string }>): Moc
   },
 });
 
-const sampleModels = [
-  { id: "model-1", title: "Warranty Policy" },
-  { id: "model-2", title: "Return Policy" },
-  { id: "model-3", title: "About Us" },
-];
+const pagesPromise = PageFactory.buildList(3);
 
 const mockField = {
   name: "modelId" as const,
   value: "",
-  onChange: () => {},
-  onBlur: () => {},
+  onChange: fn(),
+  onBlur: fn(),
   ref: () => {},
 };
 
 const meta: Meta<typeof ModelsPicker> = {
   title: "components/ModelsPicker",
   component: ModelsPicker,
-  decorators: [withApolloMocks([makeModelsOfTypeMock(sampleModels)])],
+  decorators: [withApolloMocks(pagesPromise.then(pages => [makeModelsOfTypeMock(pages)]))],
   args: {
     referenceModelTypeId: "page-type-1",
     disabled: false,
