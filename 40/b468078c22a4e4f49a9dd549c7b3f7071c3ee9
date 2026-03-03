@@ -1,0 +1,37 @@
+src/extensions/views/ExploreExtensions/hooks/useAppStoreExtensions.test.ts
+  b5128659b1923220 8,13-20,24,29-36,40,45,54-58,64,66,69-73,75-76,93,102,106,129
+src/extensions/types.ts
+  b5128659b1923220 49,51,53,55
+src/extensions/views/InstalledExtensions/components/AddExtensionDropdown/AddExtensionDropdown.tsx
+  b5128659b1923220 20
+src/extensions/messages.ts
+  b5128659b1923220 219,221
+src/extensions/views/ExploreExtensions/hooks/useAppStoreExtensions.ts
+  b5128659b1923220 1,5-7,15,18-36,38,40-42,49-51,53,68
+src/extensions/views/ExploreExtensions/ExploreExtensions.tsx
+  b5128659b1923220 7-8,18,44-61
+src/extensions/schema.ts
+  b5128659b1923220 1-53
+src/extensions/views/ExploreExtensions/hooks/useExploreExtensions.ts
+  b5128659b1923220 75-76,117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "40b468078c22a4e4f49a9dd549c7b3f7071c3ee9",
+  "prompts": {
+    "b5128659b1923220": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3a4c35ab-b414-48bf-9b64-e1804cef1c65",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 199,
+      "total_deletions": 167,
+      "accepted_lines": 158,
+      "overriden_lines": 0
+    }
+  }
+}
