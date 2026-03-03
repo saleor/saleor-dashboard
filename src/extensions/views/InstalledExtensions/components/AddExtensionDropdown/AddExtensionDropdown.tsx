@@ -1,5 +1,4 @@
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
-import { hasExtensionsApiUrl } from "@dashboard/config";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
@@ -14,15 +13,11 @@ export const AddExtensionDropdown = () => {
 
   const addExtensionOptions = useMemo(
     () => [
-      ...(hasExtensionsApiUrl()
-        ? [
-            {
-              label: intl.formatMessage(buttonLabels.explore),
-              testId: "explore-extensions",
-              onSelect: () => navigate(ExtensionsUrls.resolveExploreExtensionsUrl()),
-            },
-          ]
-        : []),
+      {
+        label: intl.formatMessage(buttonLabels.explore),
+        testId: "explore-extensions",
+        onSelect: () => navigate(ExtensionsUrls.resolveExploreExtensionsUrl()),
+      },
       {
         label: intl.formatMessage(buttonLabels.installFromManifest),
         testId: "install-custom-extension",

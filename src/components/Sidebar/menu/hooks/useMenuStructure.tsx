@@ -2,7 +2,6 @@ import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { iconSize } from "@dashboard/components/icons";
-import { hasExtensionsApiUrl } from "@dashboard/config";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
@@ -88,17 +87,13 @@ export function useMenuStructure() {
         permissions: [],
         type: "item",
       },
-      ...(hasExtensionsApiUrl()
-        ? [
-            {
-              label: intl.formatMessage(sectionNames.exploreExtensions),
-              id: "explore-extensions",
-              url: ExtensionsPaths.exploreExtensions,
-              permissions: [],
-              type: "item" as const,
-            },
-          ]
-        : []),
+      {
+        label: intl.formatMessage(sectionNames.exploreExtensions),
+        id: "explore-extensions",
+        url: ExtensionsPaths.exploreExtensions,
+        permissions: [],
+        type: "item" as const,
+      },
     ],
   });
 

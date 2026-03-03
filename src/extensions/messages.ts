@@ -216,9 +216,10 @@ export const messages = defineMessages({
     defaultMessage: "Learn more",
     id: "TdTXXf",
   },
-  emptyExtensionsApiUrl: {
-    defaultMessage: "No extensions API URL provided",
-    id: "gZ1qnD",
+  selfHostedBanner: {
+    defaultMessage:
+      "Apps are available for Saleor Cloud users. Most of them are available to self host.",
+    id: "M8Lwgl",
   },
   noExtensionsInstalled: {
     defaultMessage: "No extensions installed yet",
