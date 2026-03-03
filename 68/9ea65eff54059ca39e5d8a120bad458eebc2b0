@@ -1,0 +1,23 @@
+src/orders/components/OrderTransactionRefundPage/components/ModelsPicker/ModelsPicker.stories.tsx
+  8d798e9cf7ee468e 1-34,36-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "689ea65eff54059ca39e5d8a120bad458eebc2b0",
+  "prompts": {
+    "8d798e9cf7ee468e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5fb78fc-9d97-437a-b7a2-c632518b5d0e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 146,
+      "total_deletions": 69,
+      "accepted_lines": 76,
+      "overriden_lines": 1
+    }
+  }
+}
