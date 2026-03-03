@@ -314,6 +314,7 @@ import type {
   CustomerFilterInput,
   CustomerInput,
   CustomerMetadataUpdated,
+  CustomerOrderWhereInput,
   CustomerUpdate,
   CustomerUpdated,
   CustomerWhereInput,
@@ -9994,6 +9995,72 @@ export const defineCustomerMetadataUpdatedFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+export type OptionalCustomerOrderWhereInput = {
+  __typename?: 'CustomerOrderWhereInput';
+  /** List of conditions that must be met. */
+  AND?: Maybe<OptionalCustomerOrderWhereInput[]> | undefined;
+  /** A list of conditions of which at least one must be met. */
+  OR?: Maybe<OptionalCustomerOrderWhereInput[]> | undefined;
+  /** Filter by authorize status. */
+  authorizeStatus?: Maybe<OptionalOrderAuthorizeStatusEnumFilterInput> | undefined;
+  /** Filter by billing address of the order. */
+  billingAddress?: Maybe<OptionalAddressFilterInput> | undefined;
+  /** Filter by channel. */
+  channelId?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /** Filter by charge status. */
+  chargeStatus?: Maybe<OptionalOrderChargeStatusEnumFilterInput> | undefined;
+  /** Filter by checkout id. */
+  checkoutId?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /** Filter by checkout token. */
+  checkoutToken?: Maybe<OptionalUuidFilterInput> | undefined;
+  /** Filter order by created at date. */
+  createdAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: CustomerOrderWhereInput['hasFulfillments'] | undefined;
+  /** Filter by whether the order has any invoices. */
+  hasInvoices?: CustomerOrderWhereInput['hasInvoices'] | undefined;
+  ids?: CustomerOrderWhereInput['ids'] | undefined;
+  /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  invoices?: Maybe<OptionalInvoiceFilterInput[]> | undefined;
+  /** Filter by whether the order uses the click and collect delivery method. */
+  isClickAndCollect?: CustomerOrderWhereInput['isClickAndCollect'] | undefined;
+  /** Filter based on whether the order includes a gift card purchase. */
+  isGiftCardBought?: CustomerOrderWhereInput['isGiftCardBought'] | undefined;
+  /** Filter based on whether a gift card was used in the order. */
+  isGiftCardUsed?: CustomerOrderWhereInput['isGiftCardUsed'] | undefined;
+  /** Filter by number of lines in the order. */
+  linesCount?: Maybe<OptionalIntFilterInput> | undefined;
+  /** Filter by order number. */
+  number?: Maybe<OptionalIntFilterInput> | undefined;
+  /** Filter by the product type of related order lines. */
+  productTypeId?: Maybe<OptionalGlobalIdFilterInput> | undefined;
+  /** Filter by shipping address of the order. */
+  shippingAddress?: Maybe<OptionalAddressFilterInput> | undefined;
+  /** Filter by order status. */
+  status?: Maybe<OptionalOrderStatusEnumFilterInput> | undefined;
+  /** Filter by total gross amount of the order. */
+  totalGross?: Maybe<OptionalPriceFilterInput> | undefined;
+  /** Filter by total net amount of the order. */
+  totalNet?: Maybe<OptionalPriceFilterInput> | undefined;
+  /** Filter order by updated at date. */
+  updatedAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
+  /** Filter by user email. */
+  userEmail?: Maybe<OptionalStringFilterInput> | undefined;
+  /** Filter by voucher code used in the order. */
+  voucherCode?: Maybe<OptionalStringFilterInput> | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerOrderWhereInput} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerOrderWhereInputFactoryInterface}
+ */
+export const defineCustomerOrderWhereInputFactory: DefineTypeFactoryInterface<
+  OptionalCustomerOrderWhereInput,
+  {}
+> = defineTypeFactory;
+
 /**
  * Updates an existing customer.
  *
@@ -12375,9 +12442,9 @@ export type OptionalGiftCard = {
   /** End date of gift card. */
   endDate?: GiftCard['endDate'] | undefined;
   /**
- * List of events associated with the gift card.
+ * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER events.
  *
- * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ * Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
  */
   events?: OptionalGiftCardEvent[] | undefined;
   /** Expiry date of the gift card. */
