@@ -10030,6 +10030,8 @@ export type OptionalCustomerOrderWhereInput = {
   isGiftCardUsed?: CustomerOrderWhereInput['isGiftCardUsed'] | undefined;
   /** Filter by number of lines in the order. */
   linesCount?: Maybe<OptionalIntFilterInput> | undefined;
+  /** Filter by metadata fields. */
+  metadata?: Maybe<OptionalMetadataFilterInput> | undefined;
   /** Filter by order number. */
   number?: Maybe<OptionalIntFilterInput> | undefined;
   /** Filter by the product type of related order lines. */
