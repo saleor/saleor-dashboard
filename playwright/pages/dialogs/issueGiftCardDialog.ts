@@ -24,7 +24,7 @@ export class IssueGiftCardDialog extends BasePage {
     readonly copyCodeButton = page.getByTestId("copy-code-button"),
     readonly option = page.getByTestId("select-option"),
     readonly issueGiftCardDialog = page.getByTestId("gift-card-dialog"),
-    readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
+    readonly currencyDropdown = page.locator('div[name="balanceCurrency"]'),
   ) {
     super(page);
   }

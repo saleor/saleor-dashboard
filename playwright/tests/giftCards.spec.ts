@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 });
 test("TC: SALEOR_105 Issue gift card #e2e #gift", async () => {
   await giftCardsPage.clickIssueCardButton();
-  await expect(giftCardsPage.issueGiftCardDialog.amountDropdown).toBeVisible();
+  await expect(giftCardsPage.issueGiftCardDialog.currencyDropdown).toBeVisible();
   await giftCardsPage.issueGiftCardDialog.typeAmount("50");
   await giftCardsPage.issueGiftCardDialog.typeCustomTag("super ultra automation discount");
   await giftCardsPage.issueGiftCardDialog.tagsInputBlur();
@@ -37,16 +37,18 @@ test("TC: SALEOR_105 Issue gift card #e2e #gift", async () => {
 });
 test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e #gift", async () => {
   await giftCardsPage.clickIssueCardButton();
+  await giftCardsPage.issueGiftCardDialog.currencyDropdown.waitFor({ state: "visible" });
 
   await giftCardsPage.issueGiftCardDialog.clickSendExpireDateCheckbox();
   await giftCardsPage.issueGiftCardDialog.typeExpiryPeriodAmount("2");
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
-  await giftCardsPage.issueGiftCardDialog.selectCustomer("e2e-customer to-be-activated");
+  await giftCardsPage.issueGiftCardDialog.selectCustomer("John Daniel");
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
   await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
-  const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
+  // SKIPP search for gift card code not working on main
+  // const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
 
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });

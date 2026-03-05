@@ -35,7 +35,7 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item #navigat
 
   await addNavigationMenuItemDialog.typeMenuItemName(menuItemName);
   await addNavigationMenuItemDialog.selectLinkTypeOption("Categories");
-  await addNavigationMenuItemDialog.selectLinkTypeValue("Polo Shirts");
+  await addNavigationMenuItemDialog.selectLinkTypeValue("Polo shirts");
   await addNavigationMenuItemDialog.clickSaveButton();
   await expect(navigationDetailsPage.addMenuItemDialog).not.toBeVisible();
   await navigation.expectSuccessBanner();
