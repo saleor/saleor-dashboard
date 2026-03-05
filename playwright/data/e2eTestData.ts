@@ -303,11 +303,11 @@ export const GIFT_CARDS = {
 };
 export const WAREHOUSES = {
   warehouseToBeEdited: {
-    id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",
+    id: "V2FyZWhvdXNlOmI5ZDJhNmRkLTEzN2QtNDYzMS1iOGMzLTFhNGZmOTZlNWUxYQ==",
     name: "warehouse to be edited",
   },
   warehouseToBeDeleted: {
-    name: "warehouseto be deleted",
+    name: "warehouse to be deleted",
   },
   warehouseEurope: {
     id: "V2FyZWhvdXNlOjU4MDEwNDhlLWFmMDktNGQ4Ni05OThkLTUyZjM1OWQ2ZmQ1OA==",
