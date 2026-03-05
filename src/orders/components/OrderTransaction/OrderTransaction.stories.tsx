@@ -168,6 +168,20 @@ export const WithOtherPaymentMethod: Story = {
   ),
 };
 
+export const WithGiftCardPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "SaleorGiftcardPaymentMethodDetails",
+        name: "Gift card",
+        code: "A34F",
+      },
+    },
+  },
+};
+
 export const WithoutPaymentMethod: Story = {
   args: {
     transaction: {

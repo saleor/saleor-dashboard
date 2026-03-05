@@ -1832,6 +1832,12 @@ export const OtherPaymentMethodDetailsFragmentDoc = gql`
   name
 }
     `;
+export const SaleorGiftcardPaymentMethodDetailsFragmentDoc = gql`
+    fragment SaleorGiftcardPaymentMethodDetails on SaleorGiftcardPaymentMethodDetails {
+  name
+  code
+}
+    `;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1901,6 +1907,9 @@ export const TransactionItemFragmentDoc = gql`
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
     }
+    ... on SaleorGiftcardPaymentMethodDetails {
+      ...SaleorGiftcardPaymentMethodDetails
+    }
   }
   events {
     ...TransactionEvent
@@ -1933,6 +1942,7 @@ export const TransactionItemFragmentDoc = gql`
     ${TransactionBaseItemFragmentDoc}
 ${CardPaymentMethodDetailsFragmentDoc}
 ${OtherPaymentMethodDetailsFragmentDoc}
+${SaleorGiftcardPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
