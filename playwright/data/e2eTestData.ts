@@ -246,7 +246,7 @@ export const COUNTRIES = {
 };
 export const CHANNELS = {
   channelToBeEditedSettings: {
-    id: "Q2hhbm5lbDoyMzkx",
+    id: "Q2hhbm5lbDoz",
   },
   channelToBeDeleted: {
     name: "z - channel to be deleted",
@@ -255,21 +255,28 @@ export const CHANNELS = {
     name: "a channel for tax tests",
   },
   plnChannel: {
-    id: "VGF4Q29uZmlndXJhdGlvbjox",
+    //move to taxes
+    id: "VGF4Q29uZmlndXJhdGlvbjoy",
   },
   e2eChannelDoNotDelete: {
-    id: "Q2hhbm5lbDoyMzk0",
+    id: "Q2hhbm5lbDo2",
     name: "e2e-channel-do-not-delete",
     slug: "e2e-channel-do-not-delete",
   },
   channelUSD: {
-    id: "Q2hhbm5lbDoyMjQz",
+    id: "Q2hhbm5lbDox",
     name: "Channel-USD",
   },
   channelPLN: {
-    id: "Q2hhbm5lbDoyMjQ0",
+    id: "Q2hhbm5lbDoy",
     name: "Channel-PLN",
     currency: "PLN",
+  },
+};
+export const TAXES = {
+  plnChannelTaxConfig: {
+    // CHANNELS.plnChannel.id
+    id: "VGF4Q29uZmlndXJhdGlvbjoy",
   },
 };
 export const GIFT_CARDS = {
@@ -303,19 +310,19 @@ export const WAREHOUSES = {
     name: "warehouseto be deleted",
   },
   warehouseEurope: {
-    id: "V2FyZWhvdXNlOjlkYjY4NWQxLWViMTktNDU2ZS05ODMyLTMxODA3ZWM0NDdhOQ==",
+    id: "V2FyZWhvdXNlOjU4MDEwNDhlLWFmMDktNGQ4Ni05OThkLTUyZjM1OWQ2ZmQ1OA==",
     name: "Europe",
   },
   warehouseAmericas: {
-    id: "V2FyZWhvdXNlOjdmZDA0OGI0LWYwNzItNDZmMi1iMDMyLTc3ZWU3MDNiMzM3Yg==",
+    id: "V2FyZWhvdXNlOjRiNDJlMTgxLTNiMjgtNDY1Zi05OWVhLTExNmE4MGMxYTgxZg==",
     name: "Americas",
   },
   warehouseOceania: {
-    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+    id: "V2FyZWhvdXNlOjRkNDM4NTc4LTRhZGEtNDg0OS05YmYyLTU1Njg0NjU3ZTFkNA==",
     name: "Oceania",
   },
   warehouseAfrica: {
-    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+    id: "V2FyZWhvdXNlOjFlMjAxNTBmLTFkYTYtNGMwMS04M2FmLWQwMTNmMzRhZTI4YQ==",
     name: "Africa",
   },
 };
@@ -330,11 +337,11 @@ export const PRODUCTS = {
     info: "Single product type to be updated",
   },
   e2eProduct1: {
-    id: "UHJvZHVjdDo3OQ==",
+    id: "UHJvZHVjdDoxNTM==",
     name: "Bean Juice",
   },
   e2eProduct2: {
-    id: "UHJvZHVjdDoxMTU=",
+    id: "UHJvZHVjdDoxMzE=",
     name: "Black Hoodie",
   },
   productAvailableOnlyInPlnChannel: {
