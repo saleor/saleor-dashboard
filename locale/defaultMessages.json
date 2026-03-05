@@ -4173,6 +4173,9 @@
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
   },
+  "M8Lwgl": {
+    "string": "Apps are available for Saleor Cloud users. Most of them are available to self host."
+  },
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
     "string": "If selected customer won't be able to choose this warehouse as pickup point"
@@ -7783,9 +7786,6 @@
   },
   "gVqSnA": {
     "string": "Assign and save"
-  },
-  "gZ1qnD": {
-    "string": "No extensions API URL provided"
   },
   "gaOXvo": {
     "context": "notification, form submitted",
