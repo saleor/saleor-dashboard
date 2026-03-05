@@ -281,24 +281,24 @@ export const TAXES = {
 };
 export const GIFT_CARDS = {
   giftCardToBeEdited: {
-    id: "R2lmdENhcmQ6NTM%3D",
-    name: "Code ending with AD47",
+    id: "R2lmdENhcmQ6MQ==",
+    name: "Code ending with rd_1",
   },
   giftCardsToBeDeleted: {
     names: ["to be deleted 1/2", "to be deleted 2/2"],
-    last4: ["5EE6", "9E39"],
+    last4: ["d_15", "rd_5"],
   },
   giftCardToBeActivated: {
-    id: "R2lmdENhcmQ6NTQ%3D",
-    name: "Code ending with 7FF8",
+    id: "R2lmdENhcmQ6Mg==",
+    name: "Code ending with d_11",
   },
   giftCardToBeDeactivated: {
-    id: "R2lmdENhcmQ6NTU%3D",
-    name: "Code ending with F2DA",
+    id: "R2lmdENhcmQ6Mw==",
+    name: "Code ending with rd_2",
   },
   giftCardToResendCode: {
-    id: "R2lmdENhcmQ6Ng%3D%3D",
-    name: "Code ending with d_10",
+    id: "R2lmdENhcmQ6Ng==",
+    name: "Code ending with d_13",
   },
 };
 export const WAREHOUSES = {
@@ -355,12 +355,6 @@ export const PRODUCTS = {
     variantId: "UHJvZHVjdFZhcmlhbnQ6Mzgz",
     variantName: "70 / 70",
   },
-  // e2eProductWithVariant2: {
-  //   id: "UHJvZHVjdDoxMzE=",
-  //   name: "Hoodie",
-  //   variantId: "UHJvZHVjdFZhcmlhbnQ6NDEx",
-  //   variantName: "HD-GR-M",
-  // },
   productWithOneVariant: {
     id: "UHJvZHVjdDoxNDM=",
     name: "Neck Warmer",
@@ -628,18 +622,18 @@ export const TRANSLATIONS = {
 export const NAVIGATION_ITEMS = {
   navigationMenuToBeUpdated: {
     name: "e2e-menu-to-be-updated",
-    id: "TWVudTozNQ==",
+    id: "TWVudToz",
     menuItems: [
       { name: "e2e-menu-item-to-be-updated", link: "Groceries" },
       { name: "e2e-menu-item-to-be-deleted", link: "Accessories" },
     ],
   },
   navigationMenuToBeDeletedFromList: {
-    id: "TWVudTozOQ==",
+    id: "TWVudTo0",
     name: "e2e-menu-to-be-deleted-from-list",
   },
   navigationMenuToBeDeletedFromDetailsView: {
-    id: "TWVudTo0MA==",
+    id: "TWVudTo1",
     name: "e2e-menu-to-be-deleted-from-details-view",
   },
   navigationMenusToBeBulkDeleted: {
