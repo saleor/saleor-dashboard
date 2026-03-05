@@ -207,20 +207,20 @@ export const CUSTOMER_ADDRESS = {
 };
 export const CATEGORIES = {
   categoryToBeUpdated: {
-    id: "Q2F0ZWdvcnk6NTA3",
+    id: "Q2F0ZWdvcnk6NDc=",
     name: "a category to be updated",
   },
   categoriesToBeBulkDeleted: {
     names: ["a cateogry to be bulk deleted 1/2", "a cateogry to be bulk deleted 2/2"],
   },
   e2eCategory: {
-    id: "Q2F0ZWdvcnk6NTEx",
+    id: "Q2F0ZWdvcnk6NTE=",
     name: "e2e category",
   },
 };
 export const COLLECTIONS = {
   collectionToBeUpdated: {
-    id: "Q29sbGVjdGlvbjoxNjY%3D",
+    id: "Q29sbGVjdGlvbjo4",
     name: "Collection to be updated",
   },
   collectionsToBeBulkDeleted: {
@@ -529,44 +529,44 @@ export const ORDERS = {
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
-    info: "Shipping method that is used to add rates",
-    name: "Shipping method that is used to add rates",
+    id: "U2hpcHBpbmdab25lOjg=",
+    info: "Shipping Zone without rates to test adding new methods",
+    name: "Shipping Zone without rates",
   },
   shippingMethodToBeUpdated: {
-    id: "U2hpcHBpbmdab25lOjIzOTI=",
+    id: "U2hpcHBpbmdab25lOjk=",
     info: "Shipping zone to be updated",
-    name: "e2e-test-shippingZone-to-be-updated",
+    name: "e2e-test-shipping-zone-to-be-updated",
   },
   shippingMethodToBeBulkDeleted1: {
-    id: "U2hpcHBpbmdab25lOjIzOTM=",
+    id: "U2hpcHBpbmdab25lOjEw",
     info: "First shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-1",
   },
   shippingMethodToBeBulkDeleted2: {
-    id: "U2hpcHBpbmdab25lOjIzOTQ=",
+    id: "U2hpcHBpbmdab25lOjEx",
     info: "Second shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-2",
   },
   shippingMethodToBeBulkDeleted3: {
-    id: "U2hpcHBpbmdab25lOjIzOTU=",
+    id: "U2hpcHBpbmdab25lOjEy",
     info: "Third shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-3",
   },
-  shippingMethodWithRatesToBeDeleted: {
-    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+  shippingZoneWithRatesToBeDeleted: {
+    id: "U2hpcHBpbmdab25lOjc=",
     info: "Shipping zone with methods to be deleted",
-    name: "e2e-test-shippingZone-to-be-deleted",
+    name: "e2e-test-shipping-zone-to-be-deleted",
     rates: {
       priceBasedRateToBeDeleted: {
-        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIx",
         info: "Price based shipping rate",
-        name: "shippingMEthod_to-be-deleted",
+        name: "price-based-shipping-rate-to-be-deleted",
       },
       weightBasedRateToBeDeleted: {
-        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIy",
         info: "Weight based shipping rate",
-        name: "shippingMethod_to_be_deleted",
+        name: "weight-based-shipping-rate-to-be-deleted",
       },
     },
   },

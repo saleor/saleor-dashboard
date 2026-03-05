@@ -76,13 +76,13 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
 });
 test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details page #shipping-method #e2e", async () => {
   await shippingMethodsPage.gotoExistingShippingMethod(
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id,
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.name,
+    SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.id,
+    SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.name,
   );
   await expect(shippingMethodsPage.pageHeader).toBeVisible();
 
   const priceBasedRate =
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
+    SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.rates.priceBasedRateToBeDeleted.name;
 
   await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(priceBasedRate);
   await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
@@ -92,11 +92,11 @@ test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details
   await expect(shippingMethodsPage.priceBasedRatesSection).not.toContainText(priceBasedRate);
 });
 test("TC: SALEOR_35 Delete a single shipping rate from its details page #shipping-method #e2e", async () => {
-  const shippingMethodId = SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.id;
+  const shippingMethodId = SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.id;
   const shippingRateId =
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.id;
+    SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.id;
   const weightBasedRate =
-    SHIPPING_METHODS.shippingMethodWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.name;
+    SHIPPING_METHODS.shippingZoneWithRatesToBeDeleted.rates.weightBasedRateToBeDeleted.name;
 
   await shippingMethodsPage.gotoExistingShippingRate(shippingMethodId, shippingRateId);
   await shippingMethodsPage.clickDeleteShippingRateButton();
