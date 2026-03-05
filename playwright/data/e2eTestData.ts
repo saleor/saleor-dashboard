@@ -695,34 +695,34 @@ export const PERMISSION_GROUPS = {
 
 export const PAGE_TYPES = {
   pageTypeToBeEdited: {
-    id: "UGFnZVR5cGU6MzQ=",
+    id: "UGFnZVR5cGU6MTA=",
     name: "A page type to be edited",
     info: "Page type used in edit page type test",
   },
   pageTypeToBeRemoved: {
-    id: "UGFnZVR5cGU6MzU=",
+    id: "UGFnZVR5cGU6MTA=",
     name: "A page type to be removed",
     info: "Page type used in delete page type test",
   },
   pageTypesToBeBulkDeleted: {
     names: ["a page type to be bulk deleted 1/2", "a page type to be bulk deleted 2/2"],
-    ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
+    ids: ["UGFnZVR5cGU6OA==", "UGFnZVR5cGU6OQ=="],
   },
 };
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
-    id: "UHJvZHVjdFR5cGU6Njk4",
+    id: "UHJvZHVjdFR5cGU6Mjg=",
     name: "A product type to be edited",
     info: "Product type used in edit product type test",
   },
   productTypeToBeRemoved: {
-    id: "UHJvZHVjdFR5cGU6Njk5",
+    id: "UHJvZHVjdFR5cGU6Mjc=",
     name: "A product type to be removed",
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
     names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
-    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
+    ids: ["UHJvZHVjdFR5cGU6MjY=", "UHJvZHVjdFR5cGU6MjU="],
   },
 };
 export const CUSTOMERS = {
