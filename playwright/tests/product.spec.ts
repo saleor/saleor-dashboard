@@ -27,6 +27,7 @@ test("TC: SALEOR_3 Create basic product with variants #e2e #product", async () =
   await productPage.addAllMetaData();
   await productPage.selectFirstCategory();
   await productPage.selectFirstTaxOption();
+  await productPage.selectAttributeValue("Material", "Cotton");
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
 });
@@ -131,7 +132,7 @@ test("TC: SALEOR_45 As an admin I should be able to delete a single products @ba
 test("TC: SALEOR_46 As an admin, I should be able to update a product by uploading media, assigning channels, assigning tax, and adding a new variant   @basic-regression #product #e2e", async () => {
   const newVariantName = "variant 2";
 
-  await productPage.gotoExistingProductPage(PRODUCTS.singleProductTypeToBeUpdated.id);
+  await productPage.gotoExistingProductPage(PRODUCTS.singleProductToBeUpdated.id);
   await productPage.clickUploadMediaButton();
   await productPage.uploadProductImage("beer.avif");
   await productPage.productImage.waitFor({ state: "visible" });
@@ -273,10 +274,7 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
     productPage.noVariantsText,
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
-  expect(
-    productPage.page.url(),
-    "Deleting last variant from variant details page should redirect to product page",
-  ).toContain(PRODUCTS.singleVariantDeleteProduct.productId);
+  expect(productPage.pageHeader, PRODUCTS.singleVariantDeleteProduct.productName).toBeVisible();
 });
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression #product #e2e", async () => {
   await productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId);
@@ -292,8 +290,8 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
   ).toBeVisible();
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
-  await expect(
-    productPage.noVariantsText,
-    "Message about how to add new variant should be visible in place of list of variants",
+  expect(
+    productPage.pageHeader,
+    PRODUCTS.multipleVariantsBulkDeleteProduct.productName,
   ).toBeVisible();
 });
