@@ -1,0 +1,25 @@
+src/extensions/views/InstalledExtensions/utils.ts
+  ee635a7881f405d8 4-8
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  ee635a7881f405d8 17-18,192-193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "6d3b801fa8f437e5f7f74258a8ae33d01ac5d655",
+  "prompts": {
+    "ee635a7881f405d8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e25be4c7-ae5b-4851-8dcc-0d6f7d56732e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 2,
+      "accepted_lines": 9,
+      "overriden_lines": 0
+    }
+  }
+}
