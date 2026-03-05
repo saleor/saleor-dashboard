@@ -1,5 +1,6 @@
 import "@saleor/macaw-ui-next/style";
 import "./index.css";
+import "./styles/theme-bridge.css";
 
 import { ApolloProvider } from "@apollo/client";
 import { history, Route, Router } from "@dashboard/components/Router";

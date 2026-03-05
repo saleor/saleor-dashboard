@@ -1,4 +1,5 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
 import { copyFileSync, mkdirSync } from "fs";
@@ -73,6 +74,7 @@ export default defineConfig(({ command, mode }) => {
 
   const plugins = [
     react(),
+    tailwindcss(),
     CodeInspectorPlugin({
       bundler: "vite",
     }),

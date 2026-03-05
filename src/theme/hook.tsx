@@ -12,6 +12,8 @@ export const useTheme = () => {
     setTheme: (to: DefaultTheme) => {
       setActiveTheme(to);
       setTheme(to);
+      // Sync shadcn dark mode class with macaw-ui theme
+      document.documentElement.classList.toggle("dark", to === "defaultDark");
     },
   };
 };

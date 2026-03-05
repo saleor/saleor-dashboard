@@ -1,0 +1,35 @@
+/* Maps macaw-ui CSS variables → shadcn CSS variables */
+/* macaw-ui naming: --mu-colors-{category}-{kebab-token} */
+/* e.g. colors.text.buttonDefaultPrimary → --mu-colors-text-button-default-primary */
+/* These override the defaults shadcn wrote into index.css */
+:root {
+  --background: var(--mu-colors-background-default1);
+  --foreground: var(--mu-colors-text-default1);
+  --primary: var(--mu-colors-background-button-default-primary);
+  --primary-foreground: var(--mu-colors-text-button-default-primary);
+  --destructive: var(--mu-colors-background-button-critical-primary);
+  --destructive-foreground: var(--mu-colors-text-button-critical-primary);
+  --muted: var(--mu-colors-background-default2);
+  --muted-foreground: var(--mu-colors-text-default2);
+  --accent: var(--mu-colors-background-accent1);
+  --accent-foreground: var(--mu-colors-text-accent1);
+  --border: var(--mu-colors-border-default1);
+  --input: var(--mu-colors-border-default1);
+  --ring: var(--mu-colors-border-accent1);
+  --card: var(--mu-colors-background-default1);
+  --card-foreground: var(--mu-colors-text-default1);
+  --popover: var(--mu-colors-background-default1);
+  --popover-foreground: var(--mu-colors-text-default1);
+  --secondary: var(--mu-colors-background-button-default-secondary);
+  --secondary-foreground: var(--mu-colors-text-button-default-secondary);
+
+  /* Custom Saleor extensions (not standard shadcn) */
+  --info: var(--mu-colors-background-info1);
+  --info-foreground: var(--mu-colors-text-info1);
+  --success: var(--mu-colors-background-success1);
+  --success-foreground: var(--mu-colors-text-success1);
+  --warning: var(--mu-colors-background-warning1);
+  --warning-foreground: var(--mu-colors-text-warning1);
+  --surface-critical: var(--mu-colors-background-critical1);
+  --surface-critical-foreground: var(--mu-colors-text-critical1);
+}
