@@ -118,6 +118,7 @@ export class PromotionRuleDialog {
 
   async selectRuleConditionValue(name: string) {
     await this.page.getByTestId("condition-value-0").click();
+    await this.page.getByTestId("condition-value-0").fill(name);
     await this.page.getByRole("option", { name }).first().click();
   }
 

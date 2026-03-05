@@ -271,7 +271,7 @@ for (const rule of orderRules) {
       await discounts.promotionRuleDialog.selectRuleConditionType("is");
       await discounts.promotionRuleDialog.typeRuleConditionValue("100.00");
       await discounts.promotionRuleDialog.removeExistingGiftReward(giftRewardToBeDeleted);
-      await discounts.promotionRuleDialog.selectGiftReward("Blue Hoodie");
+      await discounts.promotionRuleDialog.selectGiftReward("Hoodie");
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
       await discounts.expectSuccessBanner();
       await expect(
