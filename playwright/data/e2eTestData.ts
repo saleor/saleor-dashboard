@@ -1,22 +1,22 @@
 export const ATTRIBUTES = {
   productAttributeWithValuesToBeUpdated: {
-    id: "QXR0cmlidXRlOjczMg==",
+    id: "QXR0cmlidXRlOjgx",
     name: "e2e product attribute to be updated",
     valueToBeDeleted: "e2e product attribute value to be deleted",
     valueToBeUpdated: "e2e product attribute value to be updated",
   },
   contentAttributeWithValuesToBeUpdated: {
-    id: "QXR0cmlidXRlOjczMw==",
+    id: "QXR0cmlidXRlOjc2",
     name: "e2e content attribute to be updated",
     valueToBeDeleted: "e2e content attribute value to be deleted",
     valueToBeUpdated: "e2e content attribute value to be updated",
   },
   productAttributeToBeDeleted: {
-    id: "QXR0cmlidXRlOjczNA==",
+    id: "QXR0cmlidXRlOjgz",
     name: "e2e product attribute to be deleted",
   },
   contentAttributeToBeDeleted: {
-    id: "QXR0cmlidXRlOjczNQ==",
+    id: "QXR0cmlidXRlOjc1",
     name: "e2e content attribute to be deleted",
   },
   attributesToBeBulkDeleted: {
@@ -29,11 +29,11 @@ export const ATTRIBUTES = {
   attributesToBeUpdated: [
     {
       name: "e2e product attribute to be updated 1",
-      id: "QXR0cmlidXRlOjc0MA==",
+      id: "QXR0cmlidXRlOjgy",
     },
     {
       name: "e2e content attribute to be updated 2",
-      id: "QXR0cmlidXRlOjczOQ==",
+      id: "QXR0cmlidXRlOjgw",
     },
   ],
   attributeTypesWithAbilityToAddValues: {
@@ -307,7 +307,7 @@ export const WAREHOUSES = {
     name: "warehouse to be edited",
   },
   warehouseToBeDeleted: {
-    name: "warehouse to be deleted",
+    name: "warehouseto be deleted",
   },
   warehouseEurope: {
     id: "V2FyZWhvdXNlOjU4MDEwNDhlLWFmMDktNGQ4Ni05OThkLTUyZjM1OWQ2ZmQ1OA==",
