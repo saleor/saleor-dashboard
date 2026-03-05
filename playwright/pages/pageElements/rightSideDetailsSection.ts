@@ -83,7 +83,7 @@ export class RightSideDetailsPage extends BasePage {
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
-    this.clickWarehouseSelectShippingPage();
+    await this.clickWarehouseSelectShippingPage();
   }
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
@@ -92,7 +92,7 @@ export class RightSideDetailsPage extends BasePage {
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
-    this.clickWarehouseSelectShippingPage();
+    await this.clickWarehouseSelectShippingPage();
   }
 
   async clickChannelsSelectShippingPage() {
