@@ -1,5 +1,5 @@
 import { ADDRESS } from "@data/addresses";
-import { ORDERS, PRODUCTS } from "@data/e2eTestData";
+import { ORDERS, PRODUCTS, WAREHOUSES } from "@data/e2eTestData";
 import { AddressesListPage } from "@pages/addressesListPage";
 import { AddressDialog } from "@pages/dialogs/addressDialog";
 import { DraftOrdersPage } from "@pages/draftOrdersPage";
@@ -75,7 +75,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
     ORDERS.ordersWithinTransactionFlow.markAsPaidOrder.orderId,
   );
   await ordersPage.clickMarkAsPaidButton();
-  await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
+  await ordersPage.markOrderAsPaidDialog.typeAndSaveTransactionReference();
   await ordersPage.expectSuccessBanner({ message: "paid" });
 
   const transactionsMadeRows = await ordersPage.orderTransactionsList.locator("tr");
@@ -83,6 +83,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   expect(await transactionsMadeRows.count()).toEqual(1);
   await expect(transactionsMadeRows).toContainText("Success");
   await ordersPage.clickFulfillButton();
+  await fulfillmentPage.selectWarehouseFromList(WAREHOUSES.warehouseAmericas.name);
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
   await expect(ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
@@ -142,6 +143,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
     "Fully charged",
   );
   await ordersPage.clickFulfillButton();
+  await fulfillmentPage.selectWarehouseFromList(WAREHOUSES.warehouseAmericas.name);
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
   // Wait for Apollo to refetch order data after the fulfillment mutation completes,
@@ -155,7 +157,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
 test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow #e2e #order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
   await ordersPage.clickMarkAsPaidButton();
-  await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
+  await ordersPage.markOrderAsPaidDialog.typeAndSaveTransactionReference();
   await ordersPage.expectSuccessBanner({ message: "paid" });
 
   expect(await ordersPage.paymentStatusBadges, "Order should be fully charged").toContainText(
@@ -216,7 +218,7 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order #e2e #order",
   await addressForm.typePhone(newAddress.phone);
   await addressForm.typeCompanyName(newAddress.companyName);
   await addressForm.typeAddressLine2(newAddress.addressLine2);
-  addressDialog.clickConfirmButton();
+  await addressDialog.clickConfirmButton();
   await ordersPage.expectSuccessBanner();
   await addressesListPage.verifyRequiredAddressFields(newAddress.firstName, newAddress);
   await addressesListPage.verifyPhoneField(newAddress.firstName, newAddress);
@@ -358,6 +360,9 @@ for (const refund of orderRefunds) {
 }
 
 test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discounts #e2e`, async () => {
+  /**
+   * Test uses "Test Catalog promo e2e" with 40% discount for "e2e-do-not-touch" product through the Channel-PLN
+   */
   test.slow();
 
   const calculateDiscountedPrice = (
@@ -400,6 +405,9 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
 });
 
 test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
+  /**
+   * Test uses "Test order promo e2e" with 5% discount for orders with total price higher than 20$.
+   */
   test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
@@ -419,10 +427,6 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
   await ordersPage.totalPrice.waitFor({ state: "visible" });
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
 
-  // TODO uncomment when MERX-727 is fixed
-  // const giftProduct = PRODUCTS.giftProduct.name;
-
-  // expect(draftOrdersPage.basketProductList).toContainText(giftProduct);
   const initialTotalPrice = Number(await ordersPage.totalPrice.innerText());
   const initialSubTotalPrice = Number(await ordersPage.subTotalPrice.innerText());
 

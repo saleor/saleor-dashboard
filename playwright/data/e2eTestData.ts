@@ -397,16 +397,16 @@ export const PRODUCTS = {
     ],
   },
   productWithPriceHigherThan20: {
-    id: "UHJvZHVjdDoxNTc=",
-    name: "Reversed Monotype Tee",
-    variantSKU: "9182235820",
-    price: 25,
+    id: "UHJvZHVjdDoxMzA=",
+    name: "Paul's Balance 420",
+    variantSKU: "118223581",
+    price: 50,
   },
   productWithPriceLowerThan20: {
-    id: "UHJvZHVjdDoxNDY=",
-    name: "Enterprise Cloud + On-premises",
-    variantSKU: "113223584",
-    price: 8.99,
+    id: "UHJvZHVjdDoxNDQ=",
+    name: "DRY Sunglasses",
+    variantSKU: "550n97455",
+    price: 15,
   },
   productWithDiscountChannelPLN: {
     id: "UHJvZHVjdDoxNjc=",
@@ -426,43 +426,43 @@ export const ORDERS = {
     ids: ["#3266", "#3265"],
   },
   draftOrderChannelPLN: {
-    id: "T3JkZXI6Zjg0NTk3N2EtM2Y3Yy00NDY3LWI3N2MtZDY0ZjhhMDU2MmQy",
+    id: "T3JkZXI6YTJmOWQ5NjgtZjEwYi00MGJkLTgwZDUtYzhjNmRjZjIwNDY4",
     productInBasket: {
-      productName: "Black Hoodie",
-      price: 20,
-      variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
+      productName: "Hoodie",
+      price: 149.99,
+      variantId: "UHJvZHVjdFZhcmlhbnQ6MzQ1",
     },
   },
   ordersWithinTransactionFlow: {
     markAsPaidOrder: {
-      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+      orderId: "T3JkZXI6Njg0M2ZjNzItMzRmNy00OTM4LThlYWYtMmVkMTVhMjM1MWIz",
       info: "Order used to mark as paid and fulfill",
     },
     captureManualTransactionOrder: {
-      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
+      orderId: "T3JkZXI6NTE1Mzg3M2UtMjNlMS00OWQ2LTg4ZDctMTc3ZjViMzE3Mzk5",
       info: "Order used to capture manual transactions and fulfill",
     },
   },
   orderToAddTrackingNumberTo: {
-    id: "T3JkZXI6M2NkYWE4NGItNzgxNi00ZWI2LWE1MGMtODE0NzY5YWM0MTEw",
+    id: "T3JkZXI6ZGI1NzE0NTktYzA3Yy00NGY4LTk3MTYtN2Y0NTE4YmEyMjA5",
   },
   orderToMarkAsPaidAndFulfill: {
-    id: "T3JkZXI6Yzg2ZDMzYmEtMTA5Yi00MzUyLTkzYWItOTljMGE3Zjk4ZGE5",
+    id: "T3JkZXI6ZjMwZmM3Y2UtZGNjOS00MTljLWEwNjItMzhlZmI1MzQwMDhj",
   },
   orderFulfilledToChangeBillingAddress: {
-    id: "T3JkZXI6MDIzNDhmMjktNzJiOC00ZTBkLWI1ODYtY2U3OTYwZDI0Y2Q0",
+    id: "T3JkZXI6MzhjMWUzOGYtYzgzYS00MmE5LThjMTMtNTQ0NzA5ZWUyODQ3",
   },
   orderNotFulfilledToChangeShippingAddress: {
-    id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
+    id: "T3JkZXI6YzNhMzhkMTYtNWFkMi00M2ExLTg4MGQtNDI1MTUxZjhiYTZh",
   },
   fullyPaidOrderWithSingleTransaction: {
-    id: "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
+    id: "T3JkZXI6YWY2YTYwNzQtZjQyZi00Yzc2LWE5ZTctZTY0Y2UyN2I2MGIz",
     lineItems: [
       {
-        name: "Bean Juice",
-        quantity: "1",
+        name: "Apple Juice",
+        quantity: "3",
       },
-      { name: "Lake Tunes", quantity: "2" },
+      { name: "Team Shirt", quantity: "4" },
     ],
   },
   fullyPaidOrderWithSeveralTransactions: {
@@ -506,7 +506,7 @@ export const ORDERS = {
     ],
   },
   orderWithoutAddedCustomer: {
-    id: "T3JkZXI6MDM4MjM4NDMtYjg3My00ZTQ2LWE1NTItNjc0ZGIwZjE2ZGZh",
+    id: "T3JkZXI6NWIzM2FhMDYtZGIwMi00MDZmLWE1MjMtMjU1ZGQwNTgzNGQw",
   },
 };
 
@@ -556,38 +556,24 @@ export const SHIPPING_METHODS = {
 };
 export const USERS = {
   userToBeDeactivated: {
-    id: "VXNlcjoxMzQ3",
+    id: "VXNlcjoxMDU=",
     email: "user-to-be-deactivated@gmai.com",
     info: "Active user used in deactivation user test",
   },
   userToBeActivated: {
-    id: "VXNlcjoxMzQ5",
+    id: "VXNlcjoxMDY=",
     email: "user-to-be-activated@gmai.com",
     info: "Inactive user used in activation user test",
   },
-  userForPasswordReset: {
-    email: "user-for-password-reset@gmail.com",
-    newPassword: "4321test",
-    info: "User used in reset password test",
-    name: "e2e",
-    lastName: "user",
-  },
-  userForPasswordChange: {
-    email: "change-password-user@gmail.com",
-    newPassword: "4321test",
-    info: "User used in change password test",
-    name: "change password",
-    lastName: "user",
-  },
   staffToBeEdited: {
-    id: "VXNlcjoxMzcx",
+    id: "VXNlcjoxMDk=",
     name: "e2e_staff_to_be_updated",
     lastName: "DO NOT DELETE",
     email: "test123@hotmail.com",
     permission: "Apps management",
   },
   staffToBeDeleted: {
-    id: "VXNlcjoxMzcy",
+    id: "VXNlcjoxMTA=",
     name: "e2e_staff_to_be_deleted",
     lastName: "DO NOT DELETE",
   },
@@ -603,18 +589,18 @@ export const APPS = {
 
 export const TRANSLATIONS = {
   translationsToBeAdded: {
-    id: "Q2F0ZWdvcnk6NTEy",
-    name: "CategoryToTranslate",
+    id: "Q2F0ZWdvcnk6NDU=",
+    name: "Books",
     info: "Category used to add translation test",
   },
   translationsToBeEdited: {
-    id: "UHJvZHVjdDo3OA==",
-    name: "Green Juice",
+    id: "UHJvZHVjdDoxNTI=",
+    name: "Apple Juice",
     info: "Product used to edit translation test",
   },
   translationsToBeCleared: {
-    id: "Q29sbGVjdGlvbjox",
-    name: "Summer collection",
+    id: "Q29sbGVjdGlvbjo1",
+    name: "Summer Picks",
     info: "Translation used in clear translation test",
   },
 };
@@ -643,7 +629,7 @@ export const NAVIGATION_ITEMS = {
 
 export const PERMISSION_GROUPS = {
   permissionGroupToBeEdited: {
-    id: "R3JvdXA6MTEx",
+    id: "R3JvdXA6NTg=",
     name: "e2e_permission_group_to_be_updated",
     assignedMembers: {
       names: [
@@ -657,7 +643,7 @@ export const PERMISSION_GROUPS = {
     },
   },
   permissionGroupToBeDeleted: {
-    id: "R3JvdXA6MTEw",
+    id: "R3JvdXA6NTk=",
     name: "e2e_permission_group_to_be_deleted",
   },
   permissionGroupMembers: [
@@ -710,11 +696,11 @@ export const PRODUCT_TYPES = {
 };
 export const CUSTOMERS = {
   deleteCustomer: {
-    id: "VXNlcjoxMzY3",
+    id: "VXNlcjoxMTE=",
     email: "e2e_customer@delete.com",
   },
   editCustomer: {
-    id: "VXNlcjoxMzY2",
+    id: "VXNlcjoxMTI=",
     email: "e2e_customer_with_addresses@saleor.io",
     note: "simple note",
     initialShippingAddress: {
@@ -756,13 +742,13 @@ export const CUSTOMERS = {
     ],
   },
   customerToBeActivated: {
-    id: "VXNlcjoxMzY0",
+    id: "VXNlcjoxMTY=",
     email: "e2e-customer@activate.com",
     firstName: "e2e-customer",
     lastName: "to-be-activated",
   },
   customerToBeDeactivated: {
-    id: "VXNlcjoxMzY1",
+    id: "VXNlcjoxMTc=",
     email: "e2e-customer@deactivate.com",
     firstName: "e2e-customer",
     lastName: "to-be-deactivated",
