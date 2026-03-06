@@ -43,6 +43,9 @@ export class GiftCardsPage extends BasePage {
     readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
     readonly showMoreMenuButton = page.getByTestId("show-more-button"),
+    readonly disabledStatusPill = page
+      .getByTestId("page-header")
+      .getByText("Disabled", { exact: true }),
     readonly giftCardDialog = page.getByTestId("gift-card-dialog"),
     readonly exportGiftCardsBanner = page.getByText(
       "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address",

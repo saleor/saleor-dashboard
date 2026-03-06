@@ -254,10 +254,6 @@ export const CHANNELS = {
   channelForTaxEdition: {
     name: "a channel for tax tests",
   },
-  plnChannel: {
-    //move to taxes
-    id: "VGF4Q29uZmlndXJhdGlvbjoy",
-  },
   e2eChannelDoNotDelete: {
     id: "Q2hhbm5lbDo2",
     name: "e2e-channel-do-not-delete",
@@ -275,7 +271,6 @@ export const CHANNELS = {
 };
 export const TAXES = {
   plnChannelTaxConfig: {
-    // CHANNELS.plnChannel.id
     id: "VGF4Q29uZmlndXJhdGlvbjoy",
   },
 };
@@ -664,7 +659,7 @@ export const PERMISSION_GROUPS = {
 
 export const PAGE_TYPES = {
   pageTypeToBeEdited: {
-    id: "UGFnZVR5cGU6MTA=",
+    id: "UGFnZVR5cGU6MTE=",
     name: "A page type to be edited",
     info: "Page type used in edit page type test",
   },
