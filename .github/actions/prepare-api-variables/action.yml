@@ -59,7 +59,11 @@ runs:
           if [[ "$DESTINATION_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
             # handles pull requests to the other branches than main, e.g. release branches
             VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
-            echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+            if [[ "$DESTINATION_BRANCH" == "3.21" ]]; then
+              echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+            else
+              echo "BACKUP_NAMESPACE=snapshot-e2e-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+            fi
             echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
             echo "RUN_SLUG=${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
           else
@@ -72,7 +76,7 @@ runs:
             #    the `main` branch as `main` is an unstable (dev) branch, whereas
             #    version number branches are stable branches thus we do not expect anyone
             #    to be using feature branches against these.
-            echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+            echo "BACKUP_NAMESPACE=snapshot-e2e-tests" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
             echo "RUN_SLUG=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           fi
