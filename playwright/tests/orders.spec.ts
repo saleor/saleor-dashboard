@@ -229,8 +229,7 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order #e2e #order",
   );
 });
 
-// Skipping due to issues with clicking on grid
-test.skip("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
+test("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.checkListRowsBasedOnContainingText(ORDERS.draftOrdersToBeDeleted.ids);
   await draftOrdersPage.clickBulkDeleteButton();
@@ -273,7 +272,7 @@ test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
-// Need to rewrite tests related to refunds due to changes in refund flow
+// Need to rewrite tests related to refunds due to changes in refund flow handle refund references
 test.skip("TC: SALEOR_191 Refund products from the fully paid order #e2e #refunds", async () => {
   // All steps of this test pass (including after hooks), but Playwright
   // marks it as failed because of exceeding 30s timeout

@@ -423,7 +423,7 @@ export const PRODUCTS = {
 
 export const ORDERS = {
   draftOrdersToBeDeleted: {
-    ids: ["#3266", "#3265"],
+    ids: ["#126", "#127"],
   },
   draftOrderChannelPLN: {
     id: "T3JkZXI6YTJmOWQ5NjgtZjEwYi00MGJkLTgwZDUtYzhjNmRjZjIwNDY4",
@@ -456,13 +456,13 @@ export const ORDERS = {
     id: "T3JkZXI6YzNhMzhkMTYtNWFkMi00M2ExLTg4MGQtNDI1MTUxZjhiYTZh",
   },
   fullyPaidOrderWithSingleTransaction: {
-    id: "T3JkZXI6YWY2YTYwNzQtZjQyZi00Yzc2LWE5ZTctZTY0Y2UyN2I2MGIz",
+    id: "T3JkZXI6ZjZkMzVmZWYtMTc1My00MDVlLWJhNmYtOThhZjVmOGE2NjJl",
     lineItems: [
       {
-        name: "Apple Juice",
-        quantity: "3",
+        name: "Dash Force",
+        quantity: "1",
       },
-      { name: "Team Shirt", quantity: "4" },
+      { name: "Mighty Mug", quantity: "1" },
     ],
   },
   fullyPaidOrderWithSeveralTransactions: {
