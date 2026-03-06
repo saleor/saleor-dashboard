@@ -180,7 +180,7 @@ export class RightSideDetailsPage extends BasePage {
     await this.page.getByRole("option", { name: warehouseName });
   }
 
-  async selectCustomer(customer = "allison.freeman@example.com") {
+  async selectCustomer(customer = "ashley.cook@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).waitFor({ state: "visible" });
     await this.selectCustomerOption.locator(`text=${customer}`).click();
     await this.waitForDOMToFullyLoad();
