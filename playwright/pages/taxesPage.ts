@@ -1,4 +1,4 @@
-import { CHANNELS } from "@data/e2eTestData";
+import { TAXES } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { AddCountriesDialog } from "@dialogs/addCountriesDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
@@ -44,7 +44,6 @@ export class TaxesPage extends BasePage {
     readonly defaultRateInput = page.getByTestId("Country default rate").locator("input"),
     readonly groceriesRateInput = page.getByTestId("Groceries").locator("input"),
     readonly booksRateInput = page.getByTestId("Books").locator("input"),
-    readonly noTaxesRateInput = page.getByTestId("No taxes").locator("input"),
   ) {
     super(page);
     this.page = page;
@@ -143,6 +142,6 @@ export class TaxesPage extends BasePage {
   }
 
   async gotoChannelsTabUrl() {
-    await this.page.goto(URL_LIST.taxChannel + CHANNELS.plnChannel.id);
+    await this.page.goto(URL_LIST.taxChannel + TAXES.plnChannelTaxConfig.id);
   }
 }

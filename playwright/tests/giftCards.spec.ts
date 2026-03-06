@@ -8,7 +8,6 @@ test.use({ permissionName: "admin" });
 let giftCardsPage: GiftCardsPage;
 
 test.beforeEach(async ({ page }) => {
-  test.slow();
   giftCardsPage = new GiftCardsPage(page);
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.waitForDOMToFullyLoad();
@@ -72,13 +71,13 @@ test("TC: SALEOR_108 Deactivate gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeDeactivated.id);
   await giftCardsPage.clickDeactivateButton();
   await giftCardsPage.expectSuccessBanner();
-  await expect(giftCardsPage.pageHeader).toContainText("Disabled");
+  await expect(giftCardsPage.disabledStatusPill).toHaveCount(1);
 });
 test("TC: SALEOR_109 Activate gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeActivated.id);
   await giftCardsPage.clickDeactivateButton();
   await giftCardsPage.expectSuccessBanner();
-  await expect(giftCardsPage.pageHeader).not.toContainText("Disabled");
+  await expect(giftCardsPage.disabledStatusPill).toHaveCount(0);
 });
 test("TC: SALEOR_110 Edit gift card #e2e #gift", async () => {
   await giftCardsPage.gotoExistingGiftCardView(GIFT_CARDS.giftCardToBeEdited.id);
