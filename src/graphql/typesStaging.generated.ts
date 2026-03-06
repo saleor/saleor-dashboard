@@ -281,9 +281,9 @@ export type AppInstallInput = {
   /** Determine if app will be set active or not. */
   activateAfterInstallation?: InputMaybe<Scalars['Boolean']>;
   /** Name of the app to install. */
-  appName?: InputMaybe<Scalars['String']>;
+  appName: Scalars['String'];
   /** URL to app's manifest in JSON format. */
-  manifestUrl?: InputMaybe<Scalars['String']>;
+  manifestUrl: Scalars['String'];
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
