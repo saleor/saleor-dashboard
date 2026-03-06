@@ -1,7 +1,34 @@
-/* Tailwind v4 - full import for shadcn compatibility */
+/* Tailwind v4 - full import needed for @theme inline to generate --color-* vars */
+/* Preflight is in @layer base (lower precedence than macaw-ui's unlayered Vanilla Extract styles) */
 @import "tailwindcss";
+/* Explicitly scan both src/ and assets/ so Tailwind generates utilities for shadcn components */
+@source "./**/*.{ts,tsx}";
+@source "../assets/**/*.{ts,tsx}";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
+/* Override Tailwind's rem-based spacing/sizing to px, because this dashboard
+   uses html { font-size: 50.782% } making 1rem = 8.125px.
+   Without this, shadcn utilities like h-9/px-4/text-sm would render at ~50% of intended size. */
+@theme {
+  --spacing: 4px;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-xl: 20px;
+  --text-xl--line-height: 28px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 32px;
+  --text-3xl: 30px;
+  --text-3xl--line-height: 36px;
+  --text-4xl: 36px;
+  --text-4xl--line-height: 40px;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -201,7 +228,7 @@ a.command-menu-item {
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 8px;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
