@@ -50,7 +50,7 @@ test("TC: SALEOR_117 Add new country and tax rates to it #taxes #e2e", async () 
   await expect(taxesPage.countriesListRow.first()).toHaveText(
     COUNTRIES.countryToBeAddedInTaxes.name,
   );
-  await taxesPage.typeAllTaxRatesForCountry("23", "0", "16", "7", "21", "19");
+  await taxesPage.typeAllTaxRatesForCountry("23", "10", "7", "0");
   await taxesPage.clickSaveButton();
   await taxesPage.expectSuccessBanner();
 });
@@ -62,8 +62,8 @@ test("TC: SALEOR_118 Add new class with metadata and set tax rate for single cou
   await taxesPage.clickCreateClassButton();
   await expect(taxesPage.taxClassNameInput).toHaveValue("New tax class");
   await taxesPage.typeTaxClassName("Automation test tax class");
-  await taxesPage.typeSearchedTaxCountryName("United States of America");
-  await taxesPage.typeTaxRateInSearchedCountryRow("United States of America", "20");
+  await taxesPage.typeSearchedTaxCountryName("United Kingdom");
+  await taxesPage.typeTaxRateInSearchedCountryRow("United Kingdom", "20");
   await taxesPage.metadataSeoPage.publicMetaSection.waitFor({ state: "attached", timeout: 10000 });
   await taxesPage.metadataSeoPage.publicMetaSection.scrollIntoViewIfNeeded();
   await taxesPage.metadataSeoPage.expandAndAddAllMetadata();
