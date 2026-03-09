@@ -201,6 +201,9 @@ export default defineConfig(({ command, mode }) => {
         "@locale": path.resolve(__dirname, "./locale"),
         "@dashboard": path.resolve(__dirname, "./src"),
         src: path.resolve(__dirname, "./src"),
+        // Force locally linked packages to use dashboard's React
+        react: path.resolve(__dirname, "./node_modules/react"),
+        "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
         /*
           Moment.js/react-moment does not fully suport ES modules.
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
