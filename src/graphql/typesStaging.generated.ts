@@ -281,9 +281,9 @@ export type AppInstallInput = {
   /** Determine if app will be set active or not. */
   activateAfterInstallation?: InputMaybe<Scalars['Boolean']>;
   /** Name of the app to install. */
-  appName?: InputMaybe<Scalars['String']>;
+  appName: Scalars['String'];
   /** URL to app's manifest in JSON format. */
-  manifestUrl?: InputMaybe<Scalars['String']>;
+  manifestUrl: Scalars['String'];
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
@@ -2389,6 +2389,12 @@ export type DecimalRangeInput = {
   /** Decimal value less than or equal to. */
   lte?: InputMaybe<Scalars['Decimal']>;
 };
+
+export enum DeliveryOptionsCalculateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
 
 export type DigitalContentInput = {
   /** Overwrite default automatic_fulfillment setting for variant. */
