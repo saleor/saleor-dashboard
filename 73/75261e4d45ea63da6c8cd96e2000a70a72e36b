@@ -1,0 +1,278 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "7375261e4d45ea63da6c8cd96e2000a70a72e36b",
+  "prompts": {
+    "fd9585df75e0afd5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "58b555e1-00cc-41e9-ae8b-326ef0a9b90f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [
+        {
+          "type": "user",
+          "text": "locally link packagage macaw-ui-next which is in ../macaw-ui (build already)",
+          "timestamp": "2026-03-09T06:06:14.139Z"
+        },
+        {
+          "type": "assistant",
+          "text": "The user wants to locally link the `@saleor/macaw-ui-next` package from `../macaw-ui` into the dashboard project.",
+          "timestamp": "2026-03-09T06:06:17.692Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "ls /Users/lukasz/projects/_SALEOR/macaw-ui/package.json && cat /Users/lukasz/projects/_SALEOR/macaw-ui/package.json | head -5",
+            "description": "Check macaw-ui package name"
+          },
+          "timestamp": "2026-03-09T06:06:19.107Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "cd /Users/lukasz/projects/_SALEOR/macaw-ui && grep '\"name\"' package.json",
+            "description": "Get package name"
+          },
+          "timestamp": "2026-03-09T06:06:25.452Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "cd /Users/lukasz/projects/_SALEOR/macaw-ui && ls dist/ 2>/dev/null | head -10 || echo \"no dist\"; ls build/ 2>/dev/null | head -10 || echo \"no build\"",
+            "description": "Check build output directory"
+          },
+          "timestamp": "2026-03-09T06:06:52.133Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "grep '\"@saleor/macaw-ui' /Users/lukasz/projects/_SALEOR/dashboard/package.json",
+            "description": "Check current macaw-ui dependency in dashboard"
+          },
+          "timestamp": "2026-03-09T06:07:38.954Z"
+        },
+        {
+          "type": "assistant",
+          "text": "The dashboard uses `@saleor/macaw-ui-next` as an alias for `@saleor/macaw-ui@1.4.2`. I'll use pnpm's `overrides` to link it locally.",
+          "timestamp": "2026-03-09T06:07:54.127Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "ToolSearch",
+          "input": {
+            "max_results": 1,
+            "query": "select:Read"
+          },
+          "timestamp": "2026-03-09T06:07:54.308Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "ToolSearch",
+          "input": {
+            "max_results": 1,
+            "query": "select:Edit"
+          },
+          "timestamp": "2026-03-09T06:07:56.406Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Edit",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/package.json",
+            "new_string": "\"@saleor/macaw-ui-next\": \"link:../macaw-ui\"",
+            "old_string": "\"@saleor/macaw-ui-next\": \"npm:@saleor/macaw-ui@1.4.2\"",
+            "replace_all": false
+          },
+          "timestamp": "2026-03-09T06:08:00.617Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/package.json",
+            "limit": 30
+          },
+          "timestamp": "2026-03-09T06:08:03.238Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Edit",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/package.json",
+            "new_string": "\"@saleor/macaw-ui-next\": \"link:../macaw-ui\"",
+            "old_string": "\"@saleor/macaw-ui-next\": \"npm:@saleor/macaw-ui@1.4.2\"",
+            "replace_all": false
+          },
+          "timestamp": "2026-03-09T06:08:06.426Z"
+        },
+        {
+          "type": "assistant",
+          "text": "Now install to update the symlink:",
+          "timestamp": "2026-03-09T06:08:19.402Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "pnpm install 2>&1 | tail -20",
+            "description": "Install with local link"
+          },
+          "timestamp": "2026-03-09T06:08:20.072Z"
+        },
+        {
+          "type": "assistant",
+          "text": "Done. `@saleor/macaw-ui-next` is now linked to `../macaw-ui`. You can verify:",
+          "timestamp": "2026-03-09T06:08:31.789Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "ls -la node_modules/@saleor/macaw-ui-next 2>&1 | head -3",
+            "description": "Verify symlink"
+          },
+          "timestamp": "2026-03-09T06:08:32.275Z"
+        },
+        {
+          "type": "assistant",
+          "text": "The symlink is in place — `node_modules/@saleor/macaw-ui-next` now points to `../macaw-ui`.",
+          "timestamp": "2026-03-09T06:08:46.230Z"
+        },
+        {
+          "type": "user",
+          "text": "Stop hook feedback:\n[$CLAUDE_PROJECT_DIR/.claude/hooks/validation-check.sh]: 🔍 Running final validation...\n❌ TypeScript validation failed - please fix type errors before completing the task\n",
+          "timestamp": "2026-03-09T06:09:22.835Z"
+        },
+        {
+          "type": "assistant",
+          "text": "The hook is complaining about TypeScript errors. Let me check what's wrong.",
+          "timestamp": "2026-03-09T06:09:25.549Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "pnpm run check-types 2>&1 | tail -30",
+            "description": "Check TypeScript errors"
+          },
+          "timestamp": "2026-03-09T06:09:26.111Z"
+        },
+        {
+          "type": "assistant",
+          "text": "This is a classic React types version mismatch. The local macaw-ui has its own `@types/react@18.0.0` in its `node_modules`, which conflicts with the dashboard's version. Let me check:",
+          "timestamp": "2026-03-09T06:10:11.969Z"
+        },
+        {
+          "type": "user",
+          "text": "[Request interrupted by user]",
+          "timestamp": "2026-03-09T06:10:12.439Z"
+        },
+        {
+          "type": "user",
+          "text": "you need to fix bundler to always resolve react, react-dom and types/react to dashboard's node modules.\n\nmacaw-ui which is locally used, has its own node modules that conflicts",
+          "timestamp": "2026-03-09T06:13:00.491Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/vite.config.ts"
+          },
+          "timestamp": "2026-03-09T06:13:04.372Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Glob",
+          "input": {
+            "pattern": "vite.config.*"
+          },
+          "timestamp": "2026-03-09T06:13:08.658Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/vite.config.js"
+          },
+          "timestamp": "2026-03-09T06:13:16.065Z"
+        },
+        {
+          "type": "assistant",
+          "text": "I see there's already a `resolve.dedupe` for `react` and `react-dom`. The issue is that for locally linked packages, `dedupe` alone isn't enough — we need explicit `resolve.alias` entries to force resolution to the dashboard's copies.",
+          "timestamp": "2026-03-09T06:13:20.212Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Edit",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/vite.config.js",
+            "new_string": "      alias: {\n        \"@assets\": path.resolve(__dirname, \"./assets\"),\n        \"@locale\": path.resolve(__dirname, \"./locale\"),\n        \"@dashboard\": path.resolve(__dirname, \"./src\"),\n        src: path.resolve(__dirname, \"./src\"),\n        // Force locally linked packages to use dashboard's React\n        react: path.resolve(__dirname, \"./node_modules/react\"),\n        \"react-dom\": path.resolve(__dirname, \"./node_modules/react-dom\"),",
+            "old_string": "      alias: {\n        \"@assets\": path.resolve(__dirname, \"./assets\"),\n        \"@locale\": path.resolve(__dirname, \"./locale\"),\n        \"@dashboard\": path.resolve(__dirname, \"./src\"),\n        src: path.resolve(__dirname, \"./src\"),",
+            "replace_all": false
+          },
+          "timestamp": "2026-03-09T06:13:23.272Z"
+        },
+        {
+          "type": "assistant",
+          "text": "Now fix the TypeScript side too — `tsconfig` needs to resolve `@types/react` from the dashboard:",
+          "timestamp": "2026-03-09T06:13:34.378Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Read",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/tsconfig.json"
+          },
+          "timestamp": "2026-03-09T06:13:34.630Z"
+        },
+        {
+          "type": "assistant",
+          "text": "I see `skipLibCheck: true` is already set, but the errors are from actual source files using macaw-ui types that pull in the wrong `@types/react`. The fix is to add path mappings so TypeScript resolves React types from the dashboard's `node_modules`:",
+          "timestamp": "2026-03-09T06:13:41.960Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Edit",
+          "input": {
+            "file_path": "/Users/lukasz/projects/_SALEOR/dashboard/tsconfig.json",
+            "new_string": "      \"@mizdra/graphql-codegen-typescript-fabbrica/helper\": [\n        \"node_modules/@mizdra/graphql-codegen-typescript-fabbrica/dist/esm/helper/index\"\n      ],\n      \"react\": [\"node_modules/@types/react\"],\n      \"react-dom\": [\"node_modules/@types/react-dom\"]",
+            "old_string": "      \"@mizdra/graphql-codegen-typescript-fabbrica/helper\": [\n        \"node_modules/@mizdra/graphql-codegen-typescript-fabbrica/dist/esm/helper/index\"\n      ]",
+            "replace_all": false
+          },
+          "timestamp": "2026-03-09T06:13:43.734Z"
+        },
+        {
+          "type": "tool_use",
+          "name": "Bash",
+          "input": {
+            "command": "pnpm run check-types 2>&1 | tail -15",
+            "description": "Check if TypeScript errors are resolved",
+            "timeout": 120000
+          },
+          "timestamp": "2026-03-09T06:14:02.209Z"
+        },
+        {
+          "type": "assistant",
+          "text": "The React type mismatch errors are gone. The remaining errors are about missing icon exports from macaw-ui (like `FullscreenOffIcon`, `PlusIcon`, `CloseIcon`, `MoreOptionsIcon`) — these are API differences between your local macaw-ui build and the published `1.4.2` version. That's expected when linking a different version locally, not related to our config changes.\n\nThe React/types resolution is now fixed. The vite alias + tsconfig paths ensure both the bundler and TypeScript always resolve `react`, `react-dom`, and their types from the dashboard's `node_modules`.",
+          "timestamp": "2026-03-09T06:15:15.150Z"
+        },
+        {
+          "type": "user",
+          "text": "[Request interrupted by user]",
+          "timestamp": "2026-03-09T06:15:32.578Z"
+        }
+      ],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
