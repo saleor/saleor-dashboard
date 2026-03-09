@@ -4,16 +4,8 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import {
-  Box,
-  Button,
-  Dropdown,
-  List,
-  MoreOptionsIcon,
-  Text,
-  useTheme,
-} from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
+import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Code, EllipsisVertical } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
@@ -110,7 +102,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 <Dropdown.Trigger>
                   <Button
                     variant="tertiary"
-                    icon={<MoreOptionsIcon />}
+                    icon={<EllipsisVertical />}
                     data-test-id="fulfillment-menu-button"
                     // optical alignment
                     __marginRight={"-16px"}
