@@ -4174,7 +4174,7 @@
     "string": "Remove from Shipping Zone"
   },
   "M8Lwgl": {
-    "string": "Apps are available for Saleor Cloud users. Most of them are available to self host."
+    "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
   },
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
