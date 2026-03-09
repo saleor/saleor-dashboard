@@ -2390,6 +2390,12 @@ export type DecimalRangeInput = {
   lte?: InputMaybe<Scalars['Decimal']>;
 };
 
+export enum DeliveryOptionsCalculateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
 export type DigitalContentInput = {
   /** Overwrite default automatic_fulfillment setting for variant. */
   automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
