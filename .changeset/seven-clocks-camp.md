@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Forced React and ReactDOM to be resolved from project's node_modules. This allows using local linking of other React packages (like app-sdk or MacawUI) which normally break due to 2 React versions installed
+Added Vite aliases so bare `react` and `react-dom` imports resolve from the project's node_modules. This allows using local linking of other React-based packages (like app-sdk or MacawUI) which normally break due to two React versions being installed.
