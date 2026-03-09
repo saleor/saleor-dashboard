@@ -1,5 +1,4 @@
 import { useUser } from "@dashboard/auth/useUser";
-import moment from "moment";
 
 export const useNewUserCheck = () => {
   const { user } = useUser();
@@ -19,10 +18,10 @@ export const useNewUserCheck = () => {
     };
   }
 
-  const userJoinedDate = moment(user.dateJoined);
-  const thresholdDate = moment(thresholdDateString);
+  const userJoinedDate = new Date(user.dateJoined);
+  const thresholdDate = new Date(thresholdDateString);
 
-  if (!userJoinedDate.isValid() || !thresholdDate.isValid()) {
+  if (isNaN(userJoinedDate.getTime()) || isNaN(thresholdDate.getTime())) {
     return {
       isNewUser: false,
       isUserLoading: false,
@@ -30,7 +29,7 @@ export const useNewUserCheck = () => {
   }
 
   return {
-    isNewUser: userJoinedDate.isAfter(thresholdDate),
+    isNewUser: userJoinedDate > thresholdDate,
     isUserLoading: false,
   };
 };
