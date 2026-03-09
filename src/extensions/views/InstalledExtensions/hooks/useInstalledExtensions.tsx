@@ -12,7 +12,11 @@ import {
   type WebhookDeliveryProblem,
 } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
+import {
+  byActivePlugin,
+  filterOutHiddenPlugins,
+  sortByName,
+} from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
   AppTypeEnum,
   PermissionEnum,
@@ -184,15 +188,18 @@ export const useInstalledExtensions = () => {
 
   const installedPlugins = useMemo<InstalledExtension[]>(
     () =>
-      installedPluginsData.filter(byActivePlugin).map(plugin => ({
-        id: plugin.id,
-        name: plugin.name,
-        logo: <PluginIcon />,
-        info: null,
-        href: ExtensionsUrls.resolveEditPluginExtensionUrl(plugin.id),
-        activeProblemCount: 0,
-        criticalProblemCount: 0,
-      })),
+      installedPluginsData
+        .filter(filterOutHiddenPlugins)
+        .filter(byActivePlugin)
+        .map(plugin => ({
+          id: plugin.id,
+          name: plugin.name,
+          logo: <PluginIcon />,
+          info: null,
+          href: ExtensionsUrls.resolveEditPluginExtensionUrl(plugin.id),
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
+        })),
     [installedPluginsData],
   );
 
