@@ -1,0 +1,31 @@
+src/taxes/components/TaxAppLabel.tsx
+  08a86bd6b1f268bd 2,14,38-40,42
+src/taxes/components/TaxAppLabel.test.tsx
+  08a86bd6b1f268bd 1-56
+src/products/utils/handlers.ts
+  08a86bd6b1f268bd 115
+src/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils.ts
+  08a86bd6b1f268bd 9
+src/welcomePage/WelcomePageOnboarding/hooks/useNewUserCheck.ts
+  08a86bd6b1f268bd 21-22,24,32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "dbc2598d89fe211508d4bd269433e7d2c356dc97",
+  "prompts": {
+    "08a86bd6b1f268bd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "94e00db0-ffcf-4899-b220-82816b982626",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 81,
+      "total_deletions": 22,
+      "accepted_lines": 71,
+      "overriden_lines": 1
+    }
+  }
+}
