@@ -1,4 +1,4 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: "./schema-main.graphql",
@@ -12,6 +12,8 @@ const config: CodegenConfig = {
     "!./src/**/mutations.staging.ts",
     "!./src/**/fragments/*.staging.ts",
     "!./src/searches/*.staging.ts",
+    // legacy SDK has its own internal GraphQL operations
+    "!./src/legacy-sdk/**",
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {
