@@ -219,7 +219,7 @@ export const messages = defineMessages({
   selfHostedBanner: {
     defaultMessage:
       "Apps are available for Saleor Cloud users. Most of them are available for self-hosting.",
-    id: "M8Lwgl",
+    id: "6IteaF",
   },
   noExtensionsInstalled: {
     defaultMessage: "No extensions installed yet",
