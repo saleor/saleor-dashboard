@@ -11,10 +11,15 @@ import { type VoucherFragment } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
-import moment from "moment";
 import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
+
+export function formatDateTime(date: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
+    new Date(date),
+  );
+}
 
 export const vouchersListStaticColumnsAdapter = (
   intl: IntlShape,
@@ -93,11 +98,11 @@ export const createGetCellContent =
           : readonlyTextCell(PLACEHOLDER);
       case "start-date":
         return readonlyTextCell(
-          rowData.startDate ? moment(rowData.startDate).locale(locale).format("lll") : PLACEHOLDER,
+          rowData.startDate ? formatDateTime(rowData.startDate, locale) : PLACEHOLDER,
         );
       case "end-date":
         return readonlyTextCell(
-          rowData.endDate ? moment(rowData.endDate).locale(locale).format("lll") : PLACEHOLDER,
+          rowData.endDate ? formatDateTime(rowData.endDate, locale) : PLACEHOLDER,
         );
 
       case "value":

@@ -3,7 +3,7 @@ import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { type VoucherFragment } from "@dashboard/graphql";
 
-import { createGetCellContent } from "./datagrid";
+import { createGetCellContent, formatDateTime } from "./datagrid";
 
 const columns: AvailableColumn[] = [
   { id: "code", title: "Code", width: 350 },
@@ -50,6 +50,24 @@ const createVoucher = (overrides: Partial<VoucherFragment> = {}): VoucherFragmen
     ...overrides,
   }) as VoucherFragment;
 
+describe("formatDateTime", () => {
+  it("formats date with EN locale", () => {
+    // Arrange & Act
+    const result = formatDateTime("2024-06-15T09:30:00Z", Locale.EN);
+
+    // Assert
+    expect(result).toBe("Jun 15, 2024, 9:30 AM");
+  });
+
+  it("formats date with PL locale", () => {
+    // Arrange & Act
+    const result = formatDateTime("2024-06-15T09:30:00Z", Locale.PL);
+
+    // Assert
+    expect(result).toBe("15 cze 2024, 09:30");
+  });
+});
+
 describe("VoucherListDatagrid createGetCellContent", () => {
   it("returns formatted start date for start-date column", () => {
     // Arrange
@@ -65,7 +83,7 @@ describe("VoucherListDatagrid createGetCellContent", () => {
     const cell = getCellContent([2, 0]);
 
     // Assert
-    expect(cell).toHaveProperty("data", "Jan 15, 2024 12:00 AM");
+    expect(cell).toHaveProperty("data", "Jan 15, 2024, 12:00 AM");
   });
 
   it("returns formatted end date for end-date column", () => {
@@ -82,7 +100,7 @@ describe("VoucherListDatagrid createGetCellContent", () => {
     const cell = getCellContent([3, 0]);
 
     // Assert
-    expect(cell).toHaveProperty("data", "Dec 31, 2024 11:59 PM");
+    expect(cell).toHaveProperty("data", "Dec 31, 2024, 11:59 PM");
   });
 
   it("returns PLACEHOLDER for null start date", () => {
