@@ -31,7 +31,13 @@ export const useInitialGiftCardsState = () => {
   const [loading, setLoading] = useState(true);
   const queriesToRun: Array<Promise<InitialGiftCardsAPIResponse>> = [];
 
-  const fetchQueries = async ({ usedBy, products, currency, tags }: GiftCardsFetchingParams) => {
+  const fetchQueries = async ({
+    usedBy,
+    products,
+    currency,
+    tags,
+    code,
+  }: GiftCardsFetchingParams) => {
     if (products.length > 0) {
       queriesToRun.push(
         client.query<_SearchProductOperandsQuery, _SearchProductOperandsQueryVariables>({
@@ -66,7 +72,7 @@ export const useInitialGiftCardsState = () => {
     }
 
     const data = await Promise.all(queriesToRun);
-    const initialState = createInitialGiftCardsState(data, tags);
+    const initialState = createInitialGiftCardsState(data, tags, code);
 
     setData(
       new InitialGiftCardsStateResponse(
@@ -75,6 +81,7 @@ export const useInitialGiftCardsState = () => {
         initialState.isActive,
         initialState.tags,
         initialState.usedBy,
+        initialState.code,
       ),
     );
     setLoading(false);

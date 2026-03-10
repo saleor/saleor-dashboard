@@ -51,6 +51,7 @@ export interface GiftCardsFetchingParams {
   products: string[];
   tags: string[];
   usedBy: string[];
+  code: string[];
 }
 
 export interface CollectionFetchingParams {
@@ -137,6 +138,7 @@ const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
   products: [],
   tags: [],
   usedBy: [],
+  code: [],
 };
 
 const emptyCollectionFetchingParams: CollectionFetchingParams = {
