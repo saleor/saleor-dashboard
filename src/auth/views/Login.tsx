@@ -1,4 +1,8 @@
-import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
+import { useQuery as useApolloQuery } from "@apollo/client";
+import {
+  type AvailableExternalAuthenticationsQuery,
+  PasswordLoginModeEnum,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
@@ -9,6 +13,7 @@ import LoginPage from "../components/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
+import { availableExternalAuthentications as availableExternalAuthenticationsQuery } from "../queries";
 import { loginCallbackPath, type LoginUrlQueryParams } from "../urls";
 import { useUser } from "../useUser";
 
@@ -21,10 +26,6 @@ const LoginView = ({ params }: LoginViewProps) => {
   const { location } = useRouter();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
     useUser();
-  const [
-    queryExternalAuthentications,
-    { data: externalAuthentications, loading: externalAuthenticationsLoading },
-  ] = useAvailableExternalAuthenticationsLazyQuery();
   const {
     fallbackUri,
     requestedExternalPluginId,
@@ -32,6 +33,15 @@ const LoginView = ({ params }: LoginViewProps) => {
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
+
+  const isCallbackFlow = !!(params.code && params.state && isCallbackPath);
+
+  const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
+    useApolloQuery<AvailableExternalAuthenticationsQuery>(availableExternalAuthenticationsQuery, {
+      skip: isCallbackFlow,
+      fetchPolicy: "network-only",
+    });
+
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
 
   const handleSubmit = async (data: LoginFormData) => {
@@ -74,14 +84,6 @@ const LoginView = ({ params }: LoginViewProps) => {
   useEffect(() => {
     const { code, state } = params;
     const externalAuthParamsExist = code && state && isCallbackPath;
-
-    if (!externalAuthParamsExist) {
-      queryExternalAuthentications();
-    }
-  }, [isCallbackPath, params, queryExternalAuthentications]);
-  useEffect(() => {
-    const { code, state } = params;
-    const externalAuthParamsExist = code && state && isCallbackPath;
     const externalAuthNotPerformed = !authenticating && !errors.length;
 
     if (externalAuthParamsExist && externalAuthNotPerformed) {
@@ -99,6 +101,9 @@ const LoginView = ({ params }: LoginViewProps) => {
       errors={errors}
       disabled={authenticating}
       externalAuthentications={externalAuthentications?.shop?.availableExternalAuthentications}
+      passwordLoginEnabled={
+        externalAuthentications?.shop?.passwordLoginMode == PasswordLoginModeEnum.ENABLED
+      }
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}

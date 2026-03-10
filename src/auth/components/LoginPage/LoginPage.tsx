@@ -23,6 +23,7 @@ interface LoginCardProps {
   disabled: boolean;
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
+  passwordLoginEnabled: boolean;
   onExternalAuthentication: (pluginId: string) => void;
   onSubmit: (event: LoginFormData) => SubmitPromise;
   lastLoginMethod: LastLoginMethod;
@@ -34,6 +35,7 @@ const LoginPage = (props: LoginCardProps) => {
     disabled,
     loading,
     externalAuthentications = [],
+    passwordLoginEnabled,
     onExternalAuthentication,
     onSubmit,
     lastLoginMethod,
@@ -65,79 +67,86 @@ const LoginPage = (props: LoginCardProps) => {
               <Text color="critical2">{getErrorMessage(error, intl)}</Text>
             </Box>
           ))}
-          <Input
-            autoFocus
-            width="100%"
-            autoComplete="email"
-            label={intl.formatMessage(commonMessages.email)}
-            id="email"
-            name="email"
-            onChange={handleChange}
-            value={data.email}
-            data-test-id="email"
-            spellCheck={false}
-            disabled={disabled}
-            required
-          />
-          <FormSpacer />
-          <Input
-            width="100%"
-            label={intl.formatMessage({
-              id: "5sg7KC",
-              defaultMessage: "Password",
-            })}
-            id="password"
-            name="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-            type={showPassword ? "text" : "password"}
-            value={data.password}
-            data-test-id="password"
-            spellCheck={false}
-            disabled={disabled}
-            endAdornment={
-              <Button
-                icon={
-                  <EyeIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+          {passwordLoginEnabled && (
+            <>
+              <Input
+                autoFocus
+                width="100%"
+                autoComplete="email"
+                label={intl.formatMessage(commonMessages.email)}
+                id="email"
+                name="email"
+                onChange={handleChange}
+                value={data.email}
+                data-test-id="email"
+                spellCheck={false}
+                disabled={disabled}
+                required
+              />
+              <FormSpacer />
+              <Input
+                width="100%"
+                label={intl.formatMessage({
+                  id: "5sg7KC",
+                  defaultMessage: "Password",
+                })}
+                id="password"
+                name="password"
+                autoComplete="current-password"
+                onChange={handleChange}
+                type={showPassword ? "text" : "password"}
+                value={data.password}
+                data-test-id="password"
+                spellCheck={false}
+                disabled={disabled}
+                endAdornment={
+                  <Button
+                    icon={
+                      <EyeIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
+                    }
+                    onMouseDown={() => setShowPassword(true)}
+                    onMouseUp={() => setShowPassword(false)}
+                    variant="tertiary"
+                    type="button"
+                  />
                 }
-                onMouseDown={() => setShowPassword(true)}
-                onMouseUp={() => setShowPassword(false)}
-                variant="tertiary"
-                type="button"
+                required
               />
-            }
-            required
-          />
-          <Link to={passwordResetUrl}>
-            <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
-              <FormattedMessage
-                id="3tbL7x"
-                defaultMessage="Forgot password?"
-                description="description"
-              />
-            </Text>
-          </Link>
+              <Link to={passwordResetUrl}>
+                <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
+                  <FormattedMessage
+                    id="3tbL7x"
+                    defaultMessage="Forgot password?"
+                    description="description"
+                  />
+                </Text>
+              </Link>
 
-          <div className={classes.buttonContainer}>
-            <ButtonWithLoader
-              width="100%"
-              disabled={disabled}
-              variant="primary"
-              type="submit"
-              transitionState={loading ? "loading" : "default"}
-              data-test-id="submit"
-              position="relative"
-            >
-              {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
-              <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
-            </ButtonWithLoader>
-          </div>
+              <div className={classes.buttonContainer}>
+                <ButtonWithLoader
+                  width="100%"
+                  disabled={disabled}
+                  variant="primary"
+                  type="submit"
+                  transitionState={loading ? "loading" : "default"}
+                  data-test-id="submit"
+                  position="relative"
+                >
+                  {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
+                  <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
+                </ButtonWithLoader>
+              </div>
+            </>
+          )}
           {externalAuthentications.map(externalAuthentication => (
             <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <ButtonWithLoader
                 width="100%"
-                variant="secondary"
+                variant={passwordLoginEnabled ? "secondary" : "primary"}
                 onClick={() => {
                   onExternalAuthentication(externalAuthentication.id);
                   setOptimisticLoaderAuthId(externalAuthentication.id);

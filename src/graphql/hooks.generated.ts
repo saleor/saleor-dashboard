@@ -4346,6 +4346,7 @@ export const AvailableExternalAuthenticationsDocument = gql`
       id
       name
     }
+    passwordLoginMode
   }
 }
     `;

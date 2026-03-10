@@ -31300,8 +31300,6 @@ export type OptionalShop = {
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
  * Added in Saleor 3.22.
- *
- * Requires one of the following permissions: MANAGE_SETTINGS.
  */
   preserveAllAddressFields?: Shop['preserveAllAddressFields'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */

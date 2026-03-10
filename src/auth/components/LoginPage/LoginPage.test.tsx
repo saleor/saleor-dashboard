@@ -18,6 +18,7 @@ const defaultProps = {
   disabled: false,
   loading: false,
   externalAuthentications: [mockExternalAuth],
+  passwordLoginEnabled: true,
   onExternalAuthentication: jest.fn(),
   onSubmit: jest.fn(),
 };

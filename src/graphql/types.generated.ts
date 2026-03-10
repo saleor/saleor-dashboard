@@ -10127,7 +10127,7 @@ export type RequestPasswordResetMutation = { __typename: 'Mutation', requestPass
 export type AvailableExternalAuthenticationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AvailableExternalAuthenticationsQuery = { __typename: 'Query', shop: { __typename: 'Shop', availableExternalAuthentications: Array<{ __typename: 'ExternalAuthentication', id: string, name: string | null }> } };
+export type AvailableExternalAuthenticationsQuery = { __typename: 'Query', shop: { __typename: 'Shop', passwordLoginMode: PasswordLoginModeEnum, availableExternalAuthentications: Array<{ __typename: 'ExternalAuthentication', id: string, name: string | null }> } };
 
 export type UserDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
