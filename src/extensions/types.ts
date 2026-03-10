@@ -1,5 +1,6 @@
 import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
 import {
   type AppTypeEnum,
   type ExtensionListQuery,
@@ -46,9 +47,7 @@ export const getProblemSortDate = (problem: AppProblem): string => {
   return problem.createdAt;
 };
 
-export type { ExtensionData } from "@dashboard/extensions/schema";
-
-import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
+export type { ExtensionData };
 
 export type APIExtensionsResponse = ExtensionCategory[];
 

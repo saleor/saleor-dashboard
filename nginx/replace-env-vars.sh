@@ -13,7 +13,7 @@ replace_env_var() {
   var_value=$(eval echo \$"$var_name")
   if [ -n "$var_value" ]; then
     echo "Setting $var_name to: $var_value"
-    sed -i "s# $var_name: \"[^\"]*\"# $var_name: \"$var_value\"#" "$INDEX_BUNDLE_PATH"
+    sed -i "s#\([[:space:]]*\)$var_name:[[:space:]]*\"[^\"]*\"#\1$var_name: \"$var_value\"#" "$INDEX_BUNDLE_PATH"
   else
     echo "No $var_name provided, using defaults."
   fi
