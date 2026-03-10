@@ -8,7 +8,6 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   PasswordLoginModeEnum,
@@ -26,6 +25,7 @@ import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
+import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
 
 interface SiteSettingsPageAddressFormData {
@@ -225,59 +225,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
                     description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
                   />
-                  <DashboardCard>
-                    <DashboardCard.Header>
-                      <DashboardCard.Title>
-                        {intl.formatMessage(messages.sectionPasswordLoginHeader)}
-                      </DashboardCard.Title>
-                    </DashboardCard.Header>
-                    <DashboardCard.Content>
-                      <SimpleRadioGroupField
-                        name="passwordLoginMode"
-                        value={data.passwordLoginMode}
-                        onChange={change}
-                        choices={[
-                          {
-                            label: (
-                              <Box>
-                                <Text>{intl.formatMessage(messages.passwordLoginEnabled)}</Text>
-                                <Text size={2} color="default2" display="block">
-                                  {intl.formatMessage(messages.passwordLoginEnabledDescription)}
-                                </Text>
-                              </Box>
-                            ),
-                            value: PasswordLoginModeEnum.ENABLED,
-                          },
-                          {
-                            label: (
-                              <Box>
-                                <Text>
-                                  {intl.formatMessage(messages.passwordLoginCustomersOnly)}
-                                </Text>
-                                <Text size={2} color="default2" display="block">
-                                  {intl.formatMessage(
-                                    messages.passwordLoginCustomersOnlyDescription,
-                                  )}
-                                </Text>
-                              </Box>
-                            ),
-                            value: PasswordLoginModeEnum.CUSTOMERS_ONLY,
-                          },
-                          {
-                            label: (
-                              <Box>
-                                <Text>{intl.formatMessage(messages.passwordLoginDisabled)}</Text>
-                                <Text size={2} color="default2" display="block">
-                                  {intl.formatMessage(messages.passwordLoginDisabledDescription)}
-                                </Text>
-                              </Box>
-                            ),
-                            value: PasswordLoginModeEnum.DISABLED,
-                          },
-                        ]}
-                      />
-                    </DashboardCard.Content>
-                  </DashboardCard>
+                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
                 </Box>
 
                 <Divider />

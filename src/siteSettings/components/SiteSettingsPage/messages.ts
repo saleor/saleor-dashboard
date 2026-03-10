@@ -88,40 +88,4 @@ export const messages = defineMessages({
       "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely.",
     description: "section description",
   },
-  sectionPasswordLoginHeader: {
-    id: "qRMXUE",
-    defaultMessage: "Password login mode",
-    description: "card header",
-  },
-  passwordLoginEnabled: {
-    id: "k6kIUq",
-    defaultMessage: "Enabled",
-    description: "password login mode option",
-  },
-  passwordLoginEnabledDescription: {
-    id: "iidznP",
-    defaultMessage: "All users can log in with a password",
-    description: "password login mode option description",
-  },
-  passwordLoginCustomersOnly: {
-    id: "3EFNZn",
-    defaultMessage: "Customers only",
-    description: "password login mode option",
-  },
-  passwordLoginCustomersOnlyDescription: {
-    id: "3CMUKE",
-    defaultMessage:
-      "Only customer users can log in with a password. Staff users logging in with a password will be treated as customers.",
-    description: "password login mode option description",
-  },
-  passwordLoginDisabled: {
-    id: "e8O72h",
-    defaultMessage: "Disabled",
-    description: "password login mode option",
-  },
-  passwordLoginDisabledDescription: {
-    id: "c5B5Cg",
-    defaultMessage: "No user can log in with a password",
-    description: "password login mode option description",
-  },
 });
