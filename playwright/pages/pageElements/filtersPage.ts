@@ -38,4 +38,11 @@ export class FiltersPage extends BasePage {
     await this.clickRightInput();
     await this.dropDownOptions.filter({ hasText: channelName }).click();
   }
+
+  async pickTextFilter(filterKind: string, value: string) {
+    await this.clickAddFilterButton();
+    await this.clickLeftInput();
+    await this.dropDownOptions.filter({ hasText: filterKind }).click();
+    await this.rightInput.fill(value);
+  }
 }

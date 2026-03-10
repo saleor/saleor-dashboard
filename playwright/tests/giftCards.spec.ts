@@ -51,7 +51,9 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.gotoGiftCardsListView();
-  await giftCardsPage.searchAndFindRowIndexes(fullCode);
+  await giftCardsPage.clickFilterButton();
+  await giftCardsPage.filtersPage.pickTextFilter("Code", fullCode);
+  await giftCardsPage.filtersPage.clickSaveFiltersButton();
   expect(
     await giftCardsPage.gridCanvas.locator("table tbody tr").count(),
     "There should be only one gift card visible on list",
