@@ -1,6 +1,6 @@
+import { Button as MacawButton, type ButtonTypeMap } from "@saleor/macaw-ui";
 import { isExternalURL } from "@dashboard/utils/urls";
 import { type OverridableComponent } from "@material-ui/core/OverridableComponent";
-import { Button as MacawButton, type ButtonTypeMap } from "@saleor/macaw-ui";
 import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 

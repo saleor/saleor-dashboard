@@ -1,8 +1,9 @@
+import { Button } from "@assets/components/ui/button";
 import { useUser } from "@dashboard/auth/useUser";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { productListUrl } from "@dashboard/products/urls";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -41,7 +42,7 @@ export const WelcomePageCreateProductButton = ({ onClick }: PrimaryActionProps) 
 
   return (
     <Link to={productListUrl()} onClick={onClick}>
-      <Button variant="primary">
+      <Button>
         <FormattedMessage defaultMessage="Go to all products" id="XZpRr8" description="btn label" />
       </Button>
     </Link>
