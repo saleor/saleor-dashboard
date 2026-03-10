@@ -1408,6 +1408,9 @@
     "context": "tax strategy combobox hint",
     "string": "Select the method of tax calculation"
   },
+  "6IteaF": {
+    "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
+  },
   "6J1m2c": {
     "string": "Create a Model"
   },
@@ -4172,9 +4175,6 @@
   "M6s/9e": {
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
-  },
-  "M8Lwgl": {
-    "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
   },
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
