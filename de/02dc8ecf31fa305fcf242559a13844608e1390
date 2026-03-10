@@ -1,0 +1,37 @@
+src/customers/components/CustomerDetails/CustomerDetails.test.ts
+  c65ec2b6355cce7f 1-27
+src/discounts/components/VoucherListDatagrid/datagrid.ts
+  c65ec2b6355cce7f 18-23,101,105
+src/orders/components/OrderDraftListDatagrid/datagrid.test.ts
+  c65ec2b6355cce7f 5,51,103-128
+src/orders/components/OrderDraftListDatagrid/datagrid.ts
+  c65ec2b6355cce7f 12-17,75
+src/hooks/useDateLocalize.ts
+  c65ec2b6355cce7f 6-18,22-29,31-32
+src/discounts/components/VoucherListDatagrid/datagrid.test.ts
+  c65ec2b6355cce7f 6,53-70,86,103
+src/customers/components/CustomerDetails/CustomerDetails.tsx
+  c65ec2b6355cce7f 31-37,75
+src/hooks/useDateLocalize.test.tsx
+  c65ec2b6355cce7f 41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "de02dc8ecf31fa305fcf242559a13844608e1390",
+  "prompts": {
+    "c65ec2b6355cce7f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "517657d6-41f2-418b-add4-85938c92cb5d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 144,
+      "total_deletions": 38,
+      "accepted_lines": 124,
+      "overriden_lines": 0
+    }
+  }
+}
