@@ -8,8 +8,13 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
+import {
+  PasswordLoginModeEnum,
+  type ShopErrorFragment,
+  type SiteSettingsQuery,
+} from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -42,6 +47,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
   preserveAllAddressFields: boolean;
+  passwordLoginMode: PasswordLoginModeEnum;
 }
 
 interface SiteSettingsPageProps {
@@ -96,6 +102,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
   };
 
   return (
@@ -202,6 +209,73 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                       >
                         <Text>{intl.formatMessage(messages.sectionEmailConfirmationHeader)}</Text>
                       </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionPasswordLoginHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <SimpleRadioGroupField
+                        name="passwordLoginMode"
+                        value={data.passwordLoginMode}
+                        onChange={change}
+                        choices={[
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(messages.passwordLoginEnabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(messages.passwordLoginEnabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.ENABLED,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>
+                                  {intl.formatMessage(messages.passwordLoginCustomersOnly)}
+                                </Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(
+                                    messages.passwordLoginCustomersOnlyDescription,
+                                  )}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.CUSTOMERS_ONLY,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(messages.passwordLoginDisabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(messages.passwordLoginDisabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.DISABLED,
+                          },
+                        ]}
+                      />
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>

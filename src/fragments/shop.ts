@@ -58,5 +58,6 @@ export const shopFragment = gql`
     enableAccountConfirmationByEmail
     useLegacyUpdateWebhookEmission
     preserveAllAddressFields
+    passwordLoginMode
   }
 `;
