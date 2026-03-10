@@ -1,5 +1,5 @@
 import { Alert, type AlertProps } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { sprinkles } from "@macaw-ui";
 import clsx from "clsx";
 
 type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;

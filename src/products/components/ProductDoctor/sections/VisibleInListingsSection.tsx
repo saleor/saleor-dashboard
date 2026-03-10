@@ -1,5 +1,5 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
-import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Text, Toggle } from "@macaw-ui";
 import { Eye } from "lucide-react";
 import { useIntl } from "react-intl";
 

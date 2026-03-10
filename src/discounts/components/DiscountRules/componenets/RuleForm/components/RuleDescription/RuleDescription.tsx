@@ -4,7 +4,7 @@ import { useDiscountRulesContext } from "@dashboard/discounts/components/Discoun
 import { type Rule } from "@dashboard/discounts/models";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 

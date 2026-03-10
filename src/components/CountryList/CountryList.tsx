@@ -6,7 +6,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { type CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import clsx from "clsx";
 import { ChevronDownIcon, Trash2 } from "lucide-react";
 import * as React from "react";

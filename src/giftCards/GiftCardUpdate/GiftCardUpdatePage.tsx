@@ -7,7 +7,7 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Divider } from "@macaw-ui";
 
 import { giftCardsListPath } from "../urls";
 import GiftCardHistory from "./GiftCardHistory/GiftCardHistory";

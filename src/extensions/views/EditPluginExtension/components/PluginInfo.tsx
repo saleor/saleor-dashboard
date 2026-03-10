@@ -4,7 +4,7 @@ import Hr from "@dashboard/components/Hr";
 import { PluginErrorCode } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
-import { Select } from "@saleor/macaw-ui-next";
+import { Select } from "@macaw-ui";
 import { useMemo } from "react";
 import { type ControllerRenderProps } from "react-hook-form";
 

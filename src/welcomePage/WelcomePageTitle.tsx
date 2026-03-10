@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { getUserName } from "@dashboard/misc";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 export const WelcomePageTitle = () => {

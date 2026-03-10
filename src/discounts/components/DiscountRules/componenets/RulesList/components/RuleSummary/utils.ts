@@ -4,7 +4,7 @@ import {
   stringToHue,
 } from "@dashboard/components/Datagrid/customCells/PillCell";
 import { isArrayOfOptions, type Rule } from "@dashboard/discounts/models";
-import { type DefaultTheme, type Option } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, type Option } from "@macaw-ui";
 
 import { type EnrichCondition } from "./components/RuleConditionsChips/useEnrichConditions";
 

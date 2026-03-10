@@ -22,7 +22,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getById, transformAddressToAddressInput } from "@dashboard/misc";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Divider, FormControlLabel } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 

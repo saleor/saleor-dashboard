@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { commonMessages } from "@dashboard/intl";
 import { DOCS_ULRS } from "@dashboard/links";
-import { Box, Button, Checkbox, Input, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Input, Paragraph, Text } from "@macaw-ui";
 import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
 import type React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -28,7 +28,7 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@macaw-ui";
 import { Package } from "lucide-react";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";

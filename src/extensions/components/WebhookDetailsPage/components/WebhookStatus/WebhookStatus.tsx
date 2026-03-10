@@ -1,4 +1,4 @@
-import { Toggle } from "@saleor/macaw-ui-next";
+import { Toggle } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { type WebhookFormData } from "../../WebhookDetailsPage";

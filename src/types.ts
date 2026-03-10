@@ -1,7 +1,7 @@
 import { type FetchResult, type MutationResult } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type UserPermissionFragment } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { type FilterElement, type IFilter } from "./components/Filter/types";
 

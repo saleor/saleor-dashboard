@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@macaw-ui";
 import { type ChangeEvent } from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -24,7 +24,7 @@ import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Divider } from "@macaw-ui";
 import { useContext } from "react";
 import { useIntl } from "react-intl";
 

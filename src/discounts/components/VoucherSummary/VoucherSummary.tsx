@@ -8,7 +8,7 @@ import Percent from "@dashboard/components/Percent";
 import { DiscountValueTypeEnum, type VoucherDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { type ChannelProps } from "@dashboard/types";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";

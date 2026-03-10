@@ -10,7 +10,7 @@ import { type TranslationField, TranslationFieldType } from "@dashboard/translat
 import { type ListProps } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import { Fragment, useState } from "react";

@@ -6,7 +6,7 @@ import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple, type RippleType } from "@dashboard/ripples/types";
-import { Box, Button, type ModalRootProps, Text, useTheme, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, type ModalRootProps, Text, useTheme, vars } from "@macaw-ui";
 import { ChevronRightIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import SVG from "react-inlinesvg";

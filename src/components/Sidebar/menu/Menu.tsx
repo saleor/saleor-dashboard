@@ -1,4 +1,4 @@
-import { Box, List } from "@saleor/macaw-ui-next";
+import { Box, List } from "@macaw-ui";
 
 import { Shortcusts } from "../shortcuts";
 import { useMenuStructure } from "./hooks/useMenuStructure";

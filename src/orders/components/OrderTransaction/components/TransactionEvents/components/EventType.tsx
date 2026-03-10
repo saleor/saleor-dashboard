@@ -2,7 +2,7 @@
 import { capitalize } from "@dashboard/misc";
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { type TransactionEventType } from "@dashboard/orders/types";
-import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@macaw-ui";
 import { Info } from "lucide-react";
 import { useIntl } from "react-intl";
 

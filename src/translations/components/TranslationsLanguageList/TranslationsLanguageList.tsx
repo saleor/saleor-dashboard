@@ -6,7 +6,7 @@ import { type LanguageFragment } from "@dashboard/graphql";
 import { languageEntitiesUrl } from "@dashboard/translations/urls";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { clsx } from "clsx";
 import { FormattedMessage } from "react-intl";
 

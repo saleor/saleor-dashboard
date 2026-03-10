@@ -1,6 +1,6 @@
 import { problemMessages } from "@dashboard/extensions/messages";
 import { type AppProblem } from "@dashboard/extensions/types";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@macaw-ui";
 import { Package, Radio } from "lucide-react";
 import { useIntl } from "react-intl";
 

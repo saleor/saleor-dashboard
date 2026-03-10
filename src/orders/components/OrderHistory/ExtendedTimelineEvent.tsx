@@ -5,7 +5,7 @@ import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { type TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { toActor } from "@dashboard/components/Timeline/utils";
 import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import camelCase from "lodash/camelCase";
 import { CheckIcon } from "lucide-react";
 import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";

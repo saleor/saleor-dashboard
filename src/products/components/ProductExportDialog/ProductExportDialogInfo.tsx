@@ -19,7 +19,7 @@ import { type FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
 import { Button, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
+import { type Option as MacawOptionType, Text } from "@macaw-ui";
 import { type PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

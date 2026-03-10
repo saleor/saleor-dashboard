@@ -1,5 +1,5 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 

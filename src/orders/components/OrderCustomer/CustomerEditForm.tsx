@@ -1,7 +1,7 @@
 import { type OrderDetailsFragment, type SearchCustomersQuery } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@macaw-ui";
 import type React from "react";
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";

@@ -4,7 +4,7 @@ import {
   Box,
   SearchInput as MacawSearchInput,
   type SearchInputProps as MacawSearchInputProps,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import * as React from "react";
 
 interface SearchInputProps extends SearchPageProps {

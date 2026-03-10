@@ -4,7 +4,7 @@ import { type AppErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Input } from "@saleor/macaw-ui-next";
+import { Input } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface CustomExtensionInfoProps {

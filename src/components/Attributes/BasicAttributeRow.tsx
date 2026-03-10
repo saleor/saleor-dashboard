@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text, Tooltip } from "@macaw-ui";
 import { Info } from "lucide-react";
 import type * as React from "react";
 

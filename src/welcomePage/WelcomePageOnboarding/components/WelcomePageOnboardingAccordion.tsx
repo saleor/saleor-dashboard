@@ -1,7 +1,7 @@
 import completedIcon from "@assets/images/completed.svg";
 import uncompletedIcon from "@assets/images/uncompleted.svg";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Accordion, Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Skeleton, Text } from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 import SVG from "react-inlinesvg";
 

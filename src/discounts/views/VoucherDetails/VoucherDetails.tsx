@@ -60,7 +60,7 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

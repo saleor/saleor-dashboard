@@ -23,7 +23,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { type FilterPageProps, type PageListProps, type SortPage } from "@dashboard/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";

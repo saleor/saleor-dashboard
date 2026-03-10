@@ -1,7 +1,7 @@
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { type OrderErrorFragment } from "@dashboard/graphql";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface AddressTextErrorProps {

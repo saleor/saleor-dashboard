@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { TRANSACTION_FLOW_STRATEGY_DOCS_URL } from "@dashboard/links";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";

@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Text } from "@macaw-ui";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, type IntlShape, useIntl } from "react-intl";
 

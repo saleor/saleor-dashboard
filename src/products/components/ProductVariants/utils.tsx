@@ -15,7 +15,7 @@ import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { type GridCell } from "@glideapps/glide-data-grid";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { type MutableRefObject } from "react";
 
 import {

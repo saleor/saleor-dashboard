@@ -3,7 +3,7 @@ import {
   prepareDatagridScroller,
 } from "@dashboard/components/Datagrid/testUtils";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";

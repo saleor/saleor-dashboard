@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { Search, X } from "lucide-react";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";

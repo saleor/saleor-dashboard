@@ -3,7 +3,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell, TableHead as MuiTableHead } from "@material-ui/core";
 import { type TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";

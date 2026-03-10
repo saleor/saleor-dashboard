@@ -1,4 +1,4 @@
-import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Text, type TextProps } from "@macaw-ui";
 import { Link, type LinkProps } from "react-router-dom";
 
 interface UnderlineLinkProps extends LinkProps {

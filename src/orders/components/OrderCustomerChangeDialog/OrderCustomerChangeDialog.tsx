@@ -2,7 +2,7 @@ import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderCustomerChangeForm, {

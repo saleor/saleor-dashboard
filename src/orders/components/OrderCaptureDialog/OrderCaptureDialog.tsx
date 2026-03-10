@@ -21,7 +21,7 @@ import {
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { getOrderTransactionErrorMessage } from "@dashboard/utils/errors/transaction";
 import { type IMoney } from "@dashboard/utils/intl";
-import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, RadioGroup, Text } from "@macaw-ui";
 import { AlertTriangle, Box as BoxIcon, CheckCircle2, CircleAlert, CreditCard } from "lucide-react";
 import { type ChangeEvent, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

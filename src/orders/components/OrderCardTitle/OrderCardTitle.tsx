@@ -1,7 +1,7 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { FormatDate } from "@dashboard/components/Date/FormatDate";
 import { type FulfillmentStatus } from "@dashboard/graphql";
-import { Box, Text, type vars } from "@saleor/macaw-ui-next";
+import { Box, Text, type vars } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { StatusIndicator } from "./StatusIndicator";

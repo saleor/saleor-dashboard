@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Select } from "@macaw-ui";
 import { X } from "lucide-react";
 
 import { getItemConstraint } from "./constrains";

@@ -8,7 +8,7 @@ import useForm from "@dashboard/hooks/useForm";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { type DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { Input, Text } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";

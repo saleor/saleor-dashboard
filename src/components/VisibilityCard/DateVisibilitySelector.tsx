@@ -1,6 +1,6 @@
 import closeIcon from "@assets/images/close-thin.svg";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import type * as React from "react";
 import { useState } from "react";
 

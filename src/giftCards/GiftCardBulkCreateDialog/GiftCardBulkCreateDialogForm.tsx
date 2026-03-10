@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import { Divider, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";

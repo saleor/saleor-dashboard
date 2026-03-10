@@ -12,7 +12,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, DynamicCombobox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, Text } from "@macaw-ui";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";

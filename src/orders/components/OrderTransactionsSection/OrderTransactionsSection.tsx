@@ -7,7 +7,7 @@ import {
 } from "@dashboard/graphql/types.generated";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 

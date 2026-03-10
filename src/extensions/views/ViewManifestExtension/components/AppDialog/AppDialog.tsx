@@ -1,5 +1,5 @@
 import { DashboardModal } from "@dashboard/components/Modal";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { type PropsWithChildren } from "react";
 
 interface AppDialogProps {

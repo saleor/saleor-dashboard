@@ -10,7 +10,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type DialogProps } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginSecretFieldDialogFormData {

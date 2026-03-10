@@ -1,5 +1,5 @@
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";

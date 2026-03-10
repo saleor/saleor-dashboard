@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Dropdown, List, Text } from "@macaw-ui";
 import { X } from "lucide-react";
 import { type MouseEvent } from "react";
 import * as React from "react";

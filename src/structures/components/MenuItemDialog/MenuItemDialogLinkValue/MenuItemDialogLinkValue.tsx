@@ -1,5 +1,5 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { DynamicCombobox } from "@saleor/macaw-ui-next";
+import { DynamicCombobox } from "@macaw-ui";
 import { type Control, Controller } from "react-hook-form";
 import { useIntl } from "react-intl";
 

@@ -5,7 +5,7 @@ import {
   FullscreenOnIcon,
   PlusIcon,
   Text,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {

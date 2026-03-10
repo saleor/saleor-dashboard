@@ -8,7 +8,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, RadioGroup, Text } from "@macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 import { useState } from "react";

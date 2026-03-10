@@ -3,7 +3,7 @@ import { type TransactionEventFragment, TransactionEventTypeEnum } from "@dashbo
 import { type TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, vars } from "@saleor/macaw-ui-next";
+import { Text, vars } from "@macaw-ui";
 import clsx from "clsx";
 
 import { mapTransactionEvent } from "../../../utils";

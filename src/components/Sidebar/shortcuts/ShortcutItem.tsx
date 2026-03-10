@@ -1,4 +1,4 @@
-import { Box, List } from "@saleor/macaw-ui-next";
+import { Box, List } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 interface ChildrenProps {

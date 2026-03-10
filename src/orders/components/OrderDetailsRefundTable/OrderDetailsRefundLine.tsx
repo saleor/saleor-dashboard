@@ -9,7 +9,7 @@ import {
   type OrderRefundDisplay,
   OrderRefundsViewModel,
 } from "@dashboard/orders/utils/OrderRefundsViewModel";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@macaw-ui";
 import { Pencil } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

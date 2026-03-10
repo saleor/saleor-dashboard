@@ -1,4 +1,4 @@
-import { Box, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Tooltip } from "@macaw-ui";
 
 interface TooltipContainerProps {
   clearTooltip: () => void;

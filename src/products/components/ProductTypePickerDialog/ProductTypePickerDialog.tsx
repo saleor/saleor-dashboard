@@ -4,7 +4,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { type FetchMoreProps } from "@dashboard/types";
-import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

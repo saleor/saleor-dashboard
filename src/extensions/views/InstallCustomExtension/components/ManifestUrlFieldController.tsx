@@ -1,5 +1,5 @@
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { type ComponentProps } from "react";
 import { type FieldValues, useController, type UseControllerProps } from "react-hook-form";
 

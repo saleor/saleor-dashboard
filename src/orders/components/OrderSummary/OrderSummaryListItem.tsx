@@ -1,4 +1,4 @@
-import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";

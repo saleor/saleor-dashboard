@@ -1,5 +1,5 @@
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 

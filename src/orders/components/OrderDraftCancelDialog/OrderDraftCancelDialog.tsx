@@ -4,7 +4,7 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { type OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderDraftCancelDialogProps {

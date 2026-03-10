@@ -14,7 +14,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TableBody, TableCell } from "@material-ui/core";
-import { Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Input, Skeleton, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

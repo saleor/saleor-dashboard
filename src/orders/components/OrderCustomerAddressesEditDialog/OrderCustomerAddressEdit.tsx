@@ -12,7 +12,7 @@ import {
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import { Box, type Option, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, type Option, Skeleton } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

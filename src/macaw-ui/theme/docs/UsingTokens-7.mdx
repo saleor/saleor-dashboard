@@ -1,0 +1,86 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Getting started / Using tokens" />
+
+# Using tokens
+
+MacawUI is implemented by using the concept of design tokens.
+Each token holds the value of a given CSS property (or group of properties),
+and it's delivered as a CSS variable in the runtime.
+
+#### Token example
+
+An example of a token can be `color` or `font-size`. Having these defined as variables:
+
+```css
+--mu-font-size-title-medium: 10px;
+--mu-colors-foreground-text-critical-default: red;
+--mu-colors-foreground-text-neutral-defailt: white;
+```
+
+We can create many variations of our text. Please notice that name of the tokens represents some of the intentions.
+
+```css
+.text-error {
+  color: var(--mu-colors-foreground-text-critical-default)
+  font-size: var(--mu-font-size-title-medium)
+}
+
+.text-neutral {
+  color: var(--mu-colors-foreground-text-neutral-defailt)
+  font-size: var(--mu-font-size-title-medium)
+}
+
+<div class="text-error">Neutarl text</div>
+<div class="text-neutral">Errored text</div>
+```
+
+#### Theming
+
+Now imagine, you need now create a different theme, that is a bit more contrasted and has a bigger font.
+To do that you need to create another set of variables, the same as the previous one but with updated values:
+
+```css
+--mu-font-size-title-medium: 15px; // bigger now
+--mu-colors-foreground-text-critical-default: red;
+--mu-colors-foreground-text-neutral-defailt: black; // new color
+```
+
+How about keeping these two variations of your values and toggling them within the runtime? This is exactly what MacawUI is doing for you.
+
+#### MacawUI contract
+
+MacawUI provides you with a set of design tokens, which you can reference in your code, that are swappable within the runtime.
+Currently, we support only two themes "defaultDark" and "defaultLight". Each implements the same token contract but delivers a different set of values.
+Switching the theme means changing one set of tokens to another.
+
+#### Building components and using tokens
+
+The most primitive element in MacawUI is the component `Box`.
+This is a sort of wrapper for any HTML element where by using its props,
+you can style it against our tokens.
+
+```tsx
+import { Box } from "@saleor/macaw-ui/next";
+
+<Box as="div" fontSize="body" paddingX={2}>
+  This is div!
+</Box>;
+```
+
+Each property is type-checked against out design token contract. Your editor will show you suggestions when you type certain properties. Every component in MacawUI is built on top of this abstraction.
+
+#### Enforcing custom values
+
+We understand that sometimes there is a need to force using some custom-defined values.
+You can achieve that by adding a double underscore to the `Box` properties.
+
+```tsx
+import { Box } from "@saleor/macaw-ui/next";
+
+<Box as="div" __fontSize="30px">
+  This is bigger!
+</Box>;
+```
+
+Even if this is possible, please use it wisely as when you force locally some of the values, they will no longer be related to our tokens.

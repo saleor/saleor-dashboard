@@ -15,7 +15,7 @@ import {
   RadioGroup,
   Typography,
 } from "@material-ui/core";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type TaxConfigurationFormData } from "../TaxChannelsPage";

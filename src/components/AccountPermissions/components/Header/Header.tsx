@@ -1,4 +1,4 @@
-import { Box, Checkbox, type CheckedState, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type CheckedState, Text } from "@macaw-ui";
 
 interface HeaderProps {
   description: string;

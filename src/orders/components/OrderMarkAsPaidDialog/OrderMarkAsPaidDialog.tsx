@@ -4,7 +4,7 @@ import { type OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

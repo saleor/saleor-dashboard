@@ -3,7 +3,7 @@ import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneFie
 import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Checkbox, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text, Toggle } from "@macaw-ui";
 import { AlertTriangle, Clock, Eye, EyeOff } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";

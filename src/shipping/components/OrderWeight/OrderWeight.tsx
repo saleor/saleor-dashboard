@@ -8,7 +8,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { InputAdornment, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";

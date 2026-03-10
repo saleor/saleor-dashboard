@@ -9,7 +9,7 @@ import {
   type OrderDetailsFragment,
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { DataLine } from "./components/DataLine";

@@ -1,4 +1,4 @@
-import { Button, type ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
+import { Button, type ButtonProps, Tooltip } from "@macaw-ui";
 import type * as React from "react";
 
 interface ButtonWithTooltipProps extends ButtonProps {

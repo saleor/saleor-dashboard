@@ -5,7 +5,7 @@ import {
   type PermissionGroupDetailsFragment,
   type UserFragment,
 } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import difference from "lodash/difference";
 
 import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";

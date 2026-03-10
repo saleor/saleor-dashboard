@@ -2,7 +2,7 @@ import { Select } from "@dashboard/components/Select";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface TransactionSelectorProps {

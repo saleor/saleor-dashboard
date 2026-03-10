@@ -37,7 +37,7 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
 import { useIntl } from "react-intl";

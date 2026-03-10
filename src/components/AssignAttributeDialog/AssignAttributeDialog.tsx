@@ -17,7 +17,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";

@@ -1,5 +1,5 @@
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { useCatalogConditionNames } from "./useCatalogConditionNames";
 import { useOrderConditionNames } from "./useOrderConditionNames";

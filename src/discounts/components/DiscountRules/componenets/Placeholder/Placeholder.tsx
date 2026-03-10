@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 

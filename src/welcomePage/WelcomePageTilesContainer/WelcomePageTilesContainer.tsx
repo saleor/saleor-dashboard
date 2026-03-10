@@ -1,5 +1,5 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { getTilesData } from "./tileData";

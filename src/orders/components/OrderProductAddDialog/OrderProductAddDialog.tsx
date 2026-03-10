@@ -21,7 +21,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

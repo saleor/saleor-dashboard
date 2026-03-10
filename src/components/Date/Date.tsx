@@ -1,6 +1,6 @@
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@macaw-ui";
 import moment from "moment-timezone";
 
 import { LocaleConsumer } from "../Locale";

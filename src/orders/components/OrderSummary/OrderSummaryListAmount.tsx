@@ -1,4 +1,4 @@
-import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Text, type TextProps } from "@macaw-ui";
 import { type CSSProperties } from "react";
 import { useIntl } from "react-intl";
 

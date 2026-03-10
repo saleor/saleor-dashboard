@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@macaw-ui";
 
 import { RuleListContainer } from "../RuleListContainer";
 import { RuleWrapper } from "../RuleWrapper";

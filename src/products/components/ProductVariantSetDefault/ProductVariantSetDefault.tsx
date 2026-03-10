@@ -1,4 +1,4 @@
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface ProductVariantSetDefaultProps {

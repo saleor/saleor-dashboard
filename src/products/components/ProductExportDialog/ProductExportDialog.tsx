@@ -22,7 +22,7 @@ import { type DialogProps, type FetchMoreProps, type RelayToFlat } from "@dashbo
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

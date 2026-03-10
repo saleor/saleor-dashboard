@@ -1,5 +1,5 @@
 import { warehouseUrl } from "@dashboard/warehouses/urls";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { orderTitleMessages } from "./messages";

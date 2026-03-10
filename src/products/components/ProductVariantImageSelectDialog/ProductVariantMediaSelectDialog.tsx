@@ -4,7 +4,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 

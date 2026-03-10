@@ -13,7 +13,7 @@ import { type RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { type FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderDraftListHeaderProps extends FilterPresetsProps {

@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, RadioGroup, Text } from "@macaw-ui";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

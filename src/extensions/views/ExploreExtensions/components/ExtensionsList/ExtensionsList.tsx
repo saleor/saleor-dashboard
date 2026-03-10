@@ -1,6 +1,6 @@
 import { EmptySearchList } from "@dashboard/extensions/components/EmptyListState/EmptySearchList";
 import { type ExtensionsGroups } from "@dashboard/extensions/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { ExtensionItem } from "../ExtenionItem/ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";

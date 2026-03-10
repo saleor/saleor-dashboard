@@ -5,7 +5,7 @@ import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Divider, Input, Text } from "@saleor/macaw-ui-next";
+import { Divider, Input, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

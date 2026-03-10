@@ -5,7 +5,7 @@ import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { type FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DynamicCombobox } from "@saleor/macaw-ui-next";
+import { DynamicCombobox } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface ShippingMethodTaxesProps {

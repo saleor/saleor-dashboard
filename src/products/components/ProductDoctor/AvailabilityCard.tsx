@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@macaw-ui";
 import { CheckCircle, ChevronLeft, ChevronRight, Info, Search, X, XCircle } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

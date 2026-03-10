@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { Search, X } from "lucide-react";
 import { useRef } from "react";
 

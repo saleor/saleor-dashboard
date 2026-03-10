@@ -1,7 +1,7 @@
 import type { UserContext as UserContextType } from "@dashboard/auth/types";
 import { UserContext } from "@dashboard/auth/useUser";
 import type { UserFragment } from "@dashboard/graphql";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentType } from "react";
 import { fn } from "storybook/test";

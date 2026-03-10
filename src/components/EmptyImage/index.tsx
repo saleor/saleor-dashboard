@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 
 export const EmptyImage = () => {
   const { theme } = useTheme();

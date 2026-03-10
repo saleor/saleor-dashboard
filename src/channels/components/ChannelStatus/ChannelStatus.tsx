@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ChannelStatusProps {

@@ -21,7 +21,7 @@ import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -7,7 +7,7 @@ import { type AccountErrorCode } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Paragraph, Text } from "@macaw-ui";
 import { ArrowLeft } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

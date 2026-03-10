@@ -2,7 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import Form from "@dashboard/components/Form";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";

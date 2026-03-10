@@ -1,7 +1,7 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardTypeEnum } from "@dashboard/graphql";
-import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Text } from "@macaw-ui";
 import type * as React from "react";
 import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";

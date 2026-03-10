@@ -1,6 +1,6 @@
 import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import { MANUAL_REFUND_DOCS_URL } from "@dashboard/links";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";

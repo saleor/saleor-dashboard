@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type ChannelFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";

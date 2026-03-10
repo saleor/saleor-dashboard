@@ -4,7 +4,7 @@ import { type MeasurementUnitsEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type Option, Text } from "@macaw-ui";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

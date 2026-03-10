@@ -18,7 +18,7 @@ import {
   type Option,
   Spinner,
   Text,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

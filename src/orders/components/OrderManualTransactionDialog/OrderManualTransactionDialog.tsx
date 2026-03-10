@@ -2,7 +2,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { commonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {

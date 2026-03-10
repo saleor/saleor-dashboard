@@ -16,7 +16,7 @@ import {
   type SearchPageProps,
   type UserPermissionProps,
 } from "@dashboard/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";

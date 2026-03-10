@@ -8,7 +8,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@macaw-ui";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

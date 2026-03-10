@@ -1,6 +1,6 @@
 import { type Theme } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
-import { useTheme, vars } from "@saleor/macaw-ui-next";
+import { useTheme, vars } from "@macaw-ui";
 import { useMemo } from "react";
 
 import { rightColumnBoxShadow } from "./ColumnPicker/utils";

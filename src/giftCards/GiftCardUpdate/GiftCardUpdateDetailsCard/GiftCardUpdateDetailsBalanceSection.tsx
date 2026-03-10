@@ -2,7 +2,7 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import clsx from "clsx";
 import { useIntl } from "react-intl";
 

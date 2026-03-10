@@ -11,7 +11,7 @@ import {
   GridCellKind,
   type TextCell,
 } from "@glideapps/glide-data-grid";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { type DropdownCell, type DropdownCellProps } from "./DropdownCell";
 import { type MoneyCell, type MoneyDiscuntedCell } from "./Money";

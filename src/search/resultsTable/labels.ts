@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import { getStatusColor, transformChargedStatus, transformPaymentStatus } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type DefaultTheme } from "@macaw-ui";
 import { type IntlShape } from "react-intl";
 
 export const getPaymentLabel = (

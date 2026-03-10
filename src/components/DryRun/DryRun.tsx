@@ -13,7 +13,7 @@ import {
   ListItem,
   ListItemCell,
 } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 

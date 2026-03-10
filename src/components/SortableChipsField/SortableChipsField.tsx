@@ -11,7 +11,7 @@ import {
 } from "@dnd-kit/core";
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";

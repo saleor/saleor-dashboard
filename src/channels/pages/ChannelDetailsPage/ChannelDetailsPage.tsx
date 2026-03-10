@@ -35,7 +35,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -28,7 +28,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import isEqual from "lodash/isEqual";
 import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

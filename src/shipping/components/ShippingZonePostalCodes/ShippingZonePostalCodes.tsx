@@ -11,7 +11,7 @@ import {
 } from "@dashboard/graphql";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@macaw-ui";
 import clsx from "clsx";
 import { ChevronDown, Trash2 } from "lucide-react";
 import * as React from "react";

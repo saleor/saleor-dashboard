@@ -5,7 +5,7 @@ import { Hr } from "@dashboard/components/Hr";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

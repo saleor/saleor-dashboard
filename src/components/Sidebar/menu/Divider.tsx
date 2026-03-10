@@ -1,4 +1,4 @@
-import { List, Text } from "@saleor/macaw-ui-next";
+import { List, Text } from "@macaw-ui";
 
 import { type SidebarMenuItem } from "./types";
 

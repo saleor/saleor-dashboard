@@ -1,6 +1,6 @@
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";
 

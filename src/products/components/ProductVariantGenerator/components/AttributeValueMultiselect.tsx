@@ -1,5 +1,5 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, DynamicMultiselect, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicMultiselect, type Option, Text } from "@macaw-ui";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

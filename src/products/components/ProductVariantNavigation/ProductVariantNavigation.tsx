@@ -6,7 +6,7 @@ import { productVariantAddUrl } from "@dashboard/products/urls";
 import { type ReorderAction } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@macaw-ui";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

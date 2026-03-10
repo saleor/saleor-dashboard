@@ -1,5 +1,5 @@
 import { type TransactionItemFragment } from "@dashboard/graphql";
-import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, RadioGroup, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { transactionRefundTilesMessages } from "./messages";

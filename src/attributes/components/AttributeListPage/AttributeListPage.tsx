@@ -8,7 +8,7 @@ import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

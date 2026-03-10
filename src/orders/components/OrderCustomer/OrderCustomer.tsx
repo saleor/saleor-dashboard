@@ -16,7 +16,7 @@ import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, sprinkles, Text } from "@macaw-ui";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -6,7 +6,7 @@ import {
 import { type FilterElement, type FilterElementRegular } from "@dashboard/components/Filter/types";
 import { type CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import {
   createFilterTabUtils,

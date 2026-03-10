@@ -1,6 +1,6 @@
 import { FieldType, type FilterElementGeneric } from "@dashboard/components/Filter/types";
 import { type MinMax } from "@dashboard/types";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 export function createDateField<K extends string>(
   name: K,

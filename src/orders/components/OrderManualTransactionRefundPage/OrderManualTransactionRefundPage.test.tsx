@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";

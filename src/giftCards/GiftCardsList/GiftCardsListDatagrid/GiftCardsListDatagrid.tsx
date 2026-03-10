@@ -12,7 +12,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
 import { type Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@macaw-ui";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";

@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 const OrderCannotCancelOrderDialog = ({ open, onClose }: DialogProps) => {

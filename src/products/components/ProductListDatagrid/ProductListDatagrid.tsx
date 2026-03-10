@@ -30,7 +30,7 @@ import {
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Item } from "@glideapps/glide-data-grid";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";

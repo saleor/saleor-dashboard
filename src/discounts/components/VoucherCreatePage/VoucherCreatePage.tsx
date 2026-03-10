@@ -51,7 +51,7 @@ import { validatePrice } from "@dashboard/products/utils/validation";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";

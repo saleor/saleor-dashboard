@@ -1,4 +1,4 @@
-import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Text, type TextProps } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 export interface TitleProps extends TextProps {

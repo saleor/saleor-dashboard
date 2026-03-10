@@ -14,7 +14,7 @@ import {
 } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
-import { sprinkles, Text } from "@saleor/macaw-ui-next";
+import { sprinkles, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";

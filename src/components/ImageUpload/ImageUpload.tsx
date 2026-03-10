@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import { Text, vars } from "@saleor/macaw-ui-next";
+import { Text, vars } from "@macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";

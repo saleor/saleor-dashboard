@@ -2,7 +2,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type TransactionActionEnum } from "@dashboard/graphql";
 import { type TransactionFakeEvent } from "@dashboard/orders/types";
-import { Accordion, Box } from "@saleor/macaw-ui-next";
+import { Accordion, Box } from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";

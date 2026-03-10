@@ -7,7 +7,7 @@ import {
   PaginationRowNumberSelect,
   type PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type * as React from "react";
 import { useIntl } from "react-intl";

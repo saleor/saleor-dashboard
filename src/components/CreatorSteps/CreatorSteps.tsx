@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import clsx from "clsx";
 
 export interface Step<T> {

@@ -10,7 +10,7 @@ import { type WarehouseFragment } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import { type Option, sprinkles } from "@saleor/macaw-ui-next";
+import { type Option, sprinkles } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

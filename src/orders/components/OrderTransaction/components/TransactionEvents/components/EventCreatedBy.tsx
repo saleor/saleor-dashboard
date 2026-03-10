@@ -3,7 +3,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { type AppAvatarFragment, type StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { Link } from "react-router-dom";
 
 interface EventCreatedByProps {

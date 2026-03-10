@@ -1,5 +1,5 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { AlertTriangle, CircleAlert } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";

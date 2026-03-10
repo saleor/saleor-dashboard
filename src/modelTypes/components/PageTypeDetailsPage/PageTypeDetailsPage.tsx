@@ -20,7 +20,7 @@ import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";

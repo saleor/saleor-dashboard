@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { type TableCellProps } from "@material-ui/core/TableCell";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { vars } from "@macaw-ui";
 import clsx from "clsx";
 import { forwardRef } from "react";
 

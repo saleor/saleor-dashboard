@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { Box, Spinner } from "@saleor/macaw-ui-next";
+import { Box, Spinner } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";

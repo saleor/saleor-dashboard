@@ -1,5 +1,5 @@
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Text, Tooltip } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 

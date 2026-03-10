@@ -6,7 +6,7 @@ import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
 import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@dashboard/utils/maps";
-import { Box, type Option } from "@saleor/macaw-ui-next";
+import { Box, type Option } from "@macaw-ui";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
 import { useIntl } from "react-intl";

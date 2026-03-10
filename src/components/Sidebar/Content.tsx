@@ -1,6 +1,6 @@
 import { AllRipplesModal } from "@dashboard/ripples/components/AllRipplesModal";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { Menu } from "./menu";
 import { MountingPoint } from "./MountingPoint";

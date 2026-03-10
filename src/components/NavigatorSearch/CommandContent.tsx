@@ -1,6 +1,6 @@
 import Link from "@dashboard/components/Link";
 import { globalSearchUrl } from "@dashboard/search/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 

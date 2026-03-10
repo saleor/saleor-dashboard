@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { RetryIcon } from "@dashboard/icons/RetryIcon";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { useIntl } from "react-intl";
 

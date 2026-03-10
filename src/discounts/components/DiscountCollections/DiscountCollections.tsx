@@ -14,7 +14,7 @@ import { renderCollection } from "@dashboard/misc";
 import { type ListActions, type ListProps } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

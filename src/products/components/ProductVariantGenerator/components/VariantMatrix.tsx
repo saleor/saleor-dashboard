@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 

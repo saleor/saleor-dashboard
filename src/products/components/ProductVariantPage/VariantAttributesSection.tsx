@@ -13,7 +13,7 @@ import {
   type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@macaw-ui";
 import { CircleHelp } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";

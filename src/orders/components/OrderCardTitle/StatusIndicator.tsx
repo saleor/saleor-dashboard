@@ -1,6 +1,6 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 

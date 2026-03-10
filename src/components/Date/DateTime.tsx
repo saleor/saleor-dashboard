@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@macaw-ui";
 import moment from "moment-timezone";
 import ReactMoment from "react-moment";
 

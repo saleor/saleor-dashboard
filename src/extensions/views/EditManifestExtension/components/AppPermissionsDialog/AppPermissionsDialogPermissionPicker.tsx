@@ -2,7 +2,7 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type PermissionEnum } from "@dashboard/graphql";
-import { Box, Checkbox, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, List, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { AppPermissionsDialogMessages } from "./messages";

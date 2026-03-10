@@ -1,6 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type LanguageFragment } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import TranslationsLanguageList from "../TranslationsLanguageList";

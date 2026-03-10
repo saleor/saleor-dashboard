@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* 
+ * Macaw-UI Tailwind Theme 
+ * This file replaces the vanilla-extract styles
+ */
+
+/* Custom theme tokens that map to macaw-ui design tokens */
+@theme {
+  /* Colors - mapped from macaw-ui theme contract */
+  --color-macaw-primary: oklch(0.55 0.22 260);
+  --color-macaw-primary-hover: oklch(0.5 0.22 260);
+  --color-macaw-secondary: oklch(0.6 0.18 260);
+  
+  /* Spacing - mapped from macaw-ui sprinkles */
+  --spacing-macaw-0: 0px;
+  --spacing-macaw-1: 4px;
+  --spacing-macaw-2: 8px;
+  --spacing-macaw-3: 12px;
+  --spacing-macaw-4: 16px;
+  --spacing-macaw-5: 20px;
+  --spacing-macaw-6: 24px;
+  --spacing-macaw-7: 28px;
+  --spacing-macaw-8: 32px;
+  
+  /* Border radius */
+  --radius-macaw-small: 4px;
+  --radius-macaw-medium: 8px;
+  --radius-macaw-large: 12px;
+  
+  /* Font sizes */
+  --font-size-macaw-small: 12px;
+  --font-size-macaw-medium: 14px;
+  --font-size-macaw-large: 16px;
+  --font-size-macaw-xl: 20px;
+}

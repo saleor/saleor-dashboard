@@ -10,7 +10,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

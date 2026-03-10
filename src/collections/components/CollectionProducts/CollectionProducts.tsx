@@ -29,7 +29,7 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import { type Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

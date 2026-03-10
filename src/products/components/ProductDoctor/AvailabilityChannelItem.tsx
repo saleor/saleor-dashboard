@@ -1,7 +1,7 @@
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@macaw-ui";
 import { AlertTriangle, ChevronDown, CircleAlert, Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";

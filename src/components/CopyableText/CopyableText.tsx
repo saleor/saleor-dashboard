@@ -1,6 +1,6 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@macaw-ui";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
 import { useIntl } from "react-intl";

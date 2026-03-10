@@ -4,7 +4,7 @@ import { formatPercantage } from "@dashboard/components/Percent/utils";
 import { type Rule } from "@dashboard/discounts/models";
 import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { Chip } from "@saleor/macaw-ui-next";
+import { Chip } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface RuleValueChipsProps {

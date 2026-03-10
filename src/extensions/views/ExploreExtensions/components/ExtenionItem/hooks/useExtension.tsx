@@ -1,6 +1,6 @@
 import { messages } from "@dashboard/extensions/messages";
 import { type ExtensionData } from "@dashboard/extensions/types";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { AppActions } from "../components/AppActions/AppActions";

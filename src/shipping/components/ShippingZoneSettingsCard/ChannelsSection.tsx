@@ -4,7 +4,7 @@ import { type ChannelFragment } from "@dashboard/graphql";
 import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({

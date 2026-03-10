@@ -3,7 +3,7 @@ import sideBarDefaultLogo from "@assets/images/sidebar-default-logo.png";
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useLegacyThemeHandler } from "@dashboard/components/Sidebar/user/Controls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Avatar, Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Avatar, Box, Text, Tooltip } from "@macaw-ui";
 import { CloudIcon } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";

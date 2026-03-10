@@ -3,7 +3,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Text, Textarea, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text, Textarea, vars } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

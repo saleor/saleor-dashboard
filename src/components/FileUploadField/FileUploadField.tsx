@@ -2,7 +2,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";

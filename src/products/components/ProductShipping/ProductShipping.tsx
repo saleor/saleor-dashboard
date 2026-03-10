@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type ProductErrorFragment } from "@dashboard/graphql";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

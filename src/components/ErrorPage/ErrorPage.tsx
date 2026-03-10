@@ -2,7 +2,7 @@
 import notFoundImage from "@assets/images/what.svg";
 import useAppState from "@dashboard/hooks/useAppState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@macaw-ui";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 

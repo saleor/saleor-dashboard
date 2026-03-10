@@ -1,7 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
-import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@macaw-ui";
 
 interface RefundTableProductCellProps {
   line: OrderDetailsGrantRefundFragment["lines"][number];

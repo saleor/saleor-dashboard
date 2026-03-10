@@ -13,7 +13,7 @@ import { renderCollection } from "@dashboard/misc";
 import { type ListActions, type ListProps, type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

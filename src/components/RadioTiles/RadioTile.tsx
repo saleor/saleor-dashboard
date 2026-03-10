@@ -1,5 +1,5 @@
 import * as RadixRadioGroup from "@radix-ui/react-radio-group";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useState } from "react";
 
 import { RadioTileIndicator } from "./RadioTileIndicator";

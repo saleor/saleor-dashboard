@@ -6,7 +6,7 @@ import { type OrderSettingsFragment, type ShopOrderSettingsFragment } from "@das
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";

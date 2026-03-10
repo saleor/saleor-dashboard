@@ -7,7 +7,7 @@ import { sectionNames } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Box, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { Box, Paragraph, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

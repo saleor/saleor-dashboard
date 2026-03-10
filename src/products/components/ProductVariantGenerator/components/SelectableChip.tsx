@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 import clsx from "clsx";
 import { Check } from "lucide-react";
 import { useMemo, useState } from "react";

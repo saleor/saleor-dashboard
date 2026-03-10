@@ -1,4 +1,4 @@
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { CheckIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 

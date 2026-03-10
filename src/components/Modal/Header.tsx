@@ -1,5 +1,5 @@
 import { useModalContext } from "@dashboard/components/Modal/context";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 import { Close } from "./Close";

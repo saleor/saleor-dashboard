@@ -14,7 +14,7 @@ import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/g
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, sprinkles } from "@macaw-ui";
 import { ExternalLink, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";

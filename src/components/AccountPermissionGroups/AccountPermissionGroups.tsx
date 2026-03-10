@@ -4,7 +4,7 @@ import { type FormChange } from "@dashboard/hooks/useForm";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { type Option, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { Multiselect } from "../Combobox";

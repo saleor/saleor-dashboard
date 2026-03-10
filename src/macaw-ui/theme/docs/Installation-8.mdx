@@ -1,0 +1,46 @@
+import { Meta, Source } from "@storybook/blocks";
+
+<Meta title="Getting started / Installation" />
+
+# Installation
+
+### 1. Install package
+
+<Source
+  code={`
+npm i @saleor/macaw-ui
+`}
+/>
+
+Currently, Macaw UI is being provided in two versions.
+First, the legacy one is available by the import of `@saleor/macaw-ui`,
+and new implementation (which this documentation is about) that is present in `@saleor/macaw-ui/next`.
+
+### 2. Add theme provider
+
+<Source code={`
+import "@saleor/macaw-ui/next/style";
+import { ThemeProvider } from "@saleor/macaw-ui/next";
+
+<ThemeProvider defaultTheme="defaultLight">
+  <YourApp />
+</ThemeProvider>
+`} />
+
+### 3. Toggle theme
+
+<Source code={`
+import { useTheme } from "@saleor/macaw-ui/next";
+
+const { setTheme } = useTheme()
+
+setTheme("defaultDark")
+`} />
+
+### 4. Use
+
+<Source code={`
+import { Text } from "@saleor/macaw-ui/next";
+
+<Text variant="caption">Macaw UI</Text>
+`} />

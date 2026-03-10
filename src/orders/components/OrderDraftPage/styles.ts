@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { vars } from "@macaw-ui";
 
 export const useAlertStyles = makeStyles(
   theme => ({

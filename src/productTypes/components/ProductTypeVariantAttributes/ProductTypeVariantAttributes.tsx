@@ -13,7 +13,7 @@ import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Tooltip } from "@macaw-ui";
 import capitalize from "lodash/capitalize";
 import { CircleQuestionMark, Trash2 } from "lucide-react";
 import { useEffect } from "react";

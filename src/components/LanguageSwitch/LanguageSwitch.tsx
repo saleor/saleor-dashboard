@@ -1,6 +1,6 @@
 import { type LanguageCodeEnum, type LanguageFragment } from "@dashboard/graphql";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Combobox, type ComboboxProps } from "@saleor/macaw-ui-next";
+import { Combobox, type ComboboxProps } from "@macaw-ui";
 
 type BaseComboboxProps = ComboboxProps<
   { value: LanguageCodeEnum; label: string },

@@ -17,7 +17,7 @@ import { pageCreateUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Combobox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Skeleton, Text } from "@macaw-ui";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";

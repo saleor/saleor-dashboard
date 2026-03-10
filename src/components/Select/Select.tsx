@@ -3,7 +3,7 @@ import {
   type Option,
   Select as SelectComponent,
   type SelectProps as SelectComponentProps,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 
 interface SelectProps<T, V> extends Omit<SelectComponentProps<T, V>, "onChange"> {
   onChange: (event: ChangeEvent) => void;

@@ -11,7 +11,7 @@ import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHist
 import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@dashboard/products/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { type MessageDescriptor, useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";

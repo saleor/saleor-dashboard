@@ -11,7 +11,7 @@ import {
 } from "@dashboard/orders/utils/data";
 import { TableCell, TextField } from "@material-ui/core";
 import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, Tooltip } from "@macaw-ui";
 import clsx from "clsx";
 import { useIntl } from "react-intl";
 

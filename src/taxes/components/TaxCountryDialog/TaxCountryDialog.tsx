@@ -7,7 +7,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
 import { SearchIcon } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

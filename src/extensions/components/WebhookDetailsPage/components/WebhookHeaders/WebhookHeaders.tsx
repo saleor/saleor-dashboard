@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableCell, TableHead } from "@material-ui/core";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@macaw-ui";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";

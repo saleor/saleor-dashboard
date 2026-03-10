@@ -9,7 +9,7 @@ import { type InvoiceErrorFragment, type InvoiceFragment } from "@dashboard/grap
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
 import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderInvoiceEmailSendDialogProps extends DialogProps {

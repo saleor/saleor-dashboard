@@ -7,7 +7,7 @@ import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGener
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@macaw-ui";
 import { CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

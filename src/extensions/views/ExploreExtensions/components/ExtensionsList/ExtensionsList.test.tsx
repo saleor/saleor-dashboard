@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 
 import { ExtensionsList } from "./ExtensionsList";
 
-jest.mock("@saleor/macaw-ui-next", () => ({
-  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
+jest.mock("@macaw-ui", () => ({
+  ...(jest.requireActual("@macaw-ui") as object),
   useTheme: () => ({ theme: "default" }),
 }));
 

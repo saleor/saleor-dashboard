@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type * as React from "react";
@@ -30,8 +30,8 @@ class ResizeObserverMock {
 
 global.ResizeObserver = ResizeObserverMock;
 
-jest.mock("@saleor/macaw-ui-next", () => ({
-  ...(jest.requireActual("@saleor/macaw-ui-next") as object),
+jest.mock("@macaw-ui", () => ({
+  ...(jest.requireActual("@macaw-ui") as object),
   useTheme: () => ({ theme: "default" }),
 }));
 

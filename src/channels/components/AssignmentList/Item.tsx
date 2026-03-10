@@ -1,5 +1,5 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
-import { Divider, Text } from "@saleor/macaw-ui-next";
+import { Divider, Text } from "@macaw-ui";
 import { SortableElement, type SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";

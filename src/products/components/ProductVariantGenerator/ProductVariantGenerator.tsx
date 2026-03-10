@@ -11,7 +11,7 @@ import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { useWarehouseListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@macaw-ui";
 import { LayoutGrid, List } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

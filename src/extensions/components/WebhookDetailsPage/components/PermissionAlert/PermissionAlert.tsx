@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { Alert } from "@saleor/macaw-ui";
-import { Box, Chip, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, Text } from "@macaw-ui";
 import { getIntrospectionQuery } from "graphql";
 import { useIntl } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 

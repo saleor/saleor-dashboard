@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
 import { type CategoryDetailsQuery } from "@dashboard/graphql";
 import { type ListProps, type ListViews, type RelayToFlat } from "@dashboard/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";

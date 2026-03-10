@@ -1,5 +1,5 @@
 import { isArrayOfOptions, type Rule } from "@dashboard/discounts/models";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 export const getCurrentConditionsValuesLabels = (rule: Rule[]) => {
   return rule

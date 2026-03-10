@@ -5,7 +5,7 @@ import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvata
 import { messages, problemMessages } from "@dashboard/extensions/messages";
 import { type InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text } from "@macaw-ui";
 import { CircleAlert } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

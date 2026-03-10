@@ -13,7 +13,7 @@ import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
+import { Checkbox, Skeleton } from "@macaw-ui";
 import { type CSSProperties } from "react";
 import { FormattedMessage } from "react-intl";
 

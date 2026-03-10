@@ -1,5 +1,5 @@
 import { fixedForwardRef, useCombinedRefs } from "@dashboard/utils/ref";
-import { Checkbox, type CheckboxProps } from "@saleor/macaw-ui-next";
+import { Checkbox, type CheckboxProps } from "@macaw-ui";
 import { type ForwardedRef } from "react";
 import {
   type Control,

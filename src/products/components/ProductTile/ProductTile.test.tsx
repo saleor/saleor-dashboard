@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { products } from "@dashboard/products/fixtures";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

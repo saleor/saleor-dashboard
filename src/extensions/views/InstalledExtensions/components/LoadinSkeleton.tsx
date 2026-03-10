@@ -2,7 +2,7 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { Package } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

@@ -19,7 +19,7 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomExtensionDefaultToken } from "../CustomExtensionDefaultToken/CustomExtensionDefaultToken";

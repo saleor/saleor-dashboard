@@ -41,7 +41,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Divider, Text } from "@macaw-ui";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

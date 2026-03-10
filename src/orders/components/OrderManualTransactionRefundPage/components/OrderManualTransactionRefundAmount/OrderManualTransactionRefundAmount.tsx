@@ -1,4 +1,4 @@
-import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@macaw-ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

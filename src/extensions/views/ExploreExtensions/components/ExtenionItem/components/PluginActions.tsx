@@ -4,7 +4,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import { useUserHasPermissions } from "@dashboard/utils/permissions";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Button, Tooltip } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginActionsProps {

@@ -4,7 +4,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input } from "@saleor/macaw-ui-next";
+import { Box, Button, Input } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

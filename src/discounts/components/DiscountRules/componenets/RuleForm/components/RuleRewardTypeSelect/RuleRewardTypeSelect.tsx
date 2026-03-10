@@ -1,6 +1,6 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Rule } from "@dashboard/discounts/models";
-import { type Option, Select } from "@saleor/macaw-ui-next";
+import { type Option, Select } from "@macaw-ui";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 

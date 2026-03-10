@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { type PluginsDetailsFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Chip, Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getPluginStatusColor, getPluginStatusLabel, isPluginGlobal } from "../../utils";

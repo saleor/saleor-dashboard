@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

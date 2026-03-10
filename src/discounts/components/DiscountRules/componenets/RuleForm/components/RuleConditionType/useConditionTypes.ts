@@ -1,5 +1,5 @@
 import { type CatalogConditions, type OrderConditions } from "@dashboard/discounts/types";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { useMemo } from "react";
 import { type IntlShape, useIntl } from "react-intl";
 

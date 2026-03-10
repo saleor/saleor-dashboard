@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, Button, Text, Tooltip, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip, vars } from "@macaw-ui";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";

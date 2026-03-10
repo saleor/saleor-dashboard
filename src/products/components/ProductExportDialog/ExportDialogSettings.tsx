@@ -7,7 +7,7 @@ import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { type ExportSettingsInput } from "./types";

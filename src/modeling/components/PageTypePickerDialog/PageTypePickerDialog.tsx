@@ -7,7 +7,7 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
-import { Button, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { Button, DynamicCombobox, type Option } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

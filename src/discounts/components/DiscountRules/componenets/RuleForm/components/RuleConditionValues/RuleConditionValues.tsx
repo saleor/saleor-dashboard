@@ -1,7 +1,7 @@
 import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Rule } from "@dashboard/discounts/models";
-import { Box, Input, RangeInput } from "@saleor/macaw-ui-next";
+import { Box, Input, RangeInput } from "@macaw-ui";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

@@ -1,4 +1,4 @@
-import { Box, Input } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

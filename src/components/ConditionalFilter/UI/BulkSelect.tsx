@@ -1,4 +1,4 @@
-import { DynamicMultiselect } from "@saleor/macaw-ui-next";
+import { DynamicMultiselect } from "@macaw-ui";
 import type * as React from "react";
 import { useRef, useState } from "react";
 

@@ -10,7 +10,7 @@ import {
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { getEntityUrl } from "@dashboard/utils/maps";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { type IntlShape } from "react-intl";
 
 export function getSingleChoices(values: AttributeValueFragment[]): Option[] {

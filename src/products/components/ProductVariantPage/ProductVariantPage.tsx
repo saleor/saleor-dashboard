@@ -51,7 +51,7 @@ import {
   type ReorderAction,
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, Tooltip } from "@macaw-ui";
 import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

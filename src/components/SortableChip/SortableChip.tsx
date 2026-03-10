@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, type BoxProps, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Button, Text } from "@macaw-ui";
 import { GripVertical, X } from "lucide-react";
 import { type ReactNode } from "react";
 import * as React from "react";

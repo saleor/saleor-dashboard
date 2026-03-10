@@ -7,7 +7,7 @@ import {
   useAppUpdatePermissionsMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 

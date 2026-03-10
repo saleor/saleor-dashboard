@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";

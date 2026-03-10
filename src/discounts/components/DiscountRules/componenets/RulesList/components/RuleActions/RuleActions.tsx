@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { Pencil, Trash2 } from "lucide-react";
 
 interface RuleActionsProps {

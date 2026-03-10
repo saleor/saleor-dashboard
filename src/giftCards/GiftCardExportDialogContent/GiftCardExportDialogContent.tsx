@@ -12,7 +12,7 @@ import {
   exportSettingsInitialFormDataWithIds,
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { type DialogProps } from "@dashboard/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";

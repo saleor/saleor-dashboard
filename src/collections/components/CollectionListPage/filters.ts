@@ -3,7 +3,7 @@ import { CollectionPublished } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { type FilterOpts } from "@dashboard/types";
 import { createOptionsField } from "@dashboard/utils/filters/fields";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { defineMessages, type IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {

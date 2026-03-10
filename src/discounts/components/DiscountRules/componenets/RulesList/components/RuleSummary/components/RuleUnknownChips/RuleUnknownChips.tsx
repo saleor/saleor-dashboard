@@ -1,4 +1,4 @@
-import { Chip } from "@saleor/macaw-ui-next";
+import { Chip } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 export const RuleUnknownChips = () => {

@@ -4,7 +4,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

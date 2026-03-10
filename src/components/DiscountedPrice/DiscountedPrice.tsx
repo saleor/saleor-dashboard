@@ -1,5 +1,5 @@
 import { type IMoney } from "@dashboard/utils/intl";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 
 import Money from "../Money";
 import { useStyles } from "./styles";

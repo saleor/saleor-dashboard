@@ -4,7 +4,7 @@ import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import GiftCardUpdateExpirySelect from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
 import { Divider } from "@material-ui/core";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";

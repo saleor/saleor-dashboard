@@ -29,7 +29,7 @@ import {
 } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Text, Toggle } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";

@@ -8,7 +8,7 @@ import {
   Dropdown,
   List,
   Text,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 import { type ReactNode } from "react";
 

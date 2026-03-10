@@ -1,5 +1,5 @@
 import { fuzzySearch } from "@dashboard/misc";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { useMemo, useState } from "react";
 
 function useChoiceSearch(choices: Option[]) {

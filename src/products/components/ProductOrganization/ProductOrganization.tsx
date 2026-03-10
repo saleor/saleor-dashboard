@@ -11,7 +11,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, type Option, Text } from "@macaw-ui";
 import { cloneElement, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

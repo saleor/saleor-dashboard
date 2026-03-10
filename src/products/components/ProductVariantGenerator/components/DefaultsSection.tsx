@@ -1,4 +1,4 @@
-import { Box, Checkbox, type CheckedState, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type CheckedState, Input, Text } from "@macaw-ui";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 

@@ -18,7 +18,7 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { parse, print } from "graphql";
 import { useEffect, useState } from "react";
 import * as React from "react";

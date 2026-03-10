@@ -7,7 +7,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { type AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

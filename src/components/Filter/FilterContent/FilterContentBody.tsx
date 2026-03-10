@@ -5,7 +5,7 @@ import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterCont
 import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { type Option, Skeleton } from "@saleor/macaw-ui-next";
+import { type Option, Skeleton } from "@macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 

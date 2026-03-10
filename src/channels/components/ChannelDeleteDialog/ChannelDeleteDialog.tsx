@@ -3,7 +3,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { type Option, Text } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";

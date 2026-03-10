@@ -5,7 +5,7 @@ import {
   type PageErrorWithAttributesFragment,
   type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

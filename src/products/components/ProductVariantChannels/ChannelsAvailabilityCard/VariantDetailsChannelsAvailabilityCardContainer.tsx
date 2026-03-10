@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Accordion } from "@saleor/macaw-ui-next";
+import { Accordion } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 

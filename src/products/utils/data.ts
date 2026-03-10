@@ -18,7 +18,7 @@ import {
 import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { type ProductStockInput } from "../components/ProductStocks";
 import { type ProductUpdateFormData } from "../components/ProductUpdatePage/types";

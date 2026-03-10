@@ -4,7 +4,7 @@ import { APP_VERSION } from "@dashboard/config";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { type AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { AppFrame } from "../AppFrame/AppFrame";
 import { AppPageNav } from "./AppPageNav";

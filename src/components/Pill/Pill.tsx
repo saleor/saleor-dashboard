@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, type PillProps } from "@saleor/macaw-ui";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@macaw-ui";
 import clsx from "clsx";
 import { forwardRef } from "react";
 

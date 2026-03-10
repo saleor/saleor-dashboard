@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type SearchWarehousesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { type FetchMoreProps, type RelayToFlat, type ReorderAction } from "@dashboard/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { AssignmentList } from "../AssignmentList/AssignmentList";

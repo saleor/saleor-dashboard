@@ -1,5 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { CategoryItem } from "./CategoryItem";
 import { CollectionItem } from "./CollectionItem";

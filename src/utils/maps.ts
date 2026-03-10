@@ -10,7 +10,7 @@ import {
 import { pageUrl } from "@dashboard/modeling/urls";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { type Node, type SlugNode } from "@dashboard/types";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 interface Edge<T> {
   node: T;

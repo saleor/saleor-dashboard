@@ -10,7 +10,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";

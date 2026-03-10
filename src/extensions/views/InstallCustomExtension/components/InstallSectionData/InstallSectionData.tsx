@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@macaw-ui";
 import { type Control, useWatch } from "react-hook-form";
 import { type ZodIssue } from "zod";
 

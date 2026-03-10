@@ -15,7 +15,7 @@ import {
   StatusType,
   type UserError,
 } from "@dashboard/types";
-import { type DefaultTheme, type ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, type ThemeTokensValues } from "@macaw-ui";
 import Fuse from "fuse.js";
 import moment from "moment-timezone";
 import { type IntlShape } from "react-intl";

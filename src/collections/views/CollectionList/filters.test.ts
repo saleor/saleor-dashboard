@@ -4,7 +4,7 @@ import { CollectionPublished } from "@dashboard/graphql";
 import { type FilterOpts } from "@dashboard/types";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";
 

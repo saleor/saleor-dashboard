@@ -18,7 +18,7 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";

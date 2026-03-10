@@ -1,6 +1,6 @@
 import { getBooleanDropdownOptions } from "@dashboard/components/Attributes/utils";
 import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
-import { Box, DynamicCombobox, Input, type Option, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, type Option, Select, Text } from "@macaw-ui";
 import { type ReactNode, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
 import { WARNING_ICON_COLOR, WARNING_ICON_COLOR_LIGHTER } from "@dashboard/colors";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { ExclamationIconFilled } from "@dashboard/icons/ExclamationIconFilled";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useState } from "react";
 
 export const AlertExclamationIcon = ({

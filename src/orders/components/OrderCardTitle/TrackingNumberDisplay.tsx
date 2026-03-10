@@ -1,5 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { vars } from "@macaw-ui";
 import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
 import type * as React from "react";

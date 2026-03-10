@@ -1,4 +1,4 @@
-import { Button, type ButtonProps, vars } from "@saleor/macaw-ui-next";
+import { Button, type ButtonProps, vars } from "@macaw-ui";
 import type * as React from "react";
 
 interface ButtonLinkProps extends ButtonProps {

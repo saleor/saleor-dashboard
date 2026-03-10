@@ -1,7 +1,7 @@
 import CheckIcon from "@assets/images/check.svg";
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { messages } from "@dashboard/extensions/messages";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 

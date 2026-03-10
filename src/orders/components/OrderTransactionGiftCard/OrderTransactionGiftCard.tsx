@@ -7,7 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { type FakeTransaction, type TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import OrderTransaction from "../OrderTransaction";

@@ -2,7 +2,7 @@
 import Money from "@dashboard/components/Money";
 import { type IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import clsx from "clsx";
 import reduce from "lodash/reduce";
 import { defineMessages, useIntl } from "react-intl";

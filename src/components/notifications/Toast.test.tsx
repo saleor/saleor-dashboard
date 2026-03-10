@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { toast } from "sonner";
 

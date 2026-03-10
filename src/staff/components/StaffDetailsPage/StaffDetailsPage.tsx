@@ -22,7 +22,7 @@ import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
-import { Button, type Option, Text } from "@saleor/macaw-ui-next";
+import { Button, type Option, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { StaffPreferences } from "../StaffPreferences/StaffPreferences";

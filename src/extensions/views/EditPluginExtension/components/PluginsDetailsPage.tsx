@@ -15,7 +15,7 @@ import {
 import { type ChangeEvent, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { isSecretField } from "../utils";

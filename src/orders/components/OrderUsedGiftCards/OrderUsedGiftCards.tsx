@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { giftCardPath } from "@dashboard/giftCards/urls";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";

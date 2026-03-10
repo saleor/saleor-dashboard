@@ -7,7 +7,7 @@ import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, type Option, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type PageFormData } from "../PageDetailsPage/form";

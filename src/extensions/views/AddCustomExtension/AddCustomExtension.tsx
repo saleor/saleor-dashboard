@@ -7,7 +7,7 @@ import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalL
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@macaw-ui";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";

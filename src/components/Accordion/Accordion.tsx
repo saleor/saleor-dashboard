@@ -1,4 +1,4 @@
-import { Accordion as AccordionMacaw, Box, Divider, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Accordion as AccordionMacaw, Box, Divider, sprinkles, Text } from "@macaw-ui";
 import type * as React from "react";
 import { useState } from "react";
 

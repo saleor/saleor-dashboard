@@ -3,7 +3,7 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { type ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

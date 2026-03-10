@@ -3,7 +3,7 @@ import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrder
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";

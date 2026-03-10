@@ -1,4 +1,4 @@
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 
 enum LabelSizes {
   sm = 12,

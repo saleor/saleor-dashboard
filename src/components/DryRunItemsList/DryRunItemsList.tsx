@@ -12,7 +12,7 @@ import {
   ListItemCell,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import camelCase from "lodash/camelCase";
 import type * as React from "react";
 import { useIntl } from "react-intl";

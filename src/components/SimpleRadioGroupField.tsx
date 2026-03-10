@@ -1,5 +1,5 @@
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { RadioGroup, type RadioGroupRootProps, Text } from "@saleor/macaw-ui-next";
+import { RadioGroup, type RadioGroupRootProps, Text } from "@macaw-ui";
 import type * as React from "react";
 
 export type SimpleRadioGroupFieldChoice = {

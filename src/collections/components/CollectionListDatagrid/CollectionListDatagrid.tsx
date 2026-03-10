@@ -13,7 +13,7 @@ import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHea
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@macaw-ui";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

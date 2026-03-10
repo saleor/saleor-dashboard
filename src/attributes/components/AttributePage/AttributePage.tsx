@@ -46,7 +46,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type ListSettings, type ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";

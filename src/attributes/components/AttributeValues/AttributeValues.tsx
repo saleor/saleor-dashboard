@@ -22,7 +22,7 @@ import {
 } from "@dashboard/types";
 import { TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

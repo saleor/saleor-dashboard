@@ -1,4 +1,4 @@
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";

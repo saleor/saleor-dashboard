@@ -14,7 +14,7 @@ import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Combobox, type Option } from "@saleor/macaw-ui-next";
+import { Combobox, type Option } from "@macaw-ui";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { useAddressValidation } from "../AddressEdit/useAddressValidation";

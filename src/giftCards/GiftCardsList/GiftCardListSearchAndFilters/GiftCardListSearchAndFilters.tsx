@@ -3,7 +3,7 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { GiftCardListBulkActions } from "../GiftCardListBulkActions";

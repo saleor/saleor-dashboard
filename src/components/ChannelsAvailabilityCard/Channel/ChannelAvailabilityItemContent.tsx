@@ -5,7 +5,7 @@ import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, RadioGroup, Text } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

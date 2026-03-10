@@ -3,7 +3,7 @@ import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
 import { type GiftCardSettingsErrorFragment, type TimePeriodTypeEnum } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TimePeriodField from "../TimePeriodField/TimePeriodField";

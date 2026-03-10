@@ -12,7 +12,7 @@ import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type FetchMoreProps } from "@dashboard/types";
 import { type RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { Accordion, Box, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Text } from "@macaw-ui";
 import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

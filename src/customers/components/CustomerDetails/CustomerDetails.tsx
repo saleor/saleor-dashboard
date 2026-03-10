@@ -6,7 +6,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Skeleton, Text } from "@macaw-ui";
 import moment from "moment-timezone";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

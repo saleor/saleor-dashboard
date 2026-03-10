@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Accordion, Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Text } from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

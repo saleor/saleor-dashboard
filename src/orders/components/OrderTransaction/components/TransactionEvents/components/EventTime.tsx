@@ -1,5 +1,5 @@
 import useLocale from "@dashboard/hooks/useLocale";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 
 export const EventTime = ({ date }: { date: string }) => {
   const { locale } = useLocale();

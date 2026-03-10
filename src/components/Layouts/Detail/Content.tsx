@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps } from "@macaw-ui";
 import type * as React from "react";
 
 interface DetailPageLayoutContentProps extends BoxProps {

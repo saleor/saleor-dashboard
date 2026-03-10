@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Text, type TextProps } from "@macaw-ui";
 
 import { useManualTransactionContext } from "../context";
 

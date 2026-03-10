@@ -10,7 +10,7 @@ import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/e
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { ExternalLink } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";

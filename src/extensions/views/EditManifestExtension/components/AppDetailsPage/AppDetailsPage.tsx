@@ -1,6 +1,6 @@
 import { type AppQuery } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";

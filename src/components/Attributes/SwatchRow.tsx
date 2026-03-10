@@ -3,7 +3,7 @@ import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttribu
 import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
 import { useComboboxHandlers } from "@dashboard/components/Combobox/hooks/useComboboxHandlers";
 import { getBySlug } from "@dashboard/misc";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@macaw-ui";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 

@@ -12,7 +12,7 @@ import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

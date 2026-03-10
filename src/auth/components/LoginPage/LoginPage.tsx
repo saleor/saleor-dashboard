@@ -8,7 +8,7 @@ import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@macaw-ui";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

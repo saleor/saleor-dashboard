@@ -12,7 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, type MenuListUrlSortField } from "@dashboard/structures/urls";
 import { type ListActions, type PageListProps, type SortPage } from "@dashboard/types";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuList from "../MenuList";

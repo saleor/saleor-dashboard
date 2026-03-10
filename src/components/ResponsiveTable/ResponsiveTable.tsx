@@ -1,6 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { Table } from "@material-ui/core";
-import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
+import { Box, SearchInput, Text } from "@macaw-ui";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { type ChangeEvent, type KeyboardEvent, type ReactNode, useState } from "react";

@@ -4,7 +4,7 @@ import {
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DropdownButton, Popover, Text } from "@macaw-ui";
 import { X } from "lucide-react";
 import { useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { type ChannelFragment } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 export const getCurencySymbol = (selectedChannel: Option | null, channels: ChannelFragment[]) => {
   const selectedChannelId = selectedChannel?.value;

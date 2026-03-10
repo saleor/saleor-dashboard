@@ -1,6 +1,6 @@
 import { problemMessages } from "@dashboard/extensions/messages";
 import useLocale from "@dashboard/hooks/useLocale";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@macaw-ui";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 

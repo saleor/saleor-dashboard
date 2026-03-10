@@ -1,5 +1,5 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { type LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

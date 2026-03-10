@@ -5,7 +5,7 @@ import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { GiftIcon } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";

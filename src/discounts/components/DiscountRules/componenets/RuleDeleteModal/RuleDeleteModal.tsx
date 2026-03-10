@@ -4,7 +4,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../../messages";

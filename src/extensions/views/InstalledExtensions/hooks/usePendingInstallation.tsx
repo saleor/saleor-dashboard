@@ -3,7 +3,7 @@ import { type InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { Package } from "lucide-react";
 import { useEffect, useState } from "react";
 

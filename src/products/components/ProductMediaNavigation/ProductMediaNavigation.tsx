@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@macaw-ui";
 import clsx from "clsx";
 import { defineMessages, useIntl } from "react-intl";
 

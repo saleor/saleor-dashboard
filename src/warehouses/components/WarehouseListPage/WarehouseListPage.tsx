@@ -15,7 +15,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { warehouseAddUrl, type WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

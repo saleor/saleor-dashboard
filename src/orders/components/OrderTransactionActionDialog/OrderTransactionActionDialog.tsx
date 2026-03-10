@@ -3,7 +3,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { mapActionToMessage } from "../OrderTransaction/utils";

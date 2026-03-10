@@ -10,7 +10,7 @@ import {
   Text,
   Tooltip,
   vars,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { type MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

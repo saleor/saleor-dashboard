@@ -1,5 +1,5 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
-import { Box, type BoxProps, type Sprinkles } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, type Sprinkles } from "@macaw-ui";
 import type * as React from "react";
 import { useMemo } from "react";
 

@@ -3,7 +3,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import clsx from "clsx";
 import { FormattedMessage, useIntl } from "react-intl";
 

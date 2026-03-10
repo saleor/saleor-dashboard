@@ -1,5 +1,5 @@
 import { getDotColor } from "@dashboard/misc";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@macaw-ui";
 
 export type DotStatus = "success" | "error" | "warning";
 export interface StatusDotProps {

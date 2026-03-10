@@ -1,5 +1,5 @@
 import { CardHeader } from "@material-ui/core";
-import { vars } from "@saleor/macaw-ui-next";
+import { vars } from "@macaw-ui";
 import type * as React from "react";
 
 interface CardTitleProps {

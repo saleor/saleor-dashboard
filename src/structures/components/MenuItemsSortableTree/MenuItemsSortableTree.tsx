@@ -1,7 +1,7 @@
 import { SortableTree } from "@dashboard/components/SortableTree";
 import { type MenuTreeItem, type RecursiveMenuItem } from "@dashboard/structures/types";
 import { type UniqueIdentifier } from "@dnd-kit/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { type MenuItemType } from "../MenuItemDialog";

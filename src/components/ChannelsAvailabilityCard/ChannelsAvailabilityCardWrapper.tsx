@@ -1,6 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { type PermissionEnum } from "@dashboard/graphql";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

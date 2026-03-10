@@ -1,7 +1,7 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type FetchMoreProps } from "@dashboard/types";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { useCallback, useMemo, useRef } from "react";
 import { defineMessages, useIntl } from "react-intl";
 

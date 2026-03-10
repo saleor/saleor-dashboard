@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type ProductErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Input } from "@saleor/macaw-ui-next";
+import { Input } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

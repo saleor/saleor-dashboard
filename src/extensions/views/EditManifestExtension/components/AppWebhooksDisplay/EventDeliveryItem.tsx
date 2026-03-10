@@ -3,7 +3,7 @@ import {
   type EventDeliveryAttemptFragment,
   type EventDeliveryStatusEnum,
 } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { AppWebhooksAttemptDetails } from "./AppWebhooksAttemptDetails";

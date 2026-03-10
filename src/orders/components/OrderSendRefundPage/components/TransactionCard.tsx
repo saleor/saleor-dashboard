@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -9,7 +9,7 @@ import {
   Skeleton,
   Text,
   Tooltip,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { type Control, type FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

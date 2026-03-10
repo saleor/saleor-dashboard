@@ -1,6 +1,6 @@
 import { type FilterErrorMessages, type IFilter } from "@dashboard/components/Filter/types";
 import { type FilterProps, type SearchPageProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 import { ExpressionFilters } from "./components/ExpressionFilters";

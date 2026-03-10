@@ -13,7 +13,7 @@ import { type CountryWithCodeFragment } from "@dashboard/graphql";
 import { fuzzySearch } from "@dashboard/misc";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from "./handlers";

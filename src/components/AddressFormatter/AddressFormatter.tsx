@@ -1,4 +1,4 @@
-import { Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Skeleton, Text, type TextProps } from "@macaw-ui";
 
 import { type AddressType } from "../../customers/types";
 

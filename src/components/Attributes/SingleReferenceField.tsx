@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { Pencil, Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 

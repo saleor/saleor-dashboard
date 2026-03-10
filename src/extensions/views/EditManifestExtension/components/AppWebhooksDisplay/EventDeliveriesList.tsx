@@ -1,5 +1,5 @@
 import { type AppWebhookDeliveriesQuery } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 

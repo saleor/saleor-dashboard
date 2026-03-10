@@ -30,7 +30,7 @@ import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Divider } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider } from "@macaw-ui";
 import { Code } from "lucide-react";
 import { useContext } from "react";
 import { useIntl } from "react-intl";

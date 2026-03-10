@@ -5,7 +5,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

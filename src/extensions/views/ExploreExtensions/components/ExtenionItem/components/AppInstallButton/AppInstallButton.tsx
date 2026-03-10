@@ -5,7 +5,7 @@ import { messages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {

@@ -17,7 +17,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useState } from "react";
 import {
   type Control,

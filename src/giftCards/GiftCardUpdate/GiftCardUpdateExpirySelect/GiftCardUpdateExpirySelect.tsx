@@ -3,7 +3,7 @@ import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/mes
 import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { TextField } from "@material-ui/core";
-import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Text } from "@macaw-ui";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 

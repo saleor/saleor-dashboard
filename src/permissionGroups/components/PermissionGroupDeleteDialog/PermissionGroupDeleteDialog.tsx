@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { PermissionGroupErrorCode, type PermissionGroupErrorFragment } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PermissionDeleteDialogProps {

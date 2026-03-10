@@ -1,4 +1,4 @@
-import { Box, Paragraph, type TextProps } from "@saleor/macaw-ui-next";
+import { Box, Paragraph, type TextProps } from "@macaw-ui";
 import type * as React from "react";
 
 const Root = ({ children, ...rest }: TextProps) => (

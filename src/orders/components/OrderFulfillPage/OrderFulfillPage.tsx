@@ -34,7 +34,7 @@ import {
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@macaw-ui";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

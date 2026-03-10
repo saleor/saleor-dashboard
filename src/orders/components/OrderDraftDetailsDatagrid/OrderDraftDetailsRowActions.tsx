@@ -1,7 +1,7 @@
 import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { Code, EllipsisVertical } from "lucide-react";
 import { type IntlShape } from "react-intl";
 

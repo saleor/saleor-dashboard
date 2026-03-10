@@ -4,7 +4,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { type FetchMoreProps } from "@dashboard/types";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface ProductTaxesProps {

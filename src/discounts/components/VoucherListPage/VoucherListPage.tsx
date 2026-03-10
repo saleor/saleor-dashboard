@@ -23,7 +23,7 @@ import {
   type PageListProps,
   type SortPage,
 } from "@dashboard/types";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

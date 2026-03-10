@@ -1,5 +1,5 @@
 import { MISSING_APPS_TYPEFORM_URL } from "@dashboard/links";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages as extensionsMessages } from "../messages";

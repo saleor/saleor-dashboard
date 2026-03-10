@@ -10,7 +10,7 @@ import {
   MoreOptionsIcon,
   sprinkles,
   Text,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";

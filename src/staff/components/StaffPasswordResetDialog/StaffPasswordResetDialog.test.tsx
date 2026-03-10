@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 

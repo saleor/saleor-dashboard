@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Text } from "@macaw-ui";
 import { ExternalLink, MoreVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

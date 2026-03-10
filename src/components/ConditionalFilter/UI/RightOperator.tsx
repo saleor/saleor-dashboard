@@ -4,7 +4,7 @@ import {
   Input,
   RangeInput,
   Select,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 
 import BulkSelect from "./BulkSelect";
 import { type FilterEventEmitter } from "./EventEmitter";

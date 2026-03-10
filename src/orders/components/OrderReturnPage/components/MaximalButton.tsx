@@ -1,4 +1,4 @@
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 interface MaximalButtonProps {

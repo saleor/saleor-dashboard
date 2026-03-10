@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import msgs from "./messages";

@@ -12,7 +12,7 @@ import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { type RelayToFlat } from "@dashboard/types";
 import { Divider } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import { type ReactNode, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 

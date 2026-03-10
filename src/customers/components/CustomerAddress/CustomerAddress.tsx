@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
 import { type AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 interface CustomerAddressProps {

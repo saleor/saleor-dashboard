@@ -1,5 +1,5 @@
 import { type RewardTypeEnum, type RewardValueTypeEnum } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { type Condition } from "./Condition";
 

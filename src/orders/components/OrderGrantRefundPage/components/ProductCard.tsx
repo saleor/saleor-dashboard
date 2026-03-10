@@ -4,7 +4,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { type OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 

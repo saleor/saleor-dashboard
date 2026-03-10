@@ -11,7 +11,7 @@ import { ProductTypeListUrlSortField, productTypeUrl } from "@dashboard/productT
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 

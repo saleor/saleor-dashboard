@@ -1,5 +1,5 @@
 import { type OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 type Props = {

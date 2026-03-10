@@ -1,5 +1,5 @@
 import { RewardTypeEnum } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { type IntlShape } from "react-intl";
 
 export const getRewardTypeOptions = (intl: IntlShape): Option[] => [

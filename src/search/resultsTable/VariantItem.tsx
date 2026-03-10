@@ -1,7 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { type GlobalSearchQuery } from "@dashboard/graphql";
 import { productVariantEditPath } from "@dashboard/products/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { DisplayDate, LinkCell, Row, Thumbnail, TypeCell } from "./CommonCells";

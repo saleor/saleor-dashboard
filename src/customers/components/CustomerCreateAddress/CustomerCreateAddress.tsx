@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { type AccountErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

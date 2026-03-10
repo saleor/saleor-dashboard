@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
 import { capitalize } from "@dashboard/misc";
-import { Combobox, Text } from "@saleor/macaw-ui-next";
+import { Combobox, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface StaffPreferencesProps {

@@ -5,7 +5,7 @@ import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichText
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type OutputData } from "@editorjs/editorjs";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";

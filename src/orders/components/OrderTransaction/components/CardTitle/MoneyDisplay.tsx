@@ -1,7 +1,7 @@
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type IMoney } from "@dashboard/utils/intl";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 
 interface MoneyDisplayProps {
   label: string;

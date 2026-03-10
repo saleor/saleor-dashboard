@@ -5,7 +5,7 @@ import { type MenuItemType } from "@dashboard/structures/components/MenuItemDial
 import { type RecursiveMenuItem } from "@dashboard/structures/types";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { type UniqueIdentifier } from "@dnd-kit/core";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

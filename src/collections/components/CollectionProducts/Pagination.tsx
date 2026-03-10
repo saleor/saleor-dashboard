@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
-import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Select, Text } from "@macaw-ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

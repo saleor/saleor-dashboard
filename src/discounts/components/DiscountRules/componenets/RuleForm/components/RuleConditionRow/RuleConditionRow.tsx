@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { type Condition } from "@dashboard/discounts/models";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { Minus } from "lucide-react";
 
 import { RuleConditionName } from "../RuleConditionName/";

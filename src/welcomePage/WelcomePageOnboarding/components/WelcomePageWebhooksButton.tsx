@@ -1,5 +1,5 @@
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 

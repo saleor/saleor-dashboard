@@ -6,7 +6,7 @@ import {
   isProblemDismissed,
 } from "@dashboard/extensions/types";
 import { type AppTypeEnum } from "@dashboard/graphql";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { ExternalLink } from "lucide-react";
 import { useIntl } from "react-intl";
 

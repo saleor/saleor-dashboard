@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { Text, type TextProps } from "@macaw-ui";
 import { type HTMLAttributes } from "react";
 
 const useStyles = makeStyles(

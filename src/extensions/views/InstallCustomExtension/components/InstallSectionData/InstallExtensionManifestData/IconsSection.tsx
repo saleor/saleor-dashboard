@@ -1,6 +1,6 @@
 import plusIcon from "@assets/images/plus-icon.svg";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { SaleorLogo } from "./SaleorLogo";
 

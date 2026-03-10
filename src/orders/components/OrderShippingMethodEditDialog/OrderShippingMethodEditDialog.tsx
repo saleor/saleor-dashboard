@@ -14,7 +14,7 @@ import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface FormData {

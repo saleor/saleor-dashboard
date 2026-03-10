@@ -24,7 +24,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
 import { Card, CardContent, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Button, Tooltip } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import type * as React from "react";
 import { forwardRef, useState } from "react";

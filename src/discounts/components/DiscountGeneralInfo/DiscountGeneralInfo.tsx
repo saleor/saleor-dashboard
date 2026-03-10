@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Select } from "@saleor/macaw-ui-next";
+import { Box, Input, Select } from "@macaw-ui";
 import { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";

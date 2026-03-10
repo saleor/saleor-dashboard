@@ -19,7 +19,7 @@ import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@macaw-ui";
 import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

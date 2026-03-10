@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface ColumnPickerPagination {

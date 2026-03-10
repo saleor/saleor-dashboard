@@ -1,4 +1,4 @@
-import { Chip, useTheme } from "@saleor/macaw-ui-next";
+import { Chip, useTheme } from "@macaw-ui";
 
 import { conditionTypeToHue } from "../../utils";
 

@@ -11,7 +11,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Input, Text } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

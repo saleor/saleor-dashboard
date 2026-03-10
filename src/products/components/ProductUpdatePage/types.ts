@@ -31,7 +31,7 @@ import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 

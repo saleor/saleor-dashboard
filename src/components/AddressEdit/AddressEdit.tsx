@@ -3,7 +3,7 @@ import { type AddressTypeInput } from "@dashboard/customers/types";
 import { type AccountErrorFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Input, type Option } from "@macaw-ui";
 import { type ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 

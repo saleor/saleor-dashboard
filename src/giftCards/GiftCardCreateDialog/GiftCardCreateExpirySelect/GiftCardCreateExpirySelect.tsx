@@ -9,7 +9,7 @@ import { getExpiryPeriodTerminationDate } from "@dashboard/giftCards/GiftCardCre
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Text } from "@macaw-ui";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardCreateExpirySelectMessages as messages } from "./messages";

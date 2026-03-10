@@ -1,6 +1,6 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
 import { ImageIcon } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import clsx from "clsx";
 
 import { useAvatarImageStyles } from "./styles";

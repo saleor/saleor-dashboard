@@ -3,7 +3,7 @@ import { Pill } from "@dashboard/components/Pill";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface TitleProps {

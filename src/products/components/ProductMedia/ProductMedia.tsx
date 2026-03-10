@@ -5,7 +5,7 @@ import MediaTile from "@dashboard/components/MediaTile";
 import { type ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { type ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@macaw-ui";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";

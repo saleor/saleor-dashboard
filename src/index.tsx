@@ -1,4 +1,4 @@
-import "@saleor/macaw-ui-next/style";
+import "./macaw-ui.css";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";

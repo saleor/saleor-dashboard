@@ -1,4 +1,4 @@
-import { Box, List, Text } from "@saleor/macaw-ui-next";
+import { Box, List, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 export interface MenuItem {

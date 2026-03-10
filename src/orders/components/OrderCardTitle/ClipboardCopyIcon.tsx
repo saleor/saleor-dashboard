@@ -1,4 +1,4 @@
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { sprinkles } from "@macaw-ui";
 import { CheckIcon, CopyIcon } from "lucide-react";
 
 interface ClipboardCopyIconProps {

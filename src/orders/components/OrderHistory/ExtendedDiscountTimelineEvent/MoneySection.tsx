@@ -1,7 +1,7 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 import Label from "../Label";

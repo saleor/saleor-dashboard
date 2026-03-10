@@ -1,4 +1,4 @@
-import { type RangeValue } from "@saleor/macaw-ui-next";
+import { type RangeValue } from "@macaw-ui";
 
 import {
   type AttributeBlurData,

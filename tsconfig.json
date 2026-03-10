@@ -22,6 +22,8 @@
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
+      "@macaw-ui/*": ["src/macaw-ui/*"],
+      "~/*": ["src/macaw-ui/*"],
       "@test/*": ["testUtils/*"],
       "@storybookUtils/*": ["storybookUtils/*"],
       "@mizdra/graphql-codegen-typescript-fabbrica/helper": [

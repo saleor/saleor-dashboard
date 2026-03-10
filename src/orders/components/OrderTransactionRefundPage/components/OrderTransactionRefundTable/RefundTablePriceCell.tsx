@@ -2,7 +2,7 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { formatMoney } from "@dashboard/components/Money";
 import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 import { AlreadyRefundedHelper } from "./AlreadyRefundedHelper";
 

@@ -1,4 +1,4 @@
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 export const toWithCustomValues = (addNewValueLabel: string) => (value: Option) => {
   if (value.label.includes(addNewValueLabel)) {

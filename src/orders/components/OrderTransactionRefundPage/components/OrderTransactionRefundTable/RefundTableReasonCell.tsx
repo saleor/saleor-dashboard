@@ -1,5 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { type FieldArrayWithId } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

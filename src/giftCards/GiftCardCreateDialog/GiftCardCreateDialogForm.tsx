@@ -15,7 +15,7 @@ import {
 import useForm from "@dashboard/hooks/useForm";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Box, Textarea } from "@saleor/macaw-ui-next";
+import { Box, Textarea } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -10,7 +10,7 @@ import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
-import { Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Button, Input, Text } from "@macaw-ui";
 import { X } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";

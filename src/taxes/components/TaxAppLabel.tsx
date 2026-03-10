@@ -1,5 +1,5 @@
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import moment from "moment";
 import { FormattedMessage } from "react-intl";
 

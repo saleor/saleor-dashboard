@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type DefaultTheme, Text } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, Text } from "@macaw-ui";
 import { Moon, Sun } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

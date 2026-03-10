@@ -18,7 +18,7 @@ import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Text, vars } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

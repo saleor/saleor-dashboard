@@ -6,7 +6,7 @@ import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Box, Checkbox, Input, Paragraph, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Paragraph, Text, Toggle } from "@macaw-ui";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributePageFormData } from "../AttributePage";

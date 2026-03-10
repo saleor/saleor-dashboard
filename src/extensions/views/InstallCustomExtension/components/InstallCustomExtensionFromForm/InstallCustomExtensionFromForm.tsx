@@ -2,7 +2,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useMemo } from "react";
 import {
   type Control,

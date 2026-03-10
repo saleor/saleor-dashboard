@@ -14,7 +14,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { type ChannelProps } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { Pencil, Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

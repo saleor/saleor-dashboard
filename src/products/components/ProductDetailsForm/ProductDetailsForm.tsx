@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Input } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {

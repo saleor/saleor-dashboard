@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { renderCollection } from "@dashboard/misc";
-import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, List, Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useWelcomePageSidebarContext } from "../../context/welcomePageSidebarContext";

@@ -9,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Text } from "@macaw-ui";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";

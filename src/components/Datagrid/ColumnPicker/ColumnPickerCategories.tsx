@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerAvailableNodes } from "./ColumnPickerAvailableNodes";

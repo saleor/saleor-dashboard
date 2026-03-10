@@ -14,7 +14,7 @@ import {
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option, Text } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

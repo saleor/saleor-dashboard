@@ -1,6 +1,6 @@
 import { type OrderGrantRefundCreateErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { type OrderReturnData } from "../../form";

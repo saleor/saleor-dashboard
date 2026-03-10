@@ -3,7 +3,7 @@ import {
   type ProductVariantBulkCreateInput,
   type VariantAttributeFragment,
 } from "@dashboard/graphql";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 export interface AttributeValue {
   id: string;

@@ -12,7 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerAddressDialog from "../components/CustomerAddressDialog";

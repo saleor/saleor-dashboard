@@ -2,7 +2,7 @@ import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import { type PermissionEnum } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, type BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Skeleton, Text } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

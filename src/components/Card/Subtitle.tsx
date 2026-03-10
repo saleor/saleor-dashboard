@@ -1,4 +1,4 @@
-import { type Sprinkles, Text } from "@saleor/macaw-ui-next";
+import { type Sprinkles, Text } from "@macaw-ui";
 import { type PropsWithChildren } from "react";
 
 type CardSubtitleProps = Sprinkles;

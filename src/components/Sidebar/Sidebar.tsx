@@ -1,4 +1,4 @@
-import { Box, Drawer } from "@saleor/macaw-ui-next";
+import { Box, Drawer } from "@macaw-ui";
 import { Menu } from "lucide-react";
 
 import { SidebarContent } from "./Content";

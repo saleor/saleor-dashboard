@@ -1,6 +1,6 @@
 import { type PermissionEnum } from "@dashboard/graphql";
 import { type FetchMoreProps, type KeyValue, type SearchPageProps } from "@dashboard/types";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { type MessageDescriptor } from "react-intl";
 
 import { type FilterDispatchFunction } from "./useFilter";

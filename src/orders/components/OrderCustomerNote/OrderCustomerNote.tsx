@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderCustomerNoteProps {

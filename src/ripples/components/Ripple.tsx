@@ -1,7 +1,7 @@
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 export const Ripple = (props: { model: RippleModel }) => {

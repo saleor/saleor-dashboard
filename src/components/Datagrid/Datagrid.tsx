@@ -17,7 +17,7 @@ import DataEditor, {
   type Theme,
 } from "@glideapps/glide-data-grid";
 import { type GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@macaw-ui";
 import clsx from "clsx";
 import range from "lodash/range";
 import {

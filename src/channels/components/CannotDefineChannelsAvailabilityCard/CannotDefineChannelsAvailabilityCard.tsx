@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { defineMessages, FormattedMessage } from "react-intl";
 
 const messages = defineMessages({

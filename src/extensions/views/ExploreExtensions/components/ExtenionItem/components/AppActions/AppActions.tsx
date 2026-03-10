@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import { messages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { ExternalLink } from "lucide-react";
 import { useIntl } from "react-intl";
 

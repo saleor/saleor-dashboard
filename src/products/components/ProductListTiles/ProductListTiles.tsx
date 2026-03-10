@@ -4,7 +4,7 @@ import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type ListProps, type RelayToFlat } from "@dashboard/types";
-import { Box, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Text, vars } from "@macaw-ui";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 

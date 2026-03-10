@@ -4,7 +4,7 @@ import { type GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsL
 import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { type GiftCardDataFragment } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -3,7 +3,7 @@ import { type ProductErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Input } from "@saleor/macaw-ui-next";
+import { Input } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface ProductVariantNameProps {

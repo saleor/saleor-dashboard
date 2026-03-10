@@ -6,7 +6,7 @@ import {
   createNumberField,
   createOptionsField,
 } from "@dashboard/utils/filters/fields";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { defineMessages, type IntlShape } from "react-intl";
 
 export enum VoucherFilterKeys {

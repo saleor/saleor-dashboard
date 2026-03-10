@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 interface LimitsInfoProps {
   text: string;

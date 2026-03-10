@@ -16,7 +16,7 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {

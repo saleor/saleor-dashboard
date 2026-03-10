@@ -10,7 +10,7 @@ import {
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";

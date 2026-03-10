@@ -12,7 +12,7 @@ import {
   MoreOptionsIcon,
   Text,
   useTheme,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";

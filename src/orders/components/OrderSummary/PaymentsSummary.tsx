@@ -1,5 +1,5 @@
 import { type OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, type PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { OrderAuthorizeStatusBadge } from "./OrderAuthorizeStatusBadge";

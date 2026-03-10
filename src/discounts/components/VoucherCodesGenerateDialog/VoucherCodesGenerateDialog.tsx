@@ -1,6 +1,6 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input } from "@saleor/macaw-ui-next";
+import { Box, Button, Input } from "@macaw-ui";
 import { type ChangeEvent, useState } from "react";
 import { useIntl } from "react-intl";
 

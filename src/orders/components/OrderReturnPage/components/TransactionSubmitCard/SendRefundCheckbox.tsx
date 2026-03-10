@@ -4,7 +4,7 @@ import {
   type TransactionRequestRefundForGrantedRefundErrorFragment,
 } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { Checkbox, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Checkbox, Text, Tooltip } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { type OrderReturnData } from "../../form";

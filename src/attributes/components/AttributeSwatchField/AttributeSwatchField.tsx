@@ -4,7 +4,7 @@ import { ColorPicker, type ColorPickerProps } from "@dashboard/components/ColorP
 import FileUploadField from "@dashboard/components/FileUploadField";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

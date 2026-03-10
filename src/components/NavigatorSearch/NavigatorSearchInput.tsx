@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, sprinkles } from "@macaw-ui";
 import { Search } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";

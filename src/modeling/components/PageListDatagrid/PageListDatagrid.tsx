@@ -10,7 +10,7 @@ import { type Page, type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@macaw-ui";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

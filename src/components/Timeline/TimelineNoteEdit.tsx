@@ -1,6 +1,6 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
+import { Box, Button, Textarea } from "@macaw-ui";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

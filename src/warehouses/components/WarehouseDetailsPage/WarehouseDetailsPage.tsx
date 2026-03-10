@@ -25,7 +25,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 

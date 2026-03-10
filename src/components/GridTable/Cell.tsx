@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { type TdHTMLAttributes } from "react";
 import * as React from "react";
 

@@ -1,0 +1,44 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Getting started / Custom styling" />
+
+# Custom styling
+
+Depending on the project, you may have a different way of delivering css code.
+Esentially we use `vanila-extract` when it comes to implementation MacawUI
+but we are not forcing you do do the same.
+
+Each of our token is exposed to be consumable by either your pure css code or any _css-in-js_ library
+
+#### Accesing tokens as javascript object
+
+Wherever in your code, you can explicitly import `vars` object that holds all of our tokens.
+The entire object is well-typed so your editor will guide you how to reach certan value.
+
+```ts
+import { vars } from "@saleor/macaw-ui/next";
+
+// var(--mu-colors-foreground-text-neutral-subdued)
+const foregroundColor = vars.colors.foreground.textNeutralSubdued;
+```
+
+#### Accesing tokens raw values
+
+```ts
+import { useTheme } from "@saleor/macaw-ui/next";
+
+const { themeValues } = useTheme();
+
+// hsla(180, 1%, 49%, 1)
+const foregroundColor = themeValues.colors.foreground.textNeutralSubdued;
+```
+
+#### Accesing tokens as css variables
+
+Since our tokes are translated to css variables, you can consume them:
+
+```css
+.product {
+  color: var(--mu-colors-foreground-text-neutral-subdued);
+}
+```

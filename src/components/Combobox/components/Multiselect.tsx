@@ -5,7 +5,7 @@ import {
   DynamicMultiselect,
   type DynamicMultiselectProps,
   type Option,
-} from "@saleor/macaw-ui-next";
+} from "@macaw-ui";
 import { forwardRef, type ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

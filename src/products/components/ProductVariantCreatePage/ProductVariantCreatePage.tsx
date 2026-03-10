@@ -43,7 +43,7 @@ import {
   type ReorderAction,
 } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";

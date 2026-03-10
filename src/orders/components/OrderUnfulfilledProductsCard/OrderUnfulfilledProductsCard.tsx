@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { PackageIcon } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

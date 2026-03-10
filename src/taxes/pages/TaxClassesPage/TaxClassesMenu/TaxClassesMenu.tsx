@@ -3,7 +3,7 @@ import { type TaxClassFragment } from "@dashboard/graphql";
 import { TaxMenu } from "@dashboard/taxes/components/TaxMenu/TaxMenu";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxClassesListUrl } from "@dashboard/taxes/urls";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

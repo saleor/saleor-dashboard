@@ -5,7 +5,9 @@ import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import { createHtmlPlugin } from "vite-plugin-html";
+import tailwindcss from "@tailwindcss/vite";
 
 const copyNoopSW = () => ({
   name: "copy-noop-sw",
@@ -30,9 +32,7 @@ const copyOgImage = () => ({
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
   const env = loadEnv(mode, process.cwd(), "");
-  /*
-    Using explicit env variables, there is no need to expose all of them (security).
-  */
+  
   const {
     NODE_ENV,
     API_URL,
@@ -58,9 +58,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_PROJECT,
     ENABLED_SERVICE_NAME_HEADER,
     ONBOARDING_USER_JOINED_DATE_THRESHOLD,
-    // Multi-schema support
     FF_USE_STAGING_SCHEMA,
-
     npm_package_version,
   } = env;
 
@@ -72,6 +70,8 @@ export default defineConfig(({ command, mode }) => {
   const sourcemap = !SKIP_SOURCEMAPS;
 
   const plugins = [
+    tailwindcss(),
+    vanillaExtractPlugin(),
     react(),
     CodeInspectorPlugin({
       bundler: "vite",
@@ -103,7 +103,6 @@ export default defineConfig(({ command, mode }) => {
 
   if (!isDev) {
     console.log("Enabling service worker...");
-
     plugins.push(
       sentryVitePlugin({
         authToken: SENTRY_AUTH_TOKEN,
@@ -114,13 +113,8 @@ export default defineConfig(({ command, mode }) => {
   }
 
   const globals = {
-    /*
-      "qs" package uses 'get-intrinsic' whish refers to the global object, we need to recreate it.
-      Issue presents only on development mode.
-    */
     ...(isDev ? { global: {} } : {}),
     FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
-    // Keep all feature flags from env in global variable
     FLAGS: JSON.stringify(featureFlagsEnvs),
   };
 
@@ -137,10 +131,6 @@ export default defineConfig(({ command, mode }) => {
     },
     define: {
       ...globals,
-
-      /*
-        We still have references to process.env, we need to peserve them as workaround.
-      */
       "process.env": {
         NODE_ENV,
         API_URL,
@@ -158,9 +148,7 @@ export default defineConfig(({ command, mode }) => {
         POSTHOG_HOST,
         ENABLED_SERVICE_NAME_HEADER,
         ONBOARDING_USER_JOINED_DATE_THRESHOLD,
-        // Multi-schema support
         FF_USE_STAGING_SCHEMA,
-
         RELEASE_NAME: npm_package_version,
       },
     },
@@ -171,10 +159,6 @@ export default defineConfig(({ command, mode }) => {
       outDir: "../build/dashboard",
       assetsDir: ".",
       commonjsOptions: {
-        /*
-          Fix dynamic imports by "require", Necessary for react-editor-js
-          Ref: https://github.com/Jungwoo-An/react-editor-js/blob/e58b7ba5e66d07912bb78f65ac911e4018d363e1/packages/react-editor-js/src/factory.ts#L5
-         */
         transformMixedEsModules: true,
       },
       rollupOptions: {
@@ -200,12 +184,9 @@ export default defineConfig(({ command, mode }) => {
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),
         "@dashboard": path.resolve(__dirname, "./src"),
+        "@macaw-ui": path.resolve(__dirname, "./src/macaw-ui"),
+        "~": path.resolve(__dirname, "./src/macaw-ui"),
         src: path.resolve(__dirname, "./src"),
-        /*
-          Moment.js/react-moment does not fully suport ES modules.
-          Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
-          We enforce to use a different path, ignoring jsnext:main field.
-        */
         moment: path.resolve(__dirname, "./node_modules/moment/min/moment-with-locales.js"),
       },
     },

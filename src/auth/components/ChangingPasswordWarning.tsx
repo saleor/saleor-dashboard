@@ -1,4 +1,4 @@
-import { Paragraph } from "@saleor/macaw-ui-next";
+import { Paragraph } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 export const ChangingPasswordWarning = () => {

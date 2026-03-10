@@ -1,5 +1,5 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, type ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, type ButtonProps, Tooltip } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 

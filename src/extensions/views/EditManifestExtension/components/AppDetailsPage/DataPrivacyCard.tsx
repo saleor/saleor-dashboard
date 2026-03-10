@@ -1,5 +1,5 @@
 import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
-import { Box, type BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";

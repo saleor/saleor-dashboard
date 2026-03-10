@@ -3,7 +3,7 @@ import deleteIcon from "@assets/images/delete.svg";
 import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 

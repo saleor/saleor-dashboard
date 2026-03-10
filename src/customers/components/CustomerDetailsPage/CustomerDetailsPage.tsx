@@ -26,7 +26,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Divider } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";

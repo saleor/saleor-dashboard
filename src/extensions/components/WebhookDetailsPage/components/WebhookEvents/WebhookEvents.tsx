@@ -12,7 +12,7 @@ import {
   ListItemCell,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { Box, Checkbox, Chip, Switch, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Chip, Switch, Text } from "@macaw-ui";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

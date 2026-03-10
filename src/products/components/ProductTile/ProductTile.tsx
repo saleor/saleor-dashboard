@@ -2,7 +2,7 @@
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
-import { Box, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text, vars } from "@macaw-ui";
 import { Package } from "lucide-react";
 
 import { getTileStatus } from "./utils";

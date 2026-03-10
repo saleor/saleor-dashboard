@@ -1,4 +1,4 @@
-import { Box, Chip, type Option, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Chip, type Option, Tooltip } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../../../../../messages";

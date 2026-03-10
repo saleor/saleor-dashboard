@@ -18,7 +18,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";
 

@@ -5,7 +5,7 @@ import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type PluginDetailsPageFormData } from "../PluginsDetailsPage";

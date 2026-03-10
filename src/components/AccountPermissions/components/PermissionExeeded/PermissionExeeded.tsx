@@ -1,5 +1,5 @@
 import { type UserPermissionFragment } from "@dashboard/graphql";
-import { Box, List, Text } from "@saleor/macaw-ui-next";
+import { Box, List, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";

@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 // Constants for Lucide icon transform offsets
 const LUCIDE_ICON_TRANSLATE_X = -3.5;

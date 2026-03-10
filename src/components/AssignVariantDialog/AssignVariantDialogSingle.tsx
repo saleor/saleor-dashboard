@@ -15,7 +15,7 @@ import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFi
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

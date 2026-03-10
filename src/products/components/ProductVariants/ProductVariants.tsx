@@ -23,7 +23,7 @@ import { type ProductVariantListError } from "@dashboard/products/views/ProductU
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { type Option, Text } from "@macaw-ui";
 import { Pencil } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

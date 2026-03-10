@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import type * as React from "react";
 import { IntlProvider } from "react-intl";

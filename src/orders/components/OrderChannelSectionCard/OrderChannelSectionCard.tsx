@@ -2,7 +2,7 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { type ChannelFragment } from "@dashboard/graphql";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 interface OrderChannelSectionCardProps {

@@ -1,7 +1,7 @@
 import { type ChannelFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Checkbox, Multiselect, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Multiselect, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

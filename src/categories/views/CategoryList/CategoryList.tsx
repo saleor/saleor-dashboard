@@ -21,7 +21,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -8,7 +8,7 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { type ChangeEvent, type ReactNode } from "react";
 
 import BackButton from "../BackButton";

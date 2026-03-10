@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Input, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {

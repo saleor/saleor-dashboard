@@ -10,7 +10,7 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 import {
   createFilterTabUtils,

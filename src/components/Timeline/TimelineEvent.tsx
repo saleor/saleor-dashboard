@@ -2,7 +2,7 @@ import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
-import { Accordion, Box, sprinkles, Text, Tooltip, useTheme, vars } from "@saleor/macaw-ui-next";
+import { Accordion, Box, sprinkles, Text, Tooltip, useTheme, vars } from "@macaw-ui";
 import {
   AlertTriangleIcon,
   BanIcon,

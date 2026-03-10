@@ -13,7 +13,7 @@ import { commonMessages } from "@dashboard/intl";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ExtendedFormHelperTextProps } from "./types";

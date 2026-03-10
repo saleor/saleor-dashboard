@@ -15,7 +15,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
 
-jest.mock("@saleor/macaw-ui-next", () => ({
+jest.mock("@macaw-ui", () => ({
   useTheme: () => ({ theme: "defaultLight" }),
 }));
 

@@ -1,5 +1,5 @@
 import { type PermissionEnum } from "@dashboard/graphql";
-import { type Sprinkles } from "@saleor/macaw-ui-next";
+import { type Sprinkles } from "@macaw-ui";
 import { type ReactNode } from "react";
 
 export interface SidebarMenuItem {

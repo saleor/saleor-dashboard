@@ -6,7 +6,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
-import { useTheme } from "@saleor/macaw-ui-next";
+import { useTheme } from "@macaw-ui";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 

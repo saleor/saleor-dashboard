@@ -3,7 +3,7 @@ import CollectionWithDividers from "@dashboard/components/CollectionWithDividers
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper } from "@material-ui/core";
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useState } from "react";
 
 import { type FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";

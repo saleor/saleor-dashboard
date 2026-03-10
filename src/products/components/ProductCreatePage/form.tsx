@@ -67,7 +67,7 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

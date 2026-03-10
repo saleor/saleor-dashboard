@@ -9,7 +9,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { commonMessages } from "@dashboard/intl";
 import { type DialogProps, type MinMax } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {

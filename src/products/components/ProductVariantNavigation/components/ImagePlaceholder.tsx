@@ -1,5 +1,5 @@
 import { ImageIcon } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 export const ImagePlaceholder = () => {
   return (

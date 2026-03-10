@@ -1,4 +1,4 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
 

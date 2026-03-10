@@ -1,5 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { vars } from "@macaw-ui";
 import type * as React from "react";
 
 const useStyles = makeStyles(

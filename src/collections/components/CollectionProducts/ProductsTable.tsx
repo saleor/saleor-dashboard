@@ -4,7 +4,7 @@ import { renderCollection } from "@dashboard/misc";
 import { type Node } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Box, Button, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Text } from "@macaw-ui";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 

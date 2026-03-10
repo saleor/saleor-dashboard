@@ -1,5 +1,5 @@
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { AlertTriangle } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

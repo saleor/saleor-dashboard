@@ -1,7 +1,7 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 
 /**
- * @deprecated use `Divider` component from `@saleor/macaw-ui-next`
+ * @deprecated use `Divider` component from `@macaw-ui`
  */
 export const Hr = ({ className }: { className?: string }) => (
   <Box

@@ -7,7 +7,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { Input } from "@saleor/macaw-ui-next";
+import { Input } from "@macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 

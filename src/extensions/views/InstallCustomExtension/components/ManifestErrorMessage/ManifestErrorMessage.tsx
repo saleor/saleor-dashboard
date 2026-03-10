@@ -8,7 +8,7 @@ import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { commonMessages } from "@dashboard/intl";
 import { getSpecificManifestErrorDocLink } from "@dashboard/links";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Text } from "@macaw-ui";
 import type * as React from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";

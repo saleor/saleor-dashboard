@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeProvider } from "@macaw-ui";
 import { renderHook } from "@testing-library/react-hooks";
 import { type PropsWithChildren, useContext } from "react";
 

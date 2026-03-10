@@ -1,4 +1,4 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { type ReactElement, type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 

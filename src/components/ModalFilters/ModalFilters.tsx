@@ -3,7 +3,7 @@ import {
   ConditionalFilters,
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
-import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@macaw-ui";
 import { type FC } from "react";
 import { useIntl } from "react-intl";
 

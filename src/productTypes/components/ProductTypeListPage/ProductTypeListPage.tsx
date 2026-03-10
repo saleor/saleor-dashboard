@@ -9,7 +9,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, type ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

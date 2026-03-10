@@ -7,7 +7,7 @@ import { type InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(

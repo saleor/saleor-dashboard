@@ -1,6 +1,6 @@
 import { getStaticUrl } from "@dashboard/config";
 import { type CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { CreditCard } from "lucide-react";
 
 const MASKED_GROUP = "****";

@@ -4,7 +4,7 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
 interface ProductVariantDeleteDialogProps {

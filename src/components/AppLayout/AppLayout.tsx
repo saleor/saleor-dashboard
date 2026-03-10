@@ -1,6 +1,6 @@
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import type * as React from "react";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";

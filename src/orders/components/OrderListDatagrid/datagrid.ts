@@ -19,7 +19,7 @@ import { type OrderListUrlSortField } from "@dashboard/orders/urls";
 import { type RelayToFlat, type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item, type TextCell } from "@glideapps/glide-data-grid";
-import { type DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, useTheme } from "@macaw-ui";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";

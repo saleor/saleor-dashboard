@@ -14,7 +14,7 @@ import {
   SALEOR_GITHUB_URL,
   TECHNICAL_HELP_CTA_URL,
 } from "@dashboard/links";
-import { Button, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Paragraph, sprinkles } from "@macaw-ui";
 import { HelpCircle } from "lucide-react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, type IntlShape } from "react-intl";

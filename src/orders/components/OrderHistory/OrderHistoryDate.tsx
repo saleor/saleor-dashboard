@@ -1,5 +1,5 @@
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
-import { Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Text, Tooltip } from "@macaw-ui";
 import { type IntlShape, useIntl } from "react-intl";
 
 interface OrderHistoryDateProps {

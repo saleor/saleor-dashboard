@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { type Name } from "@dashboard/featureFlags/availableFlags";
-import { Box, Button, Modal } from "@saleor/macaw-ui-next";
+import { Box, Button, Modal } from "@macaw-ui";
 import { X } from "lucide-react";
 
 import { Content } from "./Content";

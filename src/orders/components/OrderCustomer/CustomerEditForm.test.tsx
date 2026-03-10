@@ -10,7 +10,7 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-jest.mock("@saleor/macaw-ui-next", () => ({
+jest.mock("@macaw-ui", () => ({
   DynamicCombobox: ({
     label,
     onChange,

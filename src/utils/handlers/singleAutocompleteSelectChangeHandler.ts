@@ -1,5 +1,5 @@
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 
 function createSingleAutocompleteSelectHandler(
   change: FormChange,

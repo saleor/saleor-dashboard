@@ -16,7 +16,7 @@ import { type ListActions, type ListProps, type SortPage } from "@dashboard/type
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 

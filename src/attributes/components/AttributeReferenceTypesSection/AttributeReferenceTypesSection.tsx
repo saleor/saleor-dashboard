@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { Plus } from "lucide-react";
 import type React from "react";
 import { useIntl } from "react-intl";

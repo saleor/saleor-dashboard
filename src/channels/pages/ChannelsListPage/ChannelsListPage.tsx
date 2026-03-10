@@ -16,7 +16,7 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@macaw-ui";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

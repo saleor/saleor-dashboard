@@ -25,7 +25,7 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";

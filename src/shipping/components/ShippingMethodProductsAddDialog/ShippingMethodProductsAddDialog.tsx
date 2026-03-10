@@ -19,7 +19,7 @@ import { isProductSelected } from "@dashboard/shipping/components/ShippingMethod
 import { type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@macaw-ui";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

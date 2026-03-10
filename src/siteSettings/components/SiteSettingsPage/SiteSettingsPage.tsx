@@ -17,7 +17,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Divider, Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";

@@ -41,7 +41,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import PageInfo from "../PageInfo";

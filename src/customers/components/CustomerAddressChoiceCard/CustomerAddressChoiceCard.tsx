@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type AddressFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import clsx from "clsx";
 import { Pencil } from "lucide-react";
 import { useIntl } from "react-intl";

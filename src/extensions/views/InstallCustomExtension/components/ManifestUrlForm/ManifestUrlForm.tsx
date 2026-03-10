@@ -1,5 +1,5 @@
 import { messages } from "@dashboard/extensions/messages";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import { type ClipboardEventHandler, type FormEventHandler } from "react";
 import { type Control } from "react-hook-form";
 import { FormattedMessage } from "react-intl";

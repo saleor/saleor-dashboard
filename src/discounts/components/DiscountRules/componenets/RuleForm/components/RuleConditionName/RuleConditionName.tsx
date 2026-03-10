@@ -1,6 +1,6 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Condition, type Rule } from "@dashboard/discounts/models";
-import { Combobox } from "@saleor/macaw-ui-next";
+import { Combobox } from "@macaw-ui";
 import { useController, useFormContext } from "react-hook-form";
 
 import { useConditionNames } from "./hooks/useConditionNames";

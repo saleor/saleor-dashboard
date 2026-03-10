@@ -1,6 +1,6 @@
 import { getStaticUrl } from "@dashboard/config";
 import { type OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useState } from "react";
 
 interface OtherPaymentMethodProps {

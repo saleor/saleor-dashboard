@@ -25,7 +25,7 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text } from "@macaw-ui";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

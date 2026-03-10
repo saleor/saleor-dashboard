@@ -14,7 +14,7 @@ import { productTypeAddUrl, productTypeListUrl } from "@dashboard/productTypes/u
 import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@macaw-ui";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 

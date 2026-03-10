@@ -12,7 +12,7 @@ import {
   type OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";

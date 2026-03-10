@@ -62,7 +62,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
+import { Box, Divider, type Option } from "@macaw-ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

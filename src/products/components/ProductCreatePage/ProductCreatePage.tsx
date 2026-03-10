@@ -40,7 +40,7 @@ import { getChoices } from "@dashboard/products/utils/data";
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type Container } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, type Option } from "@saleor/macaw-ui-next";
+import { Box, type Option } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { type FetchMoreProps, type RelayToFlat } from "../../../types";

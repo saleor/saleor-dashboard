@@ -9,7 +9,7 @@ import { type OrderDiscountContextConsumerProps } from "@dashboard/products/comp
 import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Popover, type PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Popover, type PropsWithBox, sprinkles, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 

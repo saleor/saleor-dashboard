@@ -11,7 +11,7 @@ import {
   type SortPage,
 } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

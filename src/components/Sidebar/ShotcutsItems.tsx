@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { memo } from "react";
 
 import { ShortcutItem } from "./shortcuts/ShortcutItem";

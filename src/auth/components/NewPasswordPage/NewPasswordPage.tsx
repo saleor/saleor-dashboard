@@ -4,7 +4,7 @@ import { type AccountErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface NewPasswordPageFormData {

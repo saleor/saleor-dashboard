@@ -1,4 +1,4 @@
-import { Input, type InputProps, Text } from "@saleor/macaw-ui-next";
+import { Input, type InputProps, Text } from "@macaw-ui";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Switch } from "@saleor/macaw-ui-next";
+import { Switch } from "@macaw-ui";
 import { Grid3x3, List } from "lucide-react";
 
 import { type ProductListViewType } from "../ProductListPage";

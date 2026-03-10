@@ -1,4 +1,4 @@
-import { Box, type PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox } from "@macaw-ui";
 
 export const Content = ({ children, ...rest }: PropsWithBox<{}>) => (
   <Box paddingX={6} {...rest}>

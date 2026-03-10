@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { Button } from "@saleor/macaw-ui-next";
+import { Button } from "@macaw-ui";
 import { useIntl } from "react-intl";
 
 import { exitFormPromptMessages as messages } from "./messages";

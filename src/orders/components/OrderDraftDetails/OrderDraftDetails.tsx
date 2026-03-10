@@ -6,7 +6,7 @@ import {
   type OrderErrorFragment,
   type OrderLineInput,
 } from "@dashboard/graphql";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";

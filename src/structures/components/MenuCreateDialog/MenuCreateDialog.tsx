@@ -10,7 +10,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface MenuCreateDialogFormData {

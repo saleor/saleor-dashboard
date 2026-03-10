@@ -16,7 +16,7 @@ import { getDatagridRowDataIndex, getStatusColor, isFirstColumn } from "@dashboa
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
-import { type DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
+import { type DefaultTheme, useTheme } from "@macaw-ui";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { lineAlertMessages } from "../OrderDraftDetailsProducts/messages";

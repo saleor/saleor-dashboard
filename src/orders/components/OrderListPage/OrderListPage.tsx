@@ -34,7 +34,7 @@ import {
   type TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@macaw-ui";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

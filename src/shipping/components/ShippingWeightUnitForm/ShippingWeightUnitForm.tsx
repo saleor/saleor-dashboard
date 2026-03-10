@@ -2,7 +2,7 @@ import Form from "@dashboard/components/Form";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, type Option, Select } from "@saleor/macaw-ui-next";
+import { Box, Button, type Option, Select } from "@macaw-ui";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

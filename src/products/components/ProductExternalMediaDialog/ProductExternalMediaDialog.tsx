@@ -3,7 +3,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Button, Input, Text } from "@macaw-ui";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductExternalMediaDialogProps {

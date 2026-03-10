@@ -5,7 +5,7 @@ import { customerUrl } from "@dashboard/customers/urls";
 import { type AddressTypeEnum, type CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@macaw-ui";
 import { defineMessages, useIntl } from "react-intl";
 
 import CustomerAddress from "../CustomerAddress/CustomerAddress";

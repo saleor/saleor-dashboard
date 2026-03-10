@@ -13,7 +13,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { type OrderListUrlSortField } from "@dashboard/orders/urls";
 import { type ListProps, type RelayToFlat, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box } from "@macaw-ui";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";

@@ -1,0 +1,42 @@
+import { Meta, Source } from "@storybook/blocks";
+import { IconsPresentation } from "./../../../.storybook/components";
+
+<Meta title="Tokens / Icons" />
+
+# Icons
+
+Each icon has three sizing variants (`small`, `medium` and `large`) accordingly to our design tokens.
+
+<IconsPresentation title="Small" size="small" />
+
+<Source
+  code={`
+<EditIcon size="small" />
+  `}
+/>
+
+<IconsPresentation title="Medium" size="medium" />
+
+<Source
+  code={`
+<EditIcon size="medium" />
+  `}
+/>
+
+<IconsPresentation title="Large" size="large" />
+
+<Source
+  code={`
+<EditIcon size="large" />
+  `}
+/>
+
+### Changing color
+
+Icons are supporting our color tokens so you can change icon color by using `color` property.
+
+<Source
+  code={`
+<EditIcon size="large" color="iconNeutralDefault" />
+  `}
+/>
