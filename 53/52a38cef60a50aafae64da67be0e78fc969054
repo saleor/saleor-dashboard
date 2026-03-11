@@ -1,0 +1,23 @@
+src/taxes/components/TaxAppLabel.stories.tsx
+  06683bddea3ed832 1-25,27-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "5352a38cef60a50aafae64da67be0e78fc969054",
+  "prompts": {
+    "06683bddea3ed832": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "97e16f22-5889-47dd-b54c-1f2cd86e6516",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 57,
+      "total_deletions": 0,
+      "accepted_lines": 56,
+      "overriden_lines": 1
+    }
+  }
+}
