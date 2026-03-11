@@ -1,0 +1,175 @@
+name: "Setup Saleor E2E Environment"
+description: "Sets up a local Docker-based Saleor environment for E2E testing"
+inputs:
+  saleor-ref:
+    description: "Git ref of saleor/saleor to build from source"
+    required: false
+  saleor-image:
+    description: "Pre-built Docker image (skips source build if provided)"
+    required: false
+  db-dump-repo:
+    description: "GitHub repo hosting DB dumps (e.g., saleor/saleor-e2e-dumps)"
+    required: true
+  db-dump-release-tag:
+    description: "Release tag to download dump from"
+    required: true
+    default: "latest"
+  db-dump-asset-pattern:
+    description: "Glob pattern for the dump asset file"
+    required: false
+    default: "*.sql.gz"
+  postgres-version:
+    description: "Postgres Docker image tag"
+    required: false
+    default: "15-alpine"
+  saleor-port:
+    description: "Port for Saleor backend"
+    required: false
+    default: "8000"
+  dashboard-port:
+    description: "Port for Dashboard Nginx"
+    required: false
+    default: "9002"
+outputs:
+  base-url:
+    description: "Dashboard base URL"
+    value: ${{ steps.set-outputs.outputs.base-url }}
+  api-url:
+    description: "API URL"
+    value: ${{ steps.set-outputs.outputs.api-url }}
+runs:
+  using: "composite"
+  steps:
+    - name: Validate inputs
+      shell: bash
+      run: |
+        if [[ -z "${{ inputs.saleor-ref }}" && -z "${{ inputs.saleor-image }}" ]]; then
+          echo "Error: Either 'saleor-ref' or 'saleor-image' must be provided."
+          exit 1
+        fi
+
+    - name: Start Postgres
+      shell: bash
+      run: |
+        docker run -d --name saleor-db --network host \
+          -e POSTGRES_DB=saleor \
+          -e POSTGRES_USER=saleor \
+          -e POSTGRES_PASSWORD=saleor \
+          postgres:${{ inputs.postgres-version }}
+
+        # Wait for readiness
+        echo "Waiting for Postgres to be ready..."
+        for i in {1..30}; do
+          if docker exec saleor-db pg_isready -U saleor; then
+            echo "Postgres is ready."
+            break
+          fi
+          sleep 2
+        done
+
+    - name: Download DB dump
+      shell: bash
+      run: |
+        echo "Downloading DB dump from ${{ inputs.db-dump-repo }}:${{ inputs.db-dump-release-tag }}"
+        gh release download "${{ inputs.db-dump-release-tag }}" \
+          -R "${{ inputs.db-dump-repo }}" \
+          -p "${{ inputs.db-dump-asset-pattern }}" \
+          -D /tmp/db-dump
+      env:
+        GH_TOKEN: ${{ github.token }}
+
+    - name: Restore DB
+      shell: bash
+      run: |
+        DUMP_FILE=$(ls /tmp/db-dump/*.sql.gz 2>/dev/null || ls /tmp/db-dump/*.sql 2>/dev/null)
+        if [[ -z "$DUMP_FILE" ]]; then
+          echo "Error: No dump file found matching pattern '${{ inputs.db-dump-asset-pattern }}'"
+          exit 1
+        fi
+
+        echo "Restoring database from $DUMP_FILE..."
+        if [[ "$DUMP_FILE" == *.gz ]]; then
+          gunzip -c "$DUMP_FILE" | docker exec -i saleor-db psql -U saleor -d saleor
+        else
+          docker exec -i saleor-db psql -U saleor -d saleor < "$DUMP_FILE"
+        fi
+        echo "Database restored."
+
+    - name: Build Saleor from source
+      if: inputs.saleor-ref != ''
+      shell: bash
+      run: |
+        echo "Cloning saleor/saleor ref ${{ inputs.saleor-ref }}..."
+        git clone --depth 1 --branch "${{ inputs.saleor-ref }}" \
+          https://github.com/saleor/saleor.git /tmp/saleor-src
+
+        echo "Building Saleor Docker image..."
+        docker build -t saleor-backend /tmp/saleor-src
+
+    - name: Pull pre-built Saleor image
+      if: inputs.saleor-image != ''
+      shell: bash
+      run: |
+        echo "Pulling pre-built image ${{ inputs.saleor-image }}..."
+        docker pull "${{ inputs.saleor-image }}"
+        docker tag "${{ inputs.saleor-image }}" saleor-backend
+
+    - name: Start Saleor backend
+      shell: bash
+      run: |
+        echo "Starting Saleor backend..."
+        docker run -d --name saleor-backend --network host \
+          -e DATABASE_URL=postgres://saleor:saleor@localhost:5432/saleor \
+          -e SECRET_KEY=e2e-test-secret-key-not-for-production \
+          -e ALLOWED_HOSTS=localhost,127.0.0.1 \
+          -e ALLOWED_CLIENT_HOSTS=localhost \
+          -e DEFAULT_COUNTRY=US \
+          -e DEFAULT_CURRENCY=USD \
+          saleor-backend
+
+        # Health-check loop
+        echo "Waiting for Saleor backend to be ready..."
+        for i in {1..60}; do
+          if curl -sf http://localhost:${{ inputs.saleor-port }}/health/; then
+            echo "Saleor backend is ready."
+            break
+          fi
+          sleep 2
+        done
+
+    - name: Build Dashboard
+      shell: bash
+      run: |
+        echo "Building Dashboard Docker image..."
+        # Assumes the current working directory is the dashboard repo (saleor-dashboard)
+        # The action is typically called after checking out the dashboard repo
+        docker build -t dashboard \
+          --build-arg API_URL=http://localhost:${{ inputs.saleor-port }}/graphql/ \
+          --build-arg APP_MOUNT_URI=/dashboard/ \
+          .
+
+    - name: Start Dashboard via Nginx
+      shell: bash
+      run: |
+        echo "Starting Dashboard..."
+        docker run -d --name dashboard --network host \
+          -e API_URL=http://localhost:${{ inputs.saleor-port }}/graphql/ \
+          -p ${{ inputs.dashboard-port }}:80 \
+          dashboard
+
+        # Health-check
+        echo "Waiting for Dashboard to be ready..."
+        for i in {1..30}; do
+          if curl -sf http://localhost:${{ inputs.dashboard-port }}/dashboard/; then
+            echo "Dashboard is ready."
+            break
+          fi
+          sleep 2
+        done
+
+    - name: Set outputs
+      id: set-outputs
+      shell: bash
+      run: |
+        echo "base-url=http://localhost:${{ inputs.dashboard-port }}/dashboard/" >> $GITHUB_OUTPUT
+        echo "api-url=http://localhost:${{ inputs.saleor-port }}/graphql/" >> $GITHUB_OUTPUT
