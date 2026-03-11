@@ -1,0 +1,638 @@
+{
+  "extensionCategories": [
+    {
+      "id": "agentic-commerce",
+      "name": {
+        "en": "Agentic Commerce"
+      },
+      "extensions": [
+        {
+          "id": "saleor.app.instant-checkout",
+          "name": {
+            "en": "Instant Checkout with ChatGPT"
+          },
+          "description": {
+            "en": "Publish your products to ChatGPT following the Agentic Commerce Protocol."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/OpenAI-black-monoblossom.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/OpenAI-white-monoblossom.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": null
+        }
+      ]
+    },
+    {
+      "id": "payments",
+      "name": {
+        "en": "Payments"
+      },
+      "extensions": [
+        {
+          "id": "app.saleor.adyen",
+          "name": {
+            "en": "Adyen"
+          },
+          "description": {
+            "en": "Accept a wide range of payment methods and currencies by using the Adyen integration."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/adyen.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/adyen.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": null
+        },
+        {
+          "id": "app.saleor.stripe-v2",
+          "name": {
+            "en": "Stripe"
+          },
+          "description": {
+            "en": "Finalize orders successfully by offering a variety of payment methods through the integration of Saleor and Stripe."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/stripe.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/stripe.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/stripe"
+        },
+        {
+          "id": "saleor.app.authorizenet",
+          "name": {
+            "en": "Authorize.net"
+          },
+          "description": {
+            "en": "Connect Saleor with Authorize.net payments."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/authorizenet.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/authorize-net-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-authorize.net"
+        },
+        {
+          "id": "saleor.app.juspay",
+          "name": {
+            "en": "Juspay"
+          },
+          "description": {
+            "en": "Connect Saleor with a unified global payments solution to access multiple gateways and offer seamless transactions to your customers."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/juspay.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/community/juspay.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "PARTNER",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/juspay/hyperswitch-saleor-payment-app"
+        },
+        {
+          "id": "saleor.app.klarna",
+          "name": {
+            "en": "Klarna"
+          },
+          "description": {
+            "en": "Connect Saleor with Klarna, the leading BNPL provider."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/klarna.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/community/klarna.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-klarna"
+        },
+        {
+          "id": "saleor.io.dummy-payment-app",
+          "name": {
+            "en": "Dummy Payment App"
+          },
+          "description": {
+            "en": "Bare-bones app for testing Saleor's Trnsactions API without a real payment provider."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/dummy-payment-app.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/dummy-payment-app.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/dummy-payment-app"
+        },
+        {
+          "id": "saleor.app.np-atobarai",
+          "name": {
+            "en": "NP Atobarai (NP後払い)"
+          },
+          "description": {
+            "en": "Connect with leading Japanese payment and pick-up provider."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/saleor-apps/np-atobarai.png"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/saleor-apps/np-atobarai.png"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/np-atobarai"
+        },
+        {
+          "id": "saleor.app.sequra",
+          "name": {
+            "en": "seQura"
+          },
+          "description": {
+            "en": "Connect Saleor with seQura - a global payments solution that offers buy now, pay later and installment payment options."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/sequra.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/community/sequra.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-sequra"
+        }
+      ]
+    },
+    {
+      "id": "taxes",
+      "name": {
+        "en": "Taxes"
+      },
+      "extensions": [
+        {
+          "id": "saleor.app.avatax",
+          "name": {
+            "en": "Avalara AvaTax"
+          },
+          "description": {
+            "en": "Automate your tax management process by integrating Saleor with AvaTax, a leading cloud-based tax calculation software."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/avatax.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/avatax.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/avatax"
+        },
+        {
+          "id": "saleor.app.taxjar",
+          "name": {
+            "en": "TaxJar"
+          },
+          "description": {
+            "en": "Simplify tax calculations for your Saleor orders and checkouts by relying on TaxJar, a trusted tax calculation solution."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/taxjar.png"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/taxjar.png"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-taxjar"
+        }
+      ]
+    },
+    {
+      "id": "cms",
+      "name": {
+        "en": "CMS"
+      },
+      "extensions": [
+        {
+          "id": "saleor.app.cms2",
+          "name": {
+            "en": "Strapi CMS"
+          },
+          "description": {
+            "en": "Integrate Strapi CMS with Saleor to manage your products alongside your content."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/strapi.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/strapi.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/cms"
+        },
+        {
+          "id": "saleor.app.cms2",
+          "name": {
+            "en": "Contentful CMS"
+          },
+          "description": {
+            "en": "Synchronize Saleor with Contentful CMS to extend your product management capabilities."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/contentful.png"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/contentful.png"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/cms"
+        },
+        {
+          "id": "saleor.app.cms2",
+          "name": {
+            "en": "DatoCMS"
+          },
+          "description": {
+            "en": "Leverage the composable architecture by connecting your Saleor products to DatoCMS."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/datocms.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/datocms.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/cms"
+        },
+        {
+          "id": "saleor.app.cms2",
+          "name": {
+            "en": "Builder.io"
+          },
+          "description": {
+            "en": "Build e-commerce apps with the best-in-class drag & drop editor."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/builder.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/builder.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/cms"
+        },
+        {
+          "id": "saleor.app.cms2",
+          "name": {
+            "en": "Payload CMS"
+          },
+          "description": {
+            "en": "Sync your Saleor products with Payload CMS - a TypeScript-first headless CMS."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/payloadcms.png"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/payloadcms.png"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/cms"
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "name": {
+        "en": "Automation"
+      },
+      "extensions": [
+        {
+          "id": "saleor.app.search",
+          "name": {
+            "en": "Algolia"
+          },
+          "description": {
+            "en": "Enable fast and efficient product search by integrating Saleor with Algolia."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/algolia.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/algolia.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/search"
+        },
+        {
+          "id": "saleor.app.klaviyo",
+          "name": {
+            "en": "Klaviyo"
+          },
+          "description": {
+            "en": "Deliver a personalized purchase experience by leveraging integrating Saleor with Klaviyo."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/saleor-apps/app-klaviyo.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/app-klaviyo-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/klaviyo"
+        },
+        {
+          "id": "saleor.app.product-feed",
+          "name": {
+            "en": "Google Merchant Center"
+          },
+          "description": {
+            "en": "Enable your products to appear in Google's shopping results by connecting Saleor with Google Merchant Center."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/google.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/google.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/products-feed",
+          "manifestUrl": null
+        },
+        {
+          "id": "saleor.app.segment-v2",
+          "name": {
+            "en": "Twilio Segment"
+          },
+          "description": {
+            "en": "Reach your customers through video, voice, or email by leveraging the Saleor-Twilio Segment integration."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/segment.png"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/community/segment.png"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/segment"
+        },
+        {
+          "id": "saleor.app.smtp",
+          "name": {
+            "en": "SMTP"
+          },
+          "description": {
+            "en": "Take full control over your email communication by creating custom SMTP configurations within Saleor."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/smtp.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/app-smtp-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/apps/tree/HEAD/apps/smtp"
+        },
+        {
+          "id": "saleor.app.invoices",
+          "name": {
+            "en": "Invoices"
+          },
+          "description": {
+            "en": "Generate PDF invoices for Orders and store them in Saleor file storage."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/app-invoices.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/app-invoices-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-invoices"
+        },
+        {
+          "id": "saleor.app.crm",
+          "name": {
+            "en": "CRM"
+          },
+          "description": {
+            "en": "Providing customer data to external services like Mailchimp."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/app-crm.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/app-crm-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-crm"
+        },
+        {
+          "id": "saleor.app.slack",
+          "name": {
+            "en": "Slack"
+          },
+          "description": {
+            "en": "Never miss a beat by receiving real-time notifications on Slack whenever new orders come into your Saleor store."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v2/community/slack.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v2/community/slack.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-slack"
+        },
+        {
+          "id": "saleor.app.sendgrid",
+          "name": {
+            "en": "Twilio SendGrid"
+          },
+          "description": {
+            "en": "Connect Saleor to SendGrid."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v3/sendgrid.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/sendgrid.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-sendgrid"
+        },
+        {
+          "id": "saleor.app.checkout-prices-poc",
+          "name": {
+            "en": "Checkout prices"
+          },
+          "description": {
+            "en": "Set custom prices for checkout lines."
+          },
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v3/generic-app.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/generic-app-dark.svg"
+            }
+          },
+          "type": "APP",
+          "kind": "OFFICIAL",
+          "manifestUrl": null,
+          "repositoryUrl": "https://github.com/saleor/examples/tree/HEAD/example-app-checkout-prices"
+        },
+        {
+          "id": "mirumee.authentication.openidconnect",
+          "name": {
+            "en": "OpenID Connect (OIDC)"
+          },
+          "description": null,
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            }
+          },
+          "type": "PLUGIN"
+        },
+        {
+          "id": "mirumee.notifications.user_email",
+          "name": {
+            "en": "User Emails"
+          },
+          "description": null,
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            }
+          },
+          "type": "PLUGIN"
+        },
+        {
+          "id": "mirumee.notifications.admin_email",
+          "name": {
+            "en": "Admin Emails"
+          },
+          "description": null,
+          "logo": {
+            "light": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            },
+            "dark": {
+              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
+            }
+          },
+          "type": "PLUGIN"
+        }
+      ]
+    }
+  ]
+}
