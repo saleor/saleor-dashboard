@@ -3,6 +3,9 @@ import { useContext } from "react";
 
 export type LocalizeDate = (date: string, format?: string) => string;
 
+/**
+ * Backwards compat with old moment.js format.
+ */
 const FORMAT_OPTIONS: Record<string, Intl.DateTimeFormatOptions> = {
   ll: { dateStyle: "medium" },
   lll: { dateStyle: "medium", timeStyle: "short" },
@@ -19,7 +22,7 @@ const FORMAT_OPTIONS: Record<string, Intl.DateTimeFormatOptions> = {
 function useDateLocalize(): LocalizeDate {
   const { locale } = useContext(LocaleContext);
 
-  return (date: string, format?: string) => {
+  return (date: string, format?: "ll" | "lll" | "llll" | string) => {
     const parsed = new Date(date);
 
     if (isNaN(parsed.getTime())) {

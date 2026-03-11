@@ -97,13 +97,21 @@ export const createGetCellContent =
             })
           : readonlyTextCell(PLACEHOLDER);
       case "start-date":
-        return readonlyTextCell(
-          rowData.startDate ? formatDateTime(rowData.startDate, locale) : PLACEHOLDER,
-        );
+        try {
+          return readonlyTextCell(
+            rowData.startDate ? formatDateTime(rowData.startDate, locale) : PLACEHOLDER,
+          );
+        } catch (e) {
+          return readonlyTextCell(PLACEHOLDER);
+        }
       case "end-date":
-        return readonlyTextCell(
-          rowData.endDate ? formatDateTime(rowData.endDate, locale) : PLACEHOLDER,
-        );
+        try {
+          return readonlyTextCell(
+            rowData.endDate ? formatDateTime(rowData.endDate, locale) : PLACEHOLDER,
+          );
+        } catch (e) {
+          return readonlyTextCell(PLACEHOLDER);
+        }
 
       case "value":
         return getVoucherValueCell(rowData, channel);

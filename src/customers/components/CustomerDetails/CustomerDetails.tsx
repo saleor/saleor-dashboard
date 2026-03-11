@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { type AccountErrorFragment, type CustomerDetailsQuery } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
@@ -28,12 +29,13 @@ const useStyles = makeStyles(
   { name: "CustomerDetails" },
 );
 
-export function formatMonthYear(date: string): string {
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    year: "numeric",
-  }).format(new Date(date));
-}
+export const formatMonthYear =
+  (locale: string) =>
+  (date: string): string =>
+    new Intl.DateTimeFormat(locale, {
+      month: "short",
+      year: "numeric",
+    }).format(new Date(date));
 
 interface CustomerDetailsProps {
   customer: CustomerDetailsQuery["user"];
@@ -51,6 +53,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const formErrors = getFormErrors(["note"], errors);
 
@@ -72,7 +75,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
                   defaultMessage="Active member since {date}"
                   description="section subheader"
                   values={{
-                    date: formatMonthYear(customer.dateJoined),
+                    date: formatMonthYear(locale)(customer.dateJoined),
                   }}
                 />
               </Text>

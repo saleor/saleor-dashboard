@@ -72,7 +72,11 @@ export const createGetCellContent =
       case "number":
         return readonlyTextCell(`#${rowData.number}`);
       case "date":
-        return readonlyTextCell(formatDateTime(rowData.created, locale));
+        try {
+          return readonlyTextCell(formatDateTime(rowData.created, locale));
+        } catch (e) {
+          return readonlyTextCell("-");
+        }
       case "customer":
         return readonlyTextCell(getCustomerName(rowData));
       case "total":
