@@ -136,7 +136,7 @@ describe("user", () => {
       // Arrange
       const sdk = user({ apolloClient: mockClient, channel });
       const opts = {
-        newEmailAddress: "new@example.com",
+        newEmail: "new@example.com",
         password: "password123",
         redirectUrl: "https://example.com/confirm",
         channel: "custom-channel",
@@ -157,7 +157,7 @@ describe("user", () => {
       // Arrange
       const sdk = user({ apolloClient: mockClient, channel });
       const opts = {
-        newEmailAddress: "new@example.com",
+        newEmail: "new@example.com",
         password: "password123",
         redirectUrl: "https://example.com/confirm",
       };

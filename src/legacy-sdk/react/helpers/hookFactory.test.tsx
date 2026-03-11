@@ -32,7 +32,7 @@ const createMockClient = (): SaleorClient => ({
 
 interface HookResultRendererProps<T extends keyof SaleorClient> {
   useHook: () => SaleorClient[T];
-  renderValue: (value: SaleorClient[T]) => string;
+  renderValue: (value: any) => string;
 }
 
 const HookResultRenderer = <T extends keyof SaleorClient>({
