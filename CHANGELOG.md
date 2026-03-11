@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.22.35
+
+### Patch Changes
+
+- [#6408](https://github.com/saleor/saleor-dashboard/pull/6408) [`ae326e8`](https://github.com/saleor/saleor-dashboard/commit/ae326e82e4305e412ee6213c2c0121a09265e112) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed main e2e test suite failing due to using masking on shared job output
+
+- [#6402](https://github.com/saleor/saleor-dashboard/pull/6402) [`75a5de8`](https://github.com/saleor/saleor-dashboard/commit/75a5de8e9a4428d0b60fa2d395405ec9bef404e1) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update dependencies
+
+- [#6399](https://github.com/saleor/saleor-dashboard/pull/6399) [`fbbafcb`](https://github.com/saleor/saleor-dashboard/commit/fbbafcb11eecec281098a81c6063bb2d6de20c07) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replaced last remaining icons from MacawUI and replaced them with Lucide
+
+- [#6391](https://github.com/saleor/saleor-dashboard/pull/6391) [`dced6da`](https://github.com/saleor/saleor-dashboard/commit/dced6da33662c850f60f8664d588793dabc1d9c5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - When App Store is not configured (env variable not set), Dashboard will not longer crash. Instead it will load
+  local catalog of apps and plugins to render them as a fallback
+
+- [#6401](https://github.com/saleor/saleor-dashboard/pull/6401) [`41a3abb`](https://github.com/saleor/saleor-dashboard/commit/41a3abbfe75cd96b8ce79a03a76d1de78bab44fe) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added Vite aliases so bare `react` and `react-dom` imports resolve from the project's node_modules. This allows using local linking of other React-based packages (like app-sdk or MacawUI) which normally break due to two React versions being installed.
+
+- [#6395](https://github.com/saleor/saleor-dashboard/pull/6395) [`664d662`](https://github.com/saleor/saleor-dashboard/commit/664d6624c52cae0fc536f0645e3e4d16454efa15) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Hide Webhooks plugin on the extensions list
+
+- [#6408](https://github.com/saleor/saleor-dashboard/pull/6408) [`ae326e8`](https://github.com/saleor/saleor-dashboard/commit/ae326e82e4305e412ee6213c2c0121a09265e112) Thanks [@witoszekdev](https://github.com/witoszekdev)! - `run pw-e2e` label on PRs will now also trigger a deployment. Previously e2e test failed due to a missing deployment without clear error.
+
+- [#6393](https://github.com/saleor/saleor-dashboard/pull/6393) [`f587cfb`](https://github.com/saleor/saleor-dashboard/commit/f587cfb4f2d0d0f0aef6418e9ad9bbec7a15dc90) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Refund reasons are now sorted by name within Select
+
+- [#6392](https://github.com/saleor/saleor-dashboard/pull/6392) [`7d74846`](https://github.com/saleor/saleor-dashboard/commit/7d748462fde9a1cc435e334b1dffab971db983a0) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated MacawUI to 1.4.2
+
 ## 3.22.34
 
 ### Patch Changes
