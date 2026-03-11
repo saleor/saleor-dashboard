@@ -1,10 +1,5 @@
 import { Root as Portal } from "@radix-ui/react-portal";
-import {
-  ForwardedRef,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-} from "react";
+import { ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode } from "react";
 
 import { classNames } from "~/utils";
 
@@ -31,15 +26,7 @@ import { ComboboxWrapper, useCombobox } from "../Common";
 export type DynamicComboboxProps<T> = PropsWithBox<
   Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    | "color"
-    | "width"
-    | "height"
-    | "size"
-    | "type"
-    | "children"
-    | "onChange"
-    | "value"
-    | "nonce"
+    "color" | "width" | "height" | "size" | "type" | "children" | "onChange" | "value" | "nonce"
   > & {
     label?: ReactNode;
     error?: boolean;
@@ -83,7 +70,7 @@ const DynamicComboboxInner = <T extends Option>(
     onScrollEnd,
     ...props
   }: DynamicComboboxProps<T>,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const {
     active,
@@ -143,9 +130,7 @@ const DynamicComboboxInner = <T extends Option>(
             disabled={disabled}
             {...props}
             {...inputProps}
-            onChange={
-              inputProps.onChange && formEventTypeAdapter(inputProps.onChange)
-            }
+            onChange={inputProps.onChange && formEventTypeAdapter(inputProps.onChange)}
           />
 
           {endAdornment && typed && <Box>{endAdornment(value)}</Box>}
@@ -164,11 +149,7 @@ const DynamicComboboxInner = <T extends Option>(
           className={listWrapperRecipe({ size })}
           data-portal-for={id}
         >
-          <List
-            as="ul"
-            className={listStyle}
-            {...getMenuProps({ ref: refs.floating })}
-          >
+          <List as="ul" className={listStyle} {...getMenuProps({ ref: refs.floating })}>
             {isOpen &&
               itemsToSelect?.map((item, index) => (
                 <List.Item
@@ -196,12 +177,10 @@ const DynamicComboboxInner = <T extends Option>(
             {isOpen && !loading && !hasItemsToSelect && children}
 
             {loading && (
-              <LoadingListItem size={size}>
-                {locale?.loadingText ?? "Loading"}
-              </LoadingListItem>
+              <LoadingListItem size={size}>{locale?.loadingText ?? "Loading"}</LoadingListItem>
             )}
             <div
-              ref={(ref) => {
+              ref={ref => {
                 scrollRef.current = ref;
               }}
             />
@@ -218,12 +197,10 @@ const DynamicComboboxInner = <T extends Option>(
   );
 };
 
-const DynamicComboboxRoot = forwardRef(DynamicComboboxInner) as <
-  T extends Option,
->(
+const DynamicComboboxRoot = forwardRef(DynamicComboboxInner) as <T extends Option>(
   props: DynamicComboboxProps<T> & {
     ref?: React.ForwardedRef<HTMLInputElement>;
-  }
+  },
 ) => ReturnType<typeof DynamicComboboxInner>;
 
 export const DynamicCombobox = Object.assign(DynamicComboboxRoot, {

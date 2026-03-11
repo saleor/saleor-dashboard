@@ -12,18 +12,11 @@ export type SVGWrapperProps = SVGWrapperVariants &
   };
 
 export const SVGWrapper = forwardRef<SVGSVGElement, SVGWrapperProps>(
-  (
-    { className, size, viewBox = "0 0 24 24", color, children, ...rest },
-    ref
-  ) => {
+  ({ className, size, viewBox = "0 0 24 24", color, children, ...rest }, ref) => {
     return (
       <svg
         ref={ref}
-        className={classNames(
-          svgWrapper({ size }),
-          sprinkles({ color }),
-          className
-        )}
+        className={classNames(svgWrapper({ size }), sprinkles({ color }), className)}
         viewBox={viewBox}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +26,7 @@ export const SVGWrapper = forwardRef<SVGSVGElement, SVGWrapperProps>(
         {children}
       </svg>
     );
-  }
+  },
 );
 
 SVGWrapper.displayName = "SVGWrapper";

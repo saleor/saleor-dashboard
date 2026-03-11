@@ -38,13 +38,11 @@ export default meta;
 type Story = StoryObj<typeof Combobox>;
 
 const ComboboxTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<Option | null>(options[0]);
 
-    return (
-      <Combobox {...args} value={value} onChange={(value) => setValue(value)} />
-    );
+    return <Combobox {...args} value={value} onChange={value => setValue(value)} />;
   },
 };
 
@@ -148,7 +146,7 @@ export const Example = () => {
       label="Pick a color"
       size="large"
       value={value}
-      onChange={(value) => setValue(value)}
+      onChange={value => setValue(value)}
       options={options}
     />
   );
@@ -162,7 +160,7 @@ export const WithStringValue = () => {
       label="Pick a color"
       size="large"
       value={value}
-      onChange={(value) => setValue(value)}
+      onChange={value => setValue(value)}
       options={options}
     />
   );
@@ -176,33 +174,21 @@ export const WithAdornment = () => {
       label="Pick a color"
       size="large"
       value={value}
-      onChange={(value) => setValue(value)}
-      startAdornment={(value) => {
+      onChange={value => setValue(value)}
+      startAdornment={value => {
         if (!value) {
           return null;
         }
 
-        return (
-          <Box
-            width={4}
-            height={4}
-            marginRight={2}
-            __backgroundColor={value.value}
-          ></Box>
-        );
+        return <Box width={4} height={4} marginRight={2} __backgroundColor={value.value}></Box>;
       }}
-      options={options.map((option) => {
+      options={options.map(option => {
         const value = option.value.split("color-")[1];
         return {
           ...option,
           value,
           startAdornment: (
-            <Box
-              __backgroundColor={value}
-              marginRight={2}
-              width={4}
-              height={4}
-            ></Box>
+            <Box __backgroundColor={value} marginRight={2} width={4} height={4}></Box>
           ),
         };
       })}
@@ -227,14 +213,14 @@ export const WithEllipsis = () => {
         value={value}
         size="large"
         label="Label"
-        onChange={(value) => setValue(value)}
+        onChange={value => setValue(value)}
       />
     </Box>
   );
 };
 
 export const WithDisabledOption = () => {
-  const values = options.map((option) => ({
+  const values = options.map(option => ({
     ...option,
     disabled: option.value === "color-green",
   }));
@@ -247,7 +233,7 @@ export const WithDisabledOption = () => {
         value={value}
         size="large"
         label="Label"
-        onChange={(value) => setValue(value)}
+        onChange={value => setValue(value)}
       />
     </Box>
   );
@@ -256,13 +242,7 @@ export const WithDisabledOption = () => {
 export const NoOptions = () => {
   return (
     <Box __width="200px">
-      <Combobox
-        options={[]}
-        value={null}
-        size="large"
-        label="Label"
-        onChange={() => undefined}
-      >
+      <Combobox options={[]} value={null} size="large" label="Label" onChange={() => undefined}>
         <Combobox.NoOptions>No items to select</Combobox.NoOptions>
       </Combobox>
     </Box>

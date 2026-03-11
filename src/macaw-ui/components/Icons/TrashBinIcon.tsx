@@ -19,5 +19,5 @@ export const TrashBinIcon = createSVGWrapper(
       fillRule="evenodd"
       clipRule="evenodd"
     />
-  </>
+  </>,
 );

@@ -1,10 +1,4 @@
-import {
-  DynamicCombobox,
-  DynamicMultiselect,
-  Input,
-  RangeInput,
-  Select,
-} from "@macaw-ui";
+import { DynamicCombobox, DynamicMultiselect, Input, RangeInput, Select } from "@macaw-ui";
 
 import BulkSelect from "./BulkSelect";
 import { type FilterEventEmitter } from "./EventEmitter";

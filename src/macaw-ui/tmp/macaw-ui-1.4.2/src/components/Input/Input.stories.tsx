@@ -19,17 +19,11 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 const InputTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState("Input content");
 
-    return (
-      <Input
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    );
+    return <Input {...args} value={value} onChange={e => setValue(e.target.value)} />;
   },
 };
 
@@ -122,7 +116,7 @@ export const WithHelpText: Story = {
 };
 
 const InputNumberTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState(args.value);
 
@@ -132,7 +126,7 @@ const InputNumberTemplate: Story = {
           {...args}
           type="number"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={e => setValue(e.target.value)}
           endAdornment={<Text size={1}>USD</Text>}
         />
       </Box>

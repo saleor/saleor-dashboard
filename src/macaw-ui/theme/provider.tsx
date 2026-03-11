@@ -10,10 +10,7 @@ type ThemeProviderProps = {
   defaultTheme?: DefaultTheme;
 };
 
-export const ThemeProvider = ({
-  children,
-  defaultTheme = "defaultLight",
-}: ThemeProviderProps) => (
+export const ThemeProvider = ({ children, defaultTheme = "defaultLight" }: ThemeProviderProps) => (
   <ThemeContextProvider defaultTheme={defaultTheme}>
     <main id="macaw-ui-root">{children}</main>
   </ThemeContextProvider>

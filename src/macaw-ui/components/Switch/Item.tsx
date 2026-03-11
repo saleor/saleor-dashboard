@@ -13,13 +13,7 @@ export type SwitchItemProps = PropsWithBox<{
 }> &
   DataAttributes;
 
-export const SwitchItem = ({
-  value,
-  id,
-  disabled = false,
-  children,
-  ...rest
-}: SwitchItemProps) => {
+export const SwitchItem = ({ value, id, disabled = false, children, ...rest }: SwitchItemProps) => {
   return (
     <Switch.Item
       asChild

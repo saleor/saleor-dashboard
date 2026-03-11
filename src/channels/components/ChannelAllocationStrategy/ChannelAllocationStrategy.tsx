@@ -48,32 +48,7 @@ const ChannelAllocationStrategy = ({
 
       <DashboardCard.Content>
         <RadioGroupField
-          label={
-            <Text marginBottom={4} display="block">
-              <FormattedMessage {...messages.allocationStrategyDescription} />
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <CircleQuestionMark
-                    size={iconSize.small}
-                    strokeWidth={iconStrokeWidthBySize.small}
-                    className={classes.tooltipIcon}
-                  />
-                </Tooltip.Trigger>
-                <Tooltip.Content side="bottom">
-                  <Tooltip.Arrow />
-                  <FormattedMessage {...messages.allocaationMayOccur} />
-                  <ul>
-                    <li>
-                      <FormattedMessage {...messages.allocaationMayOccurWithTrackInventory} />
-                    </li>
-                    <li>
-                      <FormattedMessage {...messages.allocaationMayOccurWithReservationTime} />
-                    </li>
-                  </ul>
-                </Tooltip.Content>
-              </Tooltip>
-            </Text>
-          }
+          label="Allocation strategy"
           choices={strategyOptions.map(option => ({
             label: (
               <>
@@ -87,7 +62,7 @@ const ChannelAllocationStrategy = ({
             ),
             value: option.type,
           }))}
-          disabled={disabled}
+          disabled={disabled ? "true" : "false"}
           name="allocationStrategy"
           value={data?.allocationStrategy!}
           onChange={onChange}

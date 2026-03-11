@@ -14,7 +14,7 @@ describe("isFixedWidth", () => {
     expect(result).toBe(true);
   });
 
-  it("Returns false when children are provided, regardless of icon", () => {
+  (it("Returns false when children are provided, regardless of icon", () => {
     // Arrange
     const propsWithIcon: ButtonProps = {
       icon: <SearchIcon />,
@@ -49,5 +49,5 @@ describe("isFixedWidth", () => {
       // Assert
       expect(resultIconChildren).toBe(true);
       expect(resultIcon).toBe(false);
-    });
+    }));
 });

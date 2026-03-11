@@ -14,5 +14,5 @@ export const ExternalLinkIcon = createSVGWrapper(
     strokeWidth={1.5}
     strokeLinecap="round"
     strokeLinejoin="round"
-  />
+  />,
 );

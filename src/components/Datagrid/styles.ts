@@ -6,206 +6,193 @@ import { useMemo } from "react";
 import { rightColumnBoxShadow } from "./ColumnPicker/utils";
 
 export const cellHeight = 40;
-// Width for a single action button container (column picker, single row action)
 export const singleActionWidth = cellHeight;
-// Default width for the row action bar (can be overridden via Datagrid prop)
 export const rowActionBarWidth = singleActionWidth;
 
+// @ts-expect-error - vanilla-extract vars type incompatible with MUI makeStyles
 const useStyles = makeStyles<{
   actionButtonPosition?: "left" | "right";
   showMetadataButton?: boolean;
-}>(
-  () => {
-    const rowActionSelected = {
-      background: "transparent",
-      color: vars.colors.border.default1,
-    };
+}>(() => {
+  const rowActionSelected = {
+    background: "transparent",
+    color: vars.colors.border.default1,
+  };
 
-    return {
-      actionBtnBar: {
-        position: "absolute",
-        left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
-        right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
-        zIndex: 1,
-        background: vars.colors.background.default1,
-        borderRadius: vars.borderRadius[4],
-        // Right and left toolbars
-        width: `calc(100% - 64px - ${cellHeight} - 1px)`,
-        marginTop: 1,
-        marginLeft: 50,
-        height: cellHeight,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-        padding: vars.spacing[1.5],
+  return {
+    actionBtnBar: {
+      position: "absolute",
+      left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
+      right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
+      zIndex: 1,
+      background: vars.colors.background.default1,
+      borderRadius: vars.borderRadius[4],
+      width: `calc(100% - 64px - ${cellHeight} - 1px)`,
+      marginTop: 1,
+      marginLeft: 50,
+      height: cellHeight,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      padding: vars.spacing[1.5],
+    },
+    columnPicker: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      height: cellHeight,
+      width: "100%",
+    },
+    columnPickerBackground: {
+      background: vars.colors.background.default1,
+    },
+    ghostIcon: {
+      color: vars.colors.text.default1,
+      width: cellHeight - 8,
+      height: cellHeight - 8,
+      padding: 0,
+      margin: "auto",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    portal: {
+      "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+        appearance: "none",
+        margin: 0,
       },
-      columnPicker: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-        height: cellHeight,
+      "& input[type=number]": {
+        appearance: "textfield",
+      },
+      "& .clip-region": {
+        border: `1px solid ${vars.colors.border.accent1}`,
+      },
+      "& .gdg-growing-entry": {
+        flex: 1,
+        marginTop: 0,
+      },
+      "& .gdg-style": {
+        background: vars.colors.background.default1,
+        border: "none",
+        boxShadow: "none !important",
+        padding: "0 !important",
+      },
+      "& input:not([class*='MuiInputBase']), & textarea": {
+        appearance: "none",
+        background: "none",
+        border: "none",
+        fontSize: vars.fontSize[3],
+        letterSpacing: vars.letterSpacing[3],
+        lineHeight: vars.lineHeight[3],
+        fontWeight: vars.fontWeight.regular,
+        padding: vars.spacing[1],
+        outline: 0,
+      },
+      "& input[type='number']:not([class*='MuiInputBase'])": {
+        textAlign: "right",
         width: "100%",
       },
-      columnPickerBackground: {
-        background: vars.colors.background.default1,
+      position: "fixed",
+      top: 0,
+      left: 0,
+      zIndex: 2,
+    },
+    datagrid: {
+      "& .dvn-scroller": {
+        overscrollBehaviorX: "none",
+        overflowY: "hidden",
       },
-      ghostIcon: {
-        color: vars.colors.text.default1,
-        // Fixed size with 6px smaller than cell for visual padding
-        width: cellHeight - 8,
-        height: cellHeight - 8,
-        padding: 0,
-        margin: "auto",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+      borderRadius: 0,
+      boxSizing: "content-box",
+      width: "100%",
+      paddingBottom: "1px",
+    },
+    rowActionBar: {
+      height: "100%",
+      width: rowActionBarWidth,
+    },
+    rowActionvBarWithItems: {},
+    rowActionBarScrolledToRight: {
+      borderLeftColor: vars.colors.border.default1,
+    },
+    rowAction: {
+      "&:hover, $rowActionSelected": {
+        rowActionSelected,
       },
-      portal: {
-        "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
-          appearance: "none",
-          margin: 0,
-        },
-        "& input[type=number]": {
-          appearance: "textfield",
-        },
-        "& .clip-region": {
-          border: `1px solid ${vars.colors.border.accent1}`,
-        },
-        "& .gdg-growing-entry": {
-          flex: 1,
-          marginTop: 0,
-        },
-        "& .gdg-style": {
-          background: vars.colors.background.default1,
-          border: "none",
-          // Setting these with !important because we never intend to style
-          // this particular element, like, never ever
-          boxShadow: "none !important",
-          padding: "0 !important",
-        },
-        "& input:not([class*='MuiInputBase']), & textarea": {
-          appearance: "none",
-          background: "none",
-          border: "none",
-          fontSize: vars.fontSize[3],
-          letterSpacing: vars.letterSpacing[3],
-          lineHeight: vars.lineHeight[3],
-          fontWeight: vars.fontWeight.regular,
-          padding: vars.spacing[1],
-          outline: 0,
-        },
-        "& input[type='number']:not([class*='MuiInputBase'])": {
-          textAlign: "right",
-          width: "100%",
-        },
-        position: "fixed",
-        top: 0,
-        left: 0,
-        zIndex: 2,
+      "&:not(:last-child)": {
+        marginBottom: -1,
       },
-      datagrid: {
-        "& .dvn-scroller": {
-          overscrollBehaviorX: "none",
-          overflowY: "hidden",
-        },
-        borderRadius: 0,
-        boxSizing: "content-box",
-        width: "100%",
-        paddingBottom: "1px",
-      },
-      rowActionBar: {
-        height: "100%",
-        width: rowActionBarWidth,
-      },
-      rowActionvBarWithItems: {},
-      rowActionBarScrolledToRight: {
-        borderLeftColor: vars.colors.border.default1,
-      },
-      rowAction: {
-        "&:hover, $rowActionSelected": {
-          rowActionSelected,
-        },
-        "&:not(:last-child)": {
-          marginBottom: -1,
-        },
-        borderTop: `1px solid ${vars.colors.border.default1}`,
-        borderBottom: `1px solid ${vars.colors.border.default1}`,
-        borderLeft: `1px solid ${vars.colors.border.default1}`,
-        borderRight: "none",
-        color: vars.colors.text.default1,
-        display: "grid",
-        gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
-        alignItems: "center",
-        justifyItems: "center",
-        height: `calc(${cellHeight}px - 1px)`,
-        background: vars.colors.background.default1,
-        boxShadow: rightColumnBoxShadow,
-      },
-      rowColumnGroup: {
-        height: `calc(${cellHeight}px - 1px)`,
-      },
-      rowActionScrolledToRight: {
-        borderLeftColor: vars.colors.border.default1,
-      },
-      columnGroupFixer: {
-        position: "absolute",
-        top: 1,
-        left: 0,
-        height: cellHeight,
-        width: 10,
-        borderLeft: 0,
-        background: vars.colors.background.default1,
-      },
-      editorContainer: {
-        position: "relative",
-        height: "100%",
-      },
-      rowActionBarShadow: {
-        height: "100%",
-        width: 1,
-        position: "absolute",
-        zIndex: -1,
-        transition: "box-shadow .2s ease-in-out",
-        boxShadow: "-1px 0px 12px transparent",
-      },
-      rowActionBarShadowActive: {
-        boxShadow: "none",
-      },
-      rowActionSelected,
-    };
-  },
-  { name: "Datagrid" },
-);
+      borderTop: `1px solid ${vars.colors.border.default1}`,
+      borderBottom: `1px solid ${vars.colors.border.default1}`,
+      borderLeft: `1px solid ${vars.colors.border.default1}`,
+      borderRight: "none",
+      color: vars.colors.text.default1,
+      display: "grid",
+      gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
+      alignItems: "center",
+      justifyItems: "center",
+      height: `calc(${cellHeight}px - 1px)`,
+      background: vars.colors.background.default1,
+      boxShadow: rightColumnBoxShadow,
+    },
+    rowColumnGroup: {
+      height: `calc(${cellHeight}px - 1px)`,
+    },
+    rowActionScrolledToRight: {
+      borderLeftColor: vars.colors.border.default1,
+    },
+    columnGroupFixer: {
+      position: "absolute",
+      top: 1,
+      left: 0,
+      height: cellHeight,
+      width: 10,
+      borderLeft: 0,
+      background: vars.colors.background.default1,
+    },
+    editorContainer: {
+      position: "relative",
+      height: "100%",
+    },
+    rowActionBarShadow: {
+      height: "100%",
+      width: 1,
+      position: "absolute",
+      zIndex: -1,
+      transition: "box-shadow .2s ease-in-out",
+      boxShadow: "-1px 0px 12px transparent",
+    },
+    rowActionBarShadowActive: {
+      boxShadow: "none",
+    },
+    rowActionSelected,
+  };
+}, { name: "Datagrid" });
 
-export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
-  () => ({
-    fullScreenContainer: props => ({
-      [`& .${props.root}`]: {
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+// @ts-expect-error - vanilla-extract vars type incompatible with MUI makeStyles
+export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(() => ({
+  fullScreenContainer: props => ({
+    [`& .${props.root}`]: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+    },
+    [`& .${props.datagrid}`]: {
+      height: "100%",
+      "& .dvn-scroller": {
+        overflowY: "scroll",
       },
-      [`& .${props.datagrid}`]: {
-        height: "100%",
-        "& .dvn-scroller": {
-          overflowY: "scroll",
-        },
-      },
-    }),
+    },
   }),
-  { name: "Datagrid-fullscreen" },
-);
+}), { name: "Datagrid-fullscreen" });
 
 export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolean) {
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      // Accent colors for checkboxes and selection highlighting
-      // accentColor: used for checkbox fill when cell has focus
-      // accentLight: background overlay for focused/selected cells
       accentColor: themeValues.colors.background.accent1,
-      accentLight: themeValues.colors.background.default2, // Neutral gray for focus highlight
-      accentFg: themeValues.colors.background.default1, // Checkmark color (contrasts with accentColor)
+      accentLight: themeValues.colors.background.default2,
+      accentFg: themeValues.colors.background.default1,
       bgCell: themeValues.colors.background.default1,
       bgHeader: themeValues.colors.background.default1,
       bgHeaderHasFocus: "transparent",
@@ -233,7 +220,6 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const readonlyDatagridTheme = useMemo(
     (): Partial<Theme> => ({
       ...datagridTheme,
-      // In readonly mode, keep checkboxes visible but use muted colors
       accentColor: themeValues.colors.text.default2,
       accentLight: themeValues.colors.background.default2,
     }),

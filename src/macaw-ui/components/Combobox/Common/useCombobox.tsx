@@ -5,25 +5,16 @@ import {
 } from "downshift";
 import { FocusEvent, useState } from "react";
 
-import {
-  Option,
-  SingleChangeHandler,
-  useHighlightedIndex,
-} from "~/components/BaseSelect";
+import { Option, SingleChangeHandler, useHighlightedIndex } from "~/components/BaseSelect";
 
-const getItemsFilter = <T extends Option>(
-  inputValue: string | undefined,
-  options: T[]
-) => {
+const getItemsFilter = <T extends Option>(inputValue: string | undefined, options: T[]) => {
   if (!inputValue) {
     return options;
   }
 
   const lowerCasedInputValue = inputValue.toString().toLowerCase();
 
-  return options.filter((option) =>
-    option.label.toLowerCase().includes(lowerCasedInputValue)
-  );
+  return options.filter(option => option.label.toLowerCase().includes(lowerCasedInputValue));
 };
 
 export const useCombobox = <T extends Option, V extends string | Option>({
@@ -50,7 +41,7 @@ export const useCombobox = <T extends Option, V extends string | Option>({
   const itemsToSelect = getItemsFilter<T>(inputValue, options);
   const { highlightedIndex, onHighlightedIndexChange } = useHighlightedIndex(
     itemsToSelect,
-    selectedItem
+    selectedItem,
   );
 
   const {
@@ -62,11 +53,11 @@ export const useCombobox = <T extends Option, V extends string | Option>({
     getItemProps,
   } = useDownshiftCombobox({
     items: itemsToSelect,
-    itemToString: (item) => item?.label ?? "",
+    itemToString: item => item?.label ?? "",
     selectedItem,
     highlightedIndex,
     onHighlightedIndexChange,
-    isItemDisabled: (item) => item?.disabled ?? false,
+    isItemDisabled: item => item?.disabled ?? false,
     onInputValueChange({ inputValue, selectedItem }) {
       // It's happened because onInputValueChange is called when user selects item from a list,
       // and we don't want to show filtered items in the list when user selects item
@@ -83,9 +74,7 @@ export const useCombobox = <T extends Option, V extends string | Option>({
     },
     onSelectedItemChange: ({ selectedItem }) => {
       if (selectedItem) {
-        const selectedValue = isValuePassedAsString
-          ? selectedItem.value
-          : selectedItem;
+        const selectedValue = isValuePassedAsString ? selectedItem.value : selectedItem;
         setInputValue("");
         onChange?.(selectedValue as V);
       }
@@ -102,24 +91,24 @@ export const useCombobox = <T extends Option, V extends string | Option>({
     getMenuProps,
     getInputProps: (
       options?: UseComboboxGetInputPropsOptions,
-      otherOptions?: GetPropsCommonOptions
+      otherOptions?: GetPropsCommonOptions,
     ) =>
       _getInputProps<{
         onFocus: (e: FocusEvent<HTMLInputElement>) => void;
         onBlur: (e: FocusEvent<HTMLInputElement>) => void;
       }>(
         {
-          onFocus: (e) => {
+          onFocus: e => {
             onFocus?.(e);
             setActive(true);
           },
-          onBlur: (e) => {
+          onBlur: e => {
             onBlur?.(e);
             setActive(false);
           },
           ...options,
         },
-        otherOptions
+        otherOptions,
       ),
     highlightedIndex,
     getItemProps,

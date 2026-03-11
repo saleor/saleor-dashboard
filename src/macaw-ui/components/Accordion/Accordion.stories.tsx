@@ -50,11 +50,9 @@ export const Primary: Story = {
 
 export const Controlled: Story = {
   args,
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [value, setValue] = useState<undefined | string>(
-      args.defaultValue as string
-    );
+    const [value, setValue] = useState<undefined | string>(args.defaultValue as string);
 
     return (
       <Box>

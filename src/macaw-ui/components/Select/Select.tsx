@@ -1,22 +1,9 @@
 import { Root as Portal } from "@radix-ui/react-portal";
-import {
-  ForwardedRef,
-  InputHTMLAttributes,
-  ReactNode,
-  forwardRef,
-  useMemo,
-} from "react";
+import { ForwardedRef, InputHTMLAttributes, ReactNode, forwardRef, useMemo } from "react";
 
 import { useFloating } from "~/hooks/useFloating";
 import { isString } from "~/utils";
-import {
-  Box,
-  List,
-  PropsWithBox,
-  Text,
-  TextProps,
-  convertSizeToScale,
-} from "..";
+import { Box, List, PropsWithBox, Text, TextProps, convertSizeToScale } from "..";
 import { HelperText, InputVariants } from "../BaseInput";
 import {
   NoOptions,
@@ -36,15 +23,7 @@ import { useSelect } from "./useSelect";
 export type SelectProps<T, V> = PropsWithBox<
   Omit<
     InputHTMLAttributes<HTMLElement>,
-    | "color"
-    | "width"
-    | "height"
-    | "size"
-    | "type"
-    | "children"
-    | "onChange"
-    | "value"
-    | "nonce"
+    "color" | "width" | "height" | "size" | "type" | "children" | "onChange" | "value" | "nonce"
   > & {
     label?: ReactNode;
     error?: boolean;
@@ -89,7 +68,7 @@ const SelectInner = <T extends Option, V extends Option | string>(
     children,
     ...props
   }: SelectProps<T, V>,
-  ref: ForwardedRef<HTMLElement>
+  ref: ForwardedRef<HTMLElement>,
 ) => {
   const isValuePassedAsString = isString(value);
   const {
@@ -104,9 +83,7 @@ const SelectInner = <T extends Option, V extends Option | string>(
     highlightedIndex,
     hasItemsToSelect,
   } = useSelect({
-    value: isValuePassedAsString
-      ? options.find((item) => item.value === value)
-      : value,
+    value: isValuePassedAsString ? options.find(item => item.value === value) : value,
     isValuePassedAsString,
     options,
     onChange,
@@ -142,9 +119,7 @@ const SelectInner = <T extends Option, V extends Option | string>(
         error={error}
         className={className}
         getLabelProps={getLabelProps}
-        getToggleButtonProps={() =>
-          getToggleButtonProps({ ref: refs.reference })
-        }
+        getToggleButtonProps={() => getToggleButtonProps({ ref: refs.reference })}
       >
         <Box height={getBoxHeight(size)} {...props} ref={ref} display="flex">
           {startAdornment && typed && startAdornment(value)}
@@ -173,11 +148,7 @@ const SelectInner = <T extends Option, V extends Option | string>(
           })}
           className={listWrapperRecipe({ size })}
         >
-          <List
-            as="ul"
-            className={listStyle}
-            {...getMenuProps({ ref: refs.floating })}
-          >
+          <List as="ul" className={listStyle} {...getMenuProps({ ref: refs.floating })}>
             {isOpen &&
               options?.map((item, index) => (
                 <List.Item
@@ -217,11 +188,8 @@ const SelectInner = <T extends Option, V extends Option | string>(
   );
 };
 
-const SelectRoot = forwardRef(SelectInner) as <
-  T extends Option,
-  V extends Option | string,
->(
-  props: SelectProps<T, V> & { ref?: React.ForwardedRef<HTMLElement> }
+const SelectRoot = forwardRef(SelectInner) as <T extends Option, V extends Option | string>(
+  props: SelectProps<T, V> & { ref?: React.ForwardedRef<HTMLElement> },
 ) => ReturnType<typeof SelectInner>;
 
 export const Select = Object.assign(SelectRoot, {

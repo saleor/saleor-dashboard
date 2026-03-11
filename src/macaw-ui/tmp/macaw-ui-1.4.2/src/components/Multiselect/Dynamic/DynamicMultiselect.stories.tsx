@@ -50,22 +50,20 @@ export const Default = () => {
     }));
 
     setNextUrl(res.next);
-    setOptions((prev) => [...prev, ...options]);
+    setOptions(prev => [...prev, ...options]);
 
     setLoading(false);
   }
 
   const handleInputValueChange = async (criteria: string) => {
-    const res = await search(
-      `https://swapi.dev/api/people/?search=${criteria}`
-    );
+    const res = await search(`https://swapi.dev/api/people/?search=${criteria}`);
 
     setNextUrl(res.next);
     setOptions(
       res.results.map((result: { name: string }) => ({
         value: result.name,
         label: result.name,
-      }))
+      })),
     );
   };
 
@@ -74,10 +72,10 @@ export const Default = () => {
       <DynamicMultiselect
         value={value}
         label="Pick a star wars characters"
-        onChange={(value) => setValue(value)}
+        onChange={value => setValue(value)}
         options={options}
         loading={loading}
-        onInputValueChange={(value) => {
+        onInputValueChange={value => {
           handleInputValueChange(value);
         }}
         onScrollEnd={() => {
@@ -103,9 +101,7 @@ export const NoOptions = () => {
           placeholderText: "Add character",
         }}
       >
-        <DynamicMultiselect.NoOptions>
-          No items to select
-        </DynamicMultiselect.NoOptions>
+        <DynamicMultiselect.NoOptions>No items to select</DynamicMultiselect.NoOptions>
       </DynamicMultiselect>
     </Box>
   );

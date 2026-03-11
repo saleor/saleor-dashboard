@@ -14,7 +14,7 @@ describe("isStringArray", () => {
       isStringArray([
         { value: "two", label: "two" },
         { value: "one", label: "one" },
-      ])
+      ]),
     ).toBe(false);
   });
 

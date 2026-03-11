@@ -17,5 +17,5 @@ export const EditIcon = createSVGWrapper(
       d="M16.4749 11.5962L12.9394 8.06064L4.9792 16.0208L4.27209 20.2635L8.51474 19.5564L16.4749 11.5962Z"
       fill="currentColor"
     />
-  </>
+  </>,
 );

@@ -37,17 +37,11 @@ export default meta;
 type Story = StoryObj<typeof Select>;
 
 const SelectTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState(options[0]);
 
-    return (
-      <Select
-        {...args}
-        value={value}
-        onChange={(value) => setValue(value as Option)}
-      />
-    );
+    return <Select {...args} value={value} onChange={value => setValue(value as Option)} />;
   },
 };
 
@@ -151,12 +145,7 @@ export const WithStringValue = () => {
   const [value, setValue] = useState("color-black");
 
   return (
-    <Select
-      options={options}
-      value={value}
-      size="large"
-      onChange={(value) => setValue(value)}
-    />
+    <Select options={options} value={value} size="large" onChange={value => setValue(value)} />
   );
 };
 
@@ -168,8 +157,8 @@ export const WithStartAdornment = () => {
       label="Pick a color"
       size="large"
       value={value}
-      onChange={(value) => setValue(value)}
-      startAdornment={(value) => {
+      onChange={value => setValue(value)}
+      startAdornment={value => {
         if (!value) {
           return null;
         }
@@ -184,7 +173,7 @@ export const WithStartAdornment = () => {
           ></Box>
         );
       }}
-      options={options.map((option) => {
+      options={options.map(option => {
         const value = option.value.split("color-")[1];
         return {
           ...option,
@@ -221,14 +210,14 @@ export const WithEllipsis = () => {
         value={value}
         size="large"
         label="Label"
-        onChange={(value) => setValue(value)}
+        onChange={value => setValue(value)}
       />
     </Box>
   );
 };
 
 export const WithDisabledOption = () => {
-  const values: Option[] = options.map((option) => ({
+  const values: Option[] = options.map(option => ({
     ...option,
     disabled: option.value === "color-green",
   }));
@@ -242,7 +231,7 @@ export const WithDisabledOption = () => {
         value={value}
         size="large"
         label="Label"
-        onChange={(value) => setValue(value)}
+        onChange={value => setValue(value)}
       />
     </Box>
   );
@@ -255,13 +244,7 @@ export const Empty = () => {
 export const NoOptions = () => {
   return (
     <Box __width="200px">
-      <Select
-        options={[]}
-        value={null}
-        size="large"
-        label="Label"
-        onChange={() => undefined}
-      >
+      <Select options={[]} value={null} size="large" label="Label" onChange={() => undefined}>
         <Select.NoOptions>No items to select</Select.NoOptions>
       </Select>
     </Box>

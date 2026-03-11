@@ -1,7 +1,7 @@
-import { Box, type BoxProps } from "@macaw-ui";
+import { Box } from "@macaw-ui";
 import type * as React from "react";
 
-interface DetailPageLayoutContentProps extends BoxProps {
+interface DetailPageLayoutContentProps {
   [key: `data-${string}`]: string;
   children: React.ReactNode;
   hideScrollbar?: boolean;

@@ -18,6 +18,6 @@ describe("useStateEvents", () => {
       const { result } = renderHook(() => useStateEvents(value, type));
 
       expect(result.current.typed).toBe(expected);
-    }
+    },
   );
 });

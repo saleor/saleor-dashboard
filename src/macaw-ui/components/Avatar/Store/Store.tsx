@@ -23,10 +23,7 @@ export const Store = (props: StoreAvatarProps) => {
         as="img"
         src={src}
         alt="Store avatar image"
-        className={classNames(
-          storeAvatar({ size, scheme, type: "image" }),
-          className
-        )}
+        className={classNames(storeAvatar({ size, scheme, type: "image" }), className)}
         data-macaw-ui-component="Avatar.Store"
         {...rest}
       />
@@ -36,10 +33,7 @@ export const Store = (props: StoreAvatarProps) => {
   const { size, scheme, className, initials, ...rest } = props;
   return (
     <Box
-      className={classNames(
-        storeAvatar({ size, scheme, type: "initials" }),
-        className
-      )}
+      className={classNames(storeAvatar({ size, scheme, type: "initials" }), className)}
       data-macaw-ui-component="Avatar.Store"
       {...rest}
     >

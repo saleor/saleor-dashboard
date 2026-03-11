@@ -6,7 +6,7 @@ export const useAutoHeightTextarea = (
   textAreaRef: HTMLTextAreaElement | null,
   value: TextareaValue,
   rows: number,
-  maxRows: number
+  maxRows: number,
 ) => {
   // Use useLayoutEffect to avoid calling getComputedStyle during render
   // which causes React error #185 in React 18's useSyncExternalStore

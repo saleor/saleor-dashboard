@@ -12,21 +12,16 @@ import { MultiChangeHandler, Option } from "~/components/BaseSelect";
 import { isStringArray } from "~/utils";
 
 export type RenderEndAdornmentType = (
-  props: UseComboboxGetToggleButtonPropsReturnValue
+  props: UseComboboxGetToggleButtonPropsReturnValue,
 ) => ReactNode;
 
-const getItemsFilter = <T extends Option>(
-  selectedItems: T[],
-  inputValue: string,
-  options: T[]
-) => {
+const getItemsFilter = <T extends Option>(selectedItems: T[], inputValue: string, options: T[]) => {
   const lowerCasedInputValue = inputValue?.toLowerCase();
 
   return options.filter(
-    (option) =>
-      !selectedItems.find(
-        (selectedItem) => selectedItem.value === option.value
-      ) && option.label.toLowerCase().includes(lowerCasedInputValue ?? "")
+    option =>
+      !selectedItems.find(selectedItem => selectedItem.value === option.value) &&
+      option.label.toLowerCase().includes(lowerCasedInputValue ?? ""),
   );
 };
 
@@ -51,7 +46,7 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
   const [active, setActive] = useState(false);
   const selectedItems = isStringArray(selectedValues)
     ? selectedValues.reduce<T[]>((acc, value) => {
-        const option = options.find((option) => option.value === value);
+        const option = options.find(option => option.value === value);
         if (option) {
           acc.push(option);
         }
@@ -62,37 +57,32 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
   const itemsToSelect = getItemsFilter<T>(selectedItems, inputValue, options);
 
   const showInput =
-    onInputValueChange || showEmptyState
-      ? true
-      : selectedItems.length !== options.length;
+    onInputValueChange || showEmptyState ? true : selectedItems.length !== options.length;
 
   const typed = Boolean(selectedItems.length || active);
 
-  const { getSelectedItemProps, getDropdownProps, removeSelectedItem } =
-    useMultipleSelection({
-      selectedItems,
-      onStateChange(changes) {
-        const { selectedItems: newSelectedItems, type } = changes;
+  const { getSelectedItemProps, getDropdownProps, removeSelectedItem } = useMultipleSelection({
+    selectedItems,
+    onStateChange(changes) {
+      const { selectedItems: newSelectedItems, type } = changes;
 
-        switch (type) {
-          case useMultipleSelection.stateChangeTypes
-            .SelectedItemKeyDownBackspace:
-          case useMultipleSelection.stateChangeTypes.SelectedItemKeyDownDelete:
-          case useMultipleSelection.stateChangeTypes.DropdownKeyDownBackspace:
-          case useMultipleSelection.stateChangeTypes
-            .FunctionRemoveSelectedItem: {
-            const selected = isStringArray(selectedValues)
-              ? newSelectedItems?.map((item) => item.value)
-              : newSelectedItems;
-            onChange?.(selected as V[]);
-            break;
-          }
-
-          default:
-            break;
+      switch (type) {
+        case useMultipleSelection.stateChangeTypes.SelectedItemKeyDownBackspace:
+        case useMultipleSelection.stateChangeTypes.SelectedItemKeyDownDelete:
+        case useMultipleSelection.stateChangeTypes.DropdownKeyDownBackspace:
+        case useMultipleSelection.stateChangeTypes.FunctionRemoveSelectedItem: {
+          const selected = isStringArray(selectedValues)
+            ? newSelectedItems?.map(item => item.value)
+            : newSelectedItems;
+          onChange?.(selected as V[]);
+          break;
         }
-      },
-    });
+
+        default:
+          break;
+      }
+    },
+  });
 
   const {
     isOpen,
@@ -104,9 +94,9 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
     getToggleButtonProps: _getToggleButtonProps,
   } = useCombobox({
     items: itemsToSelect,
-    itemToString: (item) => item?.label ?? "",
+    itemToString: item => item?.label ?? "",
     defaultHighlightedIndex: 0,
-    isItemDisabled: (item) => item?.disabled ?? false,
+    isItemDisabled: item => item?.disabled ?? false,
     selectedItem: null,
     stateReducer(_state, actionAndChanges) {
       const { changes, type } = actionAndChanges;
@@ -123,18 +113,14 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
           return changes;
       }
     },
-    onStateChange({
-      inputValue: newInputValue,
-      type,
-      selectedItem: newSelectedItem,
-    }) {
+    onStateChange({ inputValue: newInputValue, type, selectedItem: newSelectedItem }) {
       switch (type) {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
         case useCombobox.stateChangeTypes.InputBlur:
           if (newSelectedItem) {
             const selected = isStringArray(selectedValues)
-              ? [...selectedItems.map((i) => i.value), newSelectedItem.value]
+              ? [...selectedItems.map(i => i.value), newSelectedItem.value]
               : [...selectedItems, newSelectedItem];
             onChange?.(selected as V[]);
           } else {
@@ -162,7 +148,7 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
     getMenuProps,
     getInputProps: (
       options?: UseComboboxGetInputPropsOptions,
-      otherOptions?: GetPropsCommonOptions
+      otherOptions?: GetPropsCommonOptions,
     ) =>
       _getInputProps<{
         onFocus: (e: FocusEvent<HTMLInputElement>) => void;
@@ -181,7 +167,7 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
           preventKeyAction: isOpen,
           ...options,
         }),
-        otherOptions
+        otherOptions,
       ),
     highlightedIndex,
     getItemProps,
@@ -194,7 +180,7 @@ export const useMultiselect = <T extends Option, V extends Option | string>({
       _getToggleButtonProps<{
         onClick?: MouseEventHandler<HTMLButtonElement>;
       }>({
-        onClick: (event) => {
+        onClick: event => {
           event.preventDefault();
         },
         ...options,

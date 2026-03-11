@@ -17,17 +17,11 @@ export default meta;
 type Story = StoryObj<typeof Textarea>;
 
 const TextareaTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState("Textarea content");
 
-    return (
-      <Textarea
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    );
+    return <Textarea {...args} value={value} onChange={e => setValue(e.target.value)} />;
   },
 };
 

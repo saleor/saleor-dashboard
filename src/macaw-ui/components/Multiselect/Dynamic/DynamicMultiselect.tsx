@@ -1,10 +1,5 @@
 import { Root as Portal } from "@radix-ui/react-portal";
-import {
-  ForwardedRef,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-} from "react";
+import { ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode } from "react";
 
 import { Box, List, PropsWithBox, Text } from "~/components";
 import { HelperText, InputVariants } from "~/components/BaseInput";
@@ -34,15 +29,7 @@ import {
 export type DynamicMultiselectProps<T> = PropsWithBox<
   Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    | "color"
-    | "width"
-    | "height"
-    | "size"
-    | "type"
-    | "children"
-    | "onChange"
-    | "value"
-    | "nonce"
+    "color" | "width" | "height" | "size" | "type" | "children" | "onChange" | "value" | "nonce"
   > & {
     label?: ReactNode;
     error?: boolean;
@@ -85,7 +72,7 @@ const DynamicMultiselectInner = <T extends Option>(
     onScrollEnd,
     ...props
   }: DynamicMultiselectProps<T>,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const {
     active,
@@ -167,7 +154,7 @@ const DynamicMultiselectInner = <T extends Option>(
               <Text
                 cursor="pointer"
                 size={1}
-                onClick={(event) => {
+                onClick={event => {
                   event.stopPropagation();
                   event.preventDefault();
                   removeSelectedItem(item);
@@ -190,9 +177,7 @@ const DynamicMultiselectInner = <T extends Option>(
           visibility={showInput ? "visible" : "hidden"}
           {...inputProps}
           {...props}
-          onChange={
-            inputProps.onChange && formEventTypeAdapter(inputProps.onChange)
-          }
+          onChange={inputProps.onChange && formEventTypeAdapter(inputProps.onChange)}
         />
       </MultiselectWrapper>
 
@@ -208,11 +193,7 @@ const DynamicMultiselectInner = <T extends Option>(
           })}
           className={listWrapperRecipe({ size })}
         >
-          <List
-            as="ul"
-            className={listStyle}
-            {...getMenuProps({ ref: refs.floating })}
-          >
+          <List as="ul" className={listStyle} {...getMenuProps({ ref: refs.floating })}>
             {isOpen &&
               itemsToSelect?.map((item, index) => (
                 <List.Item
@@ -238,12 +219,10 @@ const DynamicMultiselectInner = <T extends Option>(
             {isOpen && !loading && !hasItemsToSelect && children}
 
             {loading && (
-              <LoadingListItem size={size}>
-                {locale?.loadingText || "Loading"}
-              </LoadingListItem>
+              <LoadingListItem size={size}>{locale?.loadingText || "Loading"}</LoadingListItem>
             )}
             <div
-              ref={(ref) => {
+              ref={ref => {
                 scrollRef.current = ref;
               }}
             />
@@ -260,12 +239,10 @@ const DynamicMultiselectInner = <T extends Option>(
   );
 };
 
-const DynamicMultiselectRoot = forwardRef(DynamicMultiselectInner) as <
-  T extends Option,
->(
+const DynamicMultiselectRoot = forwardRef(DynamicMultiselectInner) as <T extends Option>(
   props: DynamicMultiselectProps<T> & {
     ref?: React.ForwardedRef<HTMLInputElement>;
-  }
+  },
 ) => ReturnType<typeof DynamicMultiselectInner>;
 
 export const DynamicMultiselect = Object.assign(DynamicMultiselectRoot, {

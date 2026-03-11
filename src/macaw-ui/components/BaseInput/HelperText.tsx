@@ -11,10 +11,7 @@ type HelperTextProps = {
 export const HelperText = ({ size, error, children }: HelperTextProps) => {
   return (
     <Box className={helperTextRecipe({ size })}>
-      <Text
-        size={convertSizeToScale(size)}
-        color={error ? "critical1" : "default2"}
-      >
+      <Text size={convertSizeToScale(size)} color={error ? "critical1" : "default2"}>
         {children}
       </Text>
     </Box>

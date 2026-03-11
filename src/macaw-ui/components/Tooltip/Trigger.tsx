@@ -5,18 +5,12 @@ export interface TooltipTriggerProps {
   children: ReactNode;
 }
 
-export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
-  ({ children }, ref) => {
-    return (
-      <RadixTooltipTrigger
-        asChild
-        ref={ref}
-        data-macaw-ui-component="Tooltip.Trigger"
-      >
-        {children}
-      </RadixTooltipTrigger>
-    );
-  }
-);
+export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(({ children }, ref) => {
+  return (
+    <RadixTooltipTrigger asChild ref={ref} data-macaw-ui-component="Tooltip.Trigger">
+      {children}
+    </RadixTooltipTrigger>
+  );
+});
 
 Trigger.displayName = "Tooltip.Trigger";

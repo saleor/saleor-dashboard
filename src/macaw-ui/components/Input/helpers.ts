@@ -14,7 +14,7 @@ export const checkIfValidNumberInput = (event: KeyboardEvent<HTMLElement>) => {
 export const isInputTyped = (
   type: InputProps["type"],
   value: InputValue,
-  active: boolean
+  active: boolean,
 ): boolean => {
   // do not scale label down if input is date, time or datetime-local
   if (checkIfDateTimeInput(type)) {

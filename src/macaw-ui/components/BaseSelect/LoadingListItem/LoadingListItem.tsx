@@ -8,16 +8,8 @@ type LoadingListItemProps = {
   children?: ReactNode;
 };
 
-export const LoadingListItem = ({
-  size = "medium",
-  children,
-}: LoadingListItemProps) => (
-  <List.Item
-    className={listItemStyle}
-    display="flex"
-    gap={1.5}
-    color="default2"
-  >
+export const LoadingListItem = ({ size = "medium", children }: LoadingListItemProps) => (
+  <List.Item className={listItemStyle} display="flex" gap={1.5} color="default2">
     <Text size={convertSizeToScale(size)} color="default2">
       {children}
     </Text>

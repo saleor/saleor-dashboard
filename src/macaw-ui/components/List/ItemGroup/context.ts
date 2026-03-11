@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react";
 
-const itemGroupContext = createContext<{ triggerOpen: () => void } | null>(
-  null
-);
+const itemGroupContext = createContext<{ triggerOpen: () => void } | null>(null);
 
 export const useItemGroupContext = () => {
   const value = useContext(itemGroupContext);

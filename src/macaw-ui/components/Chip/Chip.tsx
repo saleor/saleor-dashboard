@@ -19,7 +19,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
           chip({
             size,
           }),
-          className
+          className,
         )}
         ref={ref}
         data-macaw-ui-component="Chip"
@@ -28,7 +28,7 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 Chip.displayName = "Chip";

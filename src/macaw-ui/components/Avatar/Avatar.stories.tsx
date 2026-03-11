@@ -47,7 +47,7 @@ export const AsStoreInitials: Story = {
     scheme: "accent1",
     size: "medium",
   },
-  render: (args) => <Store {...args} />,
+  render: args => <Store {...args} />,
 };
 
 export const AsStoreImage: Story = {
@@ -56,7 +56,7 @@ export const AsStoreImage: Story = {
     scheme: "accent1",
     size: "medium",
   },
-  render: (args) => <Store {...args} />,
+  render: args => <Store {...args} />,
   parameters: {
     chromatic: { disableSnapshot: true },
   },

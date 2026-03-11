@@ -17,5 +17,5 @@ export const ExportIcon = createSVGWrapper(
       d="M8 10H4C3.44772 10 3 10.4477 3 11V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V11C21 10.4477 20.5523 10 20 10H16V12H19V19H5V12H8V10Z"
       fill="currentColor"
     />
-  </>
+  </>,
 );

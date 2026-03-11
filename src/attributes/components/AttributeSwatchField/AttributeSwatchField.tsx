@@ -6,7 +6,7 @@ import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupFie
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { Box, Skeleton } from "@macaw-ui";
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { swatchFieldMessages } from "./messages";
 import { useColorProcessing } from "./useColorProcessing";
@@ -44,10 +44,10 @@ const AttributeSwatchField = ({
             value: "image",
           },
         ]}
-        label={<FormattedMessage {...inputTypeMessages.swatchType} />}
+        label={formatMessage(inputTypeMessages.swatchType)}
         name="swatch"
         value={type}
-        onChange={event => setType(event.target.value)}
+        onChange={(event: React.ChangeEvent<any>) => setType(event.target.value)}
         display="flex"
         paddingTop={3}
         gap={4}

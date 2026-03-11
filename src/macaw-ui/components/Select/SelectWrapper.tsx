@@ -39,10 +39,7 @@ export const SelectWrapper = ({
   return (
     <Box
       as="label"
-      className={classNames(
-        labelRecipe({ typed, active, disabled, size, error }),
-        className
-      )}
+      className={classNames(labelRecipe({ typed, active, disabled, size, error }), className)}
       alignItems="center"
       justifyContent="space-between"
       disabled={disabled}
@@ -69,10 +66,7 @@ export const SelectWrapper = ({
       </Box>
 
       <ArrowDownIcon
-        className={classNames(
-          toggleIconStyle,
-          sprinkles({ cursor: "pointer" })
-        )}
+        className={classNames(toggleIconStyle, sprinkles({ cursor: "pointer" }))}
         size={size}
       />
     </Box>

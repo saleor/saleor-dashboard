@@ -18,18 +18,8 @@ export type ButtonProps = PropsWithBox<
 
 export const Button = forwardRef<HTMLElement, ButtonProps>(
   (
-    {
-      children,
-      icon,
-      size,
-      fixedWidth,
-      variant,
-      disabled,
-      className,
-      type = "button",
-      ...props
-    },
-    ref
+    { children, icon, size, fixedWidth, variant, disabled, className, type = "button", ...props },
+    ref,
   ) => {
     return (
       <Box
@@ -40,7 +30,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
             size,
             fixedWidth: isFixedWidth({ icon, children, fixedWidth }),
           }),
-          className
+          className,
         )}
         disabled={disabled}
         ref={ref}
@@ -52,7 +42,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

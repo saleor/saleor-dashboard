@@ -10,10 +10,7 @@ import { LabelVariants, labelRecipe, spanRecipe } from "../BaseInput";
 export type TextareaValue = string | number | readonly string[] | undefined;
 type ChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 
-export const useStateEvents = (
-  value: TextareaValue,
-  changeHandler?: ChangeHandler
-) => {
+export const useStateEvents = (value: TextareaValue, changeHandler?: ChangeHandler) => {
   const [active, setActive] = useState(false);
   const typed = Boolean(value || active);
 
@@ -59,19 +56,13 @@ export const TextareaWrapper = ({
     <Box
       as="label"
       htmlFor={id}
-      className={classNames(
-        labelRecipe({ typed, active, disabled, size, error }),
-        className
-      )}
+      className={classNames(labelRecipe({ typed, active, disabled, size, error }), className)}
       alignItems="center"
       gap={1}
       data-macaw-ui-component="Textarea"
     >
       <Box display="flex" flexDirection="column" width="100%">
-        <Box
-          as="span"
-          className={classNames(spanRecipe({ typed, size, disabled, error }))}
-        >
+        <Box as="span" className={classNames(spanRecipe({ typed, size, disabled, error }))}>
           {label}
         </Box>
         {children}

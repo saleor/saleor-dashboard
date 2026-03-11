@@ -8,74 +8,71 @@ import type * as React from "react";
 
 import { SaleorThrobber } from "../Throbber";
 
-const useStyles = makeStyles(
-  theme => ({
-    media: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
-    },
-    mediaContainer: {
-      "&:hover, &.dragged": {
-        "& $mediaOverlay": {
-          display: "block",
-        },
-      },
-      background: theme.palette.background.paper,
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: theme.spacing(),
-      height: 148,
-      overflow: "hidden",
-      padding: vars.spacing[1],
-      position: "relative",
-      width: 148,
-    },
-    mediaOverlay: {
-      background: theme.palette.background.default,
-      opacity: 0.8,
-      cursor: "move",
-      display: "none",
-      height: 148,
-      left: 0,
-      position: "absolute",
-      top: 0,
-      width: 148,
-    },
-    disableOverlay: {
-      "&$mediaOverlay": {
-        display: "none !important",
+// @ts-expect-error - vanilla-extract vars type incompatible with MUI makeStyles
+const useStyles = makeStyles(() => ({
+  media: {
+    height: "100%",
+    objectFit: "contain",
+    userSelect: "none",
+    width: "100%",
+  },
+  mediaContainer: {
+    "&:hover, &.dragged": {
+      "& $mediaOverlay": {
+        display: "block",
       },
     },
-    mediaOverlayShadow: {
-      $mediaOverlay: {
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-      },
+    background: vars.colors.background.default1,
+    border: `1px solid ${vars.colors.border.default1}`,
+    borderRadius: vars.borderRadius[1],
+    height: 148,
+    overflow: "hidden",
+    padding: vars.spacing[1],
+    position: "relative",
+    width: 148,
+  },
+  mediaOverlay: {
+    background: vars.colors.background.default1,
+    opacity: 0.8,
+    cursor: "move",
+    display: "none",
+    height: 148,
+    left: 0,
+    position: "absolute",
+    top: 0,
+    width: 148,
+  },
+  disableOverlay: {
+    "&$mediaOverlay": {
+      display: "none !important",
     },
-    mediaOverlayToolbar: {
+  },
+  mediaOverlayShadow: {
+    $mediaOverlay: {
+      alignItems: "center",
       display: "flex",
-      justifyContent: "flex-end",
+      justifyContent: "center",
     },
-    controlButton: {
-      color: theme.palette.saleor.main[1],
-      backgroundColor: "transparent",
-      border: "none",
-      cursor: "pointer",
-      margin: theme.spacing(2),
-      padding: 0,
-
-      "&:hover": {
-        color: theme.palette.saleor.active[1],
-      },
-      "&:first-child": {
-        marginRight: 0,
-      },
+  },
+  mediaOverlayToolbar: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  controlButton: {
+    color: vars.colors.buttonDefaultPrimary,
+    backgroundColor: "transparent",
+    border: "none",
+    cursor: "pointer",
+    margin: vars.spacing[0.5],
+    padding: 0,
+    "&:hover": {
+      color: vars.colors.buttonDefaultPrimaryHovered,
     },
-  }),
-  { name: "MediaTile" },
-);
+    "&:first-child": {
+      marginRight: 0,
+    },
+  },
+}), { name: "MediaTile" });
 
 interface MediaTileBaseProps {
   media: {

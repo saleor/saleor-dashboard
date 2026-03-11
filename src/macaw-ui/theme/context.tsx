@@ -16,10 +16,7 @@ type ThemeProviderProps = {
   defaultTheme: DefaultTheme;
 };
 
-export const ThemeContextProvider = ({
-  children,
-  defaultTheme,
-}: ThemeProviderProps) => {
+export const ThemeContextProvider = ({ children, defaultTheme }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(defaultTheme);
 
   useLayoutEffect(() => {
@@ -27,9 +24,7 @@ export const ThemeContextProvider = ({
   }, [theme]);
 
   return (
-    <ThemeContext.Provider
-      value={{ theme, setTheme, themeValues: themes[theme] }}
-    >
+    <ThemeContext.Provider value={{ theme, setTheme, themeValues: themes[theme] }}>
       {children}
     </ThemeContext.Provider>
   );

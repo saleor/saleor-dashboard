@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  FullscreenOffIcon,
-  FullscreenOnIcon,
-  PlusIcon,
-  Text,
-} from "@macaw-ui";
+import { Box, Button, FullscreenOffIcon, FullscreenOnIcon, PlusIcon, Text } from "@macaw-ui";
 import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {

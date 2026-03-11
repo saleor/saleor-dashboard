@@ -7,26 +7,16 @@ export interface RadioGroupIndicatorProps {
   asChild?: boolean;
 }
 
-export const RadioGroupIndicator = forwardRef<
-  HTMLDivElement,
-  RadioGroupIndicatorProps
->(({ disabled, asChild }, ref) => {
-  return (
-    <RadioGroup.Indicator
-      className={indicator({ disabled })}
-      asChild={asChild}
-      ref={ref}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="6"
-        height="6"
-        fill="currentColor"
-      >
-        <circle cx="3" cy="3" r="3" fill="currentColor" />
-      </svg>
-    </RadioGroup.Indicator>
-  );
-});
+export const RadioGroupIndicator = forwardRef<HTMLDivElement, RadioGroupIndicatorProps>(
+  ({ disabled, asChild }, ref) => {
+    return (
+      <RadioGroup.Indicator className={indicator({ disabled })} asChild={asChild} ref={ref}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" fill="currentColor">
+          <circle cx="3" cy="3" r="3" fill="currentColor" />
+        </svg>
+      </RadioGroup.Indicator>
+    );
+  },
+);
 
 RadioGroupIndicator.displayName = "RadioGroupIndicator";

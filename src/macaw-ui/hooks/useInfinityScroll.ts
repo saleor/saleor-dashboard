@@ -24,12 +24,12 @@ export const useInfinityScroll = (onScrollEnd?: () => void) => {
     }
 
     observer.current = new IntersectionObserver(
-      (entries) => {
+      entries => {
         if (entries[0].isIntersecting) {
           setIsIntersecting(true);
         }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
 
     observer.current.observe(target);

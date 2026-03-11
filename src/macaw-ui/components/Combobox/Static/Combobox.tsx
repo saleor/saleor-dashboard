@@ -1,10 +1,5 @@
 import { Root as Portal } from "@radix-ui/react-portal";
-import {
-  ForwardedRef,
-  InputHTMLAttributes,
-  ReactNode,
-  forwardRef,
-} from "react";
+import { ForwardedRef, InputHTMLAttributes, ReactNode, forwardRef } from "react";
 
 import { Box, List, PropsWithBox, Text } from "~/components";
 import { HelperText, InputVariants, inputRecipe } from "~/components/BaseInput";
@@ -29,15 +24,7 @@ import { useCombobox } from "../Common/useCombobox";
 export type ComboboxProps<T, V> = PropsWithBox<
   Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    | "color"
-    | "width"
-    | "height"
-    | "size"
-    | "type"
-    | "children"
-    | "onChange"
-    | "value"
-    | "nonce"
+    "color" | "width" | "height" | "size" | "type" | "children" | "onChange" | "value" | "nonce"
   > & {
     label?: ReactNode;
     error?: boolean;
@@ -71,7 +58,7 @@ const ComboboxInner = <T extends Option, V extends Option | string>(
     children,
     ...props
   }: ComboboxProps<T, V>,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const isValuePassedAsString = isString(value);
 
@@ -88,9 +75,7 @@ const ComboboxInner = <T extends Option, V extends Option | string>(
     itemsToSelect,
     hasItemsToSelect,
   } = useCombobox({
-    selectedItem: isValuePassedAsString
-      ? options.find((option) => option.value === value)
-      : value,
+    selectedItem: isValuePassedAsString ? options.find(option => option.value === value) : value,
     isValuePassedAsString,
     options,
     onChange,
@@ -135,9 +120,7 @@ const ComboboxInner = <T extends Option, V extends Option | string>(
             title={isString(value) ? value : value?.label}
             {...props}
             {...inputProps}
-            onChange={
-              inputProps.onChange && formEventTypeAdapter(inputProps.onChange)
-            }
+            onChange={inputProps.onChange && formEventTypeAdapter(inputProps.onChange)}
           />
 
           {endAdornment && typed && <Box>{endAdornment(value)}</Box>}
@@ -156,11 +139,7 @@ const ComboboxInner = <T extends Option, V extends Option | string>(
           className={listWrapperRecipe({ size })}
           data-portal-for={id}
         >
-          <List
-            as="ul"
-            className={listStyle}
-            {...getMenuProps({ ref: refs.floating })}
-          >
+          <List as="ul" className={listStyle} {...getMenuProps({ ref: refs.floating })}>
             {isOpen &&
               itemsToSelect?.map((item, index) => (
                 <List.Item
@@ -199,11 +178,8 @@ const ComboboxInner = <T extends Option, V extends Option | string>(
   );
 };
 
-const ComboboxRoot = forwardRef(ComboboxInner) as <
-  T extends Option,
-  V extends Option | string,
->(
-  props: ComboboxProps<T, V> & { ref?: React.ForwardedRef<HTMLInputElement> }
+const ComboboxRoot = forwardRef(ComboboxInner) as <T extends Option, V extends Option | string>(
+  props: ComboboxProps<T, V> & { ref?: React.ForwardedRef<HTMLInputElement> },
 ) => ReturnType<typeof ComboboxInner>;
 
 export const Combobox = Object.assign(ComboboxRoot, {

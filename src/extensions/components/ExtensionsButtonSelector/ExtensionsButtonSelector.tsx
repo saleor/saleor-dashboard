@@ -1,14 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { type ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
-import {
-  Box,
-  type BoxProps,
-  Button,
-  type ButtonProps,
-  Dropdown,
-  List,
-  Text,
-} from "@macaw-ui";
+import { Box, type BoxProps, Button, type ButtonProps, Dropdown, List, Text } from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 import { type ReactNode } from "react";
 

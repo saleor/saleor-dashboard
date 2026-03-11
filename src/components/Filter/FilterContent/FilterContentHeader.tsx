@@ -4,28 +4,26 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@macaw-ui";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
-      position: "sticky",
-      top: 0,
-      padding: theme.spacing(1, 3),
-      backgroundColor: vars.colors.background.default1,
-      borderBottom: `1px solid ${vars.colors.border.default1}`,
-      zIndex: 1,
-    },
-    clear: {
-      marginRight: theme.spacing(1),
-    },
-    label: {
-      fontWeight: 600,
-    },
-  }),
-  { name: "FilterContentHeader" },
-);
+// @ts-expect-error - vanilla-extract vars type incompatible with MUI makeStyles
+const useStyles = makeStyles(() => ({
+  container: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    position: "sticky",
+    top: 0,
+    padding: vars.spacing[1.5],
+    backgroundColor: vars.colors.background.default1,
+    borderBottom: `1px solid ${vars.colors.border.default1}`,
+    zIndex: 1,
+  },
+  clear: {
+    marginRight: vars.spacing[1],
+  },
+  label: {
+    fontWeight: 600,
+  },
+}), { name: "FilterContentHeader" });
 
 interface FilterContentHeaderProps {
   onClear: () => void;

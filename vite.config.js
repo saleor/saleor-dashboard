@@ -32,7 +32,7 @@ const copyOgImage = () => ({
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
   const env = loadEnv(mode, process.cwd(), "");
-  
+
   const {
     NODE_ENV,
     API_URL,

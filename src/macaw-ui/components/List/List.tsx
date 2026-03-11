@@ -22,7 +22,7 @@ export const List = forwardRef<HTMLElement, ListProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 List.displayName = "List";

@@ -14,5 +14,5 @@ export const HelpIcon = createSVGWrapper(
     strokeWidth="1.75"
     strokeLinecap="round"
     strokeLinejoin="round"
-  />
+  />,
 );

@@ -8,9 +8,7 @@ import { RenderEndAdornmentType, useMultiselect } from "./useMultiselect";
 
 export type AdornmentProps = {
   size?: "small" | "medium" | "large";
-  getToggleButtonProps: ReturnType<
-    typeof useMultiselect
-  >["getToggleButtonProps"];
+  getToggleButtonProps: ReturnType<typeof useMultiselect>["getToggleButtonProps"];
   renderEndAdornment?: RenderEndAdornmentType;
   disabled?: boolean;
 };

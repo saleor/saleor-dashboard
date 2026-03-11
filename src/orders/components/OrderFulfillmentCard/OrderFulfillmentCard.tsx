@@ -4,15 +4,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import {
-  Box,
-  Button,
-  Dropdown,
-  List,
-  MoreOptionsIcon,
-  Text,
-  useTheme,
-} from "@macaw-ui";
+import { Box, Button, Dropdown, List, MoreOptionsIcon, Text, useTheme } from "@macaw-ui";
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";

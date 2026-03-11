@@ -29,7 +29,7 @@ export const CardTitle = ({
     subheader={subtitle}
     {...rest}
     style={{
-      backgroundColor: vars.colors.background[backgroundColor],
+      backgroundColor: vars.colors.background[backgroundColor] as string,
       paddingBottom: "13px",
     }}
   >

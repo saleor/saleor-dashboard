@@ -1,7 +1,4 @@
-import {
-  Header as AccordionHeader,
-  Trigger as AccordionTrigger,
-} from "@radix-ui/react-accordion";
+import { Header as AccordionHeader, Trigger as AccordionTrigger } from "@radix-ui/react-accordion";
 import { ReactNode } from "react";
 
 import { Box, PropsWithBox } from "../../Box";
@@ -11,15 +8,11 @@ export type AccordionTriggerProps = PropsWithBox<{
   buttonDataTestId?: string;
 }>;
 
-export const Trigger = ({
-  children,
-  disabled,
-  ...rest
-}: AccordionTriggerProps) => (
+export const Trigger = ({ children, disabled, ...rest }: AccordionTriggerProps) => (
   <AccordionHeader asChild>
     <AccordionTrigger
       asChild
-      onClick={(e) => {
+      onClick={e => {
         disabled && e.preventDefault();
       }}
     >

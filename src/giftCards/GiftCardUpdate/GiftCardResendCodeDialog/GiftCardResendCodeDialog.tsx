@@ -10,15 +10,7 @@ import { getBySlug } from "@dashboard/misc";
 import { type DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import {
-  Box,
-  Checkbox,
-  DynamicCombobox,
-  Input,
-  type Option,
-  Spinner,
-  Text,
-} from "@macaw-ui";
+import { Box, Checkbox, DynamicCombobox, Input, type Option, Spinner, Text } from "@macaw-ui";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -9,11 +9,7 @@ export type PopoverArrowProps = {
   className?: string;
 };
 
-export const Arrow = ({
-  className,
-  fill = "default2",
-  stroke = "default1",
-}: PopoverArrowProps) => {
+export const Arrow = ({ className, fill = "default2", stroke = "default1" }: PopoverArrowProps) => {
   return (
     <RadixPopoverArrow className={classNames(arrow, className)} asChild>
       <svg

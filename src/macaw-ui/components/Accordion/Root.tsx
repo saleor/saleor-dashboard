@@ -19,10 +19,7 @@ interface MultipleProps {
 export type AccordionRootProps = PropsWithBox<MultipleProps | SingleProps>;
 
 export const Root = forwardRef<HTMLElement, AccordionRootProps>(
-  (
-    { children, defaultValue, value, onValueChange, type = "single", ...rest },
-    ref
-  ) => {
+  ({ children, defaultValue, value, onValueChange, type = "single", ...rest }, ref) => {
     const content = (
       <Box {...rest} ref={ref} data-macaw-ui-component="Accordion">
         {children}
@@ -37,12 +34,7 @@ export const Root = forwardRef<HTMLElement, AccordionRootProps>(
 
     if (type === "single") {
       return (
-        <AccordionRoot
-          type="single"
-          collapsible
-          {...(rootProps as SingleProps)}
-          asChild
-        >
+        <AccordionRoot type="single" collapsible {...(rootProps as SingleProps)} asChild>
           {content}
         </AccordionRoot>
       );
@@ -53,7 +45,7 @@ export const Root = forwardRef<HTMLElement, AccordionRootProps>(
         {content}
       </AccordionRoot>
     );
-  }
+  },
 );
 
 Root.displayName = "Accordion";

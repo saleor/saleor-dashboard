@@ -30,9 +30,7 @@ export const getListDisplayMode = ({
   return "none";
 };
 
-export const getListTextSize = (
-  size: "small" | "medium" | "large" | undefined
-) => {
+export const getListTextSize = (size: "small" | "medium" | "large" | undefined) => {
   // https://github.com/saleor/macaw-ui/issues/554
   switch (size) {
     case "small":

@@ -41,18 +41,16 @@ export default meta;
 type Story = StoryObj<typeof Multiselect>;
 
 const MultiselectTemplate: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedItems, setSelectedItems] = useState([
-      { value: "Black", label: "Black" },
-    ]);
+    const [selectedItems, setSelectedItems] = useState([{ value: "Black", label: "Black" }]);
 
     return (
       <Box __width={300}>
         <Multiselect
           {...args}
           value={selectedItems}
-          onChange={(values) => setSelectedItems(values)}
+          onChange={values => setSelectedItems(values)}
         />
       </Box>
     );
@@ -158,7 +156,7 @@ const [selectedItems, setSelectedItems] = useState([{ value: "color-black", labe
 export const WithEndAdornment: Story = {
   ...MultiselectTemplate,
   args: {
-    renderEndAdornment: (props) => <ViewTableIcon {...props} />,
+    renderEndAdornment: props => <ViewTableIcon {...props} />,
   },
   parameters: {
     docs: {
@@ -190,7 +188,7 @@ export const WithStringAsValues = () => {
         label="Pick colors"
         size="large"
         value={selectedItems}
-        onChange={(values) => setSelectedItems(values)}
+        onChange={values => setSelectedItems(values)}
         options={options}
       />
     </Box>
@@ -199,7 +197,7 @@ export const WithStringAsValues = () => {
 
 export const WithDisabledOption = () => {
   const [selectedItems, setSelectedItems] = useState(["Black"]);
-  const values = options.map((option) => {
+  const values = options.map(option => {
     return {
       ...option,
       disabled: option.value === "Green",
@@ -212,7 +210,7 @@ export const WithDisabledOption = () => {
         label="Pick colors"
         size="large"
         value={selectedItems}
-        onChange={(values) => setSelectedItems(values)}
+        onChange={values => setSelectedItems(values)}
         options={values}
       />
     </Box>

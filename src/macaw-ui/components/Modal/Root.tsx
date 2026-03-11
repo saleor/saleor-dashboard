@@ -8,11 +8,7 @@ export type ModalRootProps = {
 
 export const Root = ({ children, open, onChange }: ModalRootProps) => {
   return (
-    <DialogRoot
-      data-macaw-ui-component="Modal"
-      open={open}
-      onOpenChange={onChange}
-    >
+    <DialogRoot data-macaw-ui-component="Modal" open={open} onOpenChange={onChange}>
       {children}
     </DialogRoot>
   );

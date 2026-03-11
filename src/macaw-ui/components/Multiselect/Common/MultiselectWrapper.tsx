@@ -21,17 +21,12 @@ type MultiselectWrapperProps = LabelVariants & {
   error?: boolean;
   children: ReactNode;
   getLabelProps: UseComboboxPropGetters<Option>["getLabelProps"];
-  getToggleButtonProps: ReturnType<
-    typeof useMultiselect
-  >["getToggleButtonProps"];
+  getToggleButtonProps: ReturnType<typeof useMultiselect>["getToggleButtonProps"];
   renderEndAdornment?: RenderEndAdornmentType;
   hasItemsToSelect?: boolean;
 };
 
-export const MultiselectWrapper = forwardRef<
-  HTMLLabelElement,
-  MultiselectWrapperProps
->(
+export const MultiselectWrapper = forwardRef<HTMLLabelElement, MultiselectWrapperProps>(
   (
     {
       id,
@@ -48,16 +43,13 @@ export const MultiselectWrapper = forwardRef<
       renderEndAdornment,
       hasItemsToSelect,
     },
-    ref
+    ref,
   ) => {
     return (
       <Box
         ref={ref}
         as="label"
-        className={classNames(
-          labelRecipe({ typed, active, disabled, size, error }),
-          className
-        )}
+        className={classNames(labelRecipe({ typed, active, disabled, size, error }), className)}
         alignItems="center"
         justifyContent="space-between"
         disabled={disabled}
@@ -72,18 +64,12 @@ export const MultiselectWrapper = forwardRef<
             as="span"
             className={classNames(
               multiselectSpanRecipe({ typed }),
-              spanRecipe({ typed, size, disabled, error })
+              spanRecipe({ typed, size, disabled, error }),
             )}
           >
             {label}
           </Box>
-          <Box
-            display="flex"
-            flexDirection="row"
-            gap={1}
-            alignItems="center"
-            flexWrap="wrap"
-          >
+          <Box display="flex" flexDirection="row" gap={1} alignItems="center" flexWrap="wrap">
             {children}
           </Box>
         </Box>
@@ -100,7 +86,7 @@ export const MultiselectWrapper = forwardRef<
         )}
       </Box>
     );
-  }
+  },
 );
 
 MultiselectWrapper.displayName = "MultiselectWrapper";

@@ -45,12 +45,7 @@ export const DropdownWithList: Story = {
       </Dropdown.Trigger>,
       // eslint-disable-next-line react/jsx-key
       <Dropdown.Content align="start">
-        <List
-          padding={1}
-          borderRadius={3}
-          boxShadow="defaultOverlay"
-          backgroundColor="default1"
-        >
+        <List padding={1} borderRadius={3} boxShadow="defaultOverlay" backgroundColor="default1">
           <Dropdown.Item>
             <List.Item {...commonProps}>
               <Text>First item</Text>

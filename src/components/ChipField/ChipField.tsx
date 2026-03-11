@@ -21,6 +21,8 @@ type ChipFieldProps = {
   onClose?: () => void;
   loading?: boolean;
   url?: string;
+  className?: string;
+  style?: React.CSSProperties;
 } & BoxProps;
 
 export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(

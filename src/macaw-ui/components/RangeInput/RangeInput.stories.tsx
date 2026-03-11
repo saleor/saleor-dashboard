@@ -18,17 +18,13 @@ export default meta;
 type Story = StoryObj<typeof RangeInput>;
 
 const Template: Story = {
-  render: (args) => {
+  render: args => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [value, setValue] = useState<RangeValue>(["", ""]);
 
     return (
       <Box display="flex" gap={0.5} alignItems="center" flexWrap="wrap">
-        <RangeInput
-          {...args}
-          value={value}
-          onChange={(value) => setValue(value)}
-        />
+        <RangeInput {...args} value={value} onChange={value => setValue(value)} />
       </Box>
     );
   },

@@ -49,22 +49,20 @@ export const Default = () => {
     }));
 
     setNextUrl(res.next);
-    setOptions((prev) => [...prev, ...options]);
+    setOptions(prev => [...prev, ...options]);
 
     setLoading(false);
   }
 
   const handleInputValueChange = async (criteria: string) => {
-    const res = await search(
-      `https://swapi.dev/api/people/?search=${criteria}`
-    );
+    const res = await search(`https://swapi.dev/api/people/?search=${criteria}`);
 
     setNextUrl(res.next);
     setOptions(
       res.results.map((result: { name: string }) => ({
         value: result.name,
         label: result.name,
-      }))
+      })),
     );
   };
 
@@ -73,13 +71,13 @@ export const Default = () => {
       __width="200px"
       value={value}
       label="Pick star wars character"
-      onChange={(value) => setValue(value)}
+      onChange={value => setValue(value)}
       options={options}
       loading={loading}
       onScrollEnd={() => {
         loadMore();
       }}
-      onInputValueChange={(inputValue) => {
+      onInputValueChange={inputValue => {
         handleInputValueChange(inputValue);
       }}
     />
@@ -93,58 +91,32 @@ export const WithAdorment = () => {
     <DynamicCombobox
       value={value}
       label="Pick a color"
-      onChange={(value) => setValue(value)}
+      onChange={value => setValue(value)}
       options={[
         {
           value: "red",
           label: "Red",
-          startAdornment: (
-            <Box
-              __backgroundColor="red"
-              marginRight={2}
-              width={4}
-              height={4}
-            ></Box>
-          ),
+          startAdornment: <Box __backgroundColor="red" marginRight={2} width={4} height={4}></Box>,
         },
         {
           value: "blue",
           label: "Blue",
-          startAdornment: (
-            <Box
-              __backgroundColor="blue"
-              marginRight={2}
-              width={4}
-              height={4}
-            ></Box>
-          ),
+          startAdornment: <Box __backgroundColor="blue" marginRight={2} width={4} height={4}></Box>,
         },
         {
           value: "black",
           label: "Black",
           startAdornment: (
-            <Box
-              __backgroundColor="black"
-              marginRight={2}
-              width={4}
-              height={4}
-            ></Box>
+            <Box __backgroundColor="black" marginRight={2} width={4} height={4}></Box>
           ),
         },
       ]}
-      startAdornment={(value) => {
+      startAdornment={value => {
         if (!value) {
           return null;
         }
 
-        return (
-          <Box
-            width={4}
-            height={4}
-            marginRight={2}
-            __backgroundColor={value.value}
-          ></Box>
-        );
+        return <Box width={4} height={4} marginRight={2} __backgroundColor={value.value}></Box>;
       }}
     />
   );
@@ -158,7 +130,7 @@ export const Loading = () => {
       value={value}
       loading={true}
       label="Pick a color"
-      onChange={(value) => setValue(value)}
+      onChange={value => setValue(value)}
       options={[]}
     />
   );

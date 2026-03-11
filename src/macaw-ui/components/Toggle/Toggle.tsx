@@ -4,16 +4,7 @@ import { Box } from "../Box";
 import { toggle } from "./Toggle.css";
 
 export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
-  (
-    {
-      disabled = false,
-      pressed,
-      onPressedChange,
-      children,
-      ...props
-    }: ToggleProps,
-    ref
-  ) => {
+  ({ disabled = false, pressed, onPressedChange, children, ...props }: ToggleProps, ref) => {
     return (
       <Box
         as="label"
@@ -34,7 +25,7 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 Toggle.displayName = "Toggle";

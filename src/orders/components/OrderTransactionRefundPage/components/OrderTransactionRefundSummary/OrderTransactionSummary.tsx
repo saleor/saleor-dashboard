@@ -1,15 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { type IMoney } from "@dashboard/utils/intl";
-import {
-  Box,
-  type BoxProps,
-  Checkbox,
-  Input,
-  Skeleton,
-  Text,
-  Tooltip,
-} from "@macaw-ui";
+import { Box, type BoxProps, Checkbox, Input, Skeleton, Text, Tooltip } from "@macaw-ui";
 import { type Control, type FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

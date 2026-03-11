@@ -1,10 +1,5 @@
 import { Root as Portal } from "@radix-ui/react-portal";
-import {
-  ForwardedRef,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-} from "react";
+import { ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode } from "react";
 
 import { Box, List, PropsWithBox, Text } from "~/components";
 import { HelperText, InputVariants } from "~/components/BaseInput";
@@ -31,15 +26,7 @@ import {
 export type MultiselectProps<T, V> = PropsWithBox<
   Omit<
     InputHTMLAttributes<HTMLInputElement>,
-    | "color"
-    | "width"
-    | "height"
-    | "size"
-    | "type"
-    | "children"
-    | "onChange"
-    | "value"
-    | "nonce"
+    "color" | "width" | "height" | "size" | "type" | "children" | "onChange" | "value" | "nonce"
   > & {
     label?: ReactNode;
     error?: boolean;
@@ -77,7 +64,7 @@ const MultiselectInner = <T extends Option, V extends Option | string>(
     },
     ...props
   }: MultiselectProps<T, V>,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const {
     active,
@@ -156,7 +143,7 @@ const MultiselectInner = <T extends Option, V extends Option | string>(
               <Text
                 cursor="pointer"
                 size={1}
-                onClick={(event) => {
+                onClick={event => {
                   event.stopPropagation();
                   event.preventDefault();
                   removeSelectedItem(item);
@@ -179,9 +166,7 @@ const MultiselectInner = <T extends Option, V extends Option | string>(
           visibility={showInput ? "visible" : "hidden"}
           {...inputProps}
           {...props}
-          onChange={
-            inputProps.onChange && formEventTypeAdapter(inputProps.onChange)
-          }
+          onChange={inputProps.onChange && formEventTypeAdapter(inputProps.onChange)}
         />
       </MultiselectWrapper>
 
@@ -191,11 +176,7 @@ const MultiselectInner = <T extends Option, V extends Option | string>(
           display={isOpen ? "block" : "none"}
           className={listWrapperRecipe({ size })}
         >
-          <List
-            as="ul"
-            className={listStyle}
-            {...getMenuProps({ ref: refs.floating })}
-          >
+          <List as="ul" className={listStyle} {...getMenuProps({ ref: refs.floating })}>
             {isOpen &&
               itemsToSelect?.map((item, index) => (
                 <List.Item
@@ -236,7 +217,7 @@ export const MultiselectRoot = forwardRef(MultiselectInner) as <
   T extends Option,
   V extends Option | string,
 >(
-  props: MultiselectProps<T, V> & { ref?: React.ForwardedRef<HTMLInputElement> }
+  props: MultiselectProps<T, V> & { ref?: React.ForwardedRef<HTMLInputElement> },
 ) => ReturnType<typeof MultiselectInner>;
 
 export const Multiselect = Object.assign(MultiselectRoot, {

@@ -22,10 +22,7 @@ type ComboboxWrapperProps = LabelVariants & {
   getLabelProps: UseComboboxPropGetters<Option>["getLabelProps"];
 };
 
-export const ComboboxWrapper = forwardRef<
-  HTMLLabelElement,
-  ComboboxWrapperProps
->(
+export const ComboboxWrapper = forwardRef<HTMLLabelElement, ComboboxWrapperProps>(
   (
     {
       id,
@@ -40,16 +37,13 @@ export const ComboboxWrapper = forwardRef<
       disabled,
       size,
     },
-    ref
+    ref,
   ) => {
     return (
       <Box
         ref={ref}
         as="label"
-        className={classNames(
-          labelRecipe({ typed, active, disabled, size, error }),
-          className
-        )}
+        className={classNames(labelRecipe({ typed, active, disabled, size, error }), className)}
         alignItems="center"
         justifyContent="space-between"
         disabled={disabled}
@@ -60,31 +54,25 @@ export const ComboboxWrapper = forwardRef<
         cursor={disabled ? "not-allowed" : "text"}
       >
         <Box display="flex" flexDirection="column" width="100%">
-          <Box
-            as="span"
-            className={classNames(spanRecipe({ typed, size, disabled, error }))}
-          >
+          <Box as="span" className={classNames(spanRecipe({ typed, size, disabled, error }))}>
             {label}
           </Box>
           {children}
         </Box>
 
         <ArrowDownIcon
-          className={classNames(
-            toggleIconStyle,
-            sprinkles({ cursor: "pointer" })
-          )}
+          className={classNames(toggleIconStyle, sprinkles({ cursor: "pointer" }))}
           size={size}
           {...getToggleButtonProps({
             disabled,
-            onClick: (event) => {
+            onClick: event => {
               event.preventDefault();
             },
           })}
         />
       </Box>
     );
-  }
+  },
 );
 
 ComboboxWrapper.displayName = "ComboboxWrapper";

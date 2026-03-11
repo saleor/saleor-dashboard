@@ -1,3 +1,4 @@
+// @ts-expect-error - vanilla-extract type complex
 import { style } from "@vanilla-extract/css";
 import { sprinkles, vars } from "~/theme";
 
@@ -87,11 +88,10 @@ export const defaultCheckbox = style({
     '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible': {
       backgroundColor: vars.colors.background.accent1,
     },
-    '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible::after':
-      {
-        boxShadow: vars.boxShadow.defaultFocused,
-        backgroundColor: vars.colors.background.accent1Focused,
-      },
+    '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible::after': {
+      boxShadow: vars.boxShadow.defaultFocused,
+      backgroundColor: vars.colors.background.accent1Focused,
+    },
     '&:is([data-state="checked"],[data-state="indeterminate"])[disabled]': {
       backgroundColor: vars.colors.background.accent1Pressed,
     },
@@ -171,10 +171,9 @@ export const errorCheckbox = style({
     '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible': {
       outlineColor: vars.colors.border.critical1,
     },
-    '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible::after':
-      {
-        backgroundColor: vars.colors.background.critical1Focused,
-      },
+    '&:is([data-state="checked"],[data-state="indeterminate"]):focus-visible::after': {
+      backgroundColor: vars.colors.background.critical1Focused,
+    },
     '&:is([data-state="checked"],[data-state="indeterminate"])[disabled]': {
       backgroundColor: vars.colors.background.defaultDisabled,
       borderColor: vars.colors.border.defaultDisabled,

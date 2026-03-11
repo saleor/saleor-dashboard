@@ -15,15 +15,7 @@ export type InputProps = PropsWithBox<
   > & {
     label?: ReactNode;
     error?: boolean;
-    type?:
-      | "text"
-      | "number"
-      | "url"
-      | "email"
-      | "password"
-      | "date"
-      | "time"
-      | "datetime-local";
+    type?: "text" | "number" | "url" | "email" | "password" | "date" | "time" | "datetime-local";
     helperText?: ReactNode;
     endAdornment?: ReactNode;
   }
@@ -53,14 +45,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       endAdornment,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const {
-      handlers,
-      value: inputValue,
-      active,
-      typed,
-    } = useStateEvents(value, type, onChange);
+    const { handlers, value: inputValue, active, typed } = useStateEvents(value, type, onChange);
 
     return (
       <Box
@@ -100,7 +87,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               onFocus?.(event);
             }}
             onChange={handlers.onChange}
-            onKeyDown={(event) => {
+            onKeyDown={event => {
               if (type === "number") {
                 checkIfValidNumberInput(event);
               }
@@ -111,17 +98,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </InputWrapper>
         {helperText && (
           <Box className={helperTextRecipe({ size })}>
-            <Text
-              size={convertSizeToScale(size)}
-              color={error ? "critical1" : "default2"}
-            >
+            <Text size={convertSizeToScale(size)} color={error ? "critical1" : "default2"}>
               {helperText}
             </Text>
           </Box>
         )}
       </Box>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

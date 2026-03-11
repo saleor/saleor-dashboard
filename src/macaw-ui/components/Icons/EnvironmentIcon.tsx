@@ -20,5 +20,5 @@ export const EnvironmentIcon = createSVGWrapper(
       d="M8 13.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0-7a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
       fill="currentColor"
     />
-  </>
+  </>,
 );

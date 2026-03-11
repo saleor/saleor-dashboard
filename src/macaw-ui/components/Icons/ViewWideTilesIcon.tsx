@@ -21,5 +21,5 @@ export const ViewWideTilesIcon = createSVGWrapper(
       d="M3 14C3 13.4477 3.44772 13 4 13H20C20.5523 13 21 13.4477 21 14V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19V14ZM5 18V15H19V18H5Z"
       clipRule="evenodd"
     />
-  </>
+  </>,
 );

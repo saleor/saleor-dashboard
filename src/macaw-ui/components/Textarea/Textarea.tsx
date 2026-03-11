@@ -53,14 +53,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       maxRows = 20,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const {
-      handlers,
-      value: inputValue,
-      active,
-      typed,
-    } = useStateEvents(value, onChange);
+    const { handlers, value: inputValue, active, typed } = useStateEvents(value, onChange);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     useAutoHeightTextarea(textAreaRef.current, value, rows, maxRows);
     useImperativeHandle(ref, () => textAreaRef.current!);
@@ -111,17 +106,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         </TextareaWrapper>
         {helperText && (
           <Box className={helperTextRecipe({ size })}>
-            <Text
-              size={convertSizeToScale(size)}
-              color={error ? "critical1" : "default2"}
-            >
+            <Text size={convertSizeToScale(size)} color={error ? "critical1" : "default2"}>
               {helperText}
             </Text>
           </Box>
         )}
       </Box>
     );
-  }
+  },
 );
 
 Textarea.displayName = "Textarea";

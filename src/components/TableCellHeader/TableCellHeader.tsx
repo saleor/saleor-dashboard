@@ -7,53 +7,51 @@ import { forwardRef } from "react";
 
 import ArrowSort from "../../icons/ArrowSort";
 
-const useStyles = makeStyles(
-  theme => ({
-    arrow: {
-      transition: theme.transitions.duration.short + "ms",
-      marginBottom: vars.spacing[1],
-    },
-    arrowLeft: {
-      marginLeft: -24,
-    },
-    arrowUp: {
-      transform: "rotate(180deg)",
-    },
-    disabled: {
-      opacity: 0.7,
-      "&&": {
-        cursor: "unset",
-      },
-    },
-    label: {
-      alignSelf: "center",
-      display: "inline-block",
-      userSelect: "none",
-    },
-    labelContainer: {
-      "&:hover": {
-        color: theme.palette.text.primary,
-      },
-      display: "flex",
-    },
-    labelContainerActive: {
-      color: theme.palette.text.primary,
-    },
-    labelContainerCenter: {
-      justifyContent: "center",
-    },
-    labelContainerRight: {
-      justifyContent: "flex-end",
-    },
-    root: {
-      cursor: "pointer",
-    },
-    notSortable: {
+// @ts-expect-error - vanilla-extract vars type incompatible with MUI makeStyles
+const useStyles = makeStyles(() => ({
+  arrow: {
+    transition: "150ms",
+    marginBottom: vars.spacing[1],
+  },
+  arrowLeft: {
+    marginLeft: -24,
+  },
+  arrowUp: {
+    transform: "rotate(180deg)",
+  },
+  disabled: {
+    opacity: 0.7,
+    "&&": {
       cursor: "unset",
     },
-  }),
-  { name: "TableCellHeader" },
-);
+  },
+  label: {
+    alignSelf: "center",
+    display: "inline-block",
+    userSelect: "none",
+  },
+  labelContainer: {
+    "&:hover": {
+      color: vars.colors.text.default1,
+    },
+    display: "flex",
+  },
+  labelContainerActive: {
+    color: vars.colors.text.default1,
+  },
+  labelContainerCenter: {
+    justifyContent: "center",
+  },
+  labelContainerRight: {
+    justifyContent: "flex-end",
+  },
+  root: {
+    cursor: "pointer",
+  },
+  notSortable: {
+    cursor: "unset",
+  },
+}), { name: "TableCellHeader" });
 
 export type TableCellHeaderArrowDirection = "asc" | "desc";
 type TableCellHeaderArrowPosition = "left" | "right";

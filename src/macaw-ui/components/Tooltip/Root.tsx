@@ -13,18 +13,10 @@ export interface TooltipProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export const TooltipRoot = ({
-  children,
-  delayDuration = 250,
-  ...props
-}: TooltipProps) => {
+export const TooltipRoot = ({ children, delayDuration = 250, ...props }: TooltipProps) => {
   return (
     <RadixTooltipProvider>
-      <RadixTooltipRoot
-        delayDuration={delayDuration}
-        {...props}
-        data-macaw-ui-component="Tooltip"
-      >
+      <RadixTooltipRoot delayDuration={delayDuration} {...props} data-macaw-ui-component="Tooltip">
         {children}
       </RadixTooltipRoot>
     </RadixTooltipProvider>

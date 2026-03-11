@@ -14,7 +14,7 @@ import { ChangeHandler, InputValue } from "./types";
 export const useStateEvents = (
   value: InputValue,
   type: InputProps["type"],
-  changeHandler?: ChangeHandler
+  changeHandler?: ChangeHandler,
 ) => {
   const [active, setActive] = useState(false);
   const typed = isInputTyped(type, value, active);
@@ -61,19 +61,13 @@ export const InputWrapper = ({
     <Box
       as="label"
       htmlFor={id}
-      className={classNames(
-        labelRecipe({ typed, active, disabled, size, error }),
-        className
-      )}
+      className={classNames(labelRecipe({ typed, active, disabled, size, error }), className)}
       alignItems="center"
       gap={1}
       data-macaw-ui-component="Input"
     >
       <Box display="flex" flexDirection="column" width="100%">
-        <Box
-          as="span"
-          className={classNames(spanRecipe({ typed, size, disabled, error }))}
-        >
+        <Box as="span" className={classNames(spanRecipe({ typed, size, disabled, error }))}>
           {label}
         </Box>
         {children}

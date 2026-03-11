@@ -29,5 +29,5 @@ export const DashboardIcon = createSVGWrapper(
       stroke="currentColor"
       strokeWidth="1.25"
     />
-  </>
+  </>,
 );

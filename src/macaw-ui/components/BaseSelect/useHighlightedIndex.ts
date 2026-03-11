@@ -5,17 +5,13 @@ import { Option } from "~/components/BaseSelect";
 
 export function useHighlightedIndex<T extends Option>(
   items: T[],
-  selectedItem: T | null | undefined
+  selectedItem: T | null | undefined,
 ): {
   highlightedIndex: number | undefined;
-  onHighlightedIndexChange: (
-    change: UseComboboxStateChange<T> | UseSelectStateChange<T>
-  ) => void;
+  onHighlightedIndexChange: (change: UseComboboxStateChange<T> | UseSelectStateChange<T>) => void;
 } {
   // Initially we don't show any item as highlighted
-  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    -1
-  );
+  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(-1);
 
   // When data from API comes we can calculate initially highlighted index
   // Or when we change the selected item
@@ -46,13 +42,10 @@ export function useHighlightedIndex<T extends Option>(
   };
 }
 
-function getIndexToHighlight<T extends Option>(
-  items: T[],
-  selectedItem: T
-): number {
+function getIndexToHighlight<T extends Option>(items: T[], selectedItem: T): number {
   if (typeof selectedItem === "string") {
-    return items.findIndex((item) => item.value === selectedItem);
+    return items.findIndex(item => item.value === selectedItem);
   }
 
-  return items.findIndex((item) => item.value === selectedItem?.value);
+  return items.findIndex(item => item.value === selectedItem?.value);
 }

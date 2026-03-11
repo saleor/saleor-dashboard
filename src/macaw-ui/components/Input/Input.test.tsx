@@ -18,6 +18,6 @@ describe("Input", () => {
       fireEvent.change(input, { target: { value } });
 
       expect(input).toHaveValue(expected);
-    }
+    },
   );
 });

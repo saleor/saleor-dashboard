@@ -5,9 +5,7 @@ import { Box, PropsWithBox } from "..";
 
 import { skeleton } from "./Skeleton.css";
 
-export type SkeletonProps = PropsWithBox<
-  Omit<HTMLAttributes<HTMLDivElement>, "color">
->;
+export type SkeletonProps = PropsWithBox<Omit<HTMLAttributes<HTMLDivElement>, "color">>;
 
 export const Skeleton = ({ className, ...props }: SkeletonProps) => {
   return (

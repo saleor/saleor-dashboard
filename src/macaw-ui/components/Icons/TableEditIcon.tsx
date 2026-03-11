@@ -19,5 +19,5 @@ export const TableEditIcon = createSVGWrapper(
       fill="currentColor"
       d="M21.612 11.707a1 1 0 0 0-1.414 0l-7.075 7.066-.71 3.536 3.536-.705 7.076-7.067a1 1 0 0 0 0-1.414l-1.413-1.415Z"
     />
-  </>
+  </>,
 );

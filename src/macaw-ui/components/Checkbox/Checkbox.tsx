@@ -34,7 +34,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
       children,
       ...props
     }: CheckboxProps,
-    ref
+    ref,
   ) => {
     const iconColor = disabled ? "defaultDisabled" : "buttonDefaultPrimary";
 
@@ -51,10 +51,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
       >
         <RadixCheckbox
           ref={ref}
-          className={classNames(
-            commonCheckbox,
-            error ? errorCheckbox : defaultCheckbox
-          )}
+          className={classNames(commonCheckbox, error ? errorCheckbox : defaultCheckbox)}
           checked={checked}
           onCheckedChange={onCheckedChange}
           disabled={disabled}
@@ -74,7 +71,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 Checkbox.displayName = "Checkbox";

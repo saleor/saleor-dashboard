@@ -34,7 +34,7 @@ export const Item = forwardRef<HTMLElement, ListItemProps>(
         {children}
       </Box>
     );
-  }
+  },
 );
 
 Item.displayName = "List.Item";

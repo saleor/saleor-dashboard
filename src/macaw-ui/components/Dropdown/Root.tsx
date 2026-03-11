@@ -7,17 +7,9 @@ export type DropdownRootProps = {
   open?: boolean;
 };
 
-export const DropdownRoot = ({
-  children,
-  onOpenChange,
-  open,
-}: DropdownRootProps) => {
+export const DropdownRoot = ({ children, onOpenChange, open }: DropdownRootProps) => {
   return (
-    <DropdownMenuRoot
-      open={open}
-      onOpenChange={onOpenChange}
-      data-macaw-ui-component="Dropdown"
-    >
+    <DropdownMenuRoot open={open} onOpenChange={onOpenChange} data-macaw-ui-component="Dropdown">
       {children}
     </DropdownMenuRoot>
   );

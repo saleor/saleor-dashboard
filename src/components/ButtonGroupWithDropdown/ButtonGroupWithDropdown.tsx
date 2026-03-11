@@ -1,16 +1,10 @@
+import React from "react";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import {
-  Box,
-  type BoxProps,
-  Button,
-  type ButtonProps,
-  Dropdown,
-  List,
-  Text,
-} from "@macaw-ui";
+import { Box, type BoxProps, Button, type ButtonProps, Dropdown, List, Text } from "@macaw-ui";
 import { ChevronDown } from "lucide-react";
 
-interface ButtonGroupWithDropdownProps extends BoxProps {
+interface ButtonGroupWithDropdownProps {
+  children?: React.ReactNode;
   onClick?: () => void;
   options: Array<{
     label: string;

@@ -6,10 +6,7 @@ import { showContent } from "./Content.css";
 export type ModalContentProps = {
   children: React.ReactNode;
   disableAutofocus?: boolean;
-  dialogContentProps?: Omit<
-    Dialog.DialogContentProps,
-    "onOpenAutoFocus" | "className" | "asChild"
-  >;
+  dialogContentProps?: Omit<Dialog.DialogContentProps, "onOpenAutoFocus" | "className" | "asChild">;
   container?: HTMLElement | null | undefined;
 };
 

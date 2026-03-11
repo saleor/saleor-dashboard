@@ -26,7 +26,7 @@ export const CardSpacer = ({ children, backgroundColor = "default1" }: CardSpace
     <div
       className={classes.spacer}
       style={{
-        backgroundColor: vars.colors.background[backgroundColor],
+        backgroundColor: vars.colors.background[backgroundColor] as string,
       }}
     >
       {children}

@@ -22,8 +22,9 @@
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
-      "@macaw-ui/*": ["src/macaw-ui/*"],
-      "~/*": ["src/macaw-ui/*"],
+      "@macaw-ui": ["./src/macaw-ui"],
+      "@macaw-ui/*": ["./src/macaw-ui/*"],
+      "~/*": ["./src/macaw-ui/*"],
       "@test/*": ["testUtils/*"],
       "@storybookUtils/*": ["storybookUtils/*"],
       "@mizdra/graphql-codegen-typescript-fabbrica/helper": [
@@ -31,5 +32,10 @@
       ]
     }
   },
-  "exclude": ["node_modules", "playwright"]
+  "exclude": [
+    "node_modules",
+    "playwright",
+    "src/macaw-ui/**/*.css.ts",
+    "src/macaw-ui/**/*.stories.tsx"
+  ]
 }

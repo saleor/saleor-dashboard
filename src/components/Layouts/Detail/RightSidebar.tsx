@@ -1,7 +1,7 @@
-import { Box, type BoxProps } from "@macaw-ui";
+import { Box } from "@macaw-ui";
 import type * as React from "react";
 
-interface DetailPageLayoutRightSidebarProps extends BoxProps {
+interface DetailPageLayoutRightSidebarProps {
   children: React.ReactNode;
 }
 

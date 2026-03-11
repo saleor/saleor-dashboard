@@ -1,11 +1,7 @@
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
-import {
-  DynamicMultiselect,
-  type DynamicMultiselectProps,
-  type Option,
-} from "@macaw-ui";
+import { DynamicMultiselect, type DynamicMultiselectProps, type Option } from "@macaw-ui";
 import { forwardRef, type ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 

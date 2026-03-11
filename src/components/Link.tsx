@@ -102,20 +102,19 @@ export const Link = (props: LinkProps): JSX.Element => {
         {children}
       </RouterLink>
     );
-  } else {
-    return (
-      // @ts-expect-error - spreading HTML link props on Text is not compatbile, fixme
-      <Text
-        as="a"
-        href={disabled ? undefined : href}
-        display="block"
-        color={textColor}
-        {...commonLinkProps}
-      >
-        {children}
-      </Text>
-    );
   }
+
+  return (
+    <Text
+      as="a"
+      href={disabled ? undefined : href}
+      display="block"
+      color={textColor}
+      {...commonLinkProps}
+    >
+      {children}
+    </Text>
+  );
 };
 
 Link.displayName = "Link";

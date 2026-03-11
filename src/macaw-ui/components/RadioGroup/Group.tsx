@@ -30,7 +30,7 @@ export const RadioGroupRoot = forwardRef<HTMLDivElement, RadioGroupRootProps>(
       error = false,
       ...rest
     },
-    ref
+    ref,
   ) => (
     <Root asChild value={value} onValueChange={onValueChange}>
       <Box
@@ -41,19 +41,14 @@ export const RadioGroupRoot = forwardRef<HTMLDivElement, RadioGroupRootProps>(
         data-macaw-ui-component="RadioGroup"
       >
         {label && (
-          <legend
-            className={classNames(
-              groupLabelRecipe({ disabled, error, size }),
-              className
-            )}
-          >
+          <legend className={classNames(groupLabelRecipe({ disabled, error, size }), className)}>
             {label}
           </legend>
         )}
         {children}
       </Box>
     </Root>
-  )
+  ),
 );
 
 RadioGroupRoot.displayName = "RadioGroup";

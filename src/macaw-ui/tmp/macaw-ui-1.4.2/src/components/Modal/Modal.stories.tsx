@@ -32,12 +32,7 @@ export const Primary: Story = {
           __maxWidth="400px"
           __transform="translate(-50%, -50%)"
         >
-          <Box
-            display="flex"
-            gap={3}
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Box display="flex" gap={3} justifyContent="center" alignItems="center">
             <Text>Modal content!</Text>
             <Modal.Close>
               <Button variant="tertiary" icon={<CloseIcon />} size="small" />
@@ -66,12 +61,7 @@ export const Controlled = () => {
             __maxWidth="400px"
             __transform="translate(-50%, -50%)"
           >
-            <Box
-              display="flex"
-              gap={3}
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Box display="flex" gap={3} justifyContent="center" alignItems="center">
               <Text>Modal content!</Text>
               <Modal.Close>
                 <Button variant="tertiary" icon={<CloseIcon />} size="small" />

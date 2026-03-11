@@ -37,15 +37,11 @@ export const RadioGroupItem = forwardRef<HTMLDivElement, RadioGroupItemProps>(
       >
         <RadioGroupIndicator disabled={disabled} asChild />
       </RadioGroup.Item>
-      <Box
-        as="label"
-        htmlFor={id}
-        cursor={disabled ? "not-allowed" : "pointer"}
-      >
+      <Box as="label" htmlFor={id} cursor={disabled ? "not-allowed" : "pointer"}>
         {children}
       </Box>
     </Box>
-  )
+  ),
 );
 
 RadioGroupItem.displayName = "RadioGroup.Item";
