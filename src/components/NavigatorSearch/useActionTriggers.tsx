@@ -600,7 +600,7 @@ const allActions: TriggerDescriptor[] = [
   {
     section: allMessages.extensionsSection,
     name: allMessages.gotoExploreExtensions,
-    Component: ({ onClick }) => (
+    Component: ({ onClick }: { onClick?: React.MouseEventHandler<HTMLAnchorElement> }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={ExtensionsUrls.resolveExploreExtensionsUrl()}>
           <FormattedMessage {...allMessages.gotoExploreExtensions} />
