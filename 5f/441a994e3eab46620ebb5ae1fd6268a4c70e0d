@@ -1,0 +1,23 @@
+src/giftCards/GiftCardsList/providers/GiftCardListProvider/GiftCardListProvider.tsx
+  322866259e4077d5 141
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "5f441a994e3eab46620ebb5ae1fd6268a4c70e0d",
+  "prompts": {
+    "322866259e4077d5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3f374927-4554-4a4e-b0b2-9e28d8c9e8d3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
