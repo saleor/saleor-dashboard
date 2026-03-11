@@ -43,6 +43,8 @@ export class FiltersPage extends BasePage {
     await this.clickAddFilterButton();
     await this.clickLeftInput();
     await this.dropDownOptions.filter({ hasText: filterKind }).click();
+    await this.rightInput.waitFor({ state: "attached" });
     await this.rightInput.fill(value);
+    await this.saveFiltersButton.waitFor({ state: "visible" });
   }
 }
