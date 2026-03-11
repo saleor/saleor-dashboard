@@ -1,17 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  sectionTitle: {
-    id: "kny5j9",
-    defaultMessage: "Password Login",
-    description: "section title",
-  },
-  sectionDescription: {
-    id: "/2o5cH",
-    defaultMessage:
-      "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely.",
-    description: "section description",
-  },
   cardHeader: {
     id: "qRMXUE",
     defaultMessage: "Password login mode",

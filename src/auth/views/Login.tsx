@@ -102,7 +102,8 @@ const LoginView = ({ params }: LoginViewProps) => {
       disabled={authenticating}
       externalAuthentications={externalAuthentications?.shop?.availableExternalAuthentications}
       passwordLoginEnabled={
-        externalAuthentications?.shop?.passwordLoginMode == PasswordLoginModeEnum.ENABLED
+        externalAuthentications?.shop?.passwordLoginMode !== PasswordLoginModeEnum.DISABLED &&
+        externalAuthentications?.shop?.passwordLoginMode !== PasswordLoginModeEnum.CUSTOMERS_ONLY
       }
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
