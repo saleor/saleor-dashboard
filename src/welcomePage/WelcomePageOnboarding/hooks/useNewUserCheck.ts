@@ -19,7 +19,8 @@ export const useNewUserCheck = () => {
   }
 
   const userJoinedDate = new Date(user.dateJoined);
-  const thresholdDate = new Date(thresholdDateString);
+  // Reset time, so timezone will not flip the day
+  const thresholdDate = new Date(`${thresholdDateString}T00:00:00`);
 
   if (isNaN(userJoinedDate.getTime()) || isNaN(thresholdDate.getTime())) {
     return {

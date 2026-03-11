@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { type ExtendedGiftCard, type GiftCardBase } from "./types";
 
 function isGiftCardExpired<T extends GiftCardBase>(giftCard: T): boolean {
@@ -9,7 +8,10 @@ function isGiftCardExpired<T extends GiftCardBase>(giftCard: T): boolean {
   return new Date(giftCard.expiryDate) < new Date();
 }
 
-export function getExtendedGiftCard<T extends GiftCardBase>(giftCard?: T): ExtendedGiftCard<T> {
+export function getExtendedGiftCard<T extends GiftCardBase>(
+  giftCard?: T,
+): ExtendedGiftCard<T> | undefined {
+  // todo do not accept optional value, check for existence higher
   if (!giftCard) {
     return undefined;
   }
