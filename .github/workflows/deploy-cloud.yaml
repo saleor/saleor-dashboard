@@ -33,11 +33,6 @@ jobs:
     outputs:
       ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -48,7 +43,6 @@ jobs:
       REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
