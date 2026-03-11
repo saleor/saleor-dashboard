@@ -36,7 +36,7 @@ const createAPIHandler = (
     return new CustomerHandler(client, inputValue);
   }
 
-  if (rowType === "giftCardCode") {
+  if (rowType === "code") {
     return new NoopValuesHandler([]);
   }
 

@@ -63,7 +63,7 @@ export const STATIC_CONDITIONS = {
   isPreorder: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardCode: [{ type: "text", label: "is", value: "input-1" }],
+  code: [{ type: "text", label: "is", value: "input-1" }],
   status: [
     {
       type: "combobox",
@@ -722,7 +722,7 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
   {
     value: "code",
     label: "Code",
-    type: "giftCardCode",
+    type: "code",
     slug: "code",
     maxOccurrences: 1,
   },
