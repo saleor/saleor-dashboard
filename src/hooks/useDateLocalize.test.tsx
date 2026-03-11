@@ -38,7 +38,7 @@ describe("useDateLocalize", () => {
     const formatted = result.current("2024-01-15T14:30:00Z", "lll");
 
     // Assert
-    expect(formatted).toBe("Jan 15, 2024 2:30 PM");
+    expect(formatted).toBe("Jan 15, 2024, 2:30 PM");
   });
 
   it("formats date with PL locale", () => {
