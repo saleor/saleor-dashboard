@@ -1,0 +1,23 @@
+src/customers/components/CustomerDetails/CustomerDetails.test.ts
+  bfc9bcb183747603 6,14,22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "90807bc36300ca1db1aaaa268fe18009025d3b8d",
+  "prompts": {
+    "bfc9bcb183747603": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a73d6c6f-0d46-49c3-a397-7ce343c51400",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
