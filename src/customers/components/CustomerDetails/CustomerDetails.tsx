@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { type AccountErrorFragment, type CustomerDetailsQuery } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { maybe } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
-import moment from "moment-timezone";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,6 +29,14 @@ const useStyles = makeStyles(
   { name: "CustomerDetails" },
 );
 
+export const formatMonthYear =
+  (locale: string) =>
+  (date: string): string =>
+    new Intl.DateTimeFormat(locale, {
+      month: "short",
+      year: "numeric",
+    }).format(new Date(date));
+
 interface CustomerDetailsProps {
   customer: CustomerDetailsQuery["user"];
   data: {
@@ -45,6 +53,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const formErrors = getFormErrors(["note"], errors);
 
@@ -66,7 +75,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
                   defaultMessage="Active member since {date}"
                   description="section subheader"
                   values={{
-                    date: moment(customer.dateJoined).format("MMM YYYY"),
+                    date: formatMonthYear(locale)(customer.dateJoined),
                   }}
                 />
               </Text>

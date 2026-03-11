@@ -2,7 +2,7 @@ import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { type OrderDraft } from "@dashboard/orders/types";
 
-import { createGetCellContent, getCustomerName } from "./datagrid";
+import { createGetCellContent, formatDateTime, getCustomerName } from "./datagrid";
 
 const columns: AvailableColumn[] = [
   { id: "number", title: "Number", width: 100 },
@@ -48,7 +48,7 @@ describe("createGetCellContent", () => {
     const cell = getCellContent([1, 0]);
 
     // Assert
-    expect(cell).toHaveProperty("data", "Jan 15, 2024 2:30 PM");
+    expect(cell).toHaveProperty("data", "Jan 15, 2024, 2:30 PM");
   });
 
   it("returns empty text cell when row data is missing", () => {
@@ -97,6 +97,32 @@ describe("createGetCellContent", () => {
 
     // Assert
     expect(cell).toHaveProperty("data", "#5678");
+  });
+});
+
+describe("formatDateTime", () => {
+  it("formats date with EN locale", () => {
+    // Arrange & Act
+    const result = formatDateTime("2024-01-15T14:30:00Z", Locale.EN);
+
+    // Assert
+    expect(result).toBe("Jan 15, 2024, 2:30 PM");
+  });
+
+  it("formats date with PL locale", () => {
+    // Arrange & Act
+    const result = formatDateTime("2024-01-15T14:30:00Z", Locale.PL);
+
+    // Assert
+    expect(result).toBe("15 sty 2024, 14:30");
+  });
+
+  it("formats midnight correctly", () => {
+    // Arrange & Act
+    const result = formatDateTime("2024-01-15T00:00:00Z", Locale.EN);
+
+    // Assert
+    expect(result).toBe("Jan 15, 2024, 12:00 AM");
   });
 });
 
