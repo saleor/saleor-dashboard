@@ -1,0 +1,25 @@
+src/legacy-sdk/core/user.test.ts
+  122230d976e80f77 139,160
+src/legacy-sdk/react/helpers/hookFactory.test.tsx
+  122230d976e80f77 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "5407bc0ddc30d210a03e956e3cfc414f60aad944",
+  "prompts": {
+    "122230d976e80f77": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "efab104c-ed53-4385-86a4-668e52d40c63",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}

@@ -1,0 +1,45 @@
+codegen-main.ts
+  162ecb3834d51555 15-16
+src/components/AddressEdit/useAddressValidation.ts
+  162ecb3834d51555 7
+src/components/DevModePanel/utils.test.ts
+  162ecb3834d51555 2
+src/products/fixtures.ts
+  162ecb3834d51555 15
+src/utils/errors/account.ts
+  162ecb3834d51555 5
+src/components/DevModePanel/utils.ts
+  162ecb3834d51555 2
+src/components/AppLayout/AppChannelContext.tsx
+  162ecb3834d51555 5
+src/legacy-sdk/apollo/client.ts
+  162ecb3834d51555 71,90-91,148
+src/utils/handlers/metadataUpdateHelpers.ts
+  162ecb3834d51555 1
+src/legacy-sdk/react/components/SaleorProvider.tsx
+  162ecb3834d51555 11
+src/utils/credentialsManagement.ts
+  162ecb3834d51555 2
+src/products/views/ProductList/export.test.ts
+  162ecb3834d51555 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "ed691f696bfd17b3fc5763fa97e977c05ed2add2",
+  "prompts": {
+    "162ecb3834d51555": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "414d8a43-7286-4a3f-aac2-0ffc938d0d11",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 23,
+      "total_deletions": 21,
+      "accepted_lines": 17,
+      "overriden_lines": 0
+    }
+  }
+}

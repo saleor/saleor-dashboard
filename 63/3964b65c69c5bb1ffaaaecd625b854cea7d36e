@@ -1,0 +1,37 @@
+src/legacy-sdk/helpers.test.ts
+  dabd72ec72e39447 1-58
+src/legacy-sdk/apollo/client.test.ts
+  dabd72ec72e39447 1-44,46-91,93-113,115,117-136,138,140-156,158-162,164-182,184-188,190-201,203-213,215-227,229-239,241-253,255-265,267-279,281-291,293-304,306-343
+src/legacy-sdk/core/user.test.ts
+  dabd72ec72e39447 1-293
+src/legacy-sdk/core/storage.test.ts
+  dabd72ec72e39447 1-293
+src/legacy-sdk/react/helpers/hookFactory.test.tsx
+  dabd72ec72e39447 1-149,151-153,155-179
+src/legacy-sdk/core/helpers.test.ts
+  dabd72ec72e39447 1-58
+src/legacy-sdk/core/auth.test.ts
+  dabd72ec72e39447 1-875
+src/legacy-sdk/react/components/SaleorProvider.test.tsx
+  dabd72ec72e39447 1-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "633964b65c69c5bb1ffaaaecd625b854cea7d36e",
+  "prompts": {
+    "dabd72ec72e39447": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0ae22cf5-f25a-40d7-903d-1097ac703737",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 2276,
+      "total_deletions": 54,
+      "accepted_lines": 2221,
+      "overriden_lines": 0
+    }
+  }
+}
