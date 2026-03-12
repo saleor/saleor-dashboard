@@ -166,8 +166,8 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
       jotai:
-        specifier: 2.14.0
-        version: 2.14.0(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@18.3.23)(react@18.3.1)
+        specifier: 2.18.1
+        version: 2.18.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@18.3.23)(react@18.3.1)
       jwt-decode:
         specifier: ^3.1.2
         version: 3.1.2
@@ -9989,10 +9989,10 @@ packages:
         integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==,
       }
 
-  jotai@2.14.0:
+  jotai@2.18.1:
     resolution:
       {
-        integrity: sha512-JQkNkTnqjk1BlSUjHfXi+pGG/573bVN104gp6CymhrWDseZGDReTNniWrLhJ+zXbM6pH+82+UNJ2vwYQUkQMWQ==,
+        integrity: sha512-e0NOzK+yRFwHo7DOp0DS0Ycq74KMEAObDWFGmfEL28PD9nLqBTt3/Ug7jf9ca72x0gC9LQZG9zH+0ISICmy3iA==,
       }
     engines: { node: ">=12.20.0" }
     peerDependencies:
@@ -20979,7 +20979,7 @@ snapshots:
 
   jose@5.10.0: {}
 
-  jotai@2.14.0(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@18.3.23)(react@18.3.1):
+  jotai@2.18.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@18.3.23)(react@18.3.1):
     optionalDependencies:
       "@babel/core": 7.29.0
       "@babel/template": 7.28.6
