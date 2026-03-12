@@ -363,6 +363,7 @@
     ],
     "PaymentMethodDetails": [
       "CardPaymentMethodDetails",
+      "GiftCardPaymentMethodDetails",
       "OtherPaymentMethodDetails"
     ],
     "PromotionEvent": [

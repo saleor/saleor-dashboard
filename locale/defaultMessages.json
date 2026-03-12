@@ -1408,6 +1408,9 @@
     "context": "tax strategy combobox hint",
     "string": "Select the method of tax calculation"
   },
+  "6IteaF": {
+    "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
+  },
   "6J1m2c": {
     "string": "Create a Model"
   },
@@ -7783,9 +7786,6 @@
   },
   "gVqSnA": {
     "string": "Assign and save"
-  },
-  "gZ1qnD": {
-    "string": "No extensions API URL provided"
   },
   "gaOXvo": {
     "context": "notification, form submitted",

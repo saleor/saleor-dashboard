@@ -4,7 +4,8 @@ import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { Info } from "lucide-react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { headerTitles, messages } from "../../messages";
 import { ExploreExtensionsActions } from "./components/ExploreExtensionsActions";
@@ -14,7 +15,7 @@ import { useExtensionsFilter } from "./hooks/useExtenstionsFilter";
 
 export const ExploreExtensions = () => {
   const intl = useIntl();
-  const { extensions, loading, error } = useExploreExtensions();
+  const { extensions, loading, error, isFallback } = useExploreExtensions();
   const subtitle = useContextualLink("extensions");
 
   const { handleQueryChange, query, filteredExtensions } = useExtensionsFilter({ extensions });
@@ -40,6 +41,24 @@ export const ExploreExtensions = () => {
         <ExploreExtensionsActions />
       </TopNav>
       <DashboardCard paddingX={6}>
+        {isFallback && (
+          <Box
+            display="flex"
+            alignItems="center"
+            backgroundColor="info1"
+            padding={4}
+            gap={2}
+            borderRadius={3}
+            marginBottom={4}
+          >
+            <Box flexShrink="0">
+              <Info size={20} />
+            </Box>
+            <Text size={3}>
+              <FormattedMessage {...messages.selfHostedBanner} />
+            </Text>
+          </Box>
+        )}
         <Box __width="370px">
           <SearchInput
             size="medium"

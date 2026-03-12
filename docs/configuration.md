@@ -18,11 +18,7 @@ Create or edit `.env` file in a root directory or set environment variables with
 - `STATIC_URL` - URL where the static files are located.
   E.g., if you use an S3 bucket, you should set it to the bucket's URL. By default, Saleor assumes you serve static files from the root of your site at "http://localhost:9000/".
 
-- `APPS_MARKETPLACE_API_URL` - URI of Marketplace API to fetch list of Apps in JSON.
-
-- `EXTENSIONS_API_URL` - URI of Marketplace API to fetch list of Extensions in JSON.
-
-- `APPS_TUNNEL_URL_KEYWORDS` - Custom apps tunnel URL keywords.
+- `EXTENSIONS_API_URL` - Optional URI of the Saleor Marketplace API used to fetch the list of extensions in JSON. Saleor Cloud projects have this preconfigured; self-hosted deployments can omit it and the Dashboard will fall back to a bundled `extensions.json` dataset and show a self-hosted banner in the Explore view.
 
 ## Fetching schema
 

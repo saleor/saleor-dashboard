@@ -65,11 +65,6 @@ jobs:
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
       ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -78,7 +73,6 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
