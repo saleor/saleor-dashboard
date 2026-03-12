@@ -1,0 +1,29 @@
+src/auth/hooks/useAuthProvider.ts
+  bda74e07040cd6b3 4,109
+src/graphql/cachePersistence.ts
+  bda74e07040cd6b3 1-87
+src/graphql/client.ts
+  bda74e07040cd6b3 8,44
+src/index.tsx
+  bda74e07040cd6b3 50,350-353,357-359,362-363
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "1e32879478c38ad8db700393fdd7363e6da2dbdf",
+  "prompts": {
+    "bda74e07040cd6b3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74dae1ac-186f-40bb-80a4-564f3d2c9b39",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 108,
+      "total_deletions": 62,
+      "accepted_lines": 101,
+      "overriden_lines": 0
+    }
+  }
+}
