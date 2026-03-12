@@ -120,6 +120,7 @@ jobs:
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
+          ARTIFACT_PREFIX: ${{ inputs.VERSION }}
 
   tests-complete:
     if: "!cancelled()"
@@ -144,6 +145,7 @@ jobs:
         uses: ./.github/actions/merge-pw-reports
         with:
           PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
+          ARTIFACT_PREFIX: ${{ inputs.VERSION }}
 
       - name: Determine conclusion
         id: conclusion
