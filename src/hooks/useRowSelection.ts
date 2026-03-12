@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 export interface UseRowSelection {
   selectedRowIds: string[];
   setSelectedRowIds: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedRows: (ids: string[]) => void;
+  excludeFromSelected: (ids: string[]) => void;
   clearRowSelection: () => void;
   setClearDatagridRowSelectionCallback: (callback: () => void) => void;
 }
@@ -19,6 +21,15 @@ export const useRowSelection = (paginationParams?: Pagination): UseRowSelection 
 
     setSelectedRowIds([]);
   };
+
+  const setSelectedRows = (ids: string[]) => {
+    setSelectedRowIds(ids);
+  };
+
+  const excludeFromSelected = (ids: string[]) => {
+    setSelectedRowIds(prev => prev.filter(x => !ids.includes(x)));
+  };
+
   const setClearDatagridRowSelectionCallback = (callback: () => void) => {
     clearDatagridRowSelectionCallback.current = callback;
   };
@@ -31,6 +42,8 @@ export const useRowSelection = (paginationParams?: Pagination): UseRowSelection 
   return {
     selectedRowIds,
     setSelectedRowIds,
+    setSelectedRows,
+    excludeFromSelected,
     clearRowSelection,
     setClearDatagridRowSelectionCallback,
   };

@@ -4,6 +4,7 @@ import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
+import { chevronCellRenderer } from "./ChevronCell";
 import { dropdownCellRenderer } from "./DropdownCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
@@ -24,6 +25,7 @@ export function useCustomCellRenderers() {
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
       dateCellRenderer(locale),
+      chevronCellRenderer,
       dropdownCellRenderer,
       thumbnailCellRenderer,
       ...customRenderers,
