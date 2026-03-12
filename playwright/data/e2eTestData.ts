@@ -1,22 +1,22 @@
 export const ATTRIBUTES = {
   productAttributeWithValuesToBeUpdated: {
-    id: "QXR0cmlidXRlOjczMg==",
+    id: "QXR0cmlidXRlOjgx",
     name: "e2e product attribute to be updated",
     valueToBeDeleted: "e2e product attribute value to be deleted",
     valueToBeUpdated: "e2e product attribute value to be updated",
   },
   contentAttributeWithValuesToBeUpdated: {
-    id: "QXR0cmlidXRlOjczMw==",
+    id: "QXR0cmlidXRlOjc2",
     name: "e2e content attribute to be updated",
     valueToBeDeleted: "e2e content attribute value to be deleted",
     valueToBeUpdated: "e2e content attribute value to be updated",
   },
   productAttributeToBeDeleted: {
-    id: "QXR0cmlidXRlOjczNA==",
+    id: "QXR0cmlidXRlOjgz",
     name: "e2e product attribute to be deleted",
   },
   contentAttributeToBeDeleted: {
-    id: "QXR0cmlidXRlOjczNQ==",
+    id: "QXR0cmlidXRlOjc1",
     name: "e2e content attribute to be deleted",
   },
   attributesToBeBulkDeleted: {
@@ -29,11 +29,11 @@ export const ATTRIBUTES = {
   attributesToBeUpdated: [
     {
       name: "e2e product attribute to be updated 1",
-      id: "QXR0cmlidXRlOjc0MA==",
+      id: "QXR0cmlidXRlOjgy",
     },
     {
       name: "e2e content attribute to be updated 2",
-      id: "QXR0cmlidXRlOjczOQ==",
+      id: "QXR0cmlidXRlOjgw",
     },
   ],
   attributeTypesWithAbilityToAddValues: {
@@ -52,16 +52,16 @@ export const ATTRIBUTES = {
 export const VOUCHERS = {
   vouchers: {
     voucherToBeEditedWithFreeShipping: {
-      id: "Vm91Y2hlcjoyMDI%3D",
+      id: "Vm91Y2hlcjo3",
     },
     voucherToBeEditedUsageLimits: {
-      id: "Vm91Y2hlcjoyMDM%3D",
+      id: "Vm91Y2hlcjoxMw==",
     },
     voucherToBeEditedMinimumQuantity: {
-      id: "Vm91Y2hlcjoyMDQ%3D",
+      id: "Vm91Y2hlcjoxMQ==",
     },
     voucherToBeEditedAssignCategoryProductCollection: {
-      id: "Vm91Y2hlcjoyMDk%3D",
+      id: "Vm91Y2hlcjo2",
       name: "Assign category, product, collection",
     },
     voucherToBeBulkDeleted: {
@@ -69,7 +69,7 @@ export const VOUCHERS = {
     },
     voucherToBeDeleted: {
       name: "Delete voucher",
-      id: "Vm91Y2hlcjoyMDY%3D",
+      id: "Vm91Y2hlcjoxMA==",
     },
   },
 };
@@ -77,90 +77,90 @@ export const DISCOUNTS = {
   promotionToBeEdited: {
     name: "e2e promotion to be edited",
     type: "Catalog",
-    id: "UHJvbW90aW9uOjI0MGVkZGVkLWYzMTAtNGUzZi1iNTlmLTFlMGFkYWE2ZWFkYg==",
+    id: "UHJvbW90aW9uOjIzY2I4NjNhLWUyNzYtNDM4Zi05MTU5LTY5ZWQwNzEwM2UyOQ==",
   },
   promotionWithoutRulesToBeDeleted: {
-    id: "UHJvbW90aW9uOjRmNTQwMDc1LTZlZGMtNDI1NC1hY2U2LTQ2MzdlMGYxZWJhOA==",
+    id: "UHJvbW90aW9uOjI1N2I1ZTAzLTIzMDUtNGRjMy05YTIzLWZjNDVkODE4OGYzNA==",
     name: "e2e Order predicate promotion without rules",
     type: "Order",
   },
   catalogPromotionWithRulesToBeDeleted: {
-    id: "UHJvbW90aW9uOmYyY2VjMDhkLTVkYmUtNGVjNC05NTNjLWMzMmQ5ZGQ2MTExYw==",
+    id: "UHJvbW90aW9uOjI1ZjY5MzA5LTMxYmItNGUzMC1hNTEyLTU5MjE4ZmIyNDM3OQ==",
     name: "e2e Catalog promo with rules to be deleted",
     type: "Catalog",
     rules: [
       {
-        id: "UHJvbW90aW9uUnVsZTo3NDk4MGVhNS0zNDA2LTQxZGYtOTc3Mi1jMzg3MjNhMWEwOWM=",
+        id: "UHJvbW90aW9uUnVsZTpkZmQ1MzQ0Mi1iMDAwLTRhZTUtODkxMS1jZmQ1OTk4ZDA4YzU=",
         name: "rule 1",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZTozMTEyMTE0Yy1hYjFkLTQ3OTktODY0My1jZDhlODMwYzllZmE=",
+        id: "UHJvbW90aW9uUnVsZTphYTU4ODBmMC0wY2QyLTQ2ZTctYjhjOS1lMGE1MmU2NjA5ZjU=",
         name: "rule 2",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZTozOWE3Zjc1Zi1jYTdmLTQ4ODgtOGE4NC02NzdjMTVhOGQ4Yjc=",
+        id: "UHJvbW90aW9uUnVsZTo3M2Q5ZGM1Yi00ZDFhLTRkZWQtOGY0Yi1kODU3ZGIxODM1NTk=",
         name: "rule 3",
       },
     ],
   },
   orderPromotionWithRulesToBeDeleted: {
-    id: "UHJvbW90aW9uOjA1MDllZjhjLTc0ZTEtNGMyMC1iZDk5LWRhYWU1YWJlZDM1Nw==",
+    id: "UHJvbW90aW9uOmIyMTQ0MmYzLThlMmItNGExMS04NTdmLWFkYzQ2ZDg5ZTc4NQ==",
     name: "e2e Order promo with rules to be deleted",
     type: "Order",
     rules: [
       {
-        id: "UHJvbW90aW9uUnVsZTo2ZTdlODNkOS1kNjJlLTQ2YmQtOGE2ZS03OTdlYTZiODk2NmQ=",
+        id: "UHJvbW90aW9uUnVsZTplM2RiMTdhOC05NzkzLTQzZTItODgxZS1iOGM5YWQ1MGNhOTk=",
         name: "rule #1",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZTo1MzQwNjEyYy0wOWJhLTQxYzUtYmY2Yy1lYmUzZTQ3MjY0MjY=",
+        id: "UHJvbW90aW9uUnVsZTowYzljZjE0ZS1jNTBmLTQ5NDUtOGY3ZC05NGZmMGRjN2UyOGE=",
         name: "rule #2",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZTpjMzk5ZTM1Ni04OWFhLTQ0MTUtYWE0Zi01NThlZDQ2M2IwNTM=",
+        id: "UHJvbW90aW9uUnVsZToxMjkxZDQ0NS0xYWU0LTQwNGUtYjVlYi03OWExNzU3N2IwOWE=",
         name: "rule #3",
       },
     ],
   },
   orderPromotionWithRulesToBeUpdated: {
-    id: "UHJvbW90aW9uOjI0Njg3NmM5LWM1ZWMtNDBiYi1iMzExLWE3YWQ2YzBiZDc4NQ==",
+    id: "UHJvbW90aW9uOmUwNzJkZDM5LWE2ZWUtNGZlNC1iZDNkLWFlNjkwYjg3OWNjMg==",
     name: "e2e Order promo with rules to be updated",
     type: "Order",
     rules: [
       {
-        id: "UHJvbW90aW9uUnVsZTo3NmEwOGYzZi0xMzZhLTRmNTUtYTc0NS1kZmIxNDZkOWI4ZGQ=",
+        id: "UHJvbW90aW9uUnVsZTo5YWI0ZTAxOS02ZDYzLTQ4ZTktYWFjMi0zMTk1ODVlYjc5YWY=",
         name: "rule 1",
         channel: "Channel-PLN",
         channelCurrency: "PLN",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZTpjODIxMWJhNS05ZGRmLTRhYzQtOTdlMS04YmM0MzNhZjRlOTM=",
+        id: "UHJvbW90aW9uUnVsZTpkNDI0OTE3My04ZjNlLTRlZTYtOTBhOC1lNjk4MGVkYzAwZTE=",
         name: "rule 2",
         channel: "Channel-PLN",
         channelCurrency: "PLN",
-        giftRewardToBeDeleted: "UHJvZHVjdFZhcmlhbnQ6MjE0",
+        giftRewardToBeDeleted: "UHJvZHVjdFZhcmlhbnQ6Mzgy",
       },
     ],
   },
   catalogPromotionWithRulesToBeUpdated: {
-    id: "UHJvbW90aW9uOmJkZTgyNGQ4LTk4ZTktNDM1NC04ODE4LTE1YzVjNmI2MWU2NQ==",
+    id: "UHJvbW90aW9uOjZmYzk1NzI5LTY0NDYtNDc4ZC04ZGI2LWM1N2FlN2RhMTk0OA==",
     name: "e2e Catalog promo with rules to be updated",
     type: "Catalog",
     rules: [
       {
-        id: "UHJvbW90aW9uUnVsZTplOWZjNjc2NS1kNzM2LTRhMzMtYjBiMy1hZWMxY2FmNGVkMDE=",
+        id: "UHJvbW90aW9uUnVsZToyMjEzNzY4OS1hNjg5LTQ1MTQtODYzZi01OTc3YmE4YTYyMWI=",
         name: "rule #1",
         channel: "Channel-USD",
         channelCurrency: "USD",
       },
 
       {
-        id: "UHJvbW90aW9uUnVsZToyZjM3ZjRhOS01NjY0LTQzMDEtOWU4Zi0zZTliZGFjNmUyYjE=",
+        id: "UHJvbW90aW9uUnVsZTo4YTE5YjBhYi0wOWRkLTQ1MzAtYTc2Mi0yNDYyZGQ5ZmQ5M2I=",
         name: "rule 2",
         channel: "Channel-USD",
         channelCurrency: "USD",
@@ -169,15 +169,15 @@ export const DISCOUNTS = {
   },
   promotionWithRulesToBeDeleted: {
     name: "e2e Catalog predicate promotion with rules",
-    id: "UHJvbW90aW9uOjY0N2M2MzdhLTZjNTEtNDYxZC05MjQ2LTc0YTY0OGM0ZjAxNA==",
+    id: "UHJvbW90aW9uOjI3ZWNkZWY0LWQxOGYtNDgxMC04OWIyLWQ1MDE0Y2Y1NzljNg==",
   },
   cataloguePromotion: {
     name: "e2e Catalog promotion for adding rules",
-    id: "UHJvbW90aW9uOjNmODZjZDAwLTUwNWEtNGVkNC04ZTliLTJmOGI4NGM3NGNlOQ==",
+    id: "UHJvbW90aW9uOmRhZWVhMzA4LWYxMzAtNDE2Ni05NDdjLTNlZTQwZmU4Y2FhNA==",
   },
   orderPromotion: {
     name: "e2e Order promotion for adding rules",
-    id: "UHJvbW90aW9uOjJlM2VhNDkyLTRhMTAtNDYzOS05MWVmLTc1YzQ1OTUxNGQyMQ==",
+    id: "UHJvbW90aW9uOjg0ODA1MDU3LWM3MjctNGFhOC1iZjk0LTc0NzQzMjU1YzE0Nw==",
   },
 };
 
@@ -207,20 +207,20 @@ export const CUSTOMER_ADDRESS = {
 };
 export const CATEGORIES = {
   categoryToBeUpdated: {
-    id: "Q2F0ZWdvcnk6NTA3",
+    id: "Q2F0ZWdvcnk6NDc=",
     name: "a category to be updated",
   },
   categoriesToBeBulkDeleted: {
     names: ["a cateogry to be bulk deleted 1/2", "a cateogry to be bulk deleted 2/2"],
   },
   e2eCategory: {
-    id: "Q2F0ZWdvcnk6NTEx",
+    id: "Q2F0ZWdvcnk6NTE=",
     name: "e2e category",
   },
 };
 export const COLLECTIONS = {
   collectionToBeUpdated: {
-    id: "Q29sbGVjdGlvbjoxNjY%3D",
+    id: "Q29sbGVjdGlvbjo4",
     name: "Collection to be updated",
   },
   collectionsToBeBulkDeleted: {
@@ -246,7 +246,7 @@ export const COUNTRIES = {
 };
 export const CHANNELS = {
   channelToBeEditedSettings: {
-    id: "Q2hhbm5lbDoyMzkx",
+    id: "Q2hhbm5lbDoz",
   },
   channelToBeDeleted: {
     name: "z - channel to be deleted",
@@ -254,146 +254,133 @@ export const CHANNELS = {
   channelForTaxEdition: {
     name: "a channel for tax tests",
   },
-  plnChannel: {
-    id: "VGF4Q29uZmlndXJhdGlvbjox",
-  },
   e2eChannelDoNotDelete: {
-    id: "Q2hhbm5lbDoyMzk0",
+    id: "Q2hhbm5lbDo2",
     name: "e2e-channel-do-not-delete",
     slug: "e2e-channel-do-not-delete",
   },
   channelUSD: {
-    id: "Q2hhbm5lbDoyMjQz",
+    id: "Q2hhbm5lbDox",
     name: "Channel-USD",
   },
   channelPLN: {
-    id: "Q2hhbm5lbDoyMjQ0",
+    id: "Q2hhbm5lbDoy",
     name: "Channel-PLN",
     currency: "PLN",
   },
 };
+export const TAXES = {
+  plnChannelTaxConfig: {
+    id: "VGF4Q29uZmlndXJhdGlvbjoy",
+  },
+};
 export const GIFT_CARDS = {
   giftCardToBeEdited: {
-    id: "R2lmdENhcmQ6NTM%3D",
-    name: "Code ending with AD47",
+    id: "R2lmdENhcmQ6MQ==",
+    name: "Code ending with rd_1",
   },
   giftCardsToBeDeleted: {
     names: ["to be deleted 1/2", "to be deleted 2/2"],
-    last4: ["5EE6", "9E39"],
+    last4: ["d_15", "rd_5"],
   },
   giftCardToBeActivated: {
-    id: "R2lmdENhcmQ6NTQ%3D",
-    name: "Code ending with 7FF8",
+    id: "R2lmdENhcmQ6Mg==",
+    name: "Code ending with d_11",
   },
   giftCardToBeDeactivated: {
-    id: "R2lmdENhcmQ6NTU%3D",
-    name: "Code ending with F2DA",
+    id: "R2lmdENhcmQ6Mw==",
+    name: "Code ending with rd_2",
   },
   giftCardToResendCode: {
-    id: "R2lmdENhcmQ6Ng%3D%3D",
-    name: "Code ending with d_10",
+    id: "R2lmdENhcmQ6Ng==",
+    name: "Code ending with d_13",
   },
 };
 export const WAREHOUSES = {
   warehouseToBeEdited: {
-    id: "V2FyZWhvdXNlOjgzNGQwYjQwLWMwZGItNGRhZi04N2RjLWQ2ODBiYzY3NGVlMw%3D%3D",
+    id: "V2FyZWhvdXNlOmI5ZDJhNmRkLTEzN2QtNDYzMS1iOGMzLTFhNGZmOTZlNWUxYQ==",
     name: "warehouse to be edited",
   },
   warehouseToBeDeleted: {
     name: "warehouseto be deleted",
   },
   warehouseEurope: {
-    id: "V2FyZWhvdXNlOjlkYjY4NWQxLWViMTktNDU2ZS05ODMyLTMxODA3ZWM0NDdhOQ==",
+    id: "V2FyZWhvdXNlOjU4MDEwNDhlLWFmMDktNGQ4Ni05OThkLTUyZjM1OWQ2ZmQ1OA==",
     name: "Europe",
   },
   warehouseAmericas: {
-    id: "V2FyZWhvdXNlOjdmZDA0OGI0LWYwNzItNDZmMi1iMDMyLTc3ZWU3MDNiMzM3Yg==",
+    id: "V2FyZWhvdXNlOjRiNDJlMTgxLTNiMjgtNDY1Zi05OWVhLTExNmE4MGMxYTgxZg==",
     name: "Americas",
   },
   warehouseOceania: {
-    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+    id: "V2FyZWhvdXNlOjRkNDM4NTc4LTRhZGEtNDg0OS05YmYyLTU1Njg0NjU3ZTFkNA==",
     name: "Oceania",
   },
   warehouseAfrica: {
-    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+    id: "V2FyZWhvdXNlOjFlMjAxNTBmLTFkYTYtNGMwMS04M2FmLWQwMTNmMzRhZTI4YQ==",
     name: "Africa",
   },
 };
 
 export const PRODUCTS = {
   singleProductType: {
-    id: "UHJvZHVjdFR5cGU6Njcy",
+    id: "UHJvZHVjdFR5cGU6NjE=",
     info: "Single product type",
   },
-  singleProductTypeToBeUpdated: {
-    id: "UHJvZHVjdDo3NjE%3D",
-    info: "Single product type to be updated",
-  },
-  e2eProduct1: {
-    id: "UHJvZHVjdDo3OQ==",
-    name: "Bean Juice",
-  },
-  e2eProduct2: {
-    id: "UHJvZHVjdDoxMTU=",
-    name: "Black Hoodie",
+  singleProductToBeUpdated: {
+    id: "UHJvZHVjdDoyMDA=",
+    info: "Single product to be updated",
   },
   productAvailableOnlyInPlnChannel: {
-    id: "UHJvZHVjdDo3NjM%3D",
-    name: "a beer available only in pln channel",
-    info: "Product available only in PLN channel",
+    id: "UHJvZHVjdDoyMDE=",
+    name: "Product available only in PLN channel",
   },
   productAvailableOnlyInUsdChannel: {
-    id: "UHJvZHVjdDo3NjQ%3D",
-    name: "a beer available only in USD channel",
-    info: "Product available only in USD channel",
+    id: "UHJvZHVjdDoyMDI=",
+    name: "Product available only in USD channel",
   },
   productToAddVariants: {
-    id: "UHJvZHVjdDo3Mjk%3D",
-    name: "beer with variants",
+    id: "UHJvZHVjdDoyMDM=",
+    name: "E2E product without variants",
     info: "Product that does not contain any variant yet",
   },
   e2eProductWithVariant1: {
-    id: "UHJvZHVjdDo4NQ==",
-    name: "Colored Parrot Cushion",
-    variantId: "UHJvZHVjdFZhcmlhbnQ6OTgy",
+    id: "UHJvZHVjdDoxNTE=",
+    name: "The Dash Cushion",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6Mzgz",
     variantName: "70 / 70",
   },
-  e2eProductWithVariant2: {
-    id: "UHJvZHVjdDoxMTY=",
-    name: "Blue Hoodie 2",
-    variantId: "UHJvZHVjdFZhcmlhbnQ6MzAx",
-    variantName: "S",
-  },
   productWithOneVariant: {
-    id: "UHJvZHVjdDo3MzM%3D",
+    id: "UHJvZHVjdDoxNDM=",
+    name: "Neck Warmer",
     info: "Product that contains single variant",
   },
   singleVariantDeleteProduct: {
-    productId: "UHJvZHVjdDo3Njc%3D",
-    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzNg%3D%3D",
-    productName: "beer with variant to be deleted",
+    productId: "UHJvZHVjdDoxNjI=",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6Mzk5",
+    productName: "White Parrot Cushion",
     info: "Delete variant via it details page product",
   },
   multipleVariantsBulkDeleteProduct: {
-    productId: "UHJvZHVjdDo3NjY%3D",
-    productName: "juice with variant to be deleted",
+    productId: "UHJvZHVjdDoxMzg=",
+    productName: "Dark Polygon Tee",
     info: "Delete multiple variants via grid product page",
   },
   productWithVariantWhichWillBeUpdated: {
-    id: "UHJvZHVjdDo3NjU%3D",
-    name: "product with variant which will be updated",
-    variantId: "UHJvZHVjdFZhcmlhbnQ6MTIzMg%3D%3D",
+    id: "UHJvZHVjdDoxNDE=",
+    name: "Pirate's Beanie",
+    variantId: "UHJvZHVjdFZhcmlhbnQ6MzY4",
     variantName: "update variant",
     info: "Product with variant which will be updated",
   },
   productWithOneVariantToBeDeletedFromDetails: {
-    name: "beer to be deleted",
-    id: "UHJvZHVjdDo3NTc%3D",
+    name: "DRY Sunglasses",
+    id: "UHJvZHVjdDoxNDQ=",
     info: "Product that contains single variant - to be deleted from details view",
   },
   productAvailableWithTransactionFlow: {
-    name: "Coconut Juice transaction flow",
-    id: "UHJvZHVjdDo3Ng%3D%3D",
+    name: "Carrot Juice",
+    id: "UHJvZHVjdDoxNTU=",
     variant1sku: "84725784",
     info: "Product which is available within channel with activated transaction flow",
   },
@@ -405,25 +392,23 @@ export const PRODUCTS = {
     ],
   },
   productWithPriceHigherThan20: {
-    id: "HJvZHVjdDo2NA==",
-    name: "Ocean Poems",
-    variantSKU: "ocean-poems-mp3",
-    price: 22,
+    id: "UHJvZHVjdDoxMzA=",
+    name: "Paul's Balance 420",
+    variantSKU: "118223581",
+    price: 50,
   },
   productWithPriceLowerThan20: {
-    name: "Bean Juice",
-    variantSKU: "57423879",
-    price: 3,
-  },
-  giftProduct: {
-    name: "Power Juice",
+    id: "UHJvZHVjdDoxNDQ=",
+    name: "DRY Sunglasses",
+    variantSKU: "550n97455",
+    price: 15,
   },
   productWithDiscountChannelPLN: {
-    id: "UHJvZHVjdDo3NzA=",
+    id: "UHJvZHVjdDoxNjc=",
     name: "e2e-do-not-touch",
     rewardPercentageDiscountValue: 40,
     variant: {
-      id: "UHJvZHVjdFZhcmlhbnQ6MTIzOQ==",
+      id: "UHJvZHVjdFZhcmlhbnQ6NDIz",
       sku: "TEST-123",
       undiscountedPrice: 100,
       discountedPrice: 60,
@@ -433,46 +418,46 @@ export const PRODUCTS = {
 
 export const ORDERS = {
   draftOrdersToBeDeleted: {
-    ids: ["#3266", "#3265"],
+    ids: ["#126", "#127"],
   },
   draftOrderChannelPLN: {
-    id: "T3JkZXI6Zjg0NTk3N2EtM2Y3Yy00NDY3LWI3N2MtZDY0ZjhhMDU2MmQy",
+    id: "T3JkZXI6YTJmOWQ5NjgtZjEwYi00MGJkLTgwZDUtYzhjNmRjZjIwNDY4",
     productInBasket: {
-      productName: "Black Hoodie",
-      price: 20,
-      variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
+      productName: "Hoodie",
+      price: 149.99,
+      variantId: "UHJvZHVjdFZhcmlhbnQ6MzQ1",
     },
   },
   ordersWithinTransactionFlow: {
     markAsPaidOrder: {
-      orderId: "T3JkZXI6MDE4ZWM0NGUtNTgwMC00NGM0LTliMzAtZDE3YTIxYjljOTgz",
+      orderId: "T3JkZXI6Njg0M2ZjNzItMzRmNy00OTM4LThlYWYtMmVkMTVhMjM1MWIz",
       info: "Order used to mark as paid and fulfill",
     },
     captureManualTransactionOrder: {
-      orderId: "T3JkZXI6MmE1NTNkMzktOWU0OS00ZWE5LWIyNzEtNzk2ZWI5OGJhNzcz",
+      orderId: "T3JkZXI6NTE1Mzg3M2UtMjNlMS00OWQ2LTg4ZDctMTc3ZjViMzE3Mzk5",
       info: "Order used to capture manual transactions and fulfill",
     },
   },
   orderToAddTrackingNumberTo: {
-    id: "T3JkZXI6M2NkYWE4NGItNzgxNi00ZWI2LWE1MGMtODE0NzY5YWM0MTEw",
+    id: "T3JkZXI6ZGI1NzE0NTktYzA3Yy00NGY4LTk3MTYtN2Y0NTE4YmEyMjA5",
   },
   orderToMarkAsPaidAndFulfill: {
-    id: "T3JkZXI6Yzg2ZDMzYmEtMTA5Yi00MzUyLTkzYWItOTljMGE3Zjk4ZGE5",
+    id: "T3JkZXI6ZjMwZmM3Y2UtZGNjOS00MTljLWEwNjItMzhlZmI1MzQwMDhj",
   },
   orderFulfilledToChangeBillingAddress: {
-    id: "T3JkZXI6MDIzNDhmMjktNzJiOC00ZTBkLWI1ODYtY2U3OTYwZDI0Y2Q0",
+    id: "T3JkZXI6MzhjMWUzOGYtYzgzYS00MmE5LThjMTMtNTQ0NzA5ZWUyODQ3",
   },
   orderNotFulfilledToChangeShippingAddress: {
-    id: "T3JkZXI6ZWFhZjA0MzgtNzkyYi00ZTdlLWIyODUtMTBkMjViMjM0MzRk",
+    id: "T3JkZXI6YzNhMzhkMTYtNWFkMi00M2ExLTg4MGQtNDI1MTUxZjhiYTZh",
   },
   fullyPaidOrderWithSingleTransaction: {
-    id: "T3JkZXI6ZjZjZWUxMzItNDk2Zi00MWUyLWJkNTItYTk1MDM1YTVlZmVm",
+    id: "T3JkZXI6ZjZkMzVmZWYtMTc1My00MDVlLWJhNmYtOThhZjVmOGE2NjJl",
     lineItems: [
       {
-        name: "Bean Juice",
+        name: "Dash Force",
         quantity: "1",
       },
-      { name: "Lake Tunes", quantity: "2" },
+      { name: "Mighty Mug", quantity: "1" },
     ],
   },
   fullyPaidOrderWithSeveralTransactions: {
@@ -516,88 +501,74 @@ export const ORDERS = {
     ],
   },
   orderWithoutAddedCustomer: {
-    id: "T3JkZXI6MDM4MjM4NDMtYjg3My00ZTQ2LWE1NTItNjc0ZGIwZjE2ZGZh",
+    id: "T3JkZXI6NWIzM2FhMDYtZGIwMi00MDZmLWE1MjMtMjU1ZGQwNTgzNGQw",
   },
 };
 
 export const SHIPPING_METHODS = {
   shippingMethodWithoutRates: {
-    id: "U2hpcHBpbmdab25lOjIzOTA%3D",
-    info: "Shipping method that is used to add rates",
-    name: "Shipping method that is used to add rates",
+    id: "U2hpcHBpbmdab25lOjg=",
+    info: "Shipping Zone without rates to test adding new methods",
+    name: "Shipping Zone without rates",
   },
   shippingMethodToBeUpdated: {
-    id: "U2hpcHBpbmdab25lOjIzOTI=",
+    id: "U2hpcHBpbmdab25lOjk=",
     info: "Shipping zone to be updated",
-    name: "e2e-test-shippingZone-to-be-updated",
+    name: "e2e-test-shipping-zone-to-be-updated",
   },
   shippingMethodToBeBulkDeleted1: {
-    id: "U2hpcHBpbmdab25lOjIzOTM=",
+    id: "U2hpcHBpbmdab25lOjEw",
     info: "First shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-1",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-1",
   },
   shippingMethodToBeBulkDeleted2: {
-    id: "U2hpcHBpbmdab25lOjIzOTQ=",
+    id: "U2hpcHBpbmdab25lOjEx",
     info: "Second shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-2",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-2",
   },
   shippingMethodToBeBulkDeleted3: {
-    id: "U2hpcHBpbmdab25lOjIzOTU=",
+    id: "U2hpcHBpbmdab25lOjEy",
     info: "Third shipping zone to be bulk deleted",
-    name: "e2e-test-shippingZone-to-be-bulk-deleted-3",
+    name: "e2e-test-shipping-zone-to-be-bulk-deleted-3",
   },
-  shippingMethodWithRatesToBeDeleted: {
-    id: "U2hpcHBpbmdab25lOjIzODk%3D",
+  shippingZoneWithRatesToBeDeleted: {
+    id: "U2hpcHBpbmdab25lOjc=",
     info: "Shipping zone with methods to be deleted",
-    name: "e2e-test-shippingZone-to-be-deleted",
+    name: "e2e-test-shipping-zone-to-be-deleted",
     rates: {
       priceBasedRateToBeDeleted: {
-        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIx",
         info: "Price based shipping rate",
-        name: "shippingMEthod_to-be-deleted",
+        name: "price-based-shipping-rate-to-be-deleted",
       },
       weightBasedRateToBeDeleted: {
-        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIyMjA=",
+        id: "U2hpcHBpbmdNZXRob2RUeXBlOjIy",
         info: "Weight based shipping rate",
-        name: "shippingMethod_to_be_deleted",
+        name: "weight-based-shipping-rate-to-be-deleted",
       },
     },
   },
 };
 export const USERS = {
   userToBeDeactivated: {
-    id: "VXNlcjoxMzQ3",
+    id: "VXNlcjoxMDU=",
     email: "user-to-be-deactivated@gmai.com",
     info: "Active user used in deactivation user test",
   },
   userToBeActivated: {
-    id: "VXNlcjoxMzQ5",
+    id: "VXNlcjoxMDY=",
     email: "user-to-be-activated@gmai.com",
     info: "Inactive user used in activation user test",
   },
-  userForPasswordReset: {
-    email: "user-for-password-reset@gmail.com",
-    newPassword: "4321test",
-    info: "User used in reset password test",
-    name: "e2e",
-    lastName: "user",
-  },
-  userForPasswordChange: {
-    email: "change-password-user@gmail.com",
-    newPassword: "4321test",
-    info: "User used in change password test",
-    name: "change password",
-    lastName: "user",
-  },
   staffToBeEdited: {
-    id: "VXNlcjoxMzcx",
+    id: "VXNlcjoxMDk=",
     name: "e2e_staff_to_be_updated",
     lastName: "DO NOT DELETE",
     email: "test123@hotmail.com",
     permission: "Apps management",
   },
   staffToBeDeleted: {
-    id: "VXNlcjoxMzcy",
+    id: "VXNlcjoxMTA=",
     name: "e2e_staff_to_be_deleted",
     lastName: "DO NOT DELETE",
   },
@@ -613,18 +584,18 @@ export const APPS = {
 
 export const TRANSLATIONS = {
   translationsToBeAdded: {
-    id: "Q2F0ZWdvcnk6NTEy",
-    name: "CategoryToTranslate",
+    id: "Q2F0ZWdvcnk6NDU=",
+    name: "Books",
     info: "Category used to add translation test",
   },
   translationsToBeEdited: {
-    id: "UHJvZHVjdDo3OA==",
-    name: "Green Juice",
+    id: "UHJvZHVjdDoxNTI=",
+    name: "Apple Juice",
     info: "Product used to edit translation test",
   },
   translationsToBeCleared: {
-    id: "Q29sbGVjdGlvbjox",
-    name: "Summer collection",
+    id: "Q29sbGVjdGlvbjo1",
+    name: "Summer Picks",
     info: "Translation used in clear translation test",
   },
 };
@@ -632,18 +603,18 @@ export const TRANSLATIONS = {
 export const NAVIGATION_ITEMS = {
   navigationMenuToBeUpdated: {
     name: "e2e-menu-to-be-updated",
-    id: "TWVudTozNQ==",
+    id: "TWVudToz",
     menuItems: [
       { name: "e2e-menu-item-to-be-updated", link: "Groceries" },
       { name: "e2e-menu-item-to-be-deleted", link: "Accessories" },
     ],
   },
   navigationMenuToBeDeletedFromList: {
-    id: "TWVudTozOQ==",
+    id: "TWVudTo0",
     name: "e2e-menu-to-be-deleted-from-list",
   },
   navigationMenuToBeDeletedFromDetailsView: {
-    id: "TWVudTo0MA==",
+    id: "TWVudTo1",
     name: "e2e-menu-to-be-deleted-from-details-view",
   },
   navigationMenusToBeBulkDeleted: {
@@ -653,7 +624,7 @@ export const NAVIGATION_ITEMS = {
 
 export const PERMISSION_GROUPS = {
   permissionGroupToBeEdited: {
-    id: "R3JvdXA6MTEx",
+    id: "R3JvdXA6NTg=",
     name: "e2e_permission_group_to_be_updated",
     assignedMembers: {
       names: [
@@ -667,7 +638,7 @@ export const PERMISSION_GROUPS = {
     },
   },
   permissionGroupToBeDeleted: {
-    id: "R3JvdXA6MTEw",
+    id: "R3JvdXA6NTk=",
     name: "e2e_permission_group_to_be_deleted",
   },
   permissionGroupMembers: [
@@ -688,43 +659,43 @@ export const PERMISSION_GROUPS = {
 
 export const PAGE_TYPES = {
   pageTypeToBeEdited: {
-    id: "UGFnZVR5cGU6MzQ=",
+    id: "UGFnZVR5cGU6MTE=",
     name: "A page type to be edited",
     info: "Page type used in edit page type test",
   },
   pageTypeToBeRemoved: {
-    id: "UGFnZVR5cGU6MzU=",
+    id: "UGFnZVR5cGU6MTA=",
     name: "A page type to be removed",
     info: "Page type used in delete page type test",
   },
   pageTypesToBeBulkDeleted: {
     names: ["a page type to be bulk deleted 1/2", "a page type to be bulk deleted 2/2"],
-    ids: ["UGFnZVR5cGU6MzY=", "UGFnZVR5cGU6Mzc="],
+    ids: ["UGFnZVR5cGU6OA==", "UGFnZVR5cGU6OQ=="],
   },
 };
 export const PRODUCT_TYPES = {
   productTypeToBeEdited: {
-    id: "UHJvZHVjdFR5cGU6Njk4",
+    id: "UHJvZHVjdFR5cGU6Mjg=",
     name: "A product type to be edited",
     info: "Product type used in edit product type test",
   },
   productTypeToBeRemoved: {
-    id: "UHJvZHVjdFR5cGU6Njk5",
+    id: "UHJvZHVjdFR5cGU6Mjc=",
     name: "A product type to be removed",
     info: "Product type used in delete product type test",
   },
   productTypesToBeBulkDeleted: {
     names: ["a product type to be bulk deleted 1/2", "a product type to be bulk deleted 2/2"],
-    ids: ["UHJvZHVjdFR5cGU6NzAw", "UHJvZHVjdFR5cGU6NzAx"],
+    ids: ["UHJvZHVjdFR5cGU6MjY=", "UHJvZHVjdFR5cGU6MjU="],
   },
 };
 export const CUSTOMERS = {
   deleteCustomer: {
-    id: "VXNlcjoxMzY3",
+    id: "VXNlcjoxMTE=",
     email: "e2e_customer@delete.com",
   },
   editCustomer: {
-    id: "VXNlcjoxMzY2",
+    id: "VXNlcjoxMTI=",
     email: "e2e_customer_with_addresses@saleor.io",
     note: "simple note",
     initialShippingAddress: {
@@ -766,13 +737,13 @@ export const CUSTOMERS = {
     ],
   },
   customerToBeActivated: {
-    id: "VXNlcjoxMzY0",
+    id: "VXNlcjoxMTY=",
     email: "e2e-customer@activate.com",
     firstName: "e2e-customer",
     lastName: "to-be-activated",
   },
   customerToBeDeactivated: {
-    id: "VXNlcjoxMzY1",
+    id: "VXNlcjoxMTc=",
     email: "e2e-customer@deactivate.com",
     firstName: "e2e-customer",
     lastName: "to-be-deactivated",

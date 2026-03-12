@@ -218,4 +218,19 @@ export class ProductPage extends BasePage {
     await fileChooser.setFiles(path.join("playwright/data/images/", fileName));
     await this.page.waitForLoadState("domcontentloaded");
   }
+
+  async selectAttributeValue(attributeName: string, attributeValue: string) {
+    const attributeInput = this.page.locator(`[name="attribute:${attributeName}"]`);
+
+    await attributeInput.click();
+    await attributeInput.fill(attributeValue);
+
+    const option = this.page
+      .getByTestId("select-option")
+      .getByText(attributeValue, { exact: true })
+      .first();
+
+    await option.waitFor({ state: "visible" });
+    await option.click();
+  }
 }

@@ -1,4 +1,4 @@
-import { CHANNELS } from "@data/e2eTestData";
+import { TAXES } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { AddCountriesDialog } from "@dialogs/addCountriesDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
@@ -40,18 +40,10 @@ export class TaxesPage extends BasePage {
 
     readonly searchTaxCountryInput = page.getByRole("textbox", { name: "Search tax countries" }),
     readonly taxClassNameInput = page.getByTestId("class-name-input").locator("input"),
-    readonly noTaxRateInput = page.getByTestId("No Taxes").locator("input"),
+    readonly noTaxRateInput = page.getByTestId("No taxes").locator("input"),
     readonly defaultRateInput = page.getByTestId("Country default rate").locator("input"),
-    readonly audioProductsRateInput = page
-      .getByTestId("Audio Products (tapes, cds etc.)")
-      .locator("input"),
-    readonly dataServicesRateInput = page
-      .getByTestId("Data services - storage and retrieval ")
-      .locator("input"),
-    readonly standardRateInput = page.getByTestId("standard").locator("input"),
-    readonly temporaryUnmappedRateInput = page
-      .getByTestId("Temporary Unmapped Other SKU - taxable default")
-      .locator("input"),
+    readonly groceriesRateInput = page.getByTestId("Groceries").locator("input"),
+    readonly booksRateInput = page.getByTestId("Books").locator("input"),
   ) {
     super(page);
     this.page = page;
@@ -65,18 +57,14 @@ export class TaxesPage extends BasePage {
 
   async typeAllTaxRatesForCountry(
     defaultRate: string,
+    groceriesRate: string,
+    booksRate: string,
     noTaxRate: string,
-    audioRate: string,
-    dataServiceRate: string,
-    standardRate: string,
-    temporaryRate: string,
   ) {
     await this.defaultRateInput.fill(defaultRate);
-    await this.audioProductsRateInput.fill(audioRate);
-    await this.dataServicesRateInput.fill(dataServiceRate);
+    await this.groceriesRateInput.fill(groceriesRate);
+    await this.booksRateInput.fill(booksRate);
     await this.noTaxRateInput.fill(noTaxRate);
-    await this.standardRateInput.fill(standardRate);
-    await this.temporaryUnmappedRateInput.fill(temporaryRate);
   }
 
   async clickCountriesTab() {
@@ -154,6 +142,6 @@ export class TaxesPage extends BasePage {
   }
 
   async gotoChannelsTabUrl() {
-    await this.page.goto(URL_LIST.taxChannel + CHANNELS.plnChannel.id);
+    await this.page.goto(URL_LIST.taxChannel + TAXES.plnChannelTaxConfig.id);
   }
 }
