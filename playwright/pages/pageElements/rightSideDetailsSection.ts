@@ -102,7 +102,7 @@ export class RightSideDetailsPage extends BasePage {
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
     // below click hides prompted options
-    this.clickChannelsSelectShippingPage();
+    await this.clickChannelsSelectShippingPage();
   }
 
   async openChannelsDialog() {

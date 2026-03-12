@@ -34,12 +34,7 @@ test.beforeEach(({ page }) => {
 const variantSKU = PRODUCTS.productAvailableWithTransactionFlow.variant1sku;
 
 test("TC: SALEOR_28 Create basic order #e2e #order", async () => {
-  /**
-   * Increasing timeout to 1 minute as this test covers the whole order
-   * creation flow which is quite long and on some environments it can
-   * exceed default 30s timeout
-   */
-  test.setTimeout(60 * 1000);
+  test.slow();
 
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
@@ -59,12 +54,7 @@ test("TC: SALEOR_28 Create basic order #e2e #order", async () => {
 });
 
 test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill order with transaction flow activated #e2e #order", async () => {
-  /**
-   * Increasing timeout to 1 minute as this test covers
-   * manual capture of two transactions and fulfillment of the order,
-   * it can exceed default 30s timeout
-   */
-  test.setTimeout(60 * 1000);
+  test.slow();
 
   const firstManualTransactionAmount = "100";
   const secondManualTransactionAmount = "20";
@@ -214,12 +204,7 @@ test("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
 });
 
 test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
-  /**
-   * Increasing timeout to 1 minute as this test covers the whole order
-   * creation flow which is quite long and on some environments it can
-   * exceed default 30s timeout
-   */
-  test.setTimeout(60 * 1000);
+  test.slow();
 
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
@@ -337,12 +322,8 @@ for (const refund of orderRefunds) {
 test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discounts #e2e`, async () => {
   /**
    * Test uses "Test Catalog promo e2e" with 40% discount for "e2e-do-not-touch" product through the Channel-PLN
-   *
-   * Increasing timeout to 1 minute as this test covers the whole order
-   * creation flow which is quite long and on some environments it can
-   * exceed default 30s timeout
    */
-  test.setTimeout(60 * 1000);
+  test.slow();
 
   const calculateDiscountedPrice = (
     undiscountedPrice: number,
@@ -386,12 +367,8 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
 test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
   /**
    * Test uses "Test order promo e2e" with 5% discount for orders with total price higher than 20$.
-   *
-   * Increasing timeout to 1 minute as this test covers the whole order
-   * creation flow which is quite long and on some environments it can
-   * exceed default 30s timeout
    */
-  test.setTimeout(60 * 1000);
+  test.slow();
 
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
