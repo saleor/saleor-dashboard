@@ -642,6 +642,11 @@ export const transactionItemFragment = gql`
     lastDigits
   }
 
+  fragment SaleorGiftcardPaymentMethodDetails on SaleorGiftcardPaymentMethodDetails {
+    name
+    code
+  }
+
   fragment TransactionItem on TransactionItem {
     ...TransactionBaseItem
     pspReference
@@ -665,6 +670,9 @@ export const transactionItemFragment = gql`
       }
       ... on OtherPaymentMethodDetails {
         ...OtherPaymentMethodDetails
+      }
+      ... on SaleorGiftcardPaymentMethodDetails {
+        ...SaleorGiftcardPaymentMethodDetails
       }
     }
     events {
