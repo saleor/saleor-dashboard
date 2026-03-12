@@ -93,6 +93,7 @@
     "@uiw/react-color-hue": "0.0.34",
     "@uiw/react-color-saturation": "0.0.34",
     "apollo-upload-client": "^17.0.0",
+    "apollo3-cache-persist": "^0.14.1",
     "chroma-js": "^2.6.0",
     "clsx": "^1.2.1",
     "color-convert": "^2.0.1",

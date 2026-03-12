@@ -120,6 +120,9 @@ importers:
       apollo-upload-client:
         specifier: ^17.0.0
         version: 17.0.0(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))(graphql@16.11.0)
+      apollo3-cache-persist:
+        specifier: ^0.14.1
+        version: 0.14.1(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))
       chroma-js:
         specifier: ^2.6.0
         version: 2.6.0
@@ -6278,6 +6281,14 @@ packages:
     peerDependencies:
       "@apollo/client": ^3.0.0
       graphql: 14 - 16
+
+  apollo3-cache-persist@0.14.1:
+    resolution:
+      {
+        integrity: sha512-p/jNzN/MmSd0TmY7/ts0B3qi0SdQ3w9yNLQdKqB3GGb9xATUlAum2v4hSrTeWd/DZKK2Z7Xg5kFXTH6nNVnKSQ==,
+      }
+    peerDependencies:
+      "@apollo/client": ^3.2.5
 
   arg@4.1.3:
     resolution:
@@ -18176,6 +18187,10 @@ snapshots:
       "@apollo/client": 3.4.17(graphql@16.11.0)(react@18.3.1)
       extract-files: 11.0.0
       graphql: 16.11.0
+
+  apollo3-cache-persist@0.14.1(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1)):
+    dependencies:
+      "@apollo/client": 3.4.17(graphql@16.11.0)(react@18.3.1)
 
   arg@4.1.3: {}
 
