@@ -1,0 +1,25 @@
+src/graphql/cachePersistence.test.ts
+  21e6f439fdec8f1b 1-86
+src/graphql/cachePersistence.ts
+  21e6f439fdec8f1b 50-63,92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "0eb2904cf57f5928e0d5b75f27725fb4062218aa",
+  "prompts": {
+    "21e6f439fdec8f1b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aa5f4538-1ef0-4252-a6a7-7c10c734eae0",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 101,
+      "total_deletions": 0,
+      "accepted_lines": 101,
+      "overriden_lines": 0
+    }
+  }
+}
