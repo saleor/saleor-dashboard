@@ -46,7 +46,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
   await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
-  // SKIPP search for gift card code not working on main
+  // Skipping search for gift card code not working on main
   // const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
 
   await giftCardsPage.issueGiftCardDialog.clickOkButton();

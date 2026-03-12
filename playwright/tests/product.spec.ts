@@ -274,10 +274,9 @@ test("TC: SALEOR_61 As an admin I should be able to delete existing variant @bas
     productPage.noVariantsText,
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
-  await expect(
-    productPage.pageHeader,
+  await expect(productPage.pageHeader).toContainText(
     PRODUCTS.singleVariantDeleteProduct.productName,
-  ).toBeVisible();
+  );
 });
 test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variants @basic-regression #product #e2e", async () => {
   await productPage.gotoExistingProductPage(PRODUCTS.multipleVariantsBulkDeleteProduct.productId);
@@ -293,8 +292,7 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
   ).toBeVisible();
   await productPage.clickSaveButton();
   await productPage.expectSuccessBanner();
-  await expect(
-    productPage.pageHeader,
+  await expect(productPage.pageHeader).toContainText(
     PRODUCTS.multipleVariantsBulkDeleteProduct.productName,
-  ).toBeVisible();
+  );
 });
