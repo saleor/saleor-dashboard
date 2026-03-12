@@ -1,10 +1,11 @@
 import { InMemoryCache } from "@apollo/client";
 import { APP_VERSION } from "@dashboard/config";
-import { persistCache, SessionStorageWrapper } from "apollo3-cache-persist";
+import { persistCache } from "apollo3-cache-persist";
 
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
 import { isStagingSchema } from "./schemaVersion";
+import { TTLLocalStorageWrapper } from "./TTLLocalStorageWrapper";
 import { type TypedTypePolicies } from "./typePolicies.generated";
 
 const introspectionData = isStagingSchema()
@@ -48,14 +49,16 @@ export const cache = new InMemoryCache({
 
 const CACHE_KEY_PREFIX = "apollo-cache-persist-";
 const CACHE_KEY = `${CACHE_KEY_PREFIX}${APP_VERSION}`;
+const CACHE_TIMESTAMP_KEY = `${CACHE_KEY}-timestamp`;
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 function clearStaleCacheKeys(): void {
   try {
-    for (let i = window.sessionStorage.length - 1; i >= 0; i--) {
-      const key = window.sessionStorage.key(i);
+    for (let i = window.localStorage.length - 1; i >= 0; i--) {
+      const key = window.localStorage.key(i);
 
-      if (key?.startsWith(CACHE_KEY_PREFIX) && key !== CACHE_KEY) {
-        window.sessionStorage.removeItem(key);
+      if (key?.startsWith(CACHE_KEY_PREFIX) && key !== CACHE_KEY && key !== CACHE_TIMESTAMP_KEY) {
+        window.localStorage.removeItem(key);
       }
     }
   } catch {
@@ -69,7 +72,7 @@ export async function initCache(): Promise<void> {
   try {
     await persistCache({
       cache,
-      storage: new SessionStorageWrapper(window.sessionStorage),
+      storage: new TTLLocalStorageWrapper(window.localStorage, CACHE_KEY, CACHE_TTL_MS),
       key: CACHE_KEY,
       maxSize: 2 * 1024 * 1024, // 2MB
     });
@@ -80,7 +83,8 @@ export async function initCache(): Promise<void> {
 
 export function clearPersistedCache(): void {
   try {
-    window.sessionStorage.removeItem(CACHE_KEY);
+    window.localStorage.removeItem(CACHE_KEY);
+    window.localStorage.removeItem(CACHE_TIMESTAMP_KEY);
   } catch {
     // Ignore storage errors
   }
