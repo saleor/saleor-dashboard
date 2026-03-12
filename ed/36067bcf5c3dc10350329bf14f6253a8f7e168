@@ -1,0 +1,27 @@
+src/graphql/TTLLocalStorageWrapper.test.ts
+  977c464d102a2a0e 1-25,27-41,43-72,74-79,82-107
+src/graphql/TTLLocalStorageWrapper.ts
+  977c464d102a2a0e 1-46
+src/graphql/cachePersistence.ts
+  977c464d102a2a0e 3,52-53,57-58,60-61,86-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "ed36067bcf5c3dc10350329bf14f6253a8f7e168",
+  "prompts": {
+    "977c464d102a2a0e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2f6bb664-4e45-4019-847f-21adf2e605c9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 178,
+      "total_deletions": 7,
+      "accepted_lines": 158,
+      "overriden_lines": 2
+    }
+  }
+}
