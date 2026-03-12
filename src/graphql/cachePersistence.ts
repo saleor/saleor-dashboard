@@ -47,6 +47,20 @@ export const cache = new InMemoryCache({
   } as TypedTypePolicies,
 });
 
+const SENSITIVE_TYPE_PREFIXES = ["User:", "Address:"];
+
+export async function piiFilterMapper(data: string): Promise<string> {
+  const parsed = JSON.parse(data);
+
+  for (const key of Object.keys(parsed)) {
+    if (SENSITIVE_TYPE_PREFIXES.some(prefix => key.startsWith(prefix))) {
+      delete parsed[key];
+    }
+  }
+
+  return JSON.stringify(parsed);
+}
+
 const CACHE_KEY_PREFIX = "apollo-cache-persist-";
 const CACHE_KEY = `${CACHE_KEY_PREFIX}${APP_VERSION}`;
 const CACHE_TIMESTAMP_KEY = `${CACHE_KEY}-timestamp`;
@@ -75,6 +89,7 @@ export async function initCache(): Promise<void> {
       storage: new TTLLocalStorageWrapper(window.localStorage, CACHE_KEY, CACHE_TTL_MS),
       key: CACHE_KEY,
       maxSize: 2 * 1024 * 1024, // 2MB
+      persistenceMapper: piiFilterMapper,
     });
   } catch {
     // If cache restoration fails, continue with empty cache
