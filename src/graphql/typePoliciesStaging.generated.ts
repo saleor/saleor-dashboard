@@ -2417,6 +2417,13 @@ export type GiftCardMetadataUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type GiftCardPaymentMethodDetailsKeySpecifier = ('brand' | 'isSaleorGiftcard' | 'lastChars' | 'name' | GiftCardPaymentMethodDetailsKeySpecifier)[];
+export type GiftCardPaymentMethodDetailsFieldPolicy = {
+	brand?: FieldPolicy<any> | FieldReadFunction<any>,
+	isSaleorGiftcard?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastChars?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type GiftCardResendKeySpecifier = ('errors' | 'giftCard' | GiftCardResendKeySpecifier)[];
 export type GiftCardResendFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -8553,6 +8560,10 @@ export type StrictTypedTypePolicies = {
 	GiftCardMetadataUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GiftCardMetadataUpdatedKeySpecifier | (() => undefined | GiftCardMetadataUpdatedKeySpecifier),
 		fields?: GiftCardMetadataUpdatedFieldPolicy,
+	},
+	GiftCardPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | GiftCardPaymentMethodDetailsKeySpecifier | (() => undefined | GiftCardPaymentMethodDetailsKeySpecifier),
+		fields?: GiftCardPaymentMethodDetailsFieldPolicy,
 	},
 	GiftCardResend?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GiftCardResendKeySpecifier | (() => undefined | GiftCardResendKeySpecifier),

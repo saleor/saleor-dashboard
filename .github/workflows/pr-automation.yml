@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
-    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'test deployment') }}
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'test deployment') || contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -120,13 +120,7 @@ jobs:
       - name: Build dashboard
         id: build-dashboard
         env:
-          ## backward compatibility for older versions
-          API_URI: ${{ needs.initialize-cloud.outputs.API_URL }}
-          ## backward compatibility for older versions
-          APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
           EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
           APP_MOUNT_URI: /
           STATIC_URL: /

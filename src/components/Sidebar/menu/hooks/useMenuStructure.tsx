@@ -92,7 +92,7 @@ export function useMenuStructure() {
         id: "explore-extensions",
         url: ExtensionsPaths.exploreExtensions,
         permissions: [],
-        type: "item",
+        type: "item" as const,
       },
     ],
   });

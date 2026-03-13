@@ -5,6 +5,10 @@ inputs:
   PASSWORD_FOR_DECODING_ARTIFACT:
     description: "Password for decoding artifact"
     required: true
+  ARTIFACT_PREFIX:
+    description: "Prefix for artifact names to match correct artifacts in matrix builds"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -23,7 +27,7 @@ runs:
       uses: actions/download-artifact@v4
       with:
         path: all-blob-reports
-        pattern: all-blob-reports-*
+        pattern: ${{ inputs.ARTIFACT_PREFIX && format('{0}-all-blob-reports-*', inputs.ARTIFACT_PREFIX) || 'all-blob-reports-*' }}
         merge-multiple: true
 
     - name: Merge into HTML Report
@@ -37,14 +41,14 @@ runs:
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
       with:
-        name: html-report--attempt-${{ github.run_attempt }}
+        name: ${{ inputs.ARTIFACT_PREFIX && format('{0}-html-report--attempt-{1}', inputs.ARTIFACT_PREFIX, github.run_attempt) || format('html-report--attempt-{0}', github.run_attempt) }}
         path: secure-report.zip
         retention-days: 14
 
     - name: Merge blob reports
       uses: actions/upload-artifact/merge@v4
       with:
-        name: merged-blob-reports
-        pattern: all-blob-reports-*
+        name: ${{ inputs.ARTIFACT_PREFIX && format('{0}-merged-blob-reports', inputs.ARTIFACT_PREFIX) || 'merged-blob-reports' }}
+        pattern: ${{ inputs.ARTIFACT_PREFIX && format('{0}-all-blob-reports-*', inputs.ARTIFACT_PREFIX) || 'all-blob-reports-*' }}
         retention-days: 7
         delete-merged: true
