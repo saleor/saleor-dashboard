@@ -193,7 +193,7 @@ export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
       assertContent: expectText("DISABLED"),
     },
     {
-      id: "QXBwOjgx",
+      id: "QXBwOjExNg==",
       identifier: "saleor.app.smtp",
       name: "SMTP",
       heading: "Configuration",
