@@ -19881,7 +19881,10 @@ export type Payment = Node & ObjectWithMetadata & {
   modified: Scalars['DateTime'];
   /** Order associated with a payment. */
   order: Maybe<Order>;
-  /** Informs whether this is a partial payment. */
+  /**
+   * Informs whether this is a partial payment.
+   * @deprecated This field is reserved for the Adyen Gateway plugin. For other gateways, its value is always `false`. This field will be removed in 3.23 along with the plugin.
+   */
   partial: Scalars['Boolean'];
   /** Type of method used for payment. */
   paymentMethodType: Scalars['String'];
