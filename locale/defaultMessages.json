@@ -7808,10 +7808,6 @@
   "giVGCH": {
     "string": "Enter Voucher Code"
   },
-  "giftCard.history.refundedInOrder": {
-    "context": "gift card history message",
-    "string": "Gift card was refunded in order {orderLink}"
-  },
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
@@ -9484,6 +9480,10 @@
   "qNeXG1": {
     "context": "User registration",
     "string": "User registration"
+  },
+  "qOXgxv": {
+    "context": "gift card history message",
+    "string": "Gift card was refunded in order {orderLink}"
   },
   "qPSWmL": {
     "string": "Enter usage"
