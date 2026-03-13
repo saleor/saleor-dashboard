@@ -79,6 +79,10 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
             issuedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
+    case GiftCardEventsEnum.REFUNDED_IN_ORDER:
+      return intl.formatMessage(timelineMessages.refundedInOrder, {
+        orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
+      });
     case GiftCardEventsEnum.RESENT:
       return intl.formatMessage(timelineMessages.resent);
     case GiftCardEventsEnum.SENT_TO_CUSTOMER:
