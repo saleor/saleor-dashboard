@@ -50,8 +50,6 @@ import type {
   AppExtensionCountableConnection,
   AppExtensionCountableEdge,
   AppExtensionFilterInput,
-  AppExtensionOptionsNewTab,
-  AppExtensionOptionsWidget,
   AppFetchManifest,
   AppFilterInput,
   AppInput,
@@ -254,6 +252,8 @@ import type {
   CheckoutLinesUpdate,
   CheckoutMetadataUpdated,
   CheckoutPaymentCreate,
+  CheckoutProblemDeliveryMethodInvalid,
+  CheckoutProblemDeliveryMethodStale,
   CheckoutRemovePromoCode,
   CheckoutSettings,
   CheckoutSettingsInput,
@@ -326,6 +326,9 @@ import type {
   DecimalRangeInput,
   DeleteMetadata,
   DeletePrivateMetadata,
+  Delivery,
+  DeliveryOptionsCalculate,
+  DeliveryOptionsCalculateError,
   DigitalContent,
   DigitalContentCountableConnection,
   DigitalContentCountableEdge,
@@ -521,7 +524,6 @@ import type {
   MoveProductInput,
   Mutation,
   NameTranslationInput,
-  NewTabTargetOptions,
   Order,
   OrderAddNote,
   OrderAddNoteInput,
@@ -1188,7 +1190,6 @@ import type {
   WebhookUpdate,
   WebhookUpdateInput,
   Weight,
-  WidgetTargetOptions,
   _Service,
 } from './fabbricaTypes.generated';
 
@@ -2553,32 +2554,22 @@ export type OptionalAppExtension = {
   id?: AppExtension['id'] | undefined;
   /** Label of the extension to show in the dashboard. */
   label?: AppExtension['label'] | undefined;
-  /** Place where given extension will be mounted. */
-  mount?: AppExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Replaces `mount`
+ * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtension['mountName'] | undefined;
-  /**
- * App extension options.
- *
- * Added in Saleor 3.22.
- */
-  options?: Maybe<OptionalAppExtensionPossibleOptions> | undefined;
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * App extension settings. Replaces `options` field.
+ * App extension settings.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppExtension['settings'] | undefined;
-  /** Type of way how app extension will be opened. */
-  target?: AppExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Replaces `target`
+ * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -2639,16 +2630,12 @@ export const defineAppExtensionCountableEdgeFactory: DefineTypeFactoryInterface<
 
 export type OptionalAppExtensionFilterInput = {
   __typename?: 'AppExtensionFilterInput';
-  /** DEPRECATED: Use `mountName` instead. */
-  mount?: AppExtensionFilterInput['mount'] | undefined;
   /**
  * Plain-text mount name (case insensitive)
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtensionFilterInput['mountName'] | undefined;
-  /** DEPRECATED: Use `targetName` instead. */
-  target?: AppExtensionFilterInput['target'] | undefined;
   /**
  * Plain-text target name (case insensitive)
  *
@@ -2667,44 +2654,6 @@ export const defineAppExtensionFilterInputFactory: DefineTypeFactoryInterface<
   OptionalAppExtensionFilterInput,
   {}
 > = defineTypeFactory;
-
-/** Represents the options for an app extension. */
-export type OptionalAppExtensionOptionsNewTab = {
-  __typename?: 'AppExtensionOptionsNewTab';
-  /** Options controlling behavior of the NEW_TAB extension target */
-  newTabTarget?: Maybe<OptionalNewTabTargetOptions> | undefined;
-};
-
-/**
- * Define factory for {@link AppExtensionOptionsNewTab} model.
- *
- * @param options
- * @returns factory {@link AppExtensionOptionsNewTabFactoryInterface}
- */
-export const defineAppExtensionOptionsNewTabFactory: DefineTypeFactoryInterface<
-  OptionalAppExtensionOptionsNewTab,
-  {}
-> = defineTypeFactory;
-
-/** Represents the options for an app extension. */
-export type OptionalAppExtensionOptionsWidget = {
-  __typename?: 'AppExtensionOptionsWidget';
-  /** Options for displaying a Widget */
-  widgetTarget?: Maybe<OptionalWidgetTargetOptions> | undefined;
-};
-
-/**
- * Define factory for {@link AppExtensionOptionsWidget} model.
- *
- * @param options
- * @returns factory {@link AppExtensionOptionsWidgetFactoryInterface}
- */
-export const defineAppExtensionOptionsWidgetFactory: DefineTypeFactoryInterface<
-  OptionalAppExtensionOptionsWidget,
-  {}
-> = defineTypeFactory;
-
-export type OptionalAppExtensionPossibleOptions = OptionalAppExtensionOptionsNewTab | OptionalAppExtensionOptionsWidget;
 
 /**
  * Fetch and validate manifest.
@@ -2913,10 +2862,8 @@ export type OptionalAppManifestExtension = {
   __typename?: 'AppManifestExtension';
   /** Label of the extension to show in the dashboard. */
   label?: AppManifestExtension['label'] | undefined;
-  /** Place where given extension will be mounted. */
-  mount?: AppManifestExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Replaces `mount`
+ * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -2924,15 +2871,13 @@ export type OptionalAppManifestExtension = {
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * JSON object with settings for this extension.
+ * App extension settings.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppManifestExtension['settings'] | undefined;
-  /** Type of way how app extension will be opened. */
-  target?: AppManifestExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Replaces `target`
+ * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -7247,6 +7192,12 @@ export type OptionalCheckout = {
   /**
  * The delivery method selected for this checkout.
  *
+ * Added in Saleor 3.23.
+ */
+  delivery?: Maybe<OptionalDelivery> | undefined;
+  /**
+ * The delivery method selected for this checkout.
+ *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
  * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
@@ -7815,6 +7766,7 @@ export const defineCheckoutCustomerNoteUpdateFactory: DefineTypeFactoryInterface
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutDeliveryMethodUpdate = {
@@ -8397,7 +8349,49 @@ export const defineCheckoutPaymentCreateFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** Represents an problem in the checkout. */
-export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable;
+export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable | OptionalCheckoutProblemDeliveryMethodInvalid | OptionalCheckoutProblemDeliveryMethodStale;
+
+/**
+ * Indicates that the selected delivery method is invalid.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCheckoutProblemDeliveryMethodInvalid = {
+  __typename?: 'CheckoutProblemDeliveryMethodInvalid';
+  delivery?: OptionalDelivery | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutProblemDeliveryMethodInvalid} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutProblemDeliveryMethodInvalidFactoryInterface}
+ */
+export const defineCheckoutProblemDeliveryMethodInvalidFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutProblemDeliveryMethodInvalid,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Indicates that the delivery methods are stale.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCheckoutProblemDeliveryMethodStale = {
+  __typename?: 'CheckoutProblemDeliveryMethodStale';
+  delivery?: OptionalDelivery | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutProblemDeliveryMethodStale} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutProblemDeliveryMethodStaleFactoryInterface}
+ */
+export const defineCheckoutProblemDeliveryMethodStaleFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutProblemDeliveryMethodStale,
+  {}
+> = defineTypeFactory;
 
 /**
  * Remove a gift card or a voucher from a checkout.
@@ -8427,6 +8421,12 @@ export const defineCheckoutRemovePromoCodeFactory: DefineTypeFactoryInterface<
 /** Represents the channel-specific checkout settings. */
 export type OptionalCheckoutSettings = {
   __typename?: 'CheckoutSettings';
+  /**
+ * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowLegacyGiftCardUse?: CheckoutSettings['allowLegacyGiftCardUse'] | undefined;
   /**
  * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
  *
@@ -8462,6 +8462,12 @@ export const defineCheckoutSettingsFactory: DefineTypeFactoryInterface<
 
 export type OptionalCheckoutSettingsInput = {
   __typename?: 'CheckoutSettingsInput';
+  /**
+ * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowLegacyGiftCardUse?: CheckoutSettingsInput['allowLegacyGiftCardUse'] | undefined;
   /**
  * Settings for automatic completion of fully paid checkouts.
  *
@@ -8519,6 +8525,7 @@ export const defineCheckoutShippingAddressUpdateFactory: DefineTypeFactoryInterf
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutShippingMethodUpdate = {
@@ -10317,8 +10324,80 @@ export const defineDeletePrivateMetadataFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Represents a delivery option for the checkout.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalDelivery = {
+  __typename?: 'Delivery';
+  /** The ID of the delivery. */
+  id?: Delivery['id'] | undefined;
+  /** Shipping method represented by the delivery. */
+  shippingMethod?: Maybe<OptionalShippingMethod> | undefined;
+};
+
+/**
+ * Define factory for {@link Delivery} model.
+ *
+ * @param options
+ * @returns factory {@link DeliveryFactoryInterface}
+ */
+export const defineDeliveryFactory: DefineTypeFactoryInterface<
+  OptionalDelivery,
+  {}
+> = defineTypeFactory;
+
 /** Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise. */
 export type OptionalDeliveryMethod = OptionalShippingMethod | OptionalWarehouse;
+
+/**
+ * Calculates available delivery options for a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Triggers the following webhook events:
+ * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+ */
+export type OptionalDeliveryOptionsCalculate = {
+  __typename?: 'DeliveryOptionsCalculate';
+  /** List of the available deliveries. */
+  deliveries?: OptionalDelivery[] | undefined;
+  errors?: OptionalDeliveryOptionsCalculateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link DeliveryOptionsCalculate} model.
+ *
+ * @param options
+ * @returns factory {@link DeliveryOptionsCalculateFactoryInterface}
+ */
+export const defineDeliveryOptionsCalculateFactory: DefineTypeFactoryInterface<
+  OptionalDeliveryOptionsCalculate,
+  {}
+> = defineTypeFactory;
+
+export type OptionalDeliveryOptionsCalculateError = {
+  __typename?: 'DeliveryOptionsCalculateError';
+  /** The error code. */
+  code?: DeliveryOptionsCalculateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: DeliveryOptionsCalculateError['field'] | undefined;
+  /** The error message. */
+  message?: DeliveryOptionsCalculateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link DeliveryOptionsCalculateError} model.
+ *
+ * @param options
+ * @returns factory {@link DeliveryOptionsCalculateErrorFactoryInterface}
+ */
+export const defineDeliveryOptionsCalculateErrorFactory: DefineTypeFactoryInterface<
+  OptionalDeliveryOptionsCalculateError,
+  {}
+> = defineTypeFactory;
 
 /** Represents digital content associated with a product variant. */
 export type OptionalDigitalContent = {
@@ -11645,8 +11724,6 @@ export const defineExportProductsInputFactory: DefineTypeFactoryInterface<
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -15828,6 +15905,7 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutDeliveryMethodUpdate?: Maybe<OptionalCheckoutDeliveryMethodUpdate> | undefined;
@@ -15894,6 +15972,7 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutShippingMethodUpdate?: Maybe<OptionalCheckoutShippingMethodUpdate> | undefined;
@@ -16036,6 +16115,16 @@ export type OptionalMutation = {
  */
   deleteWarehouse?: Maybe<OptionalWarehouseDelete> | undefined;
   /**
+ * Calculates available delivery options for a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Triggers the following webhook events:
+ * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+ */
+  deliveryOptionsCalculate?: Maybe<OptionalDeliveryOptionsCalculate> | undefined;
+  /**
  * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -16125,8 +16214,6 @@ export type OptionalMutation = {
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -17666,24 +17753,6 @@ export type OptionalNameTranslationInput = {
  */
 export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
   OptionalNameTranslationInput,
-  {}
-> = defineTypeFactory;
-
-/** Represents the NEW_TAB target options for an app extension. */
-export type OptionalNewTabTargetOptions = {
-  __typename?: 'NewTabTargetOptions';
-  /** HTTP method for New Tab target (GET or POST) */
-  method?: NewTabTargetOptions['method'] | undefined;
-};
-
-/**
- * Define factory for {@link NewTabTargetOptions} model.
- *
- * @param options
- * @returns factory {@link NewTabTargetOptionsFactoryInterface}
- */
-export const defineNewTabTargetOptionsFactory: DefineTypeFactoryInterface<
-  OptionalNewTabTargetOptions,
   {}
 > = defineTypeFactory;
 
@@ -21878,7 +21947,7 @@ export type OptionalPageTypeUpdateInput = {
   addAttributes?: PageTypeUpdateInput['addAttributes'] | undefined;
   /** Name of the page type. */
   name?: PageTypeUpdateInput['name'] | undefined;
-  /** List of attribute IDs to be assigned to the page type. */
+  /** List of attribute IDs to be unassigned from the page type. */
   removeAttributes?: PageTypeUpdateInput['removeAttributes'] | undefined;
   /** Page type slug. */
   slug?: PageTypeUpdateInput['slug'] | undefined;
@@ -26251,7 +26320,9 @@ export type OptionalProductVariantChannelListing = {
   /** The price of the variant. */
   price?: Maybe<OptionalMoney> | undefined;
   /**
- * Prior price of the variant used for discount calculations.
+ * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
+ *
+ *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
  *
  * Added in Saleor 3.21.
  */
@@ -31213,6 +31284,14 @@ export type OptionalShop = {
   metafields?: Shop['metafields'] | undefined;
   /** Shop's name. */
   name?: Shop['name'] | undefined;
+  /**
+ * Controls whether password-based authentication is allowed.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+  passwordLoginMode?: Shop['passwordLoginMode'] | undefined;
   /** List of available permissions. */
   permissions?: OptionalPermission[] | undefined;
   /** List of possible phone prefixes. */
@@ -31221,8 +31300,6 @@ export type OptionalShop = {
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
  * Added in Saleor 3.22.
- *
- * Requires one of the following permissions: MANAGE_SETTINGS.
  */
   preserveAllAddressFields?: Shop['preserveAllAddressFields'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
@@ -31445,6 +31522,12 @@ export type OptionalShopSettingsInput = {
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
+  /**
+ * Controls whether password-based authentication is allowed.
+ *
+ * Added in Saleor 3.23.
+ */
+  passwordLoginMode?: ShopSettingsInput['passwordLoginMode'] | undefined;
   /**
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
@@ -36963,24 +37046,6 @@ export type OptionalWeight = {
  */
 export const defineWeightFactory: DefineTypeFactoryInterface<
   OptionalWeight,
-  {}
-> = defineTypeFactory;
-
-/** Represents the WIDGET target options for an app extension. */
-export type OptionalWidgetTargetOptions = {
-  __typename?: 'WidgetTargetOptions';
-  /** HTTP method for Widget target (GET or POST) */
-  method?: WidgetTargetOptions['method'] | undefined;
-};
-
-/**
- * Define factory for {@link WidgetTargetOptions} model.
- *
- * @param options
- * @returns factory {@link WidgetTargetOptionsFactoryInterface}
- */
-export const defineWidgetTargetOptionsFactory: DefineTypeFactoryInterface<
-  OptionalWidgetTargetOptions,
   {}
 > = defineTypeFactory;
 

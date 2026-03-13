@@ -77,4 +77,15 @@ export const messages = defineMessages({
     defaultMessage: "Preserve non-standard address fields",
     description: "card header and checkbox label",
   },
+  sectionPasswordLoginTitle: {
+    id: "kny5j9",
+    defaultMessage: "Password Login",
+    description: "section title",
+  },
+  sectionPasswordLoginDescription: {
+    id: "/2o5cH",
+    defaultMessage:
+      "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely.",
+    description: "section description",
+  },
 });

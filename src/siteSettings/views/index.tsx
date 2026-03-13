@@ -67,6 +67,7 @@ const SiteSettings = () => {
             limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
             useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
             preserveAllAddressFields: data.preserveAllAddressFields,
+            passwordLoginMode: data.passwordLoginMode,
           },
         },
       }),

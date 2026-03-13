@@ -1,4 +1,4 @@
-import { type SiteSettingsQuery } from "@dashboard/graphql";
+import { PasswordLoginModeEnum, type SiteSettingsQuery } from "@dashboard/graphql";
 
 export const shop: SiteSettingsQuery["shop"] = {
   __typename: "Shop",
@@ -43,4 +43,5 @@ export const shop: SiteSettingsQuery["shop"] = {
   enableAccountConfirmationByEmail: true,
   useLegacyUpdateWebhookEmission: true,
   preserveAllAddressFields: false,
+  passwordLoginMode: PasswordLoginModeEnum.ENABLED,
 };

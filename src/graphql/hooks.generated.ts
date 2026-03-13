@@ -3410,6 +3410,7 @@ export const ShopFragmentDoc = gql`
   enableAccountConfirmationByEmail
   useLegacyUpdateWebhookEmission
   preserveAllAddressFields
+  passwordLoginMode
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
@@ -4345,6 +4346,7 @@ export const AvailableExternalAuthenticationsDocument = gql`
       id
       name
     }
+    passwordLoginMode
   }
 }
     `;

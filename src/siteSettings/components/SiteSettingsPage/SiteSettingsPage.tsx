@@ -9,7 +9,11 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
+import {
+  PasswordLoginModeEnum,
+  type ShopErrorFragment,
+  type SiteSettingsQuery,
+} from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -21,6 +25,7 @@ import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
+import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
 
 interface SiteSettingsPageAddressFormData {
@@ -42,6 +47,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
   preserveAllAddressFields: boolean;
+  passwordLoginMode: PasswordLoginModeEnum;
 }
 
 interface SiteSettingsPageProps {
@@ -96,6 +102,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
   };
 
   return (
@@ -204,6 +211,21 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                  />
+                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
                 </Box>
 
                 <Divider />
