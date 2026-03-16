@@ -5,7 +5,6 @@ import {
   type AccountConfirmMutation,
   type AccountConfirmMutationVariables,
   type AccountDeleteMutation,
-  type AccountRegisterInput,
   type AccountRequestDeletionMutation,
   type AccountUpdateMutation,
   type ConfirmEmailChangeMutation,
@@ -26,15 +25,12 @@ import {
   type MutationExternalObtainAccessTokensArgs,
   type MutationPasswordChangeArgs,
   type MutationRequestEmailChangeArgs,
-  type MutationRequestPasswordResetArgs,
   type MutationSetPasswordArgs,
   type MutationTokenCreateArgs,
   type MutationTokenRefreshArgs,
   type PasswordChangeMutation,
   type RefreshTokenMutation,
-  type RegisterMutation,
   type RequestEmailChangeMutation,
-  type RequestPasswordResetMutation,
   type SetAccountDefaultAddressMutation,
   type SetPasswordMutation,
   type UpdateAccountAddressMutation,
@@ -90,8 +86,6 @@ export type JWTToken = {
 export type ChangePasswordOpts = MutationPasswordChangeArgs;
 export type LoginOpts = MutationTokenCreateArgs & { includeDetails?: boolean };
 export type RefreshTokenOpts = Pick<MutationTokenRefreshArgs, "refreshToken">;
-export type RegisterOpts = AccountRegisterInput;
-export type RequestPasswordResetOpts = MutationRequestPasswordResetArgs;
 export type SetPasswordOpts = MutationSetPasswordArgs;
 export type GetExternalAuthUrlOpts = MutationExternalAuthenticationUrlArgs;
 export type GetExternalAccessTokenOpts = MutationExternalObtainAccessTokensArgs;
@@ -114,10 +108,6 @@ export type LogoutResult = FetchResult<ExternalLogoutMutation> | null;
 export type LogoutData = ExternalLogoutMutation["externalLogout"] | null;
 export type RefreshTokenResult = FetchResult<RefreshTokenMutation>;
 export type RefreshTokenData = RefreshTokenMutation["tokenRefresh"];
-export type RegisterResult = FetchResult<RegisterMutation>;
-export type RegisterData = RegisterMutation["accountRegister"];
-export type RequestPasswordResetResult = FetchResult<RequestPasswordResetMutation>;
-export type RequestPasswordResetData = RequestPasswordResetMutation["requestPasswordReset"];
 export type SetPasswordResult = FetchResult<SetPasswordMutation>;
 export type SetPasswordData = SetPasswordMutation["setPassword"];
 export type VerifyTokenResult = FetchResult<VerifyTokenMutation>;

@@ -10,8 +10,6 @@ import {
   OBTAIN_EXTERNAL_ACCESS_TOKEN,
   REFRESH_TOKEN,
   REFRESH_TOKEN_WITH_USER,
-  REGISTER,
-  REQUEST_PASSWORD_RESET,
   SET_PASSWORD,
   VERIFY_TOKEN,
 } from "../apollo/mutations";
@@ -37,10 +35,6 @@ import {
   type RefreshTokenMutationVariables,
   type RefreshTokenWithUserMutation,
   type RefreshTokenWithUserMutationVariables,
-  type RegisterMutation,
-  type RegisterMutationVariables,
-  type RequestPasswordResetMutation,
-  type RequestPasswordResetMutationVariables,
   type SetPasswordMutation,
   type SetPasswordMutationVariables,
   type VerifyTokenMutation,
@@ -61,11 +55,7 @@ import {
   type LogoutResult,
   type RefreshExternalTokenResult,
   type RefreshTokenResult,
-  type RegisterOpts,
-  type RegisterResult,
-  type RequestPasswordResetOpts,
-  type RequestPasswordResetResult,
-  type SaleorClientMethodsProps,
+  type SaleorClientInternals,
   type SetPasswordOpts,
   type SetPasswordResult,
   type VerifyExternalTokenResult,
@@ -104,24 +94,6 @@ export interface AuthSDK {
    * @returns Authorization token.
    */
   refreshToken: (includeUser?: boolean) => Promise<RefreshTokenResult>;
-  /**
-   * Registers user with email and password.
-   *
-   * @param opts - Object with user's data. Email and password are required fields.
-   * "channel" can be changed by using first "setChannel" method from api.
-   * @returns Promise resolved with AccountRegister type data.
-   */
-  register: (opts: RegisterOpts) => Promise<RegisterResult>;
-  /**
-   * Sends an email with the account password modification link.
-   *
-   * @param opts - Object with slug of a channel which will be used for notify user,
-   * email of the user that will be used for password recovery and URL of a view
-   * where users should be redirected to reset the password. URL in RFC 1808 format.
-   *
-   * @returns Errors if there were some.
-   */
-  requestPasswordReset: (opts: RequestPasswordResetOpts) => Promise<RequestPasswordResetResult>;
   /**
    * Sets the user's password from the token sent by email.
    *
@@ -170,7 +142,7 @@ export interface AuthSDK {
   verifyExternalToken: () => Promise<VerifyExternalTokenResult>;
 }
 
-export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps): AuthSDK => {
+export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK => {
   const login: AuthSDK["login"] = ({ includeDetails = true, ...opts }) => {
     const query = includeDetails ? USER : USER_WITHOUT_DETAILS;
     const loginMutation = includeDetails ? LOGIN : LOGIN_WITHOUT_DETAILS;
@@ -234,17 +206,6 @@ export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps
     return null;
   };
 
-  const register: AuthSDK["register"] = async opts =>
-    await client.mutate<RegisterMutation, RegisterMutationVariables>({
-      mutation: REGISTER,
-      variables: {
-        input: {
-          ...opts,
-          channel,
-        },
-      },
-    });
-
   const refreshToken: AuthSDK["refreshToken"] = (includeUser = false) => {
     const refreshToken = storage.getRefreshToken();
 
@@ -306,18 +267,6 @@ export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps
     const result = await client.mutate<PasswordChangeMutation, PasswordChangeMutationVariables>({
       mutation: CHANGE_USER_PASSWORD,
       variables: { ...opts },
-    });
-
-    return result;
-  };
-
-  const requestPasswordReset: AuthSDK["requestPasswordReset"] = async opts => {
-    const result = await client.mutate<
-      RequestPasswordResetMutation,
-      RequestPasswordResetMutationVariables
-    >({
-      mutation: REQUEST_PASSWORD_RESET,
-      variables: { ...opts, channel },
     });
 
     return result;
@@ -476,8 +425,6 @@ export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps
     logout,
     refreshExternalToken,
     refreshToken,
-    register,
-    requestPasswordReset,
     setPassword,
     verifyExternalToken,
     verifyToken,

@@ -228,10 +228,9 @@ export const createApolloClient = (
 
   /**
    * Refreshing token code should stay under core/auth.ts To get this method available,
-   * we need to call "auth()" here. refreshToken mutation doesn't require channel, so it
-   * doesn't have to be populated with value.
+   * we need to call "auth()" here.
    */
-  authClient = auth({ apolloClient: client, channel: "" });
+  authClient = auth({ apolloClient: client });
 
   return client;
 };

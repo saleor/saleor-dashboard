@@ -10,8 +10,6 @@ import {
   OBTAIN_EXTERNAL_ACCESS_TOKEN,
   REFRESH_TOKEN,
   REFRESH_TOKEN_WITH_USER,
-  REGISTER,
-  REQUEST_PASSWORD_RESET,
   SET_PASSWORD,
   VERIFY_TOKEN,
 } from "../apollo/mutations";
@@ -45,12 +43,11 @@ type MockClient = ReturnType<typeof createMockClient>;
 describe("auth", () => {
   let client: MockClient;
   let sdk: AuthSDK;
-  const channel = "default-channel";
 
   beforeEach(() => {
     jest.clearAllMocks();
     client = createMockClient();
-    sdk = auth({ apolloClient: client as any, channel });
+    sdk = auth({ apolloClient: client as any });
   });
 
   describe("login", () => {
@@ -221,36 +218,6 @@ describe("auth", () => {
       // Assert
       expect(client.mutate).not.toHaveBeenCalled();
       expect(result).toBeNull();
-    });
-  });
-
-  describe("register", () => {
-    it("should call REGISTER mutation with opts and channel from closure", async () => {
-      // Arrange
-      const registerResult = {
-        data: { accountRegister: { errors: [], requiresConfirmation: true } },
-      };
-
-      client.mutate.mockResolvedValue(registerResult);
-
-      // Act
-      const result = await sdk.register({
-        email: "new@example.com",
-        password: "password123",
-      });
-
-      // Assert
-      expect(client.mutate).toHaveBeenCalledWith({
-        mutation: REGISTER,
-        variables: {
-          input: {
-            email: "new@example.com",
-            password: "password123",
-            channel: "default-channel",
-          },
-        },
-      });
-      expect(result).toEqual(registerResult);
     });
   });
 
@@ -439,34 +406,6 @@ describe("auth", () => {
       expect(client.mutate).toHaveBeenCalledWith({
         mutation: CHANGE_USER_PASSWORD,
         variables: { newPassword: "newPass123", oldPassword: "oldPass123" },
-      });
-      expect(result).toEqual(mutationResult);
-    });
-  });
-
-  describe("requestPasswordReset", () => {
-    it("should call REQUEST_PASSWORD_RESET mutation with channel from closure", async () => {
-      // Arrange
-      const mutationResult = {
-        data: { requestPasswordReset: { errors: [] } },
-      };
-
-      client.mutate.mockResolvedValue(mutationResult);
-
-      // Act
-      const result = await sdk.requestPasswordReset({
-        email: "test@example.com",
-        redirectUrl: "https://example.com/reset",
-      });
-
-      // Assert
-      expect(client.mutate).toHaveBeenCalledWith({
-        mutation: REQUEST_PASSWORD_RESET,
-        variables: {
-          email: "test@example.com",
-          redirectUrl: "https://example.com/reset",
-          channel: "default-channel",
-        },
       });
       expect(result).toEqual(mutationResult);
     });

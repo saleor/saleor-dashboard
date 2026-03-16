@@ -26,9 +26,8 @@ export const createSaleorClient = ({
   createStorage(autologin);
 
   const apolloClient = createApolloClient(apiUrl, autologin, fetchOpts);
-  const coreInternals = { apolloClient, channel: _channel };
-  const authSDK = auth(coreInternals);
-  const userSDK = user(coreInternals);
+  const authSDK = auth({ apolloClient });
+  const userSDK = user({ apolloClient, channel: _channel });
 
   const refreshToken = storage.getRefreshToken();
 

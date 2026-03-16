@@ -24,8 +24,6 @@ jest.mock("./auth", () => ({
     logout: mockLogout,
     refreshExternalToken: jest.fn(),
     refreshToken: jest.fn(),
-    register: jest.fn(),
-    requestPasswordReset: jest.fn(),
     setPassword: jest.fn(),
     verifyExternalToken: jest.fn(),
     verifyToken: jest.fn(),
@@ -62,7 +60,7 @@ describe("user", () => {
     user({ apolloClient: mockClient, channel });
 
     // Assert
-    expect(auth).toHaveBeenCalledWith({ apolloClient: mockClient, channel });
+    expect(auth).toHaveBeenCalledWith({ apolloClient: mockClient });
   });
 
   describe("accountDelete", () => {

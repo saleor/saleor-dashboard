@@ -41,18 +41,6 @@ export const LOGIN = gql`
   }
 `;
 
-export const REGISTER = gql`
-  ${accountErrorFragment}
-  mutation register($input: AccountRegisterInput!) {
-    accountRegister(input: $input) {
-      errors {
-        ...AccountErrorFragment
-      }
-      requiresConfirmation
-    }
-  }
-`;
-
 export const REFRESH_TOKEN = gql`
   ${accountErrorFragment}
   mutation refreshToken($refreshToken: String!) {
@@ -214,17 +202,6 @@ export const CHANGE_USER_PASSWORD = gql`
   ${accountErrorFragment}
   mutation passwordChange($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
-      errors {
-        ...AccountErrorFragment
-      }
-    }
-  }
-`;
-
-export const REQUEST_PASSWORD_RESET = gql`
-  ${accountErrorFragment}
-  mutation requestPasswordReset($email: String!, $redirectUrl: String!, $channel: String!) {
-    requestPasswordReset(email: $email, redirectUrl: $redirectUrl, channel: $channel) {
       errors {
         ...AccountErrorFragment
       }

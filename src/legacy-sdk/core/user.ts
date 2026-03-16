@@ -130,7 +130,7 @@ export interface UserSDK {
 }
 
 export const user = ({ apolloClient: client, channel }: SaleorClientMethodsProps): UserSDK => {
-  const _auth = auth({ apolloClient: client, channel });
+  const _auth = auth({ apolloClient: client });
 
   const accountDelete: UserSDK["accountDelete"] = async token => {
     const result = await client.mutate<AccountDeleteMutation, AccountDeleteMutationVariables>({

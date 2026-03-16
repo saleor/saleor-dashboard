@@ -10,8 +10,6 @@ const createMockClient = (overrides?: Partial<SaleorClient>): SaleorClient => ({
     login: jest.fn(),
     logout: jest.fn(),
     refreshToken: jest.fn(),
-    register: jest.fn(),
-    requestPasswordReset: jest.fn(),
     setPassword: jest.fn(),
     verifyToken: jest.fn(),
     getExternalAuthUrl: jest.fn(),
