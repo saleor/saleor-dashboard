@@ -1,0 +1,23 @@
+src/components/Timeline/TimelineNote.test.tsx
+  13a960ac30dbfb11 54,79,110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "9b4df8ea1281602c0b689b3fe3f2b20395c05c1c",
+  "prompts": {
+    "13a960ac30dbfb11": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "653dd919-f965-4517-8e05-8aa3b20971b7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
