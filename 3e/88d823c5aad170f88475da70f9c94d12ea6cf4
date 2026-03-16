@@ -1,0 +1,27 @@
+src/components/Date/DateTime.stories.tsx
+  9167e2bf6d5161b3 1-47
+src/components/Date/Date.stories.tsx
+  9167e2bf6d5161b3 1-38
+src/components/Timeline/TimelineNote.stories.tsx
+  9167e2bf6d5161b3 1-95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "3e88d823c5aad170f88475da70f9c94d12ea6cf4",
+  "prompts": {
+    "9167e2bf6d5161b3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1b3358d1-db52-4707-b92a-5998d7af7344",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 187,
+      "total_deletions": 7,
+      "accepted_lines": 180,
+      "overriden_lines": 0
+    }
+  }
+}
