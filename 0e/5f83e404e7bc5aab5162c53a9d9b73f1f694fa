@@ -1,0 +1,33 @@
+src/legacy-sdk/core/user.test.ts
+  2ad1bf86964df335 63
+src/legacy-sdk/apollo/client.ts
+  2ad1bf86964df335 231,233
+src/legacy-sdk/core/auth.ts
+  2ad1bf86964df335 58,145
+src/legacy-sdk/core/user.ts
+  2ad1bf86964df335 133
+src/legacy-sdk/core/createSaleorClient.ts
+  2ad1bf86964df335 29-30
+src/legacy-sdk/core/auth.test.ts
+  2ad1bf86964df335 50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "0e5f83e404e7bc5aab5162c53a9d9b73f1f694fa",
+  "prompts": {
+    "2ad1bf86964df335": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dd60d0ba-965a-45d6-9930-999da70d4142",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 164,
+      "accepted_lines": 9,
+      "overriden_lines": 0
+    }
+  }
+}
