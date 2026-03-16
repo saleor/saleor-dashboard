@@ -39,6 +39,24 @@ describe("LoginPage", () => {
       expect(screen.queryByTestId("password")).not.toBeInTheDocument();
       expect(screen.queryByTestId("submit")).not.toBeInTheDocument();
       expect(screen.queryByTestId("reset-password-link")).not.toBeInTheDocument();
+      expect(screen.getByTestId("external-authentication")).toBeInTheDocument();
+    });
+
+    it("shows empty state message when password login is disabled and no external auth", () => {
+      // Arrange & Act
+      render(
+        <LoginPage
+          lastLoginMethod={null}
+          {...defaultProps}
+          passwordLoginEnabled={false}
+          externalAuthentications={[]}
+        />,
+      );
+
+      // Assert
+      expect(screen.queryByTestId("email")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("external-authentication")).not.toBeInTheDocument();
+      expect(screen.getByText(/Password login is disabled/)).toBeInTheDocument();
     });
 
     it("shows email and password inputs when password login is enabled", () => {

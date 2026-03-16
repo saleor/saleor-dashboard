@@ -2337,6 +2337,10 @@
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
   },
+  "BtsJ+e": {
+    "context": "empty state message when no login method is available",
+    "string": "Password login is disabled. Contact your administrator to configure an external authentication method or enable password login."
+  },
   "BvGp1I": {
     "string": "between"
   },
