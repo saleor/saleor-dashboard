@@ -1,0 +1,27 @@
+src/components/Date/Date.test.tsx
+  13a960ac30dbfb11 58,71,76,91,94,109,112,127,130,145,148,163,166,181
+src/components/Date/getRelativeTime.test.ts
+  13a960ac30dbfb11 16,19,28,42,54,68,80,94,97,106,120,132,146,158,172,184,189,197-198,203,211-212,215,223-224,227,236
+src/components/Date/DateTime.test.tsx
+  13a960ac30dbfb11 32,47,62,84,101-102,105,120,123-124,138,141-142,156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "1b4f20fcb96130f94aa5fde3032595e572e80884",
+  "prompts": {
+    "13a960ac30dbfb11": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "653dd919-f965-4517-8e05-8aa3b20971b7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 61,
+      "total_deletions": 80,
+      "accepted_lines": 55,
+      "overriden_lines": 0
+    }
+  }
+}
