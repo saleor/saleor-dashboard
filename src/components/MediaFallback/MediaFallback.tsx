@@ -1,6 +1,6 @@
-import { Box, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
 import { ImageOff } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { mediaFallbackMessages } from "./messages";
@@ -12,13 +12,13 @@ interface MediaFallbackProps {
 }
 
 export const MediaFallback = ({ src, alt, className }: MediaFallbackProps) => {
-  const [hasError, setHasError] = useState(!src);
+  const [errorSrc, setErrorSrc] = useState<string | null>(null);
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
 
-  useEffect(() => {
-    setHasError(!src);
-  }, [src]);
+  const hasError = errorSrc === src;
+  const isLoaded = loadedSrc === src;
 
-  if (hasError) {
+  if (hasError || !src) {
     return (
       <Box
         display="flex"
@@ -39,6 +39,16 @@ export const MediaFallback = ({ src, alt, className }: MediaFallbackProps) => {
   }
 
   return (
-    <img className={className} src={src} alt={alt ?? undefined} onError={() => setHasError(true)} />
+    <>
+      {!isLoaded && <Skeleton __width="100%" __height="100%" />}
+      <img
+        className={className}
+        src={src}
+        alt={alt ?? undefined}
+        onLoad={() => setLoadedSrc(src)}
+        onError={() => setErrorSrc(src)}
+        style={isLoaded ? undefined : { display: "none" }}
+      />
+    </>
   );
 };
