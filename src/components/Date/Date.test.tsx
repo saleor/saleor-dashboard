@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
@@ -56,7 +55,7 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime")!.dateTime).toEqual(testDate);
   });
   it("Render humanized date with timezone GMT+13", () => {
     // Arrange & Act
@@ -69,12 +68,12 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime")!.dateTime).toEqual(testDate);
   });
 });
 
 describe("Date - relative time units", () => {
-  it("renders relative time text like '3 days ago'", () => {
+  it("renders '3 days ago' for 3 day difference", () => {
     // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-10T00:00:00Z").getTime());
 
@@ -89,10 +88,10 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/3 days ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("3 days ago");
   });
 
-  it("renders 'a few seconds ago' for very recent dates", () => {
+  it("renders '10 seconds ago' for very recent dates", () => {
     // Arrange - 10 seconds after the date
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-07T00:00:10Z").getTime());
 
@@ -107,11 +106,11 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/few seconds ago|seconds? ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("10 seconds ago");
   });
 
-  it("renders minutes ago for dates minutes in the past", () => {
-    // Arrange - 5 minutes after
+  it("renders '5 minutes ago' for 5 minute difference", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-07T00:05:00Z").getTime());
 
     // Act
@@ -125,11 +124,11 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/5 minutes ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("5 minutes ago");
   });
 
-  it("renders hours ago for dates hours in the past", () => {
-    // Arrange - 3 hours after
+  it("renders '3 hours ago' for 3 hour difference", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-07T03:00:00Z").getTime());
 
     // Act
@@ -143,11 +142,11 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/3 hours ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("3 hours ago");
   });
 
-  it("renders months ago for dates months in the past", () => {
-    // Arrange - ~2 months after
+  it("renders '2 months ago' for ~2 month difference", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-06-10T00:00:00Z").getTime());
 
     // Act
@@ -161,11 +160,11 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/2 months ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("2 months ago");
   });
 
-  it("renders years ago for dates over a year in the past", () => {
-    // Arrange - ~2 years after
+  it("renders '2 years ago' for ~2 year difference", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2020-04-10T00:00:00Z").getTime());
 
     // Act
@@ -179,6 +178,6 @@ describe("Date - relative time units", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("dateTime")).toHaveTextContent(/2 years ago/);
+    expect(screen.getByTestId("dateTime")).toHaveTextContent("2 years ago");
   });
 });

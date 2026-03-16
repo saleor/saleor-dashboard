@@ -13,10 +13,10 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/10 seconds ago/);
+      expect(result).toBe("10 seconds ago");
     });
 
-    it("returns '0 seconds ago' or 'now' for no difference", () => {
+    it("returns 'now' for no difference", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-15T12:00:00Z");
@@ -25,7 +25,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/now|0 seconds/);
+      expect(result).toBe("now");
     });
   });
 
@@ -39,7 +39,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/5 minutes ago/);
+      expect(result).toBe("5 minutes ago");
     });
 
     it("returns '1 minute ago' for 90 second difference", () => {
@@ -51,7 +51,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/1 minute ago/);
+      expect(result).toBe("1 minute ago");
     });
   });
 
@@ -65,7 +65,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/3 hours ago/);
+      expect(result).toBe("3 hours ago");
     });
 
     it("returns '1 hour ago' for 1 hour difference", () => {
@@ -77,7 +77,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/1 hour ago/);
+      expect(result).toBe("1 hour ago");
     });
   });
 
@@ -91,10 +91,10 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/5 days ago/);
+      expect(result).toBe("5 days ago");
     });
 
-    it("returns 'yesterday' for 1 day difference with numeric: auto", () => {
+    it("returns 'yesterday' for 1 day difference", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-16T12:00:00Z");
@@ -103,7 +103,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/yesterday|1 day ago/);
+      expect(result).toBe("yesterday");
     });
   });
 
@@ -117,7 +117,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/2 months ago/);
+      expect(result).toBe("2 months ago");
     });
 
     it("returns 'last month' for ~1 month difference", () => {
@@ -129,7 +129,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/last month|1 month ago/);
+      expect(result).toBe("last month");
     });
   });
 
@@ -143,7 +143,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/2 years ago/);
+      expect(result).toBe("2 years ago");
     });
 
     it("returns 'last year' for ~1 year difference", () => {
@@ -155,7 +155,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/last year|1 year ago/);
+      expect(result).toBe("last year");
     });
   });
 
@@ -169,7 +169,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/in 3 days/);
+      expect(result).toBe("in 3 days");
     });
 
     it("returns 'in 2 hours' for date 2 hours in the future", () => {
@@ -181,12 +181,12 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/in 2 hours/);
+      expect(result).toBe("in 2 hours");
     });
   });
 
   describe("locale support", () => {
-    it("returns localized text for German locale", () => {
+    it("returns 'vor 5 Tagen' for German locale", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-20T12:00:00Z");
@@ -194,13 +194,13 @@ describe("getRelativeTime", () => {
       // Act
       const result = getRelativeTime(date, now, "de");
 
-      // Assert - German "vor 5 Tagen"
-      expect(result).toMatch(/vor 5 Tagen/);
+      // Assert
+      expect(result).toBe("vor 5 Tagen");
     });
   });
 
   describe("edge cases", () => {
-    it("handles boundary between minutes and hours (59 minutes)", () => {
+    it("returns '59 minutes ago' at boundary between minutes and hours", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-15T12:59:00Z");
@@ -208,11 +208,11 @@ describe("getRelativeTime", () => {
       // Act
       const result = getRelativeTime(date, now, "en");
 
-      // Assert - should be in minutes, not hours
-      expect(result).toMatch(/59 minutes ago/);
+      // Assert
+      expect(result).toBe("59 minutes ago");
     });
 
-    it("handles boundary between hours and days (23 hours)", () => {
+    it("returns '23 hours ago' at boundary between hours and days", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-16T11:00:00Z");
@@ -220,11 +220,11 @@ describe("getRelativeTime", () => {
       // Act
       const result = getRelativeTime(date, now, "en");
 
-      // Assert - should be in hours, not days
-      expect(result).toMatch(/23 hours ago/);
+      // Assert
+      expect(result).toBe("23 hours ago");
     });
 
-    it("handles exactly 60 seconds as 1 minute", () => {
+    it("returns '1 minute ago' for exactly 60 seconds", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
       const now = toMs("2024-01-15T12:01:00Z");
@@ -233,7 +233,7 @@ describe("getRelativeTime", () => {
       const result = getRelativeTime(date, now, "en");
 
       // Assert
-      expect(result).toMatch(/1 minute ago/);
+      expect(result).toBe("1 minute ago");
     });
   });
 });

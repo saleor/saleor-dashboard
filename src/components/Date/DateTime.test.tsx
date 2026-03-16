@@ -29,7 +29,7 @@ describe("DateTime", () => {
     );
 
     // Assert
-    expect(screen.getByText(/Jan 15, 2024,? 2:30 PM/)).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 2:30 PM")).toBeInTheDocument();
   });
 
   it("renders formatted datetime with timezone in plain mode", () => {
@@ -44,7 +44,7 @@ describe("DateTime", () => {
     );
 
     // Assert
-    expect(screen.getByText(/Jan 15, 2024,? 9:30 AM/)).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 9:30 AM")).toBeInTheDocument();
   });
 
   it("renders relative time element in non-plain mode", () => {
@@ -59,7 +59,7 @@ describe("DateTime", () => {
     );
 
     // Assert
-    const timeElement = screen.getByText(/ago|year|month|day|hour|minute|second/i);
+    const timeElement = screen.getByText("5 days ago");
 
     expect(timeElement).toBeInTheDocument();
   });
@@ -81,25 +81,7 @@ describe("DateTime - additional coverage", () => {
     );
 
     // Assert — 14:30 UTC = 11:30 PM JST
-    expect(screen.getByText(/Jan 15, 2024,? 11:30 PM/)).toBeInTheDocument();
-  });
-
-  it("renders relative time with specific days difference", () => {
-    // Arrange — 5 days after
-    mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-20T14:30:00Z").getTime());
-
-    // Act
-    render(
-      // @ts-expect-error - legacy types
-      <ThemeProvider>
-        <TimezoneProvider value="UTC">
-          <DateTime date={testDateTime} />
-        </TimezoneProvider>
-      </ThemeProvider>,
-    );
-
-    // Assert
-    expect(screen.getByText(/5 days ago/)).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 11:30 PM")).toBeInTheDocument();
   });
 
   it("renders relative time with timezone applied", () => {
@@ -116,11 +98,11 @@ describe("DateTime - additional coverage", () => {
       </ThemeProvider>,
     );
 
-    // Assert — relative time should still show ~5 days regardless of timezone
-    expect(screen.getByText(/5 days ago/)).toBeInTheDocument();
+    // Assert — relative time should still show 5 days regardless of timezone
+    expect(screen.getByText("5 days ago")).toBeInTheDocument();
   });
 
-  it("renders seconds ago for very recent dates", () => {
+  it("renders 10 seconds ago for very recent dates", () => {
     // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-15T14:30:10Z").getTime());
 
@@ -135,11 +117,11 @@ describe("DateTime - additional coverage", () => {
     );
 
     // Assert
-    expect(screen.getByText(/few seconds ago|seconds? ago/)).toBeInTheDocument();
+    expect(screen.getByText("10 seconds ago")).toBeInTheDocument();
   });
 
-  it("renders hours ago for dates hours in the past", () => {
-    // Arrange — 3 hours after
+  it("renders 3 hours ago for dates hours in the past", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-15T17:30:00Z").getTime());
 
     // Act
@@ -153,11 +135,11 @@ describe("DateTime - additional coverage", () => {
     );
 
     // Assert
-    expect(screen.getByText(/3 hours ago/)).toBeInTheDocument();
+    expect(screen.getByText("3 hours ago")).toBeInTheDocument();
   });
 
-  it("renders months ago for dates months in the past", () => {
-    // Arrange — ~3 months after
+  it("renders 3 months ago for dates months in the past", () => {
+    // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2024-04-20T14:30:00Z").getTime());
 
     // Act
@@ -171,6 +153,6 @@ describe("DateTime - additional coverage", () => {
     );
 
     // Assert
-    expect(screen.getByText(/3 months ago/)).toBeInTheDocument();
+    expect(screen.getByText("3 months ago")).toBeInTheDocument();
   });
 });
