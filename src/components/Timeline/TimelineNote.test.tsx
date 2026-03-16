@@ -51,7 +51,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("5 seconds ago")).toBeInTheDocument();
   });
 
   it("renders app", () => {
@@ -76,7 +76,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test App")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("5 seconds ago")).toBeInTheDocument();
   });
 
   it("renders note id and refer id", () => {
@@ -107,7 +107,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("5 seconds ago")).toBeInTheDocument();
     // Note id is now used as HTML id attribute instead of displayed text
     expect(container.querySelector(`#timeline-note-${noteId}`)).toBeInTheDocument();
     // For edited notes, "edited" text with link icon is shown instead of "added"
