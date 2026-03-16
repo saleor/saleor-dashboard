@@ -1,0 +1,25 @@
+src/components/Date/DateTime.test.tsx
+  13a960ac30dbfb11 8,10-11,15-16,18-20,35,46,50,52-98,100-101,113,115-116,118-119,130-134,137-148
+src/components/Date/Date.test.tsx
+  13a960ac30dbfb11 8-11,16-17,19-21,31,35-36,46,50-51,56,61,63-65,67-68,73,78-86,88-99,101-104,106-122,124-140,142-158,160-166,170,172
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "f0b7cceabb182f6fa624a8050917096fb87d9432",
+  "prompts": {
+    "13a960ac30dbfb11": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "653dd919-f965-4517-8e05-8aa3b20971b7",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 342,
+      "total_deletions": 112,
+      "accepted_lines": 211,
+      "overriden_lines": 11
+    }
+  }
+}
