@@ -5,18 +5,17 @@ import { FormattedMessage } from "react-intl";
 
 import { mediaFallbackMessages } from "./messages";
 
-interface MediaFallbackProps {
+interface MediaWithFallbackProps {
   src: string;
   alt?: string | null;
   className?: string;
 }
 
-export const MediaFallback = ({ src, alt, className }: MediaFallbackProps) => {
-  const [errorSrc, setErrorSrc] = useState<string | null>(null);
-  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+export const MediaWithFallback = ({ src, alt, className }: MediaWithFallbackProps) => {
+  const [loadingStatus, setLoadingStatus] = useState<"loading" | "loaded" | "error">("loading");
 
-  const hasError = errorSrc === src;
-  const isLoaded = loadedSrc === src;
+  const hasError = loadingStatus === "error";
+  const isLoaded = loadingStatus === "loaded";
 
   if (hasError || !src) {
     return (
@@ -45,8 +44,8 @@ export const MediaFallback = ({ src, alt, className }: MediaFallbackProps) => {
         className={className}
         src={src}
         alt={alt ?? undefined}
-        onLoad={() => setLoadedSrc(src)}
-        onError={() => setErrorSrc(src)}
+        onLoad={() => setLoadingStatus("loaded")}
+        onError={() => setLoadingStatus("error")}
         style={isLoaded ? undefined : { display: "none" }}
       />
     </>

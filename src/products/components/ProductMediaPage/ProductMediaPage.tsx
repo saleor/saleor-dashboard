@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
-import { MediaFallback } from "@dashboard/components/MediaFallback/MediaFallback";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -141,7 +141,8 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                   {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
-                        <MediaFallback
+                        <MediaWithFallback
+                          key={mediaObj.url}
                           className={classes.image}
                           src={mediaObj.url}
                           alt={mediaObj.alt}
