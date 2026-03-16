@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.22.36
+
+### Patch Changes
+
+- [#6406](https://github.com/saleor/saleor-dashboard/pull/6406) [`142b8cf`](https://github.com/saleor/saleor-dashboard/commit/142b8cfaa13d621b87849714289e548b9e666599) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replaced a few instances of moment.js usage with native Intl API
+
+- [#6409](https://github.com/saleor/saleor-dashboard/pull/6409) [`32d03dc`](https://github.com/saleor/saleor-dashboard/commit/32d03dce6e5655f73ca79b04b282c4d71fcd0977) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Gift cards filters now have option to filder by gift card code explicitly. Previously this was available only in search box, which uses `search` query, this however might not be available immediately after creating a gift card, due to indexing running in the background.
+
+- [#6405](https://github.com/saleor/saleor-dashboard/pull/6405) [`23a4ee7`](https://github.com/saleor/saleor-dashboard/commit/23a4ee721f51d11b0a886a6530d5b08abb92e08d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Pull @saleor/sdk dependency into Dashboard codebase, to restore control of external dependencies like Apollo
+
+- [#6404](https://github.com/saleor/saleor-dashboard/pull/6404) [`659142b`](https://github.com/saleor/saleor-dashboard/commit/659142bd5fe708e6e7edd883c347320f5b510446) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replace a few moment.js invocations with native browser APIs
+
+- [#6414](https://github.com/saleor/saleor-dashboard/pull/6414) [`bbc0cb1`](https://github.com/saleor/saleor-dashboard/commit/bbc0cb1390198d22b18bf8d0c173757715d5a939) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated Jotai package to 2.18.1
+
 ## 3.22.35
 
 ### Patch Changes
