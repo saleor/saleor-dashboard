@@ -1,4 +1,4 @@
-import * as Types from './typesStaging.generated';
+import * as Types from './typesUnstable.generated';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';

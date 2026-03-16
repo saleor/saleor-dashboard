@@ -7,13 +7,13 @@ import type { IGraphQLConfig } from "graphql-config";
  * https://the-guild.dev/graphql/config
  *
  * Multi-schema support:
- * - main: Main/production schema
- * - staging: Staging/preview schema
+ * - stable: Pinned Saleor release tag
+ * - unstable: Latest from Saleor main branch
  */
 const config: IGraphQLConfig = {
   projects: {
-    main: {
-      schema: "schema-main.graphql",
+    stable: {
+      schema: "schema-stable.graphql",
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
@@ -21,13 +21,13 @@ const config: IGraphQLConfig = {
         "./src/searches/*.ts",
       ],
     },
-    staging: {
-      schema: "schema-staging.graphql",
+    unstable: {
+      schema: "schema-unstable.graphql",
       documents: [
-        "./src/**/queries.staging.ts",
-        "./src/**/mutations.staging.ts",
-        "./src/**/fragments/*.staging.ts",
-        "./src/searches/*.staging.ts",
+        "./src/**/queries.unstable.ts",
+        "./src/**/mutations.unstable.ts",
+        "./src/**/fragments/*.unstable.ts",
+        "./src/searches/*.unstable.ts",
       ],
     },
   },

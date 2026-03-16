@@ -2,32 +2,32 @@
  * Schema version helper
  *
  * This module provides helpers to determine which GraphQL schema version is active.
- * The schema version is controlled by the FF_USE_STAGING_SCHEMA feature flag.
+ * The schema version is controlled by the FF_USE_UNSTABLE_SCHEMA feature flag.
  *
- * - When FF_USE_STAGING_SCHEMA=true: Use staging schema with Staging suffixed types/hooks
- * - When FF_USE_STAGING_SCHEMA=false (default): Use main schema with base types/hooks
+ * - When FF_USE_UNSTABLE_SCHEMA=true: Use unstable schema with Unstable suffixed types/hooks
+ * - When FF_USE_UNSTABLE_SCHEMA=false (default): Use stable schema with base types/hooks
  */
 
-export type SchemaVersion = "main" | "staging";
+export type SchemaVersion = "stable" | "unstable";
 
 /**
- * Get the current schema version based on the FF_USE_STAGING_SCHEMA feature flag
+ * Get the current schema version based on the FF_USE_UNSTABLE_SCHEMA feature flag
  */
 export const getSchemaVersion = (): SchemaVersion => {
   // Flags is Vite-specific global, it's resolved build time from env variables
-  return FLAGS["FF_USE_STAGING_SCHEMA"] === "true" ? "staging" : "main";
+  return FLAGS["FF_USE_UNSTABLE_SCHEMA"] === "true" ? "unstable" : "stable";
 };
 
 /**
- * Check if staging schema is currently active
+ * Check if unstable schema is currently active
  */
-export const isStagingSchema = (): boolean => {
-  return getSchemaVersion() === "staging";
+export const isUnstableSchema = (): boolean => {
+  return getSchemaVersion() === "unstable";
 };
 
 /**
- * Check if main schema is currently active
+ * Check if stable schema is currently active
  */
-export const isMainSchema = (): boolean => {
-  return getSchemaVersion() === "main";
+export const isStableSchema = (): boolean => {
+  return getSchemaVersion() === "stable";
 };

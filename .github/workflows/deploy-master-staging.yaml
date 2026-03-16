@@ -27,7 +27,7 @@ jobs:
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
       # master-staging uses core unstable/unreleased schema, so this deployment will have enabled features available only on this branch
-      FF_USE_STAGING_SCHEMA: true
+      FF_USE_UNSTABLE_SCHEMA: true
     steps:
       - uses: actions/checkout@v2
       - name: Set custom version

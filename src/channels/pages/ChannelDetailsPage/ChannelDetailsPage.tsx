@@ -22,11 +22,11 @@ import {
   type SearchWarehousesQuery,
   type StockSettingsInput,
 } from "@dashboard/graphql";
-import { type ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql/types.generated";
+import { type ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/unstable";
 import { type SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";

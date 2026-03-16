@@ -8,8 +8,8 @@ import {
   type ChannelDeleteMutation,
   type ChannelErrorFragment,
   type ChannelUpdateMutation,
-  isMainSchema,
-  isStagingSchema,
+  isStableSchema,
+  isUnstableSchema,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
@@ -21,7 +21,7 @@ import {
   useChannelQuery as useChannelQueryStaging,
   useChannelsQuery as useChannelsQueryStaging,
   useChannelUpdateMutation as useChannelUpdateMutationStaging,
-} from "@dashboard/graphql/staging";
+} from "@dashboard/graphql/unstable";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -55,11 +55,11 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const shop = useShop();
   const channelsListDataMain = useChannelsQuery({
     displayLoader: true,
-    skip: isStagingSchema(),
+    skip: isUnstableSchema(),
   });
   const channelsListDataStaging = useChannelsQueryStaging({
     displayLoader: true,
-    skip: isMainSchema(),
+    skip: isStableSchema(),
   });
   const channelsListData = channelsListDataStaging ?? channelsListDataMain;
 
@@ -81,18 +81,18 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
-    skip: isStagingSchema(),
+    skip: isUnstableSchema(),
   });
 
   const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
     displayLoader: true,
     variables: { id },
-    skip: isMainSchema(),
+    skip: isStableSchema(),
   });
 
   const data = dataStaging ?? dataMain;
   const loading = loadingMain ?? loadingStaging;
-  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
+  const updateChannelOpts = isUnstableSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
@@ -175,7 +175,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
     }
 
-    const updateChannelMutation = isStagingSchema()
+    const updateChannelMutation = isUnstableSchema()
       ? updateChannelStaging({
           variables: {
             id: data?.channel.id,

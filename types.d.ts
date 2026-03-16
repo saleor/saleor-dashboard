@@ -10,7 +10,7 @@ declare const FLAGS_SERVICE_ENABLED: boolean;
 /**
  * Feature flags available in the application.
  * Notable flags:
- * - FF_USE_STAGING_SCHEMA: Enable staging schema instead of main schema
+ * - FF_USE_UNSTABLE_SCHEMA: Enable unstable schema instead of stable schema
  */
 declare const FLAGS: Record<string, string>;
 

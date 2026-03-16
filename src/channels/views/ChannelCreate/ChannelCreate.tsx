@@ -5,11 +5,11 @@ import {
   type ChannelCreateInput,
   type ChannelCreateMutation,
   type ChannelErrorFragment,
-  isStagingSchema,
+  isUnstableSchema,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
-import { type ChannelCreateInput as ChannelCreateInputWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
+import { type ChannelCreateInput as ChannelCreateInputWithAllowLegacyGiftCardUse } from "@dashboard/graphql/unstable";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -109,7 +109,7 @@ const ChannelCreateView = () => {
     };
 
     return saveChannel(
-      isStagingSchema() ? inputWithAllowLegacyGiftCardUse : input,
+      isUnstableSchema() ? inputWithAllowLegacyGiftCardUse : input,
       warehousesToDisplay,
     );
   };

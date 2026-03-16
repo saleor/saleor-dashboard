@@ -1,17 +1,17 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema-main.graphql",
+  schema: "./schema-stable.graphql",
   documents: [
     "./src/**/queries.ts",
     "./src/**/mutations.ts",
     "./src/**/fragments/*.ts",
     "./src/searches/*.ts",
-    // covered by codegen-staging
-    "!./src/**/queries.staging.ts",
-    "!./src/**/mutations.staging.ts",
-    "!./src/**/fragments/*.staging.ts",
-    "!./src/searches/*.staging.ts",
+    // covered by codegen-unstable
+    "!./src/**/queries.unstable.ts",
+    "!./src/**/mutations.unstable.ts",
+    "!./src/**/fragments/*.unstable.ts",
+    "!./src/searches/*.unstable.ts",
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {

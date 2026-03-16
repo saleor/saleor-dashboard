@@ -1,24 +1,24 @@
 # Multi-Schema Support
 
-This document describes the multi-schema GraphQL support in Saleor Dashboard, which allows the application to work with both production (main) and staging (staging) API schemas.
+This document describes the multi-schema GraphQL support in Saleor Dashboard, which allows the application to work with both stable and unstable API schemas.
 
 ## Overview
 
 The dashboard supports dual GraphQL schemas:
 
-- **Production Schema (main)**: The default schema used in production environments
-- **Staging Schema (staging)**: Optional schema for testing upcoming API changes
+- **Stable Schema**: The default schema used in production environments
+- **Unstable Schema**: Optional schema for testing upcoming API changes
 
-Both schemas are generated at build time, and runtime selection is controlled by the `FF_USE_STAGING_SCHEMA` feature flag.
+Both schemas are generated at build time, and runtime selection is controlled by the `FF_USE_UNSTABLE_SCHEMA` feature flag.
 
 ## Architecture
 
 ### Schema Files
 
 ```
-schema-main.graphql     # Production schema (Saleor stable tags like 3.22, 3.23)
-schema-staging.graphql     # Staging schema (Saleor staging - main branch)
-schema.graphql          # Symlink to schema-main.graphql (for tooling compatibility)
+schema-stable.graphql     # Stable schema (Saleor stable tags like 3.22, 3.23)
+schema-unstable.graphql     # Unstable schema (latest from Saleor main branch)
+schema.graphql          # Symlink to schema-stable.graphql (for tooling compatibility)
 ```
 
 ### Generated Files
@@ -27,16 +27,16 @@ Each schema generates its own set of TypeScript files:
 
 ```
 src/graphql/
-├── hooks.generated.ts                   # Hooks from main schema
-├── types.generated.ts                   # Types from main schema
-├── typePolicies.generated.ts            # Type policies from main schema
-├── fragmentTypes.generated.ts           # Fragment types from main schema
-├── hooksStaging.generated.ts            # Hooks from staging schema
-├── typesStaging.generated.ts            # Types from staging schema
-├── typePoliciesStaging.generated.ts     # Type policies from staging schema
-├── fragmentTypesStaging.generated.ts    # Fragment types from staging schema
-└── staging/
-    └── index.ts                         # Convenience export for all staging files
+├── hooks.generated.ts                   # Hooks from stable schema
+├── types.generated.ts                   # Types from stable schema
+├── typePolicies.generated.ts            # Type policies from stable schema
+├── fragmentTypes.generated.ts           # Fragment types from stable schema
+├── hooksUnstable.generated.ts            # Hooks from unstable schema
+├── typesUnstable.generated.ts            # Types from unstable schema
+├── typePoliciesUnstable.generated.ts     # Type policies from unstable schema
+├── fragmentTypesUnstable.generated.ts    # Fragment types from unstable schema
+└── unstable/
+    └── index.ts                         # Convenience export for all unstable files
 ```
 
 ## Usage
@@ -46,36 +46,40 @@ src/graphql/
 Add this variable to your `.env` file:
 
 ```env
-# Enable staging schema (default: false)
-FF_USE_STAGING_SCHEMA=false
+# Enable unstable schema (default: false)
+FF_USE_UNSTABLE_SCHEMA=false
 ```
 
-The same `API_URL` is used for both schema versions. The FF_USE_STAGING_SCHEMA flag controls which schema types and hooks are used in the application.
+The same `API_URL` is used for both schema versions. The FF_USE_UNSTABLE_SCHEMA flag controls which schema types and hooks are used in the application.
 
 ### Importing GraphQL Hooks
 
-By default, the application imports from the production schema:
+By default, the application imports from the stable schema:
 
 ```typescript
-// Default import uses production schema (main)
+// Default import uses stable schema
 import { useProductListQuery } from "@dashboard/graphql";
 ```
 
-To explicitly use the staging schema, you have two options:
+To explicitly use the unstable schema, you have two options:
 
-**Option 1: Import from the staging directory (recommended for multiple imports)**
+**Option 1: Import from the unstable directory (recommended for multiple imports)**
 
 ```typescript
-// Import from staging directory - includes all staging types, hooks, and helpers
-import { useProductListQuery, ProductListQuery, isStagingSchema } from "@dashboard/graphql/staging";
+// Import from unstable directory - includes all unstable types, hooks, and helpers
+import {
+  useProductListQuery,
+  ProductListQuery,
+  isUnstableSchema,
+} from "@dashboard/graphql/unstable";
 ```
 
 **Option 2: Import directly from generated files**
 
 ```typescript
 // Import directly from specific generated files
-import { useProductListQuery } from "@dashboard/graphql/hooksStaging.generated";
-import type { ProductListQuery } from "@dashboard/graphql/typesStaging.generated";
+import { useProductListQuery } from "@dashboard/graphql/hooksUnstable.generated";
+import type { ProductListQuery } from "@dashboard/graphql/typesUnstable.generated";
 ```
 
 ### Runtime Schema Selection
@@ -83,16 +87,16 @@ import type { ProductListQuery } from "@dashboard/graphql/typesStaging.generated
 Use the schema version helpers to check which schema is active:
 
 ```typescript
-import { isStagingSchema, getSchemaVersion } from "@dashboard/graphql";
+import { isUnstableSchema, getSchemaVersion } from "@dashboard/graphql";
 
 function MyComponent() {
-  // Check if staging schema is enabled
-  if (isStagingSchema()) {
-    // Use staging-specific features
+  // Check if unstable schema is enabled
+  if (isUnstableSchema()) {
+    // Use unstable-specific features
   }
 
   // Or get the version string
-  const version = getSchemaVersion(); // "main" or "staging"
+  const version = getSchemaVersion(); // "stable" or "unstable"
 }
 ```
 
@@ -103,16 +107,16 @@ For features that differ between schemas, you can conditionally use different ho
 **Example 1: Skip-based approach (recommended)**
 
 ```typescript
-import { isMainSchema, isStagingSchema, useProductListQuery } from "@dashboard/graphql";
-import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
+import { isStableSchema, isUnstableSchema, useProductListQuery } from "@dashboard/graphql";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/unstable";
 
 function ProductList() {
   // Execute only the relevant query based on schema version
   const { data: dataMain } = useProductListQuery({
-    skip: isStagingSchema()
+    skip: isUnstableSchema()
   });
   const { data: dataStaging } = useProductListQueryStaging({
-    skip: isMainSchema()
+    skip: isStableSchema()
   });
 
   // Use whichever data is available
@@ -125,13 +129,13 @@ function ProductList() {
 **Example 2: Dynamic hook selection**
 
 ```typescript
-import { isStagingSchema } from "@dashboard/graphql";
+import { isUnstableSchema } from "@dashboard/graphql";
 import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql";
-import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/unstable";
 
 function ProductList() {
   // Choose the appropriate hook based on schema version
-  const useProductList = isStagingSchema() ? useProductListQueryStaging : useProductListQueryMain;
+  const useProductList = isUnstableSchema() ? useProductListQueryStaging : useProductListQueryMain;
 
   const { data } = useProductList({
     variables: { /* ... */ }
@@ -147,8 +151,8 @@ For queries that only exist in one schema version, you can organize them in sepa
 
 ```
 src/products/
-├── queries.ts          # Main schema queries
-└── queries.staging.ts  # Staging-specific queries
+├── queries.ts          # Stable schema queries
+└── queries.unstable.ts  # Unstable-specific queries
 ```
 
 ## Development
@@ -160,8 +164,8 @@ src/products/
 pnpm run fetch-schema
 
 # Fetch individual schemas
-pnpm run fetch-schema:main
-pnpm run fetch-schema:staging
+pnpm run fetch-schema:stable
+pnpm run fetch-schema:unstable
 ```
 
 ### Generating Types
@@ -171,8 +175,8 @@ pnpm run fetch-schema:staging
 pnpm run generate
 
 # Generate for individual schemas
-pnpm run generate:main
-pnpm run generate:staging
+pnpm run generate:stable
+pnpm run generate:unstable
 ```
 
 ### Type Checking
@@ -190,12 +194,12 @@ pnpm run check-types
 
 1. Both schemas are fetched from the Saleor repository
 2. GraphQL Codegen generates separate TypeScript files for each schema
-3. Production schema generates base types (no suffix)
-4. Staging schema generates Staging-suffixed document variables
+3. Stable schema generates base types (no suffix)
+4. Unstable schema generates Unstable-suffixed document variables
 
 ### Runtime
 
-1. `FF_USE_STAGING_SCHEMA` feature flag determines which schema is active
+1. `FF_USE_UNSTABLE_SCHEMA` feature flag determines which schema is active
 2. Apollo Client loads the appropriate `fragmentTypes` based on the flag
 3. `getApiUrl()` returns the same API URL regardless of the flag
 4. Application code imports hooks from the appropriate generated file
@@ -206,64 +210,68 @@ pnpm run check-types
 
 - **Hook names are identical** in both versions (e.g., `useProductListQuery`)
 - **Type names are identical** in both versions (e.g., `ProductListQuery`)
-- GraphQL document variables have Staging suffix in the staging version (e.g., `ProductListStaging`)
+- GraphQL document variables have Unstable suffix in the unstable version (e.g., `ProductListUnstable`)
 
 This means you cannot import both versions in the same file without aliasing:
 
 ```typescript
-// This works - import with aliases (recommended: use staging directory)
+// This works - import with aliases (recommended: use unstable directory)
 import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql";
-import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/unstable";
 
 // This also works - import directly from generated files
 import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql/hooks.generated";
-import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/hooksStaging.generated";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/hooksUnstable.generated";
 
 // This doesn't work - naming conflict
 import { useProductListQuery } from "@dashboard/graphql";
-import { useProductListQuery } from "@dashboard/graphql/staging"; // ERROR!
+import { useProductListQuery } from "@dashboard/graphql/unstable"; // ERROR!
 ```
 
-### Staging Directory Convenience Export
+### Unstable Directory Convenience Export
 
-The `src/graphql/staging/index.ts` file provides a convenient way to import all staging-related exports:
+The `src/graphql/unstable/index.ts` file provides a convenient way to import all unstable-related exports:
 
 ```typescript
 // Instead of importing from multiple files...
-import { useProductListQuery } from "@dashboard/graphql/hooksStaging.generated";
-import type { ProductListQuery } from "@dashboard/graphql/typesStaging.generated";
-import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
+import { useProductListQuery } from "@dashboard/graphql/hooksUnstable.generated";
+import type { ProductListQuery } from "@dashboard/graphql/typesUnstable.generated";
+import { isUnstableSchema } from "@dashboard/graphql/schemaVersion";
 
 // You can import everything from one place
-import { useProductListQuery, ProductListQuery, isStagingSchema } from "@dashboard/graphql/staging";
+import {
+  useProductListQuery,
+  ProductListQuery,
+  isUnstableSchema,
+} from "@dashboard/graphql/unstable";
 ```
 
 This export includes:
 
-- All staging hooks (`hooksStaging.generated.ts`)
-- All staging types (`typesStaging.generated.ts`)
-- Type policies (`typePoliciesStaging.generated.ts`)
-- Fragment types (`fragmentTypesStaging.generated.ts`)
+- All unstable hooks (`hooksUnstable.generated.ts`)
+- All unstable types (`typesUnstable.generated.ts`)
+- Type policies (`typePoliciesUnstable.generated.ts`)
+- Fragment types (`fragmentTypesUnstable.generated.ts`)
 - Schema version helpers (`schemaVersion.ts`)
 - Extended types (`extendedTypes.ts`)
 
 ### Single Apollo Client
 
-The application uses a single Apollo Client instance that connects to the configured API_URL. The same API endpoint is used for both schema versions - only the client-side schema types and fragmentTypes differ based on the FF_USE_STAGING_SCHEMA flag.
+The application uses a single Apollo Client instance that connects to the configured API_URL. The same API endpoint is used for both schema versions - only the client-side schema types and fragmentTypes differ based on the FF_USE_UNSTABLE_SCHEMA flag.
 
 ### Schema Compatibility
 
-When `FF_USE_STAGING_SCHEMA=false` (default):
+When `FF_USE_UNSTABLE_SCHEMA=false` (default):
 
-- Uses production schema (main)
-- Apollo Client uses main fragmentTypes
-- All imports from `@dashboard/graphql` use production types
+- Uses stable schema
+- Apollo Client uses stable fragmentTypes
+- All imports from `@dashboard/graphql` use stable types
 
-When `FF_USE_STAGING_SCHEMA=true`:
+When `FF_USE_UNSTABLE_SCHEMA=true`:
 
-- Uses staging schema (staging)
-- Apollo Client uses staging fragmentTypes
-- Must explicitly import from Staging generated files for schema-specific features
+- Uses unstable schema
+- Apollo Client uses unstable fragmentTypes
+- Must explicitly import from Unstable generated files for schema-specific features
 - Connects to the same API_URL (you must know what schema version is provided by this endpoint)
 
 ## Adding New Queries/Mutations
@@ -272,42 +280,42 @@ When `FF_USE_STAGING_SCHEMA=true`:
 
 1. Add your query/mutation to the appropriate file (e.g., `src/products/queries.ts`)
 2. Run `pnpm run generate` to generate hooks for both schemas
-3. Import from the default export for production schema:
+3. Import from the default export for stable schema:
    ```typescript
    import { useMyNewQuery } from "@dashboard/graphql";
    ```
-4. For staging-specific features, import from the staging directory:
+4. For unstable-specific features, import from the unstable directory:
    ```typescript
-   import { useMyNewQuery } from "@dashboard/graphql/staging";
+   import { useMyNewQuery } from "@dashboard/graphql/unstable";
    ```
 
-### For Staging-Only Queries
+### For Unstable-Only Queries
 
-If a query uses fields that only exist in the staging schema:
+If a query uses fields that only exist in the unstable schema:
 
-1. Create a separate file (e.g., `src/products/queries.staging.ts`)
-2. Define your staging-specific query there
-3. Run `pnpm run generate:staging` to generate hooks
-4. Import from the staging directory:
+1. Create a separate file (e.g., `src/products/queries.unstable.ts`)
+2. Define your unstable-specific query there
+3. Run `pnpm run generate:unstable` to generate hooks
+4. Import from the unstable directory:
    ```typescript
-   import { useMyNewQuery } from "@dashboard/graphql/staging";
+   import { useMyNewQuery } from "@dashboard/graphql/unstable";
    ```
 
-This keeps schema-specific code organized and prevents type errors when generating main schema types.
+This keeps schema-specific code organized and prevents type errors when generating stable schema types.
 
 ## Testing
 
 ### Testing with Different Schemas
 
-1. Set `FF_USE_STAGING_SCHEMA=false` in your `.env`
+1. Set `FF_USE_UNSTABLE_SCHEMA=false` in your `.env`
 2. Start the dev server: `pnpm run dev`
-3. Test production schema (main) behavior
+3. Test stable schema behavior
 
 Then:
 
-1. Set `FF_USE_STAGING_SCHEMA=true` in your `.env`
+1. Set `FF_USE_UNSTABLE_SCHEMA=true` in your `.env`
 2. Restart the dev server
-3. Test staging schema (staging) behavior
+3. Test unstable schema behavior
 
 Note: Your API must support both schema versions for this to work correctly.
 
@@ -321,7 +329,7 @@ Note: Your API must support both schema versions for this to work correctly.
 
 ### Potential Optimizations
 
-1. **Differential Generation**: Generate only changed types for Staging to reduce bundle size (this should not be a huge deal if we migrate from enums to type literals)
+1. **Differential Generation**: Generate only changed types for Unstable to reduce bundle size (this should not be a huge deal if we migrate from enums to type literals)
 2. **Automatic Schema Switching**: Detect API version from response headers
 3. **Schema Compatibility Checker**: Tool to validate backward compatibility
 4. **Runtime Type Validation**: Validate API responses match the active schema
@@ -330,17 +338,17 @@ Note: Your API must support both schema versions for this to work correctly.
 
 As new schema versions are released:
 
-1. Update `fetch-schema:staging` script to fetch the new version
+1. Update `fetch-schema:unstable` script to fetch the new version
 2. Run `pnpm run generate`
 3. Fix any type errors in application code
 4. Test thoroughly with the new schema
-5. When ready, promote staging to main by updating `fetch-schema:main` to point to the new version
+5. When ready, promote unstable to stable by updating `fetch-schema:stable` to point to the new version
 
 ## Related Documentation
 
 ### Configuration Files
 
-- [Main Schema Codegen Configuration](../codegen-main.ts)
-- [Staging Schema Codegen Configuration](../codegen-staging.ts)
+- [Stable Schema Codegen Configuration](../codegen-stable.ts)
+- [Unstable Schema Codegen Configuration](../codegen-unstable.ts)
 - [Environment Variables](../.env.template)
 - [GraphQL Schema Configuration](../graphql.config.ts)

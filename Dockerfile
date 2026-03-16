@@ -12,10 +12,10 @@ COPY locale/ locale/
 COPY scripts/ scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
-COPY codegen-main.ts ./
+COPY codegen-stable.ts ./
 COPY graphql.config.ts ./
 COPY *.d.ts ./
-COPY schema-main.graphql ./
+COPY schema-stable.graphql ./
 COPY .featureFlags/ .featureFlags/
 
 COPY src/ src/

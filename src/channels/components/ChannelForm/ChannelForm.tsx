@@ -9,7 +9,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   type ChannelErrorFragment,
   type CountryCode,
-  isStagingSchema,
+  isUnstableSchema,
   MarkAsPaidStrategyEnum,
   type StockSettingsInput,
   TransactionFlowStrategyEnum,
@@ -268,7 +268,7 @@ export const ChannelForm = ({
           onCutOffTimeChange={onChange}
         />
         <Box />
-        {isStagingSchema() && (
+        {isUnstableSchema() && (
           <AllowLegacyGiftCardUse
             onChange={onAllowLegacyGiftCardUseChange ? onAllowLegacyGiftCardUseChange : () => {}}
             hasError={!!formErrors.allowLegacyGiftCardUse}
