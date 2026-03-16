@@ -1,0 +1,25 @@
+src/services/errorTracking/adapters/Sentry.ts
+  8adca19fe89b3faa 10,13-21,39-42
+src/services/errorTracking/index.ts
+  8adca19fe89b3faa 1-2,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "17e249ff7f7bb58fc3a3d3086a42a80a7a89d8d2",
+  "prompts": {
+    "8adca19fe89b3faa": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b249dcce-5c97-4730-a959-c16f8cd441e4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 0,
+      "accepted_lines": 18,
+      "overriden_lines": 0
+    }
+  }
+}
