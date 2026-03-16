@@ -1690,7 +1690,7 @@ type Query {
     """External ID of the user."""
     externalReference: String
   ): User @doc(category: "Users")
-  _entities(representations: [_Any!]!): [_Entity]
+  _entities(representations: [_Any]): [_Entity]
   _service: _Service
 }
 
@@ -3065,22 +3065,28 @@ type AppExtension implements Node @doc(category: "Apps") {
   """URL of a view where extension's iframe is placed."""
   url: String!
 
+  """Place where given extension will be mounted."""
+  mount: AppExtensionMountEnum! @deprecated(reason: "Use `mountName` instead.")
+
+  """Type of way how app extension will be opened."""
+  target: AppExtensionTargetEnum! @deprecated(reason: "Use `targetName` instead.")
+
   """
-  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+  Name of the extension mount point in the dashboard. Replaces `mount`
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Value returned in UPPERCASE.
+  Name of the extension target in the dashboard. Replaces `target`
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  App extension settings.
+  App extension settings. Replaces `options` field.
   
   Added in Saleor 3.22.
   """
@@ -3091,9 +3097,114 @@ type AppExtension implements Node @doc(category: "Apps") {
 
   """JWT token used to authenticate by third-party app extension."""
   accessToken: String
+
+  """
+  App extension options.
+  
+  Added in Saleor 3.22.
+  """
+  options: AppExtensionPossibleOptions @deprecated(reason: "Use `settings` field instead.")
+}
+
+"""All places where app extension can be mounted."""
+enum AppExtensionMountEnum @doc(category: "Apps") {
+  CATEGORY_OVERVIEW_CREATE
+  CATEGORY_OVERVIEW_MORE_ACTIONS
+  CATEGORY_DETAILS_MORE_ACTIONS
+  COLLECTION_OVERVIEW_CREATE
+  COLLECTION_OVERVIEW_MORE_ACTIONS
+  COLLECTION_DETAILS_MORE_ACTIONS
+  COLLECTION_DETAILS_WIDGETS
+  GIFT_CARD_OVERVIEW_CREATE
+  GIFT_CARD_OVERVIEW_MORE_ACTIONS
+  GIFT_CARD_DETAILS_MORE_ACTIONS
+  GIFT_CARD_DETAILS_WIDGETS
+  CUSTOMER_OVERVIEW_CREATE
+  CUSTOMER_OVERVIEW_MORE_ACTIONS
+  CUSTOMER_DETAILS_MORE_ACTIONS
+  CUSTOMER_DETAILS_WIDGETS
+  PRODUCT_OVERVIEW_CREATE
+  PRODUCT_OVERVIEW_MORE_ACTIONS
+  PRODUCT_DETAILS_MORE_ACTIONS
+  PRODUCT_DETAILS_WIDGETS
+  NAVIGATION_CATALOG
+  NAVIGATION_ORDERS
+  NAVIGATION_CUSTOMERS
+  NAVIGATION_DISCOUNTS
+  NAVIGATION_TRANSLATIONS
+  NAVIGATION_PAGES
+  ORDER_DETAILS_MORE_ACTIONS
+  ORDER_OVERVIEW_CREATE
+  ORDER_OVERVIEW_MORE_ACTIONS
+  ORDER_DETAILS_WIDGETS
+  DRAFT_ORDER_DETAILS_MORE_ACTIONS
+  DRAFT_ORDER_OVERVIEW_CREATE
+  DRAFT_ORDER_OVERVIEW_MORE_ACTIONS
+  DRAFT_ORDER_DETAILS_WIDGETS
+  DISCOUNT_DETAILS_MORE_ACTIONS
+  DISCOUNT_OVERVIEW_CREATE
+  DISCOUNT_OVERVIEW_MORE_ACTIONS
+  VOUCHER_DETAILS_MORE_ACTIONS
+  VOUCHER_OVERVIEW_CREATE
+  VOUCHER_OVERVIEW_MORE_ACTIONS
+  VOUCHER_DETAILS_WIDGETS
+  PAGE_DETAILS_MORE_ACTIONS
+  PAGE_OVERVIEW_CREATE
+  PAGE_OVERVIEW_MORE_ACTIONS
+  PAGE_TYPE_OVERVIEW_CREATE
+  PAGE_TYPE_OVERVIEW_MORE_ACTIONS
+  PAGE_TYPE_DETAILS_MORE_ACTIONS
+  MENU_OVERVIEW_CREATE
+  MENU_OVERVIEW_MORE_ACTIONS
+  MENU_DETAILS_MORE_ACTIONS
+  TRANSLATIONS_MORE_ACTIONS
+}
+
+"""
+All available ways of opening an app extension.
+
+    POPUP - app's extension will be mounted as a popup window
+    APP_PAGE - redirect to app's page
+"""
+enum AppExtensionTargetEnum @doc(category: "Apps") {
+  POPUP
+  APP_PAGE
+  NEW_TAB
+  WIDGET
 }
 
 scalar JSON
+
+union AppExtensionPossibleOptions = AppExtensionOptionsWidget | AppExtensionOptionsNewTab
+
+"""Represents the options for an app extension."""
+type AppExtensionOptionsWidget @doc(category: "Apps") {
+  """Options for displaying a Widget"""
+  widgetTarget: WidgetTargetOptions @deprecated(reason: "Use `settings` field directly.")
+}
+
+"""Represents the WIDGET target options for an app extension."""
+type WidgetTargetOptions @doc(category: "Apps") {
+  """HTTP method for Widget target (GET or POST)"""
+  method: HttpMethod! @deprecated(reason: "Use `settings` field directly.")
+}
+
+enum HttpMethod {
+  POST
+  GET
+}
+
+"""Represents the options for an app extension."""
+type AppExtensionOptionsNewTab @doc(category: "Apps") {
+  """Options controlling behavior of the NEW_TAB extension target"""
+  newTabTarget: NewTabTargetOptions @deprecated(reason: "Use `settings` field directly.")
+}
+
+"""Represents the NEW_TAB target options for an app extension."""
+type NewTabTargetOptions @doc(category: "Apps") {
+  """HTTP method for New Tab target (GET or POST)"""
+  method: HttpMethod! @deprecated(reason: "Use `settings` field directly.")
+}
 
 """
 Represents a problem associated with an app.
@@ -3681,20 +3792,13 @@ type Checkout implements Node & ObjectWithMetadata @doc(category: "Checkout") {
   shippingPrice: TaxedMoney! @webhookEventsInfo(asyncEvents: [], syncEvents: [CHECKOUT_CALCULATE_TAXES])
 
   """
-  The delivery method selected for this checkout.
-  
-  Added in Saleor 3.23.
-  """
-  delivery: Delivery
-
-  """
   The shipping method related with checkout.
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
   - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   """
-  shippingMethod: ShippingMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `delivery` instead.")
+  shippingMethod: ShippingMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `deliveryMethod` instead.")
 
   """
   The delivery method selected for this checkout.
@@ -3703,7 +3807,7 @@ type Checkout implements Node & ObjectWithMetadata @doc(category: "Checkout") {
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
   - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   """
-  deliveryMethod: DeliveryMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `delivery` instead.")
+  deliveryMethod: DeliveryMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   The price of the checkout before shipping, with taxes included.
@@ -7066,13 +7170,13 @@ type Attribute implements Node & ObjectWithMetadata @doc(category: "Attributes")
   ): [ReferenceType!]
 
   """Name of an attribute displayed in the interface."""
-  name: String!
+  name: String
 
   """Internal representation of an attribute name."""
-  slug: String!
+  slug: String
 
   """The attribute type."""
-  type: AttributeTypeEnum!
+  type: AttributeTypeEnum
 
   """The unit of attribute values."""
   unit: MeasurementUnitsEnum
@@ -7277,7 +7381,7 @@ type ProductType implements Node & ObjectWithMetadata @doc(category: "Products")
   slug: String!
 
   """Whether the product type has variants."""
-  hasVariants: Boolean! @deprecated(reason: "This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting. ")
+  hasVariants: Boolean!
 
   """Whether shipping is required for this product type."""
   isShippingRequired: Boolean!
@@ -8847,9 +8951,7 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
   costPrice: Money
 
   """
-  Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
-  
-   Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
+  Prior price of the variant used for discount calculations.
   
   Added in Saleor 3.21.
   """
@@ -10657,10 +10759,10 @@ type ShippingMethod implements Node & ObjectWithMetadata @doc(category: "Shippin
   price: Money!
 
   """Maximum order price for this shipping method."""
-  maximumOrderPrice: Money @deprecated
+  maximumOrderPrice: Money
 
   """Minimal order price for this shipping method."""
-  minimumOrderPrice: Money @deprecated
+  minimumOrderPrice: Money
 
   """Describes if this shipping method is active and can be selected."""
   active: Boolean!
@@ -10803,13 +10905,6 @@ type CheckoutSettings {
   Added in Saleor 3.22.
   """
   automaticCompletionCutOffDate: DateTime
-
-  """
-  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
-  
-  Added in Saleor 3.23.
-  """
-  allowLegacyGiftCardUse: Boolean!
 }
 
 """Represents the channel-specific payment settings."""
@@ -11665,19 +11760,6 @@ The variant assigned to the checkout line is not available.Placing the order wil
 type CheckoutLineProblemVariantNotAvailable @doc(category: "Checkout") {
   """The line that has variant that is not available."""
   line: CheckoutLine!
-}
-
-"""
-Represents a delivery option for the checkout.
-
-Added in Saleor 3.23.
-"""
-type Delivery {
-  """The ID of the delivery."""
-  id: ID!
-
-  """Shipping method represented by the delivery."""
-  shippingMethod: ShippingMethod
 }
 
 """
@@ -13595,25 +13677,7 @@ enum TokenizedPaymentFlowEnum @doc(category: "Payments") {
 }
 
 """Represents an problem in the checkout."""
-union CheckoutProblem = CheckoutProblemDeliveryMethodStale | CheckoutProblemDeliveryMethodInvalid | CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable
-
-"""
-Indicates that the delivery methods are stale.
-
-Added in Saleor 3.23.
-"""
-type CheckoutProblemDeliveryMethodStale @doc(category: "Checkout") {
-  delivery: Delivery!
-}
-
-"""
-Indicates that the selected delivery method is invalid.
-
-Added in Saleor 3.23.
-"""
-type CheckoutProblemDeliveryMethodInvalid @doc(category: "Checkout") {
-  delivery: Delivery!
-}
+union CheckoutProblem = CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable
 
 type CheckoutCountableConnection @doc(category: "Checkout") {
   """Pagination data for this connection."""
@@ -15185,13 +15249,6 @@ type Shop implements ObjectWithMetadata {
   """
   preserveAllAddressFields: Boolean!
 
-  """
-  Controls whether password-based authentication is allowed.
-  
-  Added in Saleor 3.23.
-  """
-  passwordLoginMode: PasswordLoginModeEnum!
-
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean! @deprecated(reason: "Use `Channel.taxConfiguration.pricesEnteredWithTax` to determine whether prices are entered with tax.")
 
@@ -15293,21 +15350,6 @@ type Limits {
 
   """Defines the number of warehouses."""
   warehouses: Int
-}
-
-"""
-Controls whether password-based authentication is allowed.
-
-    ENABLED - any user can log in with a password. This is the default behavior.
-    CUSTOMERS_ONLY - only customer users can log in with a password.
-        If a staff user logs in with a password, they will be treated as a customer
-        — the issued token will not contain any staff permissions.
-    DISABLED - no user can log in with a password.
-"""
-enum PasswordLoginModeEnum @doc(category: "Authentication") {
-  ENABLED
-  CUSTOMERS_ONLY
-  DISABLED
 }
 
 """Gift card related settings from site settings."""
@@ -15484,9 +15526,7 @@ enum CollectionSortField @doc(category: "Products") {
 
 input ProductTypeFilterInput @doc(category: "Products") {
   search: String
-
-  """"""
-  configurable: ProductTypeConfigurable @deprecated(reason: "The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.")
+  configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
   metadata: [MetadataFilter!]
   kind: ProductTypeKindEnum
@@ -15625,11 +15665,6 @@ enum PageSortField @doc(category: "Pages") {
 
   """Sort pages by creation date."""
   CREATED_AT
-
-  """
-  Sort pages by rank. Note: This option is available only with the `search` filter.
-  """
-  RANK
 }
 
 input PageFilterInput @doc(category: "Pages") {
@@ -16185,11 +16220,6 @@ enum GiftCardSortField @doc(category: "Gift cards") {
 
   """Sort gift cards by created at."""
   CREATED_AT
-
-  """
-  Sort gift cards by rank. Note: This option is available only with the `search` filter.
-  """
-  RANK
 }
 
 input GiftCardFilterInput @doc(category: "Gift cards") {
@@ -17023,11 +17053,6 @@ enum CheckoutSortField @doc(category: "Checkout") {
 
   """Sort checkouts by payment."""
   PAYMENT
-
-  """
-  Sort checkouts by rank. Note: This option is available only with the `search` filter.
-  """
-  RANK
 }
 
 input CheckoutFilterInput @doc(category: "Checkout") {
@@ -17181,6 +17206,12 @@ type AppExtensionCountableEdge @doc(category: "Apps") {
 }
 
 input AppExtensionFilterInput @doc(category: "Apps") {
+  """DEPRECATED: Use `mountName` instead."""
+  mount: [AppExtensionMountEnum!] @deprecated
+
+  """DEPRECATED: Use `targetName` instead."""
+  target: AppExtensionTargetEnum @deprecated
+
   """
   Plain-text mount name (case insensitive)
   
@@ -17388,11 +17419,6 @@ enum UserSortField @doc(category: "Users") {
 
   """Sort users by last modified at."""
   LAST_MODIFIED_AT
-
-  """
-  Sort users by rank. Note: This option is available only with the `search` filter.
-  """
-  RANK
 }
 
 type GroupCountableConnection @doc(category: "Users") {
@@ -17804,20 +17830,6 @@ type Mutation {
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   refundReasonReferenceClear: RefundReasonReferenceTypeClear @doc(category: "Orders")
-
-  """
-  Calculates available delivery options for a checkout.
-  
-  Added in Saleor 3.23.
-  
-  Triggers the following webhook events:
-  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
-  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
-  """
-  deliveryOptionsCalculate(
-    """The ID of the checkout."""
-    id: ID!
-  ): DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   Manage shipping method's availability in channels. 
@@ -20573,7 +20585,7 @@ type Mutation {
   exportProducts(
     """Fields required to export product data."""
     input: ExportProductsInput!
-  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
+  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: [])
 
   """
   Export gift cards to csv file. 
@@ -20587,12 +20599,14 @@ type Mutation {
   exportGiftCards(
     """Fields required to export gift cards data."""
     input: ExportGiftCardsInput!
-  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
+  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: [])
 
   """
   Export voucher codes to csv/xlsx file.
   
-  Added in Saleor 3.18. 
+  Added in Saleor 3.18.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -20602,7 +20616,7 @@ type Mutation {
   exportVoucherCodes(
     """Fields required to export voucher codes."""
     input: ExportVoucherCodesInput!
-  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
+  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: [])
 
   """
   Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
@@ -20960,7 +20974,6 @@ type Mutation {
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
-  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutShippingMethodUpdate(
@@ -20975,14 +20988,13 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
+  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
 
   """
   Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
-  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutDeliveryMethodUpdate(
@@ -20994,7 +21006,7 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
+  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT])
 
   """
   Updates language code in the existing checkout.
@@ -22960,7 +22972,6 @@ enum ShopErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
-  PASSWORD_AUTH_RESTRICTION
 }
 
 input StaffNotificationRecipientInput {
@@ -23111,13 +23122,6 @@ input ShopSettingsInput {
   Added in Saleor 3.22.
   """
   preserveAllAddressFields: Boolean
-
-  """
-  Controls whether password-based authentication is allowed.
-  
-  Added in Saleor 3.23.
-  """
-  passwordLoginMode: PasswordLoginModeEnum
 
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean @deprecated(reason: "Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.")
@@ -23352,40 +23356,6 @@ type RefundReasonReferenceTypeClearError @doc(category: "Shop") {
 
   """Failed to clear refund reason reference type"""
   code: RefundSettingsErrorCode!
-}
-
-"""
-Calculates available delivery options for a checkout.
-
-Added in Saleor 3.23.
-
-Triggers the following webhook events:
-- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
-- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
-"""
-type DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
-  """List of the available deliveries."""
-  deliveries: [Delivery!]!
-  errors: [DeliveryOptionsCalculateError!]!
-}
-
-type DeliveryOptionsCalculateError @doc(category: "Shipping") {
-  """
-  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
-  """
-  field: String
-
-  """The error message."""
-  message: String
-
-  """The error code."""
-  code: DeliveryOptionsCalculateErrorCode!
-}
-
-enum DeliveryOptionsCalculateErrorCode @doc(category: "Shipping") {
-  GRAPHQL_ERROR
-  NOT_FOUND
-  INVALID
 }
 
 """
@@ -25051,7 +25021,7 @@ input ProductTypeInput @doc(category: "Products") {
   """
   Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
   """
-  hasVariants: Boolean @deprecated(reason: "The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.")
+  hasVariants: Boolean
 
   """List of attributes shared among all product variants."""
   productAttributes: [ID!]
@@ -26872,7 +26842,7 @@ input PageTypeUpdateInput @doc(category: "Pages") {
   """List of attribute IDs to be assigned to the page type."""
   addAttributes: [ID!]
 
-  """List of attribute IDs to be unassigned from the page type."""
+  """List of attribute IDs to be assigned to the page type."""
   removeAttributes: [ID!]
 }
 
@@ -30432,7 +30402,9 @@ input ExportGiftCardsInput @doc(category: "Gift cards") {
 """
 Export voucher codes to csv/xlsx file.
 
-Added in Saleor 3.18. 
+Added in Saleor 3.18.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -31016,10 +30988,9 @@ Updates the shipping method of the checkout.
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
-- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
+type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
   """An updated checkout."""
   checkout: Checkout
   checkoutErrors: [CheckoutError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -31031,10 +31002,9 @@ Updates the delivery method (shipping method or pick up point) of the checkout. 
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
-- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
+type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
   """An updated checkout."""
   checkout: Checkout
   errors: [CheckoutError!]!
@@ -31296,13 +31266,6 @@ input CheckoutSettingsInput @doc(category: "Checkout") {
   Added in Saleor 3.22.
   """
   automaticCompletion: CheckoutAutoCompleteInput
-
-  """
-  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
-  
-  Added in Saleor 3.23.
-  """
-  allowLegacyGiftCardUse: Boolean
 }
 
 input CheckoutAutoCompleteInput @doc(category: "Checkout") {
@@ -32227,10 +32190,10 @@ type AppInstall @doc(category: "Apps") {
 
 input AppInstallInput @doc(category: "Apps") {
   """Name of the app to install."""
-  appName: String!
+  appName: String
 
   """URL to app's manifest in JSON format."""
-  manifestUrl: String!
+  manifestUrl: String
 
   """Determine if app will be set active or not."""
   activateAfterInstallation: Boolean = true
@@ -32347,22 +32310,28 @@ type AppManifestExtension @doc(category: "Apps") {
   """URL of a view where extension's iframe is placed."""
   url: String!
 
+  """Place where given extension will be mounted."""
+  mount: AppExtensionMountEnum! @deprecated(reason: "Use `mountName` instead.")
+
+  """Type of way how app extension will be opened."""
+  target: AppExtensionTargetEnum! @deprecated(reason: "Use `targetName` instead.")
+
   """
-  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+  Name of the extension mount point in the dashboard. Replaces `mount`
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Value returned in UPPERCASE.
+  Name of the extension target in the dashboard. Replaces `target`
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  App extension settings.
+  JSON object with settings for this extension.
   
   Added in Saleor 3.22.
   """
@@ -32651,7 +32620,6 @@ enum AccountErrorCode @doc(category: "Users") {
   MISSING_CHANNEL_SLUG
   ACCOUNT_NOT_CONFIRMED
   LOGIN_ATTEMPT_DELAYED
-  DISABLED_AUTHENTICATION_METHOD
   UNKNOWN_IP_ADDRESS
 }
 

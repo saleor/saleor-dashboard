@@ -1,8 +1,10 @@
 import { useQuery as useApolloQuery } from "@apollo/client";
+import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { isMainSchema, isStagingSchema } from "@dashboard/graphql/schemaVersion";
 import {
-  type AvailableExternalAuthenticationsQuery,
+  type AvailableExternalAuthenticationsStagingQuery,
   PasswordLoginModeEnum,
-} from "@dashboard/graphql";
+} from "@dashboard/graphql/staging";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
@@ -14,6 +16,7 @@ import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
 import { availableExternalAuthentications as availableExternalAuthenticationsQuery } from "../queries";
+import { availableExternalAuthenticationsStaging as availableExternalAuthenticationsStagingQuery } from "../queries.staging";
 import { loginCallbackPath, type LoginUrlQueryParams } from "../urls";
 import { useUser } from "../useUser";
 
@@ -36,11 +39,22 @@ const LoginView = ({ params }: LoginViewProps) => {
 
   const isCallbackFlow = !!(params.code && params.state && isCallbackPath);
 
-  const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
+  const { data: externalAuthenticationsMain, loading: externalAuthenticationsLoadingMain } =
     useApolloQuery<AvailableExternalAuthenticationsQuery>(availableExternalAuthenticationsQuery, {
-      skip: isCallbackFlow,
+      skip: isCallbackFlow || isStagingSchema(),
       fetchPolicy: "network-only",
     });
+  const { data: externalAuthenticationsStaging, loading: externalAuthenticationsLoadingStaging } =
+    useApolloQuery<AvailableExternalAuthenticationsStagingQuery>(
+      availableExternalAuthenticationsStagingQuery,
+      {
+        skip: isCallbackFlow || isMainSchema(),
+        fetchPolicy: "network-only",
+      },
+    );
+  const externalAuthentications = externalAuthenticationsStaging ?? externalAuthenticationsMain;
+  const externalAuthenticationsLoading =
+    externalAuthenticationsLoadingMain || externalAuthenticationsLoadingStaging;
 
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
 
@@ -102,8 +116,11 @@ const LoginView = ({ params }: LoginViewProps) => {
       disabled={authenticating}
       externalAuthentications={externalAuthentications?.shop?.availableExternalAuthentications}
       passwordLoginEnabled={
-        externalAuthentications?.shop?.passwordLoginMode !== PasswordLoginModeEnum.DISABLED &&
-        externalAuthentications?.shop?.passwordLoginMode !== PasswordLoginModeEnum.CUSTOMERS_ONLY
+        isMainSchema() ||
+        (externalAuthenticationsStaging?.shop?.passwordLoginMode !==
+          PasswordLoginModeEnum.DISABLED &&
+          externalAuthenticationsStaging?.shop?.passwordLoginMode !==
+            PasswordLoginModeEnum.CUSTOMERS_ONLY)
       }
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}

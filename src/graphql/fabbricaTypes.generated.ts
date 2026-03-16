@@ -308,7 +308,6 @@ export type AccountErrorCode =
   | 'DELETE_OWN_ACCOUNT'
   | 'DELETE_STAFF_ACCOUNT'
   | 'DELETE_SUPERUSER_ACCOUNT'
-  | 'DISABLED_AUTHENTICATION_METHOD'
   | 'DUPLICATED_INPUT_ITEM'
   | 'GRAPHQL_ERROR'
   | 'INACTIVE'
@@ -1126,21 +1125,38 @@ export type AppExtension = Node & {
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String'];
   /**
-   * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+   * Place where given extension will be mounted.
+   * @deprecated Use `mountName` instead.
+   */
+  mount: AppExtensionMountEnum;
+  /**
+   * Name of the extension mount point in the dashboard. Replaces `mount`
    *
    * Added in Saleor 3.22.
    */
   mountName: Scalars['String'];
+  /**
+   * App extension options.
+   *
+   * Added in Saleor 3.22.
+   * @deprecated Use `settings` field instead.
+   */
+  options: Maybe<AppExtensionPossibleOptions>;
   /** List of the app extension's permissions. */
   permissions: Array<Permission>;
   /**
-   * App extension settings.
+   * App extension settings. Replaces `options` field.
    *
    * Added in Saleor 3.22.
    */
   settings: Scalars['JSON'];
   /**
-   * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+   * Type of way how app extension will be opened.
+   * @deprecated Use `targetName` instead.
+   */
+  target: AppExtensionTargetEnum;
+  /**
+   * Name of the extension target in the dashboard. Replaces `target`
    *
    * Added in Saleor 3.22.
    */
@@ -1168,11 +1184,21 @@ export type AppExtensionCountableEdge = {
 
 export type AppExtensionFilterInput = {
   /**
+   * DEPRECATED: Use `mountName` instead.
+   * @deprecated Field no longer supported
+   */
+  mount: InputMaybe<Array<AppExtensionMountEnum>>;
+  /**
    * Plain-text mount name (case insensitive)
    *
    * Added in Saleor 3.22.
    */
   mountName: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * DEPRECATED: Use `targetName` instead.
+   * @deprecated Field no longer supported
+   */
+  target: InputMaybe<AppExtensionTargetEnum>;
   /**
    * Plain-text target name (case insensitive)
    *
@@ -1180,6 +1206,93 @@ export type AppExtensionFilterInput = {
    */
   targetName: InputMaybe<Scalars['String']>;
 };
+
+/** All places where app extension can be mounted. */
+export type AppExtensionMountEnum =
+  | 'CATEGORY_DETAILS_MORE_ACTIONS'
+  | 'CATEGORY_OVERVIEW_CREATE'
+  | 'CATEGORY_OVERVIEW_MORE_ACTIONS'
+  | 'COLLECTION_DETAILS_MORE_ACTIONS'
+  | 'COLLECTION_DETAILS_WIDGETS'
+  | 'COLLECTION_OVERVIEW_CREATE'
+  | 'COLLECTION_OVERVIEW_MORE_ACTIONS'
+  | 'CUSTOMER_DETAILS_MORE_ACTIONS'
+  | 'CUSTOMER_DETAILS_WIDGETS'
+  | 'CUSTOMER_OVERVIEW_CREATE'
+  | 'CUSTOMER_OVERVIEW_MORE_ACTIONS'
+  | 'DISCOUNT_DETAILS_MORE_ACTIONS'
+  | 'DISCOUNT_OVERVIEW_CREATE'
+  | 'DISCOUNT_OVERVIEW_MORE_ACTIONS'
+  | 'DRAFT_ORDER_DETAILS_MORE_ACTIONS'
+  | 'DRAFT_ORDER_DETAILS_WIDGETS'
+  | 'DRAFT_ORDER_OVERVIEW_CREATE'
+  | 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS'
+  | 'GIFT_CARD_DETAILS_MORE_ACTIONS'
+  | 'GIFT_CARD_DETAILS_WIDGETS'
+  | 'GIFT_CARD_OVERVIEW_CREATE'
+  | 'GIFT_CARD_OVERVIEW_MORE_ACTIONS'
+  | 'MENU_DETAILS_MORE_ACTIONS'
+  | 'MENU_OVERVIEW_CREATE'
+  | 'MENU_OVERVIEW_MORE_ACTIONS'
+  | 'NAVIGATION_CATALOG'
+  | 'NAVIGATION_CUSTOMERS'
+  | 'NAVIGATION_DISCOUNTS'
+  | 'NAVIGATION_ORDERS'
+  | 'NAVIGATION_PAGES'
+  | 'NAVIGATION_TRANSLATIONS'
+  | 'ORDER_DETAILS_MORE_ACTIONS'
+  | 'ORDER_DETAILS_WIDGETS'
+  | 'ORDER_OVERVIEW_CREATE'
+  | 'ORDER_OVERVIEW_MORE_ACTIONS'
+  | 'PAGE_DETAILS_MORE_ACTIONS'
+  | 'PAGE_OVERVIEW_CREATE'
+  | 'PAGE_OVERVIEW_MORE_ACTIONS'
+  | 'PAGE_TYPE_DETAILS_MORE_ACTIONS'
+  | 'PAGE_TYPE_OVERVIEW_CREATE'
+  | 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS'
+  | 'PRODUCT_DETAILS_MORE_ACTIONS'
+  | 'PRODUCT_DETAILS_WIDGETS'
+  | 'PRODUCT_OVERVIEW_CREATE'
+  | 'PRODUCT_OVERVIEW_MORE_ACTIONS'
+  | 'TRANSLATIONS_MORE_ACTIONS'
+  | 'VOUCHER_DETAILS_MORE_ACTIONS'
+  | 'VOUCHER_DETAILS_WIDGETS'
+  | 'VOUCHER_OVERVIEW_CREATE'
+  | 'VOUCHER_OVERVIEW_MORE_ACTIONS';
+
+/** Represents the options for an app extension. */
+export type AppExtensionOptionsNewTab = {
+  __typename: 'AppExtensionOptionsNewTab';
+  /**
+   * Options controlling behavior of the NEW_TAB extension target
+   * @deprecated Use `settings` field directly.
+   */
+  newTabTarget: Maybe<NewTabTargetOptions>;
+};
+
+/** Represents the options for an app extension. */
+export type AppExtensionOptionsWidget = {
+  __typename: 'AppExtensionOptionsWidget';
+  /**
+   * Options for displaying a Widget
+   * @deprecated Use `settings` field directly.
+   */
+  widgetTarget: Maybe<WidgetTargetOptions>;
+};
+
+export type AppExtensionPossibleOptions = AppExtensionOptionsNewTab | AppExtensionOptionsWidget;
+
+/**
+ * All available ways of opening an app extension.
+ *
+ *     POPUP - app's extension will be mounted as a popup window
+ *     APP_PAGE - redirect to app's page
+ */
+export type AppExtensionTargetEnum =
+  | 'APP_PAGE'
+  | 'NEW_TAB'
+  | 'POPUP'
+  | 'WIDGET';
 
 /**
  * Fetch and validate manifest.
@@ -1227,9 +1340,9 @@ export type AppInstallInput = {
   /** Determine if app will be set active or not. */
   activateAfterInstallation: InputMaybe<Scalars['Boolean']>;
   /** Name of the app to install. */
-  appName: Scalars['String'];
+  appName: InputMaybe<Scalars['String']>;
   /** URL to app's manifest in JSON format. */
-  manifestUrl: Scalars['String'];
+  manifestUrl: InputMaybe<Scalars['String']>;
   /** List of permission code names to assign to this app. */
   permissions: InputMaybe<Array<PermissionEnum>>;
 };
@@ -1296,7 +1409,12 @@ export type AppManifestExtension = {
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String'];
   /**
-   * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+   * Place where given extension will be mounted.
+   * @deprecated Use `mountName` instead.
+   */
+  mount: AppExtensionMountEnum;
+  /**
+   * Name of the extension mount point in the dashboard. Replaces `mount`
    *
    * Added in Saleor 3.22.
    */
@@ -1304,13 +1422,18 @@ export type AppManifestExtension = {
   /** List of the app extension's permissions. */
   permissions: Array<Permission>;
   /**
-   * App extension settings.
+   * JSON object with settings for this extension.
    *
    * Added in Saleor 3.22.
    */
   settings: Scalars['JSON'];
   /**
-   * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+   * Type of way how app extension will be opened.
+   * @deprecated Use `targetName` instead.
+   */
+  target: AppExtensionTargetEnum;
+  /**
+   * Name of the extension target in the dashboard. Replaces `target`
    *
    * Added in Saleor 3.22.
    */
@@ -2195,7 +2318,7 @@ export type Attribute = Node & ObjectWithMetadata & {
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields: Maybe<Scalars['Metadata']>;
   /** Name of an attribute displayed in the interface. */
-  name: Scalars['String'];
+  name: Maybe<Scalars['String']>;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
   /**
@@ -2217,7 +2340,7 @@ export type Attribute = Node & ObjectWithMetadata & {
    */
   referenceTypes: Maybe<Array<ReferenceType>>;
   /** Internal representation of an attribute name. */
-  slug: Scalars['String'];
+  slug: Maybe<Scalars['String']>;
   /**
    * The position of the attribute in the storefront navigation (0 by default). Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
    * @deprecated Field no longer supported
@@ -2226,7 +2349,7 @@ export type Attribute = Node & ObjectWithMetadata & {
   /** Returns translated attribute fields for the given language code. */
   translation: Maybe<AttributeTranslation>;
   /** The attribute type. */
-  type: AttributeTypeEnum;
+  type: Maybe<AttributeTypeEnum>;
   /** The unit of attribute values. */
   unit: Maybe<MeasurementUnitsEnum>;
   /** Whether the attribute requires values to be passed or not. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES. */
@@ -4415,16 +4538,9 @@ export type Checkout = Node & ObjectWithMetadata & {
   /**
    * The delivery method selected for this checkout.
    *
-   * Added in Saleor 3.23.
-   */
-  delivery: Maybe<Delivery>;
-  /**
-   * The delivery method selected for this checkout.
-   *
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
    * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
-   * @deprecated Use `delivery` instead.
    */
   deliveryMethod: Maybe<DeliveryMethod>;
   /** The total discount applied to the checkout. Note: Only discount created via voucher are included in this field. */
@@ -4484,7 +4600,7 @@ export type Checkout = Node & ObjectWithMetadata & {
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
    * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
-   * @deprecated Use `delivery` instead.
+   * @deprecated Use `deliveryMethod` instead.
    */
   shippingMethod: Maybe<ShippingMethod>;
   /**
@@ -4901,7 +5017,6 @@ export type CheckoutCustomerNoteUpdate = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type CheckoutDeliveryMethodUpdate = {
@@ -5317,27 +5432,7 @@ export type CheckoutPaymentCreate = {
 };
 
 /** Represents an problem in the checkout. */
-export type CheckoutProblem = CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable | CheckoutProblemDeliveryMethodInvalid | CheckoutProblemDeliveryMethodStale;
-
-/**
- * Indicates that the selected delivery method is invalid.
- *
- * Added in Saleor 3.23.
- */
-export type CheckoutProblemDeliveryMethodInvalid = {
-  __typename: 'CheckoutProblemDeliveryMethodInvalid';
-  delivery: Delivery;
-};
-
-/**
- * Indicates that the delivery methods are stale.
- *
- * Added in Saleor 3.23.
- */
-export type CheckoutProblemDeliveryMethodStale = {
-  __typename: 'CheckoutProblemDeliveryMethodStale';
-  delivery: Delivery;
-};
+export type CheckoutProblem = CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable;
 
 /**
  * Remove a gift card or a voucher from a checkout.
@@ -5357,12 +5452,6 @@ export type CheckoutRemovePromoCode = {
 /** Represents the channel-specific checkout settings. */
 export type CheckoutSettings = {
   __typename: 'CheckoutSettings';
-  /**
-   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
-   *
-   * Added in Saleor 3.23.
-   */
-  allowLegacyGiftCardUse: Scalars['Boolean'];
   /**
    * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
    *
@@ -5386,12 +5475,6 @@ export type CheckoutSettings = {
 };
 
 export type CheckoutSettingsInput = {
-  /**
-   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
-   *
-   * Added in Saleor 3.23.
-   */
-  allowLegacyGiftCardUse: InputMaybe<Scalars['Boolean']>;
   /**
    * Settings for automatic completion of fully paid checkouts.
    *
@@ -5432,7 +5515,6 @@ export type CheckoutShippingAddressUpdate = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type CheckoutShippingMethodUpdate = {
@@ -5450,9 +5532,7 @@ export type CheckoutSortField =
   /** Sort checkouts by customer. */
   | 'CUSTOMER'
   /** Sort checkouts by payment. */
-  | 'PAYMENT'
-  /** Sort checkouts by rank. Note: This option is available only with the `search` filter. */
-  | 'RANK';
+  | 'PAYMENT';
 
 export type CheckoutSortingInput = {
   /** Specifies the direction in which to sort checkouts. */
@@ -7182,52 +7262,8 @@ export type DeletePrivateMetadata = {
   metadataErrors: Array<MetadataError>;
 };
 
-/**
- * Represents a delivery option for the checkout.
- *
- * Added in Saleor 3.23.
- */
-export type Delivery = {
-  __typename: 'Delivery';
-  /** The ID of the delivery. */
-  id: Scalars['ID'];
-  /** Shipping method represented by the delivery. */
-  shippingMethod: Maybe<ShippingMethod>;
-};
-
 /** Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise. */
 export type DeliveryMethod = ShippingMethod | Warehouse;
-
-/**
- * Calculates available delivery options for a checkout.
- *
- * Added in Saleor 3.23.
- *
- * Triggers the following webhook events:
- * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
- */
-export type DeliveryOptionsCalculate = {
-  __typename: 'DeliveryOptionsCalculate';
-  /** List of the available deliveries. */
-  deliveries: Array<Delivery>;
-  errors: Array<DeliveryOptionsCalculateError>;
-};
-
-export type DeliveryOptionsCalculateError = {
-  __typename: 'DeliveryOptionsCalculateError';
-  /** The error code. */
-  code: DeliveryOptionsCalculateErrorCode;
-  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
-  field: Maybe<Scalars['String']>;
-  /** The error message. */
-  message: Maybe<Scalars['String']>;
-};
-
-export type DeliveryOptionsCalculateErrorCode =
-  | 'GRAPHQL_ERROR'
-  | 'INVALID'
-  | 'NOT_FOUND';
 
 /** Represents digital content associated with a product variant. */
 export type DigitalContent = Node & ObjectWithMetadata & {
@@ -8150,6 +8186,8 @@ export type ExportScope =
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -9238,8 +9276,6 @@ export type GiftCardSortField =
   | 'CURRENT_BALANCE'
   /** Sort gift cards by product. */
   | 'PRODUCT'
-  /** Sort gift cards by rank. Note: This option is available only with the `search` filter. */
-  | 'RANK'
   /** Sort gift cards by used by. */
   | 'USED_BY';
 
@@ -9410,6 +9446,10 @@ export type GroupCountableEdge = {
   /** The item at the end of the edge. */
   node: Group;
 };
+
+export type HttpMethod =
+  | 'GET'
+  | 'POST';
 
 /** Thumbnail formats for icon images. */
 export type IconThumbnailFormatEnum =
@@ -12679,7 +12719,6 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
-   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
    * - CHECKOUT_UPDATED (async): A checkout was updated.
    */
   checkoutDeliveryMethodUpdate: Maybe<CheckoutDeliveryMethodUpdate>;
@@ -12747,7 +12786,6 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
-   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
    * - CHECKOUT_UPDATED (async): A checkout was updated.
    * @deprecated Use `checkoutDeliveryMethodUpdate` instead.
    */
@@ -12891,16 +12929,6 @@ export type Mutation = {
    */
   deleteWarehouse: Maybe<WarehouseDelete>;
   /**
-   * Calculates available delivery options for a checkout.
-   *
-   * Added in Saleor 3.23.
-   *
-   * Triggers the following webhook events:
-   * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
-   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
-   */
-  deliveryOptionsCalculate: Maybe<DeliveryOptionsCalculate>;
-  /**
    * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
    *
    * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -12979,7 +13007,6 @@ export type Mutation = {
    * Triggers the following webhook events:
    * - NOTIFY_USER (async): A notification for the exported file.
    * - GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.
-   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportGiftCards: Maybe<ExportGiftCards>;
   /**
@@ -12990,7 +13017,6 @@ export type Mutation = {
    * Triggers the following webhook events:
    * - NOTIFY_USER (async): A notification for the exported file.
    * - PRODUCT_EXPORT_COMPLETED (async): A notification for the exported file.
-   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportProducts: Maybe<ExportProducts>;
   /**
@@ -12998,11 +13024,12 @@ export type Mutation = {
    *
    * Added in Saleor 3.18.
    *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    *
    * Triggers the following webhook events:
    * - VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
-   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportVoucherCodes: Maybe<ExportVoucherCodes>;
   /** Prepare external authentication URL for user by custom plugin. */
@@ -15104,11 +15131,6 @@ export type MutationDeleteWarehouseArgs = {
 };
 
 
-export type MutationDeliveryOptionsCalculateArgs = {
-  id: Scalars['ID'];
-};
-
-
 export type MutationDigitalContentCreateArgs = {
   input: DigitalContentUploadInput;
   variantId: Scalars['ID'];
@@ -16483,6 +16505,16 @@ export type NavigationType =
   | 'MAIN'
   /** Secondary storefront navigation. */
   | 'SECONDARY';
+
+/** Represents the NEW_TAB target options for an app extension. */
+export type NewTabTargetOptions = {
+  __typename: 'NewTabTargetOptions';
+  /**
+   * HTTP method for New Tab target (GET or POST)
+   * @deprecated Use `settings` field directly.
+   */
+  method: HttpMethod;
+};
 
 /** An object with an ID */
 export type Node = {
@@ -19361,8 +19393,6 @@ export type PageSortField =
   | 'PUBLICATION_DATE'
   /** Sort pages by publication date. */
   | 'PUBLISHED_AT'
-  /** Sort pages by rank. Note: This option is available only with the `search` filter. */
-  | 'RANK'
   /** Sort pages by slug. */
   | 'SLUG'
   /** Sort pages by title. */
@@ -19715,7 +19745,7 @@ export type PageTypeUpdateInput = {
   addAttributes: InputMaybe<Array<Scalars['ID']>>;
   /** Name of the page type. */
   name: InputMaybe<Scalars['String']>;
-  /** List of attribute IDs to be unassigned from the page type. */
+  /** List of attribute IDs to be assigned to the page type. */
   removeAttributes: InputMaybe<Array<Scalars['ID']>>;
   /** Page type slug. */
   slug: InputMaybe<Scalars['String']>;
@@ -19793,20 +19823,6 @@ export type PasswordChange = {
   /** A user instance with a new password. */
   user: Maybe<User>;
 };
-
-/**
- * Controls whether password-based authentication is allowed.
- *
- *     ENABLED - any user can log in with a password. This is the default behavior.
- *     CUSTOMERS_ONLY - only customer users can log in with a password.
- *         If a staff user logs in with a password, they will be treated as a customer
- *         — the issued token will not contain any staff permissions.
- *     DISABLED - no user can log in with a password.
- */
-export type PasswordLoginModeEnum =
-  | 'CUSTOMERS_ONLY'
-  | 'DISABLED'
-  | 'ENABLED';
 
 /** Represents a payment of a given type. */
 export type Payment = Node & ObjectWithMetadata & {
@@ -22388,10 +22404,7 @@ export type ProductType = Node & ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_PRODUCTS.
    */
   availableAttributes: Maybe<AttributeCountableConnection>;
-  /**
-   * Whether the product type has variants.
-   * @deprecated This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
-   */
+  /** Whether the product type has variants. */
   hasVariants: Scalars['Boolean'];
   /** The ID of the product type. */
   id: Scalars['ID'];
@@ -22576,7 +22589,6 @@ export type ProductTypeEnum =
   | 'SHIPPABLE';
 
 export type ProductTypeFilterInput = {
-  /** @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting. */
   configurable: InputMaybe<ProductTypeConfigurable>;
   ids: InputMaybe<Array<Scalars['ID']>>;
   kind: InputMaybe<ProductTypeKindEnum>;
@@ -22587,10 +22599,7 @@ export type ProductTypeFilterInput = {
 };
 
 export type ProductTypeInput = {
-  /**
-   * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
-   * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
-   */
+  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
   hasVariants: InputMaybe<Scalars['Boolean']>;
   /** Determines if products are digital. */
   isDigital: InputMaybe<Scalars['Boolean']>;
@@ -23140,9 +23149,7 @@ export type ProductVariantChannelListing = Node & {
   /** The price of the variant. */
   price: Maybe<Money>;
   /**
-   * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
-   *
-   *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
+   * Prior price of the variant used for discount calculations.
    *
    * Added in Saleor 3.21.
    */
@@ -25140,7 +25147,7 @@ export type Query = {
 
 
 export type Query_EntitiesArgs = {
-  representations: Array<Scalars['_Any']>;
+  representations: InputMaybe<Array<InputMaybe<Scalars['_Any']>>>;
 };
 
 
@@ -26622,10 +26629,7 @@ export type ShippingMethod = Node & ObjectWithMetadata & {
   id: Scalars['ID'];
   /** Maximum delivery days for this shipping method. */
   maximumDeliveryDays: Maybe<Scalars['Int']>;
-  /**
-   * Maximum order price for this shipping method.
-   * @deprecated Field no longer supported
-   */
+  /** Maximum order price for this shipping method. */
   maximumOrderPrice: Maybe<Money>;
   /**
    * Maximum order weight for this shipping method.
@@ -26646,10 +26650,7 @@ export type ShippingMethod = Node & ObjectWithMetadata & {
   metafields: Maybe<Scalars['Metadata']>;
   /** Minimum delivery days for this shipping method. */
   minimumDeliveryDays: Maybe<Scalars['Int']>;
-  /**
-   * Minimal order price for this shipping method.
-   * @deprecated Field no longer supported
-   */
+  /** Minimal order price for this shipping method. */
   minimumOrderPrice: Maybe<Money>;
   /**
    * Minimum order weight for this shipping method.
@@ -27569,14 +27570,6 @@ export type Shop = ObjectWithMetadata & {
   metafields: Maybe<Scalars['Metadata']>;
   /** Shop's name. */
   name: Scalars['String'];
-  /**
-   * Controls whether password-based authentication is allowed.
-   *
-   * Added in Saleor 3.23.
-   *
-   * Requires one of the following permissions: MANAGE_SETTINGS.
-   */
-  passwordLoginMode: PasswordLoginModeEnum;
   /** List of available permissions. */
   permissions: Array<Permission>;
   /** List of possible phone prefixes. */
@@ -27585,6 +27578,8 @@ export type Shop = ObjectWithMetadata & {
    * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
    *
    * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
    */
   preserveAllAddressFields: Scalars['Boolean'];
   /** List of private metadata items. Requires staff permissions to access. */
@@ -27731,7 +27726,6 @@ export type ShopErrorCode =
   | 'GRAPHQL_ERROR'
   | 'INVALID'
   | 'NOT_FOUND'
-  | 'PASSWORD_AUTH_RESTRICTION'
   | 'REQUIRED'
   | 'UNIQUE';
 
@@ -27814,12 +27808,6 @@ export type ShopSettingsInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Controls whether password-based authentication is allowed.
-   *
-   * Added in Saleor 3.23.
-   */
-  passwordLoginMode: InputMaybe<PasswordLoginModeEnum>;
   /**
    * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
    *
@@ -30586,9 +30574,7 @@ export type UserSortField =
   /** Sort users by last name. */
   | 'LAST_NAME'
   /** Sort users by order count. */
-  | 'ORDER_COUNT'
-  /** Sort users by rank. Note: This option is available only with the `search` filter. */
-  | 'RANK';
+  | 'ORDER_COUNT';
 
 export type UserSortingInput = {
   /** Specifies the direction in which to sort users. */
@@ -32845,6 +32831,16 @@ export type WeightUnitsEnum =
   | 'LB'
   | 'OZ'
   | 'TONNE';
+
+/** Represents the WIDGET target options for an app extension. */
+export type WidgetTargetOptions = {
+  __typename: 'WidgetTargetOptions';
+  /**
+   * HTTP method for Widget target (GET or POST)
+   * @deprecated Use `settings` field directly.
+   */
+  method: HttpMethod;
+};
 
 /** _Entity union as defined by Federation spec. */
 export type _Entity = Address | App | Category | Collection | Group | Order | PageType | Product | ProductMedia | ProductType | ProductVariant | User;

@@ -6,6 +6,10 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
+    "AppExtensionPossibleOptions": [
+      "AppExtensionOptionsNewTab",
+      "AppExtensionOptionsWidget"
+    ],
     "AssignedAttribute": [
       "AssignedBooleanAttribute",
       "AssignedDateAttribute",
@@ -34,9 +38,7 @@
     ],
     "CheckoutProblem": [
       "CheckoutLineProblemInsufficientStock",
-      "CheckoutLineProblemVariantNotAvailable",
-      "CheckoutProblemDeliveryMethodInvalid",
-      "CheckoutProblemDeliveryMethodStale"
+      "CheckoutLineProblemVariantNotAvailable"
     ],
     "DeliveryMethod": [
       "ShippingMethod",

@@ -9,11 +9,9 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import {
-  PasswordLoginModeEnum,
-  type ShopErrorFragment,
-  type SiteSettingsQuery,
-} from "@dashboard/graphql";
+import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
+import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
+import { PasswordLoginModeEnum, type SiteSettingsStagingQuery } from "@dashboard/graphql/staging";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -53,7 +51,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
 interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop?: SiteSettingsQuery["shop"];
+  shop?: SiteSettingsQuery["shop"] | SiteSettingsStagingQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -102,7 +100,9 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
-    passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
+    passwordLoginMode:
+      (isStagingSchema() && (shop as SiteSettingsStagingQuery["shop"])?.passwordLoginMode) ||
+      PasswordLoginModeEnum.ENABLED,
   };
 
   return (

@@ -7,7 +7,6 @@ export const availableExternalAuthentications = gql`
         id
         name
       }
-      passwordLoginMode
     }
   }
 `;
