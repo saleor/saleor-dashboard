@@ -77,7 +77,7 @@ export interface AuthSDK {
    * Change the password of the logged in user.
    *
    * @param opts - Object with password and new password.
-   * @returns Errors if the passoword change has failed.
+   * @returns Errors if the password change has failed.
    */
   changePassword: (opts: ChangePasswordOpts) => Promise<ChangePasswordResult>;
   /**
@@ -98,8 +98,7 @@ export interface AuthSDK {
    */
   logout: (opts?: LogoutOpts) => Promise<LogoutResult>;
   /**
-   * Refresh JWT token. Mutation will try to take refreshToken from the function's arguments.
-   * If it fails, it will try to use refreshToken from the http-only cookie called refreshToken.
+   * Refresh JWT token. Reads the refresh token from storage.
    *
    * @param includeUser - Whether to fetch user. Default false.
    * @returns Authorization token.
@@ -131,17 +130,16 @@ export interface AuthSDK {
    */
   setPassword: (opts: SetPasswordOpts) => Promise<SetPasswordResult>;
   /**
-   * Verify JWT token.
+   * Verify JWT token. Reads the token from storage.
    *
-   * @param token - Token value.
    * @returns User assigned to token and the information if the token is valid or not.
    */
   verifyToken: () => Promise<VerifyTokenResult>;
   /**
    * Executing externalAuthenticationUrl mutation will prepare special URL which will redirect user to requested
-   * page after successfull authentication. After redirection state and code fields will be added to the URL.
+   * page after successful authentication. After redirection state and code fields will be added to the URL.
    *
-   * @param opts - Object withpluginId default value set as "mirumee.authentication.openidconnect" and input as
+   * @param opts - Object with pluginId default value set as "mirumee.authentication.openidconnect" and input as
    * JSON with redirectUrl - the URL where the user should be redirected after successful authentication.
    * @returns Authentication data and errors
    */
@@ -149,7 +147,7 @@ export interface AuthSDK {
   /**
    * The externalObtainAccessTokens mutation will generate requested access tokens.
    *
-   * @param opts - Object withpluginId default value set as "mirumee.authentication.openidconnect" and input as
+   * @param opts - Object with pluginId default value set as "mirumee.authentication.openidconnect" and input as
    * JSON with code - the authorization code received from the OAuth provider and state - the state value received
    * from the OAuth provider
    * @returns Login authentication data and errors

@@ -85,7 +85,7 @@ export type JWTToken = {
   is_staff: boolean;
 };
 
-// Meethods opts
+// Methods opts
 // Auth
 export type ChangePasswordOpts = MutationPasswordChangeArgs;
 export type LoginOpts = MutationTokenCreateArgs & { includeDetails?: boolean };
@@ -104,7 +104,7 @@ export type UpdateAccountOpts = MutationAccountUpdateArgs;
 export type UpdateAccountAddressOpts = MutationAccountAddressUpdateArgs;
 export type ConfirmAccountOpts = AccountConfirmMutationVariables;
 
-// Meethods results
+// Methods results
 // Auth
 export type ChangePasswordResult = FetchResult<PasswordChangeMutation>;
 export type ChangePasswordData = PasswordChangeMutation["passwordChange"];
