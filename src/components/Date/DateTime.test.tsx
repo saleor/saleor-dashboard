@@ -29,7 +29,7 @@ describe("DateTime", () => {
     );
 
     // Assert
-    expect(screen.getByText("Jan 15, 2024 2:30 PM")).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 2:30 PM")).toBeInTheDocument();
   });
 
   it("renders formatted datetime with America/New_York timezone in plain mode", () => {
@@ -44,7 +44,7 @@ describe("DateTime", () => {
     );
 
     // Assert — 14:30 UTC = 9:30 AM EST
-    expect(screen.getByText("Jan 15, 2024 9:30 AM")).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 9:30 AM")).toBeInTheDocument();
   });
 
   it("renders formatted datetime with Asia/Tokyo timezone in plain mode", () => {
@@ -59,7 +59,7 @@ describe("DateTime", () => {
     );
 
     // Assert — 14:30 UTC = 11:30 PM JST
-    expect(screen.getByText("Jan 15, 2024 11:30 PM")).toBeInTheDocument();
+    expect(screen.getByText("Jan 15, 2024, 11:30 PM")).toBeInTheDocument();
   });
 
   it("renders relative time in non-plain mode", () => {
