@@ -10,7 +10,15 @@ interface DateTimeProps {
   plain?: boolean;
 }
 
-const formatDateTime = (value: string, locale: string, tz?: string): string => {
+const formatDateTime = ({
+  value,
+  locale,
+  tz,
+}: {
+  value: string;
+  locale: string;
+  tz?: string;
+}): string => {
   const options: Intl.DateTimeFormatOptions = {
     dateStyle: "medium",
     timeStyle: "short",
@@ -29,7 +37,7 @@ export const DateTime = ({ date, plain }: DateTimeProps) => {
         <LocaleConsumer>
           {({ locale }) =>
             plain ? (
-              formatDateTime(date, locale, tz)
+              formatDateTime({ value: date, locale, tz })
             ) : (
               <Tooltip>
                 <Tooltip.Trigger>
@@ -37,7 +45,7 @@ export const DateTime = ({ date, plain }: DateTimeProps) => {
                 </Tooltip.Trigger>
                 <Tooltip.Content side="bottom">
                   <Tooltip.Arrow />
-                  {formatDateTime(date, locale, tz)}
+                  {formatDateTime({ value: date, locale, tz })}
                 </Tooltip.Content>
               </Tooltip>
             )

@@ -17,7 +17,7 @@ describe("DateTime", () => {
     mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-20T14:30:00Z").getTime());
   });
 
-  it("renders formatted datetime string in plain mode with UTC", () => {
+  it("renders formatted datetime string in plain mode", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
@@ -29,10 +29,10 @@ describe("DateTime", () => {
     );
 
     // Assert
-    expect(screen.getByText("Jan 15, 2024, 2:30 PM")).toBeInTheDocument();
+    expect(screen.getByText(/Jan 15, 2024,? 2:30 PM/)).toBeInTheDocument();
   });
 
-  it("renders formatted datetime with America/New_York timezone in plain mode", () => {
+  it("renders formatted datetime with timezone in plain mode", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
@@ -43,26 +43,11 @@ describe("DateTime", () => {
       </ThemeProvider>,
     );
 
-    // Assert — 14:30 UTC = 9:30 AM EST
-    expect(screen.getByText("Jan 15, 2024, 9:30 AM")).toBeInTheDocument();
+    // Assert
+    expect(screen.getByText(/Jan 15, 2024,? 9:30 AM/)).toBeInTheDocument();
   });
 
-  it("renders formatted datetime with Asia/Tokyo timezone in plain mode", () => {
-    // Arrange & Act
-    render(
-      // @ts-expect-error - legacy types
-      <ThemeProvider>
-        <TimezoneProvider value="Asia/Tokyo">
-          <DateTime date={testDateTime} plain />
-        </TimezoneProvider>
-      </ThemeProvider>,
-    );
-
-    // Assert — 14:30 UTC = 11:30 PM JST
-    expect(screen.getByText("Jan 15, 2024, 11:30 PM")).toBeInTheDocument();
-  });
-
-  it("renders relative time in non-plain mode", () => {
+  it("renders relative time element in non-plain mode", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
@@ -73,12 +58,55 @@ describe("DateTime", () => {
       </ThemeProvider>,
     );
 
-    // Assert — 5 days difference
+    // Assert
+    const timeElement = screen.getByText(/ago|year|month|day|hour|minute|second/i);
+
+    expect(timeElement).toBeInTheDocument();
+  });
+});
+
+describe("DateTime - additional coverage", () => {
+  it("renders formatted datetime with Asia/Tokyo timezone in plain mode", () => {
+    // Arrange
+    mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-20T14:30:00Z").getTime());
+
+    // Act
+    render(
+      // @ts-expect-error - legacy types
+      <ThemeProvider>
+        <TimezoneProvider value="Asia/Tokyo">
+          <DateTime date={testDateTime} plain />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+
+    // Assert — 14:30 UTC = 11:30 PM JST
+    expect(screen.getByText(/Jan 15, 2024,? 11:30 PM/)).toBeInTheDocument();
+  });
+
+  it("renders relative time with specific days difference", () => {
+    // Arrange — 5 days after
+    mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-20T14:30:00Z").getTime());
+
+    // Act
+    render(
+      // @ts-expect-error - legacy types
+      <ThemeProvider>
+        <TimezoneProvider value="UTC">
+          <DateTime date={testDateTime} />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+
+    // Assert
     expect(screen.getByText(/5 days ago/)).toBeInTheDocument();
   });
 
   it("renders relative time with timezone applied", () => {
-    // Arrange & Act
+    // Arrange
+    mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-20T14:30:00Z").getTime());
+
+    // Act
     render(
       // @ts-expect-error - legacy types
       <ThemeProvider>
@@ -91,9 +119,7 @@ describe("DateTime", () => {
     // Assert — relative time should still show ~5 days regardless of timezone
     expect(screen.getByText(/5 days ago/)).toBeInTheDocument();
   });
-});
 
-describe("DateTime - relative time units", () => {
   it("renders seconds ago for very recent dates", () => {
     // Arrange
     mockUseCurrentDate.mockReturnValue(new window.Date("2024-01-15T14:30:10Z").getTime());

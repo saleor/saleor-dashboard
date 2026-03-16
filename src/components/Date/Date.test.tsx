@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
@@ -18,7 +19,7 @@ describe("Date", () => {
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-10T00:00:00Z").getTime());
   });
 
-  it("renders plain date with timezone GMT-11", () => {
+  it("Render plain date with timezone GMT-11", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
@@ -28,12 +29,10 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
-
     // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
-
-  it("renders plain date with timezone GMT+13", () => {
+  it("Render plain date with timezone GMT+13", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
@@ -43,30 +42,43 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
-
     // Assert
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
-
-  it("renders humanized date with correct dateTime attribute", () => {
+  it("Render humanized date with timezone GMT-11", () => {
     // Arrange & Act
     render(
       // @ts-expect-error - legacy types
       <ThemeProvider>
-        <TimezoneProvider value="UTC">
+        <TimezoneProvider value="Pacific/Midway">
           <Date date={testDate} />
         </TimezoneProvider>
       </ThemeProvider>,
     );
-
     // Assert
-    const el = screen.queryByTestId<HTMLTimeElement>("dateTime");
-
-    expect(el?.dateTime).toEqual(testDate);
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
   });
-
-  it("renders relative time text like '3 days ago'", () => {
+  it("Render humanized date with timezone GMT+13", () => {
     // Arrange & Act
+    render(
+      // @ts-expect-error - legacy types
+      <ThemeProvider>
+        <TimezoneProvider value="Pacific/Tongatapu">
+          <Date date={testDate} />
+        </TimezoneProvider>
+      </ThemeProvider>,
+    );
+    // Assert
+    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
+  });
+});
+
+describe("Date - relative time units", () => {
+  it("renders relative time text like '3 days ago'", () => {
+    // Arrange
+    mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-10T00:00:00Z").getTime());
+
+    // Act
     render(
       // @ts-expect-error - legacy types
       <ThemeProvider>
@@ -79,9 +91,7 @@ describe("Date", () => {
     // Assert
     expect(screen.getByTestId("dateTime")).toHaveTextContent(/3 days ago/);
   });
-});
 
-describe("Date - relative time units", () => {
   it("renders 'a few seconds ago' for very recent dates", () => {
     // Arrange - 10 seconds after the date
     mockUseCurrentDate.mockReturnValue(new window.Date("2018-04-07T00:00:10Z").getTime());
