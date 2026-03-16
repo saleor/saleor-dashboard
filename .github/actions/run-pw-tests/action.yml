@@ -57,6 +57,10 @@ inputs:
     description: "Comma-separated app identifiers to test (optional, empty = all)"
     required: false
     default: ""
+  ARTIFACT_PREFIX:
+    description: "Prefix for artifact names to avoid collisions in matrix builds"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -125,6 +129,7 @@ runs:
         BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
         BUILD_URL: ${{ inputs.BUILD_URL }}
         APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
+        ARTIFACT_PREFIX: ${{ inputs.ARTIFACT_PREFIX }}
 
       run: |
         PROJECTS=($PROJECT)
@@ -132,8 +137,9 @@ runs:
         for PROJECT in "${PROJECTS[@]}"; do
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
-        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        PREFIX="${ARTIFACT_PREFIX:+${ARTIFACT_PREFIX}-}"
+        echo "reportName=${PREFIX}all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        echo "ctrfReport=${PREFIX}ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts

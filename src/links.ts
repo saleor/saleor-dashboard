@@ -1,7 +1,6 @@
 import { AppErrorCode } from "./graphql";
 
-export const TECHNICAL_HELP_CTA_URL =
-  "https://www.getclockwise.com/c/rian-dillon-saleor-io/short-call-with-saleor";
+export const TECHNICAL_HELP_CTA_URL = "https://calendar.app.google/wLzdMT5qvHKdG2At6";
 
 export const DOCS_ULRS = {
   TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION:
