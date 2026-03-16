@@ -27,7 +27,6 @@ import {
   type MutationRequestEmailChangeArgs,
   type MutationSetPasswordArgs,
   type MutationTokenCreateArgs,
-  type MutationTokenRefreshArgs,
   type PasswordChangeMutation,
   type RefreshTokenMutation,
   type RequestEmailChangeMutation,
@@ -85,7 +84,6 @@ export type JWTToken = {
 // Auth
 export type ChangePasswordOpts = MutationPasswordChangeArgs;
 export type LoginOpts = MutationTokenCreateArgs & { includeDetails?: boolean };
-export type RefreshTokenOpts = Pick<MutationTokenRefreshArgs, "refreshToken">;
 export type SetPasswordOpts = MutationSetPasswordArgs;
 export type GetExternalAuthUrlOpts = MutationExternalAuthenticationUrlArgs;
 export type GetExternalAccessTokenOpts = MutationExternalObtainAccessTokensArgs;
@@ -101,45 +99,28 @@ export type ConfirmAccountOpts = AccountConfirmMutationVariables;
 // Methods results
 // Auth
 export type ChangePasswordResult = FetchResult<PasswordChangeMutation>;
-export type ChangePasswordData = PasswordChangeMutation["passwordChange"];
 export type LoginResult = FetchResult<LoginMutation>;
 export type LoginData = LoginMutation["tokenCreate"];
 export type LogoutResult = FetchResult<ExternalLogoutMutation> | null;
-export type LogoutData = ExternalLogoutMutation["externalLogout"] | null;
 export type RefreshTokenResult = FetchResult<RefreshTokenMutation>;
-export type RefreshTokenData = RefreshTokenMutation["tokenRefresh"];
 export type SetPasswordResult = FetchResult<SetPasswordMutation>;
-export type SetPasswordData = SetPasswordMutation["setPassword"];
 export type VerifyTokenResult = FetchResult<VerifyTokenMutation>;
-export type VerifyTokenData = VerifyTokenMutation["tokenVerify"];
 export type GetExternalAuthUrlResult = FetchResult<ExternalAuthenticationUrlMutation>;
 export type GetExternalAuthUrlData = ExternalAuthenticationUrlMutation["externalAuthenticationUrl"];
 export type GetExternalAccessTokenResult = FetchResult<ExternalObtainAccessTokensMutation>;
 export type GetExternalAccessTokenData =
   ExternalObtainAccessTokensMutation["externalObtainAccessTokens"];
 export type RefreshExternalTokenResult = FetchResult<ExternalRefreshMutation>;
-export type RefreshExternalTokenData = ExternalRefreshMutation["externalRefresh"];
 export type VerifyExternalTokenResult = FetchResult<ExternalVerifyMutation>;
-export type VerifyExternalTokenData = ExternalVerifyMutation["externalVerify"];
 // User
 export type AccountDeleteResult = FetchResult<AccountDeleteMutation>;
-export type AccountDeleteData = AccountDeleteMutation["accountDelete"];
 export type AccountRequestDeletionResult = FetchResult<AccountRequestDeletionMutation>;
-export type AccountRequestDeletionData = AccountRequestDeletionMutation["accountRequestDeletion"];
 export type ConfirmEmailChangeResult = FetchResult<ConfirmEmailChangeMutation>;
-export type ConfirmEmailChangeData = ConfirmEmailChangeMutation["confirmEmailChange"];
 export type CreateAccountAddressResult = FetchResult<CreateAccountAddressMutation>;
-export type CreateAccountAddressData = CreateAccountAddressMutation["accountAddressCreate"];
 export type DeleteAccountAddressResult = FetchResult<DeleteAccountAddressMutation>;
-export type DeleteAccountAddressData = DeleteAccountAddressMutation["accountAddressDelete"];
 export type RequestEmailChangeResult = FetchResult<RequestEmailChangeMutation>;
-export type RequestEmailChangeData = RequestEmailChangeMutation["requestEmailChange"];
 export type SetAccountDefaultAddressResult = FetchResult<SetAccountDefaultAddressMutation>;
-export type SetAccountDefaultAddressData =
-  SetAccountDefaultAddressMutation["accountSetDefaultAddress"];
+
 export type UpdateAccountResult = FetchResult<AccountUpdateMutation>;
-export type UpdateAccountData = AccountUpdateMutation["accountUpdate"];
 export type UpdateAccountAddressResult = FetchResult<UpdateAccountAddressMutation>;
-export type UpdateAccountAddressData = UpdateAccountAddressMutation["accountAddressUpdate"];
 export type ConfirmAccountResult = FetchResult<AccountConfirmMutation>;
-export type ConfirmAccountData = AccountConfirmMutation["confirmAccount"];

@@ -2,10 +2,6 @@ import React from "react";
 
 import { type SaleorClient } from "../../core";
 
-export type SaleorContextType = {
-  client: SaleorClient;
-};
-
 export const SaleorContext = React.createContext<SaleorClient | null>(null);
 
 export const SaleorProvider: React.FC<React.PropsWithChildren<{ client: SaleorClient }>> = ({
