@@ -1,0 +1,53 @@
+src/graphql/unstable/index.ts
+  d11ac8a5922d6f52 2-3,5-6
+.env.template
+  d11ac8a5922d6f52 8,10
+Dockerfile
+  d11ac8a5922d6f52 15,18
+codegen-unstable.ts
+  d11ac8a5922d6f52 4,7-10,13,20,23,37,40,45,49
+src/config.ts
+  d11ac8a5922d6f52 21
+src/graphql/schemaVersion.ts
+  d11ac8a5922d6f52 5,7-8,11,14,18,22,24-25,29,31-32
+.github/workflows/deploy-master-staging.yaml
+  d11ac8a5922d6f52 30
+vite.config.js
+  d11ac8a5922d6f52 60,158
+graphql.config.ts
+  d11ac8a5922d6f52 10-11,15-16,24-25,27-30
+src/graphql/client.ts
+  d11ac8a5922d6f52 9-10,14-15
+docs/multi-schema.md
+  d11ac8a5922d6f52 3,20,38-39,99,213,231,233,267-268,332,351-352
+.prettierignore
+  d11ac8a5922d6f52 3-4
+package.json
+  d11ac8a5922d6f52 32-34,36-38
+types.d.ts
+  d11ac8a5922d6f52 13
+.knip.json
+  d11ac8a5922d6f52 45
+codegen-stable.ts
+  d11ac8a5922d6f52 4,10-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "475ccccdfc85e9041ba0c35d5c7aabf484de4d44",
+  "prompts": {
+    "d11ac8a5922d6f52": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f08c8d28-a62d-47ee-9b9d-da9c19f0d31b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 81,
+      "total_deletions": 81,
+      "accepted_lines": 79,
+      "overriden_lines": 0
+    }
+  }
+}
