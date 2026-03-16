@@ -1,0 +1,25 @@
+src/legacy-sdk/core/types.ts
+  c76221d51203e43f 88,107
+src/legacy-sdk/core/auth.ts
+  c76221d51203e43f 80,101,133,140,142,150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "2ab6c69a5994f367ba03673cfe279b0441ab9859",
+  "prompts": {
+    "c76221d51203e43f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9d43f19-2c48-4a60-bdff-a1ad868b222f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 10,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    }
+  }
+}
