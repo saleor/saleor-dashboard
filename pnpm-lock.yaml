@@ -99,9 +99,6 @@ importers:
       "@saleor/macaw-ui-next":
         specifier: npm:@saleor/macaw-ui@1.4.2
         version: "@saleor/macaw-ui@1.4.2(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.18.0(babel-plugin-macros@3.1.0))(lucide-react@0.555.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)"
-      "@saleor/sdk":
-        specifier: 0.6.0
-        version: 0.6.0(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))(graphql@16.11.0)(react@18.3.1)
       "@sentry/react":
         specifier: ^8.55.0
         version: 8.55.0(react@18.3.1)
@@ -4755,17 +4752,6 @@ packages:
     peerDependenciesMeta:
       lucide-react:
         optional: true
-
-  "@saleor/sdk@0.6.0":
-    resolution:
-      {
-        integrity: sha512-w3V2ak0jdhM12j3rjBRfu6fl2XTB6vrC8RfTEpfiebrBgl474pJDP4gjzw4abwUhL6T5Knh0Chygv5kp7Y6nng==,
-      }
-    engines: { node: ">=10" }
-    peerDependencies:
-      "@apollo/client": ^3.3.19
-      graphql: ^15.5.0
-      react: ^16.8.0 || ^17.0.0
 
   "@sentry-internal/browser-utils@8.55.0":
     resolution:
@@ -17134,16 +17120,6 @@ snapshots:
       lucide-react: 0.555.0(react@18.3.1)
     transitivePeerDependencies:
       - "@vanilla-extract/css"
-
-  "@saleor/sdk@0.6.0(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))(graphql@16.11.0)(react@18.3.1)":
-    dependencies:
-      "@apollo/client": 3.4.17(graphql@16.11.0)(react@18.3.1)
-      cross-fetch: 3.2.0
-      graphql: 16.11.0
-      jwt-decode: 3.1.2
-      react: 18.3.1
-    transitivePeerDependencies:
-      - encoding
 
   "@sentry-internal/browser-utils@8.55.0":
     dependencies:
