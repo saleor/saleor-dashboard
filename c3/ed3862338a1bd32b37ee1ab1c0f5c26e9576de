@@ -1,0 +1,29 @@
+src/storybook.d.ts
+  10e61378017d18b5 9
+src/components/AssignCategoryDialog/AssignCategoryDialog.stories.tsx
+  10e61378017d18b5 4,44-51,53-57,59-65,67-73,77-87,89-96,98-109,111-118,121-146,151-159,164-174
+.storybook/preview.tsx
+  10e61378017d18b5 7,14
+eslint.config.mjs
+  10e61378017d18b5 39-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "c3ed3862338a1bd32b37ee1ab1c0f5c26e9576de",
+  "prompts": {
+    "10e61378017d18b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "30b1a95e-50ae-4759-9a76-2a9c677f62f9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 201,
+      "total_deletions": 80,
+      "accepted_lines": 125,
+      "overriden_lines": 0
+    }
+  }
+}
