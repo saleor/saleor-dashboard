@@ -5,13 +5,18 @@ import { FormattedMessage } from "react-intl";
 
 import { mediaFallbackMessages } from "./messages";
 
-interface MediaWithFallbackProps {
-  src: string;
+interface MediaWithFallbackProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "alt"> {
+  // Extend to allow "null" because GraphQL can return it. It's suger to avoid extra mapping in parents
   alt?: string | null;
-  className?: string;
 }
 
-export const MediaWithFallback = ({ src, alt, className }: MediaWithFallbackProps) => {
+export const MediaWithFallback = ({
+  src,
+  alt,
+  className,
+  style,
+  ...rest
+}: MediaWithFallbackProps) => {
   const [loadingStatus, setLoadingStatus] = useState<"loading" | "loaded" | "error">("loading");
 
   const hasError = loadingStatus === "error";
@@ -46,7 +51,8 @@ export const MediaWithFallback = ({ src, alt, className }: MediaWithFallbackProp
         alt={alt ?? undefined}
         onLoad={() => setLoadingStatus("loaded")}
         onError={() => setLoadingStatus("error")}
-        style={isLoaded ? undefined : { display: "none" }}
+        style={isLoaded ? { ...style } : { ...style, display: "none" }}
+        {...rest}
       />
     </>
   );
