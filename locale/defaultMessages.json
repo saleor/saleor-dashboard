@@ -5015,10 +5015,6 @@
     "context": "dialog title for order line metadata",
     "string": "Order line metadata"
   },
-  "QSnh4Y": {
-    "context": "add button label",
-    "string": "Add"
-  },
   "QUyUJy": {
     "string": "Main Product"
   },
@@ -6040,10 +6036,6 @@
     "context": "notifier message",
     "string": "Note was added sucessfully"
   },
-  "WTj17Z": {
-    "context": "dialog title item discount",
-    "string": "Discount Item"
-  },
   "WUKB5Z": {
     "context": "Shown after verification with relative time",
     "string": "Verified {time}"
@@ -6383,10 +6375,6 @@
   "YEv+6G": {
     "context": "input helper text",
     "string": "Leaving this setting empty will mean that stock won’t be reserved"
-  },
-  "YFDAaX": {
-    "context": "dialog title order discount",
-    "string": "Discount this Order by:"
   },
   "YFQBs1": {
     "context": "product availability date label",
@@ -9056,10 +9044,6 @@
     "context": "metadata field name, header",
     "string": "Field"
   },
-  "nvSJNR": {
-    "context": "discount reason input lavel",
-    "string": "Reason"
-  },
   "nwcJVT": {
     "context": "When enabled, all transactions would require an additional step to be charged.",
     "string": "When enabled, all transactions would require an additional step to be charged. ({link})"
@@ -9138,6 +9122,10 @@
     "context": "order status",
     "string": "Ready to fulfill"
   },
+  "oO2fji": {
+    "context": "dialog title for order discount",
+    "string": "Order discount"
+  },
   "oQ27V4": {
     "context": "order history message",
     "string": "Order placed information was sent to customer"
@@ -9203,16 +9191,16 @@
     "context": "discount type",
     "string": "Order"
   },
-  "orderDiscount.subtitle": {
-    "context": "dialog subtitle for order discount",
-    "string": "Discount this order by a percentage or fixed amount"
-  },
   "orvpWh": {
     "string": "Go back"
   },
   "osPBn1": {
     "context": "currency filter label",
     "string": "Currency"
+  },
+  "ous0aA": {
+    "context": "dialog subtitle for order discount",
+    "string": "Discount this order by a percentage or fixed amount"
   },
   "owCz2y": {
     "context": "message when matrix view cannot be shown",
@@ -9399,10 +9387,6 @@
   "pzSF+b": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
-  },
-  "q/CdmL": {
-    "context": "dialog title for order discount",
-    "string": "Order discount"
   },
   "q/FMPM": {
     "context": "dialog header",
