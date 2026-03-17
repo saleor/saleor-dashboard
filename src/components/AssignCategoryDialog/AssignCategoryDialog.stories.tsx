@@ -50,7 +50,7 @@ const findDialog = async () => {
 };
 
 export const Default: Story = {
-  play: async ({ args }: { args: Props }) => {
+  play: async ({ args, loaded }: { args: Props; loaded: { categories: Props["categories"] } }) => {
     // Arrange — wait for dialog to render in portal
     const dialog = await findDialog();
     const rows = await dialog.findAllByTestId("dialog-row");
@@ -67,14 +67,20 @@ export const Default: Story = {
     const submittedItems = (args.onSubmit as ReturnType<typeof fn>).mock.calls[0][0];
 
     await expect(submittedItems).toHaveLength(2);
-    await expect(submittedItems[0]).toMatchObject({ id: "category-0", name: "Apparel" });
-    await expect(submittedItems[1]).toMatchObject({ id: "category-1", name: "Electronics" });
+    await expect(submittedItems[0]).toMatchObject({
+      id: loaded.categories![0].id,
+      name: "Apparel",
+    });
+    await expect(submittedItems[1]).toMatchObject({
+      id: loaded.categories![1].id,
+      name: "Electronics",
+    });
   },
 };
 
 export const SingleSelection: Story = {
   args: { selectionMode: "single" },
-  play: async ({ args }: { args: Props }) => {
+  play: async ({ args, loaded }: { args: Props; loaded: { categories: Props["categories"] } }) => {
     // Arrange
     const dialog = await findDialog();
     const rows = await dialog.findAllByTestId("dialog-row");
@@ -89,13 +95,16 @@ export const SingleSelection: Story = {
     const submittedItems = (args.onSubmit as ReturnType<typeof fn>).mock.calls[0][0];
 
     await expect(submittedItems).toHaveLength(1);
-    await expect(submittedItems[0]).toMatchObject({ id: "category-1", name: "Electronics" });
+    await expect(submittedItems[0]).toMatchObject({
+      id: loaded.categories![1].id,
+      name: "Electronics",
+    });
   },
 };
 
 export const SingleSelectionChange: Story = {
   args: { selectionMode: "single" },
-  play: async ({ args }: { args: Props }) => {
+  play: async ({ args, loaded }: { args: Props; loaded: { categories: Props["categories"] } }) => {
     // Arrange
     const dialog = await findDialog();
     const rows = await dialog.findAllByTestId("dialog-row");
@@ -112,7 +121,7 @@ export const SingleSelectionChange: Story = {
 
     await expect(submittedItems).toHaveLength(1);
     await expect(submittedItems[0]).toMatchObject({
-      id: "category-2",
+      id: loaded.categories![2].id,
       name: "Home & Garden",
     });
   },
