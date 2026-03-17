@@ -3,7 +3,7 @@ import { DiscountValueTypeEnum } from "@dashboard/graphql";
 import { type ChangeEvent as FormChangeEvent } from "@dashboard/hooks/useForm";
 import { toFixed } from "@dashboard/utils/toFixed";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import { type ChangeEvent } from "react";
+import { type ChangeEvent, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -32,16 +32,19 @@ export const DiscountFormFields = ({
 }: DiscountFormFieldsProps) => {
   const intl = useIntl();
 
-  const discountTypeChoices = [
-    {
-      label: intl.formatMessage(messages.percentageOption),
-      value: DiscountValueTypeEnum.PERCENTAGE,
-    },
-    {
-      label: intl.formatMessage(messages.fixedAmountOption),
-      value: DiscountValueTypeEnum.FIXED,
-    },
-  ];
+  const discountTypeChoices = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(messages.percentageOption),
+        value: DiscountValueTypeEnum.PERCENTAGE,
+      },
+      {
+        label: intl.formatMessage(messages.fixedAmountOption),
+        value: DiscountValueTypeEnum.FIXED,
+      },
+    ],
+    [intl],
+  );
 
   return (
     <Box display="flex" flexDirection="column" gap={3} overflow="hidden">

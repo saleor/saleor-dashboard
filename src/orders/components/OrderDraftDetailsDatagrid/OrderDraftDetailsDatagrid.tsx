@@ -151,7 +151,7 @@ export const OrderDraftDetailsDatagrid = ({
         },
       },
     ],
-    [intl, lines, onOrderLineRemove],
+    [intl, lines, onOrderLineRemove, setDiscountedLineId],
   );
   const handleDatagridChange = useCallback(
     async (

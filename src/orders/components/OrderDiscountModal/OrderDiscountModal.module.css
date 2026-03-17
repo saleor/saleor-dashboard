@@ -1,16 +1,3 @@
 .priceInput input {
   text-align: right;
 }
-
-.modalContent {
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.truncatedText {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-  max-width: 100%;
-}

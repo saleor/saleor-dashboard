@@ -1,5 +1,5 @@
 import { type MoneyFragment, type TaxedMoneyFragment } from "@dashboard/graphql";
-import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountModal/types";
 
 import { type OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 

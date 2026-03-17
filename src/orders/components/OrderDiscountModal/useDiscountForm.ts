@@ -4,10 +4,10 @@ import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
 import { messages } from "./messages";
+import { type OrderDiscountCommonInput } from "./types";
 
-const numbersRegex = /([0-9]+\.?[0-9]*)$/;
+const numbersRegex = /^[0-9]*\.?[0-9]+$/;
 
 interface UseDiscountFormProps {
   maxPrice: MoneyFragment;
@@ -127,7 +127,7 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
     setValueErrorMsg(null);
   }, [getInitialData]);
 
-  useEffect(resetForm, [existingDiscount?.value, existingDiscount?.reason, isOpen]);
+  useEffect(resetForm, [resetForm, existingDiscount?.value, existingDiscount?.reason, isOpen]);
 
   const handleValueConversion = useCallback(() => {
     if (getParsedDiscountValue() === 0) {
