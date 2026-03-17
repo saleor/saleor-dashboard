@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -87,7 +88,12 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
                   onClick={onRowClick(mediaObj.id)}
                   key={mediaObj.id}
                 >
-                  <img className={classes.image} src={mediaUrl} alt={mediaObj.alt} />
+                  <MediaWithFallback
+                    key={mediaUrl}
+                    className={classes.image}
+                    src={mediaUrl}
+                    alt={mediaObj.alt}
+                  />
                 </div>
               );
             })}

@@ -1,5 +1,6 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -144,7 +145,7 @@ const MediaTile = (props: MediaTileProps) => {
           </div>
         )}
       </div>
-      <img className={classes.media} src={mediaUrl} alt={media.alt!} />
+      <MediaWithFallback key={mediaUrl} className={classes.media} src={mediaUrl} alt={media.alt} />
     </div>
   );
 };
