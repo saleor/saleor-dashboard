@@ -208,6 +208,7 @@ export const OrderDraftDetailsDatagrid = ({
         menuItems={getMenuItems(index)}
         onShowMetadata={() => onOrderLineShowMetadata(lines[index].id)}
         intl={intl}
+        showDiscountRipple={index === 0}
       />
     ),
     [getMenuItems, intl, lines, onOrderLineShowMetadata],
