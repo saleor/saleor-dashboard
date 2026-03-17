@@ -479,7 +479,7 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4
       vite:
-        specifier: ^7.0.0
+        specifier: 7.3.1
         version: 7.3.1(@types/node@20.19.32)(jiti@2.6.1)(terser@5.46.0)
       vite-plugin-html:
         specifier: ^3.2.2
