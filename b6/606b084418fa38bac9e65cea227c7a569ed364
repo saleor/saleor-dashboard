@@ -1,0 +1,25 @@
+AGENTS.md
+  911614ed34b46011 183-186
+pnpm-workspace.yaml
+  911614ed34b46011 47,58-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "b6606b084418fa38bac9e65cea227c7a569ed364",
+  "prompts": {
+    "911614ed34b46011": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "185eab31-335e-41e7-8fce-f4eb26ec5cba",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 22,
+      "accepted_lines": 7,
+      "overriden_lines": 0
+    }
+  }
+}
