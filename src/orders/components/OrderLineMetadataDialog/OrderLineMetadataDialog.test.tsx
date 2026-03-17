@@ -107,9 +107,9 @@ describe("OrderLineMetadataDialog", () => {
     );
 
     // Assert
-    expect(screen.queryByText(mockData.quantity)).toBeInTheDocument();
-    expect(screen.queryByText(mockData.variant.name)).toBeInTheDocument();
-    expect(screen.queryByText(mockData.productSku)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(mockData.quantity.toString()))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(mockData.variant.name))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(mockData.productSku))).toBeInTheDocument();
   });
 
   it("renders product thumbnail correctly", () => {

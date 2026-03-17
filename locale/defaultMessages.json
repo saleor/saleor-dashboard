@@ -490,6 +490,10 @@
   "0ix6PR": {
     "string": "Order cancelled"
   },
+  "0j4/kV": {
+    "context": "discount reason input label",
+    "string": "Reason"
+  },
   "0kPdlb": {
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
@@ -1648,6 +1652,9 @@
   "7ejEbB": {
     "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
     "string": "Authorized"
+  },
+  "7gXPhB": {
+    "string": "Qty"
   },
   "7hNjaI": {
     "context": "button",
@@ -3461,6 +3468,9 @@
   "HoBGng": {
     "string": "Voucher created"
   },
+  "HpxNPd": {
+    "string": "Add discount"
+  },
   "HqRNN8": {
     "string": "Support"
   },
@@ -3537,10 +3547,6 @@
   },
   "IH47ID": {
     "string": "Use button above to add new product variants"
-  },
-  "IHTyjM": {
-    "context": "orderLine.variant.name, subheader, order line metadata dialog",
-    "string": "Variant"
   },
   "IKvOK+": {
     "context": "Amount error message",
@@ -4414,10 +4420,6 @@
   "NJ9ngY": {
     "string": "Visible Action"
   },
-  "NL5C12": {
-    "context": "orderLine.quantity, subheader, oredr line metadata dialog",
-    "string": "Qty"
-  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -5009,6 +5011,10 @@
   "QOm7+P": {
     "string": "Create new order"
   },
+  "QSTD5z": {
+    "context": "dialog title for order line metadata",
+    "string": "Order line metadata"
+  },
   "QSnh4Y": {
     "context": "add button label",
     "string": "Add"
@@ -5325,6 +5331,10 @@
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "SIrDwV": {
+    "context": "dialog title for order line discount",
+    "string": "Line discount"
   },
   "SKFr04": {
     "string": "Attribute not found."
@@ -7881,10 +7891,6 @@
     "context": "times voucher used",
     "string": "Used"
   },
-  "h6MWxB": {
-    "context": "orderLine.productSku, subheader, order line metadata dialog",
-    "string": "SKU"
-  },
   "h75GAF": {
     "context": "voucher",
     "string": "Times used"
@@ -9197,6 +9203,10 @@
     "context": "discount type",
     "string": "Order"
   },
+  "orderDiscount.subtitle": {
+    "context": "dialog subtitle for order discount",
+    "string": "Discount this order by a percentage or fixed amount"
+  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -9389,6 +9399,10 @@
   "pzSF+b": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
+  },
+  "q/CdmL": {
+    "context": "dialog title for order discount",
+    "string": "Order discount"
   },
   "q/FMPM": {
     "context": "dialog header",

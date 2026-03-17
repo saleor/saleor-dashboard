@@ -29,6 +29,7 @@ export const OrderDraftDetailsRowActions = ({
       className={classes.rowAction}
       style={{
         boxShadow: rightColumnBoxShadow,
+        gridTemplateColumns: "1fr auto 1fr",
       }}
     >
       <IconButton

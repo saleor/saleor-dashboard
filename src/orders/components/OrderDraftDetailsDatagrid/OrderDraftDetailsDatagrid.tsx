@@ -12,11 +12,14 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import { OrderLineDiscountModal } from "@dashboard/orders/components/OrderDiscountModal/OrderLineDiscountModal";
+import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
 import { Box, sprinkles } from "@saleor/macaw-ui-next";
-import { ExternalLink, Trash2 } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { ExternalLink, Percent, Trash2 } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -44,6 +47,12 @@ export const OrderDraftDetailsDatagrid = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DRAFT_DETAILS_LIST);
+  const getDiscountProviderValues = useOrderLineDiscountContext();
+  const [discountedLineId, setDiscountedLineId] = useState<string | null>(null);
+
+  const discountProviderValues = discountedLineId
+    ? getDiscountProviderValues(discountedLineId)
+    : null;
   const emptyColumn = useEmptyColumn();
   const orderDraftDetailsStaticColumns = useMemo(
     () => orderDraftDetailsStaticColumnsAdapter(emptyColumn, intl),
@@ -98,6 +107,31 @@ export const OrderDraftDetailsDatagrid = ({
       },
       {
         label: "",
+        Icon: (() => {
+          const line = lines[index];
+          const hasDiscount =
+            line?.unitPrice?.gross?.amount !== line?.undiscountedUnitPrice?.gross?.amount;
+
+          return (
+            <Box
+              data-test-id="edit-order-line-discount"
+              as="span"
+              display="flex"
+              alignItems="center"
+              __marginLeft="-2px"
+              gap={2}
+            >
+              <Percent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+              {intl.formatMessage(hasDiscount ? messages.editDiscount : messages.addDiscount)}
+            </Box>
+          );
+        })(),
+        onSelect: () => {
+          setDiscountedLineId(lines[index].id);
+        },
+      },
+      {
+        label: "",
         Icon: (
           <Box
             data-test-id="delete-order-line"
@@ -139,6 +173,35 @@ export const OrderDraftDetailsDatagrid = ({
     [datagrid.changes, lines, onOrderLineChange],
   );
 
+  const handleDiscountConfirm = useCallback(
+    async (discount: Parameters<typeof discountProviderValues.addOrderLineDiscount>[0]) => {
+      await discountProviderValues?.addOrderLineDiscount(discount);
+      setDiscountedLineId(null);
+    },
+    [discountProviderValues],
+  );
+
+  const handleDiscountRemove = useCallback(async () => {
+    await discountProviderValues?.removeOrderLineDiscount();
+    setDiscountedLineId(null);
+  }, [discountProviderValues]);
+
+  const handleDiscountClose = useCallback(() => {
+    setDiscountedLineId(null);
+  }, []);
+
+  const handleRowClick = useCallback(
+    (item: Item) => {
+      const [columnIndex, rowIndex] = item;
+      const column = visibleColumns[columnIndex];
+
+      if (column?.id === "price" && lines[rowIndex]) {
+        setDiscountedLineId(lines[rowIndex].id);
+      }
+    },
+    [visibleColumns, lines],
+  );
+
   const renderRowActions = useCallback(
     (index: number) => (
       <OrderDraftDetailsRowActions
@@ -167,6 +230,7 @@ export const OrderDraftDetailsDatagrid = ({
         selectionActions={() => null}
         onColumnResize={handlers.onResize}
         onColumnMoved={handlers.onMove}
+        onRowClick={handleRowClick}
         recentlyAddedColumn={recentlyAddedColumn}
         renderColumnPicker={() => (
           <ColumnPicker
@@ -179,6 +243,31 @@ export const OrderDraftDetailsDatagrid = ({
         renderRowActions={renderRowActions}
         rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
       />
+      {discountProviderValues && discountedLineId && (
+        <OrderLineDiscountModal
+          open={!!discountedLineId}
+          maxPrice={discountProviderValues.unitUndiscountedPrice}
+          lineData={(() => {
+            const line = lines.find(l => l.id === discountedLineId);
+
+            return line
+              ? {
+                  productName: line.productName,
+                  variantName: line.variant?.name,
+                  productSku: line.productSku,
+                  quantity: line.quantity,
+                  thumbnail: line.thumbnail,
+                }
+              : undefined;
+          })()}
+          existingDiscount={discountProviderValues.orderLineDiscount}
+          confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
+          removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}
+          onConfirm={handleDiscountConfirm}
+          onRemove={handleDiscountRemove}
+          onClose={handleDiscountClose}
+        />
+      )}
     </DatagridChangeStateContext.Provider>
   );
 };

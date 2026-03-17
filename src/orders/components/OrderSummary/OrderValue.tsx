@@ -9,21 +9,14 @@ import { type OrderDiscountContextConsumerProps } from "@dashboard/products/comp
 import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Popover, type PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import { ORDER_DISCOUNT, type OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
+import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 import { OrderValueHeader } from "./OrderValueHeader";
-
-const emptyDiscount: OrderDiscountCommonInput = {
-  value: 0,
-  reason: "",
-  calculationMode: DiscountValueTypeEnum.PERCENTAGE,
-};
 
 const messages = defineMessages({
   discount: {
@@ -300,38 +293,11 @@ export const OrderValue = (props: Props): ReactNode => {
     if (!hasDiscount) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={discountAmountTitle}>
-          <Popover
-            onOpenChange={val => {
-              if (!val) {
-                editableProps?.closeDialog();
-              }
-            }}
-            open={editableProps?.isDialogOpen}
-          >
-            <Popover.Trigger>
-              <Text as="span">
-                <ButtonLink onClick={editableProps?.openDialog}>
-                  {intl.formatMessage(messages.addDiscount)}
-                </ButtonLink>
-              </Text>
-            </Popover.Trigger>
-            <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
-              <Box boxShadow="defaultOverlay">
-                {editableProps && (
-                  <OrderDiscountCommonModal
-                    modalType={ORDER_DISCOUNT}
-                    existingDiscount={editableProps.orderDiscount ?? emptyDiscount}
-                    maxPrice={editableProps.undiscountedPrice}
-                    onConfirm={editableProps.addOrderDiscount}
-                    onClose={editableProps.closeDialog}
-                    onRemove={editableProps.removeOrderDiscount}
-                    confirmStatus={editableProps.orderDiscountAddStatus}
-                    removeStatus={editableProps.orderDiscountRemoveStatus}
-                  />
-                )}
-              </Box>
-            </Popover.Content>
-          </Popover>
+          <Text as="span">
+            <ButtonLink onClick={editableProps?.openDialog}>
+              {intl.formatMessage(messages.addDiscount)}
+            </ButtonLink>
+          </Text>
         </OrderSummaryListItem>
       );
     }
@@ -343,42 +309,34 @@ export const OrderValue = (props: Props): ReactNode => {
     return (
       <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
         {intl.formatMessage(messages.discount)}{" "}
-        <Popover
-          onOpenChange={val => {
-            if (!val) {
-              editableProps?.closeDialog();
-            }
-          }}
-          open={editableProps?.isDialogOpen}
-        >
-          <Popover.Trigger>
-            <Text as="span">
-              <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
-                {discountDisplayValue}
-              </ButtonLink>
-            </Text>
-          </Popover.Trigger>
-          <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
-            <Box boxShadow="defaultOverlay">
-              {editableProps && (
-                <OrderDiscountCommonModal
-                  modalType={ORDER_DISCOUNT}
-                  existingDiscount={editableProps.orderDiscount ?? emptyDiscount}
-                  maxPrice={editableProps.undiscountedPrice}
-                  onConfirm={editableProps.addOrderDiscount}
-                  onClose={editableProps.closeDialog}
-                  onRemove={editableProps.removeOrderDiscount}
-                  confirmStatus={editableProps.orderDiscountAddStatus}
-                  removeStatus={editableProps.orderDiscountRemoveStatus}
-                />
-              )}
-            </Box>
-          </Popover.Content>
-        </Popover>{" "}
+        <Text as="span">
+          <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
+            {discountDisplayValue}
+          </ButtonLink>
+        </Text>{" "}
         <Text color="default2" fontWeight="medium" size={3}>
           (applied)
         </Text>
       </OrderSummaryListItem>
+    );
+  };
+
+  const renderOrderDiscountModal = () => {
+    if (!editableProps) {
+      return null;
+    }
+
+    return (
+      <OrderDiscountModal
+        open={editableProps.isDialogOpen}
+        existingDiscount={editableProps.orderDiscount ?? undefined}
+        maxPrice={editableProps.undiscountedPrice}
+        onConfirm={editableProps.addOrderDiscount}
+        onClose={editableProps.closeDialog}
+        onRemove={editableProps.removeOrderDiscount}
+        confirmStatus={editableProps.orderDiscountAddStatus}
+        removeStatus={editableProps.orderDiscountRemoveStatus}
+      />
     );
   };
 
@@ -507,6 +465,8 @@ export const OrderValue = (props: Props): ReactNode => {
           </OrderSummaryListItem>
         )}
       </Box>
+
+      {renderOrderDiscountModal()}
     </Box>
   );
 };
