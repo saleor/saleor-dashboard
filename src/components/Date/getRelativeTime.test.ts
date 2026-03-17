@@ -16,10 +16,10 @@ describe("getRelativeTime", () => {
       expect(result).toBe("10 seconds ago");
     });
 
-    it("returns 'now' for no difference", () => {
+    it("returns 'now' for 0-4 second difference", () => {
       // Arrange
       const date = "2024-01-15T12:00:00Z";
-      const now = toMs("2024-01-15T12:00:00Z");
+      const now = toMs("2024-01-15T12:00:03Z");
 
       // Act
       const result = getRelativeTime(date, now, "en");

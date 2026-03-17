@@ -24,5 +24,10 @@ export function getRelativeTime(dateValue: string, nowMs: number, locale: string
     }
   }
 
+  // For very recent changes (0-4 seconds), show "now" for a nicer UI
+  if (absDiff <= 4) {
+    return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(0, "second");
+  }
+
   return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(diffSeconds, "second");
 }
