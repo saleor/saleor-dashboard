@@ -1,0 +1,23 @@
+.storybook/main.ts
+  bedf02a90f0a185b 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "bc4a34fe558a464543fd065e10da8a4c125a70a6",
+  "prompts": {
+    "bedf02a90f0a185b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2bae7bd7-c03c-400b-a641-67af63189843",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
