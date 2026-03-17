@@ -4,11 +4,14 @@ import "@saleor/macaw-ui-next/style";
 import type { Preview } from "@storybook/react-vite";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
+import { configure } from "storybook/test";
 import { LocaleContext } from "../src/components/Locale/Locale";
 import { apolloClient } from "../src/graphql/client";
 import "../src/index.css";
 import { ThemeProvider } from "../src/theme";
 import { paletteOverrides, themeOverrides } from "../src/themeOverrides";
+
+configure({ testIdAttribute: "data-test-id" });
 
 const preview: Preview = {
   decorators: [

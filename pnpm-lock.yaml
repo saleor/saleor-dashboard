@@ -322,6 +322,9 @@ importers:
       "@sentry/cli":
         specifier: ^2.58.2
         version: 2.58.4
+      "@storybook/addon-mcp":
+        specifier: ^0.4.1
+        version: 0.4.1(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)
       "@storybook/react-vite":
         specifier: 10.2.16
         version: 10.2.16(esbuild@0.27.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.4.1(@types/node@20.19.32)(jiti@2.6.1)(terser@5.46.0))
@@ -4999,6 +5002,24 @@ packages:
         integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==,
       }
 
+  "@standard-schema/spec@1.1.0":
+    resolution:
+      {
+        integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==,
+      }
+
+  "@storybook/addon-mcp@0.4.1":
+    resolution:
+      {
+        integrity: sha512-LJpzwFeS1Mw/k16T3NE1MuKa4EaJXGwt5kcVgupMnFa0Y3jbCCf2Hw9DjI6tQqc5w6hJG9DOA+YX9Qd+Pc2PZQ==,
+      }
+    peerDependencies:
+      "@storybook/addon-vitest": ^9.1.16 || ^10.0.0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0
+      storybook: ^9.1.16 || ^10.0.0 || ^10.1.0-0 || ^10.2.0-0 || ^10.3.0-0 || ^10.4.0-0
+    peerDependenciesMeta:
+      "@storybook/addon-vitest":
+        optional: true
+
   "@storybook/builder-vite@10.2.16":
     resolution:
       {
@@ -5043,6 +5064,12 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  "@storybook/mcp@0.6.1":
+    resolution:
+      {
+        integrity: sha512-fdVJ3Br9/7Taj/sMCeM0jXM5rwdBbsRoh+nz8krMJj+Cj1vzfXRewkeadjt1Bg0q5UcV/0CSOHwj0QI8S5TIgA==,
+      }
 
   "@storybook/react-dom-shim@10.2.16":
     resolution:
@@ -5273,6 +5300,35 @@ packages:
     engines: { node: ">=18" }
     peerDependencies:
       graphql: ^16.0.0
+
+  "@tmcp/adapter-valibot@0.1.5":
+    resolution:
+      {
+        integrity: sha512-9P2wrVYPngemNK0UvPb/opC722/jfd09QxXmme1TRp/wPsl98vpSk/MXt24BCMqBRv4Dvs0xxJH4KHDcjXW52Q==,
+      }
+    peerDependencies:
+      tmcp: ^1.17.0
+      valibot: ^1.1.0
+
+  "@tmcp/session-manager@0.2.1":
+    resolution:
+      {
+        integrity: sha512-DOGy9LfufXCy1wfpGHZ6qPSDQtRnTVwOb71+41ffovTqzLMZlK3iLK/LIsekHxIiku+iIAUiqEKN+DHbqEm8IA==,
+      }
+    peerDependencies:
+      tmcp: ^1.16.3
+
+  "@tmcp/transport-http@0.8.5":
+    resolution:
+      {
+        integrity: sha512-qQLqiCTtbxtTSswqOn/782df7O57RxI/yLUtCDQ++kHEhbmDUc8glmmtGJ3mrb7yPSPoM5VF2Pc2Q5cA6quzLA==,
+      }
+    peerDependencies:
+      "@tmcp/auth": ^0.3.3 || ^0.4.0
+      tmcp: ^1.18.0
+    peerDependenciesMeta:
+      "@tmcp/auth":
+        optional: true
 
   "@toast-ui/editor@3.1.10":
     resolution:
@@ -5872,6 +5928,14 @@ packages:
     peerDependencies:
       react: ">=16.9.0"
       react-dom: ">=16.9.0"
+
+  "@valibot/to-json-schema@1.5.0":
+    resolution:
+      {
+        integrity: sha512-GE7DmSr1C2UCWPiV0upRH6mv0cCPsqYGs819fb6srCS1tWhyXrkGGe+zxUiwzn/L1BOfADH4sNjY/YHCuP8phQ==,
+      }
+    peerDependencies:
+      valibot: ^1.2.0
 
   "@vanilla-extract/css-utils@0.1.6":
     resolution:
@@ -8130,6 +8194,12 @@ packages:
       jiti:
         optional: true
 
+  esm-env@1.2.2:
+    resolution:
+      {
+        integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==,
+      }
+
   espree@10.4.0:
     resolution:
       {
@@ -10056,6 +10126,12 @@ packages:
         integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==,
       }
 
+  json-rpc-2.0@1.7.1:
+    resolution:
+      {
+        integrity: sha512-JqZjhjAanbpkXIzFE7u8mE/iFblawwlXtONaCvRqI+pyABVz7B4M1EUNpyVW+dZjqgQ2L5HFmZCmOCgUKm00hg==,
+      }
+
   json-schema-traverse@0.4.1:
     resolution:
       {
@@ -11143,6 +11219,12 @@ packages:
         integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==,
       }
     engines: { node: ">=12" }
+
+  picoquery@2.5.0:
+    resolution:
+      {
+        integrity: sha512-j1kgOFxtaCyoFCkpoYG2Oj3OdGakadO7HZ7o5CqyRazlmBekKhbDoUnNnXASE07xSY4nDImWZkrZv7toSxMi/g==,
+      }
 
   pirates@4.0.7:
     resolution:
@@ -12336,6 +12418,12 @@ packages:
         integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==,
       }
 
+  sqids@0.3.0:
+    resolution:
+      {
+        integrity: sha512-lOQK1ucVg+W6n3FhRwwSeUijxe93b51Bfz5PMRMihVf1iVkl82ePQG7V5vwrhzB11v0NtsR25PSZRGiSomJaJw==,
+      }
+
   stack-utils@2.0.6:
     resolution:
       {
@@ -12683,6 +12771,12 @@ packages:
     resolution:
       {
         integrity: sha512-e1zGYRvbffpcHIrnuqT0Dh+gEJtDaxDSoG4JAIpq4oDFyooziLBIiYQv0GBT4FUAnUop5uZ1hiIAj7oAF6sOCA==,
+      }
+
+  tmcp@1.19.3:
+    resolution:
+      {
+        integrity: sha512-plz/TLKNFrdfQN32LjCTN6ULy6pynfGPgHcU7KGCI5dBrxQ9Mub99SmcYuzxEkLjJooQuOD3gosSwZEl1htOtw==,
       }
 
   tmpl@1.0.5:
@@ -13056,6 +13150,12 @@ packages:
         integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==,
       }
 
+  uri-template-matcher@1.1.2:
+    resolution:
+      {
+        integrity: sha512-uZc1h12jdO3m/R77SfTEOuo6VbMhgWznaawKpBjRGSJb7i91x5PgI37NQJtG+Cerxkk0yr1pylBY2qG1kQ+aEQ==,
+      }
+
   url-join@4.0.1:
     resolution:
       {
@@ -13180,6 +13280,17 @@ packages:
         integrity: sha512-FGtKtv3xIpR6BYhvgH8MI/y78oT7d8Au3ww4QIxymrCtZEh5b8gCw2siywE+puhEmuWKDtmfrvF5UlB298ut3w==,
       }
     engines: { node: ">=10.12.0" }
+
+  valibot@1.2.0:
+    resolution:
+      {
+        integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==,
+      }
+    peerDependencies:
+      typescript: ">=5"
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   value-equal@1.0.1:
     resolution:
@@ -17279,6 +17390,21 @@ snapshots:
       "@sinonjs/commons": 1.8.6
     optional: true
 
+  "@standard-schema/spec@1.1.0": {}
+
+  "@storybook/addon-mcp@0.4.1(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)":
+    dependencies:
+      "@storybook/mcp": 0.6.1(typescript@5.8.3)
+      "@tmcp/adapter-valibot": 0.1.5(tmcp@1.19.3(typescript@5.8.3))(valibot@1.2.0(typescript@5.8.3))
+      "@tmcp/transport-http": 0.8.5(tmcp@1.19.3(typescript@5.8.3))
+      picoquery: 2.5.0
+      storybook: 10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tmcp: 1.19.3(typescript@5.8.3)
+      valibot: 1.2.0(typescript@5.8.3)
+    transitivePeerDependencies:
+      - "@tmcp/auth"
+      - typescript
+
   "@storybook/builder-vite@10.2.16(esbuild@0.27.3)(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.4.1(@types/node@20.19.32)(jiti@2.6.1)(terser@5.46.0))":
     dependencies:
       "@storybook/csf-plugin": 10.2.16(esbuild@0.27.3)(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.4.1(@types/node@20.19.32)(jiti@2.6.1)(terser@5.46.0))
@@ -17304,6 +17430,16 @@ snapshots:
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  "@storybook/mcp@0.6.1(typescript@5.8.3)":
+    dependencies:
+      "@tmcp/adapter-valibot": 0.1.5(tmcp@1.19.3(typescript@5.8.3))(valibot@1.2.0(typescript@5.8.3))
+      "@tmcp/transport-http": 0.8.5(tmcp@1.19.3(typescript@5.8.3))
+      tmcp: 1.19.3(typescript@5.8.3)
+      valibot: 1.2.0(typescript@5.8.3)
+    transitivePeerDependencies:
+      - "@tmcp/auth"
+      - typescript
 
   "@storybook/react-dom-shim@10.2.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@10.2.16(@testing-library/dom@8.20.1)(prettier@3.6.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
     dependencies:
@@ -17472,6 +17608,23 @@ snapshots:
       lodash.sortby: 4.7.0
     transitivePeerDependencies:
       - supports-color
+
+  "@tmcp/adapter-valibot@0.1.5(tmcp@1.19.3(typescript@5.8.3))(valibot@1.2.0(typescript@5.8.3))":
+    dependencies:
+      "@standard-schema/spec": 1.1.0
+      "@valibot/to-json-schema": 1.5.0(valibot@1.2.0(typescript@5.8.3))
+      tmcp: 1.19.3(typescript@5.8.3)
+      valibot: 1.2.0(typescript@5.8.3)
+
+  "@tmcp/session-manager@0.2.1(tmcp@1.19.3(typescript@5.8.3))":
+    dependencies:
+      tmcp: 1.19.3(typescript@5.8.3)
+
+  "@tmcp/transport-http@0.8.5(tmcp@1.19.3(typescript@5.8.3))":
+    dependencies:
+      "@tmcp/session-manager": 0.2.1(tmcp@1.19.3(typescript@5.8.3))
+      esm-env: 1.2.2
+      tmcp: 1.19.3(typescript@5.8.3)
 
   "@toast-ui/editor@3.1.10":
     dependencies:
@@ -17868,6 +18021,10 @@ snapshots:
       "@babel/runtime": 7.28.6
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  "@valibot/to-json-schema@1.5.0(valibot@1.2.0(typescript@5.8.3))":
+    dependencies:
+      valibot: 1.2.0(typescript@5.8.3)
 
   "@vanilla-extract/css-utils@0.1.6": {}
 
@@ -19553,6 +19710,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  esm-env@1.2.2: {}
+
   espree@10.4.0:
     dependencies:
       acorn: 8.15.0
@@ -21016,6 +21175,8 @@ snapshots:
 
   json-parse-even-better-errors@2.3.1: {}
 
+  json-rpc-2.0@1.7.1: {}
+
   json-schema-traverse@0.4.1: {}
 
   json-schema-traverse@1.0.0: {}
@@ -21680,6 +21841,8 @@ snapshots:
   picomatch@2.3.1: {}
 
   picomatch@4.0.3: {}
+
+  picoquery@2.5.0: {}
 
   pirates@4.0.7:
     optional: true
@@ -22498,6 +22661,8 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
+  sqids@0.3.0: {}
+
   stack-utils@2.0.6:
     dependencies:
       escape-string-regexp: 2.0.0
@@ -22716,6 +22881,16 @@ snapshots:
   title-case@3.0.3:
     dependencies:
       tslib: 2.8.1
+
+  tmcp@1.19.3(typescript@5.8.3):
+    dependencies:
+      "@standard-schema/spec": 1.1.0
+      json-rpc-2.0: 1.7.1
+      sqids: 0.3.0
+      uri-template-matcher: 1.1.2
+      valibot: 1.2.0(typescript@5.8.3)
+    transitivePeerDependencies:
+      - typescript
 
   tmpl@1.0.5:
     optional: true
@@ -22960,6 +23135,8 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
+  uri-template-matcher@1.1.2: {}
+
   url-join@4.0.1: {}
 
   url-parse@1.5.10:
@@ -23026,6 +23203,10 @@ snapshots:
       convert-source-map: 1.9.0
       source-map: 0.7.6
     optional: true
+
+  valibot@1.2.0(typescript@5.8.3):
+    optionalDependencies:
+      typescript: 5.8.3
 
   value-equal@1.0.1: {}
 

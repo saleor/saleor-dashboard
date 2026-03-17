@@ -162,6 +162,7 @@
     "@playwright/test": "1.56.1",
     "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
+    "@storybook/addon-mcp": "^0.4.1",
     "@storybook/react-vite": "10.2.16",
     "@swc/jest": "^0.2.39",
     "@types/apollo-upload-client": "^17.0.5",
