@@ -231,9 +231,6 @@ importers:
       react-intl:
         specifier: 5.25.1
         version: 5.25.1(react@18.3.1)(typescript@5.8.3)
-      react-moment:
-        specifier: ^1.1.3
-        version: 1.2.1(moment@2.30.1)(prop-types@15.8.1)(react@18.3.1)
       react-responsive-carousel:
         specifier: ^3.2.23
         version: 3.2.23
@@ -11612,16 +11609,6 @@ packages:
         integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==,
       }
 
-  react-moment@1.2.1:
-    resolution:
-      {
-        integrity: sha512-2WayhDjmgdeEt/AlNkd0/0wl6xWX59VjyrLHq0KNgTY0PPf4kY5wON9+xN89ZBxWjFOVBjTlcQ7Of2RKW+CLNg==,
-      }
-    peerDependencies:
-      moment: ^2.29.0
-      prop-types: ^15.7.0
-      react: ^16.0 || ^17.0.0 || ^18.0.0
-
   react-number-format@5.4.4:
     resolution:
       {
@@ -22026,12 +22013,6 @@ snapshots:
   react-is@17.0.2: {}
 
   react-is@18.2.0: {}
-
-  react-moment@1.2.1(moment@2.30.1)(prop-types@15.8.1)(react@18.3.1):
-    dependencies:
-      moment: 2.30.1
-      prop-types: 15.8.1
-      react: 18.3.1
 
   react-number-format@5.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
