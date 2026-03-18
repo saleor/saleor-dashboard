@@ -1,0 +1,23 @@
+.storybook/preview.tsx
+  b8a4b86a1f4a58e9 10,27-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "505d209875f3d27a25893d0a3a39dd054621e791",
+  "prompts": {
+    "b8a4b86a1f4a58e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f475f18f-0e3c-4eb8-acad-7469a897aff6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 1,
+      "accepted_lines": 12,
+      "overriden_lines": 0
+    }
+  }
+}
