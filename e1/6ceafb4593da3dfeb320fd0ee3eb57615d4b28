@@ -1,0 +1,27 @@
+src/components/Date/DateTime.tsx
+  ffb0a2b51622bd70 18
+src/components/Metadata/utils.ts
+  ffb0a2b51622bd70 9-13,35
+src/components/Timezone/Timezone.tsx
+  ffb0a2b51622bd70 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "e16ceafb4593da3dfeb320fd0ee3eb57615d4b28",
+  "prompts": {
+    "ffb0a2b51622bd70": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "266eb7ec-29c6-49af-bc67-f42c710023e8",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 11,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    }
+  }
+}
