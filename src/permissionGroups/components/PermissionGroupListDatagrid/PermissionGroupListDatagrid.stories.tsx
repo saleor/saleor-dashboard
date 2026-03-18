@@ -12,7 +12,7 @@ const meta: Meta<typeof PermissionGroupListDatagrid> = {
     disabled: false,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "members"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
   },
 };

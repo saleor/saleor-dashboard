@@ -13,7 +13,10 @@ const meta: Meta<typeof OrderListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "number" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: {
+      columns: ["number", "date", "customer", "payment", "status", "total", "channel"],
+      rowsPerPage: 20,
+    },
     onUpdateListSettings: fn(),
     onRowClick: fn(),
   },

@@ -55,7 +55,7 @@ const meta: Meta<typeof ProductListDatagrid> = {
     activeAttributeSortId: "",
     sort: { sort: ProductListUrlSortField.name, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "type", "availability", "price"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onRowClick: fn(),
     onSelectProductIds: fn(),

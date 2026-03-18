@@ -101,7 +101,10 @@ const mockGiftCards = [
 const defaultContextValue: GiftCardsListConsumerProps = {
   loading: false,
   giftCards: mockGiftCards as any,
-  settings: { columns: [], rowsPerPage: 20 } as any,
+  settings: {
+    columns: ["giftCardCode", "status", "tag", "product", "usedBy", "balance"],
+    rowsPerPage: 20,
+  } as any,
   updateListSettings: fn(),
   selectedRowIds: [],
   setSelectedRowIds: fn(),

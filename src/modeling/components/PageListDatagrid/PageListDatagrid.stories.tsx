@@ -40,7 +40,7 @@ const meta: Meta<typeof PageListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "title" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["title", "slug", "visible", "contentType"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectPageIds: fn(),
     onRowClick: fn(),

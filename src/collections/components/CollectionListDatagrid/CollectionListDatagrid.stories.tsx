@@ -15,7 +15,7 @@ const meta: Meta<typeof CollectionListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "productCount", "availability"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectCollectionIds: fn(),
     onRowClick: fn(),

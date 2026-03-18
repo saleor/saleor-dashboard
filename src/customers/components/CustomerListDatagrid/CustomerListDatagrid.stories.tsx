@@ -14,7 +14,7 @@ const meta: Meta<typeof CustomerListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "email", "orders"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectCustomerIds: fn(),
     onRowClick: fn(),

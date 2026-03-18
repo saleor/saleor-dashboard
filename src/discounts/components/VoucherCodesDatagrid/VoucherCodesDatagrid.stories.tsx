@@ -18,7 +18,7 @@ const meta: Meta<typeof VoucherCodesDatagrid> = {
     codes: mockCodes,
     loading: false,
     disabled: false,
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["code", "usage", "status"], rowsPerPage: 20 },
     onSettingsChange: fn(),
     onSelectVoucherCodesIds: fn(),
   },

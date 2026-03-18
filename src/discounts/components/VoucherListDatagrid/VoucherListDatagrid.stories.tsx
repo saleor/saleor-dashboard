@@ -13,7 +13,10 @@ const meta: Meta<typeof VoucherListDatagrid> = {
     selectedChannelId: "channel-1",
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: {
+      columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+      rowsPerPage: 20,
+    },
     onUpdateListSettings: fn(),
     onSelectVouchersIds: fn(),
     filterDependency: { label: "Channel", value: "channel-1" },

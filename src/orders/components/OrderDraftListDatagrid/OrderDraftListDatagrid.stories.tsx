@@ -15,7 +15,7 @@ const meta: Meta<typeof OrderDraftListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "number" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["number", "date", "customer", "total", "channel"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectOrderDraftIds: fn(),
     onRowClick: fn(),

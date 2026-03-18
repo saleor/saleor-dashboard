@@ -12,7 +12,7 @@ const meta: Meta<typeof CategoryListDatagrid> = {
     disabled: false,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "subcategories", "products"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectCategoriesIds: fn(),
   },

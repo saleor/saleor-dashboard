@@ -24,7 +24,7 @@ const meta: Meta<typeof CategoryProductListDatagrid> = {
   args: {
     products: mockProducts,
     disabled: false,
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectProductsIds: fn(),
   },

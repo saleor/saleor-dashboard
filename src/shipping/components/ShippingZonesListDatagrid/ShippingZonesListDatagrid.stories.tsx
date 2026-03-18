@@ -10,7 +10,7 @@ const meta: Meta<typeof ShippingZoneListDatagrid> = {
   args: {
     shippingZones,
     disabled: false,
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "priceRange", "countries"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectShippingZones: fn(),
   },

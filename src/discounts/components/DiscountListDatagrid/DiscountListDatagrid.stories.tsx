@@ -13,7 +13,7 @@ const meta: Meta<typeof DiscountListDatagrid> = {
     hasRowHover: true,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["name", "type", "startDate", "endDate"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onRowClick: fn(),
   },

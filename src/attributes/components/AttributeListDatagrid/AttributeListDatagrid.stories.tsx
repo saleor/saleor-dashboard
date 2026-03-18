@@ -12,7 +12,7 @@ const meta: Meta<typeof AttributeListDatagrid> = {
     disabled: false,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: [], rowsPerPage: 20 },
+    settings: { columns: ["slug", "name", "visible", "use-in-faceted-search"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectAttributesIds: fn(),
   },
