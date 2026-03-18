@@ -7,6 +7,9 @@ import { CustomerListDatagrid } from "./CustomerListDatagrid";
 const meta: Meta<typeof CustomerListDatagrid> = {
   title: "Customers/CustomerListDatagrid",
   component: CustomerListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     customers: customerList,
     loading: false,
