@@ -1,0 +1,25 @@
+src/products/components/ProductOrganization/ProductOrganization.tsx
+  32e0d8df45769201 15,83-91
+src/products/components/ProductOrganization/ProductOrganization.stories.tsx
+  32e0d8df45769201 4,64-94,223-303
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "4d85cde8d42262d9e7d6a0a4234e92a716b017d3",
+  "prompts": {
+    "32e0d8df45769201": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "28d3c55e-7f60-40b7-9460-e8d6630a0dd4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 140,
+      "total_deletions": 22,
+      "accepted_lines": 127,
+      "overriden_lines": 0
+    }
+  }
+}
