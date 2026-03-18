@@ -1,0 +1,23 @@
+scripts/strict-ignore-importers.mjs
+  4db28b351d6ea64c 1-222
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "ac316d63d437e0b2af04a1a4650443eb8d8fd8c2",
+  "prompts": {
+    "4db28b351d6ea64c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1f683f64-0346-4d6e-bc97-ab910fff18c3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 225,
+      "total_deletions": 0,
+      "accepted_lines": 225,
+      "overriden_lines": 0
+    }
+  }
+}
