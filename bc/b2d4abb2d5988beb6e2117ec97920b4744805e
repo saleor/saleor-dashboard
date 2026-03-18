@@ -1,0 +1,59 @@
+src/discounts/components/DiscountListDatagrid/DiscountListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/categories/components/CategoryProductListDatagrid/CategoryProductListDatagrid.stories.tsx
+  4c3a6246e3f89183 26-28
+src/attributes/components/AttributeListDatagrid/AttributeListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/orders/components/OrderListDatagrid/OrderListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/customers/components/CustomerListDatagrid/CustomerListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/components/Datagrid/Datagrid.stories.tsx
+  4c3a6246e3f89183 155-157
+src/discounts/components/VoucherCodesDatagrid/VoucherCodesDatagrid.stories.tsx
+  4c3a6246e3f89183 17-19
+src/giftCards/GiftCardsList/GiftCardsListDatagrid/GiftCardsListDatagrid.stories.tsx
+  4c3a6246e3f89183 145-147
+src/categories/components/CategoryListDatagrid/CategoryListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/orders/components/OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid.stories.tsx
+  4c3a6246e3f89183 43-45
+src/orders/components/OrderDraftListDatagrid/OrderDraftListDatagrid.stories.tsx
+  4c3a6246e3f89183 12-14
+src/orders/components/OrderDetailsDatagrid/OrderDetailsDatagrid.stories.tsx
+  4c3a6246e3f89183 13-15
+src/modeling/components/PageListDatagrid/PageListDatagrid.stories.tsx
+  4c3a6246e3f89183 36-38
+src/permissionGroups/components/PermissionGroupListDatagrid/PermissionGroupListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/collections/components/CollectionListDatagrid/CollectionListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/discounts/components/VoucherListDatagrid/VoucherListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/products/components/ProductListDatagrid/ProductListDatagrid.stories.tsx
+  4c3a6246e3f89183 58-60
+src/staff/components/StaffListDatagrid/StaffListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+src/shipping/components/ShippingZonesListDatagrid/ShippingZonesListDatagrid.stories.tsx
+  4c3a6246e3f89183 10-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "bcb2d4abb2d5988beb6e2117ec97920b4744805e",
+  "prompts": {
+    "4c3a6246e3f89183": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "60c06649-497e-4752-9de8-a5411025d0d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 57,
+      "total_deletions": 0,
+      "accepted_lines": 57,
+      "overriden_lines": 0
+    }
+  }
+}
