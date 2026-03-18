@@ -1,9 +1,19 @@
+import { ConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/context";
 import { products as productsFixture } from "@dashboard/products/fixtures";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { ProductListDatagrid } from "./ProductListDatagrid";
+
+const mockConditionalFilterContext = {
+  containerState: {
+    createAndRemoveEmpty: fn(),
+  },
+  filterWindow: {
+    setOpen: fn(),
+  },
+} as any;
 
 const placeholderImage = "https://via.placeholder.com/64";
 const products = productsFixture(placeholderImage);
@@ -38,6 +48,13 @@ const emptyAvailableColumnsAttributesOpts = [
 const meta: Meta<typeof ProductListDatagrid> = {
   title: "Products/ProductListDatagrid",
   component: ProductListDatagrid,
+  decorators: [
+    (Story: StoryFn) => (
+      <ConditionalFilterContext.Provider value={mockConditionalFilterContext}>
+        <Story />
+      </ConditionalFilterContext.Provider>
+    ),
+  ],
   argTypes: {
     gridAttributesOpts: { table: { disable: true } },
     availableColumnsAttributesOpts: { table: { disable: true } },
