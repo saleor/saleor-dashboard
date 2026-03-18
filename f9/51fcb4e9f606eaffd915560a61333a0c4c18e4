@@ -1,0 +1,23 @@
+src/translations/utils.ts
+  ccb069ddb14ae033 42,45,57,64,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "f951fcb4e9f606eaffd915560a61333a0c4c18e4",
+  "prompts": {
+    "ccb069ddb14ae033": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c1a19aa3-ad16-4443-90fc-a0f2f3093d8e",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 6,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    }
+  }
+}
