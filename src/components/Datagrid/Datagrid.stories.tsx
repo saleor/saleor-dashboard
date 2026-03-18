@@ -117,7 +117,7 @@ const meta: Meta<typeof Datagrid> = {
   title: "Components/Datagrid",
   component: Datagrid,
   decorators: [
-    Story => (
+    (Story: React.ComponentType) => (
       <DatagridChangeProvider>
         <Story />
       </DatagridChangeProvider>
