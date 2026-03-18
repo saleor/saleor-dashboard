@@ -86,7 +86,6 @@
     "@react-editor-js/core": "2.1.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
     "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.4.2",
-    "@saleor/sdk": "0.6.0",
     "@sentry/react": "^8.55.0",
     "@sentry/vite-plugin": "^2.23.1",
     "@types/faker": "^5.5.9",
@@ -163,6 +162,7 @@
     "@playwright/test": "1.56.1",
     "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
+    "@storybook/addon-mcp": "^0.4.1",
     "@storybook/react-vite": "10.2.16",
     "@swc/jest": "^0.2.39",
     "@types/apollo-upload-client": "^17.0.5",
@@ -182,7 +182,7 @@
     "@types/url-join": "^4.0.3",
     "@types/uuid": "^9.0.8",
     "@types/webappsec-credential-management": "^0.5.1",
-    "@vitejs/plugin-react-swc": "^3.11.0",
+    "@vitejs/plugin-react-swc": "^4.3.0",
     "chromatic": "^15.2.0",
     "code-inspector-plugin": "^0.6.5",
     "core-js": "^3.46.0",
@@ -215,7 +215,7 @@
     "typescript": "5.8.3",
     "typescript-eslint": "^8.46.4",
     "typescript-strict-plugin": "^2.4.4",
-    "vite": "^6.4.1",
+    "vite": "7.3.1",
     "vite-plugin-html": "^3.2.2"
   },
   "optionalDependencies": {

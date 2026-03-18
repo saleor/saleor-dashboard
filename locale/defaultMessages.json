@@ -259,6 +259,10 @@
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
+  "/UP01b": {
+    "context": "Fallback text shown when a product media image fails to load",
+    "string": "Image could not be loaded"
+  },
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"

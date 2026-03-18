@@ -7,7 +7,18 @@ interface Config {
   dsn: string;
   environment?: string;
   release?: string;
+  apiUrl?: string;
 }
+
+const extractTenant = (apiUrl: string): string => {
+  try {
+    const url = new URL(apiUrl);
+
+    return url.hostname;
+  } catch {
+    return apiUrl;
+  }
+};
 
 export const SentryAdapter = (config: Config): TrackerMethods => {
   const init: TrackerMethods["init"] = (history: History) => {
@@ -24,6 +35,10 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
         integrations: [Sentry.reactRouterV5BrowserTracingIntegration({ history })],
         tracesSampleRate: 0.1,
       });
+
+      if (config.apiUrl) {
+        Sentry.setUser({ username: extractTenant(config.apiUrl) });
+      }
 
       return true;
     }

@@ -4,7 +4,7 @@ import {
   type GetExternalAccessTokenData,
   type GetExternalAuthUrlData,
   type LoginData,
-} from "@saleor/sdk";
+} from "@dashboard/legacy-sdk";
 
 export interface RequestExternalLoginInput {
   redirectUri: string;
