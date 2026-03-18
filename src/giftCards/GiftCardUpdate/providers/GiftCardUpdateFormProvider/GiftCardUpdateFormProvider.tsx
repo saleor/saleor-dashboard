@@ -54,7 +54,7 @@ export const GiftCardUpdateFormContext = createContext<GiftCardUpdateFormConsume
   null,
 );
 
-const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[]) => {
+export const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[]) => {
   const removed = difference(initTags, changedTags);
   const added = difference(changedTags, initTags);
 
@@ -63,6 +63,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
     removeTags: removed,
   };
 };
+
 const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProps) => {
   const notify = useNotifier();
   const intl = useIntl();
