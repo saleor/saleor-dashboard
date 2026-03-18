@@ -1,6 +1,7 @@
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentProps, ComponentType } from "react";
+import { useCallback, useState } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { expect, fn, userEvent, within } from "storybook/test";
 
@@ -57,6 +58,37 @@ const categoriesWithAncestors = getChoicesWithAncestors([
     },
     parent: { id: "4-2", name: "Trekking" },
     level: 4,
+  },
+]);
+
+const allCategories = getChoicesWithAncestors([
+  {
+    id: "acc-1",
+    name: "Accessories",
+    ancestors: { edges: [] },
+    parent: null,
+    level: 0,
+  },
+  {
+    id: "hoo-1",
+    name: "Hoodies",
+    ancestors: { edges: [] },
+    parent: null,
+    level: 0,
+  },
+  {
+    id: "sho-1",
+    name: "Shoes",
+    ancestors: { edges: [] },
+    parent: null,
+    level: 0,
+  },
+  {
+    id: "run-1",
+    name: "Running",
+    ancestors: { edges: [] },
+    parent: null,
+    level: 0,
   },
 ]);
 
@@ -186,5 +218,88 @@ export const WithSelectedCategory: Story = {
   args: {
     data: { category: "1", collections: [] },
     categoryInputDisplayValue: "Shoes",
+  },
+};
+
+/**
+ * Simulates the full dynamic search flow: user has a selected category,
+ * types to search, and the options list updates asynchronously (as from a
+ * server response). Verifies:
+ * - Input text is preserved when options update (not reset to selected value)
+ * - New server results appear in the dropdown
+ */
+const DynamicSearchWrapper = (props: Props) => {
+  const [dynamicCategories, setDynamicCategories] = useState(allCategories);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCategories = useCallback((query: string) => {
+    setLoading(true);
+
+    // Simulate async server response
+    setTimeout(() => {
+      if (query) {
+        const filtered = allCategories.filter(c =>
+          c.label.toLowerCase().includes(query.toLowerCase()),
+        );
+
+        setDynamicCategories(filtered);
+      } else {
+        setDynamicCategories(allCategories);
+      }
+
+      setLoading(false);
+    }, 100);
+  }, []);
+
+  return (
+    <ProductOrganization
+      {...props}
+      categories={dynamicCategories}
+      fetchCategories={fetchCategories}
+      fetchMoreCategories={{ hasMore: false, loading, onFetchMore: fn() }}
+    />
+  );
+};
+
+export const DynamicSearchWithSelectedCategory: Story = {
+  args: {
+    data: { category: "acc-1", collections: [] },
+    categoryInputDisplayValue: "Accessories",
+  },
+  render: (args: Props) => <DynamicSearchWrapper {...args} />,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+    const categoryCombobox = canvas.getAllByRole("combobox")[0];
+
+    // Act — click to focus, then clear and type search term
+    await userEvent.click(categoryCombobox);
+    await userEvent.clear(categoryCombobox);
+    await userEvent.type(categoryCombobox, "hoo");
+
+    // Assert — "Hoodies" should appear in filtered results after async fetch
+    await expect(await within(document.body).findByText("Hoodies")).toBeInTheDocument();
+
+    // Assert — input should show typed text, not reset to "Accessories"
+    await expect(categoryCombobox).toHaveValue("hoo");
+  },
+};
+
+export const DynamicSearchOptionsUpdate: Story = {
+  render: (args: Props) => <DynamicSearchWrapper {...args} />,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    // Arrange
+    const canvas = within(canvasElement);
+    const categoryCombobox = canvas.getAllByRole("combobox")[0];
+
+    // Act — type to trigger search
+    await userEvent.click(categoryCombobox);
+    await userEvent.type(categoryCombobox, "run");
+
+    // Assert — after async update, "Running" should be visible
+    await expect(await within(document.body).findByText("Running")).toBeInTheDocument();
+
+    // Assert — input text should still be what we typed
+    await expect(categoryCombobox).toHaveValue("run");
   },
 };
