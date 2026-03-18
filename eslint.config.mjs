@@ -36,7 +36,9 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [".storybook/*.tsx", ".storybook/*.ts"],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
