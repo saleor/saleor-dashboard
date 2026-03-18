@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import { getOperationAST } from "graphql";
 
@@ -54,7 +53,7 @@ export const giftCardList = gql`
   }
 `;
 
-export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList).name.value;
+export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList)!.name!.value;
 
 export const giftCardTotalCount = gql`
   query GiftCardTotalCount {
