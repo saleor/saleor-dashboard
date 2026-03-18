@@ -50,6 +50,8 @@ import type {
   AppExtensionCountableConnection,
   AppExtensionCountableEdge,
   AppExtensionFilterInput,
+  AppExtensionOptionsNewTab,
+  AppExtensionOptionsWidget,
   AppFetchManifest,
   AppFilterInput,
   AppInput,
@@ -252,8 +254,6 @@ import type {
   CheckoutLinesUpdate,
   CheckoutMetadataUpdated,
   CheckoutPaymentCreate,
-  CheckoutProblemDeliveryMethodInvalid,
-  CheckoutProblemDeliveryMethodStale,
   CheckoutRemovePromoCode,
   CheckoutSettings,
   CheckoutSettingsInput,
@@ -326,9 +326,6 @@ import type {
   DecimalRangeInput,
   DeleteMetadata,
   DeletePrivateMetadata,
-  Delivery,
-  DeliveryOptionsCalculate,
-  DeliveryOptionsCalculateError,
   DigitalContent,
   DigitalContentCountableConnection,
   DigitalContentCountableEdge,
@@ -432,8 +429,6 @@ import type {
   GiftCardExportCompleted,
   GiftCardFilterInput,
   GiftCardMetadataUpdated,
-  GiftCardPaymentMethodDetails,
-  GiftCardPaymentMethodDetailsInput,
   GiftCardResend,
   GiftCardResendInput,
   GiftCardSent,
@@ -526,6 +521,7 @@ import type {
   MoveProductInput,
   Mutation,
   NameTranslationInput,
+  NewTabTargetOptions,
   Order,
   OrderAddNote,
   OrderAddNoteInput,
@@ -1192,6 +1188,7 @@ import type {
   WebhookUpdate,
   WebhookUpdateInput,
   Weight,
+  WidgetTargetOptions,
   _Service,
 } from './fabbricaTypes.generated';
 
@@ -2556,22 +2553,32 @@ export type OptionalAppExtension = {
   id?: AppExtension['id'] | undefined;
   /** Label of the extension to show in the dashboard. */
   label?: AppExtension['label'] | undefined;
+  /** Place where given extension will be mounted. */
+  mount?: AppExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+ * Name of the extension mount point in the dashboard. Replaces `mount`
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtension['mountName'] | undefined;
+  /**
+ * App extension options.
+ *
+ * Added in Saleor 3.22.
+ */
+  options?: Maybe<OptionalAppExtensionPossibleOptions> | undefined;
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * App extension settings.
+ * App extension settings. Replaces `options` field.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppExtension['settings'] | undefined;
+  /** Type of way how app extension will be opened. */
+  target?: AppExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+ * Name of the extension target in the dashboard. Replaces `target`
  *
  * Added in Saleor 3.22.
  */
@@ -2632,12 +2639,16 @@ export const defineAppExtensionCountableEdgeFactory: DefineTypeFactoryInterface<
 
 export type OptionalAppExtensionFilterInput = {
   __typename?: 'AppExtensionFilterInput';
+  /** DEPRECATED: Use `mountName` instead. */
+  mount?: AppExtensionFilterInput['mount'] | undefined;
   /**
  * Plain-text mount name (case insensitive)
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtensionFilterInput['mountName'] | undefined;
+  /** DEPRECATED: Use `targetName` instead. */
+  target?: AppExtensionFilterInput['target'] | undefined;
   /**
  * Plain-text target name (case insensitive)
  *
@@ -2656,6 +2667,44 @@ export const defineAppExtensionFilterInputFactory: DefineTypeFactoryInterface<
   OptionalAppExtensionFilterInput,
   {}
 > = defineTypeFactory;
+
+/** Represents the options for an app extension. */
+export type OptionalAppExtensionOptionsNewTab = {
+  __typename?: 'AppExtensionOptionsNewTab';
+  /** Options controlling behavior of the NEW_TAB extension target */
+  newTabTarget?: Maybe<OptionalNewTabTargetOptions> | undefined;
+};
+
+/**
+ * Define factory for {@link AppExtensionOptionsNewTab} model.
+ *
+ * @param options
+ * @returns factory {@link AppExtensionOptionsNewTabFactoryInterface}
+ */
+export const defineAppExtensionOptionsNewTabFactory: DefineTypeFactoryInterface<
+  OptionalAppExtensionOptionsNewTab,
+  {}
+> = defineTypeFactory;
+
+/** Represents the options for an app extension. */
+export type OptionalAppExtensionOptionsWidget = {
+  __typename?: 'AppExtensionOptionsWidget';
+  /** Options for displaying a Widget */
+  widgetTarget?: Maybe<OptionalWidgetTargetOptions> | undefined;
+};
+
+/**
+ * Define factory for {@link AppExtensionOptionsWidget} model.
+ *
+ * @param options
+ * @returns factory {@link AppExtensionOptionsWidgetFactoryInterface}
+ */
+export const defineAppExtensionOptionsWidgetFactory: DefineTypeFactoryInterface<
+  OptionalAppExtensionOptionsWidget,
+  {}
+> = defineTypeFactory;
+
+export type OptionalAppExtensionPossibleOptions = OptionalAppExtensionOptionsNewTab | OptionalAppExtensionOptionsWidget;
 
 /**
  * Fetch and validate manifest.
@@ -2864,8 +2913,10 @@ export type OptionalAppManifestExtension = {
   __typename?: 'AppManifestExtension';
   /** Label of the extension to show in the dashboard. */
   label?: AppManifestExtension['label'] | undefined;
+  /** Place where given extension will be mounted. */
+  mount?: AppManifestExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+ * Name of the extension mount point in the dashboard. Replaces `mount`
  *
  * Added in Saleor 3.22.
  */
@@ -2873,13 +2924,15 @@ export type OptionalAppManifestExtension = {
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * App extension settings.
+ * JSON object with settings for this extension.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppManifestExtension['settings'] | undefined;
+  /** Type of way how app extension will be opened. */
+  target?: AppManifestExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+ * Name of the extension target in the dashboard. Replaces `target`
  *
  * Added in Saleor 3.22.
  */
@@ -4107,7 +4160,7 @@ export type OptionalAssignedSwatchAttributeValue = {
   file?: Maybe<OptionalFile> | undefined;
   /** Hex color code. */
   hexColor?: AssignedSwatchAttributeValue['hexColor'] | undefined;
-  /** Name of the selected swatch value.  */
+  /** Name of the selected swatch value. */
   name?: AssignedSwatchAttributeValue['name'] | undefined;
   /** Slug of the selected swatch value. */
   slug?: AssignedSwatchAttributeValue['slug'] | undefined;
@@ -4610,11 +4663,7 @@ export const defineAttributeCreateFactory: DefineTypeFactoryInterface<
  */
 export type OptionalAttributeCreateInput = {
   __typename?: 'AttributeCreateInput';
-  /**
- * Whether the attribute can be displayed in the admin product list.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: AttributeCreateInput['availableInGrid'] | undefined;
   /** The entity type which can be used as a reference. */
   entityType?: AttributeCreateInput['entityType'] | undefined;
@@ -4622,11 +4671,7 @@ export type OptionalAttributeCreateInput = {
   externalReference?: AttributeCreateInput['externalReference'] | undefined;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: AttributeCreateInput['filterableInDashboard'] | undefined;
-  /**
- * Whether the attribute can be filtered in storefront.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: AttributeCreateInput['filterableInStorefront'] | undefined;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: AttributeCreateInput['inputType'] | undefined;
@@ -4644,11 +4689,7 @@ export type OptionalAttributeCreateInput = {
   referenceTypes?: AttributeCreateInput['referenceTypes'] | undefined;
   /** Internal representation of an attribute name. */
   slug?: AttributeCreateInput['slug'] | undefined;
-  /**
- * The position of the attribute in the storefront navigation (0 by default).
- *
- * DEPRECATED: this field will be removed.
- */
+  /** The position of the attribute in the storefront navigation (0 by default). */
   storefrontSearchPosition?: AttributeCreateInput['storefrontSearchPosition'] | undefined;
   /** The attribute type. */
   type?: AttributeCreateInput['type'] | undefined;
@@ -4794,11 +4835,7 @@ export const defineAttributeErrorFactory: DefineTypeFactoryInterface<
 export type OptionalAttributeFilterInput = {
   __typename?: 'AttributeFilterInput';
   availableInGrid?: AttributeFilterInput['availableInGrid'] | undefined;
-  /**
- * Specifies the channel by which the data should be filtered.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: AttributeFilterInput['channel'] | undefined;
   filterableInDashboard?: AttributeFilterInput['filterableInDashboard'] | undefined;
   filterableInStorefront?: AttributeFilterInput['filterableInStorefront'] | undefined;
@@ -4827,39 +4864,19 @@ export const defineAttributeFilterInputFactory: DefineTypeFactoryInterface<
 
 export type OptionalAttributeInput = {
   __typename?: 'AttributeInput';
-  /**
- * The boolean value of the attribute. Requires `slug` to be provided.
- *
- * DEPRECATED: this field will be removed. Use `value` instead.
- */
+  /** The boolean value of the attribute. Requires `slug` to be provided. */
   boolean?: AttributeInput['boolean'] | undefined;
-  /**
- * The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. Requires `slug` to be provided.
- *
- * DEPRECATED: this field will be removed. Use `value` instead.
- */
+  /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. Requires `slug` to be provided. */
   date?: Maybe<OptionalDateRangeInput> | undefined;
-  /**
- * The date/time range that the returned values should be in. Requires `slug` to be provided.
- *
- * DEPRECATED: this field will be removed. Use `value` instead.
- */
+  /** The date/time range that the returned values should be in. Requires `slug` to be provided. */
   dateTime?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /** Internal representation of an attribute name. */
   slug?: AttributeInput['slug'] | undefined;
-  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`.  */
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`. */
   value?: Maybe<OptionalAssignedAttributeValueInput> | undefined;
-  /**
- * Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided.
- *
- * DEPRECATED: this field will be removed. Use `value` instead.
- */
+  /** Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided. */
   values?: AttributeInput['values'] | undefined;
-  /**
- * The range that the returned values should be in. Requires `slug` to be provided.
- *
- * DEPRECATED: this field will be removed. Use `value` instead.
- */
+  /** The range that the returned values should be in. Requires `slug` to be provided. */
   valuesRange?: Maybe<OptionalIntRangeInput> | undefined;
 };
 
@@ -5068,21 +5085,13 @@ export type OptionalAttributeUpdateInput = {
   __typename?: 'AttributeUpdateInput';
   /** New values to be created for this attribute. */
   addValues?: Maybe<OptionalAttributeValueUpdateInput[]> | undefined;
-  /**
- * Whether the attribute can be displayed in the admin product list.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: AttributeUpdateInput['availableInGrid'] | undefined;
   /** External ID of this product. */
   externalReference?: AttributeUpdateInput['externalReference'] | undefined;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: AttributeUpdateInput['filterableInDashboard'] | undefined;
-  /**
- * Whether the attribute can be filtered in storefront.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: AttributeUpdateInput['filterableInStorefront'] | undefined;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: AttributeUpdateInput['isVariantOnly'] | undefined;
@@ -5100,11 +5109,7 @@ export type OptionalAttributeUpdateInput = {
   removeValues?: AttributeUpdateInput['removeValues'] | undefined;
   /** Internal representation of an attribute name. */
   slug?: AttributeUpdateInput['slug'] | undefined;
-  /**
- * The position of the attribute in the storefront navigation (0 by default).
- *
- * DEPRECATED: this field will be removed.
- */
+  /** The position of the attribute in the storefront navigation (0 by default). */
   storefrontSearchPosition?: AttributeUpdateInput['storefrontSearchPosition'] | undefined;
   /** The unit of attribute values. */
   unit?: AttributeUpdateInput['unit'] | undefined;
@@ -5393,18 +5398,12 @@ export type OptionalAttributeValueCreateInput = {
   fileUrl?: AttributeValueCreateInput['fileUrl'] | undefined;
   /** Name of a value displayed in the interface. */
   name?: AttributeValueCreateInput['name'] | undefined;
-  /**
- * Represents the text of the attribute value, plain text without formatting.
- *
- * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
- */
+  /** Represents the text of the attribute value, plain text without formatting. */
   plainText?: AttributeValueCreateInput['plainText'] | undefined;
   /**
  * Represents the text of the attribute value, includes formatting.
  *
  * Rich text format. For reference see https://editorjs.io/
- *
- * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
  */
   richText?: AttributeValueCreateInput['richText'] | undefined;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -5557,11 +5556,7 @@ export type OptionalAttributeValueInput = {
   richText?: AttributeValueInput['richText'] | undefined;
   /** Attribute value ID or external reference. */
   swatch?: Maybe<OptionalAttributeValueSelectableTypeInput> | undefined;
-  /**
- * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: AttributeValueInput['values'] | undefined;
 };
 
@@ -5758,18 +5753,12 @@ export type OptionalAttributeValueUpdateInput = {
   fileUrl?: AttributeValueUpdateInput['fileUrl'] | undefined;
   /** Name of a value displayed in the interface. */
   name?: AttributeValueUpdateInput['name'] | undefined;
-  /**
- * Represents the text of the attribute value, plain text without formatting.
- *
- * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
- */
+  /** Represents the text of the attribute value, plain text without formatting. */
   plainText?: AttributeValueUpdateInput['plainText'] | undefined;
   /**
  * Represents the text of the attribute value, includes formatting.
  *
  * Rich text format. For reference see https://editorjs.io/
- *
- * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
  */
   richText?: AttributeValueUpdateInput['richText'] | undefined;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -5906,11 +5895,7 @@ export type OptionalBulkAttributeValueInput = {
   richText?: BulkAttributeValueInput['richText'] | undefined;
   /** Attribute value ID. */
   swatch?: Maybe<OptionalAttributeValueSelectableTypeInput> | undefined;
-  /**
- * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: BulkAttributeValueInput['values'] | undefined;
 };
 
@@ -6439,11 +6424,7 @@ export const defineCategoryInputFactory: DefineTypeFactoryInterface<
 
 export type OptionalCategorySortingInput = {
   __typename?: 'CategorySortingInput';
-  /**
- * Specifies the channel in which to sort the data.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel in which to sort the data. */
   channel?: CategorySortingInput['channel'] | undefined;
   /** Specifies the direction in which to sort categories. */
   direction?: CategorySortingInput['direction'] | undefined;
@@ -7266,12 +7247,6 @@ export type OptionalCheckout = {
   /**
  * The delivery method selected for this checkout.
  *
- * Added in Saleor 3.23.
- */
-  delivery?: Maybe<OptionalDelivery> | undefined;
-  /**
- * The delivery method selected for this checkout.
- *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
  * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
@@ -7840,7 +7815,6 @@ export const defineCheckoutCustomerNoteUpdateFactory: DefineTypeFactoryInterface
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutDeliveryMethodUpdate = {
@@ -8199,7 +8173,7 @@ export const defineCheckoutLineDeleteFactory: DefineTypeFactoryInterface<
 
 export type OptionalCheckoutLineInput = {
   __typename?: 'CheckoutLineInput';
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
   forceNewLine?: CheckoutLineInput['forceNewLine'] | undefined;
   /**
  * Fields required to update the object's metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -8285,11 +8259,7 @@ export type OptionalCheckoutLineUpdateInput = {
   price?: CheckoutLineUpdateInput['price'] | undefined;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: CheckoutLineUpdateInput['quantity'] | undefined;
-  /**
- * ID of the product variant.
- *
- * DEPRECATED: this field will be removed. Use `lineId` instead.
- */
+  /** ID of the product variant. */
   variantId?: CheckoutLineUpdateInput['variantId'] | undefined;
 };
 
@@ -8427,49 +8397,7 @@ export const defineCheckoutPaymentCreateFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** Represents an problem in the checkout. */
-export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable | OptionalCheckoutProblemDeliveryMethodInvalid | OptionalCheckoutProblemDeliveryMethodStale;
-
-/**
- * Indicates that the selected delivery method is invalid.
- *
- * Added in Saleor 3.23.
- */
-export type OptionalCheckoutProblemDeliveryMethodInvalid = {
-  __typename?: 'CheckoutProblemDeliveryMethodInvalid';
-  delivery?: OptionalDelivery | undefined;
-};
-
-/**
- * Define factory for {@link CheckoutProblemDeliveryMethodInvalid} model.
- *
- * @param options
- * @returns factory {@link CheckoutProblemDeliveryMethodInvalidFactoryInterface}
- */
-export const defineCheckoutProblemDeliveryMethodInvalidFactory: DefineTypeFactoryInterface<
-  OptionalCheckoutProblemDeliveryMethodInvalid,
-  {}
-> = defineTypeFactory;
-
-/**
- * Indicates that the delivery methods are stale.
- *
- * Added in Saleor 3.23.
- */
-export type OptionalCheckoutProblemDeliveryMethodStale = {
-  __typename?: 'CheckoutProblemDeliveryMethodStale';
-  delivery?: OptionalDelivery | undefined;
-};
-
-/**
- * Define factory for {@link CheckoutProblemDeliveryMethodStale} model.
- *
- * @param options
- * @returns factory {@link CheckoutProblemDeliveryMethodStaleFactoryInterface}
- */
-export const defineCheckoutProblemDeliveryMethodStaleFactory: DefineTypeFactoryInterface<
-  OptionalCheckoutProblemDeliveryMethodStale,
-  {}
-> = defineTypeFactory;
+export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable;
 
 /**
  * Remove a gift card or a voucher from a checkout.
@@ -8500,12 +8428,6 @@ export const defineCheckoutRemovePromoCodeFactory: DefineTypeFactoryInterface<
 export type OptionalCheckoutSettings = {
   __typename?: 'CheckoutSettings';
   /**
- * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
- *
- * Added in Saleor 3.23.
- */
-  allowLegacyGiftCardUse?: CheckoutSettings['allowLegacyGiftCardUse'] | undefined;
-  /**
  * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
  *
  * Added in Saleor 3.22.
@@ -8523,11 +8445,7 @@ export type OptionalCheckoutSettings = {
  * Added in Saleor 3.20.
  */
   automaticallyCompleteFullyPaidCheckouts?: CheckoutSettings['automaticallyCompleteFullyPaidCheckouts'] | undefined;
-  /**
- * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
   useLegacyErrorFlow?: CheckoutSettings['useLegacyErrorFlow'] | undefined;
 };
 
@@ -8545,12 +8463,6 @@ export const defineCheckoutSettingsFactory: DefineTypeFactoryInterface<
 export type OptionalCheckoutSettingsInput = {
   __typename?: 'CheckoutSettingsInput';
   /**
- * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
- *
- * Added in Saleor 3.23.
- */
-  allowLegacyGiftCardUse?: CheckoutSettingsInput['allowLegacyGiftCardUse'] | undefined;
-  /**
  * Settings for automatic completion of fully paid checkouts.
  *
  * Added in Saleor 3.22.
@@ -8560,15 +8472,9 @@ export type OptionalCheckoutSettingsInput = {
  * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
  *
  * Added in Saleor 3.20.
- *
- * DEPRECATED: this field will be removed. Use `automatic_completion` instead.
  */
   automaticallyCompleteFullyPaidCheckouts?: CheckoutSettingsInput['automaticallyCompleteFullyPaidCheckouts'] | undefined;
-  /**
- * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
   useLegacyErrorFlow?: CheckoutSettingsInput['useLegacyErrorFlow'] | undefined;
 };
 
@@ -8613,7 +8519,6 @@ export const defineCheckoutShippingAddressUpdateFactory: DefineTypeFactoryInterf
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutShippingMethodUpdate = {
@@ -9026,11 +8931,7 @@ export type OptionalCollectionCreateInput = {
   privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /** List of products to be added to the collection. */
   products?: CollectionCreateInput['products'] | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: CollectionCreateInput['publicationDate'] | undefined;
   /** Search engine optimization fields. */
   seo?: Maybe<OptionalSeoInput> | undefined;
@@ -9149,11 +9050,7 @@ export const defineCollectionErrorFactory: DefineTypeFactoryInterface<
 
 export type OptionalCollectionFilterInput = {
   __typename?: 'CollectionFilterInput';
-  /**
- * Specifies the channel by which the data should be filtered.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: CollectionFilterInput['channel'] | undefined;
   ids?: CollectionFilterInput['ids'] | undefined;
   metadata?: Maybe<OptionalMetadataFilter[]> | undefined;
@@ -9201,11 +9098,7 @@ export type OptionalCollectionInput = {
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
   privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: CollectionInput['publicationDate'] | undefined;
   /** Search engine optimization fields. */
   seo?: Maybe<OptionalSeoInput> | undefined;
@@ -9300,11 +9193,7 @@ export const defineCollectionReorderProductsFactory: DefineTypeFactoryInterface<
 
 export type OptionalCollectionSortingInput = {
   __typename?: 'CollectionSortingInput';
-  /**
- * Specifies the channel in which to sort the data.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel in which to sort the data. */
   channel?: CollectionSortingInput['channel'] | undefined;
   /** Specifies the direction in which to sort collections. */
   direction?: CollectionSortingInput['direction'] | undefined;
@@ -10428,80 +10317,8 @@ export const defineDeletePrivateMetadataFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/**
- * Represents a delivery option for the checkout.
- *
- * Added in Saleor 3.23.
- */
-export type OptionalDelivery = {
-  __typename?: 'Delivery';
-  /** The ID of the delivery. */
-  id?: Delivery['id'] | undefined;
-  /** Shipping method represented by the delivery. */
-  shippingMethod?: Maybe<OptionalShippingMethod> | undefined;
-};
-
-/**
- * Define factory for {@link Delivery} model.
- *
- * @param options
- * @returns factory {@link DeliveryFactoryInterface}
- */
-export const defineDeliveryFactory: DefineTypeFactoryInterface<
-  OptionalDelivery,
-  {}
-> = defineTypeFactory;
-
 /** Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise. */
 export type OptionalDeliveryMethod = OptionalShippingMethod | OptionalWarehouse;
-
-/**
- * Calculates available delivery options for a checkout.
- *
- * Added in Saleor 3.23.
- *
- * Triggers the following webhook events:
- * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
- */
-export type OptionalDeliveryOptionsCalculate = {
-  __typename?: 'DeliveryOptionsCalculate';
-  /** List of the available deliveries. */
-  deliveries?: OptionalDelivery[] | undefined;
-  errors?: OptionalDeliveryOptionsCalculateError[] | undefined;
-};
-
-/**
- * Define factory for {@link DeliveryOptionsCalculate} model.
- *
- * @param options
- * @returns factory {@link DeliveryOptionsCalculateFactoryInterface}
- */
-export const defineDeliveryOptionsCalculateFactory: DefineTypeFactoryInterface<
-  OptionalDeliveryOptionsCalculate,
-  {}
-> = defineTypeFactory;
-
-export type OptionalDeliveryOptionsCalculateError = {
-  __typename?: 'DeliveryOptionsCalculateError';
-  /** The error code. */
-  code?: DeliveryOptionsCalculateError['code'] | undefined;
-  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
-  field?: DeliveryOptionsCalculateError['field'] | undefined;
-  /** The error message. */
-  message?: DeliveryOptionsCalculateError['message'] | undefined;
-};
-
-/**
- * Define factory for {@link DeliveryOptionsCalculateError} model.
- *
- * @param options
- * @returns factory {@link DeliveryOptionsCalculateErrorFactoryInterface}
- */
-export const defineDeliveryOptionsCalculateErrorFactory: DefineTypeFactoryInterface<
-  OptionalDeliveryOptionsCalculateError,
-  {}
-> = defineTypeFactory;
 
 /** Represents digital content associated with a product variant. */
 export type OptionalDigitalContent = {
@@ -10961,11 +10778,7 @@ export type OptionalDraftOrderCreateInput = {
   channelId?: DraftOrderCreateInput['channelId'] | undefined;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: DraftOrderCreateInput['customerNote'] | undefined;
-  /**
- * Discount amount for the order.
- *
- * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
- */
+  /** Discount amount for the order. */
   discount?: DraftOrderCreateInput['discount'] | undefined;
   /** External ID of this order. */
   externalReference?: DraftOrderCreateInput['externalReference'] | undefined;
@@ -11119,11 +10932,7 @@ export type OptionalDraftOrderInput = {
   channelId?: DraftOrderInput['channelId'] | undefined;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: DraftOrderInput['customerNote'] | undefined;
-  /**
- * Discount amount for the order.
- *
- * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
- */
+  /** Discount amount for the order. */
   discount?: DraftOrderInput['discount'] | undefined;
   /** External ID of this order. */
   externalReference?: DraftOrderInput['externalReference'] | undefined;
@@ -11836,6 +11645,8 @@ export const defineExportProductsInputFactory: DefineTypeFactoryInterface<
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -12633,7 +12444,7 @@ export type OptionalGiftCard = {
   /** End date of gift card. */
   endDate?: GiftCard['endDate'] | undefined;
   /**
- * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER and REFUNDED_IN_ORDER events.
+ * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER events.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
  */
@@ -12975,17 +12786,9 @@ export type OptionalGiftCardCreateInput = {
   balance?: OptionalPriceInput | undefined;
   /** Slug of a channel from which the email should be sent. */
   channel?: GiftCardCreateInput['channel'] | undefined;
-  /**
- * Code to use the gift card.
- *
- * DEPRECATED: this field will be removed. The code is now auto generated.
- */
+  /** Code to use the gift card. */
   code?: GiftCardCreateInput['code'] | undefined;
-  /**
- * End date of the gift card in ISO 8601 format.
- *
- * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
- */
+  /** End date of the gift card in ISO 8601 format. */
   endDate?: GiftCardCreateInput['endDate'] | undefined;
   /** The gift card expiry date. */
   expiryDate?: GiftCardCreateInput['expiryDate'] | undefined;
@@ -13009,11 +12812,7 @@ export type OptionalGiftCardCreateInput = {
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
   privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /**
- * Start date of the gift card in ISO 8601 format.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Start date of the gift card in ISO 8601 format. */
   startDate?: GiftCardCreateInput['startDate'] | undefined;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: GiftCardCreateInput['userEmail'] | undefined;
@@ -13317,79 +13116,6 @@ export type OptionalGiftCardMetadataUpdated = {
  */
 export const defineGiftCardMetadataUpdatedFactory: DefineTypeFactoryInterface<
   OptionalGiftCardMetadataUpdated,
-  {}
-> = defineTypeFactory;
-
-/**
- * Represents a gift card payment method used for a transaction.
- *
- * Added in Saleor 3.23.
- */
-export type OptionalGiftCardPaymentMethodDetails = {
-  __typename?: 'GiftCardPaymentMethodDetails';
-  /**
- * Brand of the gift card.
- *
- * Added in Saleor 3.23.
- */
-  brand?: GiftCardPaymentMethodDetails['brand'] | undefined;
-  /**
- * Indicates whether the gift card is a built-in Saleor gift card.
- *
- * Added in Saleor 3.23.
- */
-  isSaleorGiftcard?: GiftCardPaymentMethodDetails['isSaleorGiftcard'] | undefined;
-  /**
- * Last characters of the gift card code. Max 4 characters.
- *
- * Added in Saleor 3.23.
- */
-  lastChars?: GiftCardPaymentMethodDetails['lastChars'] | undefined;
-  /** Name of the gift card. */
-  name?: GiftCardPaymentMethodDetails['name'] | undefined;
-};
-
-/**
- * Define factory for {@link GiftCardPaymentMethodDetails} model.
- *
- * @param options
- * @returns factory {@link GiftCardPaymentMethodDetailsFactoryInterface}
- */
-export const defineGiftCardPaymentMethodDetailsFactory: DefineTypeFactoryInterface<
-  OptionalGiftCardPaymentMethodDetails,
-  {}
-> = defineTypeFactory;
-
-export type OptionalGiftCardPaymentMethodDetailsInput = {
-  __typename?: 'GiftCardPaymentMethodDetailsInput';
-  /**
- * Brand of the gift card used for the transaction. Max length is 40 characters.
- *
- * Added in Saleor 3.23.
- */
-  brand?: GiftCardPaymentMethodDetailsInput['brand'] | undefined;
-  /**
- * Last characters of the gift card used for the transaction. Max length is 4 characters.
- *
- * Added in Saleor 3.23.
- */
-  lastChars?: GiftCardPaymentMethodDetailsInput['lastChars'] | undefined;
-  /**
- * Name of the payment method used for the transaction. Max length is 256 characters.
- *
- * Added in Saleor 3.23.
- */
-  name?: GiftCardPaymentMethodDetailsInput['name'] | undefined;
-};
-
-/**
- * Define factory for {@link GiftCardPaymentMethodDetailsInput} model.
- *
- * @param options
- * @returns factory {@link GiftCardPaymentMethodDetailsInputFactoryInterface}
- */
-export const defineGiftCardPaymentMethodDetailsInputFactory: DefineTypeFactoryInterface<
-  OptionalGiftCardPaymentMethodDetailsInput,
   {}
 > = defineTypeFactory;
 
@@ -13705,11 +13431,7 @@ export type OptionalGiftCardUpdateInput = {
   addTags?: GiftCardUpdateInput['addTags'] | undefined;
   /** The gift card balance amount. */
   balanceAmount?: GiftCardUpdateInput['balanceAmount'] | undefined;
-  /**
- * End date of the gift card in ISO 8601 format.
- *
- * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
- */
+  /** End date of the gift card in ISO 8601 format. */
   endDate?: GiftCardUpdateInput['endDate'] | undefined;
   /** The gift card expiry date. */
   expiryDate?: GiftCardUpdateInput['expiryDate'] | undefined;
@@ -13731,11 +13453,7 @@ export type OptionalGiftCardUpdateInput = {
   privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /** The gift card tags to remove. */
   removeTags?: GiftCardUpdateInput['removeTags'] | undefined;
-  /**
- * Start date of the gift card in ISO 8601 format.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Start date of the gift card in ISO 8601 format. */
   startDate?: GiftCardUpdateInput['startDate'] | undefined;
 };
 
@@ -15443,7 +15161,6 @@ export const defineMetadataFilterFactory: DefineTypeFactoryInterface<
  *           Matches objects where the metadata key "color" is set to either "blue" or "green".
  *         - `{key: "status", value: {eq: "active"}}`
  *           Matches objects where the metadata key "status" is set to "active".
- *
  */
 export type OptionalMetadataFilterInput = {
   __typename?: 'MetadataFilterInput';
@@ -16111,7 +15828,6 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutDeliveryMethodUpdate?: Maybe<OptionalCheckoutDeliveryMethodUpdate> | undefined;
@@ -16178,7 +15894,6 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutShippingMethodUpdate?: Maybe<OptionalCheckoutShippingMethodUpdate> | undefined;
@@ -16321,16 +16036,6 @@ export type OptionalMutation = {
  */
   deleteWarehouse?: Maybe<OptionalWarehouseDelete> | undefined;
   /**
- * Calculates available delivery options for a checkout.
- *
- * Added in Saleor 3.23.
- *
- * Triggers the following webhook events:
- * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
- * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
- */
-  deliveryOptionsCalculate?: Maybe<OptionalDeliveryOptionsCalculate> | undefined;
-  /**
  * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -16420,6 +16125,8 @@ export type OptionalMutation = {
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -17747,7 +17454,7 @@ export type OptionalMutation = {
   transactionEventReport?: Maybe<OptionalTransactionEventReport> | undefined;
   /** Initializes a transaction session. It triggers the webhook `TRANSACTION_INITIALIZE_SESSION`, to the requested `paymentGateways`. There is a limit of 100 transaction items per checkout / order. */
   transactionInitialize?: Maybe<OptionalTransactionInitialize> | undefined;
-  /** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`.  */
+  /** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`. */
   transactionProcess?: Maybe<OptionalTransactionProcess> | undefined;
   /**
  * Request an action for payment transaction.
@@ -17962,6 +17669,24 @@ export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/** Represents the NEW_TAB target options for an app extension. */
+export type OptionalNewTabTargetOptions = {
+  __typename?: 'NewTabTargetOptions';
+  /** HTTP method for New Tab target (GET or POST) */
+  method?: NewTabTargetOptions['method'] | undefined;
+};
+
+/**
+ * Define factory for {@link NewTabTargetOptions} model.
+ *
+ * @param options
+ * @returns factory {@link NewTabTargetOptionsFactoryInterface}
+ */
+export const defineNewTabTargetOptionsFactory: DefineTypeFactoryInterface<
+  OptionalNewTabTargetOptions,
+  {}
+> = defineTypeFactory;
+
 /** An object with an ID */
 export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalDigitalContent | OptionalDigitalContentUrl | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
@@ -18131,7 +17856,7 @@ export type OptionalOrder = {
   totalCancelPending?: OptionalMoney | undefined;
   /** Amount canceled for the order. */
   totalCanceled?: OptionalMoney | undefined;
-  /** Amount captured for the order.  */
+  /** Amount captured for the order. */
   totalCaptured?: OptionalMoney | undefined;
   /**
  * Total amount of ongoing charge requests for the order's transactions.
@@ -18161,11 +17886,7 @@ export type OptionalOrder = {
  * Requires one of the following permissions: MANAGE_ORDERS.
  */
   totalRemainingGrant?: OptionalMoney | undefined;
-  /**
- * Google Analytics tracking client ID.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** Google Analytics tracking client ID. */
   trackingClientId?: Order['trackingClientId'] | undefined;
   /** List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS. */
   transactions?: OptionalTransactionItem[] | undefined;
@@ -20099,7 +19820,7 @@ export const defineOrderLineFactory: DefineTypeFactoryInterface<
 
 export type OptionalOrderLineCreateInput = {
   __typename?: 'OrderLineCreateInput';
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
   forceNewLine?: OrderLineCreateInput['forceNewLine'] | undefined;
   /** Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: OrderLineCreateInput['price'] | undefined;
@@ -21441,11 +21162,7 @@ export type OptionalPageCreateInput = {
   isPublished?: PageCreateInput['isPublished'] | undefined;
   /** ID of the page type that page belongs to. */
   pageType?: PageCreateInput['pageType'] | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: PageCreateInput['publicationDate'] | undefined;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: PageCreateInput['publishedAt'] | undefined;
@@ -21624,11 +21341,7 @@ export type OptionalPageInput = {
   content?: PageInput['content'] | undefined;
   /** Determines if page is visible in the storefront. */
   isPublished?: PageInput['isPublished'] | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: PageInput['publicationDate'] | undefined;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: PageInput['publishedAt'] | undefined;
@@ -22165,7 +21878,7 @@ export type OptionalPageTypeUpdateInput = {
   addAttributes?: PageTypeUpdateInput['addAttributes'] | undefined;
   /** Name of the page type. */
   name?: PageTypeUpdateInput['name'] | undefined;
-  /** List of attribute IDs to be unassigned from the page type. */
+  /** List of attribute IDs to be assigned to the page type. */
   removeAttributes?: PageTypeUpdateInput['removeAttributes'] | undefined;
   /** Page type slug. */
   slug?: PageTypeUpdateInput['slug'] | undefined;
@@ -22366,6 +22079,8 @@ export type OptionalPayment = {
   modified?: Payment['modified'] | undefined;
   /** Order associated with a payment. */
   order?: Maybe<OptionalOrder> | undefined;
+  /** Informs whether this is a partial payment. */
+  partial?: Payment['partial'] | undefined;
   /** Type of method used for payment. */
   paymentMethodType?: Payment['paymentMethodType'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
@@ -22812,7 +22527,7 @@ export const definePaymentGatewayInitializeTokenizationErrorFactory: DefineTypeF
   {}
 > = defineTypeFactory;
 
-/** Event sent to initialize a new session in payment gateway to store the payment method.  */
+/** Event sent to initialize a new session in payment gateway to store the payment method. */
 export type OptionalPaymentGatewayInitializeTokenizationSession = {
   __typename?: 'PaymentGatewayInitializeTokenizationSession';
   /** Channel related to the requested action. */
@@ -22965,7 +22680,7 @@ export const definePaymentListGatewaysFactory: DefineTypeFactoryInterface<
  *
  * Added in Saleor 3.22.
  */
-export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalGiftCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
+export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
 
 export type OptionalPaymentMethodDetailsCardFilterInput = {
   __typename?: 'PaymentMethodDetailsCardFilterInput';
@@ -23004,7 +22719,7 @@ export const definePaymentMethodDetailsFilterInputFactory: DefineTypeFactoryInte
 > = defineTypeFactory;
 
 /**
- * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
+ * Details of the payment method used for the transaction. One of `card` or `other` is required.
  *
  * Added in Saleor 3.22.
  */
@@ -23012,12 +22727,6 @@ export type OptionalPaymentMethodDetailsInput = {
   __typename?: 'PaymentMethodDetailsInput';
   /** Details of the card payment method used for the transaction. */
   card?: Maybe<OptionalCardPaymentMethodDetailsInput> | undefined;
-  /**
- * Details of the gift card payment method used for the transaction.
- *
- * Added in Saleor 3.23.
- */
-  giftCard?: Maybe<OptionalGiftCardPaymentMethodDetailsInput> | undefined;
   /** Details of the non-card payment method used for this transaction. */
   other?: Maybe<OptionalOtherPaymentMethodDetailsInput> | undefined;
 };
@@ -24403,11 +24112,7 @@ export type OptionalProductBulkCreateInput = {
   category?: ProductBulkCreateInput['category'] | undefined;
   /** List of channels in which the product is available. */
   channelListings?: Maybe<OptionalProductChannelListingCreateInput[]> | undefined;
-  /**
- * Determine if taxes are being charged for the product.
- *
- * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
- */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: ProductBulkCreateInput['chargeTaxes'] | undefined;
   /** List of IDs of collections that the product belongs to. */
   collections?: ProductBulkCreateInput['collections'] | undefined;
@@ -24445,11 +24150,7 @@ export type OptionalProductBulkCreateInput = {
   slug?: ProductBulkCreateInput['slug'] | undefined;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: ProductBulkCreateInput['taxClass'] | undefined;
-  /**
- * Tax rate for enabled tax gateway.
- *
- * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
- */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: ProductBulkCreateInput['taxCode'] | undefined;
   /** Input list of product variants to create. */
   variants?: Maybe<OptionalProductVariantBulkCreateInput[]> | undefined;
@@ -24657,11 +24358,7 @@ export type OptionalProductChannelListingAddInput = {
   addVariants?: ProductChannelListingAddInput['addVariants'] | undefined;
   /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
   availableForPurchaseAt?: ProductChannelListingAddInput['availableForPurchaseAt'] | undefined;
-  /**
- * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
- *
- * DEPRECATED: this field will be removed. Use `availableForPurchaseAt` field instead.
- */
+  /** A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed. */
   availableForPurchaseDate?: ProductChannelListingAddInput['availableForPurchaseDate'] | undefined;
   /** ID of a channel. */
   channelId?: ProductChannelListingAddInput['channelId'] | undefined;
@@ -24669,11 +24366,7 @@ export type OptionalProductChannelListingAddInput = {
   isAvailableForPurchase?: ProductChannelListingAddInput['isAvailableForPurchase'] | undefined;
   /** Determines if object is visible to customers. */
   isPublished?: ProductChannelListingAddInput['isPublished'] | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: ProductChannelListingAddInput['publicationDate'] | undefined;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: ProductChannelListingAddInput['publishedAt'] | undefined;
@@ -24861,11 +24554,7 @@ export type OptionalProductCreateInput = {
   attributes?: Maybe<OptionalAttributeValueInput[]> | undefined;
   /** ID of the product's category. */
   category?: ProductCreateInput['category'] | undefined;
-  /**
- * Determine if taxes are being charged for the product.
- *
- * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
- */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: ProductCreateInput['chargeTaxes'] | undefined;
   /** List of IDs of collections that the product belongs to. */
   collections?: ProductCreateInput['collections'] | undefined;
@@ -24901,11 +24590,7 @@ export type OptionalProductCreateInput = {
   slug?: ProductCreateInput['slug'] | undefined;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: ProductCreateInput['taxClass'] | undefined;
-  /**
- * Tax rate for enabled tax gateway.
- *
- * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
- */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: ProductCreateInput['taxCode'] | undefined;
   /** Weight of the Product. */
   weight?: ProductCreateInput['weight'] | undefined;
@@ -25058,11 +24743,7 @@ export type OptionalProductFilterInput = {
   /** Filter by the date of availability for purchase. */
   availableFrom?: ProductFilterInput['availableFrom'] | undefined;
   categories?: ProductFilterInput['categories'] | undefined;
-  /**
- * Specifies the channel by which the data should be filtered.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: ProductFilterInput['channel'] | undefined;
   collections?: ProductFilterInput['collections'] | undefined;
   /** Filter on whether product is a gift card or not. */
@@ -25132,11 +24813,7 @@ export type OptionalProductInput = {
   attributes?: Maybe<OptionalAttributeValueInput[]> | undefined;
   /** ID of the product's category. */
   category?: ProductInput['category'] | undefined;
-  /**
- * Determine if taxes are being charged for the product.
- *
- * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
- */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: ProductInput['chargeTaxes'] | undefined;
   /** List of IDs of collections that the product belongs to. */
   collections?: ProductInput['collections'] | undefined;
@@ -25170,11 +24847,7 @@ export type OptionalProductInput = {
   slug?: ProductInput['slug'] | undefined;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: ProductInput['taxClass'] | undefined;
-  /**
- * Tax rate for enabled tax gateway.
- *
- * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
- */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: ProductInput['taxCode'] | undefined;
   /** Weight of the Product. */
   weight?: ProductInput['weight'] | undefined;
@@ -25514,11 +25187,7 @@ export type OptionalProductOrder = {
  * Note: this doesn't take translations into account yet.
  */
   attributeId?: ProductOrder['attributeId'] | undefined;
-  /**
- * Specifies the channel in which to sort the data.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel in which to sort the data. */
   channel?: ProductOrder['channel'] | undefined;
   /** Specifies the direction in which to sort products. */
   direction?: ProductOrder['direction'] | undefined;
@@ -25924,11 +25593,6 @@ export const defineProductTypeDeleteFactory: DefineTypeFactoryInterface<
 
 export type OptionalProductTypeFilterInput = {
   __typename?: 'ProductTypeFilterInput';
-  /**
- *
- *
- * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
- */
   configurable?: ProductTypeFilterInput['configurable'] | undefined;
   ids?: ProductTypeFilterInput['ids'] | undefined;
   kind?: ProductTypeFilterInput['kind'] | undefined;
@@ -25951,11 +25615,7 @@ export const defineProductTypeFilterInputFactory: DefineTypeFactoryInterface<
 
 export type OptionalProductTypeInput = {
   __typename?: 'ProductTypeInput';
-  /**
- * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
- *
- * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
- */
+  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
   hasVariants?: ProductTypeInput['hasVariants'] | undefined;
   /** Determines if products are digital. */
   isDigital?: ProductTypeInput['isDigital'] | undefined;
@@ -25971,11 +25631,7 @@ export type OptionalProductTypeInput = {
   slug?: ProductTypeInput['slug'] | undefined;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
   taxClass?: ProductTypeInput['taxClass'] | undefined;
-  /**
- * Tax rate for enabled tax gateway.
- *
- * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
- */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: ProductTypeInput['taxCode'] | undefined;
   /** List of attributes used to distinguish between different variants of a product. */
   variantAttributes?: ProductTypeInput['variantAttributes'] | undefined;
@@ -26266,11 +25922,7 @@ export type OptionalProductVariantBulkCreate = {
   /** Returns how many objects were created. */
   count?: ProductVariantBulkCreate['count'] | undefined;
   errors?: OptionalBulkProductError[] | undefined;
-  /**
- * List of the created variants.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** List of the created variants. */
   productVariants?: OptionalProductVariant[] | undefined;
   /** List of the created variants. */
   results?: OptionalProductVariantBulkResult[] | undefined;
@@ -26599,9 +26251,7 @@ export type OptionalProductVariantChannelListing = {
   /** The price of the variant. */
   price?: Maybe<OptionalMoney> | undefined;
   /**
- * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
- *
- *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
+ * Prior price of the variant used for discount calculations.
  *
  * Added in Saleor 3.21.
  */
@@ -28865,11 +28515,7 @@ export type OptionalPublishableChannelListingInput = {
   channelId?: PublishableChannelListingInput['channelId'] | undefined;
   /** Determines if object is visible to customers. */
   isPublished?: PublishableChannelListingInput['isPublished'] | undefined;
-  /**
- * Publication date. ISO 8601 standard.
- *
- * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
- */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: PublishableChannelListingInput['publicationDate'] | undefined;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: PublishableChannelListingInput['publishedAt'] | undefined;
@@ -29220,11 +28866,7 @@ export type OptionalQuery = {
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
  */
   taxCountryConfiguration?: Maybe<OptionalTaxCountryConfiguration> | undefined;
-  /**
- *
- *
- * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
- */
+  /** \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP. */
   taxCountryConfigurations?: Maybe<OptionalTaxCountryConfiguration[]> | undefined;
   /** List of all tax rates available from tax gateway. */
   taxTypes?: Maybe<OptionalTaxType[]> | undefined;
@@ -30028,11 +29670,7 @@ export const defineSaleRemoveCataloguesFactory: DefineTypeFactoryInterface<
 
 export type OptionalSaleSortingInput = {
   __typename?: 'SaleSortingInput';
-  /**
- * Specifies the channel in which to sort the data.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel in which to sort the data. */
   channel?: SaleSortingInput['channel'] | undefined;
   /** Specifies the direction in which to sort sales. */
   direction?: SaleSortingInput['direction'] | undefined;
@@ -31771,11 +31409,7 @@ export type OptionalShopSettingsInput = {
   allowLoginWithoutConfirmation?: ShopSettingsInput['allowLoginWithoutConfirmation'] | undefined;
   /** Enable automatic fulfillment for all digital products. */
   automaticFulfillmentDigitalProducts?: ShopSettingsInput['automaticFulfillmentDigitalProducts'] | undefined;
-  /**
- * Charge taxes on shipping.
- *
- * DEPRECATED: this field will be removed. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
- */
+  /** Charge taxes on shipping. */
   chargeTaxesOnShipping?: ShopSettingsInput['chargeTaxesOnShipping'] | undefined;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: ShopSettingsInput['customerSetPasswordUrl'] | undefined;
@@ -31791,11 +31425,7 @@ export type OptionalShopSettingsInput = {
   defaultWeightUnit?: ShopSettingsInput['defaultWeightUnit'] | undefined;
   /** SEO description. */
   description?: ShopSettingsInput['description'] | undefined;
-  /**
- * Display prices with tax in store.
- *
- * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
- */
+  /** Display prices with tax in store. */
   displayGrossPrices?: ShopSettingsInput['displayGrossPrices'] | undefined;
   /** Enable automatic account confirmation by email. */
   enableAccountConfirmationByEmail?: ShopSettingsInput['enableAccountConfirmationByEmail'] | undefined;
@@ -31805,11 +31435,7 @@ export type OptionalShopSettingsInput = {
   fulfillmentAutoApprove?: ShopSettingsInput['fulfillmentAutoApprove'] | undefined;
   /** Header text. */
   headerText?: ShopSettingsInput['headerText'] | undefined;
-  /**
- * Include taxes in prices.
- *
- * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
- */
+  /** Include taxes in prices. */
   includeTaxesInPrices?: ShopSettingsInput['includeTaxesInPrices'] | undefined;
   /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
   limitQuantityPerCheckout?: ShopSettingsInput['limitQuantityPerCheckout'] | undefined;
@@ -31841,8 +31467,6 @@ export type OptionalShopSettingsInput = {
  * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
  *
  * Added in Saleor 3.22.
- *
- * DEPRECATED: this field will be removed.
  */
   useLegacyUpdateWebhookEmission?: ShopSettingsInput['useLegacyUpdateWebhookEmission'] | undefined;
 };
@@ -34585,7 +34209,7 @@ export const defineTransactionItemMetadataUpdatedFactory: DefineTypeFactoryInter
   {}
 > = defineTypeFactory;
 
-/** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`.  */
+/** Processes a transaction session. It triggers the webhook `TRANSACTION_PROCESS_SESSION`, to the assigned `paymentGateways`. */
 export type OptionalTransactionProcess = {
   __typename?: 'TransactionProcess';
   /** The json data required to finalize the payment. */
@@ -35415,13 +35039,7 @@ export type OptionalUserCreateInput = {
   firstName?: UserCreateInput['firstName'] | undefined;
   /** User account is active. */
   isActive?: UserCreateInput['isActive'] | undefined;
-  /**
- * User account is confirmed.
- *
- * DEPRECATED: this field will be removed.
- *
- * The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
- */
+  /** User account is confirmed. */
   isConfirmed?: UserCreateInput['isConfirmed'] | undefined;
   /** User language code. */
   languageCode?: UserCreateInput['languageCode'] | undefined;
@@ -35648,11 +35266,7 @@ export type OptionalVoucher = {
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
   channelListings?: Maybe<OptionalVoucherChannelListing[]> | undefined;
-  /**
- * The code of the voucher.
- *
- * DEPRECATED: this field will be removed.
- */
+  /** The code of the voucher. */
   code?: Voucher['code'] | undefined;
   /**
  * List of codes available for this voucher.
@@ -36290,11 +35904,7 @@ export type OptionalVoucherInput = {
   applyOncePerOrder?: VoucherInput['applyOncePerOrder'] | undefined;
   /** Categories discounted by the voucher. */
   categories?: VoucherInput['categories'] | undefined;
-  /**
- * Code to use the voucher.
- *
- * DEPRECATED: this field will be removed. Use `addCodes` instead.
- */
+  /** Code to use the voucher. */
   code?: VoucherInput['code'] | undefined;
   /** Collections discounted by the voucher. */
   collections?: VoucherInput['collections'] | undefined;
@@ -36398,11 +36008,7 @@ export const defineVoucherRemoveCataloguesFactory: DefineTypeFactoryInterface<
 
 export type OptionalVoucherSortingInput = {
   __typename?: 'VoucherSortingInput';
-  /**
- * Specifies the channel in which to sort the data.
- *
- * DEPRECATED: this field will be removed. Use root-level channel argument instead.
- */
+  /** Specifies the channel in which to sort the data. */
   channel?: VoucherSortingInput['channel'] | undefined;
   /** Specifies the direction in which to sort vouchers. */
   direction?: VoucherSortingInput['direction'] | undefined;
@@ -36687,11 +36293,7 @@ export type OptionalWarehouseCreateInput = {
   externalReference?: WarehouseCreateInput['externalReference'] | undefined;
   /** Warehouse name. */
   name?: WarehouseCreateInput['name'] | undefined;
-  /**
- * Shipping zones supported by the warehouse.
- *
- * DEPRECATED: this field will be removed. Providing the zone ids will raise a ValidationError.
- */
+  /** Shipping zones supported by the warehouse. */
   shippingZones?: WarehouseCreateInput['shippingZones'] | undefined;
   /** Warehouse slug. */
   slug?: WarehouseCreateInput['slug'] | undefined;
@@ -37068,11 +36670,7 @@ export type OptionalWebhookCreateInput = {
   asyncEvents?: WebhookCreateInput['asyncEvents'] | undefined;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: WebhookCreateInput['customHeaders'] | undefined;
-  /**
- * The events that webhook wants to subscribe.
- *
- * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
- */
+  /** The events that webhook wants to subscribe. */
   events?: WebhookCreateInput['events'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookCreateInput['isActive'] | undefined;
@@ -37080,11 +36678,7 @@ export type OptionalWebhookCreateInput = {
   name?: WebhookCreateInput['name'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookCreateInput['query'] | undefined;
-  /**
- * The secret key used to create a hash signature with each payload.
- *
- * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
- */
+  /** The secret key used to create a hash signature with each payload. */
   secretKey?: WebhookCreateInput['secretKey'] | undefined;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: WebhookCreateInput['syncEvents'] | undefined;
@@ -37325,11 +36919,7 @@ export type OptionalWebhookUpdateInput = {
   asyncEvents?: WebhookUpdateInput['asyncEvents'] | undefined;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: WebhookUpdateInput['customHeaders'] | undefined;
-  /**
- * The events that webhook wants to subscribe.
- *
- * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
- */
+  /** The events that webhook wants to subscribe. */
   events?: WebhookUpdateInput['events'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookUpdateInput['isActive'] | undefined;
@@ -37337,11 +36927,7 @@ export type OptionalWebhookUpdateInput = {
   name?: WebhookUpdateInput['name'] | undefined;
   /** Subscription query used to define a webhook payload. */
   query?: WebhookUpdateInput['query'] | undefined;
-  /**
- * Use to create a hash signature with each payload.
- *
- * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
- */
+  /** Use to create a hash signature with each payload. */
   secretKey?: WebhookUpdateInput['secretKey'] | undefined;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: WebhookUpdateInput['syncEvents'] | undefined;
@@ -37377,6 +36963,24 @@ export type OptionalWeight = {
  */
 export const defineWeightFactory: DefineTypeFactoryInterface<
   OptionalWeight,
+  {}
+> = defineTypeFactory;
+
+/** Represents the WIDGET target options for an app extension. */
+export type OptionalWidgetTargetOptions = {
+  __typename?: 'WidgetTargetOptions';
+  /** HTTP method for Widget target (GET or POST) */
+  method?: WidgetTargetOptions['method'] | undefined;
+};
+
+/**
+ * Define factory for {@link WidgetTargetOptions} model.
+ *
+ * @param options
+ * @returns factory {@link WidgetTargetOptionsFactoryInterface}
+ */
+export const defineWidgetTargetOptionsFactory: DefineTypeFactoryInterface<
+  OptionalWidgetTargetOptions,
   {}
 > = defineTypeFactory;
 
