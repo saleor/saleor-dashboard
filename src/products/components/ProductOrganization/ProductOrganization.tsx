@@ -147,6 +147,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 fetchMoreProductTypes.onFetchMore();
               }
             }}
+            onInputValueChange={fetchProductTypes}
             onFocus={() => fetchProductTypes("")}
             label={intl.formatMessage({
               id: "anK7jD",
@@ -208,6 +209,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 fetchMoreCategories.onFetchMore();
               }
             }}
+            onInputValueChange={fetchCategories}
             onFocus={() => {
               setCategoryInputActive(true);
               fetchCategories("");
