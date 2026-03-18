@@ -7,6 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import { configure } from "storybook/test";
 import { LocaleContext } from "../src/components/Locale/Locale";
 import { apolloClient } from "../src/graphql/client";
+import { PaginatorContext } from "../src/hooks/usePaginator";
 import "../src/index.css";
 import { ThemeProvider } from "../src/theme";
 import { paletteOverrides, themeOverrides } from "../src/themeOverrides";
@@ -23,7 +24,17 @@ const preview: Preview = {
               {/* @ts-expect-error legacy types  */}
               <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
                 <ThemeProvider>
-                  <Story />
+                  <PaginatorContext.Provider
+                    value={{
+                      hasNextPage: false,
+                      hasPreviousPage: false,
+                      paginatorType: "link",
+                      nextHref: undefined,
+                      prevHref: undefined,
+                    }}
+                  >
+                    <Story />
+                  </PaginatorContext.Provider>
                 </ThemeProvider>
               </LegacyThemeProvider>
             </IntlProvider>
