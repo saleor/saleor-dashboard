@@ -1,0 +1,53 @@
+src/orders/components/OrderListDatagrid/OrderListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 17
+src/shipping/components/ShippingZonesListDatagrid/ShippingZonesListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 13
+src/permissionGroups/components/PermissionGroupListDatagrid/PermissionGroupListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 15
+src/modeling/components/PageListDatagrid/PageListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 43
+src/orders/components/OrderDraftListDatagrid/OrderDraftListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 18
+src/collections/components/CollectionListDatagrid/CollectionListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 18
+src/customers/components/CustomerListDatagrid/CustomerListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 17
+src/discounts/components/DiscountListDatagrid/DiscountListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 16
+src/attributes/components/AttributeListDatagrid/AttributeListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 15
+src/discounts/components/VoucherCodesDatagrid/VoucherCodesDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 21
+src/products/components/ProductListDatagrid/ProductListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 58
+src/categories/components/CategoryListDatagrid/CategoryListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 15
+src/staff/components/StaffListDatagrid/StaffListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 15
+src/categories/components/CategoryProductListDatagrid/CategoryProductListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 27
+src/discounts/components/VoucherListDatagrid/VoucherListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 17
+src/giftCards/GiftCardsList/GiftCardsListDatagrid/GiftCardsListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 105
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "7c5a7c2874bac06a6495009150ac626226bfac1c",
+  "prompts": {
+    "b8a4b86a1f4a58e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f475f18f-0e3c-4eb8-acad-7469a897aff6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 16,
+      "accepted_lines": 16,
+      "overriden_lines": 0
+    }
+  }
+}
