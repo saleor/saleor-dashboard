@@ -1,0 +1,27 @@
+src/giftCards/GiftCardsList/GiftCardsListDatagrid/GiftCardsListDatagrid.stories.tsx
+  4860090cb2eab47f 5,14-18,98,105
+src/categories/components/CategoryProductListDatagrid/CategoryProductListDatagrid.stories.tsx
+  4860090cb2eab47f 1-2,8,10,16
+src/components/Datagrid/Datagrid.stories.tsx
+  4860090cb2eab47f 6-14,36-37,46-47,50-55,75,77,79,81,83,86-88,91-106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "4b459ab5ab4a631ec76d3007006c85d676bcaa8c",
+  "prompts": {
+    "4860090cb2eab47f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "923edd72-944a-4e68-b56b-3318836fb403",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 75,
+      "total_deletions": 65,
+      "accepted_lines": 58,
+      "overriden_lines": 0
+    }
+  }
+}
