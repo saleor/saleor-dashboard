@@ -1,0 +1,61 @@
+src/orders/components/OrderListDatagrid/OrderListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-33
+src/customers/components/CustomerListDatagrid/CustomerListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-35
+src/orders/components/OrderDraftListDatagrid/OrderDraftListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-36
+src/giftCards/GiftCardsList/providers/GiftCardListProvider/GiftCardListProvider.tsx
+  b8a4b86a1f4a58e9 68
+src/categories/components/CategoryProductListDatagrid/CategoryProductListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-44
+src/giftCards/GiftCardsList/GiftCardsListDatagrid/GiftCardsListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-144,146-182
+src/categories/components/CategoryListDatagrid/CategoryListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-39
+src/permissionGroups/components/PermissionGroupListDatagrid/PermissionGroupListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-31
+src/staff/components/StaffListDatagrid/StaffListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-31
+src/collections/components/CollectionListDatagrid/CollectionListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-41
+src/discounts/components/VoucherCodesDatagrid/VoucherCodesDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-4,6-42
+src/products/components/ProductVariants/ProductVariants.stories.tsx
+  b8a4b86a1f4a58e9 1-11,13-133
+src/components/Datagrid/Datagrid.stories.tsx
+  b8a4b86a1f4a58e9 120
+src/discounts/components/VoucherListDatagrid/VoucherListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-38
+src/discounts/components/DiscountListDatagrid/DiscountListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-33
+src/shipping/components/ShippingZonesListDatagrid/ShippingZonesListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-30
+src/modeling/components/PageListDatagrid/PageListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-61
+src/products/components/ProductListDatagrid/ProductListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-95
+src/orders/components/OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-34
+src/attributes/components/AttributeListDatagrid/AttributeListDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "3f8e570861bd268a02418d45b9a2e4dfad5df464",
+  "prompts": {
+    "b8a4b86a1f4a58e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f475f18f-0e3c-4eb8-acad-7469a897aff6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1002,
+      "total_deletions": 22,
+      "accepted_lines": 969,
+      "overriden_lines": 1
+    }
+  }
+}
