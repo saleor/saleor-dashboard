@@ -42,7 +42,8 @@
     "**/*.generated.ts",
     "apollo.config.js",
     "codegen*",
-    "src/graphql/staging/index.ts"
+    "src/graphql/staging/index.ts",
+    "src/legacy-sdk/apollo/types.ts"
   ],
   "ignoreDependencies": [
     "keycode",
