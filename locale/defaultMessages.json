@@ -8519,6 +8519,10 @@
     "context": "product export to csv file, header",
     "string": "Export Settings"
   },
+  "kkFOHD": {
+    "context": "gift card history message",
+    "string": "Gift card was refunded in an order"
+  },
   "kn7jjd": {
     "context": "section header",
     "string": "General settings"
