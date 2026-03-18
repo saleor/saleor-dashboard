@@ -1,22 +1,24 @@
+import { type CategoryDetailsQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { CategoryProductListDatagrid } from "./CategoryProductListDatagrid";
 
-const mockProducts = [
+const mockProducts: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]> = [
   {
+    __typename: "Product",
     id: "prod-1",
     name: "T-Shirt",
-    thumbnail: { url: "https://via.placeholder.com/64", __typename: "Image" as const },
-    productType: { id: "pt-1", name: "Apparel", __typename: "ProductType" as const },
+    thumbnail: { url: "https://via.placeholder.com/64", __typename: "Image" },
   },
   {
+    __typename: "Product",
     id: "prod-2",
     name: "Hoodie",
-    thumbnail: { url: "https://via.placeholder.com/64", __typename: "Image" as const },
-    productType: { id: "pt-1", name: "Apparel", __typename: "ProductType" as const },
+    thumbnail: { url: "https://via.placeholder.com/64", __typename: "Image" },
   },
-] as any;
+];
 
 const meta: Meta<typeof CategoryProductListDatagrid> = {
   title: "Categories/CategoryProductListDatagrid",

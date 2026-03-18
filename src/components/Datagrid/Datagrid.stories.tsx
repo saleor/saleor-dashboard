@@ -3,6 +3,15 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ReactElement } from "react";
 import { fn } from "storybook/test";
 
+import {
+  dateCell,
+  dropdownCell,
+  moneyCell,
+  numberCell,
+  pillCell,
+  statusCell,
+  thumbnailCell,
+} from "./customCells/cells";
 import { Datagrid, type GetCellContentOpts } from "./Datagrid";
 import { initialData } from "./fixtures";
 import { DatagridChangeStateContext, useDatagridChangeState } from "./hooks/useDatagridChange";
@@ -24,6 +33,8 @@ const columns: AvailableColumn[] = [
   { id: "eyeColor", title: "Eye color", width: 120 },
   { id: "balance", title: "Balance", width: 150 },
   { id: "job", title: "Job", width: 150 },
+  { id: "loanStatus", title: "Loan status", width: 130 },
+  { id: "loanAmount", title: "Loan amount", width: 130 },
 ];
 
 const columnsWithGroups: AvailableColumn[] = [
@@ -32,6 +43,16 @@ const columnsWithGroups: AvailableColumn[] = [
   { id: "eyeColor", title: "Eye color", width: 120, group: "Personal" },
   { id: "balance", title: "Balance", width: 150, group: "Financial" },
   { id: "job", title: "Job", width: 150, group: "Work" },
+  { id: "loanStatus", title: "Loan status", width: 130, group: "Financial" },
+  { id: "loanAmount", title: "Loan amount", width: 130, group: "Financial" },
+];
+
+const jobChoices = [
+  { label: "Engineer", value: "eng" },
+  { label: "Designer", value: "designer" },
+  { label: "QA", value: "qa" },
+  { label: "Director", value: "director" },
+  { label: "Manager", value: "manager" },
 ];
 
 const getCellContent = ([column, row]: Item, _opts: GetCellContentOpts): GridCell => {
@@ -51,46 +72,38 @@ const getCellContent = ([column, row]: Item, _opts: GetCellContentOpts): GridCel
 
   switch (columnId) {
     case "name":
-      return {
-        kind: GridCellKind.Text,
-        data: item.name,
-        displayData: item.name,
-        allowOverlay: false,
+      return thumbnailCell(item.name, "https://via.placeholder.com/64", {
         readonly: true,
+        allowOverlay: false,
         cursor: "pointer",
-      };
+      });
     case "age":
-      return {
-        kind: GridCellKind.Number,
-        data: item.age,
-        displayData: String(item.age),
-        allowOverlay: true,
-        readonly: false,
-      };
+      return numberCell(item.age);
     case "eyeColor":
-      return {
-        kind: GridCellKind.Text,
-        data: item.eyeColor,
-        displayData: item.eyeColor,
-        allowOverlay: false,
+      return pillCell(item.eyeColor, null, {
         readonly: true,
-      };
+        allowOverlay: false,
+      });
     case "balance":
-      return {
-        kind: GridCellKind.Text,
-        data: `${item.balance.amount} ${item.balance.currency}`,
-        displayData: `${item.balance.amount.toFixed(2)} ${item.balance.currency}`,
-        allowOverlay: false,
+      return moneyCell(item.balance.amount, item.balance.currency, {
         readonly: true,
-      };
+        allowOverlay: false,
+      });
     case "job":
-      return {
-        kind: GridCellKind.Text,
-        data: item.job.label,
-        displayData: item.job.label,
-        allowOverlay: false,
-        readonly: true,
-      };
+      return dropdownCell(item.job, { choices: jobChoices }, { readonly: false });
+    case "loanStatus":
+      return statusCell(
+        item.loan.active ? "success" : "error",
+        item.loan.active ? "Active" : "Inactive",
+        { readonly: true, allowOverlay: false },
+      );
+    case "loanAmount":
+      return item.loan.amount !== null
+        ? moneyCell(item.loan.amount, item.loan.currency, {
+            readonly: true,
+            allowOverlay: false,
+          })
+        : dateCell("", { readonly: true, allowOverlay: false });
     default:
       return {
         kind: GridCellKind.Text,

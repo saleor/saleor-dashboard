@@ -2,13 +2,20 @@ import {
   type GiftCardsListConsumerProps,
   GiftCardsListContext,
 } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider/GiftCardListProvider";
+import { GiftCardUrlSortField } from "@dashboard/giftCards/GiftCardsList/types";
+import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { type GiftCardListQuery } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ReactElement } from "react";
 import { fn } from "storybook/test";
 
 import { GiftCardsListDatagrid } from "./GiftCardsListDatagrid";
 
-const mockGiftCards = [
+type GiftCardNode = ExtendedGiftCard<
+  NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]
+>;
+
+const mockGiftCards: GiftCardNode[] = [
   {
     __typename: "GiftCard" as const,
     id: "gift-1",
@@ -34,11 +41,6 @@ const mockGiftCards = [
       amount: 50,
       currency: "USD",
     },
-    initialBalance: {
-      __typename: "Money" as const,
-      amount: 50,
-      currency: "USD",
-    },
   },
   {
     __typename: "GiftCard" as const,
@@ -54,11 +56,6 @@ const mockGiftCards = [
     currentBalance: {
       __typename: "Money" as const,
       amount: 0,
-      currency: "USD",
-    },
-    initialBalance: {
-      __typename: "Money" as const,
-      amount: 100,
       currency: "USD",
     },
   },
@@ -90,34 +87,29 @@ const mockGiftCards = [
       amount: 75,
       currency: "USD",
     },
-    initialBalance: {
-      __typename: "Money" as const,
-      amount: 100,
-      currency: "USD",
-    },
   },
 ];
 
 const defaultContextValue: GiftCardsListConsumerProps = {
   loading: false,
-  giftCards: mockGiftCards as any,
+  giftCards: mockGiftCards,
   settings: {
-    columns: ["giftCardCode", "status", "tag", "product", "usedBy", "balance"],
-    rowsPerPage: 20,
-  } as any,
+    columns: ["giftCardCode", "tag", "product", "usedBy", "balance"],
+    rowNumber: 20,
+  },
   updateListSettings: fn(),
   selectedRowIds: [],
   setSelectedRowIds: fn(),
   setClearDatagridRowSelectionCallback: fn(),
   clearRowSelection: fn(),
-  sort: { sort: "usedBy" as any, asc: true },
+  sort: { sort: GiftCardUrlSortField.usedBy, asc: true },
   onSort: fn(),
   pageInfo: {
     hasNextPage: false,
     hasPreviousPage: false,
     endCursor: null,
     startCursor: null,
-  } as any,
+  },
   paginationState: { first: 20 },
   params: {},
   numberOfColumns: 7,
