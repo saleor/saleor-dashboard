@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/typescript-node:22 AS pnpm
+FROM mcr.microsoft.com/devcontainers/typescript-node:24 AS pnpm
 
 RUN corepack enable
 
