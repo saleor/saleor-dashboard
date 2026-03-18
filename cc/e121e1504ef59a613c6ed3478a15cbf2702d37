@@ -1,0 +1,27 @@
+.devcontainer/Dockerfile
+  fd8a62b9872e3f4f 1
+package.json
+  fd8a62b9872e3f4f 242
+Dockerfile
+  fd8a62b9872e3f4f 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "cce121e1504ef59a613c6ed3478a15cbf2702d37",
+  "prompts": {
+    "fd8a62b9872e3f4f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "346a2002-b137-424b-9657-3b8ede59a234",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
