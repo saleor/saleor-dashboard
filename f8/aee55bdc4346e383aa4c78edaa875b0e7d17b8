@@ -1,0 +1,23 @@
+src/orders/components/OrderDetailsDatagrid/OrderDetailsDatagrid.stories.tsx
+  b8a4b86a1f4a58e9 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "f8aee55bdc4346e383aa4c78edaa875b0e7d17b8",
+  "prompts": {
+    "b8a4b86a1f4a58e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f475f18f-0e3c-4eb8-acad-7469a897aff6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 56,
+      "total_deletions": 0,
+      "accepted_lines": 56,
+      "overriden_lines": 0
+    }
+  }
+}
