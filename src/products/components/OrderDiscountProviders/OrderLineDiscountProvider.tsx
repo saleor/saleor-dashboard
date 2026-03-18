@@ -37,7 +37,8 @@ interface DiscountProviderProps {
   order: OrderDetailsFragment;
 }
 
-const OrderLineDiscountContext = createContext<GetOrderLineDiscountContextConsumerProps>(null);
+export const OrderLineDiscountContext =
+  createContext<GetOrderLineDiscountContextConsumerProps>(null);
 
 export const useOrderLineDiscountContext = () => {
   const context = useContext(OrderLineDiscountContext);
