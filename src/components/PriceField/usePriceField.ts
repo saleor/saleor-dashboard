@@ -1,5 +1,5 @@
 import { FormChange } from "@dashboard/hooks/useForm";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { formatPriceInput, getCurrencyDecimalPoints } from "./utils";
 
@@ -12,19 +12,22 @@ import { formatPriceInput, getCurrencyDecimalPoints } from "./utils";
 export function usePriceField(currency: string | undefined, onChange: FormChange) {
   const maxDecimalPlaces = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
 
-  const handleChange: FormChange = e => {
-    const rawValue = String(e.target.value ?? "");
-    const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
+  const handleChange: FormChange = useCallback(
+    e => {
+      const rawValue = String(e.target.value ?? "");
+      const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
 
-    if (!formattedValue && rawValue) return;
+      if (!formattedValue && rawValue) return;
 
-    onChange({
-      target: {
-        name: e.target.name,
-        value: formattedValue || null,
-      },
-    });
-  };
+      onChange({
+        target: {
+          name: e.target.name,
+          value: formattedValue || null,
+        },
+      });
+    },
+    [maxDecimalPlaces, onChange],
+  );
 
   return {
     onChange: handleChange,

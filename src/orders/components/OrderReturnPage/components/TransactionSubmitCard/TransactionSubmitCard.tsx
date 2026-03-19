@@ -12,6 +12,7 @@ import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/Order
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
@@ -64,6 +65,20 @@ export const TransactionSubmitCard = ({
     autoGrantRefund,
     transactions,
   });
+  const [amountInput, setAmountInput] = useState("");
+  const [isAmountFocused, setIsAmountFocused] = useState(false);
+  const defaultValue = getReturnRefundValue({
+    autoGrantRefund,
+    isAmountDirty,
+    customRefundValue,
+    amountData,
+  });
+
+  useEffect(() => {
+    if (!isAmountFocused) {
+      setAmountInput(defaultValue);
+    }
+  }, [defaultValue, isAmountFocused]);
 
   const isSubmitDisabled = (!transactionId && autoGrantRefund) || disabled;
 
@@ -109,14 +124,22 @@ export const TransactionSubmitCard = ({
           />
           <PriceField
             label={intl.formatMessage(submitCardMessages.returnRefundValueLabel)}
-            onChange={e => onAmountChange(parseFloat(e.target.value ?? "") || 0)}
+            onFocus={() => setIsAmountFocused(true)}
+            onChange={e => {
+              const value = e.target.value ?? "";
+
+              setAmountInput(value);
+
+              const parsed = parseFloat(value);
+
+              onAmountChange(Number.isNaN(parsed) ? 0 : parsed);
+            }}
+            onBlur={() => {
+              setIsAmountFocused(false);
+              setAmountInput(defaultValue);
+            }}
             name="amount"
-            value={getReturnRefundValue({
-              autoGrantRefund,
-              isAmountDirty,
-              customRefundValue,
-              amountData,
-            })}
+            value={amountInput}
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
             width="100%"

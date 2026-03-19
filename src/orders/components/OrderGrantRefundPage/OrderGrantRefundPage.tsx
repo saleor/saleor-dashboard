@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import { PriceField } from "@dashboard/components/PriceField";
+import { PriceField, PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
@@ -14,7 +14,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -99,6 +99,8 @@ const OrderGrantRefundPage = ({
     totalCalulatedPrice: totalSelectedPrice,
   });
   const currency = order?.total?.gross?.currency ?? "";
+  const [amountInputValue, setAmountInputValue] = useState("");
+  const [isAmountInputFocused, setIsAmountInputFocused] = useState(false);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
@@ -116,6 +118,18 @@ const OrderGrantRefundPage = ({
       },
       locale,
     );
+  };
+  const displayRefundAmount = getRefundAmountDisplayValue();
+
+  useEffect(() => {
+    if (!isAmountInputFocused) {
+      setAmountInputValue(displayRefundAmount);
+    }
+  }, [displayRefundAmount, isAmountInputFocused]);
+
+  const handleAmountChange = (event: PriceFieldChangeEvent) => {
+    setAmountInputValue(event.target.value ?? "");
+    change(event);
   };
 
   return (
@@ -204,11 +218,16 @@ const OrderGrantRefundPage = ({
                     flexGrow="1"
                     flexBasis="0"
                     label={intl.formatMessage(grantRefundPageMessages.refundAmountLabel)}
-                    onChange={change}
+                    onFocus={() => setIsAmountInputFocused(true)}
+                    onChange={handleAmountChange}
+                    onBlur={() => {
+                      setIsAmountInputFocused(false);
+                      setAmountInputValue(displayRefundAmount);
+                    }}
                     disabled={loading}
                     name={"amount" as keyof OrderGrantRefundFormData}
                     currencySymbol={currency}
-                    value={getRefundAmountDisplayValue()}
+                    value={amountInputValue}
                     data-test-id="amountInput"
                   />
                 </Box>

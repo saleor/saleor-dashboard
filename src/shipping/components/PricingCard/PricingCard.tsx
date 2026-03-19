@@ -88,7 +88,7 @@ const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps)
                       onChange={e =>
                         onChange(channel.id, {
                           ...channel,
-                          price: e.target.value,
+                          price: e.target.value ?? "",
                         })
                       }
                       currencySymbol={channel.currency}

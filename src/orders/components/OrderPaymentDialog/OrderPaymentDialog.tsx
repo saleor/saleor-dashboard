@@ -4,12 +4,13 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { PriceField } from "@dashboard/components/PriceField";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface FormData {
@@ -36,6 +37,13 @@ const OrderPaymentDialog = ({
   const intl = useIntl();
   const formFields = ["payment"];
   const formErrors = getFormErrors(formFields, errors);
+  const [amountInput, setAmountInput] = useState(initial.toString());
+
+  useEffect(() => {
+    if (open) {
+      setAmountInput(initial.toString());
+    }
+  }, [initial, open]);
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -45,55 +53,102 @@ const OrderPaymentDialog = ({
         }}
         onSubmit={onSubmit}
       >
-        {({ data, change, submit }) => (
-          <DashboardModal.Content size="sm">
-            <DashboardModal.Header>
-              {intl.formatMessage({
-                id: "+PbHKD",
-                defaultMessage: "Capture Payment",
-                description: "dialog header",
-              })}
-            </DashboardModal.Header>
+        {({ change, submit }) => {
+          return (
+            <DashboardModal.Content size="sm">
+              <DashboardModal.Header>
+                {intl.formatMessage({
+                  id: "+PbHKD",
+                  defaultMessage: "Capture Payment",
+                  description: "dialog header",
+                })}
+              </DashboardModal.Header>
 
-            <TextField
-              error={!!formErrors.payment}
-              fullWidth
-              helperText={getOrderErrorMessage(formErrors.payment, intl)}
-              label={intl.formatMessage({
-                id: "OhdPS1",
-                defaultMessage: "Amount",
-                description: "amount of refunded money",
-              })}
-              name="amount"
-              onChange={change}
-              inputProps={{
-                step: "0.01",
-              }}
-              type="number"
-              value={data.amount}
-            />
+              <PriceField
+                error={!!formErrors.payment}
+                hint={getOrderErrorMessage(formErrors.payment, intl)}
+                label={intl.formatMessage({
+                  id: "OhdPS1",
+                  defaultMessage: "Amount",
+                  description: "amount of refunded money",
+                })}
+                name="amount"
+                value={amountInput}
+                width="100%"
+                onChange={event => {
+                  const value = event.target.value ?? "";
 
-            {errors.length > 0 && (
-              <>
-                <FormSpacer />
-                {errors
-                  .filter(err => !formFields.includes(err.field))
-                  .map((err, index) => (
-                    <Text color="critical1" key={index}>
-                      {getOrderErrorMessage(err, intl)}
-                    </Text>
-                  ))}
-              </>
-            )}
+                  setAmountInput(value);
 
-            <DashboardModal.Actions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DashboardModal.Actions>
-          </DashboardModal.Content>
-        )}
+                  if (!value) {
+                    change({
+                      target: {
+                        name: "amount",
+                        value: "",
+                      },
+                    });
+
+                    return;
+                  }
+
+                  const parsed = parseFloat(value);
+
+                  if (Number.isNaN(parsed)) {
+                    return;
+                  }
+
+                  change({
+                    target: {
+                      name: "amount",
+                      value: parsed,
+                    },
+                  });
+                }}
+                onBlur={() => {
+                  const parsed = parseFloat(amountInput);
+
+                  if (Number.isNaN(parsed)) {
+                    change({
+                      target: {
+                        name: "amount",
+                        value: "",
+                      },
+                    });
+                    setAmountInput("");
+                  } else {
+                    change({
+                      target: {
+                        name: "amount",
+                        value: parsed,
+                      },
+                    });
+                    setAmountInput(parsed.toString());
+                  }
+                }}
+              />
+
+              {errors.length > 0 && (
+                <>
+                  <FormSpacer />
+                  {errors
+                    .filter(err => !formFields.includes(err.field))
+                    .map((err, index) => (
+                      <Text color="critical1" key={index}>
+                        {getOrderErrorMessage(err, intl)}
+                      </Text>
+                    ))}
+                </>
+              )}
+
+              <DashboardModal.Actions>
+                <BackButton onClick={onClose} />
+                <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
+                  <FormattedMessage {...buttonMessages.confirm} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </DashboardModal.Content>
+          );
+        }}
       </Form>
     </DashboardModal>
   );

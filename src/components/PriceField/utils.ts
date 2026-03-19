@@ -52,9 +52,16 @@ export const getCurrencyDecimalPoints = (currency?: string): number => {
 };
 
 const MAX_INTEGER_DIGITS = 15;
+const CHAR_CODE_0 = 48;
+const CHAR_CODE_9 = 57;
+const CHAR_CODE_COMMA = 44;
+const CHAR_CODE_DOT = 46;
 
 const limitInteger = (value: string): string => {
-  const v = value.charCodeAt(0) === 48 && value.length > 1 ? value.replace(/^0+(\d)/, "$1") : value;
+  const v =
+    value.charCodeAt(0) === CHAR_CODE_0 && value.length > 1
+      ? value.replace(/^0+(\d)/, "$1")
+      : value;
 
   return v.length > MAX_INTEGER_DIGITS ? v.slice(0, MAX_INTEGER_DIGITS) : v;
 };
@@ -71,9 +78,9 @@ const isSimpleDecimal = (s: string): boolean => {
   for (let i = 0; i < s.length; i++) {
     const c = s.charCodeAt(i);
 
-    if (c === 46) {
+    if (c === CHAR_CODE_DOT) {
       if (++dots > 1) return false;
-    } else if (c >= 48 && c <= 57) {
+    } else if (c >= CHAR_CODE_0 && c <= CHAR_CODE_9) {
       hasDigit = true;
     } else {
       return false;
@@ -105,7 +112,7 @@ const isValidThousandGrouping = (raw: string, separator: string): boolean => {
       }
 
       groupLen = 0;
-    } else if (c >= 48 && c <= 57) {
+    } else if (c >= CHAR_CODE_0 && c <= CHAR_CODE_9) {
       groupLen++;
     } else {
       return false;
@@ -264,7 +271,7 @@ const formatApostrophePrice = (value: string, maxDecimalPlaces: number): string 
 
   if (decimalSuffix.includes("'")) return "";
 
-  if ((decimalSuffix.match(/\./g) || []).length > 1) return "";
+  if (decimalSuffix.indexOf(".") !== decimalSuffix.lastIndexOf(".")) return "";
 
   return formatDecimalInput(groups.join("") + decimalSuffix, maxDecimalPlaces);
 };
@@ -292,7 +299,10 @@ export const formatPriceInput = (value: string, maxDecimalPlaces: number): strin
     const last = v.charCodeAt(v.length - 1);
     const prev = v.charCodeAt(v.length - 2);
 
-    if ((last === 44 || last === 46) && (prev === 44 || prev === 46)) {
+    if (
+      (last === CHAR_CODE_COMMA || last === CHAR_CODE_DOT) &&
+      (prev === CHAR_CODE_COMMA || prev === CHAR_CODE_DOT)
+    ) {
       v = v.slice(0, -1);
     }
   }
@@ -321,8 +331,8 @@ export const formatPriceInput = (value: string, maxDecimalPlaces: number): strin
   for (let i = 0; i < filtered.length; i++) {
     const c = filtered.charCodeAt(i);
 
-    if (c === 44) commaCount++;
-    else if (c === 46) dotCount++;
+    if (c === CHAR_CODE_COMMA) commaCount++;
+    else if (c === CHAR_CODE_DOT) dotCount++;
     else hasDigit = true;
   }
 
