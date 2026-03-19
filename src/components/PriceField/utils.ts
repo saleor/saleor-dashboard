@@ -51,110 +51,290 @@ export const getCurrencyDecimalPoints = (currency?: string): number => {
   }
 };
 
-// Max digits to prevent overflow issues with float64 precision
 const MAX_INTEGER_DIGITS = 15;
 
+const limitInteger = (value: string): string => {
+  const v = value.charCodeAt(0) === 48 && value.length > 1 ? value.replace(/^0+(\d)/, "$1") : value;
+
+  return v.length > MAX_INTEGER_DIGITS ? v.slice(0, MAX_INTEGER_DIGITS) : v;
+};
+
 /**
- * Formats price input for controlled input fields.
- *
- * Handles two scenarios:
- * 1. **Typing** (same separator type): First separator wins, rest are accidents
- *    - "10.5.6" → "10.56" (double-tap accident)
- * 2. **Paste** (mixed separators): Smart detection of thousands format
- *    - "1,234.56" → "1234.56" (US format)
- *    - "1.234,56" → "1234.56" (EU format)
- *
- * @param value - Raw input value
- * @param maxDecimalPlaces - Maximum decimal places allowed (e.g., 2 for USD, 0 for JPY)
- * @returns Normalized price string with dot decimal separator
+ * Returns true when a string contains only digits and at most one dot,
+ * with at least one digit present. Covers ~99% of keystroke inputs
+ * without touching the regex engine.
  */
-export const formatPriceInput = (value: string, maxDecimalPlaces: number): string => {
-  // Filter to only allow digits and decimal separators
-  const filtered = value.replace(/[^\d.,]/g, "");
+const isSimpleDecimal = (s: string): boolean => {
+  let dots = 0;
+  let hasDigit = false;
 
-  if (!filtered) {
-    return "";
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+
+    if (c === 46) {
+      if (++dots > 1) return false;
+    } else if (c >= 48 && c <= 57) {
+      hasDigit = true;
+    } else {
+      return false;
+    }
   }
 
-  // Just separators with no digits = empty
-  if (!/\d/.test(filtered)) {
-    return "";
+  return hasDigit;
+};
+
+/**
+ * Validates thousand-separator groups with a single character pass.
+ * First group: 1+ digits. All subsequent groups: exactly 3 digits.
+ */
+const isValidThousandGrouping = (raw: string, separator: string): boolean => {
+  const sep = separator.charCodeAt(0);
+  let groupLen = 0;
+  let firstGroup = true;
+
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw.charCodeAt(i);
+
+    if (c === sep) {
+      if (firstGroup) {
+        if (groupLen === 0) return false;
+
+        firstGroup = false;
+      } else if (groupLen !== 3) {
+        return false;
+      }
+
+      groupLen = 0;
+    } else if (c >= 48 && c <= 57) {
+      groupLen++;
+    } else {
+      return false;
+    }
   }
 
-  const commaCount = (filtered.match(/,/g) || []).length;
-  const dotCount = (filtered.match(/\./g) || []).length;
-  const hasComma = commaCount > 0;
-  const hasDot = dotCount > 0;
+  if (firstGroup) return true;
 
-  let integerPart: string;
-  let decimalPart: string | undefined;
+  return groupLen === 3;
+};
 
-  // Mixed separators = pasted formatted number (smart detection)
-  // Valid formats have ONE type as decimal (last position) and other type as thousands
-  // - US: "1,234.56" or "1,234,567.89" (dot is last, commas before)
-  // - EU: "1.234,56" or "1.234.567,89" (comma is last, dots before)
+/**
+ * Common handler for dot-decimal input (typing mode).
+ * First dot = decimal, extra dots collapsed.
+ */
+const formatDecimalInput = (filtered: string, maxDecimalPlaces: number): string => {
+  const firstDotIndex = filtered.indexOf(".");
+
+  if (firstDotIndex === -1) {
+    return limitInteger(filtered);
+  }
+
+  let integerPart = filtered.slice(0, firstDotIndex);
+  const afterDot = filtered.slice(firstDotIndex + 1);
+  const rawDecimal = afterDot.indexOf(".") !== -1 ? afterDot.replace(/\./g, "") : afterDot;
+
+  if (!integerPart) integerPart = "0";
+
+  integerPart = limitInteger(integerPart);
+
+  if (maxDecimalPlaces === 0) return integerPart;
+
+  return `${integerPart}.${rawDecimal.slice(0, maxDecimalPlaces)}`;
+};
+
+/**
+ * Mixed separators (both commas and dots) = pasted formatted number.
+ * Detects US (1,234.56) vs EU (1.234,56) by last separator position.
+ * Rejects ambiguous or malformed formats.
+ */
+const formatMixedSeparators = (
+  filtered: string,
+  commaCount: number,
+  dotCount: number,
+  maxDecimalPlaces: number,
+): string => {
   const lastComma = filtered.lastIndexOf(",");
   const lastDot = filtered.lastIndexOf(".");
   const lastSeparatorIndex = Math.max(lastComma, lastDot);
   const afterLastSeparator = filtered.slice(lastSeparatorIndex + 1);
 
-  // Clean format: after the last separator, only digits (no more separators)
-  const isCleanMixedFormat =
-    hasComma &&
-    hasDot &&
-    /^\d*$/.test(afterLastSeparator) && // Only digits after last separator
-    ((dotCount === 1 && lastDot > lastComma) || // US: one dot at end
-      (commaCount === 1 && lastComma > lastDot)); // EU: one comma at end
+  const isClean =
+    /^\d*$/.test(afterLastSeparator) &&
+    ((dotCount === 1 && lastDot > lastComma) || (commaCount === 1 && lastComma > lastDot));
 
-  if (isCleanMixedFormat) {
-    // Clean mixed format - detect US vs EU by last separator
+  if (!isClean) return "";
 
-    if (lastComma > lastDot) {
-      // EU format: "1.234,56" or "1.234.567,89" → comma is decimal
-      integerPart = filtered.slice(0, lastComma).replace(/\./g, "");
-      decimalPart = filtered.slice(lastComma + 1);
-    } else {
-      // US format: "1,234.56" or "1,234,567.89" → dot is decimal
-      integerPart = filtered.slice(0, lastDot).replace(/,/g, "");
-      decimalPart = filtered.slice(lastDot + 1);
-    }
+  let integerRaw: string;
+  let decimalPart: string;
+
+  if (lastComma > lastDot) {
+    integerRaw = filtered.slice(0, lastComma);
+
+    if (!isValidThousandGrouping(integerRaw, ".")) return "";
+
+    integerRaw = integerRaw.replace(/\./g, "");
+    decimalPart = filtered.slice(lastComma + 1);
   } else {
-    // Same separator type = typing, first separator wins
-    const withDots = filtered.replace(/,/g, ".");
-    const firstDotIndex = withDots.indexOf(".");
+    integerRaw = filtered.slice(0, lastDot);
 
-    if (firstDotIndex === -1) {
-      integerPart = withDots;
-      decimalPart = undefined;
-    } else {
-      integerPart = withDots.slice(0, firstDotIndex);
-      // Remove any extra dots from decimal part
-      decimalPart = withDots.slice(firstDotIndex + 1).replace(/\./g, "");
+    if (!isValidThousandGrouping(integerRaw, ",")) return "";
+
+    integerRaw = integerRaw.replace(/,/g, "");
+    decimalPart = filtered.slice(lastDot + 1);
+  }
+
+  return formatDecimalInput(`${integerRaw}.${decimalPart}`, maxDecimalPlaces);
+};
+
+/**
+ * Comma-only input. Distinguishes between:
+ * - Thousand separators: "1,000" → "1000" (all groups exactly 3 digits)
+ * - Typing mode: "10,50" → "10.50" (first comma = decimal)
+ * Rejects malformed thousand-separator patterns (e.g. "1,234,567,89").
+ */
+const formatCommaOnly = (filtered: string, maxDecimalPlaces: number): string => {
+  const parts = filtered.split(",");
+
+  if (parts.length >= 2 && parts[0].length > 0) {
+    let allThree = true;
+
+    for (let i = 1; i < parts.length; i++) {
+      if (parts[i].length !== 3) {
+        allThree = false;
+        break;
+      }
+    }
+
+    if (allThree) return limitInteger(parts.join(""));
+  }
+
+  if (parts.length >= 3) {
+    for (let i = 1; i < parts.length - 1; i++) {
+      if (parts[i].length === 3) return "";
     }
   }
 
-  // Add leading zero for ".50" → "0.50"
-  if (!integerPart && decimalPart !== undefined) {
-    integerPart = "0";
+  return formatDecimalInput(filtered.replace(/,/g, "."), maxDecimalPlaces);
+};
+
+/**
+ * Handles apostrophe thousand separators (Swiss format: 1'234'567.89).
+ * Validates grouping, supports dot or comma as decimal separator.
+ */
+const formatApostrophePrice = (value: string, maxDecimalPlaces: number): string => {
+  if (value.includes("''")) return "";
+
+  const filtered = value.replace(/[^\d'.,]/g, "");
+
+  if (!filtered || !/\d/.test(filtered)) return "";
+
+  if (filtered.startsWith("'")) return "";
+
+  const hasDot = filtered.includes(".");
+  const hasComma = filtered.includes(",");
+
+  if (hasDot && hasComma) return "";
+
+  let integerWithApostrophes: string;
+  let decimalSuffix: string;
+
+  if (hasDot) {
+    const idx = filtered.indexOf(".");
+
+    integerWithApostrophes = filtered.slice(0, idx);
+    decimalSuffix = filtered.slice(idx);
+  } else if (hasComma) {
+    const idx = filtered.indexOf(",");
+
+    integerWithApostrophes = filtered.slice(0, idx);
+    decimalSuffix = "." + filtered.slice(idx + 1);
+  } else {
+    integerWithApostrophes = filtered;
+    decimalSuffix = "";
   }
 
-  // Limit integer part to prevent float64 precision issues
-  if (integerPart.length > MAX_INTEGER_DIGITS) {
-    integerPart = integerPart.slice(0, MAX_INTEGER_DIGITS);
+  const groups = integerWithApostrophes.split("'");
+
+  if (groups.some(g => g.length === 0)) return "";
+
+  if (!/^\d+$/.test(groups[0])) return "";
+
+  for (let i = 1; i < groups.length; i++) {
+    if (groups[i].length !== 3) return "";
   }
 
-  // No decimal - return integer
-  if (decimalPart === undefined) {
-    return integerPart;
+  if (decimalSuffix.includes("'")) return "";
+
+  if ((decimalSuffix.match(/\./g) || []).length > 1) return "";
+
+  return formatDecimalInput(groups.join("") + decimalSuffix, maxDecimalPlaces);
+};
+
+/**
+ * Formats price input for controlled input fields.
+ *
+ * Handles multiple scenarios:
+ * 1. **Typing** (same separator type): First separator wins, rest are accidents
+ *    - "10.5.6" → "10.56"
+ * 2. **Paste with mixed separators**: Smart US/EU detection
+ *    - "1,234.56" → "1234.56" (US), "1.234,56" → "1234.56" (EU)
+ * 3. **Comma-only thousands**: "1,000" → "1000" (groups of 3 after comma)
+ * 4. **Apostrophe thousands** (Swiss): "1'234.56" → "1234.56"
+ *
+ * @param value - Raw input value
+ * @param maxDecimalPlaces - Maximum decimal places allowed (e.g., 2 for USD, 0 for JPY)
+ * @returns Normalized price string with dot decimal separator, or "" for invalid input
+ */
+export const formatPriceInput = (value: string, maxDecimalPlaces: number): string => {
+  // Collapse trailing adjacent separators (typing double-tap: "123.," → "123.")
+  let v = value;
+
+  if (v.length >= 2) {
+    const last = v.charCodeAt(v.length - 1);
+    const prev = v.charCodeAt(v.length - 2);
+
+    if ((last === 44 || last === 46) && (prev === 44 || prev === 46)) {
+      v = v.slice(0, -1);
+    }
   }
 
-  // Currency doesn't support decimals (e.g., JPY)
-  if (maxDecimalPlaces === 0) {
-    return integerPart;
+  // Fast path: clean digit+dot input covers ~99% of typing keystrokes.
+  // Single char-loop, zero regex, zero allocations.
+  if (isSimpleDecimal(v)) {
+    return formatDecimalInput(v, maxDecimalPlaces);
   }
 
-  // Truncate and format
-  const truncated = decimalPart.slice(0, maxDecimalPlaces);
+  if (/\d\s\d/.test(v)) return "";
 
-  return `${integerPart}.${truncated}`;
+  if (v.includes("'")) {
+    return formatApostrophePrice(v, maxDecimalPlaces);
+  }
+
+  const filtered = v.replace(/[^\d.,]/g, "");
+
+  if (!filtered) return "";
+
+  // Single-pass: count separators and check for digits
+  let commaCount = 0;
+  let dotCount = 0;
+  let hasDigit = false;
+
+  for (let i = 0; i < filtered.length; i++) {
+    const c = filtered.charCodeAt(i);
+
+    if (c === 44) commaCount++;
+    else if (c === 46) dotCount++;
+    else hasDigit = true;
+  }
+
+  if (!hasDigit) return "";
+
+  if (commaCount > 0 && dotCount > 0) {
+    return formatMixedSeparators(filtered, commaCount, dotCount, maxDecimalPlaces);
+  }
+
+  if (commaCount > 0) {
+    return formatCommaOnly(filtered, maxDecimalPlaces);
+  }
+
+  return formatDecimalInput(filtered, maxDecimalPlaces);
 };

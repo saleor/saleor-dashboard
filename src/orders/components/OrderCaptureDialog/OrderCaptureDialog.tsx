@@ -117,6 +117,8 @@ export const OrderCaptureDialog = ({
   const handleCustomAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const formattedValue = formatPriceInput(e.target.value, maxDecimalPlaces);
 
+    if (!formattedValue && e.target.value) return;
+
     setCustomAmountInput(formattedValue);
     setCustomAmount(parseFloat(formattedValue) || 0);
   };
