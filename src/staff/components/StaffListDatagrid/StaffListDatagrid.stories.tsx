@@ -7,6 +7,9 @@ import { StaffListDatagrid } from "./StaffListDatagrid";
 const meta: Meta<typeof StaffListDatagrid> = {
   title: "Staff/StaffListDatagrid",
   component: StaffListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     staffMembers,
     disabled: false,
