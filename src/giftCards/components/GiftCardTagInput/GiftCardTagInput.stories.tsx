@@ -1,3 +1,4 @@
+import { GiftCardErrorCode } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
@@ -29,7 +30,7 @@ export const WithValues: Story = {
 
 export const WithError: Story = {
   args: {
-    error: { code: "INVALID" as never, field: "tags" },
+    error: { code: GiftCardErrorCode.INVALID, field: "tags" },
   },
 };
 

@@ -103,7 +103,7 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
   });
   const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {
     if (!giftCard) {
-      return [];
+      return undefined;
     }
 
     const result = await updateGiftCard({
