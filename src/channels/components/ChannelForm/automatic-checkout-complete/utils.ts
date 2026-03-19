@@ -1,8 +1,8 @@
 import { type IntlShape } from "react-intl";
 
-export type RelativeTimeUnit = "day" | "hour" | "minute";
+type RelativeTimeUnit = "day" | "hour" | "minute";
 
-export interface RelativeTimeValue {
+interface RelativeTimeValue {
   value: number;
   unit: RelativeTimeUnit;
 }

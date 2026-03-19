@@ -137,7 +137,7 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
   [OrderEventsEnum.OTHER]: CircleIcon,
 };
 
-export interface TimelineEventProps {
+interface TimelineEventProps {
   children?: React.ReactNode;
   date: string | React.ReactNode;
   title?: React.ReactNode;

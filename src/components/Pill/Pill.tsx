@@ -27,7 +27,7 @@ const useStyles = makeStyles(
   { name: "Pill" },
 );
 
-export interface CustomPillProps extends Omit<PillProps, "color"> {
+interface CustomPillProps extends Omit<PillProps, "color"> {
   color: PillStatusType;
 }
 
