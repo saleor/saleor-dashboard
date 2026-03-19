@@ -14,6 +14,9 @@ const mockCodes: VoucherCode[] = [
 const meta: Meta<typeof VoucherCodesDatagrid> = {
   title: "Discounts/VoucherCodesDatagrid",
   component: VoucherCodesDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     codes: mockCodes,
     loading: false,

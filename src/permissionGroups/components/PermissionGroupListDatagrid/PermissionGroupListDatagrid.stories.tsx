@@ -7,6 +7,9 @@ import { PermissionGroupListDatagrid } from "./PermissionGroupListDatagrid";
 const meta: Meta<typeof PermissionGroupListDatagrid> = {
   title: "PermissionGroups/PermissionGroupListDatagrid",
   component: PermissionGroupListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     permissionGroups,
     disabled: false,

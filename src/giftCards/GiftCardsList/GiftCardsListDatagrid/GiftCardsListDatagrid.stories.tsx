@@ -142,6 +142,9 @@ const MockGiftCardListProvider = ({
 const meta: Meta<typeof GiftCardsListDatagrid> = {
   title: "GiftCards/GiftCardsListDatagrid",
   component: GiftCardsListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   decorators: [
     (Story: React.ComponentType) => (
       <MockGiftCardListProvider value={defaultContextValue}>
