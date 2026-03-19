@@ -36,5 +36,3 @@ export const appExtensionManifestOptionsSchemaWithDefault =
       method: "POST",
     },
   });
-
-export type AppExtensionManifestOptions = z.infer<typeof appExtensionManifestOptionsSchema>;
