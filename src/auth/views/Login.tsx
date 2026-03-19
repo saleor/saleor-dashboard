@@ -52,7 +52,9 @@ const LoginView = ({ params }: LoginViewProps) => {
         fetchPolicy: "network-only",
       },
     );
-  const externalAuthentications = externalAuthenticationsStaging ?? externalAuthenticationsMain;
+  const externalAuthentications = isStagingSchema()
+    ? externalAuthenticationsStaging
+    : externalAuthenticationsMain;
   const externalAuthenticationsLoading =
     externalAuthenticationsLoadingMain || externalAuthenticationsLoadingStaging;
 

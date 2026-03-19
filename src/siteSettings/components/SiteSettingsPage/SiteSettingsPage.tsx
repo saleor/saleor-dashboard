@@ -213,20 +213,24 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                   </DashboardCard>
                 </Box>
 
-                <Divider />
+                {isStagingSchema() && (
+                  <>
+                    <Divider />
 
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
-                >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
-                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
-                  />
-                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
-                </Box>
+                    <Box
+                      display="grid"
+                      __gridTemplateColumns="1fr 3fr"
+                      paddingLeft={6}
+                      paddingBottom={8}
+                    >
+                      <PageSectionHeader
+                        title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                        description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                      />
+                      <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
+                    </Box>
+                  </>
+                )}
 
                 <Divider />
 

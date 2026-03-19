@@ -31,7 +31,7 @@ const SiteSettings = () => {
     displayLoader: true,
     skip: isMainSchema(),
   });
-  const siteSettings = siteSettingsStaging ?? siteSettingsMain;
+  const siteSettings = isStagingSchema() ? siteSettingsStaging : siteSettingsMain;
 
   const onUpdateCompleted = (data: {
     shopSettingsUpdate?: { errors: unknown[] } | null;
@@ -58,6 +58,8 @@ const SiteSettings = () => {
 
   const updateOpts = isStagingSchema() ? updateShopSettingsOptsStaging : updateShopSettingsOpts;
 
+  // Staging schema errors have a superset of ShopErrorCode values,
+  // but they share the same shape (code, field, message) used by UI components.
   const errors = [
     ...(updateOpts.data?.shopSettingsUpdate?.errors || []),
     ...(updateOpts.data?.shopAddressUpdate?.errors || []),
