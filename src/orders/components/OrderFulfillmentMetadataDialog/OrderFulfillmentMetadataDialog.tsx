@@ -6,7 +6,7 @@ import { OrderDetailsDocument, type OrderDetailsFragment } from "@dashboard/grap
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-export type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
+type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
 
 interface OrderFulfillmentMetadataDialogProps {
   open: boolean;
