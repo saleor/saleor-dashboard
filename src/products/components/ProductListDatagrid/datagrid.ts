@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type LazyQueryResult, type QueryLazyOptions } from "@apollo/client";
+import { getDisplayValueFromAssignedAttribute } from "@dashboard/attributes/utils/assignedAttributes";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
   getChannelAvailabilityLabel,
@@ -378,24 +379,12 @@ function getAttributeCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const attributeId = getAttributeIdFromColumnValue(columnId);
-  const productAttribute = rowData?.attributes.find(
-    attribute => attribute.attribute.id === attributeId,
+  const assignedAttribute = rowData?.assignedAttributes.find(
+    attr => attr.attribute.id === attributeId,
   );
 
-  if (productAttribute) {
-    if (productAttribute.values.length) {
-      if (productAttribute.values[0].date) {
-        return readonlyTextCell(productAttribute.values[0].date);
-      }
-
-      if (productAttribute.values[0].dateTime) {
-        return readonlyTextCell(productAttribute.values[0].dateTime);
-      }
-    }
-
-    const textValue = productAttribute.values.map(value => value.name).join(", ");
-
-    return readonlyTextCell(textValue);
+  if (assignedAttribute) {
+    return readonlyTextCell(getDisplayValueFromAssignedAttribute(assignedAttribute));
   }
 
   return readonlyTextCell("");

@@ -410,13 +410,90 @@ export const exportFileFragment = gql`
   }
 `;
 
-export const productListAttribute = gql`
-  fragment ProductListAttribute on SelectedAttribute {
+export const productListAssignedAttribute = gql`
+  fragment ProductListAssignedAttribute on AssignedAttribute {
     attribute {
       id
     }
-    values {
-      ...AttributeValue
+    ... on AssignedSingleChoiceAttribute {
+      singleChoiceValue: value {
+        name
+      }
+    }
+    ... on AssignedMultiChoiceAttribute {
+      multiChoiceValue: value {
+        name
+      }
+    }
+    ... on AssignedNumericAttribute {
+      numericValue: value
+    }
+    ... on AssignedPlainTextAttribute {
+      plainTextValue: value
+    }
+    ... on AssignedBooleanAttribute {
+      booleanValue: value
+    }
+    ... on AssignedDateAttribute {
+      dateValue: value
+    }
+    ... on AssignedDateTimeAttribute {
+      dateTimeValue: value
+    }
+    ... on AssignedSwatchAttribute {
+      swatchValue: value {
+        name
+      }
+    }
+    ... on AssignedSinglePageReferenceAttribute {
+      pageReferenceValue: value {
+        title
+      }
+    }
+    ... on AssignedSingleProductReferenceAttribute {
+      productReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedSingleProductVariantReferenceAttribute {
+      variantReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedSingleCategoryReferenceAttribute {
+      categoryReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedSingleCollectionReferenceAttribute {
+      collectionReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedMultiPageReferenceAttribute {
+      multiPageReferenceValue: value {
+        title
+      }
+    }
+    ... on AssignedMultiProductReferenceAttribute {
+      multiProductReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedMultiProductVariantReferenceAttribute {
+      multiVariantReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedMultiCategoryReferenceAttribute {
+      multiCategoryReferenceValue: value {
+        name
+      }
+    }
+    ... on AssignedMultiCollectionReferenceAttribute {
+      multiCollectionReferenceValue: value {
+        name
+      }
     }
   }
 `;

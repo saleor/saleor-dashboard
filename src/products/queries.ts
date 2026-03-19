@@ -32,8 +32,8 @@ export const productListQuery = gql`
           updatedAt
           created
           description
-          attributes {
-            ...ProductListAttribute
+          assignedAttributes {
+            ...ProductListAssignedAttribute
           }
         }
       }

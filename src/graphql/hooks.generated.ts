@@ -3235,16 +3235,93 @@ export const ExportFileFragmentDoc = gql`
   url
 }
     `;
-export const ProductListAttributeFragmentDoc = gql`
-    fragment ProductListAttribute on SelectedAttribute {
+export const ProductListAssignedAttributeFragmentDoc = gql`
+    fragment ProductListAssignedAttribute on AssignedAttribute {
   attribute {
     id
   }
-  values {
-    ...AttributeValue
+  ... on AssignedSingleChoiceAttribute {
+    singleChoiceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiChoiceAttribute {
+    multiChoiceValue: value {
+      name
+    }
+  }
+  ... on AssignedNumericAttribute {
+    numericValue: value
+  }
+  ... on AssignedPlainTextAttribute {
+    plainTextValue: value
+  }
+  ... on AssignedBooleanAttribute {
+    booleanValue: value
+  }
+  ... on AssignedDateAttribute {
+    dateValue: value
+  }
+  ... on AssignedDateTimeAttribute {
+    dateTimeValue: value
+  }
+  ... on AssignedSwatchAttribute {
+    swatchValue: value {
+      name
+    }
+  }
+  ... on AssignedSinglePageReferenceAttribute {
+    pageReferenceValue: value {
+      title
+    }
+  }
+  ... on AssignedSingleProductReferenceAttribute {
+    productReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleProductVariantReferenceAttribute {
+    variantReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleCategoryReferenceAttribute {
+    categoryReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleCollectionReferenceAttribute {
+    collectionReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiPageReferenceAttribute {
+    multiPageReferenceValue: value {
+      title
+    }
+  }
+  ... on AssignedMultiProductReferenceAttribute {
+    multiProductReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiProductVariantReferenceAttribute {
+    multiVariantReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiCategoryReferenceAttribute {
+    multiCategoryReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiCollectionReferenceAttribute {
+    multiCollectionReferenceValue: value {
+      name
+    }
   }
 }
-    ${AttributeValueFragmentDoc}`;
+    `;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
@@ -15821,8 +15898,8 @@ export const ProductListDocument = gql`
         updatedAt
         created
         description
-        attributes {
-          ...ProductListAttribute
+        assignedAttributes {
+          ...ProductListAssignedAttribute
         }
       }
     }
@@ -15836,7 +15913,7 @@ export const ProductListDocument = gql`
   }
 }
     ${ProductWithChannelListingsFragmentDoc}
-${ProductListAttributeFragmentDoc}`;
+${ProductListAssignedAttributeFragmentDoc}`;
 
 /**
  * __useProductListQuery__
