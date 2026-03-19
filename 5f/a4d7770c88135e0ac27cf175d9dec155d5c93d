@@ -1,0 +1,25 @@
+src/giftCards/components/GiftCardTagInput/GiftCardTagInput.stories.tsx
+  ffb0a2b51622bd70 1,33
+src/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/GiftCardUpdateFormProvider.tsx
+  ffb0a2b51622bd70 106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "5fa4d7770c88135e0ac27cf175d9dec155d5c93d",
+  "prompts": {
+    "ffb0a2b51622bd70": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "266eb7ec-29c6-49af-bc67-f42c710023e8",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 2,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
