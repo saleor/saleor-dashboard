@@ -12,7 +12,7 @@ export const shopSettingsUpdateStaging = gql`
         message
       }
       shop {
-        ...Shop
+        ...ShopStaging
       }
     }
     shopAddressUpdate(input: $addressInput) {
