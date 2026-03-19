@@ -115,7 +115,7 @@ interface DatagridProps {
   themeOverride?: Partial<Theme>;
 }
 
-const Datagrid = ({
+export const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,
@@ -619,5 +619,3 @@ const Datagrid = ({
     </FullScreenContainer>
   );
 };
-
-export default Datagrid;
