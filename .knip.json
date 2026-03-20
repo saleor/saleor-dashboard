@@ -5,7 +5,7 @@
     "enumMembers": "off",
     "files": "warn",
     "exports": "warn",
-    "duplicates": "warn",
+    "duplicates": "off",
     "classMembers": "warn",
     "nsTypes": "warn",
     "unresolved": "warn",
@@ -24,7 +24,8 @@
     "src/**/fragments/*.ts",
     "src/searches/*.ts",
     "src/**/fixtures.ts",
-    "scripts/**"
+    "scripts/**",
+    "storybookUtils/**"
   ],
   "project": ["**/*.{js,ts,tsx,jsx}"],
   "jest": true,

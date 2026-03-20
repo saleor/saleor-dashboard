@@ -7,6 +7,9 @@ import { CollectionListDatagrid } from "./CollectionListDatagrid";
 const meta: Meta<typeof CollectionListDatagrid> = {
   title: "Collections/CollectionListDatagrid",
   component: CollectionListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     collections,
     loading: false,

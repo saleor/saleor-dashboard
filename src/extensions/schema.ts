@@ -50,4 +50,3 @@ export const extensionsResponseSchema = z.object({
 
 export type ExtensionData = z.infer<typeof extensionDataSchema>;
 export type ExtensionCategory = z.infer<typeof extensionCategorySchema>;
-export type ExtensionsResponse = z.infer<typeof extensionsResponseSchema>;

@@ -1,4 +1,4 @@
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 RUN apk --no-cache add bash
 RUN corepack enable && corepack prepare pnpm@10 --activate
 WORKDIR /app
