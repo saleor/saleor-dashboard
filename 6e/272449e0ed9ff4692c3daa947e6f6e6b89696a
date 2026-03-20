@@ -1,0 +1,37 @@
+graphql-lint.config.js
+  a747541807d2eda5 1
+  256bab8f6c08b582 2-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "6e272449e0ed9ff4692c3daa947e6f6e6b89696a",
+  "prompts": {
+    "256bab8f6c08b582": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fb6d8342-f34d-4063-a6dd-c826d839793d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 15,
+      "total_deletions": 1,
+      "accepted_lines": 15,
+      "overriden_lines": 0
+    },
+    "a747541807d2eda5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "332b3c2c-4fdf-4dfc-a84e-08b38c7c4f8b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 170,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
