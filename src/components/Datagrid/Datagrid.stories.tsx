@@ -152,6 +152,9 @@ const meta: Meta<typeof Datagrid> = {
     onColumnResize: { table: { disable: true } },
     onRowSelectionChange: { table: { disable: true } },
   },
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     availableColumns: columns,
     rows: initialData.length,

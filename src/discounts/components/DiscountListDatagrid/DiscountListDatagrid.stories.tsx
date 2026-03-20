@@ -7,6 +7,9 @@ import { DiscountListDatagrid } from "./DiscountListDatagrid";
 const meta: Meta<typeof DiscountListDatagrid> = {
   title: "Discounts/DiscountListDatagrid",
   component: DiscountListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     promotions: discountList,
     disabled: false,

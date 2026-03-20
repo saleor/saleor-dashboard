@@ -7,6 +7,9 @@ import { CategoryListDatagrid } from "./CategoryListDatagrid";
 const meta: Meta<typeof CategoryListDatagrid> = {
   title: "Categories/CategoryListDatagrid",
   component: CategoryListDatagrid,
+  parameters: {
+    chromatic: { diffThreshold: 0.3, delay: 500 },
+  },
   args: {
     categories,
     disabled: false,

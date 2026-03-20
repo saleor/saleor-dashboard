@@ -6,7 +6,7 @@ import { OrderDetailsDocument, type OrderDetailsQuery } from "@dashboard/graphql
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-export type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
+type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
 
 interface OrderMetadataDialogProps {
   open: boolean;
