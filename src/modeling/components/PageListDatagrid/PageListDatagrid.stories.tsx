@@ -33,9 +33,7 @@ const mockPages = [
 const meta: Meta<typeof PageListDatagrid> = {
   title: "Modeling/PageListDatagrid",
   component: PageListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     pages: mockPages,
     loading: false,

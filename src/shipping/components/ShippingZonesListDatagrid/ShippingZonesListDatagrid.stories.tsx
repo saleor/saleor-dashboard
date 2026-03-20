@@ -7,9 +7,7 @@ import { ShippingZoneListDatagrid } from "./ShippingZonesListDatagrid";
 const meta: Meta<typeof ShippingZoneListDatagrid> = {
   title: "Shipping/ShippingZonesListDatagrid",
   component: ShippingZoneListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     shippingZones,
     disabled: false,

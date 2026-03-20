@@ -23,9 +23,7 @@ const mockProducts: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["p
 const meta: Meta<typeof CategoryProductListDatagrid> = {
   title: "Categories/CategoryProductListDatagrid",
   component: CategoryProductListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     products: mockProducts,
     disabled: false,

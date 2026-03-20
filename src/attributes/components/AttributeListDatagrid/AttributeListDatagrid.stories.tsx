@@ -7,9 +7,7 @@ import { AttributeListDatagrid } from "./AttributeListDatagrid";
 const meta: Meta<typeof AttributeListDatagrid> = {
   title: "Attributes/AttributeListDatagrid",
   component: AttributeListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     attributes,
     disabled: false,
