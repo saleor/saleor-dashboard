@@ -9,6 +9,7 @@ import {
 import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dateCell,
+  loadingCell,
   moneyCell,
   pillCell,
   readonlyTextCell,
@@ -390,7 +391,7 @@ function getAttributeCellContent(
   attributesLoading?: boolean,
 ) {
   if (attributesLoading) {
-    return readonlyTextCell("...", true, "faded");
+    return loadingCell();
   }
 
   if (!productId || !getAssignedAttribute) {

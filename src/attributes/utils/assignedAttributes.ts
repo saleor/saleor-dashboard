@@ -9,7 +9,10 @@ export function getDisplayValueFromAssignedAttribute(attr: AssignedAttributeItem
     case "AssignedSingleChoiceAttribute":
       return attr.singleChoiceValue?.name ?? "";
     case "AssignedMultiChoiceAttribute":
-      return attr.multiChoiceValue.map((v: { name: string | null }) => v.name).join(", ");
+      return attr.multiChoiceValue
+        .map((v: { name: string | null }) => v.name?.trim())
+        .filter((name): name is string => !!name)
+        .join(", ");
     case "AssignedNumericAttribute":
       return attr.numericValue != null ? String(attr.numericValue) : "";
     case "AssignedPlainTextAttribute":
