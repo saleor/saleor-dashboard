@@ -10,6 +10,8 @@ import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
+import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
+import { PasswordLoginModeEnum, type SiteSettingsStagingQuery } from "@dashboard/graphql/staging";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -21,6 +23,7 @@ import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
+import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
 
 interface SiteSettingsPageAddressFormData {
@@ -42,12 +45,13 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
   preserveAllAddressFields: boolean;
+  passwordLoginMode: PasswordLoginModeEnum;
 }
 
 interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop?: SiteSettingsQuery["shop"];
+  shop?: SiteSettingsQuery["shop"] | SiteSettingsStagingQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -96,6 +100,10 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    // Force staging type to access the new field. Once field is available in main schema, casting should be removed.
+    passwordLoginMode:
+      (isStagingSchema() && (shop as SiteSettingsStagingQuery["shop"])?.passwordLoginMode) ||
+      PasswordLoginModeEnum.ENABLED,
   };
 
   return (
@@ -205,6 +213,25 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
+
+                {isStagingSchema() && (
+                  <>
+                    <Divider />
+
+                    <Box
+                      display="grid"
+                      __gridTemplateColumns="1fr 3fr"
+                      paddingLeft={6}
+                      paddingBottom={8}
+                    >
+                      <PageSectionHeader
+                        title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                        description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                      />
+                      <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
+                    </Box>
+                  </>
+                )}
 
                 <Divider />
 
