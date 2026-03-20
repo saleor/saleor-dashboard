@@ -86,6 +86,7 @@ export enum AccountErrorCode {
   DELETE_OWN_ACCOUNT = 'DELETE_OWN_ACCOUNT',
   DELETE_STAFF_ACCOUNT = 'DELETE_STAFF_ACCOUNT',
   DELETE_SUPERUSER_ACCOUNT = 'DELETE_SUPERUSER_ACCOUNT',
+  DISABLED_AUTHENTICATION_METHOD = 'DISABLED_AUTHENTICATION_METHOD',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INACTIVE = 'INACTIVE',
@@ -2554,7 +2555,10 @@ export type DraftOrderCreateInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -2622,7 +2626,10 @@ export type DraftOrderInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -2977,6 +2984,7 @@ export enum GiftCardEventsEnum {
   EXPIRY_DATE_UPDATED = 'EXPIRY_DATE_UPDATED',
   ISSUED = 'ISSUED',
   NOTE_ADDED = 'NOTE_ADDED',
+  REFUNDED_IN_ORDER = 'REFUNDED_IN_ORDER',
   RESENT = 'RESENT',
   SENT_TO_CUSTOMER = 'SENT_TO_CUSTOMER',
   TAGS_UPDATED = 'TAGS_UPDATED',
@@ -6195,6 +6203,21 @@ export type PageWhereInput = {
   slug?: InputMaybe<StringFilterInput>;
 };
 
+/**
+ * Controls whether password-based authentication is allowed.
+ *
+ *     ENABLED - any user can log in with a password. This is the default behavior.
+ *     CUSTOMERS_ONLY - only customer users can log in with a password.
+ *         If a staff user logs in with a password, they will be treated as a customer
+ *         — the issued token will not contain any staff permissions.
+ *     DISABLED - no user can log in with a password.
+ */
+export enum PasswordLoginModeEnum {
+  CUSTOMERS_ONLY = 'CUSTOMERS_ONLY',
+  DISABLED = 'DISABLED',
+  ENABLED = 'ENABLED'
+}
+
 export enum PaymentChargeStatusEnum {
   CANCELLED = 'CANCELLED',
   FULLY_CHARGED = 'FULLY_CHARGED',
@@ -7965,6 +7988,7 @@ export enum ShopErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
+  PASSWORD_AUTH_RESTRICTION = 'PASSWORD_AUTH_RESTRICTION',
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE'
 }
@@ -8019,6 +8043,12 @@ export type ShopSettingsInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Controls whether password-based authentication is allowed.
+   *
+   * Added in Saleor 3.23.
+   */
+  passwordLoginMode?: InputMaybe<PasswordLoginModeEnum>;
   /**
    * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
    *
@@ -8507,6 +8537,26 @@ export type TransactionCreateInput = {
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Filter input for transaction events data.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionEventFilterInput = {
+  /**
+   * Filter transaction events by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter transaction events by type.
+   *
+   * Added in Saleor 3.23.
+   */
+  type?: InputMaybe<TransactionEventTypeEnumFilterInput>;
+};
+
 export type TransactionEventInput = {
   /** The message related to the event. */
   message?: InputMaybe<Scalars['String']>;
@@ -8570,6 +8620,13 @@ export enum TransactionEventTypeEnum {
   REFUND_REVERSE = 'REFUND_REVERSE',
   REFUND_SUCCESS = 'REFUND_SUCCESS'
 }
+
+export type TransactionEventTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<TransactionEventTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<TransactionEventTypeEnum>>;
+};
 
 /** Filter input for transactions. */
 export type TransactionFilterInput = {
@@ -8645,6 +8702,28 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   REFUND_IS_PENDING = 'REFUND_IS_PENDING'
 }
 
+export enum TransactionSortField {
+  /**
+   * Sort transactions by creation date.
+   *
+   * Added in Saleor 3.23.
+   */
+  CREATED_AT = 'CREATED_AT',
+  /**
+   * Sort transactions by modification date.
+   *
+   * Added in Saleor 3.23.
+   */
+  MODIFIED_AT = 'MODIFIED_AT'
+}
+
+export type TransactionSortingInput = {
+  /** Specifies the direction in which to sort transactions. */
+  direction: OrderDirection;
+  /** Sort transactions by the selected field. */
+  field: TransactionSortField;
+};
+
 export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -8700,7 +8779,25 @@ export type TransactionWhereInput = {
   OR?: InputMaybe<Array<TransactionWhereInput>>;
   /** Filter by app identifier. */
   appIdentifier?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter transactions by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+   *
+   * Added in Saleor 3.23.
+   */
+  events?: InputMaybe<Array<TransactionEventFilterInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Filter transactions by modified at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  modifiedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by PSP reference. */
   pspReference?: InputMaybe<StringFilterInput>;
 };
