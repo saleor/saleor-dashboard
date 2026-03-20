@@ -95,7 +95,7 @@ export const TransactionCard = ({
     if (isValueFocused) return;
 
     setValueInput(value?.toString() ?? "");
-  }, [value, isValueFocused]);
+  }, [value, isValueFocused, submitError]);
 
   React.useEffect(() => {
     if (status === "success") {
