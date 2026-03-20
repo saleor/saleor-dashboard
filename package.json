@@ -36,6 +36,7 @@
     "generate": "pnpm run generate:main && pnpm run generate:staging",
     "generate:main": "graphql-codegen --config codegen-main.ts",
     "generate:staging": "graphql-codegen --config codegen-staging.ts",
+    "graphql-lint-unused": "graphql-lint-unused-fields . --advanced",
     "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix --allow-remove-files",
     "lint": "pnpm run /^lint:.*$/",
@@ -182,7 +183,7 @@
     "@types/url-join": "^4.0.3",
     "@types/uuid": "^9.0.8",
     "@types/webappsec-credential-management": "^0.5.1",
-    "@vitejs/plugin-react-swc": "^3.11.0",
+    "@vitejs/plugin-react-swc": "^4.3.0",
     "chromatic": "^15.2.0",
     "code-inspector-plugin": "^0.6.5",
     "core-js": "^3.46.0",
@@ -204,6 +205,7 @@
     "front-matter": "^4.0.2",
     "globals": "^16.5.0",
     "graphql-config": "^5.1.5",
+    "graphql-lint-unused-fields": "^1.6.18",
     "html-to-react": "^1.7.0",
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
@@ -215,7 +217,7 @@
     "typescript": "5.8.3",
     "typescript-eslint": "^8.46.4",
     "typescript-strict-plugin": "^2.4.4",
-    "vite": "^6.4.1",
+    "vite": "7.3.1",
     "vite-plugin-html": "^3.2.2"
   },
   "optionalDependencies": {
@@ -239,7 +241,7 @@
   },
   "packageManager": "pnpm@10.28.1",
   "engines": {
-    "node": ">=22.15 <23",
+    "node": ">=24 <25",
     "pnpm": ">=10"
   }
 }
