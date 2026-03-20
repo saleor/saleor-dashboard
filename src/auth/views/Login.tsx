@@ -1,10 +1,7 @@
-import { useQuery as useApolloQuery } from "@apollo/client";
-import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { useAvailableExternalAuthenticationsStagingQuery } from "@dashboard/graphql/hooksStaging.generated";
 import { isMainSchema, isStagingSchema } from "@dashboard/graphql/schemaVersion";
-import {
-  type AvailableExternalAuthenticationsStagingQuery,
-  PasswordLoginModeEnum,
-} from "@dashboard/graphql/staging";
+import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
@@ -15,8 +12,6 @@ import LoginPage from "../components/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
-import { availableExternalAuthentications as availableExternalAuthenticationsQuery } from "../queries";
-import { availableExternalAuthenticationsStaging as availableExternalAuthenticationsStagingQuery } from "../queries.staging";
 import { loginCallbackPath, type LoginUrlQueryParams } from "../urls";
 import { useUser } from "../useUser";
 
@@ -40,18 +35,15 @@ const LoginView = ({ params }: LoginViewProps) => {
   const isCallbackFlow = !!(params.code && params.state && isCallbackPath);
 
   const { data: externalAuthenticationsMain, loading: externalAuthenticationsLoadingMain } =
-    useApolloQuery<AvailableExternalAuthenticationsQuery>(availableExternalAuthenticationsQuery, {
+    useAvailableExternalAuthenticationsQuery({
       skip: isCallbackFlow || isStagingSchema(),
       fetchPolicy: "network-only",
     });
   const { data: externalAuthenticationsStaging, loading: externalAuthenticationsLoadingStaging } =
-    useApolloQuery<AvailableExternalAuthenticationsStagingQuery>(
-      availableExternalAuthenticationsStagingQuery,
-      {
-        skip: isCallbackFlow || isMainSchema(),
-        fetchPolicy: "network-only",
-      },
-    );
+    useAvailableExternalAuthenticationsStagingQuery({
+      skip: isCallbackFlow || isMainSchema(),
+      fetchPolicy: "network-only",
+    });
   const externalAuthentications = isStagingSchema()
     ? externalAuthenticationsStaging
     : externalAuthenticationsMain;
