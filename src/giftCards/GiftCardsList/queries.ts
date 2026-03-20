@@ -68,8 +68,5 @@ export const giftCardProductsCount = gql`
     giftCardProductTypes: productTypes(filter: { kind: GIFT_CARD }) {
       totalCount
     }
-    giftCardProducts: products(filter: { giftCard: true }, channel: $channel) {
-      totalCount
-    }
   }
 `;

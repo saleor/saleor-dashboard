@@ -24,9 +24,6 @@ export const productDeleteMutation = gql`
       errors {
         ...ProductError
       }
-      product {
-        id
-      }
     }
   }
 `;
@@ -36,15 +33,6 @@ export const productMediaReorder = gql`
     productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
       errors {
         ...ProductError
-      }
-      product {
-        id
-        media {
-          id
-          alt
-          sortOrder
-          url
-        }
       }
     }
   }
@@ -99,9 +87,6 @@ export const variantDeleteMutation = gql`
     productVariantDelete(id: $id) {
       errors {
         ...ProductError
-      }
-      productVariant {
-        id
       }
     }
   }
@@ -201,12 +186,6 @@ export const productMediaDeleteMutation = gql`
     productMediaDelete(id: $id) {
       errors {
         ...ProductError
-      }
-      product {
-        id
-        media {
-          id
-        }
       }
     }
   }
@@ -370,12 +349,6 @@ export const productVariantReorder = gql`
       errors {
         ...ProductError
       }
-      product {
-        id
-        variants {
-          id
-        }
-      }
     }
   }
 `;
@@ -408,12 +381,6 @@ export const ProductVariantChannelListingUpdateMutation = gql`
 export const ProductVariantPreorderDeactivateMutation = gql`
   mutation ProductVariantPreorderDeactivate($id: ID!) {
     productVariantPreorderDeactivate(id: $id) {
-      productVariant {
-        id
-        preorder {
-          ...Preorder
-        }
-      }
       errors {
         ...ProductError
       }

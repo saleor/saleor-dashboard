@@ -450,6 +450,9 @@ importers:
       graphql-config:
         specifier: ^5.1.5
         version: 5.1.5(@types/node@20.19.32)(graphql@16.11.0)(typescript@5.8.3)
+      graphql-lint-unused-fields:
+        specifier: ^1.6.18
+        version: 1.6.18
       html-to-react:
         specifier: ^1.7.0
         version: 1.7.0(react@18.3.1)
@@ -5119,6 +5122,12 @@ packages:
       }
     engines: { node: ">= 10" }
 
+  "@ts-morph/common@0.21.0":
+    resolution:
+      {
+        integrity: sha512-ES110Mmne5Vi4ypUKrtVQfXFDtCsDXiUiGxF6ILVlE90dDD4fdpC1LSjydl/ml7xJWKSDZwUYD2zkOePMSrPBA==,
+      }
+
   "@tsconfig/node10@1.0.12":
     resolution:
       {
@@ -6791,6 +6800,12 @@ packages:
         integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==,
       }
     engines: { iojs: ">= 1.0.0", node: ">= 0.12.0" }
+
+  code-block-writer@12.0.0:
+    resolution:
+      {
+        integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==,
+      }
 
   code-inspector-core@0.6.5:
     resolution:
@@ -8616,6 +8631,14 @@ packages:
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
 
+  graphql-lint-unused-fields@1.6.18:
+    resolution:
+      {
+        integrity: sha512-L8gthBtMEG1aAOaTLtov+dQG0elNFMPAZTsW7CKmCvf3znx7NXSzMviytpM+Ne/5weUVJWOwPV5m/VhGtEsQsg==,
+      }
+    engines: { node: ">=16.0.0" }
+    hasBin: true
+
   graphql-relay@0.10.2:
     resolution:
       {
@@ -10433,6 +10456,13 @@ packages:
       }
     engines: { node: ">=10" }
 
+  minimatch@7.4.9:
+    resolution:
+      {
+        integrity: sha512-Brg/fp/iAVDOQoHxkuN5bEYhyQlZhxddI78yWsCbeEwTHXQjlNLtiJDUsp1GIptVqMI7/gkJMz4vVAc01mpoBw==,
+      }
+    engines: { node: ">=10" }
+
   minimatch@8.0.5:
     resolution:
       {
@@ -10460,19 +10490,20 @@ packages:
       }
     engines: { node: ">=8" }
 
-  minipass@7.1.2:
-    resolution:
-      {
-        integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==,
-      }
-    engines: { node: ">=16 || 14 >=14.17" }
-
   minipass@7.1.3:
     resolution:
       {
         integrity: sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==,
       }
     engines: { node: ">=16 || 14 >=14.17" }
+
+  mkdirp@2.1.6:
+    resolution:
+      {
+        integrity: sha512-+hEnITedc8LAtIP9u3HJDFIdcLV2vXP33sqLLIzkv1Db1zO/1OxbvYf0Y1OC/S/Qo5dxHXepofhmxL02PsKe+A==,
+      }
+    engines: { node: ">=10" }
+    hasBin: true
 
   modern-ahocorasick@1.1.0:
     resolution:
@@ -10872,6 +10903,12 @@ packages:
     resolution:
       {
         integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==,
+      }
+
+  path-browserify@1.0.1:
+    resolution:
+      {
+        integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==,
       }
 
   path-case@3.0.4:
@@ -12651,6 +12688,12 @@ packages:
     resolution:
       {
         integrity: sha512-320x5Ggei84AxzlXp91QkIGSw5wgaLT6GeAH0KsqDmRZdVWW2OiSeVvElVoatk3f7nicwXlElXsoFkARiGE2yg==,
+      }
+
+  ts-morph@20.0.0:
+    resolution:
+      {
+        integrity: sha512-JVmEJy2Wow5n/84I3igthL9sudQ8qzjh/6i4tmYCm6IqYyKFlNbJZi7oBdjyqcWSWYRu3CtL0xbT6fS03ESZIg==,
       }
 
   ts-node@10.9.2:
@@ -17336,6 +17379,13 @@ snapshots:
   "@tootallnate/once@3.0.1":
     optional: true
 
+  "@ts-morph/common@0.21.0":
+    dependencies:
+      fast-glob: 3.3.3
+      minimatch: 7.4.9
+      mkdirp: 2.1.6
+      path-browserify: 1.0.1
+
   "@tsconfig/node10@1.0.12": {}
 
   "@tsconfig/node12@1.0.11": {}
@@ -18497,6 +18547,8 @@ snapshots:
 
   co@4.6.0:
     optional: true
+
+  code-block-writer@12.0.0: {}
 
   code-inspector-core@0.6.5:
     dependencies:
@@ -19813,6 +19865,19 @@ snapshots:
       graphql: 16.11.0
       nullthrows: 1.1.1
       vscode-languageserver-types: 3.17.5
+
+  graphql-lint-unused-fields@1.6.18:
+    dependencies:
+      "@babel/parser": 7.29.0
+      "@babel/traverse": 7.29.0
+      "@babel/types": 7.29.0
+      chalk: 4.1.2
+      glob: 13.0.6
+      graphql: 16.11.0
+      ts-morph: 20.0.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
 
   graphql-relay@0.10.2(graphql@16.11.0):
     dependencies:
@@ -21177,6 +21242,10 @@ snapshots:
     dependencies:
       brace-expansion: 2.0.2
 
+  minimatch@7.4.9:
+    dependencies:
+      brace-expansion: 2.0.2
+
   minimatch@8.0.5:
     dependencies:
       brace-expansion: 2.0.2
@@ -21189,9 +21258,9 @@ snapshots:
 
   minipass@4.2.8: {}
 
-  minipass@7.1.2: {}
-
   minipass@7.1.3: {}
+
+  mkdirp@2.1.6: {}
 
   modern-ahocorasick@1.1.0: {}
 
@@ -21458,6 +21527,8 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.8.1
 
+  path-browserify@1.0.1: {}
+
   path-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
@@ -21480,7 +21551,7 @@ snapshots:
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
-      minipass: 7.1.2
+      minipass: 7.1.3
 
   path-scurry@2.0.2:
     dependencies:
@@ -22616,6 +22687,11 @@ snapshots:
     optional: true
 
   ts-log@2.2.7: {}
+
+  ts-morph@20.0.0:
+    dependencies:
+      "@ts-morph/common": 0.21.0
+      code-block-writer: 12.0.0
 
   ts-node@10.9.2(@swc/core@1.15.11)(@types/node@20.19.32)(typescript@5.8.3):
     dependencies:
