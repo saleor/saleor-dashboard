@@ -11,7 +11,6 @@ export const RuleSummaryChips = ({ value, label }: { value: string; label: strin
       __backgroundColor={color.base}
       __color={color.text}
       __borderColor={color.border}
-      marginRight={1.5}
       data-test-id="rule-summary-chip"
     >
       {label}: {value}

@@ -1,4 +1,4 @@
-import { Box, Chip, type Option, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../../../../../messages";
@@ -12,20 +12,14 @@ export const RuleSummaryTooltip = ({ conditionsValues }: RuleSummaryTooltipProps
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Chip
-          backgroundColor="accent1Pressed"
-          borderColor="accent1"
-          color="default1"
-          marginRight={1.5}
-          cursor="pointer"
-        >
+        <Text size={2} color="default2" cursor="pointer" textDecoration="none">
           <FormattedMessage
             {...messages.ruleSummaryMoreItems}
             values={{
               itemsLength: conditionsValues.length,
             }}
           />
-        </Chip>
+        </Text>
       </Tooltip.Trigger>
       <Tooltip.Content>
         <Box __maxWidth={390} display="flex" flexWrap="wrap" gap={2}>

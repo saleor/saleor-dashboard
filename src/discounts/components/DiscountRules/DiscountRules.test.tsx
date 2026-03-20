@@ -123,16 +123,12 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
     await waitFor(() => {
-      expect(screen.getByText(/catalog rule: catalog rule 2/i)).toBeInTheDocument();
+      expect(screen.getByText("Catalog rule 2")).toBeInTheDocument();
     });
     // Assert
-    expect(screen.getByText(/catalog rule: catalog rule 2/i)).toBeInTheDocument();
-    expect(screen.getByText(/catalog rule: catalog rule 1/i)).toBeInTheDocument();
-    expect(
-      screen.getAllByText(
-        /discount of {value} on the purchase of {conditions} through the {channel}/i,
-      ).length,
-    ).toBe(2);
+    expect(screen.getByText("Catalog rule 2")).toBeInTheDocument();
+    expect(screen.getByText("Catalog rule 1")).toBeInTheDocument();
+    expect(screen.getAllByTestId("rule-summary").length).toBe(2);
   });
   it("should render order discount rules", async () => {
     // Arrange & Act
@@ -152,16 +148,12 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
     await waitFor(() => {
-      expect(screen.getByText(/order rule: order rule 2/i)).toBeInTheDocument();
+      expect(screen.getByText("order rule 2")).toBeInTheDocument();
     });
     // Assert
-    expect(screen.getByText(/order rule: order rule 2/i)).toBeInTheDocument();
-    expect(screen.getByText(/order rule: order rule 1/i)).toBeInTheDocument();
-    expect(
-      screen.getAllByText(
-        /discount of {value} on the purchase of {conditions} through the {channel}/i,
-      ).length,
-    ).toBe(2);
+    expect(screen.getByText("order rule 2")).toBeInTheDocument();
+    expect(screen.getByText("Order rule 1")).toBeInTheDocument();
+    expect(screen.getAllByTestId("rule-summary").length).toBe(2);
   });
   it("should allow to add new catalog rule", async () => {
     // Arrange
@@ -350,9 +342,9 @@ describe("DiscountRules", () => {
     await act(async () => {
       await userEvent.click(screen.getByRole("button", { name: /add condition/i }));
     });
-    await userEvent.click(await screen.findByTestId(/condition-name-1/i));
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
     await userEvent.click(screen.getAllByTestId("select-option")[0]);
-    await userEvent.click(await screen.findByTestId(/condition-value-1/i));
+    await userEvent.click(await screen.findByTestId(/condition-value-0/i));
     await userEvent.click(await screen.getAllByTestId("select-option")[1]);
     // Edit reward
     await userEvent.click(screen.getByRole("radio", { name: "$" }));
@@ -375,22 +367,22 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            id: "variant",
-            type: "is",
-            value: [
-              {
-                label: "Carrot Juice - 1l",
-                value: "UHJvZHVjdFZhcmlhbnQ6MjA2",
-              },
-            ],
-          },
-          {
             id: "product",
             type: "is",
             value: [
               {
                 label: "Banana Juice",
                 value: "UHJvZHVjdDo3NA==",
+              },
+            ],
+          },
+          {
+            id: "variant",
+            type: "is",
+            value: [
+              {
+                label: "Carrot Juice - 1l",
+                value: "UHJvZHVjdFZhcmlhbnQ6MjA2",
               },
             ],
           },
@@ -452,12 +444,12 @@ describe("DiscountRules", () => {
     await act(async () => {
       await userEvent.click(screen.getByRole("button", { name: /add condition/i }));
     });
-    await userEvent.click(await screen.findByTestId(/condition-name-1/i));
+    await userEvent.click(await screen.findByTestId(/condition-name-0/i));
     await userEvent.click(screen.getAllByTestId("select-option")[0]);
-    await userEvent.click(await screen.findByTestId(/condition-type-1/i));
+    await userEvent.click(await screen.findByTestId(/condition-type-0/i));
     await userEvent.click(screen.getAllByTestId("select-option")[1]);
-    await userEvent.clear(await screen.findByTestId(/condition-value-1/i));
-    await userEvent.type(await screen.findByTestId(/condition-value-1/i), "100");
+    await userEvent.clear(await screen.findByTestId(/condition-value-0/i));
+    await userEvent.type(await screen.findByTestId(/condition-value-0/i), "100");
     // Edit reward gifts
     await userEvent.click(screen.getByTestId("reward-type-select"));
     await userEvent.click(screen.getAllByTestId("select-option")[1]);
@@ -477,14 +469,14 @@ describe("DiscountRules", () => {
         },
         conditions: [
           {
-            id: "baseTotalPrice",
-            type: "greater",
-            value: "144",
-          },
-          {
             id: "baseSubtotalPrice",
             type: "lower",
             value: "100",
+          },
+          {
+            id: "baseTotalPrice",
+            type: "greater",
+            value: "144",
           },
         ],
         description: "",

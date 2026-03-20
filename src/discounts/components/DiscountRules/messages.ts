@@ -73,6 +73,10 @@ export const messages = defineMessages({
     id: "v1vJ77",
     defaultMessage: "Edit rule",
   },
+  ruleModalSubtitle: {
+    id: "xBulM3",
+    defaultMessage: "Set reward and conditions for the selected channel",
+  },
   ruleError: {
     id: "zehNKT",
     defaultMessage: "Rule has error, open rule to see details",
@@ -101,5 +105,25 @@ export const messages = defineMessages({
   noConditonsCreate: {
     id: "Xu4ST7",
     defaultMessage: "No conditions added, click button bellow to create one",
+  },
+  untitledRule: {
+    id: "mSS92b",
+    defaultMessage: "Untitled rule",
+  },
+  channelInactive: {
+    id: "6Tps09",
+    defaultMessage: "Inactive",
+  },
+  giftCount: {
+    id: "B8MRsI",
+    defaultMessage: "{count, plural, one {# item} other {# items}}",
+  },
+  appliesTo: {
+    id: "6WqHWi",
+    defaultMessage: "Applies to",
+  },
+  rewardOff: {
+    id: "C0MnAi",
+    defaultMessage: "off",
   },
 });

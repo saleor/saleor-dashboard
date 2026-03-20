@@ -16,6 +16,7 @@ interface DiscountDatesProps<ErrorCode> {
     startTime: string;
   };
   disabled: boolean;
+  stacked?: boolean;
   formErrors?: {
     startDate?: FieldError;
   };
@@ -27,6 +28,7 @@ interface DiscountDatesProps<ErrorCode> {
 const DiscountDates = <ErrorCode,>({
   data,
   disabled,
+  stacked = false,
   errors,
   formErrors,
   onChange,
@@ -38,7 +40,7 @@ const DiscountDates = <ErrorCode,>({
   return (
     <DashboardCard data-test-id="active-dates-section">
       <DashboardCard.Header>
-        <DashboardCard.Title>
+        <DashboardCard.Title size={stacked ? 6 : 5} fontWeight={stacked ? "medium" : "bold"}>
           <FormattedMessage
             id="zKOGkU"
             defaultMessage="Active Dates"
@@ -48,7 +50,7 @@ const DiscountDates = <ErrorCode,>({
       </DashboardCard.Header>
 
       <DashboardCard.Content>
-        <Box display="flex" gap={4}>
+        <Box display="flex" flexDirection={stacked ? "column" : "row"} gap={4}>
           <Input
             data-test-id="start-date-input"
             disabled={disabled}
@@ -104,7 +106,7 @@ const DiscountDates = <ErrorCode,>({
           </Text>
         </Checkbox>
         {data.hasEndDate && (
-          <Box display="flex" gap={4}>
+          <Box display="flex" flexDirection={stacked ? "column" : "row"} gap={4}>
             <Input
               data-test-id="end-date-input"
               disabled={disabled}
