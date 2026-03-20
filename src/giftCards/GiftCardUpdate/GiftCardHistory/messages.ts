@@ -88,6 +88,16 @@ const giftCardHistoryTimelineMessages = defineMessages({
     defaultMessage: "Gift card tags were updated",
     description: "gift card history message",
   },
+  refundedInOrder: {
+    id: "qOXgxv",
+    defaultMessage: "Gift card was refunded in order {orderLink}",
+    description: "gift card history message",
+  },
+  refundedInOrderNoLink: {
+    id: "kkFOHD",
+    defaultMessage: "Gift card was refunded in an order",
+    description: "gift card history message",
+  },
   usedInOrder: {
     id: "Uu2B2G",
     defaultMessage: "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
