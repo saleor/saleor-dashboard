@@ -2895,6 +2895,47 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
+export const ChannelListingProductForListFragmentDoc = gql`
+    fragment ChannelListingProductForList on ProductChannelListing {
+  id
+  isPublished
+  publishedAt
+  channel {
+    id
+    name
+  }
+}
+    `;
+export const ProductForListFragmentDoc = gql`
+    fragment ProductForList on Product {
+  id
+  name
+  thumbnail(size: 1024) {
+    url
+  }
+  productType {
+    id
+    name
+  }
+  category @include(if: $includeCategories) {
+    id
+    name
+  }
+  collections @include(if: $includeCollections) {
+    id
+    name
+  }
+  channelListings {
+    ...ChannelListingProductForList
+    pricing @include(if: $hasChannel) {
+      priceRange {
+        ...PriceRange
+      }
+    }
+  }
+}
+    ${ChannelListingProductForListFragmentDoc}
+${PriceRangeFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -15894,7 +15935,7 @@ export const ProductListDocument = gql`
   ) {
     edges {
       node {
-        ...ProductWithChannelListings
+        ...ProductForList
         updatedAt
         created
         description
@@ -15912,7 +15953,7 @@ export const ProductListDocument = gql`
     totalCount
   }
 }
-    ${ProductWithChannelListingsFragmentDoc}
+    ${ProductForListFragmentDoc}
 ${ProductListAssignedAttributeFragmentDoc}`;
 
 /**

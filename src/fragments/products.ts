@@ -131,6 +131,48 @@ export const productFragment = gql`
   }
 `;
 
+export const channelListingProductForListFragment = gql`
+  fragment ChannelListingProductForList on ProductChannelListing {
+    id
+    isPublished
+    publishedAt
+    channel {
+      id
+      name
+    }
+  }
+`;
+
+export const productForListFragment = gql`
+  fragment ProductForList on Product {
+    id
+    name
+    thumbnail(size: 1024) {
+      url
+    }
+    productType {
+      id
+      name
+    }
+    category @include(if: $includeCategories) {
+      id
+      name
+    }
+    collections @include(if: $includeCollections) {
+      id
+      name
+    }
+    channelListings {
+      ...ChannelListingProductForList
+      pricing @include(if: $hasChannel) {
+        priceRange {
+          ...PriceRange
+        }
+      }
+    }
+  }
+`;
+
 export const productVariantAttributesFragment = gql`
   fragment ProductVariantAttributes on Product {
     id

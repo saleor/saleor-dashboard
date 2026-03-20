@@ -28,7 +28,7 @@ export const productListQuery = gql`
     ) {
       edges {
         node {
-          ...ProductWithChannelListings
+          ...ProductForList
           updatedAt
           created
           description

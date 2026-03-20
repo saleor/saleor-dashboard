@@ -188,7 +188,7 @@ describe("getDisplayValueFromAssignedAttribute", () => {
   it("returns swatch name for swatch attribute like color", () => {
     const attr: Attr = {
       __typename: "AssignedSwatchAttribute",
-      swatchValue: { __typename: "AssignedChoiceAttributeValue", name: "Midnight Blue" },
+      swatchValue: { __typename: "AssignedSwatchAttributeValue", name: "Midnight Blue" },
       attribute: baseAttribute,
     };
 

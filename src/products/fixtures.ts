@@ -701,7 +701,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -727,7 +726,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -804,7 +803,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -830,7 +828,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -974,7 +972,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -1000,7 +997,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -1221,15 +1218,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1254,20 +1250,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1292,14 +1286,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo2MQ==",
     name: "Nebula Night Sky Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1321,15 +1314,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1354,20 +1346,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1392,14 +1382,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo2NA==",
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1421,15 +1410,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1454,20 +1442,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1492,14 +1478,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo2NQ==",
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1533,15 +1518,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1566,20 +1550,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1604,14 +1586,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3NQ==",
     name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1645,15 +1626,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1678,20 +1658,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1716,14 +1694,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Ng==",
     name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1757,15 +1734,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1790,21 +1766,19 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
 
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1829,14 +1803,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Mg==",
     name: "Apple Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1870,15 +1843,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1903,20 +1875,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1941,14 +1911,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3MQ==",
     name: "Orange Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1982,15 +1951,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2015,20 +1983,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2053,14 +2019,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3NA==",
     name: "Banana Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2094,15 +2059,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2127,20 +2091,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2165,14 +2127,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo3OQ==",
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2206,15 +2167,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2239,20 +2199,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2277,14 +2235,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Mw==",
     name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2318,15 +2275,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2351,20 +2307,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2389,14 +2343,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo3OA==",
     name: "Green Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2430,15 +2383,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2463,20 +2415,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2501,14 +2451,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo4OQ==",
     name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2542,15 +2491,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2575,20 +2523,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2613,14 +2559,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMDc=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2654,15 +2599,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2687,20 +2631,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2725,14 +2667,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMDg=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2766,15 +2707,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2799,20 +2739,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2837,14 +2775,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMDk=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2878,15 +2815,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2911,20 +2847,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2949,14 +2883,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTA=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2990,15 +2923,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3023,20 +2955,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3061,14 +2991,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMTU=",
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3102,15 +3031,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3135,20 +3063,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3173,14 +3099,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTY=",
     name: "Blue Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3214,15 +3139,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3247,20 +3171,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3285,14 +3207,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTc=",
     name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3326,15 +3247,14 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3359,20 +3279,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3397,14 +3315,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo4NQ==",
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTI=",
       name: "Cushion",
     },
