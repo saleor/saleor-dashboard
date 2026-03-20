@@ -203,6 +203,10 @@
     "context": "product type shipping settings, section header",
     "string": "Shipping"
   },
+  "/2o5cH": {
+    "context": "section description",
+    "string": "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely."
+  },
   "/4/nYx": {
     "string": "Discount updated"
   },
@@ -884,8 +888,16 @@
     "context": "button",
     "string": "Add variant"
   },
+  "3CMUKE": {
+    "context": "password login mode option description",
+    "string": "Only customer users can log in with a password. Staff users logging in with a password will be treated as customers."
+  },
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
+  },
+  "3EFNZn": {
+    "context": "password login mode option",
+    "string": "Customers only"
   },
   "3Eyq0y": {
     "string": "Mark as paid manually if the payment is confirmed"
@@ -2328,6 +2340,10 @@
   "Bphmwe": {
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
+  },
+  "BtsJ+e": {
+    "context": "empty state message when no login method is available",
+    "string": "Password login is disabled. Contact your administrator to configure an external authentication method or enable password login."
   },
   "BvGp1I": {
     "string": "between"
@@ -7096,6 +7112,10 @@
     "context": "status",
     "string": "Active"
   },
+  "c5B5Cg": {
+    "context": "password login mode option description",
+    "string": "No user can log in with a password"
+  },
   "c5fFin": {
     "context": "ExitFormPrompt title",
     "string": "Leave without saving changes?"
@@ -7427,6 +7447,10 @@
   },
   "e822us": {
     "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+  },
+  "e8O72h": {
+    "context": "password login mode option",
+    "string": "Disabled"
   },
   "e92Uxp": {
     "context": "order history message",
@@ -8135,6 +8159,10 @@
     "context": "Transaction event status - unknown status, info without event data",
     "string": "Info"
   },
+  "iidznP": {
+    "context": "password login mode option description",
+    "string": "All users can log in with a password"
+  },
   "ij3dWD": {
     "context": "custom extension page create, error message",
     "string": "Extension name is required"
@@ -8375,6 +8403,10 @@
     "context": "select label",
     "string": "Unset"
   },
+  "k6kIUq": {
+    "context": "password login mode option",
+    "string": "Enabled"
+  },
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
@@ -8530,6 +8562,10 @@
   "knO/IN": {
     "context": "delete model",
     "string": "Are you sure you want to delete {title}?"
+  },
+  "kny5j9": {
+    "context": "section title",
+    "string": "Password Login"
   },
   "kp2IYP": {
     "context": "option",
@@ -9503,6 +9539,10 @@
   "qQih8j": {
     "context": "voucher status scheduled",
     "string": "Scheduled"
+  },
+  "qRMXUE": {
+    "context": "card header",
+    "string": "Password login mode"
   },
   "qRmntJ": {
     "context": "extensions list ready to be used",

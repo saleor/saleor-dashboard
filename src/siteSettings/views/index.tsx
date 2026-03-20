@@ -1,9 +1,15 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
+  type ShopErrorFragment,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
+import { isMainSchema, isStagingSchema } from "@dashboard/graphql/schemaVersion";
+import {
+  useShopSettingsUpdateStagingMutation,
+  useSiteSettingsStagingQuery,
+} from "@dashboard/graphql/staging";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -17,27 +23,48 @@ import SiteSettingsPage, {
 const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
-  const siteSettings = useSiteSettingsQuery({
+  const siteSettingsMain = useSiteSettingsQuery({
     displayLoader: true,
+    skip: isStagingSchema(),
   });
+  const siteSettingsStaging = useSiteSettingsStagingQuery({
+    displayLoader: true,
+    skip: isMainSchema(),
+  });
+  const siteSettings = isStagingSchema() ? siteSettingsStaging : siteSettingsMain;
+
+  const onUpdateCompleted = (data: {
+    shopSettingsUpdate?: { errors: unknown[] } | null;
+    shopAddressUpdate?: { errors: unknown[] } | null;
+  }) => {
+    if (
+      [...(data?.shopAddressUpdate?.errors || []), ...(data?.shopSettingsUpdate?.errors || [])]
+        .length === 0
+    ) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
+      });
+    }
+  };
+
   const [updateShopSettings, updateShopSettingsOpts] = useShopSettingsUpdateMutation({
-    onCompleted: data => {
-      if (
-        [...(data?.shopAddressUpdate?.errors || []), ...(data?.shopSettingsUpdate?.errors || [])]
-          .length === 0
-      ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
-        });
-      }
-    },
+    onCompleted: onUpdateCompleted,
   });
+  const [updateShopSettingsStaging, updateShopSettingsOptsStaging] =
+    useShopSettingsUpdateStagingMutation({
+      onCompleted: onUpdateCompleted,
+    });
+
+  const updateOpts = isStagingSchema() ? updateShopSettingsOptsStaging : updateShopSettingsOpts;
+
+  // Staging schema errors have a superset of ShopErrorCode values,
+  // but they share the same shape (code, field, message) used by UI components.
   const errors = [
-    ...(updateShopSettingsOpts.data?.shopSettingsUpdate?.errors || []),
-    ...(updateShopSettingsOpts.data?.shopAddressUpdate?.errors || []),
-  ];
-  const loading = siteSettings.loading || updateShopSettingsOpts.loading;
+    ...(updateOpts.data?.shopSettingsUpdate?.errors || []),
+    ...(updateOpts.data?.shopAddressUpdate?.errors || []),
+  ] as ShopErrorFragment[];
+  const loading = siteSettings.loading || updateOpts.loading;
   const handleUpdateShopSettings = async (data: SiteSettingsPageFormData) => {
     const addressInput = areAddressInputFieldsModified(data)
       ? {
@@ -54,21 +81,33 @@ const SiteSettings = () => {
           companyName: data.companyName,
         };
 
+    const shopSettingsInput = {
+      description: data.description,
+      reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
+      reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,
+      enableAccountConfirmationByEmail: data.emailConfirmation,
+      limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
+      useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
+      preserveAllAddressFields: data.preserveAllAddressFields,
+    };
+
+    if (isStagingSchema()) {
+      return extractMutationErrors(
+        updateShopSettingsStaging({
+          variables: {
+            addressInput,
+            shopSettingsInput: {
+              ...shopSettingsInput,
+              passwordLoginMode: data.passwordLoginMode,
+            },
+          },
+        }),
+      );
+    }
+
     return extractMutationErrors(
       updateShopSettings({
-        variables: {
-          addressInput,
-          shopSettingsInput: {
-            description: data.description,
-            reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
-            reserveStockDurationAuthenticatedUser:
-              data.reserveStockDurationAuthenticatedUser || null,
-            enableAccountConfirmationByEmail: data.emailConfirmation,
-            limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
-            useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
-            preserveAllAddressFields: data.preserveAllAddressFields,
-          },
-        },
+        variables: { addressInput, shopSettingsInput },
       }),
     );
   };
@@ -81,7 +120,7 @@ const SiteSettings = () => {
         errors={errors}
         shop={siteSettings.data?.shop}
         onSubmit={handleUpdateShopSettings}
-        saveButtonBarState={updateShopSettingsOpts.status}
+        saveButtonBarState={updateOpts.status}
       />
     </>
   );
