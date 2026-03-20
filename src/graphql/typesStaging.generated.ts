@@ -2555,7 +2555,10 @@ export type DraftOrderCreateInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -2623,7 +2626,10 @@ export type DraftOrderInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -8531,6 +8537,26 @@ export type TransactionCreateInput = {
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Filter input for transaction events data.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionEventFilterInput = {
+  /**
+   * Filter transaction events by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter transaction events by type.
+   *
+   * Added in Saleor 3.23.
+   */
+  type?: InputMaybe<TransactionEventTypeEnumFilterInput>;
+};
+
 export type TransactionEventInput = {
   /** The message related to the event. */
   message?: InputMaybe<Scalars['String']>;
@@ -8594,6 +8620,13 @@ export enum TransactionEventTypeEnum {
   REFUND_REVERSE = 'REFUND_REVERSE',
   REFUND_SUCCESS = 'REFUND_SUCCESS'
 }
+
+export type TransactionEventTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<TransactionEventTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<TransactionEventTypeEnum>>;
+};
 
 /** Filter input for transactions. */
 export type TransactionFilterInput = {
@@ -8669,6 +8702,28 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   REFUND_IS_PENDING = 'REFUND_IS_PENDING'
 }
 
+export enum TransactionSortField {
+  /**
+   * Sort transactions by creation date.
+   *
+   * Added in Saleor 3.23.
+   */
+  CREATED_AT = 'CREATED_AT',
+  /**
+   * Sort transactions by modification date.
+   *
+   * Added in Saleor 3.23.
+   */
+  MODIFIED_AT = 'MODIFIED_AT'
+}
+
+export type TransactionSortingInput = {
+  /** Specifies the direction in which to sort transactions. */
+  direction: OrderDirection;
+  /** Sort transactions by the selected field. */
+  field: TransactionSortField;
+};
+
 export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -8724,7 +8779,25 @@ export type TransactionWhereInput = {
   OR?: InputMaybe<Array<TransactionWhereInput>>;
   /** Filter by app identifier. */
   appIdentifier?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter transactions by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+   *
+   * Added in Saleor 3.23.
+   */
+  events?: InputMaybe<Array<TransactionEventFilterInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Filter transactions by modified at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  modifiedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by PSP reference. */
   pspReference?: InputMaybe<StringFilterInput>;
 };
