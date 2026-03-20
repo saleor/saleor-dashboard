@@ -14,6 +14,12 @@
   color: var(--mu-colors-text-default1);
 }
 
+.action:focus-visible {
+  color: var(--mu-colors-text-default1);
+  outline: 2px solid var(--mu-colors-text-default1);
+  outline-offset: 2px;
+}
+
 .action:disabled {
   cursor: not-allowed;
   opacity: 0.4;

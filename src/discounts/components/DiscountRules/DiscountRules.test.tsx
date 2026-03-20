@@ -1,7 +1,6 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import { PromotionTypeEnum } from "@dashboard/graphql";
-import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,7 +17,9 @@ import { DiscountRules } from "./DiscountRules";
 import { catalogComplexRules, catalogRules, channels, orderRules } from "./mocksData";
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  useNotifier: jest.fn(() => () => undefined),
+  useNotifier: jest.fn((): (() => void) => {
+    return (): void => undefined;
+  }),
 }));
 jest.mock("@dashboard/discounts/views/DiscountDetails/context/context", () => ({
   __esModule: true,
@@ -40,7 +41,7 @@ jest.mock("./hooks/useGraphQLPlayground", () => ({
 }));
 jest.setTimeout(30000); // Timeout was increased because of error throw in update test when run all tests
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
+const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => {
   return (
     <MockedProvider
       mocks={[
@@ -51,10 +52,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         variantsWithProductDataMock,
       ]}
     >
-      {/* @ts-expect-error legacy types */}
-      <LegacyThemeProvider>
-        <ThemeProvider>{children}</ThemeProvider>
-      </LegacyThemeProvider>
+      <ThemeProvider>{children}</ThemeProvider>
     </MockedProvider>
   );
 };
@@ -129,6 +127,8 @@ describe("DiscountRules", () => {
     expect(screen.getByText("Catalog rule 2")).toBeInTheDocument();
     expect(screen.getByText("Catalog rule 1")).toBeInTheDocument();
     expect(screen.getAllByTestId("rule-summary").length).toBe(2);
+    expect(screen.getAllByText("Applies to")).toHaveLength(2);
+    expect(screen.getAllByTestId("rule-value-chip")).toHaveLength(2);
   });
   it("should render order discount rules", async () => {
     // Arrange & Act
@@ -154,6 +154,8 @@ describe("DiscountRules", () => {
     expect(screen.getByText("order rule 2")).toBeInTheDocument();
     expect(screen.getByText("Order rule 1")).toBeInTheDocument();
     expect(screen.getAllByTestId("rule-summary").length).toBe(2);
+    expect(screen.getAllByText("Applies to")).toHaveLength(2);
+    expect(screen.getAllByTestId("rule-value-chip")).toHaveLength(2);
   });
   it("should allow to add new catalog rule", async () => {
     // Arrange
@@ -268,7 +270,7 @@ describe("DiscountRules", () => {
     await userEvent.click(screen.getAllByTestId("select-option")[2]);
     await userEvent.type(await screen.findByTestId(/condition-value-0/i), "144");
     // Reward value
-    await userEvent.click(screen.getByRole("radio", { name: "$" }));
+    await userEvent.click(screen.getByTestId("fixed-reward-value-type"));
     await userEvent.type(screen.getByRole("input", { name: "Reward value" }), "22");
     await userEvent.click(screen.getByRole("button", { name: /save/i }));
     // Assert
@@ -347,7 +349,7 @@ describe("DiscountRules", () => {
     await userEvent.click(await screen.findByTestId(/condition-value-0/i));
     await userEvent.click(await screen.getAllByTestId("select-option")[1]);
     // Edit reward
-    await userEvent.click(screen.getByRole("radio", { name: "$" }));
+    await userEvent.click(screen.getByTestId("fixed-reward-value-type"));
 
     const discountValueField = screen.getByRole("input", {
       name: "Reward value",

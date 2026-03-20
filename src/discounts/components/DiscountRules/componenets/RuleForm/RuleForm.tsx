@@ -83,7 +83,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     <RichTextContext.Provider value={richText}>
       <Box width="100%">
         <Box display="flex" flexDirection="column" gap={5} paddingY={1}>
-          <Box display="flex" flexWrap="wrap" gap={2} alignItems="end">
+          <Box display="flex" flexWrap="wrap" gap={2} alignItems="start">
             <Box __flex="1 1 280px" __minWidth="280px">
               <RuleInputWrapper>
                 <Input

@@ -1,0 +1,37 @@
+.container {
+  display: grid;
+  gap: var(--mu-spacing-1);
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-4);
+}
+
+.wrapper[data-error="true"] {
+  border-color: var(--mu-colors-border-critical1);
+}
+
+.wrapper [data-macaw-ui-component="Input"] {
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--mu-colors-border-default1);
+  flex-shrink: 0;
+}
+
+.wrapper[data-error="true"] .divider {
+  background: var(--mu-colors-border-critical1);
+}
+
+.error {
+  margin-top: var(--mu-spacing-0-5);
+  line-height: 1.3;
+}

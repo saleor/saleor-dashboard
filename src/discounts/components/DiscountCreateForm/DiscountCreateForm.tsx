@@ -50,13 +50,15 @@ export const DiscountCreateForm = ({ children, onSubmit }: DiscountCreateFormPro
   return (
     <RichTextContext.Provider value={richText}>
       <FormProvider {...methods}>
-        {children({
-          onDeleteRule,
-          onRuleSubmit,
-          discountType,
-          submitHandler: submitHandlerWithValidation,
-          rules,
-        })}
+        <form onSubmit={submitHandlerWithValidation}>
+          {children({
+            onDeleteRule,
+            onRuleSubmit,
+            discountType,
+            submitHandler: submitHandlerWithValidation,
+            rules,
+          })}
+        </form>
       </FormProvider>
     </RichTextContext.Provider>
   );

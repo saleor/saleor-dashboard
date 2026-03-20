@@ -105,8 +105,9 @@ const RewardDisplay = ({ rule, currencySymbol }: { rule: Rule; currencySymbol: s
   const intl = useIntl();
   const { locale } = useLocale();
   const isGift = rule.rewardType === RewardTypeEnum.GIFT;
+  const hasRewardValue = rule.rewardValue !== null && rule.rewardValue !== undefined;
 
-  if (!rule.rewardValue && !isGift) {
+  if (!hasRewardValue && !isGift) {
     return null;
   }
 
@@ -116,8 +117,9 @@ const RewardDisplay = ({ rule, currencySymbol }: { rule: Rule; currencySymbol: s
     return (
       <Box
         display="flex"
-        flexDirection="column"
-        alignItems="center"
+        alignItems="baseline"
+        flexWrap="nowrap"
+        gap={1}
         flexShrink="0"
         borderWidth={1}
         borderStyle="solid"
@@ -125,12 +127,13 @@ const RewardDisplay = ({ rule, currencySymbol }: { rule: Rule; currencySymbol: s
         borderRadius={4}
         paddingX={3}
         paddingY={1.5}
+        style={{ whiteSpace: "nowrap" }}
       >
-        <Text size={6} fontWeight="bold">
+        <Text size={6} fontWeight="bold" whiteSpace="nowrap">
           {intl.formatMessage({ defaultMessage: "Gift", id: "ZBs2Pb" })}
         </Text>
         {giftCount > 0 && (
-          <Text size={2} color="default2">
+          <Text size={3} color="default2" whiteSpace="nowrap">
             {intl.formatMessage(messages.giftCount, { count: giftCount })}
           </Text>
         )}

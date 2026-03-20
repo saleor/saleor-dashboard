@@ -16,7 +16,10 @@ interface RuleConditionsProps {
   openPlayground: () => void;
 }
 
-export const RuleConditions = ({ hasSelectedChannels, openPlayground }: RuleConditionsProps) => {
+export const RuleConditions = ({
+  hasSelectedChannels,
+  openPlayground,
+}: RuleConditionsProps): JSX.Element => {
   const intl = useIntl();
   const { discountType, disabled } = useDiscountRulesContext();
   const conditionNames = useConditionNames(discountType);
@@ -27,7 +30,7 @@ export const RuleConditions = ({ hasSelectedChannels, openPlayground }: RuleCond
   const conditionsList = watch("conditions");
   const hasPredicateNestedConditions = watch("hasPredicateNestedConditions");
   const allConditionsSelected = conditionsList.length === conditionNames.length;
-  const isConditionNameSelected = (conditionType: string) =>
+  const isConditionNameSelected = (conditionType: string): boolean =>
     conditionsList.some(condition => condition.id === conditionType);
 
   if (hasPredicateNestedConditions) {
@@ -81,7 +84,8 @@ export const RuleConditions = ({ hasSelectedChannels, openPlayground }: RuleCond
         gap={2}
         __maxHeight="300px"
         overflowY="auto"
-        paddingRight={1}
+        __paddingRight="var(--mu-spacing-2)"
+        __marginRight="calc(-1 * var(--mu-spacing-2))"
       >
         {fields.map((condition, conditionIndex) => (
           <RuleConditionRow

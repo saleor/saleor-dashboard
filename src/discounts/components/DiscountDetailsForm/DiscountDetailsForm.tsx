@@ -85,14 +85,16 @@ export const DiscountDetailsForm = ({
   return (
     <RichTextContext.Provider value={richText}>
       <FormProvider {...methods}>
-        {children({
-          rulesErrors,
-          rules,
-          discountType,
-          onSubmit: handleSubmit,
-          onRuleSubmit,
-          onDeleteRule,
-        })}
+        <form onSubmit={handleSubmit} data-test-id="discount-form">
+          {children({
+            rulesErrors,
+            rules,
+            discountType,
+            onSubmit: handleSubmit,
+            onRuleSubmit,
+            onDeleteRule,
+          })}
+        </form>
       </FormProvider>
     </RichTextContext.Provider>
   );

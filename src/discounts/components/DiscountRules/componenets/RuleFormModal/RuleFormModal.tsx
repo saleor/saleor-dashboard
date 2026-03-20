@@ -8,7 +8,7 @@ import { type Rule } from "@dashboard/discounts/models";
 import { buttonMessages } from "@dashboard/intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import type * as React from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -18,7 +18,7 @@ import { getDefaultValue } from "./defaultFormValues";
 import { getValidationSchema } from "./validationSchema";
 
 interface RuleFormModalProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onClose: () => void;
   onSubmit: (data: Rule) => void;
   confimButtonState: ConfirmButtonTransitionState;
@@ -31,14 +31,57 @@ export const RuleFormModal = ({
   confimButtonState,
   children,
   onSubmit,
-}: RuleFormModalProps) => {
+}: RuleFormModalProps): JSX.Element => {
   const intl = useIntl();
   const { discountType } = useDiscountRulesContext();
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
   const methods = useForm<Rule>({
     mode: "onBlur",
     values: initialFormValues || getDefaultValue(discountType),
     resolver: zodResolver(getValidationSchema(intl)),
   });
+  const updateOverflowState = useCallback((): void => {
+    const scrollContainer = scrollContainerRef.current;
+
+    if (!scrollContainer) {
+      return;
+    }
+
+    setHasOverflow(scrollContainer.scrollHeight > scrollContainer.clientHeight + 1);
+  }, []);
+
+  useEffect(() => {
+    updateOverflowState();
+
+    const scrollContainer = scrollContainerRef.current;
+
+    if (!scrollContainer) {
+      return;
+    }
+
+    window.addEventListener("resize", updateOverflowState);
+
+    if (typeof ResizeObserver === "undefined") {
+      return (): void => {
+        window.removeEventListener("resize", updateOverflowState);
+      };
+    }
+
+    const resizeObserver = new ResizeObserver((): void => {
+      updateOverflowState();
+    });
+
+    resizeObserver.observe(scrollContainer);
+    Array.from(scrollContainer.children).forEach(child => {
+      resizeObserver.observe(child);
+    });
+
+    return (): void => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateOverflowState);
+    };
+  }, [children, updateOverflowState]);
 
   return (
     <DashboardModal open={true} onChange={onClose}>
@@ -69,12 +112,15 @@ export const RuleFormModal = ({
             }}
           >
             <Box
+              ref={scrollContainerRef}
               display="flex"
               flexDirection="column"
               gap={5}
               overflowY="auto"
               __flex="1 1 auto"
               __minHeight="0"
+              __paddingRight={hasOverflow ? "var(--mu-spacing-2)" : undefined}
+              __marginRight={hasOverflow ? "calc(-1 * var(--mu-spacing-2))" : undefined}
               paddingBottom={1}
             >
               {children}
