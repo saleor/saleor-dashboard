@@ -1,4 +1,4 @@
-import { MenuDetailsFragment, MenuFragment } from "@dashboard/graphql";
+import { type MenuDetailsFragment, type MenuFragment } from "@dashboard/graphql";
 
 export const menuList: MenuFragment[] = [
   {

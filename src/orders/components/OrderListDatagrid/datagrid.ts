@@ -6,21 +6,21 @@ import {
   readonlyTextCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderChargeStatusEnum, OrderListQuery } from "@dashboard/graphql";
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { OrderChargeStatusEnum, type OrderListQuery } from "@dashboard/graphql";
 import {
   getStatusColor,
   transformChargedStatus,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
-import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { type OrderListUrlSortField } from "@dashboard/orders/urls";
+import { type RelayToFlat, type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
-import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
-import { IntlShape, useIntl } from "react-intl";
+import { type GridCell, type Item, type TextCell } from "@glideapps/glide-data-grid";
+import { type DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

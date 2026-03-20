@@ -2,14 +2,18 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
-import { AccountErrorFragment, AddressInput, CustomerCreateDataQuery } from "@dashboard/graphql";
+import {
+  type AccountErrorFragment,
+  type AddressInput,
+  type CustomerCreateDataQuery,
+} from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors } from "@dashboard/misc";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -17,7 +21,7 @@ import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AddressTypeInput } from "../../types";
+import { type AddressTypeInput } from "../../types";
 import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
 import CustomerCreateDetails from "../CustomerCreateDetails";
 import CustomerCreateNote from "../CustomerCreateNote/CustomerCreateNote";

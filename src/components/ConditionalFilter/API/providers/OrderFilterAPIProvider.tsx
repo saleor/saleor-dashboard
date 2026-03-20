@@ -1,4 +1,4 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
 import {
   CountryCode,
   FulfillmentStatus,
@@ -7,15 +7,15 @@ import {
   OrderStatus,
   PaymentMethodTypeEnum,
 } from "@dashboard/graphql";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
-import { RowType } from "../../constants";
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
+import { type RowType } from "../../constants";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
 import {
   BooleanValuesHandler,
   EnumValuesHandler,
-  Handler,
+  type Handler,
   LegacyChannelHandler,
   NoopValuesHandler,
   TextInputValuesHandler,

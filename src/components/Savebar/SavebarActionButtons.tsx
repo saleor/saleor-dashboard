@@ -1,9 +1,9 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, Button, type ButtonProps, Tooltip } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { ConfirmButton as ConfirmButtonComponent, ConfirmButtonProps } from "../ConfirmButton";
+import { ConfirmButton as ConfirmButtonComponent, type ConfirmButtonProps } from "../ConfirmButton";
 
 export const DeleteButton = ({
   children,

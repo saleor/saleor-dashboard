@@ -1,16 +1,16 @@
 // @ts-strict-ignore
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { TransactionActionEnum } from "@dashboard/graphql";
-import { TransactionFakeEvent } from "@dashboard/orders/types";
+import { type TransactionActionEnum } from "@dashboard/graphql";
+import { type TransactionFakeEvent } from "@dashboard/orders/types";
 import { Accordion, Box } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 import { useState } from "react";
 
 import { OrderTransactionCardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
 import styles from "./OrderTransaction.module.css";
-import { ExtendedOrderTransaction } from "./types";
+import { type ExtendedOrderTransaction } from "./types";
 import { getTransactionEvents } from "./utils";
 
 export interface OrderTransactionProps {

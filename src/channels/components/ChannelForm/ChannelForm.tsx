@@ -1,25 +1,25 @@
 import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
-  ChannelShippingZones,
-  ChannelWarehouses,
+  type ChannelShippingZones,
+  type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
-  ChannelErrorFragment,
-  CountryCode,
+  type ChannelErrorFragment,
+  type CountryCode,
   isStagingSchema,
   MarkAsPaidStrategyEnum,
-  StockSettingsInput,
+  type StockSettingsInput,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, DynamicCombobox, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 

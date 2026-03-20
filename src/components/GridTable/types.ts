@@ -1,4 +1,4 @@
-import { PropsWithBox } from "@saleor/macaw-ui-next";
+import { type PropsWithBox } from "@saleor/macaw-ui-next";
 
 type RemovedProps = "color" | "height" | "width" | "dangerouslySetInnerHTML";
 

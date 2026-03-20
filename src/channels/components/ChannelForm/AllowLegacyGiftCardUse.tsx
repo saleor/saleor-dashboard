@@ -1,4 +1,4 @@
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

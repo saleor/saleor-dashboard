@@ -1,7 +1,10 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
@@ -21,11 +24,11 @@ import { VariantPreviewList } from "./components/VariantPreviewList";
 import { messages } from "./messages";
 import styles from "./ProductVariantGenerator.module.css";
 import {
-  AttributeError,
+  type AttributeError,
   getUnsupportedRequiredAttributes,
   isGeneratorSupportedType,
-  NonSelectionAttributeValues,
-  ProductVariantGeneratorProps,
+  type NonSelectionAttributeValues,
+  type ProductVariantGeneratorProps,
 } from "./types";
 import { useVariantGenerator } from "./useVariantGenerator";
 import { toBulkCreateInputs } from "./utils";

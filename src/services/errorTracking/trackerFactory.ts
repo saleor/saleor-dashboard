@@ -1,6 +1,6 @@
-import { History } from "history";
+import { type History } from "history";
 
-import { TrackerMethods, TrackerPermission, UserData } from "./types";
+import { type TrackerMethods, TrackerPermission, type UserData } from "./types";
 
 type ErrorTrackerFactory = (
   ExtensionFactory: TrackerMethods,

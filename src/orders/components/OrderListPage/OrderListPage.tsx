@@ -17,17 +17,21 @@ import {
   getExtensionsItemsForOrderOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
+import { type OrderListQuery, type RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
-import { OrderListUrlQueryParams, OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import {
-  PageListProps,
-  RelayToFlat,
-  SearchPageProps,
-  SortPage,
-  TabPageProps,
+  type OrderListUrlQueryParams,
+  type OrderListUrlSortField,
+  orderUrl,
+} from "@dashboard/orders/urls";
+import {
+  type PageListProps,
+  type RelayToFlat,
+  type SearchPageProps,
+  type SortPage,
+  type TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";

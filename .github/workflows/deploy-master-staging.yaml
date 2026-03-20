@@ -11,12 +11,9 @@ jobs:
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
+    outputs:
+      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION }}
     env:
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -25,7 +22,6 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
@@ -45,7 +41,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Package
         timeout-minutes: 15
@@ -64,14 +60,14 @@ jobs:
 
       - name: Deploy master staging
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-master-staging/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
 
       - name: Deploy fake production
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-fake-production/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
@@ -86,13 +82,18 @@ jobs:
         env:
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment to saleor-master-staging"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    with:
+      type: deployment
+      ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: saleor-master-staging
+      mention_on: failure
+    secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}

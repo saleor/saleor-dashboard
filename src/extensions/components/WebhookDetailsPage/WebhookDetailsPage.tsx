@@ -1,5 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -10,13 +10,13 @@ import {
 } from "@dashboard/extensions/handlers";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
-  WebhookDetailsFragment,
+  type WebhookDetailsFragment,
   WebhookErrorCode,
-  WebhookErrorFragment,
-  WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum,
+  type WebhookErrorFragment,
+  type WebhookEventTypeAsyncEnum,
+  type WebhookEventTypeSyncEnum,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
 import { parse, print } from "graphql";
@@ -24,7 +24,7 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-import { IntrospectionNode } from "../../utils";
+import { type IntrospectionNode } from "../../utils";
 import { PermissionAlert } from "./components/PermissionAlert/PermissionAlert";
 import { WebhookEvents } from "./components/WebhookEvents/WebhookEvents";
 import { WebhookHeaders } from "./components/WebhookHeaders/WebhookHeaders";

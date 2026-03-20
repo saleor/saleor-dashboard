@@ -1,5 +1,5 @@
 import { BasePage } from "@pages/basePage";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 export class AddProductsDialog extends BasePage {
   constructor(

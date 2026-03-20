@@ -1,6 +1,9 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { OrderGrantRefundCreateLineInput } from "@dashboard/graphql";
-import useForm, { ChangeEvent as FormChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { type OrderGrantRefundCreateLineInput } from "@dashboard/graphql";
+import useForm, {
+  type ChangeEvent as FormChangeEvent,
+  type FormChange,
+} from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { useEffect, useState } from "react";
 

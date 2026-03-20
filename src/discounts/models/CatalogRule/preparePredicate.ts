@@ -1,6 +1,6 @@
-import { CataloguePredicateInput } from "@dashboard/graphql";
+import { type CataloguePredicateInput } from "@dashboard/graphql";
 
-import { Condition, isArrayOfOptions } from "../Condition";
+import { type Condition, isArrayOfOptions } from "../Condition";
 
 export function prepareCataloguePredicate(conditions: Condition[]): CataloguePredicateInput {
   const ruleConditions = conditions

@@ -1,13 +1,13 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { ShopErrorFragment } from "@dashboard/graphql";
+import { type ShopErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SiteSettingsPageFormData } from "../SiteSettingsPage";
+import { type SiteSettingsPageFormData } from "../SiteSettingsPage";
 import { messages } from "./messages";
 
 interface SiteCheckoutSettingsCardProps {

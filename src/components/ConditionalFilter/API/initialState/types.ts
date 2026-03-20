@@ -1,15 +1,15 @@
-import { ApolloQueryResult } from "@apollo/client";
+import { type ApolloQueryResult } from "@apollo/client";
 import {
-  _GetChannelOperandsQuery,
-  _SearchAttributeOperandsQuery,
-  _SearchCategoriesOperandsQuery,
-  _SearchCollectionsOperandsQuery,
-  _SearchCustomersOperandsQuery,
-  _SearchPageTypesOperandsQuery,
-  _SearchProductOperandsQuery,
-  _SearchProductTypesOperandsQuery,
-  _SearchWarehouseOperandsQuery,
-  ChannelCurrenciesQuery,
+  type _GetChannelOperandsQuery,
+  type _SearchAttributeOperandsQuery,
+  type _SearchCategoriesOperandsQuery,
+  type _SearchCollectionsOperandsQuery,
+  type _SearchCustomersOperandsQuery,
+  type _SearchPageTypesOperandsQuery,
+  type _SearchProductOperandsQuery,
+  type _SearchProductTypesOperandsQuery,
+  type _SearchWarehouseOperandsQuery,
+  type ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
 export type InitialProductAPIResponse = ApolloQueryResult<

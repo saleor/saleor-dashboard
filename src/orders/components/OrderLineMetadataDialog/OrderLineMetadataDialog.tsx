@@ -1,10 +1,10 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { OrderLinesMetadataQuery } from "@dashboard/graphql";
+import { type OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";

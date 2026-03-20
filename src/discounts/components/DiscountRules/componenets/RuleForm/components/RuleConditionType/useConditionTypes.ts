@@ -1,7 +1,7 @@
-import { CatalogConditions, OrderConditions } from "@dashboard/discounts/types";
-import { Option } from "@saleor/macaw-ui-next";
+import { type CatalogConditions, type OrderConditions } from "@dashboard/discounts/types";
+import { type Option } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 interface ConditionType {
   type: string;

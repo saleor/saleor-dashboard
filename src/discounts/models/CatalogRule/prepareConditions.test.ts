@@ -1,4 +1,4 @@
-import { CataloguePredicateAPI } from "@dashboard/discounts/types";
+import { type CataloguePredicateAPI } from "@dashboard/discounts/types";
 
 import { prepareCatalogueRuleConditions } from "./prepareConditions";
 

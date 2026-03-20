@@ -1,5 +1,5 @@
-import { OutputData } from "@editorjs/editorjs";
-import { EditorCore } from "@react-editor-js/core";
+import { type OutputData } from "@editorjs/editorjs";
+import { type EditorCore } from "@react-editor-js/core";
 import { useCallback, useRef } from "react";
 
 import useMap from "../objects/useMap";

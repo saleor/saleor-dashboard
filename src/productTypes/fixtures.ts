@@ -2,14 +2,14 @@
 import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
-  ProductTypeDetailsQuery,
+  type ProductTypeDetailsQuery,
   ProductTypeKindEnum,
-  ProductTypeListQuery,
-  ProductTypeQuery,
-  SearchProductTypesQuery,
+  type ProductTypeListQuery,
+  type ProductTypeQuery,
+  type SearchProductTypesQuery,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
   {

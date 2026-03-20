@@ -5,7 +5,7 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { backgroundTasksRefreshTime, useBackgroundTasks } from "./BackgroundTasksProvider";
 import { checkExportFileStatus } from "./queries";
-import { Task, TaskData, TaskStatus } from "./types";
+import { Task, type TaskData, TaskStatus } from "./types";
 
 jest.useFakeTimers();
 

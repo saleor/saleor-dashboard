@@ -1,5 +1,5 @@
 import { Box, List } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface ChildrenProps {
   children: ReactNode;

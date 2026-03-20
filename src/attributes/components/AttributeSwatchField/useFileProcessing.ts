@@ -1,4 +1,4 @@
-import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
+import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { useFileUploadMutation } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { errorMessages } from "@dashboard/intl";

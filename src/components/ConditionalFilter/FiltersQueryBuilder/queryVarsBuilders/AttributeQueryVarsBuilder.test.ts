@@ -1,14 +1,16 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import {
   AttributeChoicesHandler,
+  CategoryHandler,
+  CollectionHandler,
   PageHandler,
   ProductsHandler,
   ProductVariantHandler,
 } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
@@ -116,6 +118,50 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(handler).toBeInstanceOf(ProductVariantHandler);
+    });
+
+    it("should create CategoryHandler for REFERENCE attributes with CATEGORY entity type", () => {
+      // Arrange
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue(
+          "attr-slug",
+          "Attr",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.CATEGORY,
+        ),
+      );
+      const def = new AttributeQueryVarsBuilder();
+      // Act
+      const handler = def.createOptionFetcher(client, inputValue, element);
+
+      // Assert
+      expect(handler).toBeInstanceOf(CategoryHandler);
+    });
+
+    it("should create CollectionHandler for REFERENCE attributes with COLLECTION entity type", () => {
+      // Arrange
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue(
+          "attr-slug",
+          "Attr",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.COLLECTION,
+        ),
+      );
+      const def = new AttributeQueryVarsBuilder();
+      // Act
+      const handler = def.createOptionFetcher(client, inputValue, element);
+
+      // Assert
+      expect(handler).toBeInstanceOf(CollectionHandler);
     });
 
     it("should create AttributeChoicesHandler for other attribute types", () => {

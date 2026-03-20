@@ -1,4 +1,4 @@
-import { PromotionDetailsQuery, RewardTypeEnum, useGiftLabelsQuery } from "@dashboard/graphql";
+import { type PromotionDetailsQuery, RewardTypeEnum, useGiftLabelsQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useEffect, useState } from "react";
 

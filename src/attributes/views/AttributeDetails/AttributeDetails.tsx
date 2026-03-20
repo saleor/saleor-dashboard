@@ -16,7 +16,7 @@ import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/use
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import { ListViews, ReorderEvent } from "@dashboard/types";
+import { ListViews, type ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -26,14 +26,14 @@ import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
-import AttributePage, { AttributePageFormData } from "../../components/AttributePage";
+import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import {
   attributeListUrl,
   attributeUrl,
-  AttributeUrlDialog,
-  AttributeUrlQueryParams,
+  type AttributeUrlDialog,
+  type AttributeUrlQueryParams,
 } from "../../urls";
 
 interface AttributeDetailsProps {

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { MockedProvider, type MockedResponse } from "@apollo/client/testing";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { productsMocks } from "@test/mocks/products";
 import { render, screen } from "@testing-library/react";

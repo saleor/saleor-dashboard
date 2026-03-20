@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 import {
   AppErrorCode,
-  AppErrorFragment,
+  type AppErrorFragment,
   WebhookEventTypeAsyncEnum,
-  WebhookFragment,
+  type WebhookFragment,
 } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { appManifestErrorMessages, localAppErrorMessages } from "./messages";
 

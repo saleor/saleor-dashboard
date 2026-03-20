@@ -27,7 +27,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuCreateDialog from "../../components/MenuCreateDialog";
 import MenuListPage from "../../components/MenuListPage";
-import { menuListUrl, MenuListUrlQueryParams, menuUrl } from "../../urls";
+import { menuListUrl, type MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
 interface MenuListProps {

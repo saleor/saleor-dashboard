@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
-import { GeneratedVariantPreview } from "../types";
+import { type GeneratedVariantPreview } from "../types";
 import styles from "./VariantPreviewList.module.css";
 
 interface VariantPreviewListProps {

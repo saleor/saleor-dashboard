@@ -1,20 +1,20 @@
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
+import { type UseListSettings } from "@dashboard/hooks/useListSettings";
+import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { VoucherCodesAddButton } from "../VoucherCodesAddButton/VoucherCodesAddButton";
-import { VoucherCodesDatagrid, VoucherCodesDatagridProps } from "../VoucherCodesDatagrid";
+import { VoucherCodesDatagrid, type VoucherCodesDatagridProps } from "../VoucherCodesDatagrid";
 import { VoucherCodesDeleteDialog } from "../VoucherCodesDeleteDialog";
 import {
-  GenerateMultipleVoucherCodeFormData,
+  type GenerateMultipleVoucherCodeFormData,
   VoucherCodesGenerateDialog,
 } from "../VoucherCodesGenerateDialog";
 import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
-import { VoucherCodesUrlDialog } from "./types";
+import { type VoucherCodesUrlDialog } from "./types";
 import { hasSavedVoucherCodesToDelete } from "./utils";
 
 export interface VoucherCodesProps extends VoucherCodesDatagridProps {

@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import {
-  OrderDetailsFragment,
-  OrderReturnFulfillmentLineInput,
-  OrderReturnLineInput,
-  OrderReturnProductsInput,
+  type OrderDetailsFragment,
+  type OrderReturnFulfillmentLineInput,
+  type OrderReturnLineInput,
+  type OrderReturnProductsInput,
 } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
 import { OrderRefundAmountCalculationMode } from "@dashboard/orders/components/OrderRefundPage/form";
 import {
-  FormsetQuantityData,
-  OrderReturnFormData,
+  type FormsetQuantityData,
+  type OrderReturnFormData,
 } from "@dashboard/orders/components/OrderReturnPage/form";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { messages } from "./messages";
 

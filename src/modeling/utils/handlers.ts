@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 
 export function createPageTypeSelectHandler(
   setPageType: (pageTypeId: string) => void,

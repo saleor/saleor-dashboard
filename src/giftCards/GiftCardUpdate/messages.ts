@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
+import { GiftCardErrorCode, type GiftCardErrorFragment } from "@dashboard/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage,
 } from "@dashboard/utils/errors/common";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 const giftCardErrorMessages = defineMessages({
   notFound: {

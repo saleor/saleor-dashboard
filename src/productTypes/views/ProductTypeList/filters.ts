@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { FilterElement } from "@dashboard/components/Filter/types";
+import { type FilterElement } from "@dashboard/components/Filter/types";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum,
-  ProductTypeFilterInput,
+  type ProductTypeFilterInput,
 } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductTypeFilterKeys,
-  ProductTypeListFilterOpts,
+  type ProductTypeListFilterOpts,
 } from "@dashboard/productTypes/components/ProductTypeListPage";
 
 import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
-import { ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum } from "../../urls";
+import { type ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum } from "../../urls";
 
 const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 

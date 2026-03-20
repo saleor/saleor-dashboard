@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { TaxClassFragment } from "@dashboard/graphql";
-import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import { type TaxClassFragment } from "@dashboard/graphql";
+import useForm, { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { TaxClassesPageFormData } from "@dashboard/taxes/types";
+import { type TaxClassesPageFormData } from "@dashboard/taxes/types";
 import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
 import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
-import { TaxClassError } from "@dashboard/utils/errors/taxes";
+import { type TaxClassError } from "@dashboard/utils/errors/taxes";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { useState } from "react";
 import * as React from "react";

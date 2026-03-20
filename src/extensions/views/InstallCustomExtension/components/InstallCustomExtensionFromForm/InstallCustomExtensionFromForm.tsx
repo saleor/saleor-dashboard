@@ -5,18 +5,18 @@ import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import {
-  Control,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormSetError,
-  UseFormWatch,
+  type Control,
+  type UseFormGetValues,
+  type UseFormHandleSubmit,
+  type UseFormSetError,
+  type UseFormWatch,
 } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { previousPagePath } from "../../consts";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
 import { useInstallApp } from "../../hooks/useInstallApp";
-import { ExtensionInstallFormData } from "../../types";
+import { type ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestUrlForm } from "../ManifestUrlForm/ManifestUrlForm";

@@ -1,12 +1,12 @@
-import { AttributeInput } from "../../../graphql";
-import { FilterElement } from "../FilterElement";
+import { type AttributeInput } from "../../../graphql";
+import { type FilterElement } from "../FilterElement";
 import {
-  ConditionValue,
+  type ConditionValue,
   isItemOption,
   isItemOptionArray,
-  ItemOption,
+  type ItemOption,
 } from "../FilterElement/ConditionValue";
-import { StaticQueryPart } from "./types";
+import { type StaticQueryPart } from "./types";
 
 type ProcessedConditionValue =
   | string
@@ -35,8 +35,22 @@ function extractBooleanValue(value: ConditionValue): boolean {
  * Extracts the actual value from ItemOption or returns the value as-is.
  * Uses originalSlug if available, falls back to value.
  */
-function extractValueFromOption(value: unknown): string {
-  return isItemOption(value) ? value.originalSlug || value.value : (value as string);
+function extractValueFromOption(value: ConditionValue): string {
+  if (isItemOption(value)) {
+    return value.originalSlug || value.value;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value) && value.length > 0) {
+    const first = value[0];
+
+    return isItemOption(first) ? first.originalSlug || first.value : String(first);
+  }
+
+  return "";
 }
 
 /**
@@ -118,31 +132,35 @@ function getFloatValueFromElement(element: FilterElement): number | number[] | n
   return isNaN(parsed) ? null : parsed;
 }
 
-function isAnyTuple(value: unknown): value is [unknown, unknown] {
-  return Array.isArray(value) && value.length === 2;
+function isConditionTuple(value: ConditionValue): value is [string, string] {
+  return Array.isArray(value) && value.length === 2 && value.every(v => typeof v === "string");
 }
 
 /**
  * Handle range conditions for input types
  * and builds the inner range object with gte/lte properties
  */
+function unwrapItemOption(value: ConditionValue): ConditionValue {
+  if (isItemOption(value)) {
+    return value.originalSlug || value.value;
+  }
+
+  return value;
+}
+
 function buildRangeObject(
-  selectedValue: unknown,
+  selectedValue: ConditionValue,
   label: string,
 ): { gte?: unknown; lte?: unknown } | null {
   if (label === "lower") {
-    const value = extractValueFromOption(selectedValue);
-
-    return { lte: value };
+    return { lte: unwrapItemOption(selectedValue) };
   }
 
   if (label === "greater") {
-    const value = extractValueFromOption(selectedValue);
-
-    return { gte: value };
+    return { gte: unwrapItemOption(selectedValue) };
   }
 
-  if (isAnyTuple(selectedValue) && label === "between") {
+  if (isConditionTuple(selectedValue) && label === "between") {
     const [gte, lte] = selectedValue;
 
     return { gte, lte };
@@ -158,7 +176,7 @@ function buildRangeObject(
  * - DecimalFilterInput
  */
 function handleRangeCondition(
-  selectedValue: unknown,
+  selectedValue: ConditionValue,
   label: string,
 ): ProcessedConditionValue | null {
   if (selectedValue === null || selectedValue === undefined || selectedValue === "") {
@@ -168,12 +186,12 @@ function handleRangeCondition(
   if (label === "is") {
     if (Array.isArray(selectedValue) && selectedValue.length > 0) {
       return {
-        oneOf: selectedValue.map(extractValueFromOption),
+        oneOf: selectedValue.map(v => (isItemOption(v) ? v.originalSlug || v.value : v)),
       };
     }
 
     return {
-      eq: extractValueFromOption(selectedValue),
+      eq: unwrapItemOption(selectedValue),
     };
   }
 
@@ -198,7 +216,7 @@ function handleBooleanCondition(selectedValue: ConditionValue): ProcessedConditi
   return null;
 }
 
-function handleSingleOption(selectedValue: unknown): ProcessedConditionValue | null {
+function handleSingleOption(selectedValue: ConditionValue): ProcessedConditionValue | null {
   if (isItemOption(selectedValue)) {
     const eq = selectedValue.originalSlug || selectedValue.value;
 
@@ -299,6 +317,37 @@ const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart | Attrib
   return queryPart;
 };
 
+function buildNumericRangeCondition(
+  parsedValue: number | number[] | null,
+  label: string,
+): ProcessedConditionValue | null {
+  if (parsedValue === null) {
+    return null;
+  }
+
+  if (label === "is") {
+    if (Array.isArray(parsedValue)) {
+      return { oneOf: parsedValue };
+    }
+
+    return { eq: parsedValue };
+  }
+
+  if (label === "lower") {
+    return { range: { lte: parsedValue } };
+  }
+
+  if (label === "greater") {
+    return { range: { gte: parsedValue } };
+  }
+
+  if (label === "between" && Array.isArray(parsedValue) && parsedValue.length >= 2) {
+    return { range: { gte: parsedValue[0], lte: parsedValue[1] } };
+  }
+
+  return null;
+}
+
 export const QueryVarsBuilderUtils = {
   getBooleanValueFromElement,
   extractConditionValueFromFilterElement,
@@ -308,6 +357,7 @@ export const QueryVarsBuilderUtils = {
   extractValueFromOption,
   buildRangeObject,
   handleRangeCondition,
+  buildNumericRangeCondition,
   handleBooleanCondition,
   handleSingleOption,
   handleMultipleOption,

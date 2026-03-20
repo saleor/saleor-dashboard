@@ -1,10 +1,10 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Plus, X } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 import messages from "./messages";
 
 interface ColumnPickerDynamicColumnsProps {

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
   useVoucherTranslationDetailsQuery,
 } from "@dashboard/graphql";
@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
 import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
+import { type TranslationField, type TranslationInputFieldName } from "../types";
 import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsVouchersQueryParams {

@@ -30,12 +30,9 @@ jobs:
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
+    outputs:
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -46,7 +43,6 @@ jobs:
       REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
@@ -69,14 +65,14 @@ jobs:
         if: needs.determine-build.outputs.use-pnpm == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Setup Node (Legacy NPM)
         if: needs.determine-build.outputs.use-pnpm == 'false'
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "npm"
 
       - name: Set sentry release
@@ -137,13 +133,18 @@ jobs:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: production
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    with:
+      type: deployment
+      ref: ${{ github.event.client_payload.ref }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: ${{ needs.build.outputs.ENVIRONMENT }}
+      mention_on: failure
+    secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}

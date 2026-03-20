@@ -5,7 +5,7 @@
     "enumMembers": "off",
     "files": "warn",
     "exports": "warn",
-    "duplicates": "warn",
+    "duplicates": "off",
     "classMembers": "warn",
     "nsTypes": "warn",
     "unresolved": "warn",
@@ -19,12 +19,13 @@
   "entry": [
     "src/index.tsx!",
     "assets/**!",
-    "src/**/queries.ts",
-    "src/**/mutations.ts",
+    "src/**/queries*.ts",
+    "src/**/mutations*.ts",
     "src/**/fragments/*.ts",
     "src/searches/*.ts",
     "src/**/fixtures.ts",
-    "scripts/**"
+    "scripts/**",
+    "storybookUtils/**"
   ],
   "project": ["**/*.{js,ts,tsx,jsx}"],
   "jest": true,
@@ -42,7 +43,8 @@
     "**/*.generated.ts",
     "apollo.config.js",
     "codegen*",
-    "src/graphql/staging/index.ts"
+    "src/graphql/staging/index.ts",
+    "src/legacy-sdk/apollo/types.ts"
   ],
   "ignoreDependencies": [
     "keycode",

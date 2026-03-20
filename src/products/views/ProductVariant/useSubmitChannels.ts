@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import {
-  ProductVariantFragment,
+  type ProductVariantFragment,
   useProductChannelListingUpdateMutation,
   useProductVariantChannelListingUpdateMutation,
 } from "@dashboard/graphql";
 import { extractMutationErrors } from "@dashboard/misc";
-import { ProductVariantUpdateSubmitData } from "@dashboard/products/components/ProductVariantPage/form";
+import { type ProductVariantUpdateSubmitData } from "@dashboard/products/components/ProductVariantPage/form";
 
 type Product = ProductVariantUpdateSubmitData;
 type Variant = ProductVariantFragment;

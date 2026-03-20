@@ -1,11 +1,11 @@
-import { useUser } from "@dashboard/auth";
 import LoginLoading from "@dashboard/auth/components/LoginLoading/LoginLoading";
-import { ReactNode, useEffect, useState } from "react";
+import { useUser } from "@dashboard/auth/useUser";
+import { type ReactNode, useEffect, useState } from "react";
 
-import { FlagList } from "./availableFlags";
+import { type FlagList } from "./availableFlags";
 import { Provider } from "./context";
 import { FlagsResolver } from "./FlagsResolver";
-import { AvailableStrategies, EnvVarsStrategy, LocalStorageStrategy } from "./strategies";
+import { type AvailableStrategies, EnvVarsStrategy, LocalStorageStrategy } from "./strategies";
 import { MetadataStrategy } from "./strategies/MetadataStrategy";
 
 interface FeatureFlagsProviderProps {

@@ -11,8 +11,8 @@ import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/Shipping
 import { useShippingRateCreator } from "@dashboard/shipping/handlers";
 import {
   shippingRateCreateUrl,
-  ShippingRateCreateUrlDialog,
-  ShippingRateCreateUrlQueryParams,
+  type ShippingRateCreateUrlDialog,
+  type ShippingRateCreateUrlQueryParams,
   shippingZoneUrl,
 } from "@dashboard/shipping/urls";
 import postalCodesReducer from "@dashboard/shipping/views/reducer";
@@ -22,7 +22,7 @@ import {
   getRuleObject,
 } from "@dashboard/shipping/views/utils";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@dashboard/types";
+import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useReducer } from "react";
 import { useIntl } from "react-intl";

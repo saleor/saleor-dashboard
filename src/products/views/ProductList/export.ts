@@ -1,11 +1,13 @@
+import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import {
-  ExportInfoInput,
-  ExportProductsInput as ExportProductsInputType,
+  type ExportInfoInput,
+  type ExportProductsInput as ExportProductsInputType,
   ExportScope,
-  FileTypesEnum,
-  InputMaybe,
-  ProductFilterInput,
-  Scalars,
+  type FileTypesEnum,
+  type InputMaybe,
+  type ProductFilterInput,
+  type Scalars,
 } from "@dashboard/graphql";
 
 export class ProductsExportParameters {
@@ -25,6 +27,39 @@ export class ProductsExportParameters {
     this.filter = filter;
     this.ids = ids;
     this.scope = scope;
+  }
+
+  static fromFilters({
+    exportData,
+    filterContainer,
+    searchQuery,
+  }: {
+    exportData: Omit<ExportProductsInputType, "filter"> & { scope: ExportScope };
+    filterContainer: FilterContainer;
+    searchQuery?: string;
+  }): ProductsExportParameters {
+    const exportInput: ExportProductsInputType = { ...exportData };
+
+    // Include filter when exporting filtered products
+    if (exportData.scope === ExportScope.FILTER) {
+      const filter = createProductExportQueryVariables(filterContainer);
+      const hasConditionalFilters =
+        filter && typeof filter === "object" && Object.keys(filter).length > 0;
+      const hasSearchQuery = searchQuery;
+
+      if (!hasConditionalFilters && !hasSearchQuery) {
+        // Fall back to exporting all when no filters or search query are applied
+        exportInput.scope = ExportScope.ALL;
+      } else {
+        // Build complete filter with both conditional filters and search query
+        exportInput.filter = {
+          ...(hasConditionalFilters ? filter : {}),
+          ...(hasSearchQuery ? { search: searchQuery } : {}),
+        };
+      }
+    }
+
+    return new ProductsExportParameters(exportInput);
   }
 
   asExportProductsInput() {

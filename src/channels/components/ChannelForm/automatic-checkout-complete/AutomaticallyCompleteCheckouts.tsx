@@ -3,13 +3,13 @@ import { commonMessages } from "@dashboard/intl";
 import { DOCS_ULRS } from "@dashboard/links";
 import { Box, Button, Checkbox, Input, Paragraph, Text } from "@saleor/macaw-ui-next";
 import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
-import React from "react";
+import type React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../messages";
 import { useAutomaticCompletionHandlers } from "./useAutomaticCompletionHandlers";
 import {
-  CutOffDateComparison,
+  type CutOffDateComparison,
   useAutomaticCompletionWarnings,
 } from "./useAutomaticCompletionWarnings";
 import { getMinimumCutoffDate } from "./utils";

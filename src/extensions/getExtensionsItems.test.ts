@@ -27,7 +27,7 @@ import {
   getExtensionsItemsForVoucherDetails,
   getExtensionsItemsForVoucherOverviewActions,
 } from "./getExtensionsItems";
-import { ExtensionWithParams } from "./types";
+import { type ExtensionWithParams } from "./types";
 
 const mockedExtension: ExtensionWithParams = {
   id: "ext-1",

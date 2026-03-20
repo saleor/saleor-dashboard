@@ -1,13 +1,13 @@
 import {
   AttributeInputTypeEnum,
-  AttributeValueFragment,
+  type AttributeValueFragment,
   ProductErrorCode,
-  ProductErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { AttributeInput } from "./Attributes";
+import { type AttributeInput } from "./Attributes";
 import { DropdownRow } from "./DropdownRow";
 
 // Mock IntersectionObserver for DynamicCombobox

@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
-import { CategoryDetailsFragment } from "@dashboard/graphql";
+import { type CategoryDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -11,7 +11,7 @@ import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryUpdateData } from "../CategoryUpdatePage/form";
+import { type CategoryUpdateData } from "../CategoryUpdatePage/form";
 
 const useStyles = makeStyles(
   theme => ({

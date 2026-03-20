@@ -19,10 +19,9 @@ declare interface Window {
   __SALEOR_CONFIG__: {
     API_URL: string;
     APP_MOUNT_URI: string;
+    STATIC_URL?: string;
     LOCALE_CODE?: string;
-    APPS_MARKETPLACE_API_URL?: string;
     EXTENSIONS_API_URL?: string;
-    APPS_TUNNEL_URL_KEYWORDS?: string;
     IS_CLOUD_INSTANCE?: string;
   };
 }

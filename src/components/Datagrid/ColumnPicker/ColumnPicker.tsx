@@ -1,17 +1,17 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
-import { Box, Popover, PopoverContentProps, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Popover, type PopoverContentProps, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Columns3 } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import useStyles, { cellHeight, singleActionWidth } from "../styles";
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 import { ColumnPickerCategories } from "./ColumnPickerCategories";
 import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
 import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
-import { ColumnCategory } from "./useColumns";
+import { type ColumnCategory } from "./useColumns";
 import { rightColumnBoxShadow } from "./utils";
 
 interface ColumnPickerProps {

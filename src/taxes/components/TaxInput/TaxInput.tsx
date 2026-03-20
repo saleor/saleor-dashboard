@@ -1,5 +1,5 @@
 import { formatPercentInput } from "@dashboard/components/PriceField/utils";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { InputAdornment, TextField } from "@material-ui/core";
 
 import { useStyles } from "./styles";

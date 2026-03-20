@@ -1,8 +1,8 @@
-import { Pagination } from "@dashboard/types";
+import { type Pagination } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
+import { type TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
 
 export enum TranslatableEntities {
   categories = "categories",

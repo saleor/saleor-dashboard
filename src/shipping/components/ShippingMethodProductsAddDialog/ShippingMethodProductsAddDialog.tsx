@@ -1,26 +1,29 @@
-import { FetchResult } from "@apollo/client";
-import { Channel, isAvailableInChannel } from "@dashboard/channels/utils";
+import { type FetchResult } from "@apollo/client";
+import { type Channel, isAvailableInChannel } from "@dashboard/channels/utils";
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ShippingPriceExcludeProductMutation } from "@dashboard/graphql";
+import { type ShippingPriceExcludeProductMutation } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { renderCollection } from "@dashboard/misc";
 import { isProductSelected } from "@dashboard/shipping/components/ShippingMethodProductsAddDialog/utils";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Product, Products } from "./types";
+import { type Product, type Products } from "./types";
 
 const useStyles = makeStyles(
   () => ({

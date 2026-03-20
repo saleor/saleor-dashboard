@@ -28,12 +28,14 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
-import StaffAddMemberDialog, { AddMemberFormData } from "../../components/StaffAddMemberDialog";
+import StaffAddMemberDialog, {
+  type AddMemberFormData,
+} from "../../components/StaffAddMemberDialog";
 import StaffListPage from "../../components/StaffListPage";
 import {
   staffListUrl,
-  StaffListUrlDialog,
-  StaffListUrlQueryParams,
+  type StaffListUrlDialog,
+  type StaffListUrlQueryParams,
   staffMemberDetailsUrl,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";

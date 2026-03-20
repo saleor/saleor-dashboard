@@ -5,7 +5,7 @@ import TranslationsEntitiesList from "@dashboard/translations/components/Transla
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { TranslationsEntityListProps } from "./types";
+import { type TranslationsEntityListProps } from "./types";
 
 const TranslationsAttributeList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useAttributeTranslationsQuery({

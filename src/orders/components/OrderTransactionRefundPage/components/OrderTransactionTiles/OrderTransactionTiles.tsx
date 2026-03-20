@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import EventTime from "@dashboard/components/EventTime";
 import Money from "@dashboard/components/Money";
-import { OrderDetailsGrantRefundFragment, TransactionActionEnum } from "@dashboard/graphql";
+import { type OrderDetailsGrantRefundFragment, TransactionActionEnum } from "@dashboard/graphql";
 import {
   EventStatus,
   PspReference,
@@ -9,10 +9,10 @@ import {
 import { EventType } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components/EventType";
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
 import { Box, RadioGroup, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
-import { Control, useController } from "react-hook-form";
+import { type Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { type OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 import { transactionRefundTilesMessages } from "./messages";
 import { TileHeader } from "./TileHeader";
 

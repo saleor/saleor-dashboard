@@ -3,8 +3,8 @@ import {
   getSelectedAttributeValues,
   mergeChoicesWithValues,
 } from "@dashboard/attributes/utils/data";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { PageDetailsFragment } from "@dashboard/graphql";
+import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type PageDetailsFragment } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export function getAttributeInputFromPage(page: PageDetailsFragment): AttributeInput[] {

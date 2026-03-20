@@ -1,6 +1,6 @@
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import { formatMoneyAmount } from "@dashboard/components/Money";
-import { getMiddleCenterBias, Rectangle, Theme } from "@glideapps/glide-data-grid";
+import { getMiddleCenterBias, type Rectangle, type Theme } from "@glideapps/glide-data-grid";
 
 const OFFSET = 8;
 

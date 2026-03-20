@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
+import { useUser } from "@dashboard/auth/useUser";
+import { type ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { useSaleorConfig } from "@dashboard/legacy-sdk";
 import { getById } from "@dashboard/misc";
-import { useSaleorConfig } from "@saleor/sdk";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
 interface UseAppChannel {
   availableChannels: ChannelFragment[];

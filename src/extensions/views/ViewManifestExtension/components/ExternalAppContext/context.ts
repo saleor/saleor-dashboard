@@ -1,5 +1,5 @@
-import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { createContext } from "react";
 
 export interface AppData {

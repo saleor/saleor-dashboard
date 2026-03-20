@@ -1,5 +1,5 @@
-import { OrderEventsEnum, WelcomePageActivitiesQuery } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { OrderEventsEnum, type WelcomePageActivitiesQuery } from "@dashboard/graphql";
+import { defineMessages, type IntlShape } from "react-intl";
 
 const messages = defineMessages({
   draft: {

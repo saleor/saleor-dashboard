@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { useUserAccountUpdateMutation } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
@@ -7,7 +7,7 @@ import {
   useSidebarWebhookAlertMetadata,
 } from "./useSidebarWebhookAlertMetadata";
 
-jest.mock("@dashboard/auth", () => ({
+jest.mock("@dashboard/auth/useUser", () => ({
   useUser: jest.fn().mockReturnValue({ user: null }),
 }));
 

@@ -1,4 +1,4 @@
-import { Row } from "./types";
+import { type Row } from "./types";
 
 export const getItemConstraint = (constraint: Row["constraint"]) => ({
   disableRemoveButton: constraint?.removable === false,

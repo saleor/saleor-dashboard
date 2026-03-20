@@ -1,10 +1,10 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
+import { type TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
 import { buttonMessages } from "@dashboard/intl";
-import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
-import { RecursiveMenuItem } from "@dashboard/structures/types";
+import { type MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
+import { type RecursiveMenuItem } from "@dashboard/structures/types";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
-import { UniqueIdentifier } from "@dnd-kit/core";
+import { type UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";

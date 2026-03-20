@@ -2,13 +2,13 @@
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
-import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { type TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { toActor } from "@dashboard/components/Timeline/utils";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
 import { CheckIcon } from "lucide-react";
-import { defineMessages, MessageDescriptor, useIntl } from "react-intl";
+import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
 
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
 import {

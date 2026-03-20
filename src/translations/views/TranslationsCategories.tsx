@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
   useUpdateCategoryTranslationsMutation,
 } from "@dashboard/graphql";
@@ -9,11 +9,11 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
+import { type TranslationField, type TranslationInputFieldName } from "../types";
 import { getParsedTranslationInputData } from "../utils";
 
 type HandleSubmitData = string | OutputData;

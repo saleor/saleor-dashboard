@@ -1,6 +1,6 @@
 import { CardHeader } from "@material-ui/core";
 import { vars } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 
 interface CardTitleProps {
   children?: React.ReactNode;

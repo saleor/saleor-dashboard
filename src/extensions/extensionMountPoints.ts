@@ -1,4 +1,4 @@
-import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 
 export const extensionMountPoints = {
   CATEGORY_LIST: ["CATEGORY_OVERVIEW_CREATE", "CATEGORY_OVERVIEW_MORE_ACTIONS"],

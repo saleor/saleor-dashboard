@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { handleNestedMutationErrors } from "@dashboard/auth";
+import { handleNestedMutationErrors } from "@dashboard/auth/utils";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useFulfillOrderMutation,
@@ -10,12 +10,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import OrderFulfillPage, {
-  OrderFulfillSubmitData,
+  type OrderFulfillSubmitData,
 } from "@dashboard/orders/components/OrderFulfillPage";
 import {
   orderFulfillUrl,
-  OrderFulfillUrlDialog,
-  OrderFulfillUrlQueryParams,
+  type OrderFulfillUrlDialog,
+  type OrderFulfillUrlQueryParams,
   orderUrl,
 } from "@dashboard/orders/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

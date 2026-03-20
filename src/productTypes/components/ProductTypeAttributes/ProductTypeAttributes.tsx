@@ -8,9 +8,9 @@ import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTa
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
-import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
+import { type AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
+import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";

@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { FulfillmentFragment, OrderFulfillLineFragment } from "@dashboard/graphql";
+import { type FulfillmentFragment, type OrderFulfillLineFragment } from "@dashboard/graphql";
 import {
   getAttributesCaption,
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
-  OrderFulfillStockFormsetData,
+  type OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
 import { TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";

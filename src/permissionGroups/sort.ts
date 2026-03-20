@@ -1,4 +1,4 @@
-import { StaffMemberFragment } from "@dashboard/graphql";
+import { type StaffMemberFragment } from "@dashboard/graphql";
 import { getUserName } from "@dashboard/misc";
 
 import { MembersListUrlSortField } from "./urls";

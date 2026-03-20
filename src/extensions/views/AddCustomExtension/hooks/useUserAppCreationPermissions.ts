@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import useShop from "@dashboard/hooks/useShop";
 import difference from "lodash/difference";
 

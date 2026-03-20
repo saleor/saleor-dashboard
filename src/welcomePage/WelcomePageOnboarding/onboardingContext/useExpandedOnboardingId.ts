@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { OnboardingState, OnboardingStep, OnboardingStepsIDs } from "./types";
+import { type OnboardingState, type OnboardingStep, type OnboardingStepsIDs } from "./types";
 import {
   getFirstExpanderStepId,
   getFirstNotCompletedAndNotExpandedStep,

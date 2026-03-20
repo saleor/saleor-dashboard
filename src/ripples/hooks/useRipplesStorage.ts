@@ -1,5 +1,5 @@
 import { allRipples } from "@dashboard/ripples/allRipples";
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/vanilla/utils";
 import lodashSet from "lodash/set";

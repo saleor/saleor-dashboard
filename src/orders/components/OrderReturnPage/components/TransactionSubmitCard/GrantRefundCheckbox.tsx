@@ -1,9 +1,9 @@
-import { OrderGrantRefundCreateErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type OrderGrantRefundCreateErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { OrderReturnData } from "../../form";
+import { type OrderReturnData } from "../../form";
 import { submitCardMessages } from "./messages";
 
 interface GrantRefundCheckboxProps {

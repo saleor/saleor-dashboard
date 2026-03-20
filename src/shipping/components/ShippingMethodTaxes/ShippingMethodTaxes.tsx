@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { TaxClassBaseFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type TaxClassBaseFragment } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

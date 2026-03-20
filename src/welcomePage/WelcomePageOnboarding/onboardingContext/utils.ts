@@ -1,6 +1,6 @@
-import { MetadataInput } from "@dashboard/graphql";
+import { type MetadataInput } from "@dashboard/graphql";
 
-import { OnboardingState, OnboardingStep, OnboardingStepsIDs } from "./types";
+import { type OnboardingState, type OnboardingStep, type OnboardingStepsIDs } from "./types";
 
 // Helper functions
 const cloneMetadata = (data: MetadataInput): MetadataInput => ({

@@ -1,16 +1,16 @@
-import { FilterElement } from "@dashboard/components/Filter/types";
+import { type FilterElement } from "@dashboard/components/Filter/types";
 import {
   CustomerFilterKeys,
-  CustomerListFilterOpts,
+  type CustomerListFilterOpts,
 } from "@dashboard/customers/components/CustomerListPage";
-import { CustomerFilterInput } from "@dashboard/graphql";
+import { type CustomerFilterInput } from "@dashboard/graphql";
 
 import {
   createFilterTabUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
 } from "../../../utils/filters";
-import { CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
+import { type CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
 
 const CUSTOMER_FILTERS_KEY = "customerFilters";
 

@@ -1,4 +1,4 @@
-import { permissions, USER_PERMISSION, UserPermissionType } from "@data/userPermissions";
+import { permissions, USER_PERMISSION, type UserPermissionType } from "@data/userPermissions";
 import { LoginPage } from "@pages/loginPage";
 import { test } from "@playwright/test";
 

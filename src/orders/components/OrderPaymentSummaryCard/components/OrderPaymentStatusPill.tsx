@@ -1,5 +1,5 @@
 import { Pill } from "@dashboard/components/Pill";
-import { OrderChargeStatusEnum, OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderChargeStatusEnum, type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 

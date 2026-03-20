@@ -1,4 +1,4 @@
-import { OrderLineFragment } from "@dashboard/graphql";
+import { type OrderLineFragment } from "@dashboard/graphql";
 
 import { toLineWithUnfulfilledQuantity } from "./utils";
 

@@ -1,5 +1,5 @@
 import { createAppsDebug } from "@dashboard/extensions/views/ViewManifestExtension/utils/apps-debug";
-import { Events } from "@saleor/app-sdk/app-bridge";
+import { type Events } from "@saleor/app-sdk/app-bridge";
 import { useCallback } from "react";
 
 const debug = createAppsDebug("postToExtension");

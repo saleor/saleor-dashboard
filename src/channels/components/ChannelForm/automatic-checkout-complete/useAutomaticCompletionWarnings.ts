@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { formatDateTime, formatTimeDifference } from "./utils";
 

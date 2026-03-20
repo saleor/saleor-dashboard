@@ -29,7 +29,11 @@ import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
-import { voucherListUrl, VoucherListUrlDialog, VoucherListUrlQueryParams } from "../../urls";
+import {
+  voucherListUrl,
+  type VoucherListUrlDialog,
+  type VoucherListUrlQueryParams,
+} from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 

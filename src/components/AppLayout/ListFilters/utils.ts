@@ -1,4 +1,4 @@
-import { FilterElement, IFilter } from "@dashboard/components/Filter/types";
+import { type FilterElement, type IFilter } from "@dashboard/components/Filter/types";
 
 export const getSelectedFilterAmount = <TFilterKeys extends string = string>(
   menu: IFilter<TFilterKeys>,

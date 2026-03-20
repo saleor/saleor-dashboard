@@ -1,4 +1,4 @@
-import { PermissionEnum, PermissionFragment } from "@dashboard/graphql";
+import { type PermissionEnum, type PermissionFragment } from "@dashboard/graphql";
 
 export const getNoPermissionsObject = (permissions: PermissionFragment[]) => {
   /**

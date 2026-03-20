@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 interface OrderAlertsProps {
   alerts: Array<string | MessageDescriptor>;

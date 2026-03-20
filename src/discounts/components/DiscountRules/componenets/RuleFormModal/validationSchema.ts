@@ -1,5 +1,5 @@
 import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 import * as z from "zod";
 
 const validationMessages = defineMessages({

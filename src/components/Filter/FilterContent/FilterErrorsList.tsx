@@ -6,7 +6,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { validationMessages } from "../messages";
-import { FilterElement, FilterErrorMessages, FilterErrors } from "../types";
+import { type FilterElement, type FilterErrorMessages, type FilterErrors } from "../types";
 
 const useStyles = makeStyles(
   theme => ({

@@ -1,11 +1,11 @@
 import {
-  FilterElement,
-  FilterElementKeyValue,
-  FilterElementRegular,
-  IFilter,
+  type FilterElement,
+  type FilterElementKeyValue,
+  type FilterElementRegular,
+  type IFilter,
 } from "@dashboard/components/Filter/types";
 import { findValueInEnum } from "@dashboard/misc";
-import { ActiveTab } from "@dashboard/types";
+import { type ActiveTab } from "@dashboard/types";
 
 export function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {

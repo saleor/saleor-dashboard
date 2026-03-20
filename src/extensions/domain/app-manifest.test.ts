@@ -1,4 +1,4 @@
-import { AppManifestFragment, PermissionEnum } from "@dashboard/graphql";
+import { type AppManifestFragment, PermissionEnum } from "@dashboard/graphql";
 
 import { appManifestSchema } from "./app-manifest";
 

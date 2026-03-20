@@ -1,8 +1,8 @@
 import {
   TaxCalculationStrategy,
-  TaxClassFragment,
-  TaxConfigurationFragment,
-  TaxCountryConfigurationFragment,
+  type TaxClassFragment,
+  type TaxConfigurationFragment,
+  type TaxCountryConfigurationFragment,
 } from "@dashboard/graphql";
 
 export const taxConfigurations: TaxConfigurationFragment[] = [

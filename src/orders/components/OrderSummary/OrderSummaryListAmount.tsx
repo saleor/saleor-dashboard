@@ -1,5 +1,5 @@
-import { Text, TextProps } from "@saleor/macaw-ui-next";
-import { CSSProperties } from "react";
+import { Text, type TextProps } from "@saleor/macaw-ui-next";
+import { type CSSProperties } from "react";
 import { useIntl } from "react-intl";
 
 type Props = Omit<TextProps, "children"> & {

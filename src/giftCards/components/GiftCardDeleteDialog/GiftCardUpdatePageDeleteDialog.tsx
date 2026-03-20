@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 
 import GiftCardDeleteDialogContent from "./GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";

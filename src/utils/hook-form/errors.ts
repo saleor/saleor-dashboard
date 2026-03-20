@@ -1,4 +1,4 @@
-import { FieldError, FieldErrors, FieldValues } from "react-hook-form";
+import { type FieldError, type FieldErrors, type FieldValues } from "react-hook-form";
 
 /** Maps all errors from react-hook-form formState, into a list of error strings
  *

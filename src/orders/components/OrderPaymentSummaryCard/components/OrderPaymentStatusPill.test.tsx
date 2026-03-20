@@ -1,7 +1,7 @@
 import { OrderChargeStatusEnum, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 
-import { OrderPaymentStatusPill, OrderPaymentStatusPillProps } from "./OrderPaymentStatusPill";
+import { OrderPaymentStatusPill, type OrderPaymentStatusPillProps } from "./OrderPaymentStatusPill";
 
 // Mock the transformPaymentStatus function
 jest.mock("@dashboard/misc", () => ({

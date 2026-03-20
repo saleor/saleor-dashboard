@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import {
-  ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderLineInput,
+  type ChannelUsabilityDataQuery,
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderLineInput,
 } from "@dashboard/graphql";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,10 +1,10 @@
 import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
-import { CollectionListUrlFilters } from "@dashboard/collections/urls";
+import { type CollectionListUrlFilters } from "@dashboard/collections/urls";
 import { CollectionPublished } from "@dashboard/graphql";
-import { FilterOpts } from "@dashboard/types";
+import { type FilterOpts } from "@dashboard/types";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";
 

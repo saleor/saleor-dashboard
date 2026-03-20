@@ -1,6 +1,6 @@
 import {
   OrderDetailsGrantRefundDocument,
-  OrderDetailsGrantRefundFragment,
+  type OrderDetailsGrantRefundFragment,
   OrderGrantRefundUpdateErrorCode,
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundEditMutation,
@@ -11,8 +11,8 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderTransactionRefundPage, {
-  OrderTransactionRefundError,
-  OrderTransactionRefundPageFormData,
+  type OrderTransactionRefundError,
+  type OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
 import { useState } from "react";

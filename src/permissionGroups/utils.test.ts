@@ -1,13 +1,13 @@
-import { UserContext } from "@dashboard/auth/types";
+import { type UserContext } from "@dashboard/auth/types";
 import {
-  ChannelFragment,
+  type ChannelFragment,
   PermissionEnum,
-  PermissionFragment,
-  PermissionGroupDetailsFragment,
-  UserFragment,
+  type PermissionFragment,
+  type PermissionGroupDetailsFragment,
+  type UserFragment,
 } from "@dashboard/graphql";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
 import {
   arePermissionsExceeded,

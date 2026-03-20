@@ -1,11 +1,14 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { OrderRefundDataQuery } from "@dashboard/graphql";
-import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import { type OrderRefundDataQuery } from "@dashboard/graphql";
+import useForm, {
+  type CommonUseFormResultWithHandlers,
+  type SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import useFormset, { type FormsetChange, type FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import type * as React from "react";
 import { useEffect } from "react";
-import * as React from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
 

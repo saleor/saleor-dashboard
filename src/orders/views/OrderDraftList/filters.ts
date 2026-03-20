@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { FilterElement } from "@dashboard/components/Filter/types";
-import { OrderDraftFilterInput } from "@dashboard/graphql";
+import { type FilterElement } from "@dashboard/components/Filter/types";
+import { type OrderDraftFilterInput } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import {
   OrderDraftFilterKeys,
-  OrderDraftListFilterOpts,
+  type OrderDraftListFilterOpts,
 } from "@dashboard/orders/components/OrderDraftListPage";
 
 import {
@@ -13,7 +13,7 @@ import {
   getMinMaxQueryParam,
   getSingleValueQueryParam,
 } from "../../../utils/filters";
-import { OrderDraftListUrlFilters, OrderDraftListUrlFiltersEnum } from "../../urls";
+import { type OrderDraftListUrlFilters, OrderDraftListUrlFiltersEnum } from "../../urls";
 
 const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
 

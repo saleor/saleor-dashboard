@@ -1,4 +1,4 @@
-import { DragStartEvent, UniqueIdentifier } from "@dnd-kit/core";
+import { type DragStartEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { useCallback, useState } from "react";
 
 /**

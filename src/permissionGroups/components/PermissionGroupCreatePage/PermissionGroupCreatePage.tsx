@@ -6,8 +6,12 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import { ChannelFragment, PermissionEnum, PermissionGroupErrorFragment } from "@dashboard/graphql";
-import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import {
+  type ChannelFragment,
+  type PermissionEnum,
+  type PermissionGroupErrorFragment,
+} from "@dashboard/graphql";
+import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
@@ -16,7 +20,7 @@ import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGr
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { PermissionData } from "../PermissionGroupDetailsPage";
+import { type PermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 
 export interface PermissionGroupCreateFormData {

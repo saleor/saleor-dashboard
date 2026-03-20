@@ -1,4 +1,4 @@
-import { PermissionEnum } from "@dashboard/graphql";
+import { type PermissionEnum } from "@dashboard/graphql";
 import difference from "lodash/difference";
 
 export const getPermissionsDiff = (

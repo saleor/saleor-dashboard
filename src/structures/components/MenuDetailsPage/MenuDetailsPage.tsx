@@ -1,20 +1,20 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForMenuDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type MenuDetailsFragment, type MenuErrorFragment } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { useState } from "react";
 
-import { MenuItemType } from "../MenuItemDialog";
-import MenuItems, { TreeOperation } from "../MenuItems";
+import { type MenuItemType } from "../MenuItemDialog";
+import MenuItems, { type TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
 import { computeRelativeTree } from "./tree";
 

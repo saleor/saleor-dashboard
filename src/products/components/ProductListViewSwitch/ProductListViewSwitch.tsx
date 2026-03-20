@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Switch } from "@saleor/macaw-ui-next";
 import { Grid3x3, List } from "lucide-react";
 
-import { ProductListViewType } from "../ProductListPage";
+import { type ProductListViewType } from "../ProductListPage";
 
 interface ProductListViewSwitchProps {
   defaultValue: ProductListViewType;

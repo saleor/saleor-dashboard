@@ -1,13 +1,20 @@
 // @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { FulfillmentStatus, OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
+import {
+  FulfillmentStatus,
+  type OrderErrorFragment,
+  type WarehouseFragment,
+} from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

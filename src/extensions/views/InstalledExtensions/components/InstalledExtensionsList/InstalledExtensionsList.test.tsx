@@ -1,4 +1,4 @@
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { type InstalledExtension } from "@dashboard/extensions/types";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { InstalledExtensionsList } from "./InstalledExtensionsList";

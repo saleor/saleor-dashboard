@@ -1,4 +1,4 @@
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 export function getSkuData(data: DatagridChange[], currentIndex: number): string | undefined {

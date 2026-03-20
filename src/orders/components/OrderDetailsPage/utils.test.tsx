@@ -1,5 +1,5 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
 import {
   createMetadataHandler,

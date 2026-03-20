@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
-import { useUser } from "..";
 import { loginCallbackPath } from "../urls";
+import { useUser } from "../useUser";
 import { useAuthParameters } from "./useAuthParameters";
 
 const PLUGIN_ID_PARAM = "saleorPluginId";

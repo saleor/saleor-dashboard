@@ -1,11 +1,11 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
-import { GridColumn } from "@glideapps/glide-data-grid";
+import { type GridColumn } from "@glideapps/glide-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PersistedColumn } from "../persistance/persistedColumn";
 import { usePersistance } from "../persistance/usePersistance";
-import { AvailableColumn } from "../types";
+import { type AvailableColumn } from "../types";
 import {
   areCategoriesLoaded,
   extractSelectedNodesFromCategories,

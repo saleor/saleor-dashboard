@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import {
-  LanguageCodeEnum,
+  type LanguageCodeEnum,
   usePageTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdatePageTranslationsMutation,
@@ -10,11 +10,11 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
-import { PageTranslationInputFieldName, TranslationField } from "../types";
+import { type PageTranslationInputFieldName, type TranslationField } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsPagesQueryParams {

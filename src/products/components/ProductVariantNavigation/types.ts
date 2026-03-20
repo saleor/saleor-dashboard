@@ -1,4 +1,7 @@
-import { ProductVariantCreateDataQuery, ProductVariantDetailsQuery } from "@dashboard/graphql";
+import {
+  type ProductVariantCreateDataQuery,
+  type ProductVariantDetailsQuery,
+} from "@dashboard/graphql";
 
 export type ProductVariantItem = NonNullable<
   | ProductVariantDetailsQuery["productVariant"]

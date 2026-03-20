@@ -1,12 +1,12 @@
-import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition, type Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Combobox, Input, Option } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";

@@ -5,19 +5,19 @@ import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterCont
 import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option, Skeleton } from "@saleor/macaw-ui-next";
+import { type Option, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import type * as React from "react";
 
 import FilterAutocompleteField, {
-  FilterAutocompleteDisplayValues,
+  type FilterAutocompleteDisplayValues,
 } from "../FilterAutocompleteField";
 import { FilterKeyValueField } from "../FilterKeyValueField";
 import FilterOptionField from "../FilterOptionField";
-import { FilterReducerAction } from "../reducer";
+import { type FilterReducerAction } from "../reducer";
 import {
   FieldType,
-  FilterElement,
+  type FilterElement,
   isFilterDateType,
   isFilterNumericType,
   isFilterType,

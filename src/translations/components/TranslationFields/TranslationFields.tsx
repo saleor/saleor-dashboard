@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
-import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
-import { ListProps } from "@dashboard/types";
-import { OutputData } from "@editorjs/editorjs";
+import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import { type ListProps } from "@dashboard/types";
+import { type OutputData } from "@editorjs/editorjs";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

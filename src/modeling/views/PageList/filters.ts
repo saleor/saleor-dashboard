@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { FilterElement } from "@dashboard/components/Filter/types";
-import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
-import { SearchPageTypesQuery } from "@dashboard/graphql";
-import { PageListUrlFilters } from "@dashboard/modeling/urls";
-import { AutocompleteFilterOpts, FilterOpts } from "@dashboard/types";
+import { type FilterElement } from "@dashboard/components/Filter/types";
+import { type SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
+import { type SearchPageTypesQuery } from "@dashboard/graphql";
+import { type PageListUrlFilters } from "@dashboard/modeling/urls";
+import { type AutocompleteFilterOpts, type FilterOpts } from "@dashboard/types";
 import { createFilterTabUtils, getMultipleValueQueryParam } from "@dashboard/utils/filters";
 import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 

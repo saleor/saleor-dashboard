@@ -1,4 +1,4 @@
-import { Locale } from "../Locale";
+import { type Locale } from "../Locale";
 
 export const formatPercantage = (amount: number | undefined, locale: Locale) => {
   return amount

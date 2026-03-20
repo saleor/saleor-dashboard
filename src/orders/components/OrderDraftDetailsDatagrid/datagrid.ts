@@ -8,16 +8,16 @@ import {
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { getDatagridRowDataIndex, getStatusColor, isFirstColumn } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
-import { IntlShape, useIntl } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme, useTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { lineAlertMessages } from "../OrderDraftDetailsProducts/messages";
 import { columnsMessages } from "./messages";

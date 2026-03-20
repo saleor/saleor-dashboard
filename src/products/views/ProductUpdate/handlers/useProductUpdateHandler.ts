@@ -8,14 +8,14 @@ import {
   handleUploadMultipleFiles,
 } from "@dashboard/attributes/utils/handlers";
 import {
-  AttributeErrorFragment,
+  type AttributeErrorFragment,
   ErrorPolicyEnum,
-  MetadataErrorFragment,
-  ProductChannelListingErrorFragment,
-  ProductErrorFragment,
-  ProductErrorWithAttributesFragment,
-  ProductFragment,
-  UploadErrorFragment,
+  type MetadataErrorFragment,
+  type ProductChannelListingErrorFragment,
+  type ProductErrorFragment,
+  type ProductErrorWithAttributesFragment,
+  type ProductFragment,
+  type UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
@@ -28,7 +28,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
-import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
@@ -37,7 +37,7 @@ import { useIntl } from "react-intl";
 import {
   getCreateVariantMutationError,
   getVariantUpdateMutationErrors,
-  ProductVariantListError,
+  type ProductVariantListError,
 } from "./errors";
 import {
   getBulkVariantUpdateInputs,

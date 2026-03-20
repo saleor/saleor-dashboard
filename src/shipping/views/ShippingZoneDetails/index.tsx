@@ -6,7 +6,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   CountryCode,
   ShippingMethodTypeEnum,
-  ShippingZoneUpdateInput,
+  type ShippingZoneUpdateInput,
   useDeleteShippingRateMutation,
   useDeleteShippingZoneMutation,
   useShippingZoneQuery,
@@ -38,14 +38,14 @@ import { diff } from "fast-array-diff";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
-import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
+import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import {
   shippingRateCreateUrl,
   shippingRateEditUrl,
   shippingZonesListUrl,
   shippingZoneUrl,
-  ShippingZoneUrlDialog,
-  ShippingZoneUrlQueryParams,
+  type ShippingZoneUrlDialog,
+  type ShippingZoneUrlQueryParams,
 } from "../../urls";
 
 interface ShippingZoneDetailsProps {

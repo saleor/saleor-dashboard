@@ -1,6 +1,6 @@
 import { Actions } from "./Actions";
 import { Close } from "./Close";
-import { Content, ContentSize } from "./Content";
+import { Content, type ContentSize } from "./Content";
 import { Grid } from "./Grid";
 import { Header } from "./Header";
 import { Root } from "./Root";

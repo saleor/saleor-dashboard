@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
-  CountryCode,
-  TaxCountryConfigurationFragment,
+  type CountryCode,
+  type TaxCountryConfigurationFragment,
   useTaxClassesListQuery,
   useTaxCountriesListQuery,
   useTaxCountryConfigurationDeleteMutation,
@@ -19,9 +19,9 @@ import TaxCountryDialog from "../components/TaxCountryDialog";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
 import {
   taxCountriesListUrl,
-  TaxesUrlDialog,
-  TaxesUrlQueryParams,
-  TaxTab,
+  type TaxesUrlDialog,
+  type TaxesUrlQueryParams,
+  type TaxTab,
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";

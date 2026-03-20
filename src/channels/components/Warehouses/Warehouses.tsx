@@ -1,8 +1,8 @@
-import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { type ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import { SearchWarehousesQuery } from "@dashboard/graphql";
+import { type SearchWarehousesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { type FetchMoreProps, type RelayToFlat, type ReorderAction } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

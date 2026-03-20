@@ -1,5 +1,5 @@
-import { TransactionItemFragment } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type TransactionItemFragment } from "@dashboard/graphql";
+import { type IntlShape } from "react-intl";
 import { z } from "zod";
 
 import { validationMessages } from "../../messages";

@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { ProductListColumns } from "@dashboard/config";
-import { ProductListQuery } from "@dashboard/graphql";
-import { ListProps, RelayToFlat } from "@dashboard/types";
+import { type ProductListColumns } from "@dashboard/config";
+import { type ProductListQuery } from "@dashboard/graphql";
+import { type ListProps, type RelayToFlat } from "@dashboard/types";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";

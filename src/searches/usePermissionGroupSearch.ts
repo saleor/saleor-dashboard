@@ -2,8 +2,8 @@
 import { gql } from "@apollo/client";
 import {
   SearchPermissionGroupsDocument,
-  SearchPermissionGroupsQuery,
-  SearchPermissionGroupsQueryVariables,
+  type SearchPermissionGroupsQuery,
+  type SearchPermissionGroupsQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 

@@ -1,5 +1,5 @@
-import { ExportErrorFragment } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type ExportErrorFragment } from "@dashboard/graphql";
+import { type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

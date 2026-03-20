@@ -1,11 +1,11 @@
 import { useApolloClient } from "@apollo/client";
 import { createInitialPageState } from "@dashboard/components/ConditionalFilter/API/initialState/helpers";
-import { InitialPageAPIResponse } from "@dashboard/components/ConditionalFilter/API/initialState/types";
-import { PageFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type InitialPageAPIResponse } from "@dashboard/components/ConditionalFilter/API/initialState/types";
+import { type PageFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _SearchPageTypesOperandsDocument,
-  _SearchPageTypesOperandsQuery,
-  _SearchPageTypesOperandsQueryVariables,
+  type _SearchPageTypesOperandsQuery,
+  type _SearchPageTypesOperandsQueryVariables,
 } from "@dashboard/graphql";
 import { useState } from "react";
 

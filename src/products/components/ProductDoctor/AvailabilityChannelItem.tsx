@@ -1,5 +1,5 @@
-import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
-import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { AlertTriangle, ChevronDown, CircleAlert, Search } from "lucide-react";
@@ -12,7 +12,7 @@ import {
   isPurchasable,
   PublicApiVerificationBadge,
 } from "./AvailabilityCard";
-import { ChannelVerificationResult } from "./hooks/usePublicApiVerification";
+import { type ChannelVerificationResult } from "./hooks/usePublicApiVerification";
 import { messages } from "./messages";
 import {
   CurrencyBadge,
@@ -26,7 +26,7 @@ import {
 import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSection";
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
-import { AvailabilityIssue, ChannelSummary } from "./utils/types";
+import { type AvailabilityIssue, type ChannelSummary } from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;

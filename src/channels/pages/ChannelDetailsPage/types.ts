@@ -1,5 +1,5 @@
-import { ChannelShippingZonesQuery, WarehouseFragment } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type ChannelShippingZonesQuery, type WarehouseFragment } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 
 export type ChannelShippingZones = RelayToFlat<ChannelShippingZonesQuery["shippingZones"]>;
 

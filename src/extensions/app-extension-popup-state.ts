@@ -1,12 +1,12 @@
-import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
-import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 import {
-  AllFormPayloads,
+  type AllFormPayloads,
   DashboardEventFactory,
-  FormPayloadProductEdit,
-  FormPayloadProductTranslate,
+  type FormPayloadProductEdit,
+  type FormPayloadProductTranslate,
 } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";

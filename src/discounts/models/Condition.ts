@@ -1,4 +1,4 @@
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 
 export type ConditionType = "is" | "between" | "lower" | "greater";
 

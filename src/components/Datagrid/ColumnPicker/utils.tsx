@@ -1,8 +1,8 @@
 import { ArrowLeft, X } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
-import { AvailableColumn } from "../types";
-import { ColumnCategory } from "./useColumns";
+import { type AvailableColumn } from "../types";
+import { type ColumnCategory } from "./useColumns";
 
 export const filterEmptyColumn = (column: AvailableColumn) => column.title !== "";
 

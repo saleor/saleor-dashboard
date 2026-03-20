@@ -1,13 +1,13 @@
 import {
-  DragEndEvent,
+  type DragEndEvent,
   PointerSensor,
-  UniqueIdentifier,
+  type UniqueIdentifier,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import { useState } from "react";
 
-import { ProductVariantItem } from "../types";
+import { type ProductVariantItem } from "../types";
 
 interface UseVariantDragProps {
   variants: ProductVariantItem[];

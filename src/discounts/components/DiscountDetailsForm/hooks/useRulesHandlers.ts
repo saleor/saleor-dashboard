@@ -1,11 +1,11 @@
-import { mapAPIRuleToForm, Rule } from "@dashboard/discounts/models";
+import { mapAPIRuleToForm, type Rule } from "@dashboard/discounts/models";
 import { sortRules } from "@dashboard/discounts/utils";
 import {
-  PromotionDetailsFragment,
-  PromotionRuleCreateErrorFragment,
-  PromotionRuleUpdateErrorFragment,
+  type PromotionDetailsFragment,
+  type PromotionRuleCreateErrorFragment,
+  type PromotionRuleUpdateErrorFragment,
 } from "@dashboard/graphql";
-import { CommonError } from "@dashboard/utils/errors/common";
+import { type CommonError } from "@dashboard/utils/errors/common";
 import { useEffect, useState } from "react";
 
 import { getCurrentConditionsValuesLabels } from "../utils";

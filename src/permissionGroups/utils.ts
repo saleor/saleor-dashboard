@@ -1,14 +1,14 @@
-import { UserContext } from "@dashboard/auth/types";
+import { type UserContext } from "@dashboard/auth/types";
 import {
-  ChannelFragment,
-  PermissionFragment,
-  PermissionGroupDetailsFragment,
-  UserFragment,
+  type ChannelFragment,
+  type PermissionFragment,
+  type PermissionGroupDetailsFragment,
+  type UserFragment,
 } from "@dashboard/graphql";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import difference from "lodash/difference";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.

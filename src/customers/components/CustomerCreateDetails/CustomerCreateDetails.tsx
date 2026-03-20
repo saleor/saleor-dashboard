@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { AccountErrorFragment } from "@dashboard/graphql";
+import { type AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { CustomerCreatePageFormData } from "../CustomerCreatePage";
+import { type CustomerCreatePageFormData } from "../CustomerCreatePage";
 
 const useStyles = makeStyles(
   theme => ({

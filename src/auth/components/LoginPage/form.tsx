@@ -1,6 +1,6 @@
-import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import useForm, { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import * as React from "react";
+import type * as React from "react";
 
 export interface LoginFormData {
   email: string;

@@ -180,6 +180,10 @@ This frontend connects to a Saleor GraphQL backend:
 
 When modifying `package.json`, always run `pnpm install` to update `pnpm-lock.yaml` and node_modules.
 
+### Dependency Overrides
+
+Dependency overrides (for security patches, version pinning, etc.) must be placed in `pnpm-workspace.yaml` under the `overrides:` key — **not** in `package.json` under `pnpm.overrides`. The workspace file is the single source of truth for overrides in this project.
+
 ## Contributing
 
 ### Changesets
@@ -220,6 +224,7 @@ During code review, do not verify auto-generated files. Such files are suffixed 
 
 ### Component Patterns
 
+- **Storybook** - Add storybook file (componentName.stories.tsx) for new created components
 - **No default exports** - Use named exports for all components and functions
 - **No `// @ts-strict-ignore`** - Write properly typed code from the start
 - **Use object destructuring** - Prefer named attributes in function parameters

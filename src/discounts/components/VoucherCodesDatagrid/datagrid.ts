@@ -4,15 +4,15 @@ import {
   tagsCell,
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getStatusColor } from "@dashboard/misc";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
-import { VoucherCode } from "./types";
+import { type VoucherCode } from "./types";
 
 export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
   {

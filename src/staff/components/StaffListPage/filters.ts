@@ -1,8 +1,8 @@
-import { IFilter } from "@dashboard/components/Filter/types";
+import { type IFilter } from "@dashboard/components/Filter/types";
 import { StaffMemberStatus } from "@dashboard/graphql";
-import { FilterOpts } from "@dashboard/types";
+import { type FilterOpts } from "@dashboard/types";
 import { createOptionsField } from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 export enum StaffFilterKeys {
   status = "status",

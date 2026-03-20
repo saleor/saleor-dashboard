@@ -1,4 +1,4 @@
-import { LanguageCodeEnum } from "@dashboard/graphql";
+import { type LanguageCodeEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 

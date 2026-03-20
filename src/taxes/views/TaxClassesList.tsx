@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
-  TaxClassCreateErrorFragment,
-  TaxClassFragment,
+  type TaxClassCreateErrorFragment,
+  type TaxClassFragment,
   useTaxClassCreateMutation,
   useTaxClassDeleteMutation,
   useTaxClassesListQuery,
@@ -13,7 +13,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createMetadataCreateHandler, {
-  CreateMetadataHandlerFunctionResult,
+  type CreateMetadataHandlerFunctionResult,
 } from "@dashboard/utils/handlers/metadataCreateHandler";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -22,8 +22,8 @@ import { useIntl } from "react-intl";
 
 import { taxesMessages } from "../messages";
 import TaxClassesPage from "../pages/TaxClassesPage";
-import { TaxClassesPageFormData } from "../types";
-import { taxClassesListUrl, TaxTab, taxTabPath } from "../urls";
+import { type TaxClassesPageFormData } from "../types";
+import { taxClassesListUrl, type TaxTab, taxTabPath } from "../urls";
 import { createTaxClassCreateInput, createTaxClassUpdateInput } from "../utils/data";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 import { mapUndefinedCountriesToTaxClasses } from "../utils/utils";

@@ -1,18 +1,18 @@
 import { useApolloClient } from "@apollo/client";
 import {
   _GetLegacyChannelOperandsDocument,
-  _GetLegacyChannelOperandsQuery,
-  _GetLegacyChannelOperandsQueryVariables,
+  type _GetLegacyChannelOperandsQuery,
+  type _GetLegacyChannelOperandsQueryVariables,
   DiscountStatusEnum,
   VoucherDiscountType,
 } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { VoucherFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { type VoucherFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
 import { createInitialVoucherState } from "../helpers";
-import { InitialVoucherAPIResponse } from "../types";
+import { type InitialVoucherAPIResponse } from "../types";
 import { InitialVouchersStateResponse } from "./InitialVouchersState";
 
 export interface InitialVoucherAPIState {

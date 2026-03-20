@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
-import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  ChannelDeleteMutation,
-  ChannelErrorFragment,
-  ChannelUpdateMutation,
+  type ChannelDeleteMutation,
+  type ChannelErrorFragment,
+  type ChannelUpdateMutation,
   isMainSchema,
   isStagingSchema,
   useChannelActivateMutation,
@@ -34,7 +34,12 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
+import {
+  channelsListUrl,
+  channelUrl,
+  type ChannelUrlDialog,
+  type ChannelUrlQueryParams,
+} from "../../urls";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
 

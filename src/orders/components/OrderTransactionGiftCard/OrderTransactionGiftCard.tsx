@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 
 import {
-  OrderDetailsFragment,
-  OrderGiftCardFragment,
+  type OrderDetailsFragment,
+  type OrderGiftCardFragment,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
-import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
+import { type FakeTransaction, type TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -72,6 +72,8 @@ const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardP
     refundPendingAmount: prepareMoney(0, currency),
     canceledAmount: prepareMoney(0, currency),
     cancelPendingAmount: prepareMoney(0, currency),
+    createdBy: null,
+    paymentMethodDetails: null,
     __typename: "FakeTransaction",
   };
 

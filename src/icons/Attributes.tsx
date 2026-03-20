@@ -1,4 +1,4 @@
-import { createSvgIcon, SvgIconProps } from "@material-ui/core";
+import { createSvgIcon, type SvgIconProps } from "@material-ui/core";
 
 /**
  * @deprecated This icon uses Material-UI which is deprecated. Please use Lucide React icons instead.

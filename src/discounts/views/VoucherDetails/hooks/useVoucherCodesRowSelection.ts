@@ -1,4 +1,4 @@
-import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import isEqual from "lodash/isEqual";
 import { useCallback } from "react";

@@ -1,12 +1,12 @@
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
-import { LeftOperand } from "../LeftOperandsProvider";
-import { InitialResponseType } from "../types";
-import { UrlToken } from "./../ValueProvider/UrlToken";
-import { ConditionOptions, StaticElementName } from "./ConditionOptions";
+import { type InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
+import { type LeftOperand } from "../LeftOperandsProvider";
+import { type InitialResponseType } from "../types";
+import { type UrlToken } from "./../ValueProvider/UrlToken";
+import { ConditionOptions, type StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
-import { ItemOption } from "./ConditionValue";
+import { type ItemOption } from "./ConditionValue";
 
 export class Condition {
   public constructor(

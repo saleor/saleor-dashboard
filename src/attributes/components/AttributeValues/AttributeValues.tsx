@@ -9,12 +9,17 @@ import { TablePagination } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   AttributeInputTypeEnum,
-  AttributeValueFragment,
-  AttributeValueListFragment,
+  type AttributeValueFragment,
+  type AttributeValueListFragment,
 } from "@dashboard/graphql";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import {
+  type ListProps,
+  type PaginateListProps,
+  type RelayToFlat,
+  type ReorderAction,
+} from "@dashboard/types";
 import { TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";

@@ -5,19 +5,19 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { configurationMenuUrl } from "@dashboard/configuration";
-import { RefreshLimitsQuery } from "@dashboard/graphql";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
+import { type RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { StaffMembers } from "@dashboard/staff/types";
-import { StaffListUrlSortField } from "@dashboard/staff/urls";
-import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
+import { type StaffMembers } from "@dashboard/staff/types";
+import { type StaffListUrlSortField } from "@dashboard/staff/urls";
+import { type FilterPagePropsWithPresets, type ListProps, type SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { StaffListDatagrid } from "../StaffListDatagrid";
-import { StaffFilterKeys, StaffListFilterOpts } from "./filters";
+import { type StaffFilterKeys, type StaffListFilterOpts } from "./filters";
 
 interface StaffListPageProps
   extends ListProps,

@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { z } from "zod";
 
 import { formLabels, headerTitles, infoMessages, messages } from "../../messages";

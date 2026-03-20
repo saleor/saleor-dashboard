@@ -1,4 +1,4 @@
-import { useRichText, UseRichTextOptions } from "../useRichText";
+import { type useRichText, type UseRichTextOptions } from "../useRichText";
 
 const useRichTextMocked = ({
   initial,

@@ -1,4 +1,4 @@
-import { useChannelReorderWarehousesMutation, WarehouseFragment } from "@dashboard/graphql";
+import { useChannelReorderWarehousesMutation, type WarehouseFragment } from "@dashboard/graphql";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 

@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import {
-  CollectionErrorFragment,
-  PageErrorFragment,
-  ProductErrorFragment,
+  type CollectionErrorFragment,
+  type PageErrorFragment,
+  type ProductErrorFragment,
 } from "@dashboard/graphql";
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { Accordion, Box, Input, Text, Textarea } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";

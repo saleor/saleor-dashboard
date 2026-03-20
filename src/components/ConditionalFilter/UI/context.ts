@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { FilterEventEmitter } from "./EventEmitter";
+import { type FilterEventEmitter } from "./EventEmitter";
 
 interface Context {
   emitter: FilterEventEmitter;

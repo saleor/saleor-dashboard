@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 import {
   DescriptionField,
@@ -10,7 +10,7 @@ import {
 } from "./components";
 import {
   OrderManualTransactionForm as MainComponent,
-  OrderManualTransactionFormProps as MainComponentProps,
+  type OrderManualTransactionFormProps as MainComponentProps,
 } from "./OrderManualTransactionForm";
 
 interface OrderManualTransactionCombinedComponent {

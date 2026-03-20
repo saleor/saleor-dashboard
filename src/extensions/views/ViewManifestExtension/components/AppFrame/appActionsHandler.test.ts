@@ -1,7 +1,7 @@
 import * as dashboardConfig from "@dashboard/config";
 import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import * as ExternalAppContext from "../ExternalAppContext/ExternalAppContext";
 import { AppActionsHandler } from "./appActionsHandler";
@@ -18,6 +18,21 @@ jest.mock("../ExternalAppContext/ExternalAppContext");
 
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
+const mockDeactivate = jest.fn();
+
+jest.mock(
+  "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider",
+  () => ({
+    useActiveAppExtension: () => ({
+      active: null,
+      activate: jest.fn(),
+      deactivate: mockDeactivate,
+      attachFormState: jest.fn(),
+      attachFormResponseFrame: jest.fn(),
+      framesByFormType: {},
+    }),
+  }),
+);
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   useNotifier: () => mockNotify,
@@ -311,6 +326,34 @@ describe("AppActionsHandler", function () {
           "",
           "/dashboard/extensions/app/XYZ/config?",
         );
+      });
+    });
+  });
+  describe("useHandlePopupCloseAction", () => {
+    it("Calls deactivate and returns ok response", () => {
+      // Arrange
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandlePopupCloseAction());
+
+      // Act
+      const response = handle({
+        type: "popupClose",
+        payload: {
+          actionId: "test-popup-close",
+        },
+      });
+
+      // Assert
+      expect(mockDeactivate).toHaveBeenCalledTimes(1);
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "test-popup-close",
+          ok: true,
+        },
       });
     });
   });

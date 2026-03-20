@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const giftCardListSearchAndFiltersMessages = defineMessages({
   searchPlaceholder: {
-    id: "jY80Gs",
-    defaultMessage: "Search by code, e.g {exampleGiftCardCode}",
+    id: "JDvxO6",
+    defaultMessage: "Search Gift Cards (e.g. by code, email, user name)",
     description: "search gift card placeholder",
   },
   defaultTabLabel: {

@@ -1,13 +1,13 @@
 import {
-  DecimalFilterInput,
-  PromotionRuleDetailsFragment,
-  PromotionRuleInput,
+  type DecimalFilterInput,
+  type PromotionRuleDetailsFragment,
+  type PromotionRuleInput,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
 
-import { CataloguePredicateAPI, OrderPredicateAPI } from "../types";
-import { Condition, ConditionType, isTuple } from "./Condition";
-import { Rule } from "./Rule";
+import { type CataloguePredicateAPI, type OrderPredicateAPI } from "../types";
+import { type Condition, type ConditionType, isTuple } from "./Condition";
+import { type Rule } from "./Rule";
 
 export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
   return {

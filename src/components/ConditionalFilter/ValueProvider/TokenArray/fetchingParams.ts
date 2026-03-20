@@ -1,5 +1,5 @@
-import { FilterProviderType } from "../../types";
-import { TokenType, UrlToken } from "../UrlToken";
+import { type FilterProviderType } from "../../types";
+import { TokenType, type UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
   category: string[];
@@ -51,6 +51,7 @@ export interface GiftCardsFetchingParams {
   products: string[];
   tags: string[];
   usedBy: string[];
+  code: string[];
 }
 
 export interface CollectionFetchingParams {
@@ -71,6 +72,11 @@ export interface StaffMembersFetchingParams {
 export interface AttributesFetchingParams {
   channel: string[];
   attributeType: string[];
+}
+
+export interface CategoryFetchingParams {
+  metadata: string[];
+  updatedAt: string[];
 }
 
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute" | "attributeReference">;
@@ -132,6 +138,7 @@ const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
   products: [],
   tags: [],
   usedBy: [],
+  code: [],
 };
 
 const emptyCollectionFetchingParams: CollectionFetchingParams = {
@@ -153,6 +160,14 @@ const emptyAttributesFetchingParams: AttributesFetchingParams = {
   channel: [],
   attributeType: [],
 };
+
+const emptyCategoryFetchingParams: CategoryFetchingParams = {
+  metadata: [],
+  updatedAt: [],
+};
+
+export { emptyCategoryFetchingParams };
+export { emptyCollectionFetchingParams };
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 const includedInParams = (c: UrlToken) =>
@@ -300,6 +315,18 @@ export const toAttributesFetchingParams = (p: AttributesFetchingParams, c: UrlTo
   return p;
 };
 
+export const toCategoryFetchingParams = (p: CategoryFetchingParams, c: UrlToken) => {
+  const key = c.name as keyof CategoryFetchingParams;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams
@@ -309,7 +336,8 @@ export type FetchingParamsType =
   | VoucherFetchingParams
   | ProductTypesFetchingParams
   | StaffMembersFetchingParams
-  | AttributesFetchingParams;
+  | AttributesFetchingParams
+  | CategoryFetchingParams;
 
 export const getEmptyFetchingPrams = (type: FilterProviderType) => {
   switch (type) {
@@ -331,5 +359,7 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyStaffMembersFetchingParams;
     case "attributes":
       return emptyAttributesFetchingParams;
+    case "category":
+      return emptyCategoryFetchingParams;
   }
 };

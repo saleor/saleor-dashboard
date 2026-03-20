@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { CollectionFragment } from "@dashboard/graphql";
-import { PillColor } from "@saleor/macaw-ui";
-import { MessageDescriptor } from "react-intl";
+import { type CollectionFragment } from "@dashboard/graphql";
+import { type PillColor } from "@saleor/macaw-ui";
+import { type MessageDescriptor } from "react-intl";
 
-import { Pill } from "../ChannelsAvailabilityMenuContent";
-import { DotStatus } from "../StatusDot/StatusDot";
+import { type Pill } from "../ChannelsAvailabilityMenuContent";
+import { type DotStatus } from "../StatusDot/StatusDot";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<

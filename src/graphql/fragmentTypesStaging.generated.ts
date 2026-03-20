@@ -220,6 +220,7 @@
       "App",
       "AppExtension",
       "AppInstallation",
+      "AppProblem",
       "AppToken",
       "Attribute",
       "AttributeTranslatableContent",
@@ -362,6 +363,7 @@
     ],
     "PaymentMethodDetails": [
       "CardPaymentMethodDetails",
+      "GiftCardPaymentMethodDetails",
       "OtherPaymentMethodDetails"
     ],
     "PromotionEvent": [

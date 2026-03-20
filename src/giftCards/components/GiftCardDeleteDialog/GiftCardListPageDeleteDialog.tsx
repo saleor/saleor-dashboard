@@ -1,7 +1,7 @@
-import { ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { type ActionDialogProps } from "@dashboard/components/ActionDialog";
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
-import { DialogProps } from "@dashboard/types";
+import { type DialogProps } from "@dashboard/types";
 
 import GiftCardDeleteDialogContent, { SINGLE } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";

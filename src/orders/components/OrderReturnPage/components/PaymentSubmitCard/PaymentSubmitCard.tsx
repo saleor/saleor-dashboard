@@ -4,22 +4,29 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import {
   SimpleRadioGroupField,
-  SimpleRadioGroupFieldChoice,
+  type SimpleRadioGroupFieldChoice,
 } from "@dashboard/components/SimpleRadioGroupField";
-import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import {
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderRefundDataQuery,
+} from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { defineMessages, FormattedMessage, IntlShape, useIntl } from "react-intl";
+import type * as React from "react";
+import { defineMessages, FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
   OrderRefundAmountCalculationMode,
-  OrderRefundFormData,
+  type OrderRefundFormData,
   OrderRefundType,
 } from "../../../OrderRefundPage/form";
-import { OrderReturnFormData } from "../../form";
-import { PaymentSubmitCardValues, PaymentSubmitCardValuesProps } from "./PaymentSubmitCardValues";
+import { type OrderReturnFormData } from "../../form";
+import {
+  PaymentSubmitCardValues,
+  type PaymentSubmitCardValuesProps,
+} from "./PaymentSubmitCardValues";
 import RefundAmountInput from "./RefundAmountInput";
 
 const useStyles = makeStyles(

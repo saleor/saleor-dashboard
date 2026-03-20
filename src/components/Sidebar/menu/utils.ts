@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { Extension } from "@dashboard/extensions/types";
+import { type Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
-import { SidebarMenuItem } from "./types";
+import { type SidebarMenuItem } from "./types";
 
 export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMenuItem) => {
   const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({

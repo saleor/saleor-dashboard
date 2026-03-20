@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import {
-  ProductErrorCode,
-  ProductVariantBulkCreateMutation,
-  ProductVariantBulkErrorCode,
-  ProductVariantBulkErrorFragment,
-  ProductVariantBulkUpdateMutation,
+  type ProductErrorCode,
+  type ProductVariantBulkCreateMutation,
+  type ProductVariantBulkErrorCode,
+  type ProductVariantBulkErrorFragment,
+  type ProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
 
 export type ProductVariantListError =

@@ -2,8 +2,8 @@
 import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchAttributeValuesDocument,
-  SearchAttributeValuesQuery,
-  SearchAttributeValuesQueryVariables,
+  type SearchAttributeValuesQuery,
+  type SearchAttributeValuesQueryVariables,
 } from "@dashboard/graphql";
 import makeSearch from "@dashboard/hooks/makeSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";

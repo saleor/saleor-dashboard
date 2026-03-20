@@ -22,7 +22,7 @@ describe("useSidebarDotState", () => {
     const { result } = renderHook(() => useSidebarDotState());
 
     // Assert
-    expect(result.current.hasNewFailedAttempts).toBe(false);
+    expect(result.current.hasProblems).toBe(false);
   });
 
   it("should show dot when failed attempt is newer than last click", async () => {
@@ -43,7 +43,7 @@ describe("useSidebarDotState", () => {
     });
 
     // Assert
-    expect(result.current.hasNewFailedAttempts).toBe(true);
+    expect(result.current.hasProblems).toBe(true);
   });
 
   it("should hide dot after clicking when no failed attempts", async () => {
@@ -59,7 +59,7 @@ describe("useSidebarDotState", () => {
     });
 
     // Assert
-    expect(result.current.hasNewFailedAttempts).toBe(false);
+    expect(result.current.hasProblems).toBe(false);
   });
 
   it("should handle empty metadata state", async () => {
@@ -74,7 +74,7 @@ describe("useSidebarDotState", () => {
     });
 
     // Assert
-    expect(result.current.hasNewFailedAttempts).toBe(true);
+    expect(result.current.hasProblems).toBe(true);
   });
 
   it("should handle initial metadata state and show the dot", () => {
@@ -91,7 +91,7 @@ describe("useSidebarDotState", () => {
     const { result } = renderHook(() => useSidebarDotState());
 
     // Assert
-    expect(result.current.hasNewFailedAttempts).toBe(true);
+    expect(result.current.hasProblems).toBe(true);
   });
 
   it("should persist app list item click", async () => {
@@ -119,7 +119,7 @@ describe("useSidebarDotState", () => {
       lastClickDate: date,
       lastFailedAttemptDate: "",
     });
-    expect(result.current.hasNewFailedAttempts).toBe(false);
+    expect(result.current.hasProblems).toBe(false);
   });
 
   it("should persist failed attempt", async () => {
@@ -147,7 +147,7 @@ describe("useSidebarDotState", () => {
       lastClickDate: "",
       lastFailedAttemptDate: date,
     });
-    expect(result.current.hasNewFailedAttempts).toBe(true);
+    expect(result.current.hasProblems).toBe(true);
   });
 
   it("should persist click date after multiple attempts", async () => {

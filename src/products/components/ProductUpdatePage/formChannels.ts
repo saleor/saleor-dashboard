@@ -1,16 +1,16 @@
 // @ts-strict-ignore
-import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import {
-  ProductChannelListingAddInput,
-  ProductChannelListingUpdateInput,
-  ProductFragment,
+  type ProductChannelListingAddInput,
+  type ProductChannelListingUpdateInput,
+  type ProductFragment,
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import uniq from "lodash/uniq";
 import uniqBy from "lodash/uniqBy";
 import { useCallback, useRef } from "react";
 
-import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
   availableForPurchaseAt: null,

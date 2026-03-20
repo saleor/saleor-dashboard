@@ -1,10 +1,20 @@
 import packageInfo from "../package.json";
-import { SearchVariables } from "./hooks/makeSearch";
-import { ListSettings, ListViews, Pagination } from "./types";
+import { type SearchVariables } from "./hooks/makeSearch";
+import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
+export const getStaticUrl = () => {
+  const staticUrl = window?.__SALEOR_CONFIG__?.STATIC_URL;
 
+  // Treat empty, null, or undefined as unset and fall back to root
+  if (!staticUrl) {
+    return "/";
+  }
+
+  // Ensure the returned URL always ends with a trailing slash
+  return staticUrl.endsWith("/") ? staticUrl : `${staticUrl}/`;
+};
 /**
  * Get the API URL.
  * The same API URL is used regardless of schema version (eg 3.22 or 3.23).
@@ -21,15 +31,6 @@ export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.origin).href;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
-
-export const getAppsConfig = () => ({
-  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URL,
-  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(";") || [
-    ".ngrok.io",
-    ".saleor.live",
-    ".trycloudflare.com",
-  ],
-});
 
 export const getExtensionsConfig = () => ({
   extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,

@@ -1,7 +1,7 @@
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 
-import { FormData } from "./types";
+import { type FormData } from "./types";
 
 export const initialForm: FormData = {
   applyOncePerCustomer: false,

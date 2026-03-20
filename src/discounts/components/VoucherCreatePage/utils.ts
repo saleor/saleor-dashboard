@@ -1,13 +1,13 @@
 import {
-  SearchCategoriesOpts,
-  SearchCollectionOpts,
-  SearchProductsOpts,
+  type SearchCategoriesOpts,
+  type SearchCollectionOpts,
+  type SearchProductsOpts,
 } from "@dashboard/discounts/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { v4 as uuidv4 } from "uuid";
 
-import { VoucherCode } from "../VoucherCodesDatagrid/types";
-import { FormData } from "./types";
+import { type VoucherCode } from "../VoucherCodesDatagrid/types";
+import { type FormData } from "./types";
 
 export const generateDraftVoucherCode = (code: string) => {
   return {

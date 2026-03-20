@@ -1,5 +1,5 @@
-import { UserContextError } from "@dashboard/auth/types";
-import { defineMessages, IntlShape } from "react-intl";
+import { type UserContextError } from "@dashboard/auth/types";
+import { defineMessages, type IntlShape } from "react-intl";
 
 const errorMessages = defineMessages({
   loginError: {

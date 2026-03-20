@@ -2,7 +2,7 @@
 import Debounce from "@dashboard/components/Debounce";
 import { DashboardModal } from "@dashboard/components/Modal";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
+import { type OrderFulfillLineFragment, type WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";

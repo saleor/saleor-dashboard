@@ -1,5 +1,5 @@
 import { createFilterStructure } from "@dashboard/customers/components/CustomerListPage";
-import { CustomerListUrlFilters } from "@dashboard/customers/urls";
+import { type CustomerListUrlFilters } from "@dashboard/customers/urls";
 import { date } from "@dashboard/fixtures";
 import { PermissionEnum } from "@dashboard/graphql";
 import { getFilterQueryParams } from "@dashboard/utils/filters";

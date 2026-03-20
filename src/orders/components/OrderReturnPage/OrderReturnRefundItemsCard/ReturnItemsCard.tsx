@@ -4,19 +4,22 @@ import Money from "@dashboard/components/Money";
 import { QuantityInput } from "@dashboard/components/QuantityInput";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
-import { FormsetChange } from "@dashboard/hooks/useFormset";
+import {
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderLineFragment,
+} from "@dashboard/graphql";
+import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderCardTitle } from "../../OrderCardTitle/OrderCardTitle";
 import { MaximalButton } from "../components/MaximalButton";
-import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { type FormsetQuantityData, type FormsetReplacementData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
 import ProductErrorCell from "./ProductErrorCell";
 

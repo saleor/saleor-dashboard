@@ -1,4 +1,4 @@
-import { AppsInstallationsQuery } from "@dashboard/graphql";
+import { type AppsInstallationsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { renderHook } from "@testing-library/react-hooks";
 

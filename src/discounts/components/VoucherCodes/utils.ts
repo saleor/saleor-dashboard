@@ -1,4 +1,4 @@
-import { VoucherCode } from "../VoucherCodesDatagrid/types";
+import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 
 export const hasSavedVoucherCodesToDelete = (
   voucherCodesIdsToDelete: string[],

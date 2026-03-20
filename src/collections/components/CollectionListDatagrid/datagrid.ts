@@ -1,20 +1,20 @@
-import { Collection, Collections } from "@dashboard/collections/types";
-import { CollectionListUrlSortField } from "@dashboard/collections/urls";
+import { type Collection, type Collections } from "@dashboard/collections/types";
+import { type CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
-  CollectionChannels,
+  type CollectionChannels,
   getChannelAvailabilityColor,
   getChannelAvailabilityLabel,
   getDropdownColor,
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { getStatusColor } from "@dashboard/misc";
-import { Sort } from "@dashboard/types";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

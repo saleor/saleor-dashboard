@@ -1,21 +1,20 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
+import { type FetchResult } from "@apollo/client";
 import {
-  ChannelData,
-  ChannelPriceAndPreorderData,
-  ChannelPriceArgs,
+  type ChannelData,
+  type ChannelPriceAndPreorderData,
+  type ChannelPriceArgs,
 } from "@dashboard/channels/utils";
 import {
-  ProductChannelListingAddInput,
-  ProductVariantFragment,
-  VariantMediaAssignMutation,
-  VariantMediaAssignMutationVariables,
-  VariantMediaUnassignMutation,
-  VariantMediaUnassignMutationVariables,
+  type ProductChannelListingAddInput,
+  type ProductVariantFragment,
+  type VariantMediaAssignMutation,
+  type VariantMediaAssignMutationVariables,
+  type VariantMediaUnassignMutation,
+  type VariantMediaUnassignMutationVariables,
 } from "@dashboard/graphql";
-import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
+import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import { diff } from "fast-array-diff";
-import moment from "moment";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -113,7 +112,7 @@ export const createPreorderEndDateChangeHandler =
   event => {
     form.change(event);
 
-    if (moment(event.target.value).isSameOrBefore(Date.now())) {
+    if (new Date(event.target.value) <= new Date()) {
       form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
     } else {
       form.clearErrors("preorderEndDateTime");

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
+import { type ChannelData } from "@dashboard/channels/utils";
 import {
   booleanCell,
   dropdownCell,
@@ -9,14 +9,14 @@ import {
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { ProductDetailsVariantFragment } from "@dashboard/graphql";
-import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
+import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { GridCell } from "@glideapps/glide-data-grid";
-import { Option } from "@saleor/macaw-ui-next";
-import { MutableRefObject } from "react";
+import { type GridCell } from "@glideapps/glide-data-grid";
+import { type Option } from "@saleor/macaw-ui-next";
+import { type MutableRefObject } from "react";
 
 import {
   getColumnAttribute,

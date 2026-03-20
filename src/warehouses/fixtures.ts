@@ -1,8 +1,8 @@
 import { address } from "@dashboard/fixtures";
 import {
   WarehouseClickAndCollectOptionEnum,
-  WarehouseDetailsFragment,
-  WarehouseWithShippingFragment,
+  type WarehouseDetailsFragment,
+  type WarehouseWithShippingFragment,
 } from "@dashboard/graphql";
 
 import { shippingZones } from "../shipping/fixtures";

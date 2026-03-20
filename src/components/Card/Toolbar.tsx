@@ -1,4 +1,4 @@
-import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Box, type PropsWithBox } from "@saleor/macaw-ui-next";
 
 export const Toolbar = ({ children, ...rest }: PropsWithBox<{}>) => (
   <Box display="flex" flexDirection="row" gap={2} {...rest}>

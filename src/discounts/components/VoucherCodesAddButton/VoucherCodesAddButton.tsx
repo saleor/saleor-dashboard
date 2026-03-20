@@ -1,4 +1,4 @@
-import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
+import { type MenuItem, SubMenu } from "@dashboard/components/SubMenu";
 import { Box, Button, Popover } from "@saleor/macaw-ui-next";
 import { ChevronDown, Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";

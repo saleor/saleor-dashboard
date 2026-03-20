@@ -1,13 +1,13 @@
-import { VariantAttributeFragment } from "@dashboard/graphql";
+import { type VariantAttributeFragment } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useMemo, useState } from "react";
 
 import {
-  AttributeData,
-  ExistingVariantCombination,
-  ExistingVariantData,
-  GeneratorDefaults,
-  SelectionState,
+  type AttributeData,
+  type ExistingVariantCombination,
+  type ExistingVariantData,
+  type GeneratorDefaults,
+  type SelectionState,
 } from "./types";
 import { extractExistingCombinations, generateVariantPreviews } from "./utils";
 

@@ -1,4 +1,4 @@
-import { ActivitiesFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { type ActivitiesFragment, OrderEventsEnum } from "@dashboard/graphql";
 
 export const activities = [
   {

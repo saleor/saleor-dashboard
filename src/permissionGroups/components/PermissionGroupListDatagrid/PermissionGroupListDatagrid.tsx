@@ -1,21 +1,21 @@
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { PermissionGroupFragment } from "@dashboard/graphql";
+import { type PermissionGroupFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   permissionGroupDetailsUrl,
-  PermissionGroupListUrlSortField,
+  type PermissionGroupListUrlSortField,
 } from "@dashboard/permissionGroups/urls";
 import { canBeSorted } from "@dashboard/permissionGroups/views/PermissionGroupList/sort";
-import { ListProps, SortPage } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
+import { type ListProps, type SortPage } from "@dashboard/types";
+import { type Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";

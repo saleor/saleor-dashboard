@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Plus } from "lucide-react";
-import { MutableRefObject, PropsWithChildren } from "react";
+import { type MutableRefObject, type PropsWithChildren } from "react";
 
 const useStyles = makeStyles(
   theme => ({

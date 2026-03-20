@@ -1,9 +1,9 @@
 import {
   AttributeInputTypeEnum,
-  ProductVariantBulkCreateInput,
-  VariantAttributeFragment,
+  type ProductVariantBulkCreateInput,
+  type VariantAttributeFragment,
 } from "@dashboard/graphql";
-import { Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 
 export interface AttributeValue {
   id: string;

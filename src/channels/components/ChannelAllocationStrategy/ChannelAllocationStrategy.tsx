@@ -1,8 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
-import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { AllocationStrategyEnum, type StockSettingsInput } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleQuestionMark } from "lucide-react";
 import { FormattedMessage } from "react-intl";

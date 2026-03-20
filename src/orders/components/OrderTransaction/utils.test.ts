@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { TransactionEventFragment } from "@dashboard/graphql";
-import { TransactionFakeEvent, TransactionMappingResult } from "@dashboard/orders/types";
+import { type TransactionEventFragment } from "@dashboard/graphql";
+import { type TransactionFakeEvent, type TransactionMappingResult } from "@dashboard/orders/types";
 
 import { mapTransactionEvent } from "./utils";
 

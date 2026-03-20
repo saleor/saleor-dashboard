@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { productListUrl } from "@dashboard/products/urls";
@@ -6,7 +6,7 @@ import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { PrimaryActionProps } from "./type";
+import { type PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
 export const WelcomePageCreateProductButton = ({ onClick }: PrimaryActionProps) => {

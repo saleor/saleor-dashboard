@@ -1,6 +1,6 @@
 import { commonMessages } from "@dashboard/intl";
 import isUrl from "is-url";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import { z } from "zod";
 
 export const getValidationSchema = (intl: IntlShape) => {

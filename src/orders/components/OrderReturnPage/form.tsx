@@ -1,8 +1,11 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
+import useForm, {
+  type CommonUseFormResultWithHandlers,
+  type SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import useFormset, { type FormsetChange, type FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
 import { useEffect } from "react";

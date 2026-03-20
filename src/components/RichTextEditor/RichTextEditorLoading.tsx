@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import RichTextEditor, { RichTextEditorProps } from "./RichTextEditor";
+import RichTextEditor, { type RichTextEditorProps } from "./RichTextEditor";
 
 interface RichTextEditorLoadingProps
   extends Omit<

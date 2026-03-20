@@ -1,8 +1,8 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
-import { FlagList } from "@dashboard/featureFlags";
-import { Dialog, SingleAction } from "@dashboard/types";
+import { type FlagList } from "@dashboard/featureFlags";
+import { type Dialog, type SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { ThemeType } from "@saleor/app-sdk/app-bridge";
+import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
 
 export const LegacyAppSections = {

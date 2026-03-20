@@ -2,8 +2,8 @@
 import { gql } from "@apollo/client";
 import {
   SearchAvailablePageAttributesDocument,
-  SearchAvailablePageAttributesQuery,
-  SearchAvailablePageAttributesQueryVariables,
+  type SearchAvailablePageAttributesQuery,
+  type SearchAvailablePageAttributesQueryVariables,
 } from "@dashboard/graphql";
 import makeSearch from "@dashboard/hooks/makeSearch";
 

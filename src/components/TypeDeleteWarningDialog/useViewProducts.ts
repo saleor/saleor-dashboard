@@ -5,7 +5,7 @@ import urljoin from "url-join";
 
 import { FilterElement } from "../ConditionalFilter/FilterElement";
 import { prepareStructure } from "../ConditionalFilter/ValueProvider/utils";
-import { TypeBaseData } from "./types";
+import { type TypeBaseData } from "./types";
 
 export interface ProductTypeBaseData extends TypeBaseData {
   slug: string;

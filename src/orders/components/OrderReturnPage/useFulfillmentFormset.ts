@@ -1,13 +1,13 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import useFormset from "@dashboard/hooks/useFormset";
 
-import { LineItemData } from "./form";
+import { type LineItemData } from "./form";
 import {
   getItemsFulfilled,
   getItemsWaiting,
   getOrderUnfulfilledLines,
   getParsedLineData,
-  LineItem,
+  type LineItem,
 } from "./utils";
 
 const mapWithLabel = (line: LineItem<number>) => ({ ...line, label: line.label ?? "" });

@@ -1,5 +1,5 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
-import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 
 const createInputElement = (name: string, value: string): HTMLInputElement => {
   const elInput = document.createElement("input");

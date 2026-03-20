@@ -1,7 +1,7 @@
-import { UniqueIdentifier } from "@dnd-kit/core";
+import { type UniqueIdentifier } from "@dnd-kit/core";
 import { useEffect, useMemo, useState } from "react";
 
-import { DataTypePlaceholder, TreeItems } from "../types";
+import { type DataTypePlaceholder, type TreeItems } from "../types";
 import { flattenTree, removeChildrenOf } from "../utils";
 
 interface UseItemsProps<T extends DataTypePlaceholder> {

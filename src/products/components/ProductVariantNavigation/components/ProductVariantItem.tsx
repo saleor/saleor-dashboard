@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 import { useScrollIntoView } from "../hooks/useScrollIntoView";
 import { messages } from "../messages";
-import { ProductVariantItem, ProductVariantItemThumbnail } from "../types";
+import { type ProductVariantItem, type ProductVariantItemThumbnail } from "../types";
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
 interface VariantItemProps {

@@ -1,4 +1,4 @@
-import { Option, RangeValue } from "@saleor/macaw-ui-next";
+import { type Option, type RangeValue } from "@saleor/macaw-ui-next";
 
 type DisabledScope = "left" | "right" | "condition";
 

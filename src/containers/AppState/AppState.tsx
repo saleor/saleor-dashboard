@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import * as React from "react";
 import useRouter from "use-react-router";
 
-import appStateReducer, { AppStateReducerAction } from "./reducer";
-import IAppState, { initialAppState } from "./state";
+import appStateReducer, { type AppStateReducerAction } from "./reducer";
+import type IAppState from "./state";
+import { initialAppState } from "./state";
 
 type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>];
 export const AppStateContext = React.createContext<AppStateContextType>([

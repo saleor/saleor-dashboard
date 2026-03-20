@@ -7,7 +7,7 @@ import {
 } from "@saleor/macaw-ui-next";
 
 import BulkSelect from "./BulkSelect";
-import { FilterEventEmitter } from "./EventEmitter";
+import { type FilterEventEmitter } from "./EventEmitter";
 import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
@@ -24,7 +24,7 @@ import {
   isTextInput,
 } from "./operators";
 import { RangeInputWrapper } from "./RangeInputWrapper";
-import { SelectedOperator } from "./types";
+import { type SelectedOperator } from "./types";
 
 interface RightOperatorProps {
   index: number;

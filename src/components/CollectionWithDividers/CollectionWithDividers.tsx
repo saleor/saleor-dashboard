@@ -1,6 +1,5 @@
 import { Divider } from "@material-ui/core";
-import { PropsWithChildren } from "react";
-import * as React from "react";
+import { type PropsWithChildren } from "react";
 
 interface CollectionWithDividersProps<T> {
   DividerComponent?: React.FunctionComponent;

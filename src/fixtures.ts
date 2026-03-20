@@ -1,21 +1,21 @@
 import {
   AllocationStrategyEnum,
-  ChannelFragment,
+  type ChannelFragment,
   PermissionEnum,
-  ShopInfoQuery,
-  ShopLimitFragment,
-  UserDetailsQuery,
+  type ShopInfoQuery,
+  type ShopLimitFragment,
+  type UserDetailsQuery,
 } from "@dashboard/graphql";
 
-import { PaginatorContextValues } from "./hooks/usePaginator";
+import { type PaginatorContextValues } from "./hooks/usePaginator";
 import {
-  FetchMoreProps,
-  FilterPageProps,
-  FilterPresetsProps,
-  ListActions,
-  SearchPageProps,
-  SortPage,
-  TabPageProps,
+  type FetchMoreProps,
+  type FilterPageProps,
+  type FilterPresetsProps,
+  type ListActions,
+  type SearchPageProps,
+  type SortPage,
+  type TabPageProps,
 } from "./types";
 
 const pageInfo = {

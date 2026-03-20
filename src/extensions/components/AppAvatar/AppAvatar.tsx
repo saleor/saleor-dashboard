@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { AppLogo } from "@dashboard/extensions/types";
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import { type AppLogo } from "@dashboard/extensions/types";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 
 type Logo = AppLogo | undefined;

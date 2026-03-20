@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
@@ -30,8 +30,8 @@ import { useIntl } from "react-intl";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
   orderListUrl,
-  OrderListUrlDialog,
-  OrderListUrlQueryParams,
+  type OrderListUrlDialog,
+  type OrderListUrlQueryParams,
   orderSettingsPath,
   orderUrl,
 } from "../../urls";

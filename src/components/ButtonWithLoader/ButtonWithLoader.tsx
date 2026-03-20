@@ -1,8 +1,8 @@
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, ButtonProps, Spinner, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Button, type ButtonProps, Spinner, sprinkles } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { ConfirmButtonTransitionState } from "../ConfirmButton";
+import { type ConfirmButtonTransitionState } from "../ConfirmButton";
 
 interface ButtonWithLoaderProps extends ButtonProps {
   transitionState: ConfirmButtonTransitionState;

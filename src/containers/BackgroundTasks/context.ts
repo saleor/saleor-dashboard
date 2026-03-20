@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { createContext } from "react";
 
-import { BackgroundTasksContextType } from "./types";
+import { type BackgroundTasksContextType } from "./types";
 
 const BackgroundTasksContext = createContext<BackgroundTasksContextType>(null);
 

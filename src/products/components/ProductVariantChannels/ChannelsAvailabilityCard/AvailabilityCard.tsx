@@ -1,12 +1,12 @@
 import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
+  type ChannelPriceAndPreorderData,
+  type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
 import { Divider } from "@dashboard/components/Divider";
-import { FormsetData } from "@dashboard/hooks/useFormset";
-import { PropsWithChildren } from "react";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { type PropsWithChildren } from "react";
 
-import { ProductChannelListing } from "./../types";
+import { type ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";
 import { useFilteredChannelListing } from "./useFilteredChannelListing";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";

@@ -1,5 +1,5 @@
-import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { Box, type PropsWithBox } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 
 export const Actions = ({ children, ...rest }: PropsWithBox<{ children: ReactNode }>) => {
   return (

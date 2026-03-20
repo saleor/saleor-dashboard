@@ -1,6 +1,6 @@
-import { ApolloError } from "@apollo/client";
+import { type ApolloError } from "@apollo/client";
 import { findValueInEnum } from "@dashboard/misc";
-import { GraphQLError } from "graphql";
+import { type GraphQLError } from "graphql";
 
 import { UserContextError } from "./types";
 

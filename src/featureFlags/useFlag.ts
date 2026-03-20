@@ -1,4 +1,4 @@
-import { Name as FlagName } from "./availableFlags";
+import { type Name as FlagName } from "./availableFlags";
 import { useFeatureFlagContext } from "./context";
 import { FlagValue } from "./FlagContent";
 

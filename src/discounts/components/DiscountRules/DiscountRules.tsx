@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Rule } from "@dashboard/discounts/models";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type Rule } from "@dashboard/discounts/models";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
-import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
-import { CommonError } from "@dashboard/utils/errors/common";
+import { type ChannelFragment, type PromotionTypeEnum } from "@dashboard/graphql";
+import { type CommonError } from "@dashboard/utils/errors/common";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,6 +1,6 @@
 import { stringifyQs } from "@dashboard/utils/urls";
 
-import { Dialog } from "../types";
+import { type Dialog } from "../types";
 
 const siteSettingsSection = "/site-settings";
 

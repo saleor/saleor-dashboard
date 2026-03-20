@@ -3,18 +3,23 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { configurationMenuUrl } from "@dashboard/configuration";
-import { ProductTypeFragment } from "@dashboard/graphql";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
+import { type ProductTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
-import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
+import { productTypeAddUrl, type ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
-import { ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
+import {
+  type FilterPageProps,
+  type ListActions,
+  type PageListProps,
+  type SortPage,
+} from "../../../types";
+import { type ProductTypeFilterKeys, type ProductTypeListFilterOpts } from "./filters";
 
 interface ProductTypeListPageProps
   extends PageListProps,

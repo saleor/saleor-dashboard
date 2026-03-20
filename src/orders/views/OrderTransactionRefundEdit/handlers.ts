@@ -1,11 +1,11 @@
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import {
-  OrderGrantRefundEditMutation,
+  type OrderGrantRefundEditMutation,
   OrderGrantRefundUpdateErrorCode,
-  OrderGrantRefundUpdateErrorFragment,
+  type OrderGrantRefundUpdateErrorFragment,
 } from "@dashboard/graphql";
-import { OrderTransactionRefundError } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
-import { IntlShape } from "react-intl";
+import { type OrderTransactionRefundError } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
+import { type IntlShape } from "react-intl";
 
 import { transactionRefundEditMessages } from "./messages";
 

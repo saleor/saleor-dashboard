@@ -1,7 +1,7 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { LanguageFragment } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { OutputData } from "@editorjs/editorjs";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type LanguageFragment } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type OutputData } from "@editorjs/editorjs";
 
 export enum TranslationInputFieldName {
   description = "description",

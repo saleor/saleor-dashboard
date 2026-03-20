@@ -1,6 +1,6 @@
 import { BasicApiService } from "@api/basics";
-import { permissions, USER_PERMISSION, UserPermissionType } from "@data/userPermissions";
-import { APIRequestContext, test as setup } from "@playwright/test";
+import { permissions, USER_PERMISSION, type UserPermissionType } from "@data/userPermissions";
+import { type APIRequestContext, test as setup } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 

@@ -1,5 +1,6 @@
 import {
   useAppFailedPendingWebhooksLazyQuery,
+  useAppHasProblemsLazyQuery,
   useUserAccountUpdateMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
@@ -21,6 +22,7 @@ describe("SidebarAppAlert", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useUserAccountUpdateMutation as jest.Mock).mockReturnValue([jest.fn()]);
+    (useAppHasProblemsLazyQuery as jest.Mock).mockReturnValue([jest.fn(), { data: undefined }]);
   });
 
   it("displays sidebar alert dot when there are webhook failures, TC_ID: D_INT_01", async () => {
@@ -75,10 +77,10 @@ describe("SidebarAppAlert", () => {
     const { result } = renderHook(() => useAppsAlert());
 
     await waitFor(() => {
-      expect(result.current.hasNewFailedAttempts).toBe(true);
+      expect(result.current.hasProblems).toBe(true);
     });
 
-    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasProblems} />);
 
     const trigger = screen.getByTestId("sidebar-app-alert-trigger");
 
@@ -91,6 +93,61 @@ describe("SidebarAppAlert", () => {
     expect(
       screen.queryAllByText("Issues found.{break}Review extension alerts.")[0],
     ).toBeInTheDocument();
+  });
+
+  it("sets hasNewFailedAttempts when apps have problems (no webhook failures)", async () => {
+    // Arrange
+    (useHasManagedAppsPermission as jest.Mock).mockReturnValue({
+      hasManagedAppsPermission: true,
+    });
+    // No webhook failures
+    (useAppFailedPendingWebhooksLazyQuery as jest.Mock).mockReturnValue([
+      jest.fn(),
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  webhooks: [
+                    {
+                      failedDelivers: { edges: [] },
+                      pendingDelivers: { edges: [] },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+    // App has problems
+    (useAppHasProblemsLazyQuery as jest.Mock).mockReturnValue([
+      jest.fn(),
+      {
+        data: {
+          apps: {
+            edges: [
+              {
+                node: {
+                  id: "app-1",
+                  problems: [{ __typename: "AppProblem" }],
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+
+    // Act
+    const { result } = renderHook(() => useAppsAlert());
+
+    // Assert
+    await waitFor(() => {
+      expect(result.current.hasProblems).toBe(true);
+    });
   });
 
   it("doesn't display sidebar alert dot when there are no webhook failures", async () => {
@@ -130,10 +187,10 @@ describe("SidebarAppAlert", () => {
     const { result } = renderHook(() => useAppsAlert());
 
     await waitFor(() => {
-      expect(result.current.hasNewFailedAttempts).toBe(false);
+      expect(result.current.hasProblems).toBe(false);
     });
 
-    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasNewFailedAttempts} />);
+    render(<SidebarAppAlert hasNewFailedAttempts={result.current.hasProblems} />);
 
     // Assert
     expect(screen.queryByTestId("sidebar-app-alert-trigger")).not.toBeInTheDocument();

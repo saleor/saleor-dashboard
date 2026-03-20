@@ -1,44 +1,44 @@
 // @ts-strict-ignore
 import {
-  AppAvatarFragment,
-  ChannelUsabilityDataQuery,
-  CountryWithCodeFragment,
+  type AppAvatarFragment,
+  type ChannelUsabilityDataQuery,
+  type CountryWithCodeFragment,
   FulfillmentStatus,
-  InvoiceFragment,
+  type InvoiceFragment,
   JobStatusEnum,
   MarkAsPaidStrategyEnum,
   OrderAction,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  OrderDetailsWithMetadataFragment,
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+  type OrderDetailsWithMetadataFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
-  OrderFulfillLineFragment,
-  OrderGrantedRefundFragment,
+  type OrderFulfillLineFragment,
+  type OrderGrantedRefundFragment,
   OrderGrantedRefundStatusEnum,
-  OrderListQuery,
-  OrderPaymentFragment,
-  OrderSettingsFragment,
+  type OrderListQuery,
+  type OrderPaymentFragment,
+  type OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
-  PaymentGatewayFragment,
-  SearchCustomersQuery,
-  SearchOrderVariantQuery,
-  SearchWarehousesQuery,
-  ShopOrderSettingsFragment,
+  type PaymentGatewayFragment,
+  type SearchCustomersQuery,
+  type SearchOrderVariantQuery,
+  type SearchWarehousesQuery,
+  type ShopOrderSettingsFragment,
   TransactionActionEnum,
-  TransactionEventFragment,
+  type TransactionEventFragment,
   TransactionEventTypeEnum,
-  TransactionItemFragment,
+  type TransactionItemFragment,
   TransactionKind,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
-import { MessageDescriptor } from "react-intl";
+import { type MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
@@ -115,6 +115,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     actions: [],
     externalUrl: null,
     createdAt: "2022-08-12T14:10:22.226875+00:00",
+    createdBy: null,
     events: [
       {
         id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -141,6 +142,15 @@ export const orderTransactions: TransactionItemFragment[] = [
     refundPendingAmount: prepareMoney(0),
     canceledAmount: prepareMoney(0),
     cancelPendingAmount: prepareMoney(0),
+    paymentMethodDetails: {
+      __typename: "CardPaymentMethodDetails",
+      name: "Credit card",
+      brand: "visa",
+      expMonth: 12,
+      expYear: 2025,
+      firstDigits: "4242",
+      lastDigits: "4242",
+    },
     __typename: "TransactionItem",
   },
   {
@@ -149,6 +159,7 @@ export const orderTransactions: TransactionItemFragment[] = [
     pspReference: "123",
     externalUrl: null,
     createdAt: "2022-08-12T14:10:22.226875+00:00",
+    createdBy: null,
     actions: [],
     events: [
       {
@@ -208,6 +219,10 @@ export const orderTransactions: TransactionItemFragment[] = [
     refundPendingAmount: prepareMoney(0),
     canceledAmount: prepareMoney(0),
     cancelPendingAmount: prepareMoney(0),
+    paymentMethodDetails: {
+      __typename: "OtherPaymentMethodDetails",
+      name: "PayPal",
+    },
     __typename: "TransactionItem",
   },
 ];
@@ -2788,6 +2803,7 @@ export const transactions: Record<
       actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.CHARGE],
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
+      createdBy: transactionApp,
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2814,6 +2830,15 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "visa",
+        expMonth: 12,
+        expYear: 2025,
+        firstDigits: "4242",
+        lastDigits: "4242",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -2825,6 +2850,7 @@ export const transactions: Record<
       externalUrl: null,
       actions: [],
       createdAt: "2022-08-12T14:10:22.226875+00:00",
+      createdBy: transactionApp,
       events: [
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
@@ -2867,6 +2893,15 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "visa",
+        expMonth: 12,
+        expYear: 2025,
+        firstDigits: "4242",
+        lastDigits: "4242",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -2877,6 +2912,7 @@ export const transactions: Record<
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
       externalUrl: null,
+      createdBy: transactionApp,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
         {
@@ -2936,6 +2972,15 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "mastercard",
+        expMonth: 3,
+        expYear: 2026,
+        firstDigits: "5555",
+        lastDigits: "4444",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -2945,6 +2990,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.REFUND],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3005,6 +3051,10 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "OtherPaymentMethodDetails",
+        name: "PayPal",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -3014,6 +3064,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [TransactionActionEnum.CHARGE],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3074,6 +3125,7 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: null,
       __typename: "TransactionItem",
     },
   ],
@@ -3083,6 +3135,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3159,6 +3212,15 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(58.98),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "CardPaymentMethodDetails",
+        name: "Credit card",
+        brand: "visa",
+        expMonth: 6,
+        expYear: 2027,
+        firstDigits: "4111",
+        lastDigits: "1111",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -3168,6 +3230,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3260,6 +3323,10 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: {
+        __typename: "OtherPaymentMethodDetails",
+        name: "Bank Transfer",
+      },
       __typename: "TransactionItem",
     },
   ],
@@ -3269,6 +3336,7 @@ export const transactions: Record<
       name: "Mollie",
       pspReference: "ord_3d41ih",
       actions: [],
+      createdBy: transactionApp,
       externalUrl: null,
       createdAt: "2022-08-12T14:10:22.226875+00:00",
       events: [
@@ -3361,6 +3429,7 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
+      paymentMethodDetails: null,
       __typename: "TransactionItem",
     },
   ],

@@ -2,7 +2,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, type Option, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";

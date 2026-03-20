@@ -5,13 +5,14 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import {
   DashboardEventFactory,
-  DispatchResponseEvent,
-  FormPayloadUpdate,
-  NotificationAction,
-  NotifyReady,
-  RedirectAction,
-  RequestPermissions,
-  UpdateRouting,
+  type DispatchResponseEvent,
+  type FormPayloadUpdate,
+  type NotificationAction,
+  type NotifyReady,
+  type PopupClose,
+  type RedirectAction,
+  type RequestPermissions,
+  type UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -267,6 +268,21 @@ const useHandleAppFormUpdate = () => {
   };
 };
 
+const useHandlePopupCloseAction = () => {
+  const { deactivate } = useActiveAppExtension();
+
+  return {
+    handle: (action: PopupClose) => {
+      const { actionId } = action.payload;
+
+      debug(`Handling PopupClose action with ID: %s`, actionId);
+      deactivate();
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
@@ -275,4 +291,5 @@ export const AppActionsHandler = {
   createResponseStatus,
   useHandlePermissionRequest,
   useHandleAppFormUpdate,
+  useHandlePopupCloseAction,
 };

@@ -1,11 +1,11 @@
 import {
-  CustomCell,
-  CustomRenderer,
+  type CustomCell,
+  type CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  ProvideEditorCallback,
+  type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useCallback, useState } from "react";
 
 type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;

@@ -1,4 +1,4 @@
-import { Condition } from "../Condition";
+import { type Condition } from "../Condition";
 import { prepareOrderPredicate } from "./preparePredicate";
 
 describe("prepareOrderPredicate", () => {

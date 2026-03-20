@@ -1,4 +1,4 @@
-import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import { type Actions, type DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";
 
@@ -30,6 +30,7 @@ export const useAppActions = (
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
   const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
+  const { handle: handlePopupClose } = AppActionsHandler.useHandlePopupCloseAction();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -61,9 +62,11 @@ export const useAppActions = (
       case "formPayloadUpdate": {
         return handleAppFormUpdate(action);
       }
+      case "popupClose": {
+        return handlePopupClose(action);
+      }
       default: {
-        // @ts-expect-error this is for runtime checking
-        const actionType = action?.type as string | undefined;
+        const actionType = (action as unknown as { type?: string })?.type;
 
         captureMessage("Unknown action type requested by the App", scope => {
           scope.setLevel("warning");
@@ -86,12 +89,21 @@ export const useAppActions = (
 
   useEffect(() => {
     const handler = (event: MessageEvent<Actions>) => {
-      if (event.origin === appOrigin) {
-        const response = handleAction(event.data);
+      if (event.origin !== appOrigin) {
+        return;
+      }
 
-        if (response) {
-          postToExtension(response);
-        }
+      // Ignore messages that don't look like app-bridge actions
+      // (e.g., from browser extensions like React DevTools).
+      // Valid app-bridge actions always have `type` and `payload.actionId`.
+      if (!event.data?.type || !event.data?.payload?.actionId) {
+        return;
+      }
+
+      const response = handleAction(event.data);
+
+      if (response) {
+        postToExtension(response);
       }
     };
 

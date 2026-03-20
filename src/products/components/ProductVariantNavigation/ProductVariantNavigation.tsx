@@ -3,7 +3,7 @@ import { Divider } from "@dashboard/components/Divider";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { productVariantAddUrl } from "@dashboard/products/urls";
-import { ReorderAction } from "@dashboard/types";
+import { type ReorderAction } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -15,7 +15,7 @@ import { ProductVariantEmptyItem } from "./components/ProductVariantEmptyItem";
 import { VariantItem } from "./components/ProductVariantItem";
 import { useVariantDrag } from "./hooks/useVariantDrag";
 import { messages } from "./messages";
-import { ProductVariantItem } from "./types";
+import { type ProductVariantItem } from "./types";
 
 interface ProductVariantNavigationProps {
   current?: string;

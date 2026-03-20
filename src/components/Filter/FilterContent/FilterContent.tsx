@@ -6,10 +6,16 @@ import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 
-import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
-import { FilterReducerAction } from "../reducer";
-import { FieldType, FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "../types";
-import { FilterContentBody, FilterContentBodyProps } from "./FilterContentBody";
+import { type FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
+import { type FilterReducerAction } from "../reducer";
+import {
+  FieldType,
+  type FilterElement,
+  type FilterErrorMessages,
+  type IFilter,
+  type InvalidFilters,
+} from "../types";
+import { FilterContentBody, type FilterContentBodyProps } from "./FilterContentBody";
 import { FilterContentBodyNameField } from "./FilterContentBodyNameField";
 import { FilterContentHeader } from "./FilterContentHeader";
 import { FilterErrorsList } from "./FilterErrorsList";

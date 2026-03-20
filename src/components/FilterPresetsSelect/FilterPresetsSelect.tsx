@@ -5,13 +5,13 @@ import {
   Dropdown,
   DropdownButton,
   List,
-  PlusIcon,
   sprinkles,
   Text,
   Tooltip,
   vars,
 } from "@saleor/macaw-ui-next";
-import { MouseEvent } from "react";
+import { PlusIcon } from "lucide-react";
+import { type MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";

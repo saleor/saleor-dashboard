@@ -1,6 +1,6 @@
 import { date } from "@dashboard/fixtures";
 import { createFilterStructure } from "@dashboard/orders/components/OrderDraftListPage";
-import { OrderDraftListUrlFilters } from "@dashboard/orders/urls";
+import { type OrderDraftListUrlFilters } from "@dashboard/orders/urls";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";

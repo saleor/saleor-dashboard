@@ -1,11 +1,10 @@
 // @ts-strict-ignore
-import { AddressTypeInput } from "@dashboard/customers/types";
-import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type AddressTypeInput } from "@dashboard/customers/types";
+import { type AccountErrorFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Box, Combobox, Input, Option } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { ChangeEvent } from "react";
+import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
+import { type ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { getErrorMessage } from "./getErrorMessage";

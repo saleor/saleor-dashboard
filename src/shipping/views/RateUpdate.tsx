@@ -1,6 +1,6 @@
 import {
-  Channel,
-  ChannelShippingData,
+  type Channel,
+  type ChannelShippingData,
   createShippingChannelsFromRate,
   createSortedShippingChannels,
 } from "@dashboard/channels/utils";
@@ -9,10 +9,10 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
-  PostalCodeRuleInclusionTypeEnum,
+  type PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment,
-  ShippingMethodWithPostalCodesFragment,
+  type ShippingMethodTypeFragment,
+  type ShippingMethodWithPostalCodesFragment,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
   useShippingPriceExcludeProductMutation,
@@ -29,13 +29,14 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { sectionNames } from "@dashboard/intl";
+import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/types";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
-import { ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
+import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
 import UnassignDialog from "@dashboard/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
@@ -44,8 +45,8 @@ import {
 } from "@dashboard/shipping/handlers";
 import {
   shippingRateEditUrl,
-  ShippingRateUrlDialog,
-  ShippingRateUrlQueryParams,
+  type ShippingRateUrlDialog,
+  type ShippingRateUrlQueryParams,
   shippingZoneUrl,
 } from "@dashboard/shipping/urls";
 import postalCodesReducer from "@dashboard/shipping/views/reducer";
@@ -55,11 +56,10 @@ import {
   getRuleObject,
 } from "@dashboard/shipping/views/utils";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@dashboard/types";
+import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { ShippingMethodPostalCodeRule } from "@saleor/sdk/dist/apollo/types";
 import { useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

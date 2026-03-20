@@ -1,4 +1,4 @@
-import { SavebarProps } from "../Savebar";
+import { type SavebarProps } from "../Savebar";
 
 export const SavebarRoot = ({ children }: SavebarProps) => <div>{children}</div>;
 

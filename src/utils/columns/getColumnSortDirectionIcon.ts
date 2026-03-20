@@ -1,4 +1,4 @@
-import { Sort } from "@dashboard/types";
+import { type Sort } from "@dashboard/types";
 
 export function getColumnSortDirectionIcon<T extends string = string>(
   { sort, asc }: Sort<T>,

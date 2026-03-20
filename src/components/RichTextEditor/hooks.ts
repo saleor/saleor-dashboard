@@ -1,5 +1,5 @@
-import { EditorConfig } from "@editorjs/editorjs";
-import { EditorCore } from "@react-editor-js/core";
+import { type EditorConfig } from "@editorjs/editorjs";
+import { type EditorCore } from "@react-editor-js/core";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export const useHasRendered = () => {

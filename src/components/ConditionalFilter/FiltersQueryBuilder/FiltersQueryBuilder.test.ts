@@ -2,7 +2,7 @@ import { Condition } from "../FilterElement/Condition";
 import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import { FiltersQueryBuilder } from "./FiltersQueryBuilder";
-import { QueryVarsBuilder } from "./queryVarsBuilders/types";
+import { type QueryVarsBuilder } from "./queryVarsBuilders/types";
 import { QueryApiType } from "./types";
 
 describe("FiltersQueryBuilder", () => {

@@ -1,6 +1,6 @@
-import { ChannelErrorCode, ChannelErrorFragment } from "@dashboard/graphql";
+import { ChannelErrorCode, type ChannelErrorFragment } from "@dashboard/graphql";
 
-import { FormData } from "./components/ChannelForm";
+import { type FormData } from "./components/ChannelForm";
 import { isCutoffDateTooOld } from "./components/ChannelForm/automatic-checkout-complete/utils";
 
 const createEmptyRequiredError = (field: string): ChannelErrorFragment => ({

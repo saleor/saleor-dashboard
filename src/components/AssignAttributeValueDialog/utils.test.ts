@@ -1,11 +1,11 @@
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import {
   filterPagesByAttributeValues,
   filterProductsByAttributeValues,
-  PagesToFilter,
-  ProductsToFilter,
+  type PagesToFilter,
+  type ProductsToFilter,
 } from "./utils";
 
 const createMockProduct = (id: string, name: string): NonNullable<ProductsToFilter>[number] => ({

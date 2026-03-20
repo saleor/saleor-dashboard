@@ -1,4 +1,4 @@
-import { FilterValueProvider } from "@dashboard/components/ConditionalFilter/FilterValueProvider";
+import { type FilterValueProvider } from "@dashboard/components/ConditionalFilter/FilterValueProvider";
 
 export const getNextUniqueTabName = (name: string, avialabeNames: string[]) => {
   let uniqueName = name;

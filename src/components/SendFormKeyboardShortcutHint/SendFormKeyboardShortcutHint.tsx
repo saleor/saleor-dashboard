@@ -1,5 +1,5 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 import styles from "./SendFormKeyboardShortcutHint.module.css";

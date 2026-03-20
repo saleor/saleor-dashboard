@@ -1,4 +1,4 @@
-import { Pagination } from "@dashboard/types";
+import { type Pagination } from "@dashboard/types";
 import { useEffect, useRef, useState } from "react";
 
 export interface UseRowSelection {

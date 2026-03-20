@@ -1,4 +1,4 @@
-import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
+import { type ChannelFragment, type PromotionTypeEnum } from "@dashboard/graphql";
 import { createContext } from "react";
 
 export const discountRulesContext = createContext<{

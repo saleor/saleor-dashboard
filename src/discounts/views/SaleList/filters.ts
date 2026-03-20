@@ -1,7 +1,11 @@
 // @ts-strict-ignore
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
+import { type FilterElement, type FilterElementRegular } from "@dashboard/components/Filter/types";
 import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
-import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
+import {
+  DiscountStatusEnum,
+  DiscountValueTypeEnum,
+  type SaleFilterInput,
+} from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime } from "@dashboard/misc";
 
 import {
@@ -12,7 +16,7 @@ import {
   getSingleValueQueryParam,
 } from "../../../utils/filters";
 import {
-  SaleListUrlFilters,
+  type SaleListUrlFilters,
   SaleListUrlFiltersEnum,
   SaleListUrlFiltersWithMultipleValues,
 } from "../../urls";

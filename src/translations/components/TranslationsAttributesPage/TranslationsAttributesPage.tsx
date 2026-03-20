@@ -3,21 +3,21 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
+import { type AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
+import { type TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import { ListSettings } from "@dashboard/types";
+import { type ListSettings } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

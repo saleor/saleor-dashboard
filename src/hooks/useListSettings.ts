@@ -2,8 +2,8 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import mergeWith from "lodash/mergeWith";
 
-import { AppListViewSettings, defaultListSettings } from "./../config";
-import { ListSettings, ListViews } from "./../types";
+import { type AppListViewSettings, defaultListSettings } from "./../config";
+import { type ListSettings, type ListViews } from "./../types";
 
 export const listSettingsStorageKey = "listConfig";
 export interface UseListSettings<TColumns extends string = string> {

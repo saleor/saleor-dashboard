@@ -1,15 +1,21 @@
-import { AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import { Select } from "@dashboard/components/Select";
-import { MeasurementUnitsEnum } from "@dashboard/graphql";
-import { UseFormResult } from "@dashboard/hooks/useForm";
+import { type MeasurementUnitsEnum } from "@dashboard/graphql";
+import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type Option, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import * as M from "./messages";
-import { getUnitChoices, UnitSystem, unitSystemChoices, UnitType, unitTypeChoices } from "./utils";
+import {
+  getUnitChoices,
+  type UnitSystem,
+  unitSystemChoices,
+  type UnitType,
+  unitTypeChoices,
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({

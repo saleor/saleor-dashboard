@@ -1,4 +1,4 @@
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { useCallback, useMemo } from "react";
 
 import { formatPriceInput, getCurrencyDecimalPoints } from "./utils";

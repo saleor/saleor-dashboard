@@ -1,15 +1,15 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid";
-import { DiscountErrorFragment } from "@dashboard/graphql";
+import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherDatesProps {
   data: VoucherDetailsPageFormData;

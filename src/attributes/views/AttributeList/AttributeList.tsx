@@ -30,7 +30,11 @@ import { useIntl } from "react-intl";
 
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
-import { attributeListUrl, AttributeListUrlDialog, AttributeListUrlQueryParams } from "../../urls";
+import {
+  attributeListUrl,
+  type AttributeListUrlDialog,
+  type AttributeListUrlQueryParams,
+} from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
-import { LocalizeDate } from "@dashboard/hooks/useDateLocalize";
-import { IntlShape } from "react-intl";
+import { type ChannelData } from "@dashboard/channels/utils";
+import { type LocalizeDate } from "@dashboard/hooks/useDateLocalize";
+import { type IntlShape } from "react-intl";
 
 import { publicationMessages } from "./messages";
-import { Messages } from "./types";
+import { type Messages } from "./types";
 
 export const getChannelsAvailabilityMessages = ({
   messages,

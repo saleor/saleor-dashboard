@@ -1,9 +1,12 @@
-import { ApolloError, ServerError } from "@apollo/client/core";
-import { INotification, INotificationCallback } from "@dashboard/components/notifications";
+import { type ApolloError, type ServerError } from "@apollo/client/core";
+import {
+  type INotification,
+  type INotificationCallback,
+} from "@dashboard/components/notifications";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { isJwtError, isTokenExpired } from "./errors";

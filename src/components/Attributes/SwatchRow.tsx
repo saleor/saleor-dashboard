@@ -7,7 +7,7 @@ import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeRowProps } from "./types";
+import { type AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
   AttributeRowProps,

@@ -1,5 +1,5 @@
-import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { PermissionGroupErrorCode, type PermissionGroupErrorFragment } from "@dashboard/graphql";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

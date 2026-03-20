@@ -1,5 +1,5 @@
 import { FlagsResolver } from "./FlagsResolver";
-import { Strategy } from "./Strategy";
+import { type Strategy } from "./Strategy";
 
 jest.mock("./availableFlags", () => ({
   isSupported: () => true,

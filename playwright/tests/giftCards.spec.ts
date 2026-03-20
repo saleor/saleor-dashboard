@@ -22,14 +22,14 @@ test("TC: SALEOR_105 Issue gift card #e2e #gift", async () => {
   await giftCardsPage.issueGiftCardDialog.clickRequiresActivationCheckbox();
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
+  await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
 
   const code = (await giftCardsPage.issueGiftCardDialog.cardCode.innerText()).slice(-4);
 
   await giftCardsPage.issueGiftCardDialog.clickCopyCodeButton();
-  await giftCardsPage.expectSuccessBanner();
+  await giftCardsPage.expectSuccessBanner({ message: "Copied to clipboard" });
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
-  await giftCardsPage.expectSuccessBanner({ message: "Successfully created gift card" });
   await giftCardsPage.gotoGiftCardsListView();
   await giftCardsPage.gridCanvas
     .getByText(`Code ending with ${code}`)
@@ -43,17 +43,23 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
   await giftCardsPage.issueGiftCardDialog.clickSendToCustomerCheckbox();
   await giftCardsPage.issueGiftCardDialog.selectCustomer("e2e-customer to-be-activated");
   await giftCardsPage.issueGiftCardDialog.clickIssueButton();
+  await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
   const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
 
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
-  await giftCardsPage.expectSuccessBanner({ message: "Successfully created gift card" });
   await giftCardsPage.gotoGiftCardsListView();
-  await giftCardsPage.searchAndFindRowIndexes(fullCode);
+  await giftCardsPage.clickFilterButton();
+  await giftCardsPage.filtersPage.pickTextFilter("Code", fullCode);
+  await giftCardsPage.filtersPage.clickSaveFiltersButton();
+
+  const last4 = fullCode.slice(-4);
+
+  await giftCardsPage.waitForCanvasContainsText(`Code ending with ${last4}`);
   expect(
-    await giftCardsPage.gridCanvas.locator("table tbody tr").count(),
+    await giftCardsPage.getNumberOfGridRowsWithText(`Code ending with ${last4}`),
     "There should be only one gift card visible on list",
   ).toEqual(1);
 });

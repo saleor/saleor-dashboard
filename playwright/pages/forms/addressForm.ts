@@ -1,6 +1,6 @@
-import { AddressFieldsType } from "@data/addresses";
+import { type AddressFieldsType } from "@data/addresses";
 import { BasePage } from "@pages/basePage";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 export class AddressForm extends BasePage {
   constructor(

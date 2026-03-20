@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { UserError } from "@dashboard/types";
-import { FormErrors, getFormErrors } from "@dashboard/utils/errors";
+import { type UserError } from "@dashboard/types";
+import { type FormErrors, getFormErrors } from "@dashboard/utils/errors";
 import { useEffect, useState } from "react";
 
 export function useDialogFormReset<TError extends UserError, TKey extends string>({

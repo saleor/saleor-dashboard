@@ -1,12 +1,12 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { KeyValue } from "@dashboard/types";
+import { type KeyValue } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Trash2 } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { keyValueMessages } from "./messages";
-import { FieldType, FilterFieldBaseProps } from "./types";
+import { type FieldType, type FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(
   theme => ({

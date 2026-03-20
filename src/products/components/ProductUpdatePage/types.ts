@@ -1,39 +1,39 @@
 // @ts-strict-ignore
-import { RichTextProps } from "@dashboard/attributes/utils/data";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import { type RichTextProps } from "@dashboard/attributes/utils/data";
+import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import {
-  DatagridChangeOpts,
-  UseDatagridChangeState,
+  type DatagridChangeOpts,
+  type UseDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  MetadataErrorFragment,
-  ProductChannelListingUpdateInput,
-  ProductFragment,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchProductsQuery,
+  type MetadataErrorFragment,
+  type ProductChannelListingUpdateInput,
+  type ProductFragment,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchProductsQuery,
 } from "@dashboard/graphql";
 import {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  FormErrors,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type FormErrors,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import {
-  FormsetAdditionalDataChange,
-  FormsetChange,
-  FormsetData,
+  type FormsetAdditionalDataChange,
+  type FormsetChange,
+  type FormsetData,
 } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
-import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
-import { OutputData } from "@editorjs/editorjs";
-import { Option } from "@saleor/macaw-ui-next";
+import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
+import { type OutputData } from "@editorjs/editorjs";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { ChannelVoucherData, validateVoucherPrice } from "@dashboard/channels/utils";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
-import { DiscountErrorCode, DiscountErrorFragment, VoucherTypeEnum } from "@dashboard/graphql";
-import { ChangeEvent, FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
-import { RequireOnlyOne } from "@dashboard/misc";
+import { type ChannelVoucherData, validateVoucherPrice } from "@dashboard/channels/utils";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { DiscountTypeEnum, type RequirementsPicker } from "@dashboard/discounts/types";
+import { DiscountErrorCode, type DiscountErrorFragment, VoucherTypeEnum } from "@dashboard/graphql";
+import { type ChangeEvent, type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type RequireOnlyOne } from "@dashboard/misc";
 import { arrayDiff } from "@dashboard/utils/arrays";
 
 import { getAddedChannelsInputFromFormData } from "./data";

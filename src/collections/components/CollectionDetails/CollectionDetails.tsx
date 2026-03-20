@@ -2,13 +2,13 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { CollectionErrorFragment } from "@dashboard/graphql";
+import { type CollectionErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
 import { Input } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 interface CollectionDetailsProps {

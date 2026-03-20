@@ -1,55 +1,57 @@
-import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
-import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { ReactNode } from "react";
+import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
+import {
+  type AppTypeEnum,
+  type ExtensionListQuery,
+  type InstalledAppDetailsFragment,
+  type PermissionEnum,
+} from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
+import { type ReactNode } from "react";
 
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { type AppDetailsUrlMountQueryParams } from "./urls";
 
-interface CommonExtensionData {
-  id: string;
-  name: {
-    en: string;
-  };
-  description: {
-    en: string;
-  };
-  logo: {
-    light: {
-      source: string;
-    };
-    dark: {
-      source: string;
-    };
-  };
-  installed?: boolean;
-  disabled?: boolean;
+export type GraphQLAppProblem = NonNullable<InstalledAppDetailsFragment["problems"]>[number];
+
+export interface WebhookDeliveryProblem {
+  __typename: "WebhookDeliveryError";
+  message: string;
+  createdAt: string;
 }
 
-interface AppExtensionData extends CommonExtensionData {
-  type: "APP";
-  kind: "OFFICIAL" | "OSS";
-  manifestUrl: string | null;
-  repositoryUrl: string | null; // Typo in the original code
-  isCustomApp?: boolean;
-  appId?: string;
-}
+export type AppProblem = GraphQLAppProblem | WebhookDeliveryProblem;
 
-interface PluginExtensionData extends CommonExtensionData {
-  type: "PLUGIN";
-}
+export const isProblemCritical = (problem: AppProblem): boolean => {
+  if (problem.__typename === "AppProblem") {
+    return problem.isCritical;
+  }
 
-export type ExtensionData = AppExtensionData | PluginExtensionData;
+  // WebhookDeliveryError is a warning, not critical
+  return false;
+};
 
-type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
+export const isProblemDismissed = (problem: AppProblem): boolean => {
+  if (problem.__typename === "AppProblem") {
+    return problem.dismissed !== null;
+  }
 
-export type ExtensionsGroups = Record<ExtensionGroup, { title: string; items: ExtensionData[] }>;
+  return false;
+};
 
-export type APIExtensionsResponse = Array<{
-  id: string;
-  name: { en: string };
-  extensions: ExtensionData[];
-}>;
+export const getProblemSortDate = (problem: AppProblem): string => {
+  if (problem.__typename === "AppProblem") {
+    return problem.updatedAt;
+  }
+
+  return problem.createdAt;
+};
+
+export type { ExtensionData };
+
+export type APIExtensionsResponse = ExtensionCategory[];
+
+export type ExtensionsGroups = Record<string, { title: string; items: ExtensionData[] }>;
 
 /*
   Candidate for refactoring. InstalledExtension is only one case.
@@ -63,6 +65,10 @@ export type InstalledExtension = {
   info: ReactNode;
   href?: string;
   actions?: ReactNode;
+  problems?: AppProblem[];
+  appType?: AppTypeEnum | null;
+  activeProblemCount: number;
+  criticalProblemCount: number;
 };
 
 export interface Extension {

@@ -1,18 +1,18 @@
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import {
-  OrderDetailsGrantRefundQuery,
-  OrderGrantRefundAddMutation,
+  type OrderDetailsGrantRefundQuery,
+  type OrderGrantRefundAddMutation,
   OrderGrantRefundCreateErrorCode,
-  OrderGrantRefundCreateErrorFragment,
-  OrderGrantRefundCreateLineInput,
+  type OrderGrantRefundCreateErrorFragment,
+  type OrderGrantRefundCreateLineInput,
 } from "@dashboard/graphql";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { type UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import {
-  LineToRefund,
-  OrderTransactionRefundError,
+  type LineToRefund,
+  type OrderTransactionRefundError,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { transactionRefundEditMessages } from "../OrderTransactionRefundEdit/messages";
 

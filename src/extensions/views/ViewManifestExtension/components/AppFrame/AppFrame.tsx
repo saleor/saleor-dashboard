@@ -1,6 +1,6 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
-import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
+import { type AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";

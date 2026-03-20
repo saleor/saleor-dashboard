@@ -1,4 +1,4 @@
-import { Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
 

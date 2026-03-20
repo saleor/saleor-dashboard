@@ -1,7 +1,7 @@
-import { DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getDotColor } from "@dashboard/misc";
-import { CustomCell, CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
+import { type ThemeTokensValues } from "@saleor/macaw-ui-next";
 
 interface StatusCellProps {
   readonly status: DotStatus;

@@ -1,4 +1,4 @@
-import { ExtensionInstallQueryParams, MANIFEST_ATTR } from "@dashboard/extensions/urls";
+import { type ExtensionInstallQueryParams, MANIFEST_ATTR } from "@dashboard/extensions/urls";
 import { useEffect } from "react";
 
 export const useLoadQueryParamsToForm = ({

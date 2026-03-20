@@ -1,10 +1,19 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { SearchProductsQuery } from "@dashboard/graphql";
-import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
+import {
+  type Container,
+  type DialogProps,
+  type FetchMoreProps,
+  type RelayToFlat,
+} from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
-import { AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import {
+  type InitialConstraints,
+  ModalProductFilterProvider,
+} from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
 import { messages } from "./messages";
@@ -13,15 +22,21 @@ interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
-  onFetch: (value: string) => void;
+  onFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   onSubmit: (data: Container[]) => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
+  excludedFilters?: string[];
+  initialConstraints?: InitialConstraints;
 }
 
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
-  const { selectionMode = "multiple", ...restProps } = props;
+  const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
 
   const { open, onClose } = props;
 
@@ -29,18 +44,29 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
     onClose();
   };
 
+  const dialogContent = (
+    <>
+      <DashboardModal.Header>
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
+      </DashboardModal.Header>
+
+      {selectionMode === "single" ? (
+        <AssignVariantDialogSingle {...restProps} />
+      ) : (
+        <AssignVariantDialogMulti {...restProps} />
+      )}
+    </>
+  );
+
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.assignVariantDialogHeader} />
-        </DashboardModal.Header>
-
-        {selectionMode === "single" ? (
-          <AssignVariantDialogSingle {...restProps} />
-        ) : (
-          <AssignVariantDialogMulti {...restProps} />
-        )}
+        <ModalProductFilterProvider
+          excludedFilters={excludedFilters}
+          initialConstraints={initialConstraints}
+        >
+          {dialogContent}
+        </ModalProductFilterProvider>
       </DashboardModal.Content>
     </DashboardModal>
   );

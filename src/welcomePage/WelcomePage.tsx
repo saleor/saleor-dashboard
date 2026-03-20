@@ -1,4 +1,4 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -32,7 +32,7 @@ export const WelcomePage = () => {
       paddingTop={9}
       __gridTemplateRows="auto 1fr"
     >
-      <Box gridRowStart="1" __grid-column="1/-1">
+      <Box gridRowStart="1" __gridColumn="1/-1">
         <WelcomePageTitle />
       </Box>
       <Box

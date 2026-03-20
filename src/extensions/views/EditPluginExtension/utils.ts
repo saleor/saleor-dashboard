@@ -1,11 +1,11 @@
 import { pluginStatusMessages } from "@dashboard/extensions/views/EditPluginExtension/messages";
 import {
-  ConfigurationItemFragment,
+  type ConfigurationItemFragment,
   ConfigurationTypeFieldEnum,
-  PluginConfigurationBaseFragment,
+  type PluginConfigurationBaseFragment,
 } from "@dashboard/graphql";
-import { PillColor } from "@saleor/macaw-ui";
-import { MessageDescriptor } from "react-intl";
+import { type PillColor } from "@saleor/macaw-ui";
+import { type MessageDescriptor } from "react-intl";
 
 export const isPluginGlobal = (globalConfiguration: PluginConfigurationBaseFragment) =>
   !!globalConfiguration;

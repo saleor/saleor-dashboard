@@ -1,15 +1,15 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import React from "react";
+import type React from "react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 
 import { InitialProductStateResponse } from "../ConditionalFilter/API/initialState/product/InitialProductStateResponse";
-import { InitialProductAPIState } from "../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
+import { type InitialProductAPIState } from "../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
 import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../ConditionalFilter/FilterElement/FilterElement";
-import { FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 
 const emptyProductFetchingParams: FetchingParams = {

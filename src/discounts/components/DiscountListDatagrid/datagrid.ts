@@ -1,12 +1,12 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { dateCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
-import { PromotionFragment, PromotionTypeEnum } from "@dashboard/graphql";
-import { Sort } from "@dashboard/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
+import { type PromotionFragment, PromotionTypeEnum } from "@dashboard/graphql";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

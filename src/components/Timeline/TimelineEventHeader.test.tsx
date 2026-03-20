@@ -3,7 +3,7 @@ import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
 import { TimelineEventHeader } from "./TimelineEventHeader";
-import { Actor } from "./types";
+import { type Actor } from "./types";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>

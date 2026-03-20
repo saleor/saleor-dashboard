@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import { CollectionFragment } from "@dashboard/graphql";
-import { PillColor } from "@saleor/macaw-ui";
+import { type CollectionFragment } from "@dashboard/graphql";
+import { type PillColor } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { messages } from "../ChannelsAvailabilityDropdown/messages";
 import { Pill } from "../Pill";

@@ -1,4 +1,4 @@
-import { Location, UnregisterCallback } from "history";
+import { type Location, type UnregisterCallback } from "history";
 import { useRef } from "react";
 import useRouter from "use-react-router";
 

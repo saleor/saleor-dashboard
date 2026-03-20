@@ -1,12 +1,12 @@
 import {
   GiftCardEventsEnum,
   OrderAction,
-  OrderDetailsFragment,
+  type OrderDetailsFragment,
   OrderStatus,
 } from "@dashboard/graphql";
 
 import { prepareMoney } from "../fixtures";
-import { OrderDetailsViewModel, OrderTotalAmounts } from "./OrderDetailsViewModel";
+import { OrderDetailsViewModel, type OrderTotalAmounts } from "./OrderDetailsViewModel";
 
 describe("OrderModel", () => {
   describe("shouldShowInvoiceList", () => {

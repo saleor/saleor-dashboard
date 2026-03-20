@@ -1,6 +1,6 @@
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
 import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export const Timeline = ({ children }: PropsWithChildren) => {

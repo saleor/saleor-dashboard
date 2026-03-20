@@ -1,4 +1,4 @@
-import { MetadataProps } from "./Metadata";
+import { type MetadataProps } from "./Metadata";
 
 export const props: MetadataProps = {
   data: {

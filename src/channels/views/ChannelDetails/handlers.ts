@@ -1,5 +1,5 @@
-import { ReorderInput } from "@dashboard/graphql";
-import { Node } from "@dashboard/types";
+import { type ReorderInput } from "@dashboard/graphql";
+import { type Node } from "@dashboard/types";
 import { move } from "@dashboard/utils/lists";
 
 export function calculateItemsOrderMoves<T extends Node>(

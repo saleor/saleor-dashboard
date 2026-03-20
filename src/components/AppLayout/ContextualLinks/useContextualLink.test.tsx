@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 
 import { useContextualLink } from "./useContextualLink";

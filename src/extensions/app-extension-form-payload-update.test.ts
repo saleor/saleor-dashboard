@@ -1,4 +1,4 @@
-import { AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
+import { type AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider, useAtom } from "jotai";
 import React from "react";

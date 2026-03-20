@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import * as React from "react";
+import type * as React from "react";
 
 import { ProductAnalytics } from ".";
 

@@ -1,5 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
-import { GlobalSearchQuery } from "@dashboard/graphql";
+import { type GlobalSearchQuery } from "@dashboard/graphql";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

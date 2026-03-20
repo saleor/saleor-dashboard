@@ -1,4 +1,4 @@
-import { ExtensionsGroups } from "@dashboard/extensions/types";
+import { type ExtensionsGroups } from "@dashboard/extensions/types";
 import { fuzzySearch } from "@dashboard/misc";
 import { useState } from "react";
 

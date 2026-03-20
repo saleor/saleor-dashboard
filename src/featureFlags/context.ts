@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { FlagList } from "./availableFlags";
+import { type FlagList } from "./availableFlags";
 
 const FeatureFlagsContext = createContext<FlagList | undefined>(undefined);
 

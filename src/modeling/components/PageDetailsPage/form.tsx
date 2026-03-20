@@ -4,7 +4,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-  RichTextProps,
+  type RichTextProps,
 } from "@dashboard/attributes/utils/data";
 import {
   createAttributeChangeHandler,
@@ -16,27 +16,27 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  PageDetailsFragment,
-  PageErrorWithAttributesFragment,
-  SearchCategoriesQuery,
-  SearchCollectionsQuery,
-  SearchPagesQuery,
-  SearchPageTypesQuery,
-  SearchProductsQuery,
+  type PageDetailsFragment,
+  type PageErrorWithAttributesFragment,
+  type SearchCategoriesQuery,
+  type SearchCollectionsQuery,
+  type SearchPagesQuery,
+  type SearchPageTypesQuery,
+  type SearchProductsQuery,
 } from "@dashboard/graphql";
 import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  SubmitPromise,
+  type CommonUseFormResultWithHandlers,
+  type FormChange,
+  type SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
-  FormsetAdditionalDataChange,
-  FormsetChange,
-  FormsetData,
+  type FormsetAdditionalDataChange,
+  type FormsetChange,
+  type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
@@ -45,8 +45,8 @@ import {
 } from "@dashboard/modeling/utils/data";
 import { createPageTypeSelectHandler } from "@dashboard/modeling/utils/handlers";
 import { validatePageCreateData } from "@dashboard/modeling/utils/validation";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import getPublicationData from "@dashboard/utils/data/getPublicationData";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
@@ -54,9 +54,9 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
+import { type OutputData } from "@editorjs/editorjs";
+import type * as React from "react";
 import { useEffect, useState } from "react";
-import * as React from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;

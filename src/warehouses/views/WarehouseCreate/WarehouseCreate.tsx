@@ -5,7 +5,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import WarehouseCreatePage, {
-  WarehouseCreatePageFormData,
+  type WarehouseCreatePageFormData,
 } from "@dashboard/warehouses/components/WarehouseCreatePage";
 import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";

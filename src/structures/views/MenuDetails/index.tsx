@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   PermissionEnum,
@@ -20,18 +20,18 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
-import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import MenuDetailsPage, { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import MenuItemDialog, {
-  MenuItemDialogFormData,
-  MenuItemType,
+  type MenuItemDialogFormData,
+  type MenuItemType,
 } from "../../components/MenuItemDialog";
 import {
   getItemId,
   getItemType,
   unknownTypeError,
 } from "../../components/MenuItemsSortableTree/utils";
-import { menuUrl, MenuUrlQueryParams } from "../../urls";
+import { menuUrl, type MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
   getInitialMenuItemLabel,

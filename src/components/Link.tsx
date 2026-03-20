@@ -1,7 +1,7 @@
 import { isExternalURL } from "@dashboard/utils/urls";
 import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import * as React from "react";
+import type * as React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 interface LinkState {

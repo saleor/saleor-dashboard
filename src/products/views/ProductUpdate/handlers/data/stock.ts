@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { ProductFragment, ProductVariantStocksUpdateInput } from "@dashboard/graphql";
+import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { type ProductFragment, type ProductVariantStocksUpdateInput } from "@dashboard/graphql";
 import { getColumnStock, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 export function getStockData(data: DatagridChange[], currentIndex: number) {

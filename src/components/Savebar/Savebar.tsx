@@ -1,6 +1,6 @@
 import { Root as Portal } from "@radix-ui/react-portal";
 import { Box } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import type * as React from "react";
 
 import { savebarHeight } from "../AppLayout/consts";
 import { useSavebarRef } from "./SavebarRefContext";

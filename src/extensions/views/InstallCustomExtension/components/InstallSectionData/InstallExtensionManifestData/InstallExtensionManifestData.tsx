@@ -4,10 +4,10 @@ import { messages } from "@dashboard/extensions/messages";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ZodIssue } from "zod";
+import { type ZodIssue } from "zod";
 import { fromZodIssue } from "zod-validation-error";
 
-import { InstallDetailsManifestData } from "../../../types";
+import { type InstallDetailsManifestData } from "../../../types";
 import { IconsSection } from "./IconsSection";
 
 export const InstallExtensionManifestData = ({

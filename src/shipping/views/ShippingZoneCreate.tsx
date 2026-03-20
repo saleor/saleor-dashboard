@@ -8,7 +8,7 @@ import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
 import ShippingZoneCreatePage, {
-  ShippingZoneCreateFormData,
+  type ShippingZoneCreateFormData,
 } from "../components/ShippingZoneCreatePage";
 import { shippingZoneUrl } from "../urls";
 

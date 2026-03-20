@@ -1,11 +1,14 @@
 // @ts-strict-ignore
-import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
+import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
+  type CategoryFilterInput,
+  type CollectionFilterInput,
+  type ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
@@ -27,9 +30,9 @@ import { useIntl } from "react-intl";
 import VoucherCreatePage from "../../components/VoucherCreatePage";
 import {
   voucherAddUrl,
-  VoucherCreateUrlQueryParams,
+  type VoucherCreateUrlQueryParams,
   voucherUrl,
-  VoucherUrlDialog,
+  type VoucherUrlDialog,
 } from "../../urls";
 import { createHandler } from "./handlers";
 import { VOUCHER_CREATE_FORM_ID } from "./types";
@@ -87,15 +90,61 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   });
 
   const categoriesSearch = useCategoryWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    },
   });
   const productsSearch = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const variantsSearch = productsSearch;
+
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    productsSearch.result.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
+    });
+  };
+
+  const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
+    categoriesSearch.result.refetch({
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
+    });
+  };
+
+  const handleCollectionFilterChange = (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    collectionsSearch.result.refetch({
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: {
+        ...filterVariables,
+        search: query,
+      },
+      channel,
+    });
+  };
 
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
@@ -151,6 +200,9 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         collectionsSearch={collectionsSearch}
         productsSearch={productsSearch}
         variantsSearch={variantsSearch}
+        onProductFilterChange={handleProductFilterChange}
+        onCategoryFilterChange={handleCategoryFilterChange}
+        onCollectionFilterChange={handleCollectionFilterChange}
         openModal={openModal}
         closeModal={closeModal}
         allChannelsCount={allChannels?.length}

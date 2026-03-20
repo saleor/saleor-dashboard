@@ -1,7 +1,7 @@
 import { InitialOrderStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/orders/InitialOrderState";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { TokenArray } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray";
-import { OrderWhereInput } from "@dashboard/graphql";
+import { type OrderWhereInput } from "@dashboard/graphql";
 import { getExistingKeys } from "@test/filters";
 
 describe("OrderList Filters", () => {

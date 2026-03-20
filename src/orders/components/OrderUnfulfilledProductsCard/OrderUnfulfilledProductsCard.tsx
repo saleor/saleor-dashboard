@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { OrderLineFragment } from "@dashboard/graphql";
+import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { TaxClassBaseFragment, useTaxClassAssignQuery } from "@dashboard/graphql";
-import { FetchMoreProps } from "@dashboard/types";
+import { type TaxClassBaseFragment, useTaxClassAssignQuery } from "@dashboard/graphql";
+import { type FetchMoreProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 interface UseTaxClassFetchMoreHookResult {

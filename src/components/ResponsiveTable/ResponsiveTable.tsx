@@ -3,7 +3,7 @@ import { Table } from "@material-ui/core";
 import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { ChangeEvent, KeyboardEvent, ReactNode, useState } from "react";
+import { type ChangeEvent, type KeyboardEvent, type ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { iconSize, iconStrokeWidthBySize } from "../icons";

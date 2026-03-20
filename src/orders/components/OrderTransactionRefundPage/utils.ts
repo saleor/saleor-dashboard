@@ -1,15 +1,25 @@
-import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
-import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
+import {
+  type OrderDetailsGrantRefundFragment,
+  OrderGrantedRefundStatusEnum,
+} from "@dashboard/graphql";
+import { type ConfirmButtonTransitionState, type SavebarLabels } from "@saleor/macaw-ui";
 import { useEffect } from "react";
-import { UseFieldArrayUpdate, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { IntlShape } from "react-intl";
+import {
+  type UseFieldArrayUpdate,
+  type UseFormGetValues,
+  type UseFormSetValue,
+} from "react-hook-form";
+import { type IntlShape } from "react-intl";
 
 import {
   orderTransactionRefundMessages,
   refundSavebarMessages,
   refundStatusMessages,
 } from "./messages";
-import { LineToRefund, OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
+import {
+  type LineToRefund,
+  type OrderTransactionRefundPageFormData,
+} from "./OrderTransactionRefundPage";
 
 export const canRefundShipping = (
   order: OrderDetailsGrantRefundFragment | undefined | null,

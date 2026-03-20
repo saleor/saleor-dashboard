@@ -1,7 +1,7 @@
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import { commonMessages } from "@dashboard/intl";
 import commonErrorMessages from "@dashboard/utils/errors/common";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 export const getDefaultNotifierSuccessErrorData = (
   errors: any[],

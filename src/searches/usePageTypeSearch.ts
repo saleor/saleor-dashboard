@@ -2,8 +2,8 @@
 import { gql } from "@apollo/client";
 import {
   SearchPageTypesDocument,
-  SearchPageTypesQuery,
-  SearchPageTypesQueryVariables,
+  type SearchPageTypesQuery,
+  type SearchPageTypesQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 

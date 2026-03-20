@@ -1,13 +1,21 @@
 // @ts-strict-ignore
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
-import { FulfillmentStatus, OrderDetailsFragment, TransactionActionEnum } from "@dashboard/graphql";
+import {
+  FulfillmentStatus,
+  type OrderDetailsFragment,
+  TransactionActionEnum,
+} from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
-import { Node } from "@dashboard/types";
-import { MessageDescriptor } from "react-intl";
+import { type Node } from "@dashboard/types";
+import { type MessageDescriptor } from "react-intl";
 
-import { PaymentSubmitCardValuesProps } from "./components/PaymentSubmitCard/PaymentSubmitCardValues";
+import { type PaymentSubmitCardValuesProps } from "./components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
-import { FormsetQuantityData, FormsetReplacementData, LineItemOptions } from "./form";
+import {
+  type FormsetQuantityData,
+  type FormsetReplacementData,
+  type LineItemOptions,
+} from "./form";
 
 type OrderLine = OrderDetailsFragment["lines"][0];
 type FulfillmentLine = OrderDetailsFragment["fulfillments"][0]["lines"][0];

@@ -2,21 +2,28 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
-import { messages } from "@dashboard/extensions/messages";
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { messages, problemMessages } from "@dashboard/extensions/messages";
+import { type InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { CircleAlert } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
+import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
+import { useExtensionProblems } from "./useExtensionProblems";
 
 interface InstalledExtensionsListProps {
   installedExtensions: InstalledExtension[];
   loading: boolean;
   clearSearch: () => void;
   searchQuery?: string;
+  hasManagedAppsPermission?: boolean;
+  onClearProblem?: (problemId: string) => void;
+  onFetchAllProblems?: (appId: string) => void;
 }
 
-const ExtensionLink = ({
+const ExtensionName = ({
   href,
   name,
   children,
@@ -27,7 +34,7 @@ const ExtensionLink = ({
 }) => {
   if (!href) {
     return (
-      <Box display="flex" alignItems="center" __padding="5px 20px">
+      <Box display="flex" alignItems="center" gap={2}>
         {children}
       </Box>
     );
@@ -42,19 +49,133 @@ const ExtensionLink = ({
       style={{
         display: "flex",
         alignItems: "center",
-        padding: "5px 20px",
+        gap: "8px",
         textDecoration: "none",
         color: "inherit",
       }}
-      className={sprinkles({
-        backgroundColor: {
-          default: "default1",
-          hover: "default2",
-        },
-      })}
     >
       {children}
     </Link>
+  );
+};
+
+interface ExtensionRowProps {
+  extension: InstalledExtension;
+  hasManagedAppsPermission?: boolean;
+  onClearProblem?: (problemId: string) => void;
+  onFetchAllProblems?: (appId: string) => void;
+}
+
+const ExtensionRow = ({
+  extension,
+  hasManagedAppsPermission,
+  onClearProblem,
+  onFetchAllProblems,
+}: ExtensionRowProps) => {
+  const intl = useIntl();
+  const problems = extension.problems ?? [];
+  const {
+    totalCount,
+    criticalCount,
+    hasActiveProblems,
+    hasAnyProblems,
+    problemsVisible,
+    modalOpen,
+    setModalOpen,
+    toggleProblems,
+  } = useExtensionProblems(problems);
+
+  return (
+    <>
+      <GridTable.Row data-test-id="installed-extension-row">
+        <GridTable.Cell padding={0}>
+          <Box
+            display="flex"
+            alignItems="center"
+            __padding="5px 20px"
+            className={
+              extension.href
+                ? sprinkles({
+                    backgroundColor: {
+                      default: "default1",
+                      hover: "default2",
+                    },
+                  })
+                : undefined
+            }
+          >
+            <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+              <ExtensionName href={extension.href} name={extension.name}>
+                <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
+                <Text
+                  size={4}
+                  fontWeight="bold"
+                  __maxWidth="400px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
+                  {extension.name}
+                </Text>
+              </ExtensionName>
+              {hasActiveProblems && (
+                <ProblemsBadge
+                  totalCount={totalCount}
+                  criticalCount={criticalCount}
+                  expanded={problemsVisible}
+                  onToggle={toggleProblems}
+                />
+              )}
+            </Box>
+            <Box marginLeft="auto" marginRight={4} display="flex" alignItems="center" gap={4}>
+              {extension.info}
+              {hasAnyProblems && (
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setModalOpen(true)}
+                  data-test-id="open-app-problems"
+                >
+                  <CircleAlert size={14} />
+                  {intl.formatMessage(problemMessages.openAppProblems)}
+                </Button>
+              )}
+              {extension.actions}
+            </Box>
+          </Box>
+        </GridTable.Cell>
+      </GridTable.Row>
+      {hasActiveProblems && problemsVisible ? (
+        <GridTable.Row data-test-id="installed-extension-problems-row">
+          <GridTable.Cell padding={0}>
+            <ProblemsList
+              problems={problems}
+              appId={extension.id}
+              appType={extension.appType}
+              onClearProblem={onClearProblem}
+              hasManagedAppsPermission={hasManagedAppsPermission}
+              modalOpen={modalOpen}
+              onModalOpenChange={setModalOpen}
+              onFetchAllProblems={onFetchAllProblems}
+            />
+          </GridTable.Cell>
+        </GridTable.Row>
+      ) : (
+        hasAnyProblems && (
+          <ProblemsList
+            problems={problems}
+            appId={extension.id}
+            appType={extension.appType}
+            onClearProblem={onClearProblem}
+            hasManagedAppsPermission={hasManagedAppsPermission}
+            showInline={false}
+            modalOpen={modalOpen}
+            onModalOpenChange={setModalOpen}
+            onFetchAllProblems={onFetchAllProblems}
+          />
+        )
+      )}
+    </>
   );
 };
 
@@ -63,6 +184,9 @@ export const InstalledExtensionsList = ({
   loading,
   clearSearch,
   searchQuery,
+  hasManagedAppsPermission,
+  onClearProblem,
+  onFetchAllProblems,
 }: InstalledExtensionsListProps) => {
   const intl = useIntl();
 
@@ -100,31 +224,13 @@ export const InstalledExtensionsList = ({
             </GridTable.Cell>
           </GridTable.Row>
           {installedExtensions.map(extension => (
-            <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
-              <GridTable.Cell padding={0}>
-                <ExtensionLink href={extension.href} name={extension.name}>
-                  <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-                    <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
-                    <Text
-                      size={4}
-                      fontWeight="bold"
-                      __maxWidth="400px"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
-                      whiteSpace="nowrap"
-                    >
-                      {extension.name}
-                    </Text>
-                  </Box>
-                  <Box marginLeft="auto" marginRight={4} display="flex" alignItems="center" gap={4}>
-                    {extension.info}
-                    {/* Actions are here only for failed installation case,
-                        type InstalledExtension should be refactored. More info in its definition */}
-                    {extension.actions}
-                  </Box>
-                </ExtensionLink>
-              </GridTable.Cell>
-            </GridTable.Row>
+            <ExtensionRow
+              key={extension.id}
+              extension={extension}
+              hasManagedAppsPermission={hasManagedAppsPermission}
+              onClearProblem={onClearProblem}
+              onFetchAllProblems={onFetchAllProblems}
+            />
           ))}
         </GridTable.Body>
       </GridTable>

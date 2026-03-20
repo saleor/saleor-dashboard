@@ -1,5 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { PermissionEnum } from "@dashboard/graphql";
+import { type PermissionEnum } from "@dashboard/graphql";
 
 export const useHasPermission = () => {
   const userPermissions = useUserPermissions();

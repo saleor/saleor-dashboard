@@ -1,5 +1,6 @@
 // @ts-strict-ignore
-import IAppState, { AppError } from "./state";
+import type IAppState from "./state";
+import { type AppError } from "./state";
 
 type AppStateReducerActionType = "displayError" | "displayLoader";
 

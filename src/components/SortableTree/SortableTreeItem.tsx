@@ -1,9 +1,9 @@
 import type { UniqueIdentifier } from "@dnd-kit/core";
-import { AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
+import { type AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 
-import { DataTypePlaceholder, TreeItemComponentProps } from "./types";
+import { type DataTypePlaceholder, type TreeItemComponentProps } from "./types";
 
 interface SortableTreeItemProps<T extends DataTypePlaceholder> extends TreeItemComponentProps<T> {
   id: UniqueIdentifier;

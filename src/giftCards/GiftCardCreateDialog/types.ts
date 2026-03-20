@@ -1,7 +1,7 @@
-import { GiftCardErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
+import { type GiftCardErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 
-import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import { type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 
 export type GiftCardExpiryType = "EXPIRY_DATE" | "EXPIRY_PERIOD";
 

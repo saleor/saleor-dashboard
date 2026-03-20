@@ -1,12 +1,12 @@
 import {
-  CustomCell,
-  CustomRenderer,
+  type CustomCell,
+  type CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  ProvideEditorCallback,
+  type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 
-import { Locale } from "../../Locale";
+import { type Locale } from "../../Locale";
 
 export const numberCellEmptyValue = Symbol("number-cell-empty-value");
 export interface NumberCellProps {

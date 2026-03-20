@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { AddressTypeInput } from "@dashboard/customers/types";
+import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorCode,
-  AccountErrorFragment,
-  AddressInput,
-  AddressTypeEnum,
+  type AccountErrorFragment,
+  type AddressInput,
+  type AddressTypeEnum,
 } from "@dashboard/graphql";
 import { transformFormToAddressInput } from "@dashboard/misc";
 import { add, remove } from "@dashboard/utils/lists";

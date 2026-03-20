@@ -1,23 +1,29 @@
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import { formatPriceInput, getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
-import { OrderErrorFragment, TransactionRequestActionErrorFragment } from "@dashboard/graphql";
+import {
+  type OrderErrorFragment,
+  type TransactionRequestActionErrorFragment,
+} from "@dashboard/graphql";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { getOrderTransactionErrorMessage } from "@dashboard/utils/errors/transaction";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, Box as BoxIcon, CheckCircle2, CircleAlert, CreditCard } from "lucide-react";
-import { ChangeEvent, useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { AuthorizationStatus, useCaptureState } from "./useCaptureState";
+import { type AuthorizationStatus, useCaptureState } from "./useCaptureState";
 
 type CaptureError = OrderErrorFragment | TransactionRequestActionErrorFragment;
 

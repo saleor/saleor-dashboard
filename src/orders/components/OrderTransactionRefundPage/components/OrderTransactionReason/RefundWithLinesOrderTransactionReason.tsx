@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Textarea, TextareaProps } from "@saleor/macaw-ui-next";
-import { Control, useController } from "react-hook-form";
+import { Textarea, type TextareaProps } from "@saleor/macaw-ui-next";
+import { type Control, useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
+import { type OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";
 import { transactionRefundReasonMessages } from "./messages";
 
 interface OrderTransactionReasonProps {

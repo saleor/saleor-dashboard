@@ -1,10 +1,10 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, DynamicMultiselect, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicMultiselect, type Option, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
-import { AttributeData } from "../types";
+import { type AttributeData } from "../types";
 import { AttributeHeader } from "./AttributeHeader";
 import styles from "./AttributeValueChips.module.css";
 

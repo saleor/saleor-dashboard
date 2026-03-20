@@ -1,7 +1,13 @@
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction, Sort } from "../types";
+import {
+  type BulkAction,
+  type Dialog,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+} from "../types";
 
 const navigationSection = "/structures";
 

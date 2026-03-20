@@ -1,9 +1,9 @@
-import { FetchResult, MutationResult } from "@apollo/client";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { UserPermissionFragment } from "@dashboard/graphql";
-import { Option } from "@saleor/macaw-ui-next";
+import { type FetchResult, type MutationResult } from "@apollo/client";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type UserPermissionFragment } from "@dashboard/graphql";
+import { type Option } from "@saleor/macaw-ui-next";
 
-import { FilterElement, IFilter } from "./components/Filter/types";
+import { type FilterElement, type IFilter } from "./components/Filter/types";
 
 export interface UserError {
   field: string | null;

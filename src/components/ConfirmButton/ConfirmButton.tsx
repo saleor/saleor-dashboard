@@ -1,6 +1,6 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";

@@ -2,9 +2,9 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
-import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { type TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { toActor } from "@dashboard/components/Timeline/utils";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";

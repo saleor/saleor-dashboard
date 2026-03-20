@@ -43,6 +43,7 @@ runs:
       shell: bash
       env:
         MODE: ${{ inputs.MODE }}
+        VERSION: ${{ inputs.VERSION }}
         PULL_REQUEST_NUMBER: ${{ github.event.number }}
         PREFIX: pr-
         DESTINATION_BRANCH: ${{ github.event.pull_request.base.ref }}

@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import {
   SortableContainer as SortableContainerHoc,
-  SortableContainerProps as SortableContainerHocProps,
+  type SortableContainerProps as SortableContainerHocProps,
 } from "react-sortable-hoc";
 
 type SortableContainerProps = PropsWithChildren<SortableContainerHocProps>;

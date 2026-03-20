@@ -1,7 +1,7 @@
 import AppChannelSelect from "@dashboard/components/AppLayout/AppChannelSelect";
 import { DashboardCard } from "@dashboard/components/Card";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { ChannelFragment, PermissionEnum } from "@dashboard/graphql";
+import { type ChannelFragment, PermissionEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 

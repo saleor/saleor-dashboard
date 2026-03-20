@@ -6,7 +6,7 @@ import { CollectionItem } from "./CollectionItem";
 import { ModelItem } from "./ModelItem";
 import { ModelTypeItem } from "./ModelTypeItem";
 import { OrderItem } from "./OrderItem";
-import { ItemData } from "./prepareResults";
+import { type ItemData } from "./prepareResults";
 import { ProductItem } from "./ProductItem";
 import { VariantItem } from "./VariantItem";
 

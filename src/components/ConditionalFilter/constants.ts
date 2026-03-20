@@ -1,6 +1,6 @@
-import { ConditionItem } from "./FilterElement/ConditionOptions";
-import { ItemOption } from "./FilterElement/ConditionValue";
-import { LeftOperand } from "./LeftOperandsProvider";
+import { type ConditionItem } from "./FilterElement/ConditionOptions";
+import { type ItemOption } from "./FilterElement/ConditionValue";
+import { type LeftOperand } from "./LeftOperandsProvider";
 
 export const STATIC_CONDITIONS = {
   category: [
@@ -63,6 +63,7 @@ export const STATIC_CONDITIONS = {
   isPreorder: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
+  code: [{ type: "text", label: "is", value: "input-1" }],
   status: [
     {
       type: "combobox",
@@ -190,11 +191,8 @@ export const STATIC_CONDITIONS = {
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
   pageTypes: [
-    {
-      type: "multiselect",
-      label: "in",
-      value: "input-1",
-    },
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
   ],
   currency: [
     {
@@ -291,58 +289,58 @@ export const CONSTRAINTS = {
   },
 };
 
-export const OCCURRENCE_LIMITS = {
-  billingPhoneNumber: { maxOccurrences: 1 },
-  billingCountry: { maxOccurrences: 1 },
-  shippingPhoneNumber: { maxOccurrences: 1 },
-  shippingCountry: { maxOccurrences: 1 },
-};
-
 export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
-  { value: "price", label: "Price", type: "price", slug: "price" },
-  { value: "category", label: "Category", type: "category", slug: "category" },
+  { value: "price", label: "Price", type: "price", slug: "price", maxOccurrences: 1 },
+  { value: "category", label: "Category", type: "category", slug: "category", maxOccurrences: 1 },
   {
     value: "collection",
     label: "Collection",
     type: "collection",
     slug: "collection",
+    maxOccurrences: 1,
   },
-  { value: "channel", label: "Channel", type: "channel", slug: "channel" },
+  { value: "channel", label: "Channel", type: "channel", slug: "channel", maxOccurrences: 1 },
   {
     value: "productType",
     label: "ProductType",
     type: "productType",
     slug: "productType",
+    maxOccurrences: 1,
   },
   {
     value: "isAvailable",
     label: "IsAvailable",
     type: "isAvailable",
     slug: "isAvailable",
+    maxOccurrences: 1,
   },
   {
     value: "isPublished",
     label: "IsPublished",
     type: "isPublished",
     slug: "isPublished",
+    maxOccurrences: 1,
   },
   {
     value: "isVisibleInListing",
     label: "VisibleInListing",
     type: "isVisibleInListing",
     slug: "isVisibleInListing",
+    maxOccurrences: 1,
   },
   {
     value: "hasCategory",
     label: "HasCategory",
     type: "hasCategory",
     slug: "hasCategory",
+    maxOccurrences: 1,
   },
   {
     value: "giftCard",
     label: "IsGiftcard",
     type: "giftCard",
     slug: "giftCard",
+    maxOccurrences: 1,
   },
   {
     value: "attribute",
@@ -358,12 +356,14 @@ export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
     label: "Start date",
     type: "startDate",
     slug: "startDate",
+    maxOccurrences: 1,
   },
   {
     value: "endDate",
     label: "End date",
     type: "endDate",
     slug: "endDate",
+    maxOccurrences: 1,
   },
 ];
 
@@ -374,12 +374,13 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     type: "ids",
     slug: "ids",
   },
-  { value: "channels", label: "Channels", type: "channels", slug: "channels" },
+  { value: "channels", label: "Channels", type: "channels", slug: "channels", maxOccurrences: 1 },
   {
     value: "status",
     label: "Order Status",
     type: "status",
     slug: "status",
+    maxOccurrences: 1,
   },
   {
     value: "fulfillmentStatus",
@@ -392,114 +393,133 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Creation date",
     type: "createdAt",
     slug: "createdAt",
+    maxOccurrences: 1,
   },
   {
     value: "authorizeStatus",
     label: "Authorize status",
     type: "authorizeStatus",
     slug: "authorizeStatus",
+    maxOccurrences: 1,
   },
   {
     value: "chargeStatus",
     label: "Charge status",
     type: "chargeStatus",
     slug: "chargeStatus",
+    maxOccurrences: 1,
   },
   {
     value: "updatedAt",
     label: "Updated at",
     type: "updatedAt",
     slug: "updatedAt",
+    maxOccurrences: 1,
   },
   {
     value: "isClickAndCollect",
     label: "Click and collect",
     type: "isClickAndCollect",
     slug: "isClickAndCollect",
+    maxOccurrences: 1,
   },
   {
     value: "isGiftCardBought",
     label: "Gift card bought",
     type: "isGiftCardBought",
     slug: "isGiftCardBought",
+    maxOccurrences: 1,
   },
   {
     value: "isGiftCardUsed",
     label: "Gift card used",
     type: "isGiftCardUsed",
     slug: "isGiftCardUsed",
+    maxOccurrences: 1,
   },
   {
     value: "totalGross",
     label: "Total Gross Amount",
     type: "totalGross",
     slug: "totalGross",
+    maxOccurrences: 1,
   },
   {
     value: "totalNet",
     label: "Total Net Amount",
     type: "totalNet",
     slug: "totalNet",
+    maxOccurrences: 1,
   },
   {
     value: "hasInvoices",
     label: "Has Invoices",
     type: "hasInvoices",
     slug: "hasInvoices",
+    maxOccurrences: 1,
   },
   {
     value: "hasFulfillments",
     label: "Has Fulfillments",
     type: "hasFulfillments",
     slug: "hasFulfillments",
+    maxOccurrences: 1,
   },
   {
     value: "invoicesCreatedAt",
     label: "Invoice Date",
     type: "invoicesCreatedAt",
     slug: "invoicesCreatedAt",
+    maxOccurrences: 1,
   },
   {
     value: "customer",
     label: "Customer ID",
     type: "customer",
     slug: "customer",
+    maxOccurrences: 1,
   },
   {
     value: "metadata",
     label: "Metadata",
     type: "metadata",
     slug: "metadata",
+    maxOccurrences: 1,
   },
   {
     value: "number",
     label: "Order Number",
     type: "number",
     slug: "number",
+    maxOccurrences: 1,
   },
   {
     value: "userEmail",
     label: "Customer Email",
     type: "userEmail",
     slug: "userEmail",
+    maxOccurrences: 1,
   },
   {
     value: "voucherCode",
     label: "Voucher Code",
     type: "voucherCode",
     slug: "voucherCode",
+    maxOccurrences: 1,
   },
   {
     value: "linesCount",
     label: "Number of Lines",
     type: "linesCount",
     slug: "linesCount",
+    maxOccurrences: 1,
   },
   {
     value: "checkoutId",
     label: "Checkout ID",
     type: "checkoutId",
     slug: "checkoutId",
+    maxOccurrences: 1,
   },
   {
     value: "linesMetadata",
@@ -536,24 +556,28 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Billing Phone",
     type: "billingPhoneNumber",
     slug: "billingPhoneNumber",
+    maxOccurrences: 1,
   },
   {
     value: "billingCountry",
     label: "Billing Country",
     type: "billingCountry",
     slug: "billingCountry",
+    maxOccurrences: 1,
   },
   {
     value: "shippingPhoneNumber",
     label: "Shipping Phone",
     type: "shippingPhoneNumber",
     slug: "shippingPhoneNumber",
+    maxOccurrences: 1,
   },
   {
     value: "shippingCountry",
     label: "Shipping Country",
     type: "shippingCountry",
     slug: "shippingCountry",
+    maxOccurrences: 1,
   },
   {
     value: "fulfillmentWarehouse",
@@ -569,6 +593,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     label: "Channel",
     type: "channel",
     slug: "channel",
+    maxOccurrences: 1,
   },
   {
     value: "discountType",
@@ -581,6 +606,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     label: "Started",
     type: "startDate",
     slug: "started",
+    maxOccurrences: 1,
   },
   {
     value: "voucherStatus",
@@ -593,6 +619,7 @@ export const STATIC_VOUCHER_OPTIONS: LeftOperand[] = [
     label: "Times used",
     type: "timesUsed",
     slug: "timesUsed",
+    maxOccurrences: 1,
   },
 ];
 
@@ -602,6 +629,7 @@ export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
     label: "Is published",
     type: "published",
     slug: "published",
+    maxOccurrences: 1,
   },
   {
     value: "metadata",
@@ -614,6 +642,7 @@ export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
     label: "Channel",
     type: "channel",
     slug: "channel",
+    maxOccurrences: 1,
   },
 ];
 
@@ -632,12 +661,14 @@ export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
     label: "Customer ID",
     type: "customer",
     slug: "customer",
+    maxOccurrences: 1,
   },
   {
     value: "createdAt",
     label: "Creation date",
     type: "createdAt",
     slug: "createdAt",
+    maxOccurrences: 1,
   },
 ];
 
@@ -647,18 +678,21 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
     label: "Currency",
     type: "currency",
     slug: "currency",
+    maxOccurrences: 1,
   },
   {
     value: "currentBalance",
     label: "Current balance",
     type: "currentBalance",
     slug: "currentBalance",
+    maxOccurrences: 1,
   },
   {
     value: "initialBalance",
     label: "Initial balance",
     type: "initialBalance",
     slug: "initialBalance",
+    maxOccurrences: 1,
   },
   {
     value: "products",
@@ -671,6 +705,7 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
     label: "Is active",
     type: "isActive",
     slug: "isActive",
+    maxOccurrences: 1,
   },
   {
     value: "tags",
@@ -684,6 +719,13 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
     type: "usedBy",
     slug: "usedBy",
   },
+  {
+    value: "code",
+    label: "Code",
+    type: "code",
+    slug: "code",
+    maxOccurrences: 1,
+  },
 ];
 
 export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
@@ -692,12 +734,14 @@ export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
     label: "Join date",
     type: "dateJoined",
     slug: "dateJoined",
+    maxOccurrences: 1,
   },
   {
     value: "numberOfOrders",
     label: "Number of orders",
     type: "numberOfOrders",
     slug: "numberOfOrders",
+    maxOccurrences: 1,
   },
   {
     value: "metadata",
@@ -713,12 +757,14 @@ export const STATIC_PRODUCT_TYPES_OPTIONS: LeftOperand[] = [
     label: "Has variant attributes",
     type: "configurable",
     slug: "configurable",
+    maxOccurrences: 1,
   },
   {
     value: "typeOfProduct",
     label: "Type",
     type: "typeOfProduct",
     slug: "typeOfProduct",
+    maxOccurrences: 1,
   },
 ];
 
@@ -728,6 +774,7 @@ export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
     label: "Status",
     type: "staffMemberStatus",
     slug: "staffMemberStatus",
+    maxOccurrences: 1,
   },
 ];
 
@@ -737,36 +784,58 @@ export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
     label: "Filterable in Storefront",
     type: "filterableInStorefront",
     slug: "filterableInStorefront",
+    maxOccurrences: 1,
   },
   {
     value: "isVariantOnly",
     label: "Variant only",
     type: "isVariantOnly",
     slug: "isVariantOnly",
+    maxOccurrences: 1,
   },
   {
     value: "valueRequired",
     label: "Is required",
     type: "valueRequired",
     slug: "valueRequired",
+    maxOccurrences: 1,
   },
   {
     value: "visibleInStorefront",
     label: "Visible in Storefront",
     type: "visibleInStorefront",
     slug: "visibleInStorefront",
+    maxOccurrences: 1,
   },
   {
     value: "attributeType",
     label: "Type",
     type: "attributeType",
     slug: "attributeType",
+    maxOccurrences: 1,
   },
   {
     value: "channel",
     label: "Channel",
     type: "channel",
     slug: "channel",
+    maxOccurrences: 1,
+  },
+];
+
+export const STATIC_CATEGORY_OPTIONS: LeftOperand[] = [
+  {
+    value: "metadata",
+    label: "Metadata",
+    type: "metadata",
+    slug: "metadata",
+  },
+  {
+    value: "updatedAt",
+    label: "Updated at",
+    type: "updatedAt",
+    slug: "updatedAt",
+    maxOccurrences: 1,
   },
 ];
 
@@ -783,6 +852,7 @@ export const STATIC_OPTIONS = [
   ...STATIC_PRODUCT_TYPES_OPTIONS,
   ...STAFF_MEMBER_OPTIONS,
   ...STATIC_ATTRIBUTES_OPTIONS,
+  ...STATIC_CATEGORY_OPTIONS,
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {

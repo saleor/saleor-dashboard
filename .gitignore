@@ -11,7 +11,6 @@
 !.gqlconfig
 !.github
 !.gitignore
-!.nvmrc
 !.node-version
 !.npmrc
 !.plop
@@ -62,3 +61,5 @@ introspection.json
 storybook-static/
 
 !.claude
+!.claude/**/.claude-plugin/
+playwright-failures*/

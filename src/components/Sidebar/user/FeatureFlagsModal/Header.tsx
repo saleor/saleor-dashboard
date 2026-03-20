@@ -1,5 +1,5 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface HeaderProps {

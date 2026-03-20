@@ -1,19 +1,19 @@
-import { AppExtensionActiveParams } from "@dashboard/extensions/app-extension-popup-state";
+import { type AppExtensionActiveParams } from "@dashboard/extensions/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import {
   ALL_APP_EXTENSION_MOUNTS,
-  AllAppExtensionMounts,
+  type AllAppExtensionMounts,
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
-import { ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
+import { type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { Extension, ExtensionWithParams } from "../types";
-import { AppDetailsUrlMountQueryParams } from "../urls";
+import { type Extension, type ExtensionWithParams } from "../types";
+import { type AppDetailsUrlMountQueryParams } from "../urls";
 
 const prepareExtensionsWithActions = ({
   extensions,

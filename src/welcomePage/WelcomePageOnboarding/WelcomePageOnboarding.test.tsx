@@ -1,9 +1,9 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as React from "react";
+import type * as React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
 import { OnboardingProvider } from "./onboardingContext";
@@ -15,7 +15,7 @@ jest.mock("@dashboard/components/Router/useRouteChange", () => ({
     register: jest.fn(),
   }),
 }));
-jest.mock("@dashboard/auth");
+jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn().mockReturnValue({
     enabled: false,

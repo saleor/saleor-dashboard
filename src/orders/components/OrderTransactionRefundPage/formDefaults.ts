@@ -1,6 +1,6 @@
-import { OrderDetailsGrantRefundFragment, TransactionActionEnum } from "@dashboard/graphql";
+import { type OrderDetailsGrantRefundFragment, TransactionActionEnum } from "@dashboard/graphql";
 
-import { OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
+import { type OrderTransactionRefundPageFormData } from "./OrderTransactionRefundPage";
 
 export const getRefundFormDefaultValues = ({
   order,

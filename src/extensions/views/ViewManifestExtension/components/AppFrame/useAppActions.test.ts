@@ -1,4 +1,4 @@
-import { Actions } from "@saleor/app-sdk/app-bridge";
+import { type Actions } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
@@ -28,6 +28,7 @@ jest.mock("./appActionsHandler", () => ({
     useNotifyReadyAction: jest.fn(),
     useHandlePermissionRequest: jest.fn(),
     useHandleAppFormUpdate: jest.fn(),
+    useHandlePopupCloseAction: jest.fn(),
   },
 }));
 
@@ -51,6 +52,7 @@ describe("useAppActions", () => {
   const mockHandleNotifyReady = jest.fn();
   const mockHandlePermissionRequest = jest.fn();
   const mockHandleAppFormUpdate = jest.fn();
+  const mockHandlePopupClose = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -76,6 +78,9 @@ describe("useAppActions", () => {
     (AppActionsHandler.useHandleAppFormUpdate as jest.Mock).mockReturnValue({
       handle: mockHandleAppFormUpdate,
     });
+    (AppActionsHandler.useHandlePopupCloseAction as jest.Mock).mockReturnValue({
+      handle: mockHandlePopupClose,
+    });
 
     // Reset capture message mock to return a proper scope
     mockCaptureMessage.mockImplementation((_message, callback) => {
@@ -97,7 +102,7 @@ describe("useAppActions", () => {
     const unknownActionType = "unknownAction";
     const unknownAction = {
       type: unknownActionType,
-      payload: { some: "data" },
+      payload: { actionId: "action-1", some: "data" },
     } as unknown as Actions;
 
     renderHook(() =>
@@ -136,6 +141,32 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
+  });
+
+  it("should ignore messages without type and actionId (e.g., from browser extensions)", () => {
+    // Arrange
+    const extensionMessage = {
+      payload: { event: "operations", payload: [] },
+      source: "react-devtools-bridge",
+    };
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: extensionMessage,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
+    expect(mockPostToExtension).not.toHaveBeenCalled();
   });
 
   it("should ignore messages from different origins", () => {

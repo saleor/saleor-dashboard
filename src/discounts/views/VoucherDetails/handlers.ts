@@ -1,17 +1,17 @@
 // @ts-strict-ignore
-import { FetchResult } from "@apollo/client";
-import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type FetchResult } from "@apollo/client";
+import { type ChannelVoucherData } from "@dashboard/channels/utils";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
   DiscountValueTypeEnum,
-  VoucherChannelListingUpdateMutation,
-  VoucherChannelListingUpdateMutationVariables,
-  VoucherDetailsFragment,
+  type VoucherChannelListingUpdateMutation,
+  type VoucherChannelListingUpdateMutationVariables,
+  type VoucherDetailsFragment,
   VoucherTypeEnum,
-  VoucherUpdateMutation,
-  VoucherUpdateMutationVariables,
+  type VoucherUpdateMutation,
+  type VoucherUpdateMutationVariables,
 } from "@dashboard/graphql";
 import { joinDateTime } from "@dashboard/misc";
 

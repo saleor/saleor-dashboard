@@ -1,8 +1,8 @@
-import { PropsWithChildren, ReactNode, useMemo } from "react";
+import { type PropsWithChildren, type ReactNode, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { toast, Toaster } from "sonner";
 
-import { INotificationContext, NotificationContext } from ".";
+import { type INotificationContext, NotificationContext } from ".";
 
 const stopPropagation = (e: React.SyntheticEvent): void => {
   e.stopPropagation();

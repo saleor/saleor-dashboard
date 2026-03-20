@@ -1,13 +1,13 @@
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
-  CustomCell,
-  CustomRenderer,
+  type CustomCell,
+  type CustomRenderer,
   getMiddleCenterBias,
   GridCellKind,
-  ProvideEditorCallback,
+  type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { ChangeEvent, KeyboardEvent, useMemo } from "react";
+import { type ChangeEvent, type KeyboardEvent, useMemo } from "react";
 
 import { hasDiscountValue } from "./utils";
 

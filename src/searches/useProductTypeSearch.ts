@@ -2,8 +2,8 @@
 import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchProductTypesDocument,
-  SearchProductTypesQuery,
-  SearchProductTypesQueryVariables,
+  type SearchProductTypesQuery,
+  type SearchProductTypesQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";

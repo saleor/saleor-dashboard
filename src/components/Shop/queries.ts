@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
-  RefreshLimitsQuery,
-  RefreshLimitsQueryVariables,
+  type RefreshLimitsQuery,
+  type RefreshLimitsQueryVariables,
   useRefreshLimitsQuery,
 } from "@dashboard/graphql";
-import { QueryHookOptions } from "@dashboard/hooks/graphql";
+import { type QueryHookOptions } from "@dashboard/hooks/graphql";
 
 export const shopInfo = gql`
   query ShopInfo {
@@ -25,7 +25,6 @@ export const shopInfo = gql`
         ...Language
       }
       name
-      trackInventoryByDefault
       permissions {
         ...Permission
       }

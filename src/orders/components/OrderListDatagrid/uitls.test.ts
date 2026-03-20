@@ -1,6 +1,6 @@
-import { OrderListQuery } from "@dashboard/graphql";
+import { type OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
 

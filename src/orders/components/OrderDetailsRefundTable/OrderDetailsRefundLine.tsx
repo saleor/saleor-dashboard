@@ -2,11 +2,11 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
-import { getUserInitials, getUserName, User } from "@dashboard/misc";
+import { getUserInitials, getUserName, type User } from "@dashboard/misc";
 import { refundGridMessages } from "@dashboard/orders/components/OrderDetailsRefundTable/messages";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import {
-  OrderRefundDisplay,
+  type OrderRefundDisplay,
   OrderRefundsViewModel,
 } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";

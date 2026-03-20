@@ -2,10 +2,10 @@ import backgroundArt from "@assets/images/login-background.svg";
 import saleorLogo from "@assets/images/saleor-logo.svg";
 import saleorLogoWhite from "@assets/images/saleor-logo-white.svg";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import SVG from "react-inlinesvg";
 
-import { useUser } from "..";
+import { useUser } from "../useUser";
 import LoginLoading from "./LoginLoading";
 
 const useStyles = makeStyles(

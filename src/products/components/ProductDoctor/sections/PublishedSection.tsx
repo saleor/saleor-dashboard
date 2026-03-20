@@ -1,6 +1,6 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
-import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Checkbox, Text, Toggle } from "@saleor/macaw-ui-next";
@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { messages } from "../messages";
 import { InfoCallout, SCHEDULED_BACKGROUND_COLOR, SCHEDULED_COLOR } from "../primitives";
 import { isFutureDate } from "../utils/dateUtils";
-import { ChannelSummary } from "../utils/types";
+import { type ChannelSummary } from "../utils/types";
 
 interface PublishedSectionProps {
   summary: ChannelSummary;

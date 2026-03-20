@@ -6,11 +6,11 @@ import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { WarehouseFragment } from "@dashboard/graphql";
+import { type WarehouseFragment } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import { Option, sprinkles } from "@saleor/macaw-ui-next";
+import { type Option, sprinkles } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

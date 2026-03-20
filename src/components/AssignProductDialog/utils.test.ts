@@ -1,4 +1,4 @@
-import { ProductChannels, SelectedChannel } from "./types";
+import { type ProductChannels, type SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
 describe("isProductAvailableInVoucherChannels", () => {

@@ -1,4 +1,4 @@
-import { InstalledExtension } from "@dashboard/extensions/types";
+import { type InstalledExtension } from "@dashboard/extensions/types";
 import { fuzzySearch } from "@dashboard/misc";
 import { useState } from "react";
 

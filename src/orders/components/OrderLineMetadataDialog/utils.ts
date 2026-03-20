@@ -1,5 +1,5 @@
-import { MetadataInput } from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+import { type MetadataInput } from "@dashboard/graphql";
+import { type IntlShape } from "react-intl";
 
 export const getValidateMetadata =
   (intl: IntlShape) =>

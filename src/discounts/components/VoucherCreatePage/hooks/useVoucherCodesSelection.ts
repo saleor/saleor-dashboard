@@ -1,7 +1,7 @@
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import isEqual from "lodash/isEqual";
 
-import { VoucherCode } from "../../VoucherCodesDatagrid/types";
+import { type VoucherCode } from "../../VoucherCodesDatagrid/types";
 
 export const useVoucherCodesSelection = (codes: VoucherCode[]) => {
   const {

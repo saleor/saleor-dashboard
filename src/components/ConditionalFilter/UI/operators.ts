@@ -1,14 +1,14 @@
 import {
-  BulkselectOperator,
-  ComboboxOperator,
-  DateOperator,
-  DateTimeOperator,
-  DoubleTextOperator,
-  InputOperator,
-  MultiselectOperator,
-  NumberRangeOperator,
-  SelectedOperator,
-  SelectOperator,
+  type BulkselectOperator,
+  type ComboboxOperator,
+  type DateOperator,
+  type DateTimeOperator,
+  type DoubleTextOperator,
+  type InputOperator,
+  type MultiselectOperator,
+  type NumberRangeOperator,
+  type SelectedOperator,
+  type SelectOperator,
 } from "./types";
 
 export const isTextInput = (value: SelectedOperator): value is InputOperator =>

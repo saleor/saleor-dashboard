@@ -1,6 +1,6 @@
 import { CONSTRAINTS } from "../constants";
-import { StaticElementName } from "./ConditionOptions";
-import { FilterContainer, FilterElement } from "./FilterElement";
+import { type StaticElementName } from "./ConditionOptions";
+import { type FilterContainer, FilterElement } from "./FilterElement";
 
 export const GLOBAL = "GLOBAL" as const;
 

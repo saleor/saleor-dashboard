@@ -1,16 +1,16 @@
 // @ts-strict-ignore
-import { ApolloQueryResult } from "@apollo/client";
-import { INotificationCallback } from "@dashboard/components/notifications";
+import { type ApolloQueryResult } from "@apollo/client";
+import { type INotificationCallback } from "@dashboard/components/notifications";
 import {
-  CheckExportFileStatusQuery,
-  CheckOrderInvoicesStatusQuery,
+  type CheckExportFileStatusQuery,
+  type CheckOrderInvoicesStatusQuery,
   JobStatusEnum,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import messages from "./messages";
-import { InvoiceGenerateParams, QueuedTask, TaskData, TaskStatus } from "./types";
+import { type InvoiceGenerateParams, type QueuedTask, type TaskData, TaskStatus } from "./types";
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {

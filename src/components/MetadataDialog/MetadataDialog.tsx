@@ -2,8 +2,8 @@ import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonW
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { MetadataInput } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { type MetadataInput } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { expect, Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
 
 export class HomePage {
   readonly page: Page;

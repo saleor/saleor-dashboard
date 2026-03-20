@@ -1,17 +1,17 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ProductWhereInput } from "@dashboard/graphql";
-import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
+import { type ProductWhereInput } from "@dashboard/graphql";
+import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
 import {
-  InitialConstraints,
+  type InitialConstraints,
   ModalProductFilterProvider,
 } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignProductDialogMulti } from "./AssignProductDialogMulti";
 import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
 import { messages } from "./messages";
-import { Products, SelectedChannel } from "./types";
+import { type Products, type SelectedChannel } from "./types";
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

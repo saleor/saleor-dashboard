@@ -1,5 +1,5 @@
 import { errorTracker } from "@dashboard/services/errorTracking";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSidebarWebhookAlertMetadata } from "./useSidebarWebhookAlertMetadata";
 
@@ -17,13 +17,13 @@ const shouldShowDotCheck = (
 interface SidebarDotState {
   handleAppsListItemClick: (clickDate: string) => void;
   handleFailedAttempt: (failedAttemptDate: string) => void;
-  hasNewFailedAttempts: boolean;
+  hasProblems: boolean;
 }
 
 export const useSidebarDotState = (): SidebarDotState => {
   const { persist, sidebarDotRemoteState } = useSidebarWebhookAlertMetadata();
 
-  const [hasNewFailedAttempts, setHasNewFailedAttempts] = useState(false);
+  const [hasProblems, setHasProblems] = useState(false);
   const lastClickDateRef = useRef<string | null>(null);
   const lastFailedAttemptDateRef = useRef<string | null>(null);
 
@@ -38,42 +38,48 @@ export const useSidebarDotState = (): SidebarDotState => {
         lastFailedAttemptDateRef.current,
       );
 
-      setHasNewFailedAttempts(shouldShowDot);
+      setHasProblems(shouldShowDot);
     }
   }, [sidebarDotRemoteState]);
 
-  const handleClick = async (clickDate: string) => {
-    try {
-      await persist({
-        lastClickDate: clickDate,
-        lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
-      });
-      lastClickDateRef.current = clickDate;
-    } catch (error) {
-      errorTracker.captureException(error as Error);
-    }
-  };
-
-  const handleFailedAttempt = async (failedAttemptDate: string) => {
-    try {
-      await persist({
-        lastClickDate: lastClickDateRef.current ?? "",
-        lastFailedAttemptDate: failedAttemptDate,
-      });
-      lastFailedAttemptDateRef.current = failedAttemptDate;
-
-      // Show dot if no clicks or failed attempt is newer
-      if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
-        setHasNewFailedAttempts(true);
+  const handleClick = useCallback(
+    async (clickDate: string) => {
+      try {
+        await persist({
+          lastClickDate: clickDate,
+          lastFailedAttemptDate: lastFailedAttemptDateRef.current ?? "",
+        });
+        lastClickDateRef.current = clickDate;
+      } catch (error) {
+        errorTracker.captureException(error as Error);
       }
-    } catch (error) {
-      errorTracker.captureException(error as Error);
-    }
-  };
+    },
+    [persist],
+  );
+
+  const handleFailedAttempt = useCallback(
+    async (failedAttemptDate: string) => {
+      try {
+        await persist({
+          lastClickDate: lastClickDateRef.current ?? "",
+          lastFailedAttemptDate: failedAttemptDate,
+        });
+        lastFailedAttemptDateRef.current = failedAttemptDate;
+
+        // Show dot if no clicks or failed attempt is newer
+        if (!lastClickDateRef.current || failedAttemptDate > lastClickDateRef.current) {
+          setHasProblems(true);
+        }
+      } catch (error) {
+        errorTracker.captureException(error as Error);
+      }
+    },
+    [persist],
+  );
 
   return {
     handleAppsListItemClick: handleClick,
     handleFailedAttempt,
-    hasNewFailedAttempts,
+    hasProblems,
   };
 };

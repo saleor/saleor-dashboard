@@ -13,9 +13,9 @@ import { useIntl } from "react-intl";
 import TaxChannelsPage from "../pages/TaxChannelsPage";
 import {
   taxConfigurationListUrl,
-  TaxesUrlDialog,
-  TaxesUrlQueryParams,
-  TaxTab,
+  type TaxesUrlDialog,
+  type TaxesUrlQueryParams,
+  type TaxTab,
   taxTabPath,
 } from "../urls";
 import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";

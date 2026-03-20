@@ -1,6 +1,9 @@
 import { useContext } from "react";
 
-import { GiftCardDetailsConsumerProps, GiftCardDetailsContext } from "../GiftCardDetailsProvider";
+import {
+  type GiftCardDetailsConsumerProps,
+  GiftCardDetailsContext,
+} from "../GiftCardDetailsProvider";
 
 const useGiftCardDetails = (): GiftCardDetailsConsumerProps => {
   const giftCardDetailsConsumerProps = useContext(GiftCardDetailsContext);

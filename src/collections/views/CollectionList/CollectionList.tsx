@@ -30,8 +30,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   collectionListUrl,
-  CollectionListUrlDialog,
-  CollectionListUrlQueryParams,
+  type CollectionListUrlDialog,
+  type CollectionListUrlQueryParams,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";

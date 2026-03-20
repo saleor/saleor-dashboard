@@ -1,5 +1,5 @@
-import { AddressFieldsType } from "@data/addresses";
-import { expect, Page } from "@playwright/test";
+import { type AddressFieldsType } from "@data/addresses";
+import { expect, type Page } from "@playwright/test";
 
 import { BasePage } from "./basePage";
 

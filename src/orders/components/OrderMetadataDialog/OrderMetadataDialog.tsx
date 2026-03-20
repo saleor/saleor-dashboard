@@ -2,11 +2,11 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { OrderDetailsDocument, OrderDetailsQuery } from "@dashboard/graphql";
+import { OrderDetailsDocument, type OrderDetailsQuery } from "@dashboard/graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-export type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
+type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
 
 interface OrderMetadataDialogProps {
   open: boolean;

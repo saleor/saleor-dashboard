@@ -11,7 +11,7 @@ import { getMutationErrors } from "@dashboard/misc";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { useIntl } from "react-intl";
 
-import PageTypeCreatePage, { PageTypeForm } from "../components/PageTypeCreatePage";
+import PageTypeCreatePage, { type PageTypeForm } from "../components/PageTypeCreatePage";
 import { pageTypeUrl } from "../urls";
 
 const PageTypeCreate = () => {

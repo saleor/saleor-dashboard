@@ -1,18 +1,18 @@
-import { ChannelsAction } from "@dashboard/channels/urls";
+import { type ChannelsAction } from "@dashboard/channels/urls";
 import urlJoin from "url-join";
 
 import {
-  ActiveTab,
-  BulkAction,
-  Dialog,
-  Filters,
-  FiltersAsDictWithMultipleValues,
-  FiltersWithKeyValueValues,
-  FiltersWithMultipleValues,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
+  type ActiveTab,
+  type BulkAction,
+  type Dialog,
+  type Filters,
+  type FiltersAsDictWithMultipleValues,
+  type FiltersWithKeyValueValues,
+  type FiltersWithMultipleValues,
+  type Pagination,
+  type SingleAction,
+  type Sort,
+  type TabActionDialog,
 } from "../types";
 import { stringifyQs } from "../utils/urls";
 

@@ -2,7 +2,10 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DiscountDeleteModal } from "@dashboard/discounts/components/DiscountDeleteModal";
 import { DiscountDetailsPage } from "@dashboard/discounts/components/DiscountDetailsPage";
-import { discountSalesListPath, DiscountUrlQueryParams } from "@dashboard/discounts/discountsUrls";
+import {
+  discountSalesListPath,
+  type DiscountUrlQueryParams,
+} from "@dashboard/discounts/discountsUrls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";

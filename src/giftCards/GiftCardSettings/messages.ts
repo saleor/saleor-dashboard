@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { GiftCardSettingsErrorFragment } from "@dashboard/graphql";
+import { type GiftCardSettingsErrorFragment } from "@dashboard/graphql";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 export const giftCardSettingsPageMessages = defineMessages({
   title: {

@@ -1,7 +1,7 @@
-import * as dndKit from "@dnd-kit/core";
+import type * as dndKit from "@dnd-kit/core";
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { ProductVariantItem } from "../types";
+import { type ProductVariantItem } from "../types";
 import { useVariantDrag } from "./useVariantDrag";
 
 jest.mock("@dnd-kit/core", () => ({

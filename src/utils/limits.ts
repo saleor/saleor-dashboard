@@ -1,4 +1,4 @@
-import { LimitInfoFragment, RefreshLimitsQuery } from "@dashboard/graphql";
+import { type LimitInfoFragment, type RefreshLimitsQuery } from "@dashboard/graphql";
 
 export function hasLimits(
   limits: RefreshLimitsQuery["shop"]["limits"] | undefined,

@@ -4,10 +4,10 @@ import {
   getFilteredProductVariants,
   mapLocalVariantsToSavedVariants,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
-import { SearchProductsOpts } from "@dashboard/discounts/types";
+import { type SearchProductsOpts } from "@dashboard/discounts/types";
 import { v4 as uuidv4 } from "uuid";
 
-import { FormData } from "./types";
+import { type FormData } from "./types";
 
 jest.mock("uuid");
 

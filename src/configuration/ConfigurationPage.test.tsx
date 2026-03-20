@@ -3,10 +3,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { useUser } from "../auth";
-import { PermissionEnum, UserFragment } from "../graphql";
+import { useUser } from "../auth/useUser";
+import { PermissionEnum, type UserFragment } from "../graphql";
 import { ConfigurationPage } from "./ConfigurationPage";
-import { MenuSection } from "./types";
+import { type MenuSection } from "./types";
 
 jest.mock("@material-ui/core/useMediaQuery", () => jest.fn());
 jest.mock("@dashboard/featureFlags", () => ({
@@ -16,7 +16,7 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => children),
 }));
-jest.mock("@dashboard/auth", () => ({
+jest.mock("@dashboard/auth/useUser", () => ({
   useUser: jest.fn(),
 }));
 jest.mock("./styles", () => ({

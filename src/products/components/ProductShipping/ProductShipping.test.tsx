@@ -1,7 +1,7 @@
-import { ProductErrorCode, ProductErrorFragment } from "@dashboard/graphql";
+import { ProductErrorCode, type ProductErrorFragment } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
-import * as React from "react";
+import type * as React from "react";
 
 import { ProductShipping } from "./ProductShipping";
 

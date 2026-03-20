@@ -1,12 +1,12 @@
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Customers } from "@dashboard/customers/types";
-import { CustomerListUrlSortField } from "@dashboard/customers/urls";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Customers } from "@dashboard/customers/types";
+import { type CustomerListUrlSortField } from "@dashboard/customers/urls";
 import { getUserName } from "@dashboard/misc";
-import { Sort } from "@dashboard/types";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

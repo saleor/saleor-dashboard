@@ -1,13 +1,13 @@
 // @ts-strict-ignore
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderFulfillLineFragment } from "@dashboard/graphql";
-import { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import { type OrderFulfillLineFragment } from "@dashboard/graphql";
+import { type FormsetChange, type FormsetData } from "@dashboard/hooks/useFormset";
 import {
   getAttributesCaption,
   getOrderLineAvailableQuantity,
   getWarehouseStock,
-  OrderFulfillLineFormData,
+  type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableCell, TextField } from "@material-ui/core";
 import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";

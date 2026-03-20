@@ -1,5 +1,5 @@
-import { DocumentNode, useApolloClient } from "@apollo/client";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { type DocumentNode, useApolloClient } from "@apollo/client";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";

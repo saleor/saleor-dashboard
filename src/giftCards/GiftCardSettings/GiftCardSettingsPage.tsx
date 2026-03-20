@@ -19,7 +19,7 @@ import { giftCardsListPath } from "../urls";
 import GiftCardExpirySettingsCard from "./GiftCardExpirySettingsCard";
 import { giftCardExpirySettingsCard as expirySettingsMessages } from "./GiftCardExpirySettingsCard/messages";
 import { giftCardSettingsPageMessages as messages } from "./messages";
-import { GiftCardSettingsFormData } from "./types";
+import { type GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 
 const GiftCardSettingsPage = () => {

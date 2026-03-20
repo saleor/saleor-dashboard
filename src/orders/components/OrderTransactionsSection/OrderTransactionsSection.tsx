@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  TransactionActionEnum,
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+  type TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { Ripple } from "@dashboard/ripples/components/Ripple";

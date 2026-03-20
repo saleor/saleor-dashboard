@@ -4,7 +4,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
-import React from "react";
+import type React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

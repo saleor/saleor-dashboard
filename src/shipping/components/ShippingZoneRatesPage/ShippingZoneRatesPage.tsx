@@ -1,23 +1,23 @@
-import { ChannelShippingData } from "@dashboard/channels/utils";
+import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { WithFormId } from "@dashboard/components/Form";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type WithFormId } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingChannelsErrorFragment,
-  ShippingErrorFragment,
+  type PostalCodeRuleInclusionTypeEnum,
+  type ShippingChannelsErrorFragment,
+  type ShippingErrorFragment,
   ShippingMethodTypeEnum,
-  ShippingMethodTypeFragment,
-  ShippingZoneQuery,
-  TaxClassBaseFragment,
+  type ShippingMethodTypeFragment,
+  type ShippingZoneQuery,
+  type TaxClassBaseFragment,
 } from "@dashboard/graphql";
-import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useStateUpdate } from "@dashboard/hooks/useStateUpdate";
@@ -29,17 +29,17 @@ import PricingCard from "@dashboard/shipping/components/PricingCard";
 import ShippingMethodProducts from "@dashboard/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
-import { FetchMoreProps, ListActions, ListProps } from "@dashboard/types";
+import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { FormEventHandler, useMemo } from "react";
+import { type FormEventHandler, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
-import { ShippingZoneRateUpdateFormData } from "./types";
+import { type ShippingZoneRateUpdateFormData } from "./types";
 
 interface ShippingZoneRatesPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,

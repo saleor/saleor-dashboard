@@ -4,7 +4,7 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import { AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -33,13 +33,14 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationErrors, weight } from "../../misc";
-import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import { type ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import { ProductVariantCreatePage } from "../components/ProductVariantCreatePage/ProductVariantCreatePage";
 import {
   productListUrl,
   productVariantAddUrl,
-  ProductVariantAddUrlQueryParams,
+  type ProductVariantAddUrlQueryParams,
   productVariantEditUrl,
 } from "../urls";
 import { variantCreateMessages as messages } from "./messages";
@@ -207,7 +208,11 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: {
+      after: DEFAULT_INITIAL_SEARCH_DATA.after,
+      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+      filter: undefined,
+    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -215,6 +220,12 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     result: searchCollectionsOpts,
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
   });
   const {
     loadMore: loadMoreAttributeValues,
@@ -306,6 +317,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
         onAttributeSelectBlur={searchAttributeReset}
+        onFilterChange={onFilterChange}
       />
     </>
   );

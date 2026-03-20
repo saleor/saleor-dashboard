@@ -3,15 +3,17 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
-import { configurationMenuUrl } from "@dashboard/configuration";
-import { ShopErrorFragment, SiteSettingsQuery } from "@dashboard/graphql";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
+import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
+import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
+import { PasswordLoginModeEnum, type SiteSettingsStagingQuery } from "@dashboard/graphql/staging";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
@@ -21,6 +23,7 @@ import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
+import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
 
 interface SiteSettingsPageAddressFormData {
@@ -40,12 +43,15 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
+  useLegacyUpdateWebhookEmission: boolean;
+  preserveAllAddressFields: boolean;
+  passwordLoginMode: PasswordLoginModeEnum;
 }
 
 interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop?: SiteSettingsQuery["shop"];
+  shop?: SiteSettingsQuery["shop"] | SiteSettingsStagingQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -92,6 +98,12 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
+    useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
+    preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    // Force staging type to access the new field. Once field is available in main schema, casting should be removed.
+    passwordLoginMode:
+      (isStagingSchema() && (shop as SiteSettingsStagingQuery["shop"])?.passwordLoginMode) ||
+      PasswordLoginModeEnum.ENABLED,
   };
 
   return (
@@ -115,6 +127,12 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
         const handleEmailConfirmationChange = isEnabled => {
           change({ target: { name: "emailConfirmation", value: isEnabled } });
+        };
+        const handleWebhookEmissionChange = isEnabled => {
+          change({ target: { name: "useLegacyUpdateWebhookEmission", value: isEnabled } });
+        };
+        const handlePreserveAddressFieldsChange = isEnabled => {
+          change({ target: { name: "preserveAllAddressFields", value: isEnabled } });
         };
 
         return (
@@ -191,6 +209,85 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                         onCheckedChange={handleEmailConfirmationChange}
                       >
                         <Text>{intl.formatMessage(messages.sectionEmailConfirmationHeader)}</Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+
+                {isStagingSchema() && (
+                  <>
+                    <Divider />
+
+                    <Box
+                      display="grid"
+                      __gridTemplateColumns="1fr 3fr"
+                      paddingLeft={6}
+                      paddingBottom={8}
+                    >
+                      <PageSectionHeader
+                        title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                        description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                      />
+                      <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
+                    </Box>
+                  </>
+                )}
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionWebhookEmissionTitle)}
+                    description={intl.formatMessage(messages.sectionWebhookEmissionDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionWebhookEmissionHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Checkbox
+                        data-test-id="legacy-webhook-emission-checkbox"
+                        checked={data.useLegacyUpdateWebhookEmission}
+                        onCheckedChange={handleWebhookEmissionChange}
+                      >
+                        <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionAddressValidationTitle)}
+                    description={intl.formatMessage(messages.sectionAddressValidationDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionAddressValidationHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Checkbox
+                        data-test-id="preserve-all-address-fields-checkbox"
+                        checked={data.preserveAllAddressFields}
+                        onCheckedChange={handlePreserveAddressFieldsChange}
+                      >
+                        <Text>{intl.formatMessage(messages.sectionAddressValidationHeader)}</Text>
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>

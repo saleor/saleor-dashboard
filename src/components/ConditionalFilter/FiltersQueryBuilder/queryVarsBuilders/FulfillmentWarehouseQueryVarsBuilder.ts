@@ -1,9 +1,9 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 
-import { Handler, WarehouseHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, WarehouseHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
-import { WhereOnlyQueryVarsBuilder } from "./types";
+import { type WhereOnlyQueryVarsBuilder } from "./types";
 
 export type FulfillmentWarehouseFilterQueryPart = {
   fulfillments?: Array<{

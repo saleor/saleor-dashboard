@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import {
-  PageErrorWithAttributesFragment,
-  ProductErrorWithAttributesFragment,
+  type PageErrorWithAttributesFragment,
+  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 
 import AttributeRow from "./AttributeRow";
-import { AttributeRowProps } from "./types";
+import { type AttributeRowProps } from "./types";
 
 type AttributeListItemProps = Omit<AttributeRowProps, "error"> & {
   errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;

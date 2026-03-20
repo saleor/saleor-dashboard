@@ -1,14 +1,19 @@
 import { moneyCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
-import { OrderDraft } from "@dashboard/orders/types";
-import { Sort } from "@dashboard/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Locale } from "@dashboard/components/Locale";
+import { type OrderDraft } from "@dashboard/orders/types";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import moment from "moment";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
+
+export function formatDateTime(date: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
+    new Date(date),
+  );
+}
 
 export const orderDraftListStaticColumnsAdapter = (
   intl: IntlShape,
@@ -67,7 +72,11 @@ export const createGetCellContent =
       case "number":
         return readonlyTextCell(`#${rowData.number}`);
       case "date":
-        return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
+        try {
+          return readonlyTextCell(formatDateTime(rowData.created, locale));
+        } catch (e) {
+          return readonlyTextCell("-");
+        }
       case "customer":
         return readonlyTextCell(getCustomerName(rowData));
       case "total":

@@ -1,10 +1,10 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
 import { Divider, Text } from "@saleor/macaw-ui-next";
-import { SortableElement, SortableElementProps } from "react-sortable-hoc";
+import { SortableElement, type SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
 import { useStyles } from "./styles";
-import { AssignItem } from "./types";
+import { type AssignItem } from "./types";
 
 interface ItemProps extends SortableElementProps {
   item: AssignItem;

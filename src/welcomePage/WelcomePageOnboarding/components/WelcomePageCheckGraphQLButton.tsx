@@ -2,7 +2,7 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { PrimaryActionProps } from "./type";
+import { type PrimaryActionProps } from "./type";
 
 export const WelcomePageCheckGraphQLButton = ({ onClick }: PrimaryActionProps) => {
   const context = useDevModeContext();

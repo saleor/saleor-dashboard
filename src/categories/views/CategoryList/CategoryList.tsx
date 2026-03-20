@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
-  CategoryBulkDeleteMutation,
+  type CategoryBulkDeleteMutation,
   useCategoryBulkDeleteMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
@@ -29,9 +29,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
   categoryListUrl,
-  CategoryListUrlDialog,
-  CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
+  type CategoryListUrlDialog,
+  type CategoryListUrlFilters,
+  type CategoryListUrlQueryParams,
 } from "../../urls";
 import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
 import { getSortQueryVariables } from "./sort";

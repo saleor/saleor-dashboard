@@ -1,10 +1,10 @@
-import { ApolloQueryResult } from "@apollo/client";
+import { type ApolloQueryResult } from "@apollo/client";
 import {
-  _GetChannelOperandsQuery,
-  _SearchAttributeOperandsQuery,
-  _SearchCategoriesOperandsQuery,
-  _SearchCollectionsOperandsQuery,
-  _SearchProductTypesOperandsQuery,
+  type _GetChannelOperandsQuery,
+  type _SearchAttributeOperandsQuery,
+  type _SearchCategoriesOperandsQuery,
+  type _SearchCollectionsOperandsQuery,
+  type _SearchProductTypesOperandsQuery,
   AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 

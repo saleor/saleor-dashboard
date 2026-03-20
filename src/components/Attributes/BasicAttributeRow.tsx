@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;

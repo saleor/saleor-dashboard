@@ -1,10 +1,10 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { getExtensionsConfig } from "@dashboard/config";
-import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
+import { type ExtensionData, type ExtensionsGroups } from "@dashboard/extensions/types";
 import {
-  InstalledAppFragment,
+  type InstalledAppFragment,
   PermissionEnum,
-  PluginBaseFragment,
+  type PluginBaseFragment,
   useInstalledAppsQuery,
   usePluginsQuery,
 } from "@dashboard/graphql";
@@ -72,7 +72,9 @@ const getFilteredExtensions = ({
 };
 
 export const useExploreExtensions = () => {
-  const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
+  const { data, loading, error, isFallback } = useAppStoreExtensions(
+    getExtensionsConfig().extensionsApiUri,
+  );
   const { data: installedAppsData } = useInstalledAppsQuery({
     variables: {
       first: 100,
@@ -112,5 +114,6 @@ export const useExploreExtensions = () => {
     extensions: extensionsData,
     loading,
     error,
+    isFallback,
   };
 };

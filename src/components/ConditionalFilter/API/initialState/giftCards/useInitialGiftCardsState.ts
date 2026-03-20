@@ -1,17 +1,17 @@
 import { useApolloClient } from "@apollo/client";
 import { createInitialGiftCardsState } from "@dashboard/components/ConditionalFilter/API/initialState/helpers";
-import { InitialGiftCardsAPIResponse } from "@dashboard/components/ConditionalFilter/API/initialState/types";
-import { GiftCardsFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type InitialGiftCardsAPIResponse } from "@dashboard/components/ConditionalFilter/API/initialState/types";
+import { type GiftCardsFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _SearchCustomersOperandsDocument,
-  _SearchCustomersOperandsQuery,
-  _SearchCustomersOperandsQueryVariables,
+  type _SearchCustomersOperandsQuery,
+  type _SearchCustomersOperandsQueryVariables,
   _SearchProductOperandsDocument,
-  _SearchProductOperandsQuery,
-  _SearchProductOperandsQueryVariables,
+  type _SearchProductOperandsQuery,
+  type _SearchProductOperandsQueryVariables,
   ChannelCurrenciesDocument,
-  ChannelCurrenciesQuery,
-  ChannelCurrenciesQueryVariables,
+  type ChannelCurrenciesQuery,
+  type ChannelCurrenciesQueryVariables,
 } from "@dashboard/graphql";
 import { useState } from "react";
 
@@ -31,7 +31,13 @@ export const useInitialGiftCardsState = () => {
   const [loading, setLoading] = useState(true);
   const queriesToRun: Array<Promise<InitialGiftCardsAPIResponse>> = [];
 
-  const fetchQueries = async ({ usedBy, products, currency, tags }: GiftCardsFetchingParams) => {
+  const fetchQueries = async ({
+    usedBy,
+    products,
+    currency,
+    tags,
+    code,
+  }: GiftCardsFetchingParams) => {
     if (products.length > 0) {
       queriesToRun.push(
         client.query<_SearchProductOperandsQuery, _SearchProductOperandsQueryVariables>({
@@ -66,7 +72,7 @@ export const useInitialGiftCardsState = () => {
     }
 
     const data = await Promise.all(queriesToRun);
-    const initialState = createInitialGiftCardsState(data, tags);
+    const initialState = createInitialGiftCardsState(data, tags, code);
 
     setData(
       new InitialGiftCardsStateResponse(
@@ -75,6 +81,7 @@ export const useInitialGiftCardsState = () => {
         initialState.isActive,
         initialState.tags,
         initialState.usedBy,
+        initialState.code,
       ),
     );
     setLoading(false);

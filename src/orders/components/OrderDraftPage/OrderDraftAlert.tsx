@@ -1,9 +1,9 @@
-import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
+import { type ChannelUsabilityDataQuery, type OrderDetailsFragment } from "@dashboard/graphql";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
-import { Alert, AlertProps } from "@saleor/macaw-ui";
+import { Alert, type AlertProps } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import OrderAlerts from "../OrderAlerts";

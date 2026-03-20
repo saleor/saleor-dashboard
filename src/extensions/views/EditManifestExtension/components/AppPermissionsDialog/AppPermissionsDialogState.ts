@@ -1,5 +1,5 @@
 import { getPermissionsDiff } from "@dashboard/extensions/getPermissionsDiff";
-import { PermissionEnum } from "@dashboard/graphql";
+import { type PermissionEnum } from "@dashboard/graphql";
 import { useState } from "react";
 
 type State =

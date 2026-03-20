@@ -1,9 +1,9 @@
 import { AccountErrorCode } from "@dashboard/graphql";
 import {
-  AccountError,
-  AccountErrorCode as SdkAccountErrorCode,
-} from "@saleor/sdk/dist/apollo/types";
-import { defineMessages, IntlShape } from "react-intl";
+  type AccountError,
+  type AccountErrorCode as SdkAccountErrorCode,
+} from "@dashboard/legacy-sdk/apollo/types";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
 

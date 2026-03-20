@@ -1,14 +1,17 @@
 import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
-  AccountErrorFragment,
-  AddressFragment,
-  AddressInput,
-  CountryWithCodeFragment,
+  type AccountErrorFragment,
+  type AddressFragment,
+  type AddressInput,
+  type CountryWithCodeFragment,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
@@ -18,7 +21,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { FormattedMessage } from "react-intl";
 
-import { AddressTypeInput } from "../../types";
+import { type AddressTypeInput } from "../../types";
 
 interface CustomerAddressDialogProps {
   address: AddressFragment;

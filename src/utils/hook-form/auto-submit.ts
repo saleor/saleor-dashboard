@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import { useEffect, useMemo, useRef } from "react";
-import { Control, FieldValues, useFormState, UseFormWatch } from "react-hook-form";
+import { type Control, type FieldValues, useFormState, type UseFormWatch } from "react-hook-form";
 
 interface UseAutoSubmitProps<TFieldValues extends FieldValues> {
   watch: UseFormWatch<TFieldValues>;

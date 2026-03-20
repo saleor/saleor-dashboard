@@ -2,7 +2,7 @@ import { URL_LIST } from "@data/url";
 import { RightSideDetailsPage } from "@pageElements/rightSideDetailsSection";
 import { BasePage } from "@pages/basePage";
 import { DeleteDialog } from "@pages/dialogs/deleteDialog";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 
 export class ChannelPage extends BasePage {
   readonly page: Page;

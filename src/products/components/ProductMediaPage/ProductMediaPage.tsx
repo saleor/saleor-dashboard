@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -140,7 +141,12 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                   {mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
-                        <img className={classes.image} src={mediaObj.url} alt={mediaObj.alt} />
+                        <MediaWithFallback
+                          key={mediaObj.url}
+                          className={classes.image}
+                          src={mediaObj.url}
+                          alt={mediaObj.alt}
+                        />
                       </div>
                     ) : (
                       <div

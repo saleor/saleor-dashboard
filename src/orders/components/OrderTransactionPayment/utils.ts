@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import {
   OrderAction,
-  OrderPaymentFragment,
-  PaymentGatewayFragment,
+  type OrderPaymentFragment,
+  type PaymentGatewayFragment,
   TransactionActionEnum,
   TransactionKind,
 } from "@dashboard/graphql";
 import {
-  TransactionEventStatus,
-  TransactionFakeEvent,
-  TransactionMappingResult,
+  type TransactionEventStatus,
+  type TransactionFakeEvent,
+  type TransactionMappingResult,
 } from "@dashboard/orders/types";
 
 type Money = OrderPaymentFragment["total"];

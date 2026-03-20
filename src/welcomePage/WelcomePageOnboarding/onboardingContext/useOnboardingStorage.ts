@@ -1,9 +1,9 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { useSaveOnBoardingStateMutation } from "@dashboard/graphql";
 import debounce from "lodash/debounce";
 import { useCallback, useMemo } from "react";
 
-import { OnboardingState, StorageService } from "../onboardingContext/types";
+import { type OnboardingState, type StorageService } from "../onboardingContext/types";
 import { METADATA_KEY, prepareUserMetadata } from "./utils";
 
 export const useOnboardingStorage = (): StorageService => {

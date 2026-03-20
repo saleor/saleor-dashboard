@@ -12,7 +12,7 @@ import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@dashboard/products/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Text } from "@saleor/macaw-ui-next";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { PLACEHOLDER } from "../types";

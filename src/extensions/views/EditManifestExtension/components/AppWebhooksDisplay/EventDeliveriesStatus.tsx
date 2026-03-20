@@ -1,5 +1,5 @@
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
-import { Chip, Text, ThemeTokensValues } from "@saleor/macaw-ui-next";
+import { Chip, Text, type ThemeTokensValues } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 const mapDeliveryStatusToTextColor = (

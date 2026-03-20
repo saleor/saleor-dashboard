@@ -1,6 +1,6 @@
 import { EnvVarsStrategy } from "./EnvVarsStrategy";
 import { LocalStorageStrategy } from "./LocalStorageStrategy";
-import { MetadataStrategy } from "./MetadataStrategy";
+import { type MetadataStrategy } from "./MetadataStrategy";
 
 export { EnvVarsStrategy, LocalStorageStrategy };
 

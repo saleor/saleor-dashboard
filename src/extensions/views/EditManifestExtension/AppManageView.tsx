@@ -6,8 +6,8 @@ import { AppDeleteDialog } from "@dashboard/extensions/components/AppDeleteDialo
 import { appMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import {
-  AppDetailsUrlDialog,
-  AppDetailsUrlQueryParams,
+  type AppDetailsUrlDialog,
+  type AppDetailsUrlQueryParams,
   ExtensionsPaths,
   ExtensionsUrls,
 } from "@dashboard/extensions/urls";

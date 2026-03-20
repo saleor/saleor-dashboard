@@ -1,10 +1,11 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
-import * as React from "react";
+import type * as React from "react";
 
 import { SaleorThrobber } from "../Throbber";
 
@@ -144,7 +145,7 @@ const MediaTile = (props: MediaTileProps) => {
           </div>
         )}
       </div>
-      <img className={classes.media} src={mediaUrl} alt={media.alt!} />
+      <MediaWithFallback key={mediaUrl} className={classes.media} src={mediaUrl} alt={media.alt} />
     </div>
   );
 };

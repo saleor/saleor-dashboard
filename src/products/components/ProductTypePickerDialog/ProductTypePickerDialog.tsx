@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { FetchMoreProps } from "@dashboard/types";
-import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import { type FetchMoreProps } from "@dashboard/types";
+import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 

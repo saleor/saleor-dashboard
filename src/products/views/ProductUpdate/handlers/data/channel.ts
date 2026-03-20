@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import {
-  DatagridChange,
-  DatagridChangeOpts,
+  type DatagridChange,
+  type DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
-  ProductFragment,
-  ProductVariantChannelListingAddInput,
-  ProductVariantChannelListingUpdateInput,
+  type ProductFragment,
+  type ProductVariantChannelListingAddInput,
+  type ProductVariantChannelListingUpdateInput,
 } from "@dashboard/graphql";
 import { getColumnChannel, getColumnChannelAvailability } from "@dashboard/products/utils/datagrid";
 

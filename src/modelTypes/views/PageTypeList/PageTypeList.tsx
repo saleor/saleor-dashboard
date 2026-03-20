@@ -27,7 +27,11 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import PageTypeListPage from "../../components/PageTypeListPage";
-import { pageTypeListUrl, PageTypeListUrlDialog, PageTypeListUrlQueryParams } from "../../urls";
+import {
+  pageTypeListUrl,
+  type PageTypeListUrlDialog,
+  type PageTypeListUrlQueryParams,
+} from "../../urls";
 import { getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 

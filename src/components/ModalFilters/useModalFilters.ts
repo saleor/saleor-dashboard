@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { FilterContainer } from "../ConditionalFilter/FilterElement";
-import { InitialResponseType } from "../ConditionalFilter/types";
+import { type FilterContainer } from "../ConditionalFilter/FilterElement";
+import { type InitialResponseType } from "../ConditionalFilter/types";
 import { useContainerState } from "../ConditionalFilter/useContainerState";
 import { useFilterLeftOperandsProvider } from "../ConditionalFilter/useFilterLeftOperands";
 import { useFilterWindow } from "../ConditionalFilter/useFilterWindow";
@@ -11,11 +11,11 @@ import {
   getFilteredOptions,
 } from "./lockedFilters";
 import {
-  InitialStateAPI,
-  LockedFilter,
-  ModalFilterConfig,
-  ModalFilterContext,
-  ModalFilterResult,
+  type InitialStateAPI,
+  type LockedFilter,
+  type ModalFilterConfig,
+  type ModalFilterContext,
+  type ModalFilterResult,
 } from "./types";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 
@@ -56,8 +56,8 @@ export const useModalFilters = <
       return null;
     }
 
-    return createLockedFilterElement(lockedFilter);
-  }, [lockedFilter]);
+    return createLockedFilterElement(lockedFilter, config.staticOptions);
+  }, [lockedFilter, config.staticOptions]);
 
   // Wrap value provider with locked filter behavior
   const wrappedValueProvider = useMemo(
@@ -82,12 +82,12 @@ export const useModalFilters = <
   const { filterVariables, filterChannel } = useMemo(() => {
     const queryVars = config.createQueryVariables(
       wrappedValueProvider.value as FilterContainer,
-    ) as TQueryVariables & { channel?: { eq: string } };
+    ) as TQueryVariables & { channel?: string };
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where as TQueryVariables,
-      filterChannel: channel?.eq,
+      filterChannel: channel,
     };
   }, [wrappedValueProvider.value, config]);
 

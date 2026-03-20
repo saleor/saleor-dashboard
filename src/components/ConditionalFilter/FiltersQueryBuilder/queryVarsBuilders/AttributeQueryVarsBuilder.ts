@@ -1,25 +1,27 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 import {
   AttributeEntityTypeEnum,
-  AttributeInput,
+  type AttributeInput,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
 
 import {
   AttributeChoicesHandler,
-  Handler,
+  CategoryHandler,
+  CollectionHandler,
+  type Handler,
   PageHandler,
   ProductsHandler,
   ProductVariantHandler,
 } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement";
 import {
-  ConditionValue,
+  type ConditionValue,
   isItemOption,
   isItemOptionArray,
 } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
-import { WhereOnlyQueryVarsBuilder } from "./types";
+import { type WhereOnlyQueryVarsBuilder } from "./types";
 
 type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
@@ -44,6 +46,10 @@ export class AttributeQueryVarsBuilder
         return new ProductsHandler(client, inputValue);
       case AttributeEntityTypeEnum.PRODUCT_VARIANT:
         return new ProductVariantHandler(client, inputValue);
+      case AttributeEntityTypeEnum.CATEGORY:
+        return new CategoryHandler(client, inputValue);
+      case AttributeEntityTypeEnum.COLLECTION:
+        return new CollectionHandler(client, inputValue);
       default:
         return new AttributeChoicesHandler(client, id, inputValue);
     }

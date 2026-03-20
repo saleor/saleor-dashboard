@@ -1,5 +1,10 @@
-import { InstalledExtension } from "@dashboard/extensions/types";
-import { PluginBaseFragment } from "@dashboard/graphql";
+import { type InstalledExtension } from "@dashboard/extensions/types";
+import { type PluginBaseFragment } from "@dashboard/graphql";
+
+const HIDDEN_PLUGIN_IDS = new Set(["mirumee.webhooks"]);
+
+export const filterOutHiddenPlugins = (plugin: PluginBaseFragment) =>
+  !HIDDEN_PLUGIN_IDS.has(plugin.id);
 
 export const byActivePlugin = (plugin: PluginBaseFragment) => {
   return (

@@ -6,13 +6,13 @@ import {
   handleDeleteMultipleAttributeValues,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
+import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeInputTypeEnum,
-  AttributeValueDetailsFragment,
-  ProductFragment,
+  type AttributeValueDetailsFragment,
+  type ProductFragment,
 } from "@dashboard/graphql";
-import { FormsetData, UseFormsetOutput } from "@dashboard/hooks/useFormset";
+import { type FormsetData, type UseFormsetOutput } from "@dashboard/hooks/useFormset";
 
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   {

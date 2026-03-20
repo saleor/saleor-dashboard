@@ -2,8 +2,8 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import { Search } from "lucide-react";
+import type * as React from "react";
 import { useState } from "react";
-import * as React from "react";
 
 interface NavigatorSearchInputProps {
   onSearch: (query: string) => void;

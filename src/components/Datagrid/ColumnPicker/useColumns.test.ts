@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { AvailableColumn } from "../types";
-import { ColumnCategory, useColumns } from "./useColumns";
+import { type AvailableColumn } from "../types";
+import { type ColumnCategory, useColumns } from "./useColumns";
 
 const mockedColumns: AvailableColumn[] = [
   {

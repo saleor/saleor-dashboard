@@ -1,6 +1,5 @@
-import { PromotionDetailsQuery } from "@dashboard/graphql";
-import { ReactNode } from "react";
-import * as React from "react";
+import { type PromotionDetailsQuery } from "@dashboard/graphql";
+import { type ReactNode } from "react";
 
 import {
   getRuleConditionsOptionsDetailsMap,

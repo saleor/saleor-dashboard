@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
+import { GiftCardErrorCode, type GiftCardErrorFragment } from "@dashboard/graphql";
 import reduce from "lodash/reduce";
 
-import { GiftCardBulkCreateFormData, GiftCardBulkCreateFormErrors } from "./types";
+import { type GiftCardBulkCreateFormData, type GiftCardBulkCreateFormErrors } from "./types";
 
 const validateField = (
   {

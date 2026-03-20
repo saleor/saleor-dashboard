@@ -1,8 +1,8 @@
-import { FetchMoreProps } from "@dashboard/types";
+import { type FetchMoreProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { ResultSearchData } from "./makeTopLevelSearch";
-import { CommonSearchOpts } from "./types";
+import { type ResultSearchData } from "./makeTopLevelSearch";
+import { type CommonSearchOpts } from "./types";
 
 export const getSearchFetchMoreProps = (
   { data, loading }: CommonSearchOpts,

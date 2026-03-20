@@ -1,17 +1,17 @@
-// @ts-strict-ignore
-import moment from "moment";
-
-import { ExtendedGiftCard, GiftCardBase } from "./types";
+import { type ExtendedGiftCard, type GiftCardBase } from "./types";
 
 function isGiftCardExpired<T extends GiftCardBase>(giftCard: T): boolean {
   if (!giftCard?.expiryDate) {
     return false;
   }
 
-  return moment(giftCard?.expiryDate).isBefore(moment());
+  return new Date(giftCard.expiryDate) < new Date();
 }
 
-export function getExtendedGiftCard<T extends GiftCardBase>(giftCard?: T): ExtendedGiftCard<T> {
+export function getExtendedGiftCard<T extends GiftCardBase>(
+  giftCard?: T,
+): ExtendedGiftCard<T> | undefined {
+  // todo do not accept optional value, check for existence higher
   if (!giftCard) {
     return undefined;
   }

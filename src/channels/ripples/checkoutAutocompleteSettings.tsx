@@ -1,6 +1,6 @@
 import { DOCS_ULRS } from "@dashboard/links";
 import { rippleActionMessages } from "@dashboard/ripples/messages";
-import { Ripple } from "@dashboard/ripples/types";
+import { type Ripple } from "@dashboard/ripples/types";
 
 export const checkoutAutocompleteSettings: Ripple = {
   type: "feature",

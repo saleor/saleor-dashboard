@@ -1,4 +1,4 @@
-import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { FormattedMessage } from "react-intl";
 

@@ -1,9 +1,9 @@
 import { sortAPIRules } from "@dashboard/discounts/utils";
 import {
   PromotionDetailsDocument,
-  PromotionDetailsFragment,
-  PromotionRuleCreateMutation,
-  PromotionRuleDetailsFragment,
+  type PromotionDetailsFragment,
+  type PromotionRuleCreateMutation,
+  type PromotionRuleDetailsFragment,
   usePromotionRuleCreateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";

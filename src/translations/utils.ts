@@ -1,19 +1,18 @@
-// @ts-strict-ignore
 import {
-  AttributeTranslationDetailsFragment,
-  AttributeValueTranslatableFragment,
-  AttributeValueTranslationInput,
+  type AttributeTranslationDetailsFragment,
+  type AttributeValueTranslatableFragment,
+  type AttributeValueTranslationInput,
 } from "@dashboard/graphql";
 import {
   PageTranslationInputFieldName,
-  TranslationField,
+  type TranslationField,
   TranslationFieldType,
   TranslationInputFieldName,
 } from "@dashboard/translations/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { OutputData } from "@editorjs/editorjs";
-import { IntlShape } from "react-intl";
+import { type OutputData } from "@editorjs/editorjs";
+import { type IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";
@@ -40,10 +39,10 @@ export const getParsedTranslationInputData = ({
 };
 
 export const getTranslationFields = (
-  fields: AttributeTranslationDetailsFragment["attribute"]["choices"],
+  fields: NonNullable<NonNullable<AttributeTranslationDetailsFragment["attribute"]>["choices"]>,
   intl: IntlShape,
 ) =>
-  mapEdgesToItems(fields).map(({ id, name, translation }, attributeValueIndex) => {
+  mapEdgesToItems(fields)?.map(({ id, name, translation }, attributeValueIndex) => {
     const displayName = intl.formatMessage(messages.valueNumber, {
       number: attributeValueIndex + 1,
     });
@@ -55,14 +54,14 @@ export const getTranslationFields = (
       type: "short" as TranslationField["type"],
       value: name,
     };
-  }) || [];
+  }) ?? [];
 
 export const mapAttributeValuesToTranslationFields = (
   attributeValues: AttributeValueTranslatableFragment[],
   intl: IntlShape,
 ) =>
   attributeValues.map<TranslationField>(attrVal => ({
-    id: attrVal.attributeValue.id,
+    id: attrVal.attributeValue?.id,
     displayName: intl.formatMessage(
       {
         id: "zgqPGF",
@@ -70,7 +69,7 @@ export const mapAttributeValuesToTranslationFields = (
         description: "attribute list",
       },
       {
-        name: attrVal.attribute.name,
+        name: attrVal.attribute?.name,
       },
     ),
     name: attrVal.name,

@@ -1,10 +1,10 @@
 import {
-  CollectionErrorFragment,
-  ProductChannelListingErrorFragment,
+  type CollectionErrorFragment,
+  type ProductChannelListingErrorFragment,
   ProductErrorCode,
-  ProductErrorFragment,
+  type ProductErrorFragment,
 } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages, type IntlShape } from "react-intl";
 
 import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";
 

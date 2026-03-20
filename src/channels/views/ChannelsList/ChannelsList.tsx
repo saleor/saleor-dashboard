@@ -2,7 +2,7 @@
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
-  ChannelDeleteMutation,
+  type ChannelDeleteMutation,
   useChannelDeleteMutation,
   useChannelsQuery,
 } from "@dashboard/graphql";
@@ -14,7 +14,11 @@ import { useIntl } from "react-intl";
 
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
 import ChannelsListPage from "../../pages/ChannelsListPage";
-import { channelsListUrl, ChannelsListUrlDialog, ChannelsListUrlQueryParams } from "../../urls";
+import {
+  channelsListUrl,
+  type ChannelsListUrlDialog,
+  type ChannelsListUrlQueryParams,
+} from "../../urls";
 
 interface ChannelsListProps {
   params: ChannelsListUrlQueryParams;

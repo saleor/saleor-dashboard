@@ -1,4 +1,4 @@
-import { FilterAPIProvider } from "../FilterAPIProvider";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
 
 export const useDiscountFilterAPIProvider = (): FilterAPIProvider => {
   const fetchRightOptions = async () => {

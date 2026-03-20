@@ -1,6 +1,6 @@
 import { EventDeliveryStatusEnum, WebhookEventTypeEnum } from "@dashboard/graphql";
 
-import { sortWebhooksByDeliveries, Webhook } from "./utils";
+import { sortWebhooksByDeliveries, type Webhook } from "./utils";
 
 const DEFAULT_WEBHOOK = {
   isActive: true,

@@ -2,11 +2,11 @@
 import avatarImage from "@assets/images/avatars/avatar.png";
 import { permissions } from "@dashboard/fixtures";
 import {
-  StaffListQuery,
-  StaffMemberAvatarFragment,
-  StaffMemberDetailsFragment,
+  type StaffListQuery,
+  type StaffMemberAvatarFragment,
+  type StaffMemberDetailsFragment,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
   {

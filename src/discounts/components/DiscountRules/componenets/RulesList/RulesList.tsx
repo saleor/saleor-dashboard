@@ -1,5 +1,5 @@
-import { Rule } from "@dashboard/discounts/models";
-import { CommonError } from "@dashboard/utils/errors/common";
+import { type Rule } from "@dashboard/discounts/models";
+import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

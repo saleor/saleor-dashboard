@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 
 import {
   WebhookDetailsPage,
-  WebhookFormData,
+  type WebhookFormData,
 } from "../../components/WebhookDetailsPage/WebhookDetailsPage";
 import { useAvailableEvents } from "../../hooks/useAvailableEvents";
 

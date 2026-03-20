@@ -1,20 +1,20 @@
-import { ApolloClient } from "@apollo/client";
+import { type ApolloClient } from "@apollo/client";
 
 import {
   CategoryHandler,
   ChannelHandler,
   CollectionHandler,
   CustomerHandler,
-  Handler,
+  type Handler,
   PageTypesHandler,
   ProductsHandler,
   ProductTypeHandler,
 } from "../../API/Handler";
-import { STATIC_CONDITIONS } from "../../constants";
-import { FilterElement } from "../../FilterElement";
+import { type STATIC_CONDITIONS } from "../../constants";
+import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
-import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
+import { type BothApiQueryVarsBuilder, type FilterQuery } from "./types";
 
 const SUPPORTED_STATIC_FIELDS = new Set([
   "collection",
@@ -27,6 +27,10 @@ const SUPPORTED_STATIC_FIELDS = new Set([
 ] satisfies Array<keyof typeof STATIC_CONDITIONS>);
 
 type SupportedStaticFieldsKeys = typeof SUPPORTED_STATIC_FIELDS extends Set<infer T> ? T : never;
+
+const STATIC_WHERE_FIELD_NAME_MAP: Partial<Record<SupportedStaticFieldsKeys, string>> = {
+  pageTypes: "pageType",
+};
 
 type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
 
@@ -67,7 +71,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
   updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const { value: selectedValue } = element.condition.selected;
-    const fieldName = element.value.value;
+    const fieldName = this.getWhereFieldName(element.value.value as SupportedStaticFieldsKeys);
     let queryPart: StaticWhereQueryPart | undefined;
 
     if (isItemOption(selectedValue)) {
@@ -83,8 +87,9 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
   updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const whereQuery = this.updateWhereQueryVariables(query, element);
-    const fieldName = element.value.value;
-    const whereQueryPart = whereQuery[fieldName] as StaticWhereQueryPart;
+    const whereFieldName = this.getWhereFieldName(element.value.value as SupportedStaticFieldsKeys);
+    const filterFieldName = element.value.value;
+    const whereQueryPart = whereQuery[whereFieldName] as StaticWhereQueryPart;
 
     if (!whereQueryPart) {
       return query;
@@ -92,9 +97,13 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
 
     return {
       ...query,
-      [fieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
+      [filterFieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
         whereQueryPart as { eq?: string; oneOf?: string[] },
       ),
     };
+  }
+
+  private getWhereFieldName(fieldName: SupportedStaticFieldsKeys): string {
+    return STATIC_WHERE_FIELD_NAME_MAP[fieldName] ?? fieldName;
   }
 }

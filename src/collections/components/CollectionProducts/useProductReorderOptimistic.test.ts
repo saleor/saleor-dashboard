@@ -1,7 +1,7 @@
-import { PaginationState } from "@dashboard/hooks/usePaginator";
+import { type PaginationState } from "@dashboard/hooks/usePaginator";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { Product } from "./types";
+import { type Product } from "./types";
 import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";

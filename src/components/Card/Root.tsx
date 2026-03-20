@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 
 const borderProps: BoxProps = {
   borderWidth: 1,

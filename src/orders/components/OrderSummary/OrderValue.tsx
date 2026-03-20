@@ -1,19 +1,20 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
 import {
   DiscountValueTypeEnum,
-  OrderDetailsFragment,
-  OrderErrorFragment,
+  type OrderDetailsFragment,
+  type OrderErrorFragment,
+  type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
-import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, Popover, PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { Box, Popover, type PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import { ORDER_DISCOUNT, OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
+import { ORDER_DISCOUNT, type OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 import { OrderValueHeader } from "./OrderValueHeader";
@@ -107,16 +108,27 @@ const messages = defineMessages({
   },
 });
 
-type BaseProps = {
-  orderSubtotal: OrderDetailsFragment["subtotal"];
-  shippingMethodName: OrderDetailsFragment["shippingMethodName"];
-  shippingPrice: OrderDetailsFragment["shippingPrice"];
-  orderTotal: OrderDetailsFragment["total"];
-  discounts: OrderDetailsFragment["discounts"];
+// Fields that can change when order lines are modified (from OrderLinesUpdateFragment)
+type LineUpdateFields = {
+  orderSubtotal: OrderLinesUpdateFragment["subtotal"];
+  shippingMethodName: OrderLinesUpdateFragment["shippingMethodName"];
+  shippingPrice: OrderLinesUpdateFragment["shippingPrice"];
+  orderTotal: OrderLinesUpdateFragment["total"];
+  discounts: OrderLinesUpdateFragment["discounts"];
+  isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
+  shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
+  // shippingMethod is reset to null when isShippingRequired becomes false
+  shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
+};
+
+// Fields that don't change on line mutations (from OrderDetailsFragment)
+type StaticFields = {
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
 };
+
+type BaseProps = LineUpdateFields & StaticFields;
 
 type EditableProps = {
   isEditable: true;
@@ -130,10 +142,7 @@ type EditableProps = {
   orderDiscountRemoveStatus: OrderDiscountContextConsumerProps["orderDiscountRemoveStatus"];
   undiscountedPrice: OrderDiscountContextConsumerProps["undiscountedPrice"];
   onShippingMethodEdit: () => void;
-  shippingMethods: OrderDetailsFragment["shippingMethods"];
-  shippingMethod: OrderDetailsFragment["shippingMethod"];
   shippingAddress: OrderDetailsFragment["shippingAddress"];
-  isShippingRequired: OrderDetailsFragment["isShippingRequired"];
   errors?: OrderErrorFragment[];
 };
 

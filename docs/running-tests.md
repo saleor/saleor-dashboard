@@ -25,3 +25,9 @@ You are ready to run Playwright commands like:
 ```shell
 pnpm run e2e
 ```
+
+Note that if you have changed `BASE_URL` to run tests on different environment you will need to clear login data which is stored locally in `playwright/.auth` folder:
+
+```
+pnpm run e2e:clean-auth
+```

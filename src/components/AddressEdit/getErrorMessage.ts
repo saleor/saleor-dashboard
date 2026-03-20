@@ -1,7 +1,7 @@
-import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { type AccountErrorFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 export function getErrorMessage(
   err: AccountErrorFragment | OrderErrorFragment | undefined,

@@ -1,7 +1,7 @@
-import { Handler, NoopValuesHandler } from "../../API/Handler";
-import { FilterElement } from "../../FilterElement";
+import { type Handler, NoopValuesHandler } from "../../API/Handler";
+import { type FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
-import { BothApiQueryVarsBuilder } from "./types";
+import { type BothApiQueryVarsBuilder } from "./types";
 
 /** Builds query for MetadataFilter fields
  * for MetadataFilterInput use MetadataFilterQueryVarsBuilder
@@ -29,10 +29,18 @@ export class MetadataFilterQueryVarsBuilder
     if (isTuple(selectedValue)) {
       const [key, value] = selectedValue;
 
+      if (!key && !value) {
+        return query;
+      }
+
       return {
         ...query,
         metadata: [...existing, { key, value }],
       };
+    }
+
+    if (!selectedValue || selectedValue === "") {
+      return query;
     }
 
     // Fallback: use the label as key and value as value

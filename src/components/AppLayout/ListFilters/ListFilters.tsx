@@ -1,7 +1,7 @@
-import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter/types";
-import { FilterProps, SearchPageProps } from "@dashboard/types";
+import { type FilterErrorMessages, type IFilter } from "@dashboard/components/Filter/types";
+import { type FilterProps, type SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { ExpressionFilters } from "./components/ExpressionFilters";
 import { FiltersSelect } from "./components/FiltersSelect";
@@ -51,7 +51,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
               onFilterAttributeFocus={props.onFilterAttributeFocus}
             />
           )}
-          <Box __width="320px">
+          <Box __width="360px">
             <SearchInput
               initialSearch={initialSearch}
               placeholder={searchPlaceholder}

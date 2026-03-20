@@ -1,29 +1,29 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
 import { useRowAnchorHandler } from "@dashboard/components/Datagrid/hooks/useRowAnchorHandler";
-import { NavigatorOpts } from "@dashboard/hooks/useNavigator";
+import { type NavigatorOpts } from "@dashboard/hooks/useNavigator";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
 import DataEditor, {
-  CellClickedEventArgs,
-  DataEditorProps,
-  DataEditorRef,
-  DrawHeaderCallback,
-  EditableGridCell,
-  GridCell,
-  GridColumn,
-  GridSelection,
-  HeaderClickedEventArgs,
-  Item,
-  Theme,
+  type CellClickedEventArgs,
+  type DataEditorProps,
+  type DataEditorRef,
+  type DrawHeaderCallback,
+  type EditableGridCell,
+  type GridCell,
+  type GridColumn,
+  type GridSelection,
+  type HeaderClickedEventArgs,
+  type Item,
+  type Theme,
 } from "@glideapps/glide-data-grid";
-import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
+import { type GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
 import {
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
+  type MutableRefObject,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -32,7 +32,7 @@ import {
 } from "react";
 
 import { DashboardCard } from "../Card";
-import { CardMenuItem } from "../CardMenu";
+import { type CardMenuItem } from "../CardMenu";
 import { SaleorThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
@@ -40,7 +40,10 @@ import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
 import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
 import { headerIcons } from "./headerIcons";
-import useDatagridChange, { DatagridChange, OnDatagridChange } from "./hooks/useDatagridChange";
+import useDatagridChange, {
+  type DatagridChange,
+  type OnDatagridChange,
+} from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
 import { usePortalClasses } from "./hooks/usePortalClasses";
 import { useRowAnchor } from "./hooks/useRowAnchor";
@@ -53,7 +56,7 @@ import useStyles, {
   useDatagridTheme,
   useFullScreenStyles,
 } from "./styles";
-import { AvailableColumn } from "./types";
+import { type AvailableColumn } from "./types";
 import { preventRowClickOnSelectionCheckbox } from "./utils";
 
 export interface GetCellContentOpts {
@@ -112,7 +115,7 @@ interface DatagridProps {
   themeOverride?: Partial<Theme>;
 }
 
-const Datagrid = ({
+export const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,
@@ -371,20 +374,28 @@ const Datagrid = ({
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
-  const drawHeader: DrawHeaderCallback = useCallback(args => {
-    const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+  const drawHeader: DrawHeaderCallback = useCallback(
+    args => {
+      const { ctx, rect, isSelected, spriteManager, theme, column } = args;
 
-    if (isSelected && column.id !== "empty") {
-      const iconSize = 16;
-      const padding = 8;
-      const x = rect.x + rect.width - iconSize - padding;
-      const y = rect.y + (rect.height - iconSize) / 2;
+      if (isSelected) {
+        ctx.fillStyle = themeValues.colors.background.default1;
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+      }
 
-      spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
-    }
+      if (isSelected && column.id !== "empty") {
+        const iconSize = 16;
+        const padding = 8;
+        const x = rect.x + rect.width - iconSize - padding;
+        const y = rect.y + (rect.height - iconSize) / 2;
 
-    return false;
-  }, []);
+        spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
+      }
+
+      return false;
+    },
+    [themeValues],
+  );
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
@@ -608,5 +619,3 @@ const Datagrid = ({
     </FullScreenContainer>
   );
 };
-
-export default Datagrid;

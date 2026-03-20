@@ -2,13 +2,13 @@
 import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
-import { AccountErrorFragment } from "@dashboard/graphql";
+import { type AccountErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Box, type Option, Text } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AddressTypeInput } from "../../types";
+import { type AddressTypeInput } from "../../types";
 
 const useStyles = makeStyles(
   {

@@ -1,11 +1,14 @@
 // @ts-strict-ignore
-import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
+import { type PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
 import { pageListUrl } from "@dashboard/modeling/urls";
-import { PageTypeListUrlQueryParams, PageTypeUrlQueryParams } from "@dashboard/modelTypes/urls";
+import {
+  type PageTypeListUrlQueryParams,
+  type PageTypeUrlQueryParams,
+} from "@dashboard/modelTypes/urls";
 import { useMemo } from "react";
 
 import * as messages from "./messages";
-import { UseTypeDeleteData, UseTypeDeleteProps } from "./types";
+import { type UseTypeDeleteData, type UseTypeDeleteProps } from "./types";
 
 type UsePageTypeDeleteProps<T = PageTypeListUrlQueryParams | PageTypeUrlQueryParams> =
   UseTypeDeleteProps<T>;

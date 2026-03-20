@@ -1,21 +1,21 @@
 // @ts-strict-ignore
 import {
   FulfillmentStatus,
-  OrderDetailsFragment,
-  OrderDetailsWithMetadataFragment,
-  OrderDiscountFragment,
+  type OrderDetailsFragment,
+  type OrderDetailsWithMetadataFragment,
+  type OrderDiscountFragment,
   OrderDiscountType,
-  OrderFulfillLineFragment,
-  OrderLineWithMetadataFragment,
-  OrderRefundDataQuery,
+  type OrderFulfillLineFragment,
+  type OrderLineWithMetadataFragment,
+  type OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { testIntlInstance } from "@test/intl";
 
-import { LineItemData } from "../components/OrderReturnPage/form";
-import { OrderRefundSharedType } from "../types";
+import { type LineItemData } from "../components/OrderReturnPage/form";
+import { type OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
   getAttributesCaption,
@@ -26,8 +26,8 @@ import {
   getReturnSelectedProductsAmount,
   getWarehousesFromOrderLines,
   mergeRepeatedOrderLines,
-  OrderLineWithStockWarehouses,
-  OrderWithTotalAndTotalCaptured,
+  type OrderLineWithStockWarehouses,
+  type OrderWithTotalAndTotalCaptured,
 } from "./data";
 
 const orderBase: OrderDetailsFragment = {

@@ -1,4 +1,4 @@
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 
 export { default } from "./Money";
 export * from "./Money";

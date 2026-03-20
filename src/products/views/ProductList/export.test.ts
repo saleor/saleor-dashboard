@@ -1,5 +1,5 @@
 import { ExportScope, FileTypesEnum, ProductFieldEnum } from "@dashboard/graphql";
-import { ExportInfoInput } from "@saleor/sdk/dist/apollo/types";
+import { type ExportInfoInput } from "@dashboard/legacy-sdk/apollo/types";
 
 import { ProductsExportParameters } from "./export";
 import { getFilterVariables } from "./filters";
@@ -43,5 +43,17 @@ describe("Passing input to product export", () => {
 
     expect(productExportParams.asExportProductsInput()).toStrictEqual(mock);
     expect(productExportParams.asExportProductsInput()).not.toHaveProperty("where");
+  });
+  it("should include search query in filter when provided", () => {
+    const mockWithSearch = {
+      ...exportParams,
+      scope: ExportScope.FILTER,
+      filter: { search: "iPhone" },
+      ids: [],
+    };
+    const productExportParams = new ProductsExportParameters(mockWithSearch);
+
+    expect(productExportParams.asExportProductsInput()).toStrictEqual(mockWithSearch);
+    expect(productExportParams.asExportProductsInput().filter).toHaveProperty("search", "iPhone");
   });
 });

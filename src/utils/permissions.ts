@@ -1,5 +1,5 @@
-import { useUser } from "@dashboard/auth";
-import { PermissionEnum } from "@dashboard/graphql";
+import { useUser } from "@dashboard/auth/useUser";
+import { type PermissionEnum } from "@dashboard/graphql";
 import { useMemo } from "react";
 
 export const useUserHasPermissions = (requiredPermissions: PermissionEnum[]) => {

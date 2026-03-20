@@ -1,8 +1,8 @@
 import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
-  PageTypeDetailsFragment,
-  PageTypeFragment,
+  type PageTypeDetailsFragment,
+  type PageTypeFragment,
 } from "@dashboard/graphql";
 
 export const pageTypes: PageTypeFragment[] = [

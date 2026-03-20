@@ -1,7 +1,7 @@
-import { CataloguePredicateAPI } from "@dashboard/discounts/types";
+import { type CataloguePredicateAPI } from "@dashboard/discounts/types";
 import {
-  PromotionDetailsQuery,
-  RuleConditionsSelectedOptionsDetailsQuery,
+  type PromotionDetailsQuery,
+  type RuleConditionsSelectedOptionsDetailsQuery,
   useRuleConditionsSelectedOptionsDetailsQuery,
 } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";

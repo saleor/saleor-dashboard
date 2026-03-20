@@ -9,7 +9,7 @@ import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pencil, Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { AttributeRowProps } from "./types";
+import { type AttributeRowProps } from "./types";
 
 interface SingleReferenceFieldProps {
   attribute: AttributeRowProps["attribute"];

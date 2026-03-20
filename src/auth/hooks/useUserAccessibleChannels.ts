@@ -1,4 +1,4 @@
-import { useUser } from "..";
+import { useUser } from "../useUser";
 
 export const useUserAccessibleChannels = () => {
   const user = useUser();

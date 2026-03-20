@@ -1,6 +1,6 @@
-import { WebhookDetailsFragment } from "@dashboard/graphql";
+import { type WebhookDetailsFragment } from "@dashboard/graphql";
 
-import { WebhookFormData } from "./WebhookDetailsPage";
+import { type WebhookFormData } from "./WebhookDetailsPage";
 
 export const getWebhookFormInitialFormValues = ({
   webhook,

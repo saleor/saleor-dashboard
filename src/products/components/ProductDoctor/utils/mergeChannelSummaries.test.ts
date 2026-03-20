@@ -1,11 +1,11 @@
 import {
   AllocationStrategyEnum,
-  ChannelFragment,
-  ProductChannelListingAddInput,
+  type ChannelFragment,
+  type ProductChannelListingAddInput,
 } from "@dashboard/graphql";
 
 import { mergeFormDataWithChannelSummaries } from "./mergeChannelSummaries";
-import { ChannelSummary } from "./types";
+import { type ChannelSummary } from "./types";
 
 const createMockSummary = (overrides?: Partial<ChannelSummary>): ChannelSummary => ({
   id: "channel-1",

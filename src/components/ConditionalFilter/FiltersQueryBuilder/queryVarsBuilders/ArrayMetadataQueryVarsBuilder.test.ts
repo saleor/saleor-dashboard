@@ -1,12 +1,12 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
 import {
-  ConditionItem,
+  type ConditionItem,
   ConditionOptions,
-  StaticElementName,
+  type StaticElementName,
 } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
-import { ConditionValue } from "../../FilterElement/ConditionValue";
+import { type ConditionValue } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { ArrayMetadataQueryVarsBuilder } from "./ArrayMetadataQueryVarsBuilder";
 

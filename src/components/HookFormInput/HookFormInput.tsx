@@ -1,9 +1,8 @@
 import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { fixedForwardRef } from "@dashboard/utils/ref";
 import { Box } from "@saleor/macaw-ui-next";
-import { ComponentProps } from "react";
-import * as React from "react";
-import { FieldValues, useController, UseControllerProps } from "react-hook-form";
+import { type ComponentProps } from "react";
+import { type FieldValues, useController, type UseControllerProps } from "react-hook-form";
 
 import { InputWithPlaceholder } from "../InputWithPlaceholder/InputWithPlaceholder";
 

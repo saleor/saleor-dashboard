@@ -1,5 +1,5 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,

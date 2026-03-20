@@ -4,16 +4,16 @@ import {
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { commonStatusMessages } from "@dashboard/intl";
 import { getStatusColor, getUserName } from "@dashboard/misc";
-import { StaffMember, StaffMembers } from "@dashboard/staff/types";
-import { StaffListUrlSortField } from "@dashboard/staff/urls";
-import { Sort } from "@dashboard/types";
+import { type StaffMember, type StaffMembers } from "@dashboard/staff/types";
+import { type StaffListUrlSortField } from "@dashboard/staff/urls";
+import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 

@@ -1,11 +1,11 @@
-import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
 import { useVoucherCodesQuery } from "@dashboard/graphql";
 import useLocalPaginator, {
-  LocalPagination,
-  PaginationState,
+  type LocalPagination,
+  type PaginationState,
   useLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
-import { ListSettings } from "@dashboard/types";
+import { type ListSettings } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 interface UseVoucherCodesServerProps {

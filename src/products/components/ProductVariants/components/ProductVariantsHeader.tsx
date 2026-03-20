@@ -1,7 +1,7 @@
 import { Header as DatagridHeader } from "@dashboard/components/Datagrid/components/Header";
-import { DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
+import { type DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { VariantAttributeFragment } from "@dashboard/graphql";
+import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { productVariantAddUrl } from "@dashboard/products/urls";

@@ -2,7 +2,7 @@
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { UserFragment } from "@dashboard/graphql";
+import { type UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { useTheme } from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import VersionInfo from "../components/VersionInfo";
 import navigationCardStyles from "./navigation-card.module.css";
 import { useStyles } from "./styles";
-import { MenuSection } from "./types";
+import { type MenuSection } from "./types";
 import { hasUserMenuItemPermissions } from "./utils";
 
 interface VersionInfo {

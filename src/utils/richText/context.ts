@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { useRichText } from "./useRichText";
+import { type useRichText } from "./useRichText";
 
 export type RichTextContextValues = ReturnType<typeof useRichText>;
 

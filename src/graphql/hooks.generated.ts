@@ -198,6 +198,20 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  problems {
+    __typename
+    key
+    message
+    createdAt
+    count
+    isCritical
+    dismissed {
+      by
+      userEmail
+    }
+    updatedAt
+    id
+  }
   brand {
     logo {
       default(format: WEBP, size: 64)
@@ -310,6 +324,14 @@ export const CategoryDetailsFragmentDoc = gql`
   seoTitle
   parent {
     id
+  }
+  ancestors(first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
   }
 }
     ${MetadataFragmentDoc}`;
@@ -1555,6 +1577,170 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLineFragmentDoc = gql`
+    fragment OrderLine on OrderLine {
+  id
+  isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+  variant {
+    id
+    name
+    quantityAvailable
+    preorder {
+      endDate
+    }
+    stocks {
+      ...Stock
+    }
+    product {
+      id
+      isAvailableForPurchase
+    }
+  }
+  productName
+  productSku
+  isGift
+  quantity
+  quantityFulfilled
+  quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
+  unitDiscount {
+    amount
+    currency
+  }
+  unitDiscountValue
+  unitDiscountReason
+  unitDiscountType
+  undiscountedUnitPrice {
+    currency
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  unitPrice {
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  thumbnail {
+    url
+  }
+}
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
+export const OrderDiscountFragmentDoc = gql`
+    fragment OrderDiscount on OrderDiscount {
+  id
+  type
+  name
+  calculationMode: valueType
+  value
+  reason
+  amount {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLinesUpdateFragmentDoc = gql`
+    fragment OrderLinesUpdate on Order {
+  id
+  lines {
+    ...OrderLine
+  }
+  subtotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  undiscountedTotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  isShippingRequired
+  shippingMethod {
+    id
+  }
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingMethodName
+  collectionPointName
+  shippingMethods {
+    id
+    name
+    price {
+      ...Money
+    }
+    active
+    message
+  }
+  discounts {
+    ...OrderDiscount
+  }
+}
+    ${OrderLineFragmentDoc}
+${MoneyFragmentDoc}
+${OrderDiscountFragmentDoc}`;
 export const OrderLineMetadataFragmentDoc = gql`
     fragment OrderLineMetadata on OrderLine {
   metadata {
@@ -1631,6 +1817,21 @@ export const TransactionBaseItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseEventFragmentDoc}`;
+export const CardPaymentMethodDetailsFragmentDoc = gql`
+    fragment CardPaymentMethodDetails on CardPaymentMethodDetails {
+  name
+  brand
+  expMonth
+  expYear
+  firstDigits
+  lastDigits
+}
+    `;
+export const OtherPaymentMethodDetailsFragmentDoc = gql`
+    fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
+  name
+}
+    `;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1681,6 +1882,26 @@ export const TransactionItemFragmentDoc = gql`
   pspReference
   externalUrl
   createdAt
+  createdBy {
+    ... on App {
+      name
+      brand {
+        logo {
+          default(size: 64)
+        }
+      }
+    }
+  }
+  paymentMethodDetails {
+    name
+    __typename
+    ... on CardPaymentMethodDetails {
+      ...CardPaymentMethodDetails
+    }
+    ... on OtherPaymentMethodDetails {
+      ...OtherPaymentMethodDetails
+    }
+  }
   events {
     ...TransactionEvent
   }
@@ -1710,6 +1931,8 @@ export const TransactionItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseItemFragmentDoc}
+${CardPaymentMethodDetailsFragmentDoc}
+${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
@@ -1823,19 +2046,6 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
-export const OrderDiscountFragmentDoc = gql`
-    fragment OrderDiscount on OrderDiscount {
-  id
-  type
-  name
-  calculationMode: valueType
-  value
-  reason
-  amount {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1916,96 +2126,6 @@ export const OrderEventFragmentDoc = gql`
   }
 }
     `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    ...Warehouse
-  }
-}
-    ${WarehouseFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const OrderLineFragmentDoc = gql`
-    fragment OrderLine on OrderLine {
-  id
-  isShippingRequired
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  variant {
-    id
-    name
-    quantityAvailable
-    preorder {
-      endDate
-    }
-    stocks {
-      ...Stock
-    }
-    product {
-      id
-      isAvailableForPurchase
-    }
-  }
-  productName
-  productSku
-  isGift
-  quantity
-  quantityFulfilled
-  quantityToFulfill
-  totalPrice {
-    ...TaxedMoney
-  }
-  unitDiscount {
-    amount
-    currency
-  }
-  unitDiscountValue
-  unitDiscountReason
-  unitDiscountType
-  undiscountedUnitPrice {
-    currency
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  unitPrice {
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  thumbnail {
-    url
-  }
-}
-    ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   ...Metadata
@@ -2953,6 +3073,7 @@ export const ProductFragmentDoc = gql`
     id
     name
     hasVariants
+    isShippingRequired
   }
   weight {
     ...Weight
@@ -3287,6 +3408,8 @@ export const ShopFragmentDoc = gql`
   reserveStockDurationAuthenticatedUser
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
+  useLegacyUpdateWebhookEmission
+  preserveAllAddressFields
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
@@ -4942,35 +5065,12 @@ export const CollectionAssignProductDocument = gql`
     }
   }
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-    collection {
-      id
-      products(
-        first: $first
-        after: $after
-        before: $before
-        last: $last
-        sortBy: {field: COLLECTION, direction: ASC}
-      ) {
-        edges {
-          node {
-            ...CollectionProduct
-          }
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          startCursor
-        }
-      }
-    }
     errors {
       message
     }
   }
 }
-    ${CollectionErrorFragmentDoc}
-${CollectionProductFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}`;
 export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>;
 
 /**
@@ -5214,34 +5314,12 @@ export type CollectionChannelListingUpdateMutationOptions = Apollo.BaseMutationO
 export const ReorderProductsInCollectionDocument = gql`
     mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-    collection {
-      id
-      products(
-        first: $first
-        after: $after
-        before: $before
-        last: $last
-        sortBy: {field: COLLECTION, direction: ASC}
-      ) {
-        edges {
-          node {
-            ...CollectionProduct
-          }
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          startCursor
-        }
-      }
-    }
     errors {
       message
     }
   }
 }
-    ${CollectionProductFragmentDoc}`;
+    `;
 export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>;
 
 /**
@@ -6795,7 +6873,6 @@ export const ShopInfoDocument = gql`
       ...Language
     }
     name
-    trackInventoryByDefault
     permissions {
       ...Permission
     }
@@ -9158,6 +9235,41 @@ export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+export const AppProblemDismissDocument = gql`
+    mutation appProblemDismiss($input: AppProblemDismissInput!) {
+  appProblemDismiss(input: $input) {
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type AppProblemDismissMutationFn = Apollo.MutationFunction<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
+
+/**
+ * __useAppProblemDismissMutation__
+ *
+ * To run a mutation, you first call `useAppProblemDismissMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppProblemDismissMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appProblemDismissMutation, { data, loading, error }] = useAppProblemDismissMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppProblemDismissMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>(AppProblemDismissDocument, options);
+      }
+export type AppProblemDismissMutationHookResult = ReturnType<typeof useAppProblemDismissMutation>;
+export type AppProblemDismissMutationResult = Apollo.MutationResult<Types.AppProblemDismissMutation>;
+export type AppProblemDismissMutationOptions = Apollo.BaseMutationOptions<Types.AppProblemDismissMutation, Types.AppProblemDismissMutationVariables>;
 export const AppUpdatePermissionsDocument = gql`
     mutation AppUpdatePermissions($id: ID!, $permissions: [PermissionEnum!]!) {
   appUpdate(id: $id, input: {permissions: $permissions}) {
@@ -9413,7 +9525,6 @@ export const AppDocument = gql`
       code
       name
     }
-    dataPrivacy
     dataPrivacyUrl
     brand {
       logo {
@@ -9572,6 +9683,97 @@ export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.
 export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
 export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
+export const AppHasProblemsDocument = gql`
+    query AppHasProblems($first: Int!) {
+  apps(first: $first, filter: {isActive: true}) {
+    edges {
+      node {
+        id
+        problems(limit: 1) {
+          __typename
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppHasProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppHasProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppHasProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppHasProblemsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useAppHasProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+      }
+export function useAppHasProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>(AppHasProblemsDocument, options);
+        }
+export type AppHasProblemsQueryHookResult = ReturnType<typeof useAppHasProblemsQuery>;
+export type AppHasProblemsLazyQueryHookResult = ReturnType<typeof useAppHasProblemsLazyQuery>;
+export type AppHasProblemsQueryResult = Apollo.QueryResult<Types.AppHasProblemsQuery, Types.AppHasProblemsQueryVariables>;
+export const AppAllProblemsDocument = gql`
+    query AppAllProblems($id: ID!) {
+  app(id: $id) {
+    id
+    problems {
+      __typename
+      key
+      message
+      createdAt
+      count
+      isCritical
+      dismissed {
+        by
+        userEmail
+      }
+      updatedAt
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useAppAllProblemsQuery__
+ *
+ * To run a query within a React component, call `useAppAllProblemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppAllProblemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppAllProblemsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppAllProblemsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+      }
+export function useAppAllProblemsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>(AppAllProblemsDocument, options);
+        }
+export type AppAllProblemsQueryHookResult = ReturnType<typeof useAppAllProblemsQuery>;
+export type AppAllProblemsLazyQueryHookResult = ReturnType<typeof useAppAllProblemsLazyQuery>;
+export type AppAllProblemsQueryResult = Apollo.QueryResult<Types.AppAllProblemsQuery, Types.AppAllProblemsQueryVariables>;
 export const WebhookDetailsDocument = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {
@@ -10358,38 +10560,6 @@ export function useGiftCardDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GiftCardDetailsQueryHookResult = ReturnType<typeof useGiftCardDetailsQuery>;
 export type GiftCardDetailsLazyQueryHookResult = ReturnType<typeof useGiftCardDetailsLazyQuery>;
 export type GiftCardDetailsQueryResult = Apollo.QueryResult<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>;
-export const GiftCardCurrenciesDocument = gql`
-    query GiftCardCurrencies {
-  giftCardCurrencies
-}
-    `;
-
-/**
- * __useGiftCardCurrenciesQuery__
- *
- * To run a query within a React component, call `useGiftCardCurrenciesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardCurrenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardCurrenciesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGiftCardCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-      }
-export function useGiftCardCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-        }
-export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCurrenciesQuery>;
-export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
-export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
 export const DeleteGiftCardDocument = gql`
     mutation DeleteGiftCard($id: ID!) {
   giftCardDelete(id: $id) {
@@ -10461,7 +10631,7 @@ export type BulkDeleteGiftCardMutationHookResult = ReturnType<typeof useBulkDele
 export type BulkDeleteGiftCardMutationResult = Apollo.MutationResult<Types.BulkDeleteGiftCardMutation>;
 export type BulkDeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>;
 export const GiftCardListDocument = gql`
-    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput) {
+    query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput, $search: String) {
   giftCards(
     first: $first
     after: $after
@@ -10469,6 +10639,7 @@ export const GiftCardListDocument = gql`
     last: $last
     filter: $filter
     sortBy: $sort
+    search: $search
   ) {
     edges {
       node {
@@ -10522,6 +10693,7 @@ ${MoneyFragmentDoc}`;
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      search: // value for 'search'
  *   },
  * });
  */
@@ -10573,9 +10745,6 @@ export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTot
 export const GiftCardProductsCountDocument = gql`
     query GiftCardProductsCount($channel: String!) {
   giftCardProductTypes: productTypes(filter: {kind: GIFT_CARD}) {
-    totalCount
-  }
-  giftCardProducts: products(filter: {giftCard: true}, channel: $channel) {
     totalCount
   }
 }
@@ -11460,13 +11629,9 @@ export const OrderDiscountAddDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDiscountAddMutationFn = Apollo.MutationFunction<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>;
 
 /**
@@ -11500,13 +11665,9 @@ export const OrderDiscountDeleteDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDiscountDeleteMutationFn = Apollo.MutationFunction<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>;
 
 /**
@@ -11539,13 +11700,9 @@ export const OrderLineDiscountRemoveDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderLineDiscountRemoveMutationFn = Apollo.MutationFunction<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>;
 
 /**
@@ -11578,13 +11735,9 @@ export const OrderLineDiscountUpdateDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderLineDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>;
 
 /**
@@ -11618,13 +11771,9 @@ export const OrderDiscountUpdateDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>;
 
 /**
@@ -11732,13 +11881,9 @@ export const OrderConfirmDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderConfirmMutationFn = Apollo.MutationFunction<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>;
 
 /**
@@ -12458,15 +12603,12 @@ export const OrderLineDeleteDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
 
 /**
@@ -12500,15 +12642,12 @@ export const OrderLinesAddDocument = gql`
       ...OrderError
     }
     order {
-      id
-      lines {
-        ...OrderLine
-      }
+      ...OrderLinesUpdate
     }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
 
 /**
@@ -12545,10 +12684,14 @@ export const OrderLineUpdateDocument = gql`
     orderLine {
       ...OrderLine
     }
+    order {
+      ...OrderLinesUpdate
+    }
   }
 }
     ${OrderErrorFragmentDoc}
-${OrderLineFragmentDoc}`;
+${OrderLineFragmentDoc}
+${OrderLinesUpdateFragmentDoc}`;
 export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
 
 /**
@@ -14600,9 +14743,6 @@ export const ProductDeleteDocument = gql`
     errors {
       ...ProductError
     }
-    product {
-      id
-    }
   }
 }
     ${ProductErrorFragmentDoc}`;
@@ -14637,15 +14777,6 @@ export const ProductMediaReorderDocument = gql`
   productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
     errors {
       ...ProductError
-    }
-    product {
-      id
-      media {
-        id
-        alt
-        sortOrder
-        url
-      }
     }
   }
 }
@@ -14803,9 +14934,6 @@ export const VariantDeleteDocument = gql`
   productVariantDelete(id: $id) {
     errors {
       ...ProductError
-    }
-    productVariant {
-      id
     }
   }
 }
@@ -14973,12 +15101,6 @@ export const ProductMediaDeleteDocument = gql`
   productMediaDelete(id: $id) {
     errors {
       ...ProductError
-    }
-    product {
-      id
-      media {
-        id
-      }
     }
   }
 }
@@ -15379,12 +15501,6 @@ export const ProductVariantReorderDocument = gql`
     errors {
       ...ProductError
     }
-    product {
-      id
-      variants {
-        id
-      }
-    }
   }
 }
     ${ProductErrorFragmentDoc}`;
@@ -15468,19 +15584,12 @@ export type ProductVariantChannelListingUpdateMutationOptions = Apollo.BaseMutat
 export const ProductVariantPreorderDeactivateDocument = gql`
     mutation ProductVariantPreorderDeactivate($id: ID!) {
   productVariantPreorderDeactivate(id: $id) {
-    productVariant {
-      id
-      preorder {
-        ...Preorder
-      }
-    }
     errors {
       ...ProductError
     }
   }
 }
-    ${PreorderFragmentDoc}
-${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductVariantPreorderDeactivateMutationFn = Apollo.MutationFunction<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 
 /**
@@ -16041,16 +16150,6 @@ export type AvailableColumnAttributesLazyQueryHookResult = ReturnType<typeof use
 export type AvailableColumnAttributesQueryResult = Apollo.QueryResult<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>;
 export const GridWarehousesDocument = gql`
     query GridWarehouses($ids: [ID!]!, $hasWarehouses: Boolean!) {
-  availableWarehouses: warehouses(first: 10) {
-    edges {
-      node {
-        ...Warehouse
-      }
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
   selectedWarehouses: warehouses(first: 100, filter: {ids: $ids}) @include(if: $hasWarehouses) {
     edges {
       node {
@@ -16059,8 +16158,7 @@ export const GridWarehousesDocument = gql`
     }
   }
 }
-    ${WarehouseFragmentDoc}
-${PageInfoFragmentDoc}`;
+    ${WarehouseFragmentDoc}`;
 
 /**
  * __useGridWarehousesQuery__
@@ -16154,12 +16252,6 @@ export type ChannelDiagnosticsQueryResult = Apollo.QueryResult<Types.ChannelDiag
 export const SetRefundReasonTypeDocument = gql`
     mutation SetRefundReasonType($modelTypeId: ID!) {
   refundSettingsUpdate(input: {refundReasonReferenceType: $modelTypeId}) {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
     errors {
       message
       code
@@ -16199,12 +16291,6 @@ export const ClearRefundReasonTypeDocument = gql`
     errors {
       message
       code
-    }
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
     }
   }
 }
@@ -16711,8 +16797,8 @@ export type SearchAvailableProductAttributesQueryHookResult = ReturnType<typeof 
 export type SearchAvailableProductAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesLazyQuery>;
 export type SearchAvailableProductAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>;
 export const SearchCategoriesDocument = gql`
-    query SearchCategories($after: String, $first: Int!, $query: String!) {
-  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCategories($after: String, $first: Int!, $filter: CategoryFilterInput) {
+  search: categories(after: $after, first: $first, filter: $filter) {
     edges {
       node {
         ...CategoryWithAncestors
@@ -16740,7 +16826,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -16756,8 +16842,8 @@ export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategor
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
 export const SearchCategoriesWithTotalProductsDocument = gql`
-    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
-  search: categories(after: $after, first: $first, filter: {search: $query}) {
+    query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $filter: CategoryFilterInput) {
+  search: categories(after: $after, first: $first, filter: $filter) {
     edges {
       node {
         ...CategoryWithTotalProducts
@@ -16785,7 +16871,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -16801,11 +16887,11 @@ export type SearchCategoriesWithTotalProductsQueryHookResult = ReturnType<typeof
 export type SearchCategoriesWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCategoriesWithTotalProductsLazyQuery>;
 export type SearchCategoriesWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>;
 export const SearchCollectionsDocument = gql`
-    query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
+    query SearchCollections($after: String, $first: Int!, $channel: String, $filter: CollectionFilterInput) {
   search: collections(
     after: $after
     first: $first
-    filter: {search: $query}
+    filter: $filter
     channel: $channel
   ) {
     edges {
@@ -16835,8 +16921,8 @@ export const SearchCollectionsDocument = gql`
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
  *      channel: // value for 'channel'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -16852,11 +16938,11 @@ export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollec
 export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
 export type SearchCollectionsQueryResult = Apollo.QueryResult<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>;
 export const SearchCollectionsWithTotalProductsDocument = gql`
-    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+    query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $filter: CollectionFilterInput, $channel: String) {
   search: collections(
     after: $after
     first: $first
-    filter: {search: $query}
+    filter: $filter
     channel: $channel
   ) {
     edges {
@@ -16886,7 +16972,7 @@ ${PageInfoFragmentDoc}`;
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
- *      query: // value for 'query'
+ *      filter: // value for 'filter'
  *      channel: // value for 'channel'
  *   },
  * });
@@ -18322,12 +18408,6 @@ export const RefundSettingsUpdateDocument = gql`
       code
       message
     }
-    refundSettings {
-      reasonReferenceType {
-        name
-        id
-      }
-    }
   }
 }
     `;
@@ -18360,12 +18440,6 @@ export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Typ
 export const RefundReasonReferenceClearDocument = gql`
     mutation RefundReasonReferenceClear {
   refundReasonReferenceClear {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
     errors {
       code
       message
@@ -19164,13 +19238,9 @@ export const TaxConfigurationUpdateDocument = gql`
     errors {
       ...TaxConfigurationUpdateError
     }
-    taxConfiguration {
-      ...TaxConfiguration
-    }
   }
 }
-    ${TaxConfigurationUpdateErrorFragmentDoc}
-${TaxConfigurationFragmentDoc}`;
+    ${TaxConfigurationUpdateErrorFragmentDoc}`;
 export type TaxConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>;
 
 /**
@@ -19207,13 +19277,9 @@ export const TaxCountryConfigurationUpdateDocument = gql`
     errors {
       ...TaxCountryConfigurationUpdateError
     }
-    taxCountryConfiguration {
-      ...TaxCountryConfiguration
-    }
   }
 }
-    ${TaxCountryConfigurationUpdateErrorFragmentDoc}
-${TaxCountryConfigurationFragmentDoc}`;
+    ${TaxCountryConfigurationUpdateErrorFragmentDoc}`;
 export type TaxCountryConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
 
 /**
@@ -19247,13 +19313,9 @@ export const TaxCountryConfigurationDeleteDocument = gql`
     errors {
       ...TaxCountryConfigurationDeleteError
     }
-    taxCountryConfiguration {
-      ...TaxCountryConfiguration
-    }
   }
 }
-    ${TaxCountryConfigurationDeleteErrorFragmentDoc}
-${TaxCountryConfigurationFragmentDoc}`;
+    ${TaxCountryConfigurationDeleteErrorFragmentDoc}`;
 export type TaxCountryConfigurationDeleteMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
 
 /**

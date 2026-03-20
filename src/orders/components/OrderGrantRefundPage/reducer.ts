@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
-  OrderDetailsGrantedRefundFragment,
-  OrderDetailsGrantRefundFragment,
+  type OrderDetailsGrantedRefundFragment,
+  type OrderDetailsGrantRefundFragment,
 } from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
 

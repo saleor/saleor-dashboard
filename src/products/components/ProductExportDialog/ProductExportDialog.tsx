@@ -1,29 +1,32 @@
 // @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import makeCreatorSteps, { type Step } from "@dashboard/components/CreatorSteps";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
-  ChannelFragment,
-  ExportErrorFragment,
-  ExportProductsInput,
-  SearchAttributesQuery,
-  WarehouseFragment,
+  type ChannelFragment,
+  type ExportErrorFragment,
+  type ExportProductsInput,
+  type SearchAttributesQuery,
+  type WarehouseFragment,
 } from "@dashboard/graphql";
-import useForm, { FormChange } from "@dashboard/hooks/useForm";
+import useForm, { type FormChange } from "@dashboard/hooks/useForm";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useWizard from "@dashboard/hooks/useWizard";
 import { buttonMessages } from "@dashboard/intl";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { type DialogProps, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ExportDialogSettings, { ExportItemsQuantity } from "./ExportDialogSettings";
+import ExportDialogSettings, { type ExportItemsQuantity } from "./ExportDialogSettings";
 import { productExportDialogMessages as messages } from "./messages";
 import ProductExportDialogInfo, {
   attributeNamePrefix,

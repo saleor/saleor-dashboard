@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 
-import BulkSelect, { BulkSelectProps } from "./BulkSelect";
+import BulkSelect, { type BulkSelectProps } from "./BulkSelect";
 
 const intersectionObserverMock = () => ({
   observe: () => null,

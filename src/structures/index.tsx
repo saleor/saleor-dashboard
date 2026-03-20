@@ -1,9 +1,14 @@
 import { Route } from "@dashboard/components/Router";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { type RouteComponentProps, Switch } from "react-router-dom";
 
-import { MenuListUrlQueryParams, MenuListUrlSortField, menuPath, structuresListPath } from "./urls";
+import {
+  type MenuListUrlQueryParams,
+  MenuListUrlSortField,
+  menuPath,
+  structuresListPath,
+} from "./urls";
 import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";
 

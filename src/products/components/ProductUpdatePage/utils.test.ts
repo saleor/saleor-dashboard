@@ -1,5 +1,5 @@
 import { Locale } from "@dashboard/components/Locale";
-import { ChannelFragment, ProductChannelListingAddInput } from "@dashboard/graphql";
+import { type ChannelFragment, type ProductChannelListingAddInput } from "@dashboard/graphql";
 
 import { mapByChannel, parseCurrency } from "./utils";
 

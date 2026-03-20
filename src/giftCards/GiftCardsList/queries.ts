@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import { getOperationAST } from "graphql";
 
@@ -10,6 +9,7 @@ export const giftCardList = gql`
     $before: String
     $filter: GiftCardFilterInput
     $sort: GiftCardSortingInput
+    $search: String
   ) {
     giftCards(
       first: $first
@@ -18,6 +18,7 @@ export const giftCardList = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      search: $search
     ) {
       edges {
         node {
@@ -52,7 +53,7 @@ export const giftCardList = gql`
   }
 `;
 
-export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList).name.value;
+export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList)!.name!.value;
 
 export const giftCardTotalCount = gql`
   query GiftCardTotalCount {
@@ -65,9 +66,6 @@ export const giftCardTotalCount = gql`
 export const giftCardProductsCount = gql`
   query GiftCardProductsCount($channel: String!) {
     giftCardProductTypes: productTypes(filter: { kind: GIFT_CARD }) {
-      totalCount
-    }
-    giftCardProducts: products(filter: { giftCard: true }, channel: $channel) {
       totalCount
     }
   }

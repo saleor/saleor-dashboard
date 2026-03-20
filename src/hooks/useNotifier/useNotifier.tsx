@@ -1,4 +1,7 @@
-import { INotification, INotificationCallback } from "@dashboard/components/notifications";
+import {
+  type INotification,
+  type INotificationCallback,
+} from "@dashboard/components/notifications";
 import { Toast } from "@dashboard/components/notifications/Toast";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { commonMessages } from "@dashboard/intl";

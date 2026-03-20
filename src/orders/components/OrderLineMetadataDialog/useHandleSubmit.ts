@@ -10,8 +10,8 @@ import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
-  OrderLineAndVariantMetadataFormData,
-  OrderLineMetadataDialogData,
+  type OrderLineAndVariantMetadataFormData,
+  type OrderLineMetadataDialogData,
 } from "./OrderLineMetadataDialog";
 
 export const useHandleOrderLineMetadataSubmit = ({

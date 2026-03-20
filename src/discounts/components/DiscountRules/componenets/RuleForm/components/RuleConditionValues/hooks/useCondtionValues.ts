@@ -1,6 +1,6 @@
-import { CatalogConditions } from "@dashboard/discounts/types";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import { Option } from "@saleor/macaw-ui-next";
+import { type CatalogConditions } from "@dashboard/discounts/types";
+import { type getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { type Option } from "@saleor/macaw-ui-next";
 
 import { useCategorieOptions } from "./options/useCategorieOptions";
 import { useCollectionOptions } from "./options/useCollectionOptions";

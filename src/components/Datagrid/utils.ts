@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { DataEditorProps } from "@glideapps/glide-data-grid";
+import { type DataEditorProps } from "@glideapps/glide-data-grid";
 
 export const preventRowClickOnSelectionCheckbox = (
   rowMarkers: DataEditorProps["rowMarkers"],

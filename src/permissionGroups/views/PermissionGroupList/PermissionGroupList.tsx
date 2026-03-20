@@ -13,7 +13,7 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
-import { permissionGroupListUrl, PermissionGroupListUrlQueryParams } from "../../urls";
+import { permissionGroupListUrl, type PermissionGroupListUrlQueryParams } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
 interface PermissionGroupListProps {

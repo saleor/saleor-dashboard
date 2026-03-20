@@ -1,5 +1,5 @@
 import { getAvailabilityStatus, isPurchasable } from "./availabilityStatus";
-import { ChannelSummary } from "./types";
+import { type ChannelSummary } from "./types";
 
 const createMockSummary = (overrides?: Partial<ChannelSummary>): ChannelSummary => ({
   id: "channel-1",

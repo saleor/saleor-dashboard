@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import {
-  AssignProductAttributeMutation,
+  type AssignProductAttributeMutation,
   ProductAttributeType,
-  ProductTypeAttributeReorderMutation,
-  ProductTypeDeleteMutation,
-  ProductTypeDetailsFragment,
-  ReorderInput,
-  UnassignProductAttributeMutation,
+  type ProductTypeAttributeReorderMutation,
+  type ProductTypeDeleteMutation,
+  type ProductTypeDetailsFragment,
+  type ReorderInput,
+  type UnassignProductAttributeMutation,
   useAssignProductAttributeMutation,
   useProductTypeAttributeReorderMutation,
   useProductTypeDeleteMutation,

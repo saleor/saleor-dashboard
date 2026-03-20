@@ -1,6 +1,6 @@
 import { BasePage } from "@pages/basePage";
 import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export class RightSideDetailsPage extends BasePage {
   readonly channelSelectDialog: ChannelSelectDialog;
@@ -181,6 +181,7 @@ export class RightSideDetailsPage extends BasePage {
   }
 
   async selectCustomer(customer = "allison.freeman@example.com") {
+    await this.selectCustomerOption.locator(`text=${customer}`).waitFor({ state: "visible" });
     await this.selectCustomerOption.locator(`text=${customer}`).click();
     await this.waitForDOMToFullyLoad();
   }

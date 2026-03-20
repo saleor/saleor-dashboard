@@ -1,13 +1,14 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
+import { type ApolloClient, useApolloClient } from "@apollo/client";
 
-import { FilterContainer, FilterElement } from "../../FilterElement";
-import { FilterAPIProvider } from "../FilterAPIProvider";
+import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterAPIProvider } from "../FilterAPIProvider";
 import {
   BooleanValuesHandler,
   CurrencyHandler,
   CustomerHandler,
   GiftCardTagsHandler,
-  Handler,
+  type Handler,
+  NoopValuesHandler,
   ProductsHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";
@@ -33,6 +34,10 @@ const createAPIHandler = (
 
   if (rowType === "usedBy") {
     return new CustomerHandler(client, inputValue);
+  }
+
+  if (rowType === "code") {
+    return new NoopValuesHandler([]);
   }
 
   if (rowType === "isActive") {

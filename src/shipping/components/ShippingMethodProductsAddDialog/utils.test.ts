@@ -1,4 +1,4 @@
-import { Products } from "./types";
+import { type Products } from "./types";
 import { isProductSelected } from "./utils";
 
 describe("isProductSelected", () => {

@@ -1,10 +1,10 @@
 import { Route } from "@dashboard/components/Router";
-import { PermissionEnum } from "@dashboard/graphql";
-import { RouteProps } from "react-router-dom";
+import { type PermissionEnum } from "@dashboard/graphql";
+import { type RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
-import { useUser } from "..";
 import { hasAllPermissions, hasAnyPermissions } from "../misc";
+import { useUser } from "../useUser";
 
 type MatchPermissionType = "all" | "any";
 

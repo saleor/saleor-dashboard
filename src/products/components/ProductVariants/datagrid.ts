@@ -1,10 +1,14 @@
-import { ChannelData } from "@dashboard/channels/utils";
-import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { AttributeInputTypeEnum, ProductFragment, WarehouseFragment } from "@dashboard/graphql";
+import { type ChannelData } from "@dashboard/channels/utils";
+import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import {
+  AttributeInputTypeEnum,
+  type ProductFragment,
+  type WarehouseFragment,
+} from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination";
 import { useState } from "react";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import messages from "./messages";
 

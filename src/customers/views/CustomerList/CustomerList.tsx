@@ -27,7 +27,11 @@ import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
-import { customerListUrl, CustomerListUrlDialog, CustomerListUrlQueryParams } from "../../urls";
+import {
+  customerListUrl,
+  type CustomerListUrlDialog,
+  type CustomerListUrlQueryParams,
+} from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 

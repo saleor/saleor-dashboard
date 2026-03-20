@@ -1,6 +1,6 @@
-import { ChannelsAction } from "@dashboard/channels/urls";
-import { Channel } from "@dashboard/channels/utils";
-import { useExitFormDialog, WithFormId } from "@dashboard/components/Form";
+import { type ChannelsAction } from "@dashboard/channels/urls";
+import { type Channel } from "@dashboard/channels/utils";
+import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 

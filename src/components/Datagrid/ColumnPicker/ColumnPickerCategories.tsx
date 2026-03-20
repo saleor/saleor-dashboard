@@ -7,7 +7,7 @@ import { ColumnPickerPagination } from "./ColumnPickerPagination";
 import messages from "./messages";
 import { useAvailableColumnsQuery } from "./useAvailableColumnsQuery";
 import { useCategorySelection } from "./useCategorySelection";
-import { ColumnCategory } from "./useColumns";
+import { type ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
 interface ColumnPickerCategoriesProps {

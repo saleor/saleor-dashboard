@@ -3,9 +3,9 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
-import { IntlShape } from "react-intl";
+import { type IntlShape } from "react-intl";
 
-import { CardMenuItem } from "../../../components/CardMenu";
+import { type CardMenuItem } from "../../../components/CardMenu";
 import useStyles from "../../../components/Datagrid/styles";
 import { messages } from "./messages";
 

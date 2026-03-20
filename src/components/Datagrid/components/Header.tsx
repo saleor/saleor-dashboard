@@ -1,18 +1,12 @@
-import {
-  Box,
-  Button,
-  FullscreenOffIcon,
-  FullscreenOnIcon,
-  PlusIcon,
-  Text,
-} from "@saleor/macaw-ui-next";
-import { FC, PropsWithChildren } from "react";
-import * as React from "react";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
   onToggle: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+import { Maximize, Minimize, PlusIcon } from "lucide-react";
 
 const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   isOpen,
@@ -22,7 +16,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   return (
     <Button data-test-id="button-exit-fullscreen" variant="secondary" onClick={onToggle}>
       <Box as="span" display="flex">
-        {isOpen ? <FullscreenOffIcon /> : <FullscreenOnIcon />}
+        {isOpen ? <Minimize /> : <Maximize />}
       </Box>
       {children}
     </Button>

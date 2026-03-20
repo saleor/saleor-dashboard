@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "../messages";
 import { InfoCallout } from "../primitives";
-import { ChannelSummary } from "../utils/types";
+import { type ChannelSummary } from "../utils/types";
 
 interface VisibleInListingsSectionProps {
   summary: ChannelSummary;

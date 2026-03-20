@@ -1,4 +1,4 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: "./schema-main.graphql",
@@ -12,6 +12,8 @@ const config: CodegenConfig = {
     "!./src/**/mutations.staging.ts",
     "!./src/**/fragments/*.staging.ts",
     "!./src/searches/*.staging.ts",
+    // legacy SDK has its own internal GraphQL operations
+    "!./src/legacy-sdk/**",
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {
@@ -67,6 +69,28 @@ const config: CodegenConfig = {
       preset: "import-types",
       presetConfig: {
         typesPath: "./types.generated",
+      },
+    },
+    "./src/graphql/fabbricaTypes.generated.ts": {
+      plugins: ["typescript"],
+      config: {
+        enumsAsTypes: true,
+        avoidOptionals: true,
+        nonOptionalTypename: true,
+        scalars: {
+          Day: "number",
+          Hour: "number",
+          Date: "string",
+        },
+        namingConvention: {
+          enumValues: "change-case-all#upperCase",
+        },
+      },
+    },
+    "./src/graphql/fabbrica.generated.ts": {
+      plugins: ["@mizdra/graphql-codegen-typescript-fabbrica"],
+      config: {
+        typesFile: "./fabbricaTypes.generated",
       },
     },
   },

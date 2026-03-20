@@ -1,9 +1,9 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { DynamicCombobox } from "@saleor/macaw-ui-next";
-import { Control, Controller } from "react-hook-form";
+import { type Control, Controller } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { MenuItemDialogFormData, MenuItemTypeWithOptions } from "../types";
+import { type MenuItemDialogFormData, type MenuItemTypeWithOptions } from "../types";
 import { useLinkValue } from "./useLinkValue";
 
 interface MenuItemDialogLinkValueProps {

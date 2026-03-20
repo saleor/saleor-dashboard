@@ -1,4 +1,4 @@
-import { AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
+import { type AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 
 const extensionFormResponseState = atom<AllFormPayloadUpdatePayloads[]>([]);

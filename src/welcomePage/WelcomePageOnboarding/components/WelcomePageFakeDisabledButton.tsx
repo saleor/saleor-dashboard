@@ -1,4 +1,4 @@
-import { Button, ButtonProps, vars } from "@saleor/macaw-ui-next";
+import { Button, type ButtonProps, vars } from "@saleor/macaw-ui-next";
 import { forwardRef, useState } from "react";
 
 export const WelcomePageFakeDisabledButton = forwardRef<HTMLButtonElement, ButtonProps>(

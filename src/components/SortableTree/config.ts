@@ -1,7 +1,7 @@
 import {
   defaultDropAnimation,
-  DropAnimation,
-  MeasuringConfiguration,
+  type DropAnimation,
+  type MeasuringConfiguration,
   MeasuringStrategy,
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";

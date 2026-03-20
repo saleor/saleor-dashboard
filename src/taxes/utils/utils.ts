@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import {
-  CountryFragment,
-  TaxClassFragment,
-  TaxCountryConfigurationFragment,
+  type CountryFragment,
+  type TaxClassFragment,
+  type TaxCountryConfigurationFragment,
 } from "@dashboard/graphql";
 import uniqBy from "lodash/uniqBy";
 

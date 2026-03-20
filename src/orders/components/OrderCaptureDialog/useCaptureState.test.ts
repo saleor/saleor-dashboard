@@ -1,7 +1,7 @@
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { renderHook } from "@testing-library/react-hooks";
 
-import { CaptureStateInput, useCaptureState } from "./useCaptureState";
+import { type CaptureStateInput, useCaptureState } from "./useCaptureState";
 
 const createMoney = (amount: number, currency = "USD"): IMoney => ({
   amount,

@@ -1,4 +1,4 @@
-import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
+import { DashboardEventFactory, type Events } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useRef } from "react";
 
 import { createAppsDebug } from "../../utils/apps-debug";

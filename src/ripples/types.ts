@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { MessageDescriptor } from "react-intl";
+import { type ReactNode } from "react";
+import { type MessageDescriptor } from "react-intl";
 
 export type RippleType = "feature" | "improvement" | "bugfix";
 

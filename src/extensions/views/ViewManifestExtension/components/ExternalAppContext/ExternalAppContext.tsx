@@ -2,7 +2,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useContext } from "react";
 
-import { AppData, ExternalAppContext } from "./context";
+import { type AppData, ExternalAppContext } from "./context";
 
 export const useExternalApp = () => {
   const { open, setOpen, setAppData } = useContext(ExternalAppContext);

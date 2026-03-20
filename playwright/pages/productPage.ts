@@ -6,7 +6,7 @@ import { ChannelSelectDialog } from "@pages/dialogs/channelSelectDialog";
 import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
-import { Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
 import * as faker from "faker";
 import path from "path";
 
@@ -29,9 +29,7 @@ export class ProductPage extends BasePage {
   constructor(
     page: Page,
     readonly productsNames = page.getByTestId("name"),
-    readonly productAvailableInChannelsText = page.getByTestId(
-      "product-available-in-channels-text",
-    ),
+    readonly productAvailableInChannelsText = page.getByTestId("availability-card"),
     readonly createProductButton = page.getByTestId("add-product"),
     readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
     readonly exportButton = page.getByTestId("export"),

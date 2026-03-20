@@ -2,9 +2,9 @@ import { CollectionPublished } from "@dashboard/graphql";
 
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
+import { type ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
-import { ItemOption } from "../../FilterElement/ConditionValue";
+import { type ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { CollectionPublishedQueryVarsBuilder } from "./CollectionPublishedQueryVarsBuilder";
 

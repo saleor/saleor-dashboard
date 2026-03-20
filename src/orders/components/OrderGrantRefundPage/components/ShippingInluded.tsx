@@ -1,6 +1,6 @@
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import useLocale from "@dashboard/hooks/useLocale";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 import { useId } from "@reach/auto-id";
 import { Box, Skeleton, Text, Toggle } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";

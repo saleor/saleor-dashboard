@@ -1,4 +1,4 @@
-import { OrderPredicateAPI } from "@dashboard/discounts/types";
+import { type OrderPredicateAPI } from "@dashboard/discounts/types";
 
 import { prepareOrderConditions } from "./prepareConditions";
 

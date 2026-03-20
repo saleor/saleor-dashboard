@@ -1,6 +1,6 @@
-import { ExtensionData } from "@dashboard/extensions/types";
+import { type ExtensionData } from "@dashboard/extensions/types";
 import { renderHook } from "@testing-library/react-hooks";
-import * as React from "react";
+import type * as React from "react";
 
 import { useExtension } from "./useExtension";
 

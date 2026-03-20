@@ -1,6 +1,6 @@
 import { defineMessage, defineMessages } from "react-intl";
 
-import { TransactionEventType } from "./types";
+import { type TransactionEventType } from "./types";
 
 export const orderMessages = defineMessages({
   headerOrder: {

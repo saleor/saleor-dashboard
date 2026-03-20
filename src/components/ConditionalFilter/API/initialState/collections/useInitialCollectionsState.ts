@@ -1,14 +1,14 @@
 import { useApolloClient } from "@apollo/client";
-import { CollectionFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { type CollectionFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetChannelOperandsDocument,
-  _GetChannelOperandsQuery,
-  _GetChannelOperandsQueryVariables,
+  type _GetChannelOperandsQuery,
+  type _GetChannelOperandsQueryVariables,
 } from "@dashboard/graphql";
 import { useState } from "react";
 
 import { createInitialCollectionState } from "../helpers";
-import { InitialCollectionAPIResponse } from "../types";
+import { type InitialCollectionAPIResponse } from "../types";
 import { InitialCollectionStateResponse } from "./InitialCollectionState";
 
 export interface InitialCollectionAPIState {

@@ -1,6 +1,6 @@
-import { PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
 
-import { Edges, Product } from "./types";
+import { type Edges, type Product } from "./types";
 import { useCollectionId } from "./useCollectionId";
 import { useProductEdges } from "./useProductEdges";
 

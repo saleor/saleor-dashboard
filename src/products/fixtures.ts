@@ -3,17 +3,17 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  GridAttributesQuery,
-  ProductFragment,
-  ProductListQuery,
+  type GridAttributesQuery,
+  type ProductFragment,
+  type ProductListQuery,
   ProductMediaType,
-  ProductVariantCreateDataQuery,
-  ProductVariantFragment,
-  VariantAttributeFragment,
+  type ProductVariantCreateDataQuery,
+  type ProductVariantFragment,
+  type VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { ProductType } from "@saleor/sdk/dist/apollo/types";
+import { type ProductType } from "@dashboard/legacy-sdk/apollo/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -335,6 +335,7 @@ export const product: (
   productType: {
     __typename: "ProductType",
     hasVariants: true,
+    isShippingRequired: true,
     id: "pt76406",
     name: "Versatile",
     nonSelectionVariantAttributes: [
@@ -445,11 +446,6 @@ export const product: (
         },
       },
     ],
-    taxClass: {
-      __typename: "TaxClass",
-      name: "standard",
-      id: "standard",
-    },
     variantAttributes: [
       {
         __typename: "Attribute",

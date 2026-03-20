@@ -3,9 +3,9 @@ import appleTouchIcon from "@assets/favicons/apple-touch-icon.png";
 import favicon16 from "@assets/favicons/favicon-16x16.png";
 import favicon32 from "@assets/favicons/favicon-32x32.png";
 import safariPinnedTab from "@assets/favicons/safari-pinned-tab.svg";
-import { useUser } from "@dashboard/auth";
-import { ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
-import { createContext, ReactNode, useEffect } from "react";
+import { useUser } from "@dashboard/auth/useUser";
+import { type ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
+import { createContext, type ReactNode, useEffect } from "react";
 import Helmet from "react-helmet";
 
 import { useAnalytics } from "../ProductAnalytics/useAnalytics";

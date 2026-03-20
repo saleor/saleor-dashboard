@@ -100,6 +100,8 @@ describe("InstalledExtensions / hooks / usePendingInstallation", () => {
           actions: expect.any(Object),
           info: expect.any(Object),
           logo: expect.any(Object),
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
         },
         {
           id: "2",
@@ -107,6 +109,8 @@ describe("InstalledExtensions / hooks / usePendingInstallation", () => {
           actions: expect.any(Object),
           info: expect.any(Object),
           logo: expect.any(Object),
+          activeProblemCount: 0,
+          criticalProblemCount: 0,
         },
       ],
       pendingInstallationsLoading: undefined,

@@ -1,12 +1,12 @@
 import {
-  GlobalSearchQuery,
+  type GlobalSearchQuery,
   OrderChargeStatusEnum,
-  PaymentChargeStatusEnum,
+  type PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { getStatusColor, transformChargedStatus, transformPaymentStatus } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DefaultTheme } from "@saleor/macaw-ui-next";
-import { IntlShape } from "react-intl";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
+import { type IntlShape } from "react-intl";
 
 export const getPaymentLabel = (
   intl: IntlShape,

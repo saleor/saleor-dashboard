@@ -1,6 +1,6 @@
 import "./RippleAnimation.css";
 
-import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import type { CSSProperties } from "react";
 
 interface RippleAnimationProps extends BoxProps {}

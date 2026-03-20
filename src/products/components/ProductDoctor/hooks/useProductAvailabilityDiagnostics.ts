@@ -1,16 +1,16 @@
 import { useQuery } from "@apollo/client";
-import { ChannelDiagnosticsQuery } from "@dashboard/graphql";
+import { type ChannelDiagnosticsQuery } from "@dashboard/graphql";
 import { channelDiagnosticsQuery } from "@dashboard/products/queries";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
 import {
-  AvailabilityIssue,
-  ChannelDiagnosticData,
-  ChannelSummary,
-  DiagnosticsResult,
-  ProductDiagnosticData,
+  type AvailabilityIssue,
+  type ChannelDiagnosticData,
+  type ChannelSummary,
+  type DiagnosticsResult,
+  type ProductDiagnosticData,
 } from "../utils/types";
 
 interface UseProductAvailabilityDiagnosticsProps {

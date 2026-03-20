@@ -1,8 +1,8 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Multiselect } from "@dashboard/components/Combobox";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { FetchMoreProps, SearchProps } from "@dashboard/types";
-import { Box, Button, Option } from "@saleor/macaw-ui-next";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type FetchMoreProps, type SearchProps } from "@dashboard/types";
+import { Box, Button, type Option } from "@saleor/macaw-ui-next";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({

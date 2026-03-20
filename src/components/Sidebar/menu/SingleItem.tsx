@@ -3,7 +3,7 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Link } from "react-router-dom";
 
-import { SidebarMenuItem } from "./types";
+import { type SidebarMenuItem } from "./types";
 import { getMenuItemExtension, isMenuActive } from "./utils";
 
 interface Props {

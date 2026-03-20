@@ -1,9 +1,9 @@
-import useListSettings, { UseListSettings } from "@dashboard/hooks/useListSettings";
+import useListSettings, { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
-import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
+import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import { ListViews } from "@dashboard/types";
 
-import { VoucherCode } from "../../VoucherCodesDatagrid/types";
+import { type VoucherCode } from "../../VoucherCodesDatagrid/types";
 
 interface UseVoucherCodesPagination {
   pagination: LocalPagination;

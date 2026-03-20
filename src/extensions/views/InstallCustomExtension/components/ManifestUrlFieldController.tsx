@@ -1,9 +1,9 @@
 import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import { Box } from "@saleor/macaw-ui-next";
-import { ComponentProps } from "react";
-import { FieldValues, useController, UseControllerProps } from "react-hook-form";
+import { type ComponentProps } from "react";
+import { type FieldValues, useController, type UseControllerProps } from "react-hook-form";
 
-import { ExtensionInstallFormData } from "../schema";
+import { type ExtensionInstallFormData } from "../schema";
 import { ManifestErrorMessage } from "./ManifestErrorMessage/ManifestErrorMessage";
 
 type ManifestUrlFieldControllerProps<TFormValues extends FieldValues> =

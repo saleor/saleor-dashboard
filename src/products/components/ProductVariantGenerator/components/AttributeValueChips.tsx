@@ -1,6 +1,6 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { AttributeData } from "../types";
+import { type AttributeData } from "../types";
 import { AttributeHeader } from "./AttributeHeader";
 import styles from "./AttributeValueChips.module.css";
 import { AttributeValueMultiselect } from "./AttributeValueMultiselect";

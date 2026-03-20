@@ -1,5 +1,5 @@
-import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
-import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
+import { type ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import { type UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
 export interface InitialGiftCardsState {
   currency: ItemOption[];
@@ -7,6 +7,7 @@ export interface InitialGiftCardsState {
   isActive: ItemOption[];
   tags: ItemOption[];
   usedBy: ItemOption[];
+  code: ItemOption[];
 }
 
 export class InitialGiftCardsStateResponse implements InitialGiftCardsState {
@@ -16,6 +17,7 @@ export class InitialGiftCardsStateResponse implements InitialGiftCardsState {
     public isActive: ItemOption[] = [],
     public tags: ItemOption[] = [],
     public usedBy: ItemOption[] = [],
+    public code: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -44,6 +46,8 @@ export class InitialGiftCardsStateResponse implements InitialGiftCardsState {
         return this.tags;
       case "usedBy":
         return this.usedBy;
+      case "code":
+        return this.code;
       default:
         return [];
     }

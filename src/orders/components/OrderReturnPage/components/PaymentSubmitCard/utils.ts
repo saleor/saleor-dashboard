@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { OrderDetailsFragment } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
-import { OrderRefundSharedType } from "@dashboard/orders/types";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { type OrderRefundSharedType } from "@dashboard/orders/types";
 import {
   getAllFulfillmentLinesPriceSum,
   getOrderCharged,
@@ -10,11 +10,11 @@ import {
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
 } from "@dashboard/orders/utils/data";
-import { IMoney } from "@dashboard/utils/intl";
+import { type IMoney } from "@dashboard/utils/intl";
 
-import { OrderRefundFormData } from "../../../OrderRefundPage/form";
-import { LineItemData, OrderReturnFormData } from "../../form";
-import { PaymentSubmitCardValuesProps } from "./PaymentSubmitCardValues";
+import { type OrderRefundFormData } from "../../../OrderRefundPage/form";
+import { type LineItemData, type OrderReturnFormData } from "../../form";
+import { type PaymentSubmitCardValuesProps } from "./PaymentSubmitCardValues";
 
 export const getMiscellaneousAmountValues = (
   order: OrderRefundSharedType,

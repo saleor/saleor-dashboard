@@ -2,14 +2,14 @@ import avatarImg from "@assets/images/avatars/avatar.png";
 import { channels } from "@dashboard/fixtures";
 import {
   PermissionEnum,
-  PermissionGroupDetailsFragment,
+  type PermissionGroupDetailsFragment,
   PermissionGroupErrorCode,
-  PermissionGroupErrorFragment,
-  PermissionGroupFragment,
-  SearchStaffMembersQuery,
-  StaffMemberDetailsFragment,
+  type PermissionGroupErrorFragment,
+  type PermissionGroupFragment,
+  type SearchStaffMembersQuery,
+  type StaffMemberDetailsFragment,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { type RelayToFlat } from "@dashboard/types";
 
 export const permissionGroups: PermissionGroupFragment[] = [
   {

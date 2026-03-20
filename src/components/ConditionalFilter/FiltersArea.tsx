@@ -1,15 +1,15 @@
 import { Box } from "@saleor/macaw-ui-next";
-import { FC } from "react";
+import { type FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
-import { FilterContainer } from "./FilterElement";
-import { LeftOperand } from "./LeftOperandsProvider";
+import { type FilterContainer } from "./FilterElement";
+import { type LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
-import { FilterEvent, Filters, Row } from "./UI";
+import { type FilterEvent, Filters, type Row } from "./UI";
 import { useFilterContainer } from "./useFilterContainer";
 import { useFilteredOperands } from "./useFilteredOperands";
 import { useTranslate } from "./useTranslate";
-import { ErrorEntry } from "./Validation";
+import { type ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;

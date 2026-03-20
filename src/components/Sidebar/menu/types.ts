@@ -1,6 +1,6 @@
-import { PermissionEnum } from "@dashboard/graphql";
-import { Sprinkles } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
+import { type PermissionEnum } from "@dashboard/graphql";
+import { type Sprinkles } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 
 export interface SidebarMenuItem {
   label?: string | ReactNode;

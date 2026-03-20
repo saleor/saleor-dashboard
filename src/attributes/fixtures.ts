@@ -1,10 +1,10 @@
 import {
-  AttributeDetailsQuery,
+  type AttributeDetailsQuery,
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  AttributeListQuery,
+  type AttributeListQuery,
   AttributeTypeEnum,
-  ProductDetailsQuery,
+  type ProductDetailsQuery,
 } from "@dashboard/graphql";
 
 export const attribute: AttributeDetailsQuery["attribute"] = {

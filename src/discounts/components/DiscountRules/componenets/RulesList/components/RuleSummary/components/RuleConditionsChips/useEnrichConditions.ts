@@ -1,10 +1,10 @@
-import { Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale";
 import { useConditionNames } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionName/hooks/useConditionNames";
 import { useCondtionTypes } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionType/useConditionTypes";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { Condition } from "@dashboard/discounts/models";
+import { type Condition } from "@dashboard/discounts/models";
 import useLocale from "@dashboard/hooks/useLocale";
-import { IntlShape, useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { formatMoney, formatMoneyRange } from "./formatLable";

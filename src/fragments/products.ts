@@ -230,6 +230,7 @@ export const productFragmentDetails = gql`
       id
       name
       hasVariants
+      isShippingRequired
     }
     weight {
       ...Weight

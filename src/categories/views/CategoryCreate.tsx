@@ -1,6 +1,6 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  CategoryCreateMutation,
+  type CategoryCreateMutation,
   useCategoryCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
@@ -13,7 +13,7 @@ import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc"
 import { useIntl } from "react-intl";
 
 import CategoryCreatePage from "../components/CategoryCreatePage";
-import { CategoryCreateData } from "../components/CategoryCreatePage/form";
+import { type CategoryCreateData } from "../components/CategoryCreatePage/form";
 import { categoryListUrl, categoryUrl } from "../urls";
 
 interface CategoryCreateViewProps {

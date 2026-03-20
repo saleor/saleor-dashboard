@@ -1,33 +1,33 @@
 import { subtractMoney } from "@dashboard/components/Money";
 import {
-  AddressFragment,
-  AddressInput,
+  type AddressFragment,
+  type AddressInput,
   CountryCode,
-  FulfillmentFragment,
+  type FulfillmentFragment,
   FulfillmentStatus,
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  OrderDiscountFragment,
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+  type OrderDiscountFragment,
   OrderDiscountType,
-  OrderFulfillLineFragment,
-  OrderLineFragment,
-  OrderLineStockDataFragment,
-  OrderRefundDataQuery,
-  StockFragment,
-  WarehouseFragment,
+  type OrderFulfillLineFragment,
+  type OrderLineFragment,
+  type OrderLineStockDataFragment,
+  type OrderRefundDataQuery,
+  type StockFragment,
+  type WarehouseFragment,
 } from "@dashboard/graphql";
-import { FormsetData } from "@dashboard/hooks/useFormset";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
-import { IMoney } from "@dashboard/utils/intl";
-import { IntlShape } from "react-intl";
+import { type IMoney } from "@dashboard/utils/intl";
+import { type IntlShape } from "react-intl";
 
-import { LineItemData, OrderReturnFormData } from "../components/OrderReturnPage/form";
+import { type LineItemData, type OrderReturnFormData } from "../components/OrderReturnPage/form";
 import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
 } from "../components/OrderReturnPage/utils";
 import { orderDiscountTypeLabelMessages } from "../messages";
-import { OrderRefundSharedType } from "../types";
+import { type OrderRefundSharedType } from "../types";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
   NonNullable<OrderRefundDataQuery["order"]>,

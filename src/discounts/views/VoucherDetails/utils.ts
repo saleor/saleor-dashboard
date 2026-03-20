@@ -1,4 +1,4 @@
-import { VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
 
 export const getVoucherCodesToDisplay = ({
   clientVoucherCodes,

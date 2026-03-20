@@ -31,8 +31,8 @@ import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
 import {
   productTypeListUrl,
-  ProductTypeListUrlDialog,
-  ProductTypeListUrlQueryParams,
+  type ProductTypeListUrlDialog,
+  type ProductTypeListUrlQueryParams,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";

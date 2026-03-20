@@ -1,6 +1,6 @@
 import { byDuplicates } from "../persistance/byDuplicates";
-import { PersistedColumn } from "../persistance/persistedColumn";
-import { AvailableColumn } from "../types";
+import { type PersistedColumn } from "../persistance/persistedColumn";
+import { type AvailableColumn } from "../types";
 import { isValidColumn } from "./utils";
 
 type VisibleColumn = AvailableColumn | undefined;

@@ -1,5 +1,5 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { PriceFieldChangeEvent } from "@dashboard/components/PriceField";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import * as React from "react";
 
 interface ManualRefundHookProps {
