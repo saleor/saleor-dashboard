@@ -40,9 +40,7 @@ const meta: Meta<typeof OrderDraftDetailsDatagrid> = {
       </OrderLineDiscountContext.Provider>
     ),
   ],
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     lines: orderFixture.lines,
     loading: false,
