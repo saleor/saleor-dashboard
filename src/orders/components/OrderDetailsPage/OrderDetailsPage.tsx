@@ -42,7 +42,7 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
-import OrderHistory, { type FormData as HistoryFormData } from "../OrderHistory";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
