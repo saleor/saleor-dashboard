@@ -17,7 +17,7 @@ interface GiftCardTagInputProps {
   name: string;
   onChange: FormChange;
   values: Option[];
-  error: GiftCardBulkCreateFormError;
+  error?: GiftCardBulkCreateFormError;
   optional?: boolean;
   loading?: boolean;
 }
