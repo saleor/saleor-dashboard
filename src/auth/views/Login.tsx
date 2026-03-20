@@ -112,18 +112,16 @@ const LoginView = ({ params }: LoginViewProps) => {
     };
   }, []);
 
+  const isMain = isMainSchema();
+  const passwordLoginMode = externalAuthenticationsStaging?.shop?.passwordLoginMode;
+  const passwordLoginEnabled = isMain || passwordLoginMode === PasswordLoginModeEnum.ENABLED;
+
   return (
     <LoginPage
       errors={errors}
       disabled={authenticating}
       externalAuthentications={externalAuthentications?.shop?.availableExternalAuthentications}
-      passwordLoginEnabled={
-        isMainSchema() ||
-        (externalAuthenticationsStaging?.shop?.passwordLoginMode !==
-          PasswordLoginModeEnum.DISABLED &&
-          externalAuthenticationsStaging?.shop?.passwordLoginMode !==
-            PasswordLoginModeEnum.CUSTOMERS_ONLY)
-      }
+      passwordLoginEnabled={passwordLoginEnabled}
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}

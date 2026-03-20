@@ -100,6 +100,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    // Force staging type to access the new field. Once field is available in main schema, casting should be removed.
     passwordLoginMode:
       (isStagingSchema() && (shop as SiteSettingsStagingQuery["shop"])?.passwordLoginMode) ||
       PasswordLoginModeEnum.ENABLED,
