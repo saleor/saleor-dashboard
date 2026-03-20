@@ -7,9 +7,7 @@ import { VoucherListDatagrid } from "./VoucherListDatagrid";
 const meta: Meta<typeof VoucherListDatagrid> = {
   title: "Discounts/VoucherListDatagrid",
   component: VoucherListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     vouchers: voucherList,
     disabled: false,

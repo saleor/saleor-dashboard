@@ -9,9 +9,7 @@ const draftOrders = orders as any;
 const meta: Meta<typeof OrderDraftListDatagrid> = {
   title: "Orders/OrderDraftListDatagrid",
   component: OrderDraftListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     orders: draftOrders,
     disabled: false,

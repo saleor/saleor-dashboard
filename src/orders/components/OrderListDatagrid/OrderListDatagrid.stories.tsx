@@ -7,9 +7,7 @@ import { OrderListDatagrid } from "./OrderListDatagrid";
 const meta: Meta<typeof OrderListDatagrid> = {
   title: "Orders/OrderListDatagrid",
   component: OrderListDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     orders,
     disabled: false,

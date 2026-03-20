@@ -55,9 +55,7 @@ const meta: Meta<typeof ProductListDatagrid> = {
       </ConditionalFilterContext.Provider>
     ),
   ],
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   argTypes: {
     gridAttributesOpts: { table: { disable: true } },
     availableColumnsAttributesOpts: { table: { disable: true } },
