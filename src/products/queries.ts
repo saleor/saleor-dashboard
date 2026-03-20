@@ -32,9 +32,6 @@ export const productListQuery = gql`
           updatedAt
           created
           description
-          assignedAttributes {
-            ...ProductListAssignedAttribute
-          }
         }
       }
       pageInfo {
@@ -208,6 +205,7 @@ export const gridAttributes = gql`
         node {
           id
           name
+          slug
         }
       }
     }
@@ -259,6 +257,21 @@ export const gridWarehouses = gql`
       edges {
         node {
           ...Warehouse
+        }
+      }
+    }
+  }
+`;
+
+export const productListAttributeQuery = gql`
+  query ProductListAttribute($ids: [ID!]!, $slug: String!) {
+    products(where: { ids: $ids }, first: 100) {
+      edges {
+        node {
+          id
+          assignedAttribute(slug: $slug) {
+            ...ProductListAssignedAttribute
+          }
         }
       }
     }

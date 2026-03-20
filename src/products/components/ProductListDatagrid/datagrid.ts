@@ -183,6 +183,8 @@ interface GetCellContentProps {
   theme: DefaultTheme;
   locale: Locale;
   selectedChannelId?: string;
+  getAssignedAttribute?: (productId: string, attributeId: string) => unknown;
+  attributesLoading?: boolean;
 }
 
 export function createGetCellContent({
@@ -191,6 +193,8 @@ export function createGetCellContent({
   theme,
   products,
   selectedChannelId,
+  getAssignedAttribute,
+  attributesLoading,
 }: GetCellContentProps) {
   return ([column, row]: Item, { changes, getChangeIndex, added, removed }: GetCellContentOpts) => {
     const columnId = columns[column]?.id;
@@ -229,7 +233,12 @@ export function createGetCellContent({
     }
 
     if (columnId.startsWith("attribute")) {
-      return getAttributeCellContent(columnId, rowData);
+      return getAttributeCellContent(
+        columnId,
+        rowData?.id,
+        getAssignedAttribute,
+        attributesLoading,
+      );
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -376,15 +385,27 @@ function getPriceCellContent(
 
 function getAttributeCellContent(
   columnId: string,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  productId: string | undefined,
+  getAssignedAttribute?: (productId: string, attributeId: string) => unknown,
+  attributesLoading?: boolean,
 ) {
+  if (attributesLoading) {
+    return readonlyTextCell("...", true, "faded");
+  }
+
+  if (!productId || !getAssignedAttribute) {
+    return readonlyTextCell("");
+  }
+
   const attributeId = getAttributeIdFromColumnValue(columnId);
-  const assignedAttribute = rowData?.assignedAttributes.find(
-    attr => attr.attribute.id === attributeId,
-  );
+  const assignedAttribute = getAssignedAttribute(productId, attributeId);
 
   if (assignedAttribute) {
-    return readonlyTextCell(getDisplayValueFromAssignedAttribute(assignedAttribute));
+    return readonlyTextCell(
+      getDisplayValueFromAssignedAttribute(
+        assignedAttribute as Parameters<typeof getDisplayValueFromAssignedAttribute>[0],
+      ),
+    );
   }
 
   return readonlyTextCell("");

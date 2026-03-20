@@ -1213,7 +1213,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    assignedAttributes: [],
+
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -1307,7 +1307,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    assignedAttributes: [],
+
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
@@ -1403,7 +1403,7 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    assignedAttributes: [],
+
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
@@ -1501,19 +1501,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Pineapple",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -1609,19 +1596,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Coconut",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -1717,19 +1691,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Apple",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -1826,19 +1787,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Orange",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -1934,19 +1882,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Banana",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2042,19 +1977,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Bean",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2150,19 +2072,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Carrot",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2258,19 +2167,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjE2",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Sprouty",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2366,19 +2262,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2474,19 +2357,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2582,19 +2452,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2690,19 +2547,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2798,19 +2642,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -2906,19 +2737,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -3014,19 +2832,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -3122,19 +2927,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjI1",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -3230,19 +3022,6 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    assignedAttributes: [
-      {
-        __typename: "AssignedSingleChoiceAttribute" as const,
-        attribute: {
-          __typename: "Attribute" as const,
-          id: "QXR0cmlidXRlOjIz",
-        },
-        singleChoiceValue: {
-          __typename: "AssignedChoiceAttributeValue" as const,
-          name: "Cotton",
-        },
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
@@ -4045,6 +3824,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjIx",
           name: "ABV",
+          slug: "abv",
         },
       },
       {
@@ -4053,6 +3833,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI3",
           name: "Author",
+          slug: "author",
         },
       },
       {
@@ -4061,6 +3842,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjE1",
           name: "Bottle Size",
+          slug: "bottle-size",
         },
       },
       {
@@ -4069,6 +3851,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjMw",
           name: "Details",
+          slug: "details",
         },
       },
       {
@@ -4077,6 +3860,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI1",
           name: "Format",
+          slug: "format",
         },
       },
       {
@@ -4085,6 +3869,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI2",
           name: "Publisher",
+          slug: "publisher",
         },
       },
     ],

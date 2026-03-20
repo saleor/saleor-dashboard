@@ -15939,9 +15939,6 @@ export const ProductListDocument = gql`
         updatedAt
         created
         description
-        assignedAttributes {
-          ...ProductListAssignedAttribute
-        }
       }
     }
     pageInfo {
@@ -15953,8 +15950,7 @@ export const ProductListDocument = gql`
     totalCount
   }
 }
-    ${ProductForListFragmentDoc}
-${ProductListAssignedAttributeFragmentDoc}`;
+    ${ProductForListFragmentDoc}`;
 
 /**
  * __useProductListQuery__
@@ -16317,6 +16313,7 @@ export const GridAttributesDocument = gql`
       node {
         id
         name
+        slug
       }
     }
   }
@@ -16457,6 +16454,49 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const ProductListAttributeDocument = gql`
+    query ProductListAttribute($ids: [ID!]!, $slug: String!) {
+  products(where: {ids: $ids}, first: 100) {
+    edges {
+      node {
+        id
+        assignedAttribute(slug: $slug) {
+          ...ProductListAssignedAttribute
+        }
+      }
+    }
+  }
+}
+    ${ProductListAssignedAttributeFragmentDoc}`;
+
+/**
+ * __useProductListAttributeQuery__
+ *
+ * To run a query within a React component, call `useProductListAttributeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductListAttributeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductListAttributeQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useProductListAttributeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>(ProductListAttributeDocument, options);
+      }
+export function useProductListAttributeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>(ProductListAttributeDocument, options);
+        }
+export type ProductListAttributeQueryHookResult = ReturnType<typeof useProductListAttributeQuery>;
+export type ProductListAttributeLazyQueryHookResult = ReturnType<typeof useProductListAttributeLazyQuery>;
+export type ProductListAttributeQueryResult = Apollo.QueryResult<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
   channels {

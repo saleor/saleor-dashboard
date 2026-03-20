@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { type LazyQueryResult } from "@apollo/client/react";
+import { type QueryResult } from "@apollo/client/react";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -55,7 +55,7 @@ interface ProductListPageProps
     ChannelProps {
   activeAttributeSortId: string;
   currencySymbol: string;
-  gridAttributesOpts: LazyQueryResult<
+  gridAttributesOpts: QueryResult<
     GridAttributesQuery,
     Exact<{
       ids: string | string[];

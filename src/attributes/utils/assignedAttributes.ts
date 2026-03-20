@@ -1,8 +1,8 @@
-import { type ProductListQuery } from "@dashboard/graphql";
+import { type ProductListAttributeQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 
-type ProductListItems = NonNullable<RelayToFlat<ProductListQuery["products"]>>;
-type AssignedAttributeItem = ProductListItems[number]["assignedAttributes"][number];
+type ProductListAttributeItems = NonNullable<RelayToFlat<ProductListAttributeQuery["products"]>>;
+type AssignedAttributeItem = NonNullable<ProductListAttributeItems[number]["assignedAttribute"]>;
 
 export function getDisplayValueFromAssignedAttribute(attr: AssignedAttributeItem): string {
   switch (attr.__typename) {
