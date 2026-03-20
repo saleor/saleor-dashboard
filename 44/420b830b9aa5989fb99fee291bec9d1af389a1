@@ -1,0 +1,25 @@
+src/products/components/ProductListDatagrid/datagrid.ts
+  d8f0a514b3fd4497 12,394
+src/attributes/utils/assignedAttributes.ts
+  d8f0a514b3fd4497 13-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "44420b830b9aa5989fb99fee291bec9d1af389a1",
+  "prompts": {
+    "d8f0a514b3fd4497": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f2225d36-b3ca-4a61-9a46-09c613bfffda",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 2,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
