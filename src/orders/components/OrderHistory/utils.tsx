@@ -2,13 +2,7 @@ import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 
 // Date group labels - keys are used internally, labels are internationalized in component
-export type DateGroupKey =
-  | "TODAY"
-  | "YESTERDAY"
-  | "LAST_7_DAYS"
-  | "LAST_30_DAYS"
-  | "OLDER"
-  | "UNKNOWN";
+type DateGroupKey = "TODAY" | "YESTERDAY" | "LAST_7_DAYS" | "LAST_30_DAYS" | "OLDER" | "UNKNOWN";
 
 const isSameDay = (date1: Date, date2: Date): boolean =>
   date1.getFullYear() === date2.getFullYear() &&
