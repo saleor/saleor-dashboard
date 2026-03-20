@@ -216,7 +216,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
         <Box
           as="span"
           className={styles.infoIcon}
-          cursor="pointer"
+          cursor="default"
           display="inline-flex"
           alignItems="center"
         >
