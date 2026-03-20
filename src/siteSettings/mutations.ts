@@ -30,12 +30,6 @@ export const refundSettingsUpdate = gql`
         code
         message
       }
-      refundSettings {
-        reasonReferenceType {
-          name
-          id
-        }
-      }
     }
   }
 `;
@@ -43,12 +37,6 @@ export const refundSettingsUpdate = gql`
 export const refundReasonReferenceClear = gql`
   mutation RefundReasonReferenceClear {
     refundReasonReferenceClear {
-      refundSettings {
-        reasonReferenceType {
-          id
-          name
-        }
-      }
       errors {
         code
         message

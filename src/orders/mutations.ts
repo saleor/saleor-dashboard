@@ -20,9 +20,6 @@ export const orderDiscountAddMutation = gql`
       errors {
         ...OrderError
       }
-      order {
-        ...OrderDetails
-      }
     }
   }
 `;
@@ -32,9 +29,6 @@ export const orderDiscountDeleteMutation = gql`
     orderDiscountDelete(discountId: $discountId) {
       errors {
         ...OrderError
-      }
-      order {
-        ...OrderDetails
       }
     }
   }
@@ -46,9 +40,6 @@ export const orderLineDiscountRemoveMutation = gql`
       errors {
         ...OrderError
       }
-      order {
-        ...OrderDetails
-      }
     }
   }
 `;
@@ -59,9 +50,6 @@ export const orderLineDiscountUpdateMutation = gql`
       errors {
         ...OrderError
       }
-      order {
-        ...OrderDetails
-      }
     }
   }
 `;
@@ -71,9 +59,6 @@ export const orderDiscountUpdateMutation = gql`
     orderDiscountUpdate(input: $input, discountId: $discountId) {
       errors {
         ...OrderError
-      }
-      order {
-        ...OrderDetails
       }
     }
   }
@@ -109,9 +94,6 @@ export const orderConfirmMutation = gql`
     orderConfirm(id: $id) {
       errors {
         ...OrderError
-      }
-      order {
-        ...OrderDetails
       }
     }
   }
