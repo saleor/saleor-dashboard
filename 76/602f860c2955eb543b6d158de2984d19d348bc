@@ -1,0 +1,23 @@
+src/fragments/shop.staging.ts
+  c68605c2c77425e6 3,5-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "76602f860c2955eb543b6d158de2984d19d348bc",
+  "prompts": {
+    "c68605c2c77425e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b847099a-a334-46dc-8e11-1b82e13fce21",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 25,
+      "total_deletions": 3,
+      "accepted_lines": 24,
+      "overriden_lines": 0
+    }
+  }
+}
