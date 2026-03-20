@@ -1,0 +1,37 @@
+.github/workflows/quality.yml
+  ae8abc8e26abc203 45,48-49,51,53-54,56,59,61-62,65-66,69
+  bbefd3ac3f5941a9 60,64,68,70-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "154c430a44a19758f59cc5ca5c9ea1a02862a9c8",
+  "prompts": {
+    "ae8abc8e26abc203": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "57d77d1d-866f-410a-bc8a-0d0c24fa9baa",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 4,
+      "accepted_lines": 18,
+      "overriden_lines": 0
+    },
+    "bbefd3ac3f5941a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e99886cc-c9ad-4117-8a4a-5bdc3e506de3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 32,
+      "total_deletions": 18,
+      "accepted_lines": 27,
+      "overriden_lines": 0
+    }
+  }
+}
