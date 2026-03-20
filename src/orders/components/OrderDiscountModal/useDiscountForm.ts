@@ -114,8 +114,8 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
 
     if (parsedValue > topAmount) {
       return isPercentage
-        ? intl.formatMessage(messages.valueBiggerThat100)
-        : intl.formatMessage(messages.valueBiggerThatPrice);
+        ? intl.formatMessage(messages.valueBiggerThan100)
+        : intl.formatMessage(messages.valueBiggerThanPrice);
     }
 
     return null;
