@@ -77,8 +77,8 @@ export const AddressFragmentDoc = gql`
   streetAddress2
 }
     `;
-export const ShopFragmentDoc = gql`
-    fragment Shop on Shop {
+export const ShopStagingFragmentDoc = gql`
+    fragment ShopStaging on Shop {
   companyAddress {
     ...Address
   }
@@ -357,7 +357,7 @@ export const ShopSettingsUpdateStagingStaging = gql`
       message
     }
     shop {
-      ...Shop
+      ...ShopStaging
     }
   }
   shopAddressUpdate(input: $addressInput) {
@@ -373,7 +373,7 @@ export const ShopSettingsUpdateStagingStaging = gql`
     }
   }
 }
-    ${ShopFragmentDoc}
+    ${ShopStagingFragmentDoc}
 ${AddressFragmentDoc}`;
 export type ShopSettingsUpdateStagingMutationFn = Apollo.MutationFunction<Types.ShopSettingsUpdateStagingMutation, Types.ShopSettingsUpdateStagingMutationVariables>;
 
@@ -405,10 +405,10 @@ export type ShopSettingsUpdateStagingMutationOptions = Apollo.BaseMutationOption
 export const SiteSettingsStagingStaging = gql`
     query SiteSettingsStaging {
   shop {
-    ...Shop
+    ...ShopStaging
   }
 }
-    ${ShopFragmentDoc}`;
+    ${ShopStagingFragmentDoc}`;
 
 /**
  * __useSiteSettingsStagingQuery__
