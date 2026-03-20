@@ -8,7 +8,7 @@ import { TimelineNote } from "./TimelineNote";
 import { type Actor } from "./types";
 
 const wrapperFriendlyDate = new Date("2018-08-07T14:30:40+00:00").toISOString();
-const mockNow = new Date("2018-08-07T14:30:45+00:00").getTime(); // 5 seconds after the note date
+const mockNow = new Date("2018-08-07T14:30:43+00:00").getTime(); // 3 seconds after the note date
 
 // Mock Date.now() to return a fixed timestamp close to our test date
 beforeAll(() => {
@@ -51,7 +51,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("now")).toBeInTheDocument();
   });
 
   it("renders app", () => {
@@ -76,7 +76,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test App")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("now")).toBeInTheDocument();
   });
 
   it("renders note id and refer id", () => {
@@ -107,7 +107,7 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
+    expect(screen.getByText("now")).toBeInTheDocument();
     // Note id is now used as HTML id attribute instead of displayed text
     expect(container.querySelector(`#timeline-note-${noteId}`)).toBeInTheDocument();
     // For edited notes, "edited" text with link icon is shown instead of "added"
