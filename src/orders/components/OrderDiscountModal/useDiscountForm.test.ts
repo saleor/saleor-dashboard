@@ -1,17 +1,7 @@
 import { DiscountValueTypeEnum } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { type ChangeEvent } from "react";
 
 import { useDiscountForm } from "./useDiscountForm";
-
-const createInputEvent = (value: string): ChangeEvent<HTMLInputElement> =>
-  ({
-    target: { value },
-  }) as ChangeEvent<HTMLInputElement>;
-
-const createFormChangeEvent = (value: string) => ({
-  target: { value, name: "discountType" },
-});
 
 describe("useDiscountForm", () => {
   const defaultMaxPrice = {
@@ -26,9 +16,11 @@ describe("useDiscountForm", () => {
       const { result } = renderHook(() => useDiscountForm({ maxPrice: defaultMaxPrice }));
 
       // Assert
-      expect(result.current.value).toBe("");
-      expect(result.current.reason).toBe("");
-      expect(result.current.calculationMode).toBe(DiscountValueTypeEnum.PERCENTAGE);
+      const data = result.current.getDiscountData();
+
+      expect(data.value).toBe(0);
+      expect(data.reason).toBe("");
+      expect(data.calculationMode).toBe(DiscountValueTypeEnum.PERCENTAGE);
       expect(result.current.valueFieldSymbol).toBe("%");
       expect(result.current.isSubmitDisabled).toBe(true);
       expect(result.current.valueErrorMsg).toBeNull();
@@ -48,9 +40,11 @@ describe("useDiscountForm", () => {
       );
 
       // Assert
-      expect(result.current.value).toBe("25");
-      expect(result.current.reason).toBe("Test discount");
-      expect(result.current.calculationMode).toBe(DiscountValueTypeEnum.PERCENTAGE);
+      const data = result.current.getDiscountData();
+
+      expect(data.value).toBe(25);
+      expect(data.reason).toBe("Test discount");
+      expect(data.calculationMode).toBe(DiscountValueTypeEnum.PERCENTAGE);
     });
 
     it("should initialize with fixed amount discount", () => {
@@ -67,8 +61,10 @@ describe("useDiscountForm", () => {
       );
 
       // Assert
-      expect(result.current.value).toBe("50");
-      expect(result.current.calculationMode).toBe(DiscountValueTypeEnum.FIXED);
+      const data = result.current.getDiscountData();
+
+      expect(data.value).toBe(50);
+      expect(data.calculationMode).toBe(DiscountValueTypeEnum.FIXED);
       expect(result.current.valueFieldSymbol).toBe("USD");
     });
   });
@@ -80,11 +76,11 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("50"));
+        result.current.setValue("value", "50");
       });
 
       // Assert
-      expect(result.current.value).toBe("50");
+      expect(result.current.getValues("value")).toBe("50");
       expect(result.current.isSubmitDisabled).toBe(false);
     });
 
@@ -94,7 +90,7 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("150"));
+        result.current.setValue("value", "150");
       });
 
       // Assert
@@ -108,11 +104,11 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetCalculationMode(createFormChangeEvent(DiscountValueTypeEnum.FIXED));
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.FIXED);
       });
 
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("150"));
+        result.current.setValue("value", "150");
       });
 
       // Assert
@@ -126,7 +122,7 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent(""));
+        result.current.setValue("value", "");
       });
 
       // Assert
@@ -141,11 +137,11 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetReason(createInputEvent("Test reason"));
+        result.current.setValue("reason", "Test reason");
       });
 
       // Assert
-      expect(result.current.reason).toBe("Test reason");
+      expect(result.current.getValues("reason")).toBe("Test reason");
     });
   });
 
@@ -156,52 +152,52 @@ describe("useDiscountForm", () => {
 
       // Act
       act(() => {
-        result.current.handleSetCalculationMode(createFormChangeEvent(DiscountValueTypeEnum.FIXED));
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.FIXED);
       });
 
       // Assert
-      expect(result.current.calculationMode).toBe(DiscountValueTypeEnum.FIXED);
+      expect(result.current.getDiscountData().calculationMode).toBe(DiscountValueTypeEnum.FIXED);
       expect(result.current.valueFieldSymbol).toBe("USD");
     });
 
     it("should convert value when switching from percentage to fixed", () => {
-      // Arrange
-      const { result } = renderHook(() => useDiscountForm({ maxPrice: defaultMaxPrice }));
+      // Arrange - use maxAmount=200 to avoid degenerate case where percentage == fixed
+      const maxPrice200 = { ...defaultMaxPrice, amount: 200 };
+      const { result } = renderHook(() => useDiscountForm({ maxPrice: maxPrice200 }));
 
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("50"));
+        result.current.setValue("value", "50");
       });
 
       // Act
       act(() => {
-        result.current.handleSetCalculationMode(createFormChangeEvent(DiscountValueTypeEnum.FIXED));
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.FIXED);
       });
 
-      // Assert
-      expect(result.current.value).toBe("50");
+      // Assert - 50% of $200 = $100
+      expect(result.current.getValues("value")).toBe("100");
     });
 
     it("should convert value when switching from fixed to percentage", () => {
-      // Arrange
-      const { result } = renderHook(() => useDiscountForm({ maxPrice: defaultMaxPrice }));
+      // Arrange - use maxAmount=200 to avoid degenerate case where percentage == fixed
+      const maxPrice200 = { ...defaultMaxPrice, amount: 200 };
+      const { result } = renderHook(() => useDiscountForm({ maxPrice: maxPrice200 }));
 
       act(() => {
-        result.current.handleSetCalculationMode(createFormChangeEvent(DiscountValueTypeEnum.FIXED));
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.FIXED);
       });
 
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("25"));
+        result.current.setValue("value", "50");
       });
 
       // Act
       act(() => {
-        result.current.handleSetCalculationMode(
-          createFormChangeEvent(DiscountValueTypeEnum.PERCENTAGE),
-        );
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.PERCENTAGE);
       });
 
-      // Assert
-      expect(result.current.value).toBe("25");
+      // Assert - $50 of $200 = 25%
+      expect(result.current.getValues("value")).toBe("25");
     });
   });
 
@@ -211,8 +207,8 @@ describe("useDiscountForm", () => {
       const { result } = renderHook(() => useDiscountForm({ maxPrice: defaultMaxPrice }));
 
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("25"));
-        result.current.handleSetReason(createInputEvent("Test reason"));
+        result.current.setValue("value", "25");
+        result.current.setValue("reason", "Test reason");
       });
 
       // Act
@@ -241,22 +237,21 @@ describe("useDiscountForm", () => {
         { initialProps: { isOpen: true } },
       );
 
-      // Modify the form
       act(() => {
-        result.current.handleSetDiscountValue(createInputEvent("50"));
-        result.current.handleSetReason(createInputEvent("Modified"));
+        result.current.setValue("value", "50");
+        result.current.setValue("reason", "Modified");
       });
 
-      expect(result.current.value).toBe("50");
-      expect(result.current.reason).toBe("Modified");
+      expect(result.current.getValues("value")).toBe("50");
+      expect(result.current.getValues("reason")).toBe("Modified");
 
       // Act - close and reopen
       rerender({ isOpen: false });
       rerender({ isOpen: true });
 
       // Assert - should reset to original values
-      expect(result.current.value).toBe("25");
-      expect(result.current.reason).toBe("Original");
+      expect(result.current.getValues("value")).toBe("25");
+      expect(result.current.getValues("reason")).toBe("Original");
     });
   });
 });

@@ -42,16 +42,12 @@ export const DiscountModalBase = ({
   const intl = useIntl();
 
   const {
-    value,
-    reason,
-    calculationMode,
-    valueErrorMsg,
+    control,
     valueFieldSymbol,
+    valueErrorMsg,
     isSubmitDisabled,
-    handleSetDiscountValue,
-    handleSetReason,
-    handleSetCalculationMode,
     getDiscountData,
+    onCalculationModeChange,
   } = useDiscountForm({
     maxPrice,
     existingDiscount,
@@ -86,14 +82,10 @@ export const DiscountModalBase = ({
         </Box>
 
         <DiscountFormFields
-          value={value}
-          reason={reason}
-          calculationMode={calculationMode}
-          valueErrorMsg={valueErrorMsg}
+          control={control}
           valueFieldSymbol={valueFieldSymbol}
-          onValueChange={handleSetDiscountValue}
-          onReasonChange={handleSetReason}
-          onCalculationModeChange={handleSetCalculationMode}
+          valueErrorMsg={valueErrorMsg}
+          onCalculationModeChange={onCalculationModeChange}
         />
 
         <DashboardModal.Actions>

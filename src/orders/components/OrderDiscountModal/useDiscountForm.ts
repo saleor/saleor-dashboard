@@ -1,7 +1,6 @@
 import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
-import { type ChangeEvent as FormChangeEvent } from "@dashboard/hooks/useForm";
-import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -9,167 +8,140 @@ import { type OrderDiscountCommonInput } from "./types";
 
 const numbersRegex = /^[0-9]*\.?[0-9]+$/;
 
+export interface DiscountFormData {
+  value: string;
+  reason: string;
+  calculationMode: DiscountValueTypeEnum;
+}
+
 interface UseDiscountFormProps {
   maxPrice: MoneyFragment;
   existingDiscount?: OrderDiscountCommonInput;
   isOpen?: boolean;
 }
 
+const parseNumericValue = (value: string): number => parseFloat(value) || 0;
+
+function convertValue(
+  value: number,
+  maxAmount: number,
+  from: DiscountValueTypeEnum,
+  to: DiscountValueTypeEnum,
+): string {
+  if (value === 0 || maxAmount === 0 || from === to) {
+    return value.toString();
+  }
+
+  const toFixed = from === DiscountValueTypeEnum.PERCENTAGE && to === DiscountValueTypeEnum.FIXED;
+
+  return toFixed ? ((value * maxAmount) / 100).toString() : ((value / maxAmount) * 100).toString();
+}
+
 export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDiscountFormProps) => {
   const intl = useIntl();
   const { currency, amount: maxAmount } = maxPrice;
-
-  const getInitialDiscountValue = useCallback(
-    (calculationMode: DiscountValueTypeEnum) => {
-      if (!existingDiscount?.value) {
-        return "";
-      }
-
-      const stringifiedValue = existingDiscount.value.toString();
-
-      if (calculationMode === DiscountValueTypeEnum.FIXED) {
-        return parseFloat(stringifiedValue).toString();
-      }
-
-      return stringifiedValue;
-    },
-    [existingDiscount?.value],
+  const previousCalculationMode = useRef<DiscountValueTypeEnum>(
+    existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE,
   );
 
-  const getInitialData = useCallback(() => {
+  const getDefaultValues = useCallback((): DiscountFormData => {
     const calculationMode = existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE;
+    let value = "";
+
+    if (existingDiscount?.value) {
+      const stringifiedValue = existingDiscount.value.toString();
+
+      value =
+        calculationMode === DiscountValueTypeEnum.FIXED
+          ? parseFloat(stringifiedValue).toString()
+          : stringifiedValue;
+    }
 
     return {
       calculationMode,
       reason: existingDiscount?.reason || "",
-      value: getInitialDiscountValue(calculationMode),
+      value,
     };
-  }, [existingDiscount?.calculationMode, existingDiscount?.reason, getInitialDiscountValue]);
+  }, [existingDiscount?.calculationMode, existingDiscount?.reason, existingDiscount?.value]);
 
-  const initialData = getInitialData();
-  const [valueErrorMsg, setValueErrorMsg] = useState<string | null>(null);
-  const [reason, setReason] = useState<string>(initialData.reason);
-  const [value, setValue] = useState<string>(initialData.value);
-  const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
-    initialData.calculationMode,
-  );
-  const previousCalculationMode = useRef(calculationMode);
+  const { control, watch, setValue, reset, getValues } = useForm<DiscountFormData>({
+    defaultValues: getDefaultValues(),
+  });
 
-  const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+  const calculationMode = watch("calculationMode");
+  const value = watch("value");
 
-  const getParsedDiscountValue = useCallback(() => parseFloat(value) || 0, [value]);
+  useEffect(() => {
+    const data = getDefaultValues();
 
-  const isAmountTooLarge = useCallback(
-    (checkValue?: string) => {
-      const topAmount = isDiscountTypePercentage ? 100 : maxAmount;
+    reset(data);
+    previousCalculationMode.current = data.calculationMode;
+  }, [isOpen, existingDiscount?.value, existingDiscount?.reason, getDefaultValues, reset]);
 
-      if (checkValue) {
-        return (parseFloat(checkValue) || 0) > topAmount;
-      }
+  const handleCalculationModeChange = useCallback(
+    (newMode: DiscountValueTypeEnum) => {
+      const currentValue = parseNumericValue(getValues("value"));
+      const converted = convertValue(
+        currentValue,
+        maxAmount,
+        previousCalculationMode.current,
+        newMode,
+      );
 
-      return getParsedDiscountValue() > topAmount;
+      setValue("value", converted);
+      setValue("calculationMode", newMode);
+      previousCalculationMode.current = newMode;
     },
-    [isDiscountTypePercentage, maxAmount, getParsedDiscountValue],
+    [getValues, maxAmount, setValue],
   );
 
-  const getErrorMessage = useCallback(
-    (checkValue: string): string | null => {
-      if (isAmountTooLarge(checkValue)) {
-        if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
-          return intl.formatMessage(messages.valueBiggerThat100);
-        }
-
-        return intl.formatMessage(messages.valueBiggerThatPrice);
-      }
-
-      if (!numbersRegex.test(checkValue)) {
-        return intl.formatMessage(messages.invalidValue);
-      }
-
+  // Validation is derived rather than stored in formState.errors because
+  // the error depends on both `value` and `calculationMode` (cross-field),
+  // and using setError/clearErrors in an effect causes infinite re-renders
+  // with react-hook-form's proxy-based formState subscriptions.
+  const valueErrorMsg = useMemo(() => {
+    if (value === "") {
       return null;
-    },
-    [isAmountTooLarge, calculationMode, intl],
-  );
+    }
 
-  const handleSetDiscountValue = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = event.target.value;
+    const isPercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+    const topAmount = isPercentage ? 100 : maxAmount;
+    const parsedValue = parseNumericValue(value);
 
-      setValueErrorMsg(getErrorMessage(newValue));
-      setValue(newValue);
-    },
-    [getErrorMessage],
-  );
+    if (!numbersRegex.test(value)) {
+      return intl.formatMessage(messages.invalidValue);
+    }
 
-  const handleSetReason = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setReason(event.target.value);
-  }, []);
+    if (parsedValue > topAmount) {
+      return isPercentage
+        ? intl.formatMessage(messages.valueBiggerThat100)
+        : intl.formatMessage(messages.valueBiggerThatPrice);
+    }
 
-  const handleSetCalculationMode = useCallback((event: FormChangeEvent) => {
-    setCalculationMode(event.target.value as DiscountValueTypeEnum);
-  }, []);
+    return null;
+  }, [value, calculationMode, maxAmount, intl]);
+
+  const parsedValue = parseNumericValue(value);
+  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
+  const isSubmitDisabled = !parsedValue || !!valueErrorMsg;
 
   const getDiscountData = useCallback(
     (): OrderDiscountCommonInput => ({
-      calculationMode,
-      reason,
-      value: getParsedDiscountValue(),
+      calculationMode: getValues("calculationMode"),
+      reason: getValues("reason"),
+      value: parseNumericValue(getValues("value")),
     }),
-    [calculationMode, reason, getParsedDiscountValue],
+    [getValues],
   );
 
-  const resetForm = useCallback(() => {
-    const data = getInitialData();
-
-    setReason(data.reason);
-    setValue(data.value);
-    setCalculationMode(data.calculationMode);
-    setValueErrorMsg(null);
-  }, [getInitialData]);
-
-  useEffect(resetForm, [resetForm, existingDiscount?.value, existingDiscount?.reason, isOpen]);
-
-  const handleValueConversion = useCallback(() => {
-    if (getParsedDiscountValue() === 0) {
-      return;
-    }
-
-    const changedFromPercentageToFixed =
-      previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
-      calculationMode === DiscountValueTypeEnum.FIXED;
-    const recalculatedValueFromPercentageToFixed = (
-      (getParsedDiscountValue() * maxAmount) /
-      100
-    ).toString();
-    const recalculatedValueFromFixedToPercentage = (
-      (getParsedDiscountValue() / maxAmount) *
-      100
-    ).toString();
-    const recalculatedValue = changedFromPercentageToFixed
-      ? recalculatedValueFromPercentageToFixed
-      : recalculatedValueFromFixedToPercentage;
-
-    setValueErrorMsg(getErrorMessage(recalculatedValue));
-    setValue(recalculatedValue);
-    previousCalculationMode.current = calculationMode;
-  }, [calculationMode, getParsedDiscountValue, maxAmount, getErrorMessage]);
-
-  useUpdateEffect(handleValueConversion, [calculationMode]);
-
-  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
-  const isSubmitDisabled = !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
-
   return {
-    value,
-    reason,
-    calculationMode,
-    valueErrorMsg,
+    control,
+    setValue,
+    getValues,
     valueFieldSymbol,
     isSubmitDisabled,
-    handleSetDiscountValue,
-    handleSetReason,
-    handleSetCalculationMode,
     getDiscountData,
-    resetForm,
+    valueErrorMsg,
+    onCalculationModeChange: handleCalculationModeChange,
   };
 };
