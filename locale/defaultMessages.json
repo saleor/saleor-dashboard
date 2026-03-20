@@ -58,6 +58,10 @@
     "context": "check to mark this account as active",
     "string": "User account active"
   },
+  "+PbHKD": {
+    "context": "dialog header",
+    "string": "Capture Payment"
+  },
   "+PclgM": {
     "context": "tabel column header",
     "string": "Total"
@@ -4681,6 +4685,10 @@
   "OhFGpX": {
     "context": "button",
     "string": "Assign members"
+  },
+  "OhdPS1": {
+    "context": "amount of refunded money",
+    "string": "Amount"
   },
   "Om1LKj": {
     "context": "stock input label",
