@@ -1,0 +1,37 @@
+src/products/queries.ts
+  d8f0a514b3fd4497 208,266-280
+src/products/components/ProductListDatagrid/ProductListDatagrid.tsx
+  d8f0a514b3fd4497 2,52,60,102-127,277-278,285-286
+src/products/views/ProductList/ProductList.tsx
+  d8f0a514b3fd4497 19,59,258,263-264
+src/products/components/ProductListDatagrid/useProductListAttributes.ts
+  d8f0a514b3fd4497 1-82,84-96
+src/attributes/utils/assignedAttributes.ts
+  d8f0a514b3fd4497 1,4-5
+src/products/components/ProductListDatagrid/datagrid.ts
+  d8f0a514b3fd4497 186-187,196-197,238-239,388-390,392-399,401,407
+src/products/components/ProductListPage/ProductListPage.tsx
+  d8f0a514b3fd4497 2,58
+src/products/fixtures.ts
+  d8f0a514b3fd4497 1216,1310,1406,3827,3836,3845,3854,3863,3872
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "7230c7dc34662dbe1d0a89c5a82ac5f697f4ea3e",
+  "prompts": {
+    "d8f0a514b3fd4497": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f2225d36-b3ca-4a61-9a46-09c613bfffda",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 330,
+      "total_deletions": 165,
+      "accepted_lines": 182,
+      "overriden_lines": 3
+    }
+  }
+}
