@@ -5,6 +5,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import {
   searchCategoriesMock,
@@ -43,17 +44,19 @@ jest.setTimeout(30000); // Timeout was increased because of error throw in updat
 
 const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => {
   return (
-    <MockedProvider
-      mocks={[
-        searchCategoriesMock,
-        searchCollectionsMock,
-        searchProductsMock,
-        searchVariantsMock,
-        variantsWithProductDataMock,
-      ]}
-    >
-      <ThemeProvider>{children}</ThemeProvider>
-    </MockedProvider>
+    <MemoryRouter>
+      <MockedProvider
+        mocks={[
+          searchCategoriesMock,
+          searchCollectionsMock,
+          searchProductsMock,
+          searchVariantsMock,
+          variantsWithProductDataMock,
+        ]}
+      >
+        <ThemeProvider>{children}</ThemeProvider>
+      </MockedProvider>
+    </MemoryRouter>
   );
 };
 
