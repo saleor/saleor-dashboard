@@ -7,7 +7,7 @@ import {
   RewardTypeEnum,
   RewardValueTypeEnum,
 } from "@dashboard/graphql";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { RulesList } from "./RulesList";
@@ -163,7 +163,7 @@ const meta: Meta<typeof RulesList> = {
   title: "Discounts / RulesList",
   component: RulesList,
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <DiscountRulesContextProvider
         discountType={PromotionTypeEnum.CATALOGUE}
         channels={[channel, inactiveChannel]}
