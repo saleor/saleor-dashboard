@@ -50,10 +50,6 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
-  "+MJW+8": {
-    "context": "button",
-    "string": "Create Discount"
-  },
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
@@ -497,10 +493,6 @@
   "0kPdlb": {
     "context": "deprecated secret key toolbar label",
     "string": "Use RS256 signature instead."
-  },
-  "0khVBN": {
-    "context": "discount type",
-    "string": "Catalog"
   },
   "0krqBj": {
     "context": "page header",
@@ -1216,6 +1208,9 @@
     "context": "button",
     "string": "Approve"
   },
+  "5A5tMT": {
+    "string": "Fixed amount"
+  },
   "5A6/2C": {
     "context": "section header",
     "string": "Availability"
@@ -1463,6 +1458,9 @@
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
+  },
+  "6WqHWi": {
+    "string": "Applies to"
   },
   "6Y1YDn": {
     "string": "Updated extension permissions"
@@ -1840,6 +1838,9 @@
   "8uLHBY": {
     "context": "unassign attribute from object",
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "8ugJiV": {
+    "string": "Reward value type"
   },
   "8uo4v1": {
     "context": "title",
@@ -2241,6 +2242,9 @@
     "context": "Empty filters text",
     "string": "Add filter to start"
   },
+  "B8MRsI": {
+    "string": "{count, plural, one {# item} other {# items}}"
+  },
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
   },
@@ -2361,6 +2365,9 @@
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
     "string": "Funds will be returned in a separate step"
+  },
+  "C0MnAi": {
+    "string": "off"
   },
   "C2N30x": {
     "context": "app has been removed",
@@ -2783,6 +2790,9 @@
   "EQjp7M": {
     "context": "Shown when country count cannot be determined",
     "string": "Countries: Unknown"
+  },
+  "EQpfkS": {
+    "string": "Finished"
   },
   "ER/yBq": {
     "context": "max price in channel",
@@ -3492,6 +3502,9 @@
   },
   "Hwp65F": {
     "string": "Draft finalized"
+  },
+  "HyMpO2": {
+    "string": "Percentage"
   },
   "I+1KzL": {
     "context": "tab name",
@@ -6202,6 +6215,9 @@
     "context": "assign categories to sale and save",
     "string": "Assign and save"
   },
+  "XMFpAP": {
+    "string": "Each rule is an alternative. Customers get the best matching discount."
+  },
   "XMrYaA": {
     "context": "checkbox label",
     "string": "User is active"
@@ -7221,6 +7237,9 @@
     "context": "section header",
     "string": "Media View"
   },
+  "cXAlMR": {
+    "string": "Scheduled"
+  },
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
   },
@@ -7779,6 +7798,9 @@
     "context": "Number of countries covered by shipping",
     "string": "{count, plural, one {# country} other {# countries}} covered"
   },
+  "gK7mIl": {
+    "string": "Discount name"
+  },
   "gKary4": {
     "context": "Description for inactive channel error",
     "string": "This channel is not active. Products cannot be purchased until the channel is activated."
@@ -8138,6 +8160,10 @@
   "iUy2dx": {
     "context": "vouchers section name",
     "string": "Vouchers"
+  },
+  "iWmfMe": {
+    "context": "button",
+    "string": "Create promotion"
   },
   "iWyoZn": {
     "context": "dialog content",
@@ -8663,10 +8689,6 @@
     "context": "table head",
     "string": "Variant Name"
   },
-  "lJXkFS": {
-    "context": "discount name",
-    "string": "Discount name"
-  },
   "lL1HTg": {
     "string": "Order marked as paid"
   },
@@ -8854,6 +8876,9 @@
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
+  },
+  "mSS92b": {
+    "string": "Untitled rule"
   },
   "mTEqYL": {
     "context": "NoChannels content",
@@ -9146,6 +9171,9 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
+  "oDI/Rp": {
+    "string": "and {count} more"
+  },
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"
@@ -9232,10 +9260,6 @@
   "ojHyj3": {
     "context": "discount value label",
     "string": "discount value"
-  },
-  "onUvP+": {
-    "context": "discount type",
-    "string": "Order"
   },
   "orvpWh": {
     "string": "Go back"
@@ -10216,6 +10240,10 @@
     "context": "Enable email confirmation",
     "string": "Enable email confirmation"
   },
+  "uT3VS+": {
+    "context": "promotion status",
+    "string": "Status"
+  },
   "uT5L4h": {
     "context": "cancel button label",
     "string": "Cancel"
@@ -10784,6 +10812,9 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xBulM3": {
+    "string": "Set reward and conditions for the selected channel"
   },
   "xFSJR1": {
     "context": "recent changes shortcut",
