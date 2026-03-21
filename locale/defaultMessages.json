@@ -6330,6 +6330,9 @@
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
   },
+  "Xu4ST7": {
+    "string": "No conditions added, click button below to create one"
+  },
   "XvbjyW": {
     "context": "add new structure",
     "string": "Create new item"
@@ -8298,9 +8301,6 @@
   "jL3caQ": {
     "context": "resent code success message",
     "string": "Code resent to customer"
-  },
-  "jL7f0z": {
-    "string": "No conditions added, click button below to create one"
   },
   "jMzyU8": {
     "context": "tax classes card header",
