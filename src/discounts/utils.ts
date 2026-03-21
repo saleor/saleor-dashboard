@@ -14,6 +14,7 @@ import {
 } from "./types";
 
 type SaleOrVoucherData = SaleDetailsQuery | VoucherDetailsQuery;
+export type PromotionStatus = "scheduled" | "active" | "finished";
 
 const getCriteria = (data: SaleOrVoucherData) => {
   if (!!data && "sale" in data) {
@@ -103,4 +104,24 @@ export function sortRules(rules: Rule[]) {
 
 export function sortAPIRules(rules: PromotionRuleDetailsFragment[]) {
   return rules.sort(sortAlphabetically("name"));
+}
+
+export function getPromotionStatus(
+  startDate: string | null | undefined,
+  endDate: string | null | undefined,
+  now = new Date(),
+): PromotionStatus {
+  const nowTimestamp = now.getTime();
+  const startTimestamp = startDate ? new Date(startDate).getTime() : null;
+  const endTimestamp = endDate ? new Date(endDate).getTime() : null;
+
+  if (startTimestamp !== null && startTimestamp > nowTimestamp) {
+    return "scheduled";
+  }
+
+  if (endTimestamp !== null && endTimestamp < nowTimestamp) {
+    return "finished";
+  }
+
+  return "active";
 }

@@ -117,16 +117,10 @@ const RewardDisplay = ({ rule, currencySymbol }: { rule: Rule; currencySymbol: s
     return (
       <Box
         display="flex"
-        alignItems="baseline"
+        alignItems="center"
         flexWrap="nowrap"
         gap={1}
         flexShrink="0"
-        borderWidth={1}
-        borderStyle="solid"
-        borderColor="default1"
-        borderRadius={4}
-        paddingX={3}
-        paddingY={1.5}
         style={{ whiteSpace: "nowrap" }}
       >
         <Text size={6} fontWeight="bold" whiteSpace="nowrap">
@@ -152,12 +146,7 @@ const RewardDisplay = ({ rule, currencySymbol }: { rule: Rule; currencySymbol: s
       alignItems="baseline"
       gap={1}
       flexShrink="0"
-      borderWidth={1}
-      borderStyle="solid"
-      borderColor="default1"
-      borderRadius={4}
-      paddingX={3}
-      paddingY={1.5}
+      style={{ whiteSpace: "nowrap" }}
     >
       <Text size={6} fontWeight="bold" data-test-id="rule-value-chip">
         {value}

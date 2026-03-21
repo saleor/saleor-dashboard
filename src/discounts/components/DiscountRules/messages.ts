@@ -5,6 +5,10 @@ export const messages = defineMessages({
     defaultMessage: "Rules",
     id: "kAAlGL",
   },
+  titleDescription: {
+    defaultMessage: "Each rule is an alternative. Customers get the best matching discount.",
+    id: "XMFpAP",
+  },
   addRule: {
     defaultMessage: "Add rule",
     id: "gzM1em",

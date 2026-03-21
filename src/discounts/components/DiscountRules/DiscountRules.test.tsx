@@ -101,6 +101,9 @@ describe("DiscountRules", () => {
       { wrapper: Wrapper },
     );
     // Assert
+    expect(
+      screen.getByText(/each rule is an alternative\. customers get the best matching discount\./i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/add your first rule to set up a promotion/i)).toBeInTheDocument();
   });
   it("should render catalog discount rules", async () => {

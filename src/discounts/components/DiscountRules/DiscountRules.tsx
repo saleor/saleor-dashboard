@@ -92,7 +92,12 @@ export const DiscountRules = <ErrorCode,>({
     >
       <DashboardCard marginBottom={20}>
         <DashboardCard.Header>
-          <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+          <DashboardCard.Title>
+            {intl.formatMessage(messages.title)}
+            <DashboardCard.Subtitle fontSize={3} color="default2">
+              {intl.formatMessage(messages.titleDescription)}
+            </DashboardCard.Subtitle>
+          </DashboardCard.Title>
           <DashboardCard.Toolbar>
             <AddButton onClick={() => setIsModalOpen(true)} />
           </DashboardCard.Toolbar>
