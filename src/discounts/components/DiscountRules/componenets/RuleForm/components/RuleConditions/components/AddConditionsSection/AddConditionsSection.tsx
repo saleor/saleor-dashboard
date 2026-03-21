@@ -15,7 +15,7 @@ export const AddConditionsSection = ({ disabled, addCondition }: AddConditionsSe
     <Box display="flex" flexDirection="column" gap={4}>
       <ModalSectionHeader>{intl.formatMessage(messages.conditions)}</ModalSectionHeader>
       <Text size={2} color="default2">
-        {intl.formatMessage(messages.noConditonsCreate)}
+        {intl.formatMessage(messages.noConditionsCreate)}
       </Text>
 
       <Button

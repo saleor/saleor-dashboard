@@ -23,7 +23,7 @@ export const NestedConditionsWarning = ({
 
         <Box display="flex" flexDirection="column">
           <Text size={2} color="default1">
-            {intl.formatMessage(messages.noHanldedConditions)}
+            {intl.formatMessage(messages.noHandledConditions)}
           </Text>
           <Text size={2} color="default1">
             {intl.formatMessage(messages.noHandledConditionsReminder)}

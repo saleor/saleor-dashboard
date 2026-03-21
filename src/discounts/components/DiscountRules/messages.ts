@@ -97,7 +97,7 @@ export const messages = defineMessages({
     id: "w7jT4W",
     defaultMessage: "No channels selected",
   },
-  noHanldedConditions: {
+  noHandledConditions: {
     id: "ckSjjv",
     defaultMessage: "Too complex conditions to display, use playground to see details.",
   },
@@ -106,9 +106,9 @@ export const messages = defineMessages({
     defaultMessage:
       "Please remember that conditions will not be updated when you change the channel.",
   },
-  noConditonsCreate: {
-    id: "Xu4ST7",
-    defaultMessage: "No conditions added, click button bellow to create one",
+  noConditionsCreate: {
+    id: "jL7f0z",
+    defaultMessage: "No conditions added, click button below to create one",
   },
   untitledRule: {
     id: "mSS92b",

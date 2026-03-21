@@ -62,10 +62,10 @@ export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps) => {
   const promotionStatus = getPromotionStatus(data.startDate, data.endDate);
   const statusLabel = intl.formatMessage(
     promotionStatus === "scheduled"
-      ? { defaultMessage: "Scheduled", id: "to13M2" }
+      ? { defaultMessage: "Scheduled", id: "cXAlMR" }
       : promotionStatus === "finished"
-        ? { defaultMessage: "Finished", id: "Qrw4A1" }
-        : { defaultMessage: "Active", id: "3FfJ0R" },
+        ? { defaultMessage: "Finished", id: "EQpfkS" }
+        : { defaultMessage: "Active", id: "3a5wL8" },
   );
   const statusColor: PillStatusType =
     promotionStatus === "active" ? "success" : promotionStatus === "scheduled" ? "info" : "neutral";
