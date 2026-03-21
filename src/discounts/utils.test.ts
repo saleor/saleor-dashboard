@@ -44,4 +44,14 @@ describe("getPromotionStatus", () => {
     // Assert
     expect(result).toBe("finished");
   });
+
+  it("returns active when dates are invalid strings", () => {
+    // Arrange
+    const now = new Date("2026-03-21T12:00:00.000Z");
+
+    // Act & Assert
+    expect(getPromotionStatus("", "", now)).toBe("active");
+    expect(getPromotionStatus("not-a-date", null, now)).toBe("active");
+    expect(getPromotionStatus(null, "garbage", now)).toBe("active");
+  });
 });

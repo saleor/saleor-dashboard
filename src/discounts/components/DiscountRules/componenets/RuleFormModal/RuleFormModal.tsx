@@ -73,15 +73,12 @@ export const RuleFormModal = ({
     });
 
     resizeObserver.observe(scrollContainer);
-    Array.from(scrollContainer.children).forEach(child => {
-      resizeObserver.observe(child);
-    });
 
     return (): void => {
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateOverflowState);
     };
-  }, [children, updateOverflowState]);
+  }, [updateOverflowState]);
 
   return (
     <DashboardModal open={true} onChange={onClose}>

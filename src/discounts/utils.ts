@@ -112,14 +112,14 @@ export function getPromotionStatus(
   now = new Date(),
 ): PromotionStatus {
   const nowTimestamp = now.getTime();
-  const startTimestamp = startDate ? new Date(startDate).getTime() : null;
-  const endTimestamp = endDate ? new Date(endDate).getTime() : null;
+  const startTimestamp = startDate ? new Date(startDate).getTime() : NaN;
+  const endTimestamp = endDate ? new Date(endDate).getTime() : NaN;
 
-  if (startTimestamp !== null && startTimestamp > nowTimestamp) {
+  if (Number.isFinite(startTimestamp) && startTimestamp > nowTimestamp) {
     return "scheduled";
   }
 
-  if (endTimestamp !== null && endTimestamp < nowTimestamp) {
+  if (Number.isFinite(endTimestamp) && endTimestamp < nowTimestamp) {
     return "finished";
   }
 
