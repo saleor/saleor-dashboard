@@ -9171,9 +9171,6 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
-  "oDI/Rp": {
-    "string": "and {count} more"
-  },
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"

@@ -105,7 +105,7 @@ const OverflowIndicator = ({ items }: { items: ConditionChipOption[] }) => {
       </Tooltip.Trigger>
       <Tooltip.Content>
         <Tooltip.Arrow />
-        <Box display="flex" flexWrap="wrap" __maxWidth="300px">
+        <Box display="flex" flexWrap="wrap" __maxWidth="460px">
           {items.map((item, index) => (
             <React.Fragment key={item.entityId ?? item.value}>
               <ConditionItemLink item={item} />
