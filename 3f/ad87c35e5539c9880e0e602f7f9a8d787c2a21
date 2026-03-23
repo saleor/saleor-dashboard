@@ -1,0 +1,23 @@
+.github/workflows/cleanup-after-release.yml
+  0abb127473c1e7b1 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "3fad87c35e5539c9880e0e602f7f9a8d787c2a21",
+  "prompts": {
+    "0abb127473c1e7b1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7079fb52-8280-4bc1-8603-dc9ac77f9c2f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
