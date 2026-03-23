@@ -1,4 +1,4 @@
-import { expect, type APIRequestContext, type FrameLocator } from "@playwright/test";
+import { expect, type FrameLocator } from "@playwright/test";
 
 type ContentAssertion = (iframe: FrameLocator, timeout: number) => Promise<void>;
 
@@ -231,75 +231,4 @@ export function resolveAppUrl(version: string, appId: string): string {
   }
 
   return `extensions/app/${encodeURIComponent(appId)}`;
-}
-
-const APPS_QUERY = `
-  query FetchAppsForSmokeTest {
-    apps(first: 100) {
-      edges {
-        node {
-          id
-          identifier
-        }
-      }
-    }
-  }
-`;
-
-interface AppsQueryResponse {
-  data: {
-    apps: {
-      edges: Array<{
-        node: {
-          id: string;
-          identifier: string | null;
-        };
-      }>;
-    };
-  };
-}
-
-let cachedAppMap: Map<string, string> | null = null;
-
-async function fetchAppMap(request: APIRequestContext): Promise<Map<string, string>> {
-  if (cachedAppMap) {
-    return cachedAppMap;
-  }
-
-  const apiUrl = process.env.API_URL;
-
-  if (!apiUrl) {
-    throw new Error("API_URL environment variable is not set");
-  }
-
-  const response = await request.post(apiUrl, {
-    data: { query: APPS_QUERY },
-  });
-
-  const json: AppsQueryResponse = await response.json();
-
-  cachedAppMap = new Map(
-    json.data.apps.edges
-      .filter(
-        (edge): edge is typeof edge & { node: { identifier: string } } =>
-          edge.node.identifier !== null,
-      )
-      .map(edge => [edge.node.identifier, edge.node.id]),
-  );
-
-  return cachedAppMap;
-}
-
-export async function fetchAppIdByIdentifier(
-  request: APIRequestContext,
-  identifier: string,
-): Promise<string> {
-  const appMap = await fetchAppMap(request);
-  const appId = appMap.get(identifier);
-
-  if (!appId) {
-    throw new Error(`App with identifier "${identifier}" not found in Saleor`);
-  }
-
-  return appId;
 }

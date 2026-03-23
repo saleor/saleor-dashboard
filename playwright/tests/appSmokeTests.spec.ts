@@ -1,9 +1,5 @@
-import {
-  APP_SMOKE_DATA,
-  fetchAppIdByIdentifier,
-  getAppsForCurrentEnv,
-  resolveAppUrl,
-} from "@data/appSmokeTestData";
+import { AppsApiService } from "@api/apps";
+import { APP_SMOKE_DATA, getAppsForCurrentEnv, resolveAppUrl } from "@data/appSmokeTestData";
 import { LOCATORS } from "@data/commonLocators";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
@@ -25,12 +21,17 @@ if (!version || apps.length === 0) {
   );
 }
 
+let appsApi: AppsApiService;
+
+test.beforeAll(({ request }) => {
+  appsApi = new AppsApiService(request);
+});
+
 apps.forEach(app => {
   test(`TC: APP_SMOKE - [${version}] ${app.name} app renders and loads configuration #e2e`, async ({
     page,
-    request,
   }) => {
-    const appId = await fetchAppIdByIdentifier(request, app.identifier);
+    const appId = await appsApi.getAppIdByIdentifier(app.identifier);
     const appUrl = resolveAppUrl(version, appId);
 
     await page.goto(appUrl);
