@@ -404,6 +404,7 @@ export const OrderValue = (props: Props): ReactNode => {
                 __gridTemplateColumns="auto auto minmax(0, 1fr)"
                 alignItems="baseline"
                 gap={0.5}
+                columnGap={1}
                 __minWidth={0}
               >
                 {cornerIcon}
