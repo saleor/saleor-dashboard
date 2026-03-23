@@ -80,7 +80,16 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
 
   const handleCalculationModeChange = useCallback(
     (newMode: DiscountValueTypeEnum) => {
-      const currentValue = parseNumericValue(getValues("value"));
+      const rawValue = getValues("value");
+
+      if (rawValue === "") {
+        setValue("calculationMode", newMode);
+        previousCalculationMode.current = newMode;
+
+        return;
+      }
+
+      const currentValue = parseNumericValue(rawValue);
       const converted = convertValue(
         currentValue,
         maxAmount,

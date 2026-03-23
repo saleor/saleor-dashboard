@@ -160,6 +160,20 @@ describe("useDiscountForm", () => {
       expect(result.current.valueFieldSymbol).toBe("USD");
     });
 
+    it("should keep empty value when switching calculation mode", () => {
+      // Arrange
+      const { result } = renderHook(() => useDiscountForm({ maxPrice: defaultMaxPrice }));
+
+      // Act
+      act(() => {
+        result.current.onCalculationModeChange(DiscountValueTypeEnum.FIXED);
+      });
+
+      // Assert
+      expect(result.current.getValues("value")).toBe("");
+      expect(result.current.getDiscountData().calculationMode).toBe(DiscountValueTypeEnum.FIXED);
+    });
+
     it("should convert value when switching from percentage to fixed", () => {
       // Arrange - use maxAmount=200 to avoid degenerate case where percentage == fixed
       const maxPrice200 = { ...defaultMaxPrice, amount: 200 };

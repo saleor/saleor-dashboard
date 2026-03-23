@@ -46,6 +46,7 @@ export class OrderFixture {
     transactions: [],
     payments: [],
     giftCards: [],
+    voucher: null,
     grantedRefunds: [],
     discounts: [],
     events: [],

@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import ActionDialog from "@dashboard/components/ActionDialog";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
@@ -13,15 +14,15 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { OrderLineDiscountModal } from "@dashboard/orders/components/OrderDiscountModal/OrderLineDiscountModal";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountModal/types";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { ExternalLink, Percent, Trash2 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
@@ -49,10 +50,15 @@ export const OrderDraftDetailsDatagrid = ({
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DRAFT_DETAILS_LIST);
   const getDiscountProviderValues = useOrderLineDiscountContext();
   const [discountedLineId, setDiscountedLineId] = useState<string | null>(null);
+  const [lineToRemoveId, setLineToRemoveId] = useState<string | null>(null);
 
   const discountProviderValues = discountedLineId
     ? getDiscountProviderValues(discountedLineId)
     : null;
+  const lineToRemove = useMemo(
+    () => lines.find(line => line.id === lineToRemoveId),
+    [lineToRemoveId, lines],
+  );
   const emptyColumn = useEmptyColumn();
   const orderDraftDetailsStaticColumns = useMemo(
     () => orderDraftDetailsStaticColumnsAdapter(emptyColumn, intl),
@@ -81,76 +87,42 @@ export const OrderDraftDetailsDatagrid = ({
   const getMenuItems = useCallback(
     index => [
       {
-        label: "",
+        label: intl.formatMessage(messages.productDetails),
+        testId: "open-product-details",
         disabled: !lines[index]?.variant?.product.id,
-        Icon: lines[index]?.variant?.product.id ? (
-          <Link
-            to={productUrl(lines[index]?.variant.product.id)}
-            data-test-id="open-product-details"
-            target="_blank"
-            className={sprinkles({
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-            })}
-          >
-            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            {intl.formatMessage(messages.productDetails)}
-          </Link>
-        ) : (
-          <Box display="flex" alignItems="center" gap={2}>
-            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            {intl.formatMessage(messages.productDetails)}
-          </Box>
-        ),
-        onSelect: () => false,
+        Icon: <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+        onSelect: () => {
+          const productId = lines[index]?.variant?.product.id;
+
+          if (productId) {
+            window.open(productUrl(productId), "_blank", "noopener,noreferrer");
+          }
+        },
       },
       {
-        label: "",
-        Icon: (() => {
-          const line = lines[index];
-          const hasManualDiscount = !!line?.unitDiscountValue;
-
-          return (
-            <Box
-              data-test-id="edit-order-line-discount"
-              as="span"
-              display="flex"
-              alignItems="center"
-              __marginLeft="-2px"
-              gap={2}
-            >
-              <Percent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-              {intl.formatMessage(hasManualDiscount ? messages.editDiscount : messages.addDiscount)}
-            </Box>
-          );
-        })(),
+        label: intl.formatMessage(
+          lines[index]?.unitDiscountValue ? messages.editDiscount : messages.addDiscount,
+        ),
+        testId: "edit-order-line-discount",
+        Icon: <Percent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
         onSelect: () => {
           setDiscountedLineId(lines[index].id);
         },
       },
       {
-        label: "",
+        label: intl.formatMessage(messages.deleteOrder),
+        testId: "delete-order-line",
         Icon: (
-          <Box
-            data-test-id="delete-order-line"
-            as="span"
-            color="critical1"
-            display="flex"
-            alignItems="center"
-            __marginLeft="-2px"
-            gap={2}
-          >
+          <Box as="span" color="critical1">
             <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            {intl.formatMessage(messages.deleteOrder)}
           </Box>
         ),
         onSelect: () => {
-          onOrderLineRemove(lines[index].id);
+          setLineToRemoveId(lines[index].id);
         },
       },
     ],
-    [intl, lines, onOrderLineRemove, setDiscountedLineId],
+    [intl, lines, setDiscountedLineId],
   );
   const handleDatagridChange = useCallback(
     async (
@@ -173,7 +145,7 @@ export const OrderDraftDetailsDatagrid = ({
   );
 
   const handleDiscountConfirm = useCallback(
-    async (discount: Parameters<typeof discountProviderValues.addOrderLineDiscount>[0]) => {
+    async (discount: OrderDiscountCommonInput) => {
       await discountProviderValues?.addOrderLineDiscount(discount);
       setDiscountedLineId(null);
     },
@@ -188,6 +160,19 @@ export const OrderDraftDetailsDatagrid = ({
   const handleDiscountClose = useCallback(() => {
     setDiscountedLineId(null);
   }, []);
+
+  const handleCloseRemoveDialog = useCallback(() => {
+    setLineToRemoveId(null);
+  }, []);
+
+  const handleConfirmRemove = useCallback(() => {
+    if (!lineToRemoveId) {
+      return;
+    }
+
+    onOrderLineRemove(lineToRemoveId);
+    setLineToRemoveId(null);
+  }, [lineToRemoveId, onOrderLineRemove]);
 
   const handleRowClick = useCallback(
     (item: Item) => {
@@ -281,6 +266,24 @@ export const OrderDraftDetailsDatagrid = ({
           onClose={handleDiscountClose}
         />
       )}
+      <ActionDialog
+        open={!!lineToRemoveId}
+        onClose={handleCloseRemoveDialog}
+        onConfirm={handleConfirmRemove}
+        title={intl.formatMessage(messages.removeProductDialogTitle)}
+        confirmButtonState="default"
+        variant="delete"
+        backButtonText={intl.formatMessage(messages.keepProductButton)}
+        confirmButtonLabel={intl.formatMessage(messages.removeProductButton)}
+      >
+        <FormattedMessage
+          {...messages.removeProductDialogContent}
+          values={{
+            productName:
+              lineToRemove?.productName ?? intl.formatMessage(messages.unknownProductFallback),
+          }}
+        />
+      </ActionDialog>
     </DatagridChangeStateContext.Provider>
   );
 };

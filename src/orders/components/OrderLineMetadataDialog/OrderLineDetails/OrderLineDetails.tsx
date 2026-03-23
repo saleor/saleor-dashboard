@@ -38,7 +38,7 @@ export const OrderLineDetails = ({
               </>
             )}
             <FormattedMessage defaultMessage="Qty" id="7gXPhB" />
-            {`: ${data?.quantity}`}
+            {`: ${data?.quantity ?? "-"}`}
           </Text>
         </>
       )}

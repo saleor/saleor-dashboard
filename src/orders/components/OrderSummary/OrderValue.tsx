@@ -14,7 +14,7 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
-import { useHistory } from "react-router-dom";
+import useRouter from "use-react-router";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
@@ -215,7 +215,7 @@ export const OrderValue = (props: Props): ReactNode => {
     ...restProps
   } = props;
   const intl = useIntl();
-  const history = useHistory();
+  const { history } = useRouter();
   const editableProps = isEditable ? (props as BaseProps & EditableProps) : null;
 
   const hasChosenShippingMethod =
@@ -378,20 +378,77 @@ export const OrderValue = (props: Props): ReactNode => {
 
         <Box display="grid" gap={0.5} paddingLeft={1} __minWidth={0}>
           {hasManualDiscount ? (
-            <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
-              {cornerIcon}
-              {intl.formatMessage(messages.manual)}{" "}
-              <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
-                {discountDisplayValue}
-              </ButtonLink>
-            </OrderSummaryListItem>
+            <Box
+              as="li"
+              display="grid"
+              __gridTemplateColumns="1fr auto"
+              alignItems="baseline"
+              gap={2}
+              __minWidth={0}
+            >
+              <Box
+                display="grid"
+                __gridTemplateColumns="auto auto minmax(0, 1fr)"
+                alignItems="baseline"
+                gap={0.5}
+                columnGap={1}
+                __minWidth={0}
+              >
+                {cornerIcon}
+                <Text as="span" size={4}>
+                  {intl.formatMessage(messages.manual)}
+                </Text>
+                <Text
+                  as="span"
+                  size={4}
+                  overflow="hidden"
+                  __whiteSpace="nowrap"
+                  __textOverflow="ellipsis"
+                  title={discountReason || undefined}
+                >
+                  <ButtonLink
+                    onClick={editableProps?.openDialog}
+                    title={discountReason || undefined}
+                  >
+                    {discountDisplayValue}
+                  </ButtonLink>
+                </Text>
+              </Box>
+              <Box title={discountAmountTitle}>
+                <OrderSummaryListAmount amount={discountAmount} size={4} />
+              </Box>
+            </Box>
           ) : (
-            <OrderSummaryListItem amount={0} amountTitle={discountAmountTitle}>
-              {cornerIcon}
-              <ButtonLink onClick={editableProps?.openDialog}>
-                {intl.formatMessage(messages.addDiscount)}
-              </ButtonLink>
-            </OrderSummaryListItem>
+            <Box
+              as="li"
+              display="grid"
+              __gridTemplateColumns="1fr auto"
+              alignItems="baseline"
+              gap={2}
+              __minWidth={0}
+            >
+              <Box
+                display="grid"
+                __gridTemplateColumns="auto auto minmax(0, 1fr)"
+                alignItems="baseline"
+                gap={0.5}
+                columnGap={1}
+                __minWidth={0}
+              >
+                {cornerIcon}
+                <Text as="span" size={4}>
+                  {intl.formatMessage(messages.manual)}
+                </Text>
+                <Text as="span" size={4}>
+                  <ButtonLink onClick={editableProps?.openDialog}>
+                    {intl.formatMessage(messages.addDiscount)}
+                  </ButtonLink>
+                </Text>
+              </Box>
+              <Box title={discountAmountTitle}>
+                <OrderSummaryListAmount amount={0} size={4} />
+              </Box>
+            </Box>
           )}
 
           {automaticDiscounts.map(discount => (

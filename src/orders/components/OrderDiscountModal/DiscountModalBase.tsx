@@ -77,7 +77,6 @@ export const DiscountModalBase = ({
               icon={<X size={20} />}
               size="small"
               variant="tertiary"
-              onClick={onClose}
               flexShrink="0"
             />
           </Modal.Close>

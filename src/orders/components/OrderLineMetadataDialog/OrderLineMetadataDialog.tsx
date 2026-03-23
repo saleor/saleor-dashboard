@@ -9,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Box, Button, Divider, Modal, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -114,16 +114,14 @@ export const OrderLineMetadataDialog = ({
           overflow="hidden"
         >
           <OrderLineDetails data={data} loading={loading} />
-          <Modal.Close>
-            <Button
-              data-test-id="close-button"
-              icon={<X size={20} />}
-              size="small"
-              variant="tertiary"
-              onClick={handleClose}
-              flexShrink="0"
-            />
-          </Modal.Close>
+          <Button
+            data-test-id="close-button"
+            icon={<X size={20} />}
+            size="small"
+            variant="tertiary"
+            onClick={handleClose}
+            flexShrink="0"
+          />
         </Box>
 
         {/* This is scroll container so that Save and title are always visible */}
