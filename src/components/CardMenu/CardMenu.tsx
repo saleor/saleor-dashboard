@@ -62,6 +62,24 @@ const useStyles = makeStyles(
       alignItems: "center",
       justifyContent: "flex-end",
     },
+    menuItemContent: {
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      gap: theme.spacing(2),
+    },
+    menuItemIconSlot: {
+      width: 24,
+      minWidth: 24,
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      lineHeight: 0,
+    },
+    menuItemLabel: {
+      lineHeight: "24px",
+    },
   }),
   { name: "CardMenu" },
 );
@@ -190,9 +208,14 @@ const CardMenu = (props: CardMenuProps) => {
                             <SaleorThrobber size={24} />
                           </>
                         ) : (
-                          <Text>
-                            {showMenuIcon && menuItem.Icon} {menuItem.label}
-                          </Text>
+                          <div className={classes.menuItemContent}>
+                            {showMenuIcon && (
+                              <span className={classes.menuItemIconSlot}>
+                                {menuItem.Icon ?? null}
+                              </span>
+                            )}
+                            <Text className={classes.menuItemLabel}>{menuItem.label}</Text>
+                          </div>
                         )}
                       </div>
                     </MenuItem>
