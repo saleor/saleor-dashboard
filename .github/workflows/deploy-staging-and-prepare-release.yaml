@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Publishing version
-        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
