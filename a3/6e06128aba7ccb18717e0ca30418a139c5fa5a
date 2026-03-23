@@ -1,0 +1,39 @@
+src/orders/components/OrderDetailsDatagrid/OrderDetailsDatagrid.stories.tsx
+  58b3076eaed34a20 30-32
+src/customers/components/CustomerListDatagrid/CustomerListDatagrid.stories.tsx
+  58b3076eaed34a20 32-34
+src/collections/components/CollectionListDatagrid/CollectionListDatagrid.stories.tsx
+  58b3076eaed34a20 34-36
+src/products/components/ProductListDatagrid/ProductListDatagrid.stories.tsx
+  58b3076eaed34a20 95-97
+src/modeling/components/PageListDatagrid/PageListDatagrid.stories.tsx
+  58b3076eaed34a20 58-60
+src/giftCards/GiftCardsList/GiftCardsListDatagrid/GiftCardsListDatagrid.stories.tsx
+  58b3076eaed34a20 168-170
+src/discounts/components/VoucherCodesDatagrid/VoucherCodesDatagrid.stories.tsx
+  58b3076eaed34a20 35-37
+src/orders/components/OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid.stories.tsx
+  58b3076eaed34a20 61-63
+src/components/Datagrid/Datagrid.stories.tsx
+  58b3076eaed34a20 177-179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "a36e06128aba7ccb18717e0ca30418a139c5fa5a",
+  "prompts": {
+    "58b3076eaed34a20": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3db8b83d-1fa3-49ad-a3db-c4e9cf9536cf",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 27,
+      "total_deletions": 0,
+      "accepted_lines": 27,
+      "overriden_lines": 0
+    }
+  }
+}
