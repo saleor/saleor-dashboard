@@ -213,13 +213,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   const infoIcon = eventDataString ? (
     <Tooltip>
       <Tooltip.Trigger>
-        <Box
-          as="span"
-          className={styles.infoIcon}
-          cursor="pointer"
-          display="inline-flex"
-          alignItems="center"
-        >
+        <Box as="span" className={styles.infoIcon} display="inline-flex" alignItems="center">
           <InfoIcon size={16} color={ICON_COLOR} />
         </Box>
       </Tooltip.Trigger>
