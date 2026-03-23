@@ -28,7 +28,7 @@ jobs:
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.DEV_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
       IS_CLOUD_INSTANCE: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.inputs.git_ref }}
 
@@ -39,7 +39,7 @@ jobs:
           RELEASE="${CURRENT_VERSION}-${HASH}"
           echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

@@ -36,7 +36,7 @@ jobs:
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           sparse-checkout: ./.github/actions
 
@@ -96,9 +96,9 @@ jobs:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -180,7 +180,7 @@ jobs:
         shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
@@ -221,7 +221,7 @@ jobs:
     needs: [run-tests, deploy-dashboard]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
