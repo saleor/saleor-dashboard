@@ -22,9 +22,9 @@ jobs:
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -92,7 +92,7 @@ jobs:
       matrix:
         shard: [1/2, 2/2]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -122,7 +122,7 @@ jobs:
     needs: ["initialize-cloud", "run-tests"]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0

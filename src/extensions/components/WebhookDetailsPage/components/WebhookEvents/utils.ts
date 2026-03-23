@@ -3,7 +3,7 @@ import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/
 type Actions = string[];
 
 export const getWebhookTypes = (webhookEvents: string[]) => {
-  const multiWords = ["DRAFT_ORDER", "GIFT_CARD", "ANY_EVENTS"];
+  const multiWords = ["DRAFT_ORDER", "GIFT_CARD", "ANY_EVENTS", "PRODUCT_VARIANT"];
 
   return webhookEvents.sort().reduce<Record<string, Actions>>((acc, key) => {
     const keywords = key.split("_");
