@@ -160,7 +160,7 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null,
+        value: null,
       },
     }),
   }),

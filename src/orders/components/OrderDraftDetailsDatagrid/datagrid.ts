@@ -8,6 +8,7 @@ import {
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
@@ -106,7 +107,10 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
           allowOverlay: false,
         });
       case "quantity":
-        return numberCell(change?.value || rowData.quantity, { hasFloatingPoint: false });
+        return numberCell(
+          change !== undefined ? (change.value ?? numberCellEmptyValue) : rowData.quantity,
+          { hasFloatingPoint: false },
+        );
       case "price":
         return moneyDiscountedCell(
           {

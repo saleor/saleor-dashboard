@@ -115,9 +115,10 @@ export function getData({
 
   if (getColumnStock(columnId)) {
     const value =
-      change?.value ??
-      dataRow?.stocks.find(stock => stock.warehouse.id === getColumnStock(columnId))?.quantity ??
-      numberCellEmptyValue;
+      change !== undefined
+        ? (change.value ?? numberCellEmptyValue)
+        : (dataRow?.stocks.find(stock => stock.warehouse.id === getColumnStock(columnId))
+            ?.quantity ?? numberCellEmptyValue);
 
     return numberCell(value, { hasFloatingPoint: false });
   }
@@ -137,7 +138,7 @@ export function getData({
     }
 
     const currency = channels.find(channel => channelId === channel.id)?.currency;
-    const value = change?.value ?? listing?.price?.amount ?? 0;
+    const value = change !== undefined ? change.value : (listing?.price?.amount ?? null);
 
     return moneyCell(value, currency);
   }
