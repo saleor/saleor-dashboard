@@ -29,7 +29,7 @@ runs:
         node-version-file: "package.json"
         cache: pnpm
     - name: install dependencies
-      working-directory: .github/workflows
+      working-directory: .github/scripts
       shell: bash
       run: pnpm install
     - name: Get environment variables
@@ -39,7 +39,7 @@ runs:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
       run: |
-        node .github/workflows/testsHelpers/getEnvironmentVariables.js \
+        node .github/scripts/get-release-env-vars.js \
           --version ${{ inputs.version }} \
           --token "$TOKEN" \
           --repo_token "$REPO_TOKEN" \
