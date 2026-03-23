@@ -1,5 +1,5 @@
 import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -33,8 +33,9 @@ function convertValue(
   }
 
   const toFixed = from === DiscountValueTypeEnum.PERCENTAGE && to === DiscountValueTypeEnum.FIXED;
+  const raw = toFixed ? (value * maxAmount) / 100 : (value / maxAmount) * 100;
 
-  return toFixed ? ((value * maxAmount) / 100).toString() : ((value / maxAmount) * 100).toString();
+  return (Math.round(raw * 100) / 100).toString();
 }
 
 export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDiscountFormProps) => {
@@ -71,12 +72,16 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
   const calculationMode = watch("calculationMode");
   const value = watch("value");
 
-  useEffect(() => {
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+
     const data = getDefaultValues();
 
     reset(data);
     previousCalculationMode.current = data.calculationMode;
-  }, [isOpen, existingDiscount?.value, existingDiscount?.reason, getDefaultValues, reset]);
+  }
 
   const handleCalculationModeChange = useCallback(
     (newMode: DiscountValueTypeEnum) => {

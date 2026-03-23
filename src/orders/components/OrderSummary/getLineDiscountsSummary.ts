@@ -22,6 +22,7 @@ export function getLineDiscountsSummary(lines: LineInput[]): LineDiscountSummary
       continue;
     }
 
+    // Each line has at most one active discount type; use the first entry to classify it.
     const type = line.discounts[0].type;
     const existing = grouped.get(type);
 

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -59,13 +58,26 @@ export const OrderDraftDetailsDatagrid = ({
     () => lines.find(line => line.id === lineToRemoveId),
     [lineToRemoveId, lines],
   );
+  const discountedLineData = useMemo(() => {
+    const line = lines.find(l => l.id === discountedLineId);
+
+    if (!line) return undefined;
+
+    return {
+      productName: line.productName,
+      variantName: line.variant?.name,
+      productSku: line.productSku,
+      quantity: line.quantity,
+      thumbnail: line.thumbnail,
+    };
+  }, [lines, discountedLineId]);
   const emptyColumn = useEmptyColumn();
   const orderDraftDetailsStaticColumns = useMemo(
     () => orderDraftDetailsStaticColumnsAdapter(emptyColumn, intl),
     [emptyColumn, intl],
   );
   const handleColumnChange = useCallback(
-    picked => {
+    (picked: string[]) => {
       if (updateListSettings) {
         updateListSettings("columns", picked.filter(Boolean));
       }
@@ -85,7 +97,7 @@ export const OrderDraftDetailsDatagrid = ({
     errors,
   });
   const getMenuItems = useCallback(
-    index => [
+    (index: number) => [
       {
         label: intl.formatMessage(messages.productDetails),
         testId: "open-product-details",
@@ -124,7 +136,7 @@ export const OrderDraftDetailsDatagrid = ({
         },
       },
     ],
-    [intl, lines, setDiscountedLineId],
+    [intl, lines],
   );
   const handleDatagridChange = useCallback(
     async (
@@ -235,19 +247,7 @@ export const OrderDraftDetailsDatagrid = ({
           open={!!discountedLineId}
           maxPrice={discountProviderValues.unitUndiscountedPrice}
           automaticDiscounts={discountProviderValues.automaticDiscounts}
-          lineData={(() => {
-            const line = lines.find(l => l.id === discountedLineId);
-
-            return line
-              ? {
-                  productName: line.productName,
-                  variantName: line.variant?.name,
-                  productSku: line.productSku,
-                  quantity: line.quantity,
-                  thumbnail: line.thumbnail,
-                }
-              : undefined;
-          })()}
+          lineData={discountedLineData}
           existingDiscount={discountProviderValues.orderLineDiscount}
           confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
           removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}

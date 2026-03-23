@@ -1,11 +1,15 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import modalStyles from "@dashboard/components/Modal/DashboardModal.module.css";
-import { type MoneyFragment, OrderDiscountType } from "@dashboard/graphql";
+import { type MoneyFragment } from "@dashboard/graphql";
+import {
+  type DiscountTypeCategory,
+  getDiscountTypeCategory,
+} from "@dashboard/orders/utils/discounts";
 import { type AutomaticDiscountInfo } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { TicketPercent } from "lucide-react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { DiscountModalBase } from "./DiscountModalBase";
 import { type OrderDiscountCommonInput } from "./types";
@@ -32,28 +36,24 @@ const discountMessages = defineMessages({
     description: "named discount source in line discount modal, e.g. promotion Summer Sale",
   },
   helperText: {
-    id: "5DGwEy",
+    id: "B5VCeZ",
     defaultMessage:
-      "This line is already discounted by {source}. Manual line discount is configured separately in this form.",
+      "This line is already discounted by {source}. A manual discount will replace the existing one.",
     description: "helper text shown in line discount modal when automatic discount is applied",
   },
 });
 
-const getDiscountTypeLabel = (
-  type: OrderDiscountType,
-  intl: ReturnType<typeof useIntl>,
-): string => {
-  switch (type) {
-    case OrderDiscountType.VOUCHER:
-      return intl.formatMessage(discountMessages.voucherSource);
-    case OrderDiscountType.ORDER_PROMOTION:
-    case OrderDiscountType.PROMOTION:
-    case OrderDiscountType.SALE:
-      return intl.formatMessage(discountMessages.promotionSource);
-    default:
-      return intl.formatMessage(discountMessages.genericSource);
-  }
+const discountSourceMessages: Record<DiscountTypeCategory, MessageDescriptor> = {
+  manual: discountMessages.genericSource,
+  voucher: discountMessages.voucherSource,
+  promotion: discountMessages.promotionSource,
+  other: discountMessages.genericSource,
 };
+
+const getDiscountSourceLabel = (
+  type: AutomaticDiscountInfo["type"],
+  intl: ReturnType<typeof useIntl>,
+): string => intl.formatMessage(discountSourceMessages[getDiscountTypeCategory(type)]);
 
 const formatDiscountSource = (
   discounts: AutomaticDiscountInfo[],
@@ -64,7 +64,7 @@ const formatDiscountSource = (
   }
 
   const parts = discounts.map(d => {
-    const typeLabel = getDiscountTypeLabel(d.type, intl);
+    const typeLabel = getDiscountSourceLabel(d.type, intl);
 
     if (d.name) {
       return intl.formatMessage(discountMessages.namedSource, {

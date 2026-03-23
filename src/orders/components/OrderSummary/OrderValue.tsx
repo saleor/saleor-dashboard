@@ -7,14 +7,18 @@ import {
   type OrderErrorFragment,
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
+import {
+  type DiscountTypeCategory,
+  getDiscountTypeCategory,
+} from "@dashboard/orders/utils/discounts";
 import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { type OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Box, type PropsWithBox, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronDown, ChevronUp, Info } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
@@ -192,7 +196,7 @@ type ReadOnlyProps = {
   isEditable?: false;
 };
 
-type Props = PropsWithBox<BaseProps & (EditableProps | ReadOnlyProps)>;
+type Props = BaseProps & (EditableProps | ReadOnlyProps);
 
 const getOrderDiscountLabel = (
   orderDiscount: OrderDiscountData | undefined,
@@ -214,23 +218,35 @@ const getOrderDiscountLabel = (
   return { value: discountValue.toFixed(2) };
 };
 
-const getDiscountTypeLabel = (
-  type: OrderDiscountType,
-  intl: ReturnType<typeof useIntl>,
-): string => {
-  switch (type) {
-    case OrderDiscountType.MANUAL:
-      return intl.formatMessage(messages.manual);
-    case OrderDiscountType.VOUCHER:
-      return intl.formatMessage(messages.voucher);
-    case OrderDiscountType.ORDER_PROMOTION:
-    case OrderDiscountType.PROMOTION:
-    case OrderDiscountType.SALE:
-      return intl.formatMessage(messages.promotion);
-    default:
-      return intl.formatMessage(messages.discount);
-  }
+const discountTypeLabelMessages: Record<DiscountTypeCategory, MessageDescriptor> = {
+  manual: messages.manual,
+  voucher: messages.voucher,
+  promotion: messages.promotion,
+  other: messages.discount,
 };
+
+const getDiscountTypeLabel = (type: OrderDiscountType, intl: ReturnType<typeof useIntl>): string =>
+  intl.formatMessage(discountTypeLabelMessages[getDiscountTypeCategory(type)]);
+
+const cornerIcon = (
+  <Box
+    as="span"
+    display="inline-block"
+    flexShrink="0"
+    borderColor="default1"
+    borderStyle="solid"
+    borderTopWidth={0}
+    borderRightWidth={0}
+    borderRadius={1}
+    __width="6px"
+    __height="8px"
+    __borderBottomWidth="1.5px"
+    __borderLeftWidth="1.5px"
+    __position="relative"
+    __top="-2px"
+    __marginRight="4px"
+  />
+);
 
 export const OrderValue = (props: Props): ReactNode => {
   const {
@@ -246,7 +262,6 @@ export const OrderValue = (props: Props): ReactNode => {
     lineDiscountsSummary,
     undiscountedSubtotal,
     isEditable = false,
-    ...restProps
   } = props;
   const intl = useIntl();
   const { history } = useRouter();
@@ -332,26 +347,6 @@ export const OrderValue = (props: Props): ReactNode => {
       </OrderSummaryListItem>
     );
   };
-
-  const cornerIcon = (
-    <Box
-      as="span"
-      display="inline-block"
-      flexShrink="0"
-      borderColor="default1"
-      borderStyle="solid"
-      borderTopWidth={0}
-      borderRightWidth={0}
-      borderRadius={1}
-      __width="6px"
-      __height="8px"
-      __borderBottomWidth="1.5px"
-      __borderLeftWidth="1.5px"
-      __position="relative"
-      __top="-2px"
-      __marginRight="4px"
-    />
-  );
 
   const renderDiscountRow = ({
     key,
@@ -516,11 +511,11 @@ export const OrderValue = (props: Props): ReactNode => {
                 amountTitle: discountAmountTitle,
               }),
             )}
-            <Box paddingLeft={1}>
+            <Text size={4} paddingLeft={1}>
               <ButtonLink onClick={editableProps?.openDialog}>
                 {intl.formatMessage(messages.overrideWithManual)}
               </ButtonLink>
-            </Box>
+            </Text>
           </Box>
         </Box>
       );
@@ -594,7 +589,7 @@ export const OrderValue = (props: Props): ReactNode => {
 
     const orderDiscountTotal = discounts.reduce((sum, d) => sum + d.amount.amount, 0);
     const lineDiscountTotal = lineDiscountsSummary.reduce((sum, e) => sum + e.totalAmount, 0);
-    const totalDiscountAmount = orderDiscountTotal + lineDiscountTotal;
+    const totalDiscountAmount = Math.round((orderDiscountTotal + lineDiscountTotal) * 100) / 100;
     const ToggleIcon = discountsExpanded ? ChevronUp : ChevronDown;
 
     return (
@@ -651,23 +646,8 @@ export const OrderValue = (props: Props): ReactNode => {
     );
   };
 
-  const {
-    isEditable: _,
-    voucherId: _v,
-    lineDiscountsSummary: _lds,
-    undiscountedSubtotal: _us,
-    ...boxProps
-  } = restProps as any;
-
   return (
-    <Box
-      padding={5}
-      borderRadius={4}
-      borderStyle="solid"
-      borderColor="default1"
-      borderWidth={1}
-      {...boxProps}
-    >
+    <Box padding={5} borderRadius={4} borderStyle="solid" borderColor="default1" borderWidth={1}>
       <OrderValueHeader
         description={intl.formatMessage({
           defaultMessage: "All lines as ordered by the client.",
@@ -697,7 +677,7 @@ export const OrderValue = (props: Props): ReactNode => {
                     style={{ verticalAlign: "middle" }}
                     data-test-id="subtotal-before-discounts"
                   >
-                    <Info size={14} />
+                    <Info size={12} />
                   </Box>
                 </Tooltip.Trigger>
                 <Tooltip.Content>

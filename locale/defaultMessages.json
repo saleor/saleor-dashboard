@@ -1229,7 +1229,7 @@
   },
   "5DGwEy": {
     "context": "helper text shown in line discount modal when automatic discount is applied",
-    "string": "This line is already discounted by {source}. Manual line discount is configured separately in this form."
+    "string": "This line is already discounted by {source}. A manual discount will replace the existing one."
   },
   "5FSIZp": {
     "string": "Create new attribute"
