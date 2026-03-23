@@ -12,8 +12,9 @@ describe("getWebhookTypes", () => {
   it("should map array of enum keys to objects with events ", () => {
     const TestWebhookTypes = getWebhookTypes(TestKeys);
 
-    expect(Object.keys(TestWebhookTypes)).toEqual(["DRAFT_ORDER", "PRODUCT"]);
+    expect(Object.keys(TestWebhookTypes)).toEqual(["DRAFT_ORDER", "PRODUCT", "PRODUCT_VARIANT"]);
     expect(TestWebhookTypes.DRAFT_ORDER).toEqual(["CREATED", "UPDATED"]);
-    expect(TestWebhookTypes.PRODUCT).toEqual(["CREATED", "UPDATED", "VARIANT_UPDATED"]);
+    expect(TestWebhookTypes.PRODUCT).toEqual(["CREATED", "UPDATED"]);
+    expect(TestWebhookTypes.PRODUCT_VARIANT).toEqual(["UPDATED"]);
   });
 });
