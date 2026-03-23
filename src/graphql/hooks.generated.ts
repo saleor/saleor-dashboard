@@ -2290,6 +2290,9 @@ export const OrderDetailsFragmentDoc = gql`
     email
   }
   userEmail
+  voucher {
+    id
+  }
   shippingMethods {
     id
     name
@@ -11629,9 +11632,13 @@ export const OrderDiscountAddDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountAddMutationFn = Apollo.MutationFunction<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>;
 
 /**
@@ -11665,9 +11672,13 @@ export const OrderDiscountDeleteDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountDeleteMutationFn = Apollo.MutationFunction<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>;
 
 /**
@@ -11700,9 +11711,13 @@ export const OrderLineDiscountRemoveDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineDiscountRemoveMutationFn = Apollo.MutationFunction<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>;
 
 /**
@@ -11735,9 +11750,13 @@ export const OrderLineDiscountUpdateDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderLineDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>;
 
 /**
@@ -11771,9 +11790,13 @@ export const OrderDiscountUpdateDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>;
 
 /**

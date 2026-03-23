@@ -109,8 +109,7 @@ export const OrderDraftDetailsDatagrid = ({
         label: "",
         Icon: (() => {
           const line = lines[index];
-          const hasDiscount =
-            line?.unitPrice?.gross?.amount !== line?.undiscountedUnitPrice?.gross?.amount;
+          const hasManualDiscount = !!line?.unitDiscountValue;
 
           return (
             <Box
@@ -122,7 +121,7 @@ export const OrderDraftDetailsDatagrid = ({
               gap={2}
             >
               <Percent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-              {intl.formatMessage(hasDiscount ? messages.editDiscount : messages.addDiscount)}
+              {intl.formatMessage(hasManualDiscount ? messages.editDiscount : messages.addDiscount)}
             </Box>
           );
         })(),
@@ -248,6 +247,19 @@ export const OrderDraftDetailsDatagrid = ({
         <OrderLineDiscountModal
           open={!!discountedLineId}
           maxPrice={discountProviderValues.unitUndiscountedPrice}
+          hasAutomaticDiscount={(() => {
+            const line = lines.find(l => l.id === discountedLineId);
+
+            if (!line) {
+              return false;
+            }
+
+            const hasManualLineDiscount = !!line.unitDiscountValue;
+            const hasAnyPriceReduction =
+              line.unitPrice.gross.amount < line.undiscountedUnitPrice.gross.amount;
+
+            return hasAnyPriceReduction && !hasManualLineDiscount;
+          })()}
           lineData={(() => {
             const line = lines.find(l => l.id === discountedLineId);
 

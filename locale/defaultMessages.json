@@ -2262,6 +2262,10 @@
     "context": "order history message",
     "string": "Shipping details was sent to customer"
   },
+  "BESehS": {
+    "context": "helper text shown in line discount modal when automatic discount is applied",
+    "string": "This line is already discounted by a voucher or promotion. Manual line discount is configured separately in this form."
+  },
   "BFR6CF": {
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
@@ -8765,6 +8769,10 @@
     "context": "webhook input help text",
     "string": "Secret key is used to create a hash signature with each payload. *optional field"
   },
+  "lrTQWC": {
+    "context": "label for promotion discount type in order summary",
+    "string": "Promotion"
+  },
   "lrq8O6": {
     "context": "order refund amount, input label",
     "string": "Amount"
@@ -8994,6 +9002,10 @@
   },
   "nLML8Y": {
     "string": "Default Shipping Address"
+  },
+  "nMQ3ZW": {
+    "context": "label for voucher discount type in order summary",
+    "string": "Voucher"
   },
   "nMojhT": {
     "context": "Clear filters button text",
@@ -10137,6 +10149,10 @@
   },
   "u0V06N": {
     "string": "Max. Order Weight"
+  },
+  "u2/qds": {
+    "context": "label for manually added order discount",
+    "string": "Manual"
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"

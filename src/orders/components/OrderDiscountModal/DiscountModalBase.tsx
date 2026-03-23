@@ -26,6 +26,7 @@ interface DiscountModalBaseProps {
   onRemove: () => void;
   onClose: () => void;
   header: ReactNode;
+  preFormContent?: ReactNode;
 }
 
 export const DiscountModalBase = ({
@@ -38,6 +39,7 @@ export const DiscountModalBase = ({
   onRemove,
   onClose,
   header,
+  preFormContent,
 }: DiscountModalBaseProps) => {
   const intl = useIntl();
 
@@ -80,6 +82,8 @@ export const DiscountModalBase = ({
             />
           </Modal.Close>
         </Box>
+
+        {preFormContent}
 
         <DiscountFormFields
           control={control}

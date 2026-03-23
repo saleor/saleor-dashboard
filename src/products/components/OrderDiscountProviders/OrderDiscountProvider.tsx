@@ -1,8 +1,10 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   type MoneyFragment,
   type OrderDetailsFragment,
+  OrderDetailsWithMetadataDocument,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
@@ -33,6 +35,7 @@ interface OrderDiscountProviderProps {
 }
 
 export const OrderDiscountProvider = ({ children, order }: OrderDiscountProviderProps) => {
+  const apolloClient = useApolloClient();
   const intl = useIntl();
   const notify = useNotifier();
   const { id: orderId } = order;
@@ -47,7 +50,13 @@ export const OrderDiscountProvider = ({ children, order }: OrderDiscountProvider
   const [orderDiscountRemove, orderDiscountRemoveOpts] = useOrderDiscountDeleteMutation({
     onCompleted: ({ orderDiscountDelete: { errors } }) => handleDiscountDataSubmission(errors),
   });
-  const handleDiscountDataSubmission = (errors: any[]) => {
+  const handleDiscountDataSubmission = async (errors: any[]) => {
+    if (errors.length === 0) {
+      await apolloClient.refetchQueries({
+        include: [OrderDetailsWithMetadataDocument],
+      });
+    }
+
     closeDialog();
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };

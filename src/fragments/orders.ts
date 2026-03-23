@@ -469,6 +469,9 @@ export const fragmentOrderDetails = gql`
       email
     }
     userEmail
+    voucher {
+      id
+    }
     shippingMethods {
       id
       name

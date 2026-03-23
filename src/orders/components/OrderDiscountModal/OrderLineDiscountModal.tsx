@@ -1,7 +1,9 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import modalStyles from "@dashboard/components/Modal/DashboardModal.module.css";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
+import { TicketPercent } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { DiscountModalBase } from "./DiscountModalBase";
@@ -19,6 +21,7 @@ interface OrderLineDiscountModalProps {
   open: boolean;
   maxPrice: MoneyFragment;
   lineData?: OrderLineData;
+  hasAutomaticDiscount?: boolean;
   existingDiscount?: OrderDiscountCommonInput;
   confirmStatus: ConfirmButtonTransitionState;
   removeStatus: ConfirmButtonTransitionState;
@@ -31,6 +34,7 @@ export const OrderLineDiscountModal = ({
   open,
   maxPrice,
   lineData,
+  hasAutomaticDiscount = false,
   existingDiscount,
   confirmStatus,
   removeStatus,
@@ -38,6 +42,31 @@ export const OrderLineDiscountModal = ({
   onRemove,
   onClose,
 }: OrderLineDiscountModalProps) => {
+  const preFormContent =
+    hasAutomaticDiscount && !existingDiscount ? (
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        gap={2}
+        padding={3}
+        borderStyle="solid"
+        borderColor="default1"
+        borderWidth={1}
+        borderRadius={3}
+      >
+        <Box color="default2" __lineHeight="0" __marginTop="2px" flexShrink="0">
+          <TicketPercent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        </Box>
+        <Text size={2} color="default2">
+          <FormattedMessage
+            defaultMessage="This line is already discounted by a voucher or promotion. Manual line discount is configured separately in this form."
+            id="BESehS"
+            description="helper text shown in line discount modal when automatic discount is applied"
+          />
+        </Text>
+      </Box>
+    ) : null;
+
   const header = (
     <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
       {lineData?.thumbnail?.url && (
@@ -93,6 +122,7 @@ export const OrderLineDiscountModal = ({
       onRemove={onRemove}
       onClose={onClose}
       header={header}
+      preFormContent={preFormContent}
     />
   );
 };

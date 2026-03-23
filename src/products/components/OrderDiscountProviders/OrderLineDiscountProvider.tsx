@@ -1,8 +1,10 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   type MoneyFragment,
   type OrderDetailsFragment,
+  OrderDetailsWithMetadataDocument,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
 } from "@dashboard/graphql";
@@ -51,6 +53,7 @@ export const useOrderLineDiscountContext = () => {
 };
 
 export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderProps) => {
+  const apolloClient = useApolloClient();
   const intl = useIntl();
   const notify = useNotifier();
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
@@ -74,7 +77,13 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
         handleDiscountDataSubmission(errors),
     },
   );
-  const handleDiscountDataSubmission = (errors: any[]) => {
+  const handleDiscountDataSubmission = async (errors: any[]) => {
+    if (errors.length === 0) {
+      await apolloClient.refetchQueries({
+        include: [OrderDetailsWithMetadataDocument],
+      });
+    }
+
     closeDialog();
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
   };

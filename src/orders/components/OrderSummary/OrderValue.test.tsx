@@ -24,6 +24,7 @@ type BaseOrderValueProps = {
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
+  voucherId: string | null;
 };
 
 const baseProps: BaseOrderValueProps = {
@@ -50,6 +51,7 @@ const baseProps: BaseOrderValueProps = {
   giftCardsAmount: null,
   usedGiftCards: null,
   displayGrossPrices: true,
+  voucherId: null,
 };
 
 const shippingAddress: OrderDetailsFragment["shippingAddress"] = {

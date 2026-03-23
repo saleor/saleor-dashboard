@@ -1,7 +1,9 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
+import { voucherUrl } from "@dashboard/discounts/urls";
 import {
   DiscountValueTypeEnum,
   type OrderDetailsFragment,
+  OrderDiscountType,
   type OrderErrorFragment,
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
@@ -12,6 +14,7 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
+import { useHistory } from "react-router-dom";
 
 import { OrderDiscountModal } from "../OrderDiscountModal/OrderDiscountModal";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
@@ -28,6 +31,26 @@ const messages = defineMessages({
     id: "Myx1Qp",
     defaultMessage: "Add Discount",
     description: "add discount button",
+  },
+  manual: {
+    id: "u2/qds",
+    defaultMessage: "Manual",
+    description: "label for manually added order discount",
+  },
+  voucher: {
+    id: "nMQ3ZW",
+    defaultMessage: "Voucher",
+    description: "label for voucher discount type in order summary",
+  },
+  promotion: {
+    id: "lrTQWC",
+    defaultMessage: "Promotion",
+    description: "label for promotion discount type in order summary",
+  },
+  fixedAmount: {
+    id: "YPCB7b",
+    defaultMessage: "Fixed amount",
+    description: "label for fixed amount discount type",
   },
   setShippingMethod: {
     id: "Dg4Y2p",
@@ -94,11 +117,6 @@ const messages = defineMessages({
     defaultMessage: "Gift card amount used",
     description: "tooltip for gift card amount",
   },
-  fixedAmount: {
-    id: "YPCB7b",
-    defaultMessage: "Fixed amount",
-    description: "label for fixed amount discount type",
-  },
 });
 
 // Fields that can change when order lines are modified (from OrderLinesUpdateFragment)
@@ -119,6 +137,7 @@ type StaticFields = {
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
+  voucherId: string | null;
 };
 
 type BaseProps = LineUpdateFields & StaticFields;
@@ -165,6 +184,22 @@ const getOrderDiscountLabel = (
   return { value: discountValue.toFixed(2) };
 };
 
+const getAutomaticDiscountTypeLabel = (
+  type: OrderDiscountType,
+  intl: ReturnType<typeof useIntl>,
+): string => {
+  switch (type) {
+    case OrderDiscountType.VOUCHER:
+      return intl.formatMessage(messages.voucher);
+    case OrderDiscountType.ORDER_PROMOTION:
+    case OrderDiscountType.PROMOTION:
+    case OrderDiscountType.SALE:
+      return intl.formatMessage(messages.promotion);
+    default:
+      return intl.formatMessage(messages.discount);
+  }
+};
+
 export const OrderValue = (props: Props): ReactNode => {
   const {
     orderSubtotal,
@@ -172,6 +207,7 @@ export const OrderValue = (props: Props): ReactNode => {
     shippingPrice,
     orderTotal,
     discounts,
+    voucherId,
     giftCardsAmount,
     usedGiftCards,
     displayGrossPrices,
@@ -179,7 +215,7 @@ export const OrderValue = (props: Props): ReactNode => {
     ...restProps
   } = props;
   const intl = useIntl();
-
+  const history = useHistory();
   const editableProps = isEditable ? (props as BaseProps & EditableProps) : null;
 
   const hasChosenShippingMethod =
@@ -262,7 +298,7 @@ export const OrderValue = (props: Props): ReactNode => {
     );
   };
 
-  const renderDiscountRow = (): ReactNode => {
+  const renderDiscountSection = (): ReactNode => {
     const discountAmountTitle = intl.formatMessage(messages.discountTitle);
 
     if (!isEditable) {
@@ -273,7 +309,7 @@ export const OrderValue = (props: Props): ReactNode => {
           amountTitle={discountAmountTitle}
         >
           {intl.formatMessage(messages.discount)}{" "}
-          <Text as="span" color="default2">
+          <Text as="span" color="default2" title={discount.name ?? undefined}>
             {discount.name}
           </Text>{" "}
           <Text color="default2" fontWeight="medium" size={3}>
@@ -283,14 +319,14 @@ export const OrderValue = (props: Props): ReactNode => {
       ));
     }
 
-    const hasDiscount = !!editableProps?.orderDiscount;
-    const discountLabel = getOrderDiscountLabel(
-      editableProps?.orderDiscount,
-      orderTotal.gross.currency,
+    const automaticDiscounts = discounts.filter(
+      discount => discount.type !== OrderDiscountType.MANUAL,
     );
-    const discountReason = editableProps?.orderDiscount?.reason;
+    const hasManualDiscount = !!editableProps?.orderDiscount;
+    const hasAutomaticDiscounts = automaticDiscounts.length > 0;
+    const hasAnyDiscount = hasManualDiscount || hasAutomaticDiscounts;
 
-    if (!hasDiscount) {
+    if (!hasAnyDiscount) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={discountAmountTitle}>
           <Text as="span">
@@ -302,22 +338,115 @@ export const OrderValue = (props: Props): ReactNode => {
       );
     }
 
+    const discountLabel = getOrderDiscountLabel(
+      editableProps?.orderDiscount,
+      orderTotal.gross.currency,
+    );
+    const discountReason = editableProps?.orderDiscount?.reason;
     const discountDisplayValue =
       discountLabel.percentage || intl.formatMessage(messages.fixedAmount);
     const discountAmount = parseFloat(discountLabel.value) || 0;
 
+    const cornerIcon = (
+      <Box
+        as="span"
+        display="inline-block"
+        flexShrink="0"
+        borderColor="default1"
+        borderStyle="solid"
+        borderTopWidth={0}
+        borderRightWidth={0}
+        borderRadius={1}
+        __width="6px"
+        __height="8px"
+        __borderBottomWidth="1.5px"
+        __borderLeftWidth="1.5px"
+        __position="relative"
+        __top="-2px"
+        __marginRight="4px"
+      />
+    );
+
     return (
-      <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
-        {intl.formatMessage(messages.discount)}{" "}
-        <Text as="span">
-          <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
-            {discountDisplayValue}
-          </ButtonLink>
-        </Text>{" "}
-        <Text color="default2" fontWeight="medium" size={3}>
-          (applied)
-        </Text>
-      </OrderSummaryListItem>
+      <Box as="li" display="grid" gap={0.5} __minWidth={0}>
+        <Text size={4}>{intl.formatMessage(messages.discount)}</Text>
+
+        <Box display="grid" gap={0.5} paddingLeft={1} __minWidth={0}>
+          {hasManualDiscount ? (
+            <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
+              {cornerIcon}
+              {intl.formatMessage(messages.manual)}{" "}
+              <ButtonLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
+                {discountDisplayValue}
+              </ButtonLink>
+            </OrderSummaryListItem>
+          ) : (
+            <OrderSummaryListItem amount={0} amountTitle={discountAmountTitle}>
+              {cornerIcon}
+              <ButtonLink onClick={editableProps?.openDialog}>
+                {intl.formatMessage(messages.addDiscount)}
+              </ButtonLink>
+            </OrderSummaryListItem>
+          )}
+
+          {automaticDiscounts.map(discount => (
+            <Box
+              as="li"
+              key={`order-value-automatic-discount-${discount.id}`}
+              display="grid"
+              __gridTemplateColumns="1fr auto"
+              alignItems="baseline"
+              gap={2}
+              __minWidth={0}
+            >
+              <Box
+                display="grid"
+                __gridTemplateColumns="auto auto minmax(0, 1fr)"
+                alignItems="baseline"
+                gap={0.5}
+                __minWidth={0}
+              >
+                {cornerIcon}
+                <Text as="span" size={4}>
+                  {getAutomaticDiscountTypeLabel(discount.type, intl)}
+                </Text>
+                {discount.type === OrderDiscountType.VOUCHER && voucherId ? (
+                  <Text
+                    as="span"
+                    size={4}
+                    overflow="hidden"
+                    __whiteSpace="nowrap"
+                    __textOverflow="ellipsis"
+                    title={discount.name ?? undefined}
+                  >
+                    <ButtonLink
+                      onClick={() => history.push(voucherUrl(voucherId))}
+                      title={discount.name ?? undefined}
+                    >
+                      {discount.name}
+                    </ButtonLink>
+                  </Text>
+                ) : (
+                  <Text
+                    as="span"
+                    size={4}
+                    color="default2"
+                    overflow="hidden"
+                    __whiteSpace="nowrap"
+                    __textOverflow="ellipsis"
+                    title={discount.name ?? undefined}
+                  >
+                    {discount.name}
+                  </Text>
+                )}
+              </Box>
+              <Box title={discountAmountTitle}>
+                <OrderSummaryListAmount amount={discount.amount.amount} size={4} />
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     );
   };
 
@@ -340,7 +469,7 @@ export const OrderValue = (props: Props): ReactNode => {
     );
   };
 
-  const { isEditable: _, ...boxProps } = restProps as any;
+  const { isEditable: _, voucherId: _v, ...boxProps } = restProps as any;
 
   return (
     <Box
@@ -424,7 +553,7 @@ export const OrderValue = (props: Props): ReactNode => {
           </Box>
         </Box>
 
-        {renderDiscountRow()}
+        {renderDiscountSection()}
 
         {displayGrossPrices && (
           <OrderSummaryListItem
