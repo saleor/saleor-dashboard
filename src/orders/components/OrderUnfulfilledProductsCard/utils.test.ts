@@ -75,6 +75,7 @@ const line = {
     },
   },
   thumbnail: null,
+  discounts: [],
 };
 
 describe("toLineWithUnfulfilledQuantity", () => {

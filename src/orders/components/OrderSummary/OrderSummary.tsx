@@ -4,8 +4,11 @@ import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewM
 import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { getLineDiscountsSummary } from "./getLineDiscountsSummary";
+import { getUndiscountedSubtotal } from "./getUndiscountedSubtotal";
 import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";
 import { OrderValue } from "./OrderValue";
 import { PaymentsSummary } from "./PaymentsSummary";
@@ -54,6 +57,12 @@ export const OrderSummary = (props: Props) => {
   const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
 
   const editableProps = isEditable ? (props as Props & EditableOrderSummary) : null;
+
+  const lineDiscountsSummary = useMemo(() => getLineDiscountsSummary(order.lines), [order.lines]);
+  const undiscountedSubtotal = useMemo(
+    () => getUndiscountedSubtotal(order.lines, order.displayGrossPrices),
+    [order.lines, order.displayGrossPrices],
+  );
 
   return (
     <Box padding={6} display="grid" gap={6} data-test-id="OrderSummary">
@@ -110,6 +119,8 @@ export const OrderSummary = (props: Props) => {
             giftCardsAmount={giftCardsAmount ?? null}
             usedGiftCards={usedGiftCards}
             displayGrossPrices={order.displayGrossPrices}
+            lineDiscountsSummary={lineDiscountsSummary}
+            undiscountedSubtotal={undiscountedSubtotal}
             isEditable={true}
             onShippingMethodEdit={editableProps.onShippingMethodEdit}
             shippingMethods={order.shippingMethods}
@@ -141,6 +152,8 @@ export const OrderSummary = (props: Props) => {
             giftCardsAmount={giftCardsAmount ?? null}
             usedGiftCards={usedGiftCards}
             displayGrossPrices={order.displayGrossPrices}
+            lineDiscountsSummary={lineDiscountsSummary}
+            undiscountedSubtotal={undiscountedSubtotal}
           />
         )}
         <PaymentsSummary

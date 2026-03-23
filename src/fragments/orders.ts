@@ -149,6 +149,21 @@ export const fragmentOrderLine = gql`
     thumbnail {
       url
     }
+    discounts {
+      ...OrderLineDiscount
+    }
+  }
+`;
+
+export const fragmentOrderLineDiscount = gql`
+  fragment OrderLineDiscount on OrderLineDiscount {
+    id
+    type
+    name
+    translatedName
+    valueType
+    value
+    reason
   }
 `;
 

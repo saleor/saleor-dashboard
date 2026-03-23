@@ -1227,6 +1227,10 @@
   "5BajZK": {
     "string": "View and update your site settings"
   },
+  "5DGwEy": {
+    "context": "helper text shown in line discount modal when automatic discount is applied",
+    "string": "This line is already discounted by {source}. Manual line discount is configured separately in this form."
+  },
   "5FSIZp": {
     "string": "Create new attribute"
   },
@@ -1925,6 +1929,10 @@
   "9Fiuq2": {
     "string": "Learn more about {customExtensionDocsLink}"
   },
+  "9GevHe": {
+    "context": "discount type label in line discount modal",
+    "string": "voucher"
+  },
   "9HSbdS": {
     "context": "structure loading",
     "string": "working..."
@@ -2261,10 +2269,6 @@
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
-  },
-  "BESehS": {
-    "context": "helper text shown in line discount modal when automatic discount is applied",
-    "string": "This line is already discounted by a voucher or promotion. Manual line discount is configured separately in this form."
   },
   "BFR6CF": {
     "context": "webhooks and events section name",
@@ -3282,6 +3286,10 @@
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
+  },
+  "GrMiRT": {
+    "context": "fallback product name in remove product confirmation dialog",
+    "string": "this product"
   },
   "GsBRWL": {
     "string": "Languages"
@@ -4307,6 +4315,10 @@
     "context": "customers section name",
     "string": "Customers"
   },
+  "McotWC": {
+    "context": "button label to confirm product removal",
+    "string": "Remove product"
+  },
   "MdFdbd": {
     "string": "Delete rule"
   },
@@ -5156,6 +5168,10 @@
   "RABrGb": {
     "string": "Save hours of evaluating Saleor on your own by speaking with our solution engineer."
   },
+  "RADyO6": {
+    "context": "sub-header for order-level discounts in summary",
+    "string": "Order"
+  },
   "RBkNPr": {
     "string": "Full coverage of advanced checkout cases like split payments, split fulfillments, and orchestrated payments."
   },
@@ -5628,6 +5644,10 @@
   "U2WgwW": {
     "context": "add custom select input option",
     "string": "Add new value: {value}"
+  },
+  "U2il94": {
+    "context": "number of order lines with this discount type",
+    "string": "{count, plural, one {# line} other {# lines}}"
   },
   "U2mOqA": {
     "string": "No vouchers found"
@@ -7295,6 +7315,10 @@
     "context": "attribute",
     "string": "Visible on Product Page in Storefront"
   },
+  "cwYYx4": {
+    "context": "discount type label in line discount modal",
+    "string": "promotion"
+  },
   "cwjmte": {
     "context": "fulfillment status refunded",
     "string": "Refunded"
@@ -7641,6 +7665,10 @@
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
+  },
+  "fdJjic": {
+    "context": "dialog title for removing product from draft order",
+    "string": "Remove product"
   },
   "fg8dzN": {
     "string": "Add condition"
@@ -8274,6 +8302,10 @@
     "context": "resent code success message",
     "string": "Code resent to customer"
   },
+  "jLePAq": {
+    "context": "fallback discount source label in line discount modal",
+    "string": "a voucher or promotion"
+  },
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
@@ -8294,6 +8326,10 @@
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
+  },
+  "jg8M0x": {
+    "context": "sub-header for line-level discounts in summary",
+    "string": "Lines"
   },
   "jgURyO": {
     "context": "product price",
@@ -10025,6 +10061,10 @@
   "tIc6ZH": {
     "string": "Go to shipping methods"
   },
+  "tIdHHK": {
+    "context": "named discount source in line discount modal, e.g. promotion Summer Sale",
+    "string": "{type} \"{name}\""
+  },
   "tKxCld": {
     "context": "set balance dialog title label",
     "string": "Set balance"
@@ -10081,6 +10121,10 @@
   "tf+OkY": {
     "context": "link to edit variant metadata",
     "string": "Edit on variant page"
+  },
+  "th06kZ": {
+    "context": "dialog body asking to confirm product removal from draft order",
+    "string": "Are you sure you want to remove {productName} from this draft order?"
   },
   "tiY7bx": {
     "string": "Add new product"
@@ -10244,6 +10288,10 @@
   },
   "uX+Vg7": {
     "string": "Voucher updated"
+  },
+  "uY8rPp": {
+    "context": "button label to cancel product removal",
+    "string": "Keep product"
   },
   "ubasgL": {
     "context": "order history message",
@@ -10641,6 +10689,10 @@
     "context": "no models placeholder",
     "string": "No models available"
   },
+  "wBcA2j": {
+    "context": "label for undiscounted subtotal reference",
+    "string": "before discounts"
+  },
   "wDUBLR": {
     "context": "order refund amount",
     "string": "Proposed refund amount"
@@ -10790,6 +10842,10 @@
   "x3leH4": {
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "x5wgj0": {
+    "context": "link to replace automatic order discounts with a manual one",
+    "string": "Override with manual discount"
   },
   "x79cEk": {
     "context": "dialog header",

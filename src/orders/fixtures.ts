@@ -1390,6 +1390,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               __typename: "Image" as const,
               url: placeholder,
             },
+            discounts: [],
             totalPrice: {
               __typename: "TaxedMoney",
               gross: {
@@ -1523,6 +1524,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               __typename: "Image" as const,
               url: placeholder,
             },
+            discounts: [],
             totalPrice: {
               __typename: "TaxedMoney",
               gross: {
@@ -1658,6 +1660,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -1769,6 +1772,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -2050,6 +2054,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -2161,6 +2166,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {

@@ -12,6 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
+import { type LineDiscountSummaryEntry } from "./getLineDiscountsSummary";
 import { OrderValue } from "./OrderValue";
 
 const RouterWrapper = ({ children }: { children: ReactNode }) => (
@@ -29,9 +30,11 @@ type BaseOrderValueProps = {
   isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
   shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
   shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
+  lineDiscountsSummary: LineDiscountSummaryEntry[];
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
+  undiscountedSubtotal: number;
   voucherId: string | null;
 };
 
@@ -56,9 +59,11 @@ const baseProps: BaseOrderValueProps = {
   isShippingRequired: true,
   shippingMethods: [],
   shippingMethod: null,
+  lineDiscountsSummary: [],
   giftCardsAmount: null,
   usedGiftCards: null,
   displayGrossPrices: true,
+  undiscountedSubtotal: 100,
   voucherId: null,
 };
 
@@ -144,7 +149,7 @@ describe("OrderValue", () => {
       expect(screen.getByText("Standard Shipping")).toBeInTheDocument();
     });
 
-    it("should render discounts as text when not editable", () => {
+    it("should render discounts as text when not editable", async () => {
       // Arrange
       const props = {
         ...baseProps,
@@ -169,8 +174,15 @@ describe("OrderValue", () => {
         </RouterWrapper>,
       );
 
-      // Assert
-      expect(screen.getByText("Discount")).toBeInTheDocument();
+      // Assert - collapsed header is visible
+      expect(screen.getByText("(applied)")).toBeInTheDocument();
+      expect(screen.getByTestId("discount-section-toggle")).toBeInTheDocument();
+
+      // Act - expand to see details
+      await userEvent.click(screen.getByTestId("discount-section-toggle"));
+
+      // Assert - detail content visible after expanding
+      expect(screen.getByText("Manual")).toBeInTheDocument();
       expect(screen.getByText("Summer Sale")).toBeInTheDocument();
     });
   });
@@ -387,7 +399,7 @@ describe("OrderValue", () => {
       expect(openDialog).toHaveBeenCalledTimes(1);
     });
 
-    it("should show percentage discount value when discount is percentage type", () => {
+    it("should show percentage discount value when discount is percentage type", async () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
         value: 10,
@@ -408,12 +420,16 @@ describe("OrderValue", () => {
         </RouterWrapper>,
       );
 
-      // Assert
       expect(screen.getByText("Discount")).toBeInTheDocument();
+
+      // Act - expand to see detail
+      await userEvent.click(screen.getByTestId("discount-section-toggle"));
+
+      // Assert
       expect(screen.getByText("10%")).toBeInTheDocument();
     });
 
-    it("should show fixed discount value when discount is fixed type", () => {
+    it("should show fixed discount value when discount is fixed type", async () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
         value: 15,
@@ -434,13 +450,17 @@ describe("OrderValue", () => {
         </RouterWrapper>,
       );
 
-      // Assert
       expect(screen.getByText("Discount")).toBeInTheDocument();
+
+      // Act - expand to see detail
+      await userEvent.click(screen.getByTestId("discount-section-toggle"));
+
+      // Assert
       expect(screen.getByText("Fixed amount")).toBeInTheDocument();
       expect(screen.getByText("15")).toBeInTheDocument();
     });
 
-    it("should show discount reason as tooltip on existing discount", () => {
+    it("should show discount reason as tooltip on existing discount", async () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
         value: 10,
@@ -461,10 +481,86 @@ describe("OrderValue", () => {
         </RouterWrapper>,
       );
 
+      // Act - expand to see detail
+      await userEvent.click(screen.getByTestId("discount-section-toggle"));
+
       // Assert
       const discountLink = screen.getByText("10%");
 
       expect(discountLink).toHaveAttribute("title", "Loyalty discount");
+    });
+
+    it("should show total discount amount in collapsed state", () => {
+      // Arrange
+      const orderDiscount: OrderDiscountData = {
+        value: 20,
+        calculationMode: DiscountValueTypeEnum.FIXED,
+        amount: { __typename: "Money", amount: 20, currency: "USD" },
+        reason: "",
+      };
+      const props = createEditableProps({
+        shippingAddress,
+        shippingMethods,
+        orderDiscount,
+        discounts: [
+          {
+            __typename: "OrderDiscount" as const,
+            id: "od-1",
+            name: null,
+            amount: { __typename: "Money" as const, amount: 20, currency: "USD" },
+            type: OrderDiscountType.MANUAL,
+            calculationMode: DiscountValueTypeEnum.FIXED,
+            value: 20,
+            reason: null,
+          },
+        ],
+        lineDiscountsSummary: [{ type: OrderDiscountType.PROMOTION, lineCount: 1, totalAmount: 5 }],
+      });
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+
+      // Assert - collapsed header shows total (20 + 5 = 25)
+      const toggle = screen.getByTestId("discount-section-toggle");
+
+      expect(toggle).toBeInTheDocument();
+      expect(screen.getByText("25")).toBeInTheDocument();
+    });
+
+    it("should expand discount details when header is clicked", async () => {
+      // Arrange
+      const orderDiscount: OrderDiscountData = {
+        value: 10,
+        calculationMode: DiscountValueTypeEnum.PERCENTAGE,
+        amount: { __typename: "Money", amount: 11, currency: "USD" },
+        reason: "",
+      };
+      const props = createEditableProps({
+        shippingAddress,
+        shippingMethods,
+        orderDiscount,
+      });
+
+      // Act
+      render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+
+      // Assert - detail not visible before expanding
+      expect(screen.queryByText("10%")).not.toBeInTheDocument();
+
+      // Act - expand
+      await userEvent.click(screen.getByTestId("discount-section-toggle"));
+
+      // Assert - detail visible after expanding
+      expect(screen.getByText("10%")).toBeInTheDocument();
+      expect(screen.getByText("Manual")).toBeInTheDocument();
     });
   });
 

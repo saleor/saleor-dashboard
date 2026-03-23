@@ -1597,6 +1597,17 @@ export const TaxedMoneyFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const OrderLineDiscountFragmentDoc = gql`
+    fragment OrderLineDiscount on OrderLineDiscount {
+  id
+  type
+  name
+  translatedName
+  valueType
+  value
+  reason
+}
+    `;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1664,9 +1675,13 @@ export const OrderLineFragmentDoc = gql`
   thumbnail {
     url
   }
+  discounts {
+    ...OrderLineDiscount
+  }
 }
     ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
+${TaxedMoneyFragmentDoc}
+${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
     fragment OrderDiscount on OrderDiscount {
   id

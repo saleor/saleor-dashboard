@@ -17,16 +17,23 @@ import { createContext, useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
+  type AutomaticDiscountInfo,
   type GetOrderLineDiscountContextConsumerProps,
   type OrderDiscountConsumerCommonProps,
   type OrderLineDiscountData,
 } from "./types";
-import { getOrderLineDiscount, getParsedDiscountData, useDiscountDialog } from "./utils";
+import {
+  getAutomaticLineDiscounts,
+  getOrderLineDiscount,
+  getParsedDiscountData,
+  useDiscountDialog,
+} from "./utils";
 
 export interface OrderLineDiscountContextConsumerProps extends OrderDiscountConsumerCommonProps {
   addOrderLineDiscount: (data: OrderDiscountCommonInput) => void;
   removeOrderLineDiscount: () => void;
   orderLineDiscount?: OrderLineDiscountData;
+  automaticDiscounts: AutomaticDiscountInfo[];
   orderLineDiscountUpdateStatus: ConfirmButtonTransitionState;
   orderLineDiscountRemoveStatus: ConfirmButtonTransitionState;
   totalDiscountedPrice: MoneyFragment;
@@ -105,6 +112,7 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
     addOrderLineDiscount: addOrUpdateOrderLineDiscount(orderLineId),
     removeOrderLineDiscount: removeOrderLineDiscount(orderLineId),
     orderLineDiscount: getOrderLineDiscount(order, orderLineId),
+    automaticDiscounts: getAutomaticLineDiscounts(order, orderLineId),
     isDialogOpen: isOrderLineDialogOpen(orderLineId),
     orderLineDiscountUpdateStatus: orderLineDiscountAddOrUpdateOpts.status,
     orderLineDiscountRemoveStatus: orderLineDiscountRemoveOpts.status,

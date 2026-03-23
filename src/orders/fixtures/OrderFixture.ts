@@ -235,6 +235,7 @@ export class OrderFixture {
         __typename: "Image",
         url: "https://example.com/image.jpg",
       },
+      discounts: [],
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -400,6 +401,7 @@ export class OrderFixture {
             __typename: "Image",
             url: "",
           },
+          discounts: [],
         },
       },
     ],

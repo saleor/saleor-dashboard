@@ -24,6 +24,7 @@ const mockGetOrderLineDiscountValues: GetOrderLineDiscountContextConsumerProps =
     isDialogOpen: false,
     openDialog: fn(),
     closeDialog: fn(),
+    automaticDiscounts: [],
     totalDiscountedPrice: line?.totalPrice?.gross ?? unitPrice,
     unitDiscountedPrice: unitPrice,
     unitUndiscountedPrice: undiscountedPrice,

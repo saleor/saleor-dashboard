@@ -101,7 +101,9 @@ export const OrderDraftDetailsDatagrid = ({
       },
       {
         label: intl.formatMessage(
-          lines[index]?.unitDiscountValue ? messages.editDiscount : messages.addDiscount,
+          lines[index]?.discounts?.some(d => d.type === "MANUAL")
+            ? messages.editDiscount
+            : messages.addDiscount,
         ),
         testId: "edit-order-line-discount",
         Icon: <Percent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
@@ -232,19 +234,7 @@ export const OrderDraftDetailsDatagrid = ({
         <OrderLineDiscountModal
           open={!!discountedLineId}
           maxPrice={discountProviderValues.unitUndiscountedPrice}
-          hasAutomaticDiscount={(() => {
-            const line = lines.find(l => l.id === discountedLineId);
-
-            if (!line) {
-              return false;
-            }
-
-            const hasManualLineDiscount = !!line.unitDiscountValue;
-            const hasAnyPriceReduction =
-              line.unitPrice.gross.amount < line.undiscountedUnitPrice.gross.amount;
-
-            return hasAnyPriceReduction && !hasManualLineDiscount;
-          })()}
+          automaticDiscounts={discountProviderValues.automaticDiscounts}
           lineData={(() => {
             const line = lines.find(l => l.id === discountedLineId);
 
