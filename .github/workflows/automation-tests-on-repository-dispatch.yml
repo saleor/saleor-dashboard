@@ -6,42 +6,43 @@ on:
     types: [automation-tests-event]
 
 jobs:
-  get-environment-variables:
+  extract-version:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     outputs:
-      VERSION: ${{ steps.get-environment-variables.outputs.version }}
+      VERSION: ${{ steps.extract-version.outputs.version }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version-file: "package.json"
           cache: "pnpm"
+          cache-dependency-path: .github/scripts/pnpm-lock.yaml
 
       - name: Install dependencies
         run: |
-          cd .github/workflows
+          cd .github/scripts
           pnpm install
 
-      - name: get environment variables
-        id: get-environment-variables
+      - name: Extract version
+        id: extract-version
         run: |
-          node .github/workflows/getEnvironmentVariables.js \
+          node .github/scripts/extract-version.js \
             --custom_version "$CUSTOM_VERSION" \
             --repo_token "$REPO_TOKEN"
 
   run-tests-on-release:
-    needs: get-environment-variables
+    needs: extract-version
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
+      VERSION: ${{needs.extract-version.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
