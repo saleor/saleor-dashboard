@@ -1,7 +1,7 @@
 import { AppsApiService } from "@api/apps";
 import { APP_SMOKE_DATA, getAppsForCurrentEnv, resolveAppUrl } from "@data/appSmokeTestData";
 import { LOCATORS } from "@data/commonLocators";
-import { expect } from "@playwright/test";
+import { expect, request as playwrightRequest } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -23,8 +23,10 @@ if (!version || apps.length === 0) {
 
 let appsApi: AppsApiService;
 
-test.beforeAll(({ request }) => {
-  appsApi = new AppsApiService(request);
+test.beforeAll(async () => {
+  const requestContext = await playwrightRequest.newContext();
+
+  appsApi = new AppsApiService(requestContext);
 });
 
 apps.forEach(app => {
