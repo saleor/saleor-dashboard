@@ -1,4 +1,9 @@
-import { APP_SMOKE_DATA, getAppsForCurrentEnv, resolveAppUrl } from "@data/appSmokeTestData";
+import {
+  APP_SMOKE_DATA,
+  fetchAppIdByIdentifier,
+  getAppsForCurrentEnv,
+  resolveAppUrl,
+} from "@data/appSmokeTestData";
 import { LOCATORS } from "@data/commonLocators";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
@@ -23,8 +28,10 @@ if (!version || apps.length === 0) {
 apps.forEach(app => {
   test(`TC: APP_SMOKE - [${version}] ${app.name} app renders and loads configuration #e2e`, async ({
     page,
+    request,
   }) => {
-    const appUrl = resolveAppUrl(version, app.id);
+    const appId = await fetchAppIdByIdentifier(request, app.identifier);
+    const appUrl = resolveAppUrl(version, appId);
 
     await page.goto(appUrl);
     const appFrame = page.locator('[data-test-id="app-frame"]');

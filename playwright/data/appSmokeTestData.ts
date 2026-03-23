@@ -1,4 +1,4 @@
-import { expect, type FrameLocator } from "@playwright/test";
+import { expect, type APIRequestContext, type FrameLocator } from "@playwright/test";
 
 type ContentAssertion = (iframe: FrameLocator, timeout: number) => Promise<void>;
 
@@ -15,7 +15,6 @@ const expectInputValue = (label: string, value: string): ContentAssertion => {
 };
 
 interface AppSmokeEntry {
-  id: string;
   identifier: string;
   name: string;
   heading: string;
@@ -25,49 +24,42 @@ interface AppSmokeEntry {
 export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
   v320: [
     {
-      id: "QXBwOjc0",
       identifier: "app.saleor.adyen_staging",
       name: "Adyen",
       heading: "Adyen",
       assertContent: expectText("No Adyen configurations added."),
     },
     {
-      id: "QXBwOjc2",
       identifier: "saleor.app.avatax_staging",
       name: "AvaTax",
       heading: "Configuration",
       assertContent: expectText("No configurations created yet"),
     },
     {
-      id: "QXBwOjc1",
       identifier: "saleor.app.cms2",
       name: "CMS",
       heading: "Saleor App CMS",
       assertContent: expectText("No configurations yet"),
     },
     {
-      id: "QXBwOjc3",
       identifier: "saleor.app.klaviyo",
       name: "Klaviyo",
       heading: "Configuration",
       assertContent: expectInputValue("PUBLIC_TOKEN", "test_token"),
     },
     {
-      id: "QXBwOjcx",
       identifier: "saleor.app.dummy.tax",
       name: "Dummy Tax",
       heading: "Welcome to Saleor Dummy Tax App",
       assertContent: expectText("See what your app can do"),
     },
     {
-      id: "QXBwOjc4",
       identifier: "saleor.app.search",
       name: "Search",
       heading: "Configuration",
       assertContent: expectText("DISABLED"),
     },
     {
-      id: "QXBwOjc5",
       identifier: "saleor.app.smtp",
       name: "SMTP",
       heading: "Configuration",
@@ -76,56 +68,48 @@ export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
   ],
   v321: [
     {
-      id: "QXBwOjc0",
       identifier: "saleor.app.avatax_staging",
       name: "AvaTax",
       heading: "Configuration",
       assertContent: expectText("No configurations created yet"),
     },
     {
-      id: "QXBwOjc1",
       identifier: "saleor.app.cms2",
       name: "CMS",
       heading: "Saleor App CMS",
       assertContent: expectText("No configurations yet"),
     },
     {
-      id: "QXBwOjc2",
       identifier: "saleor.app.klaviyo",
       name: "Klaviyo",
       heading: "Configuration",
       assertContent: expectInputValue("PUBLIC_TOKEN", "test_token"),
     },
     {
-      id: "QXBwOjcx",
       identifier: "saleor.app.dummy.tax",
       name: "Dummy Tax",
       heading: "Welcome to Saleor Dummy Tax App",
       assertContent: expectText("See what your app can do"),
     },
     {
-      id: "QXBwOjgw",
       identifier: "saleor.app.search",
       name: "Search",
       heading: "Configuration",
       assertContent: expectText("DISABLED"),
     },
     {
-      id: "QXBwOjc5",
       identifier: "saleor.app.smtp",
       name: "SMTP",
       heading: "Configuration",
       assertContent: expectText("Saleor Cloud SMTP available"),
     },
     {
-      id: "QXBwOjc3",
       identifier: "saleor.app.payment.np-atobarai",
       name: "NP Atobarai",
       heading: "Configuration",
       assertContent: expectText("No configurations found"),
     },
     {
-      id: "QXBwOjc4",
       identifier: "saleor.app.product-feed",
       name: "Product Feed",
       heading: "Configuration",
@@ -135,14 +119,12 @@ export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
       ),
     },
     {
-      id: "QXBwOjgx",
       identifier: "saleor.app.payment.stripe",
       name: "Stripe",
       heading: "Configuration",
       assertContent: expectText("No configurations found"),
     },
     {
-      id: "QXBwOjgy",
       identifier: "saleor.app.segment-v2",
       name: "Segment",
       heading: "Configuration",
@@ -151,63 +133,54 @@ export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
   ],
   v322: [
     {
-      id: "QXBwOjc2",
       identifier: "app.saleor.adyen_staging",
       name: "Adyen",
       heading: "Adyen",
       assertContent: expectText("No Adyen configurations added."),
     },
     {
-      id: "QXBwOjc1",
       identifier: "saleor.app.avatax_staging",
       name: "AvaTax",
       heading: "Configuration",
       assertContent: expectText("No configurations created yet"),
     },
     {
-      id: "QXBwOjc3",
       identifier: "saleor.app.cms2",
       name: "CMS",
       heading: "Saleor App CMS",
       assertContent: expectText("No configurations yet"),
     },
     {
-      id: "QXBwOjc0",
       identifier: "saleor.app.klaviyo",
       name: "Klaviyo",
       heading: "Configuration",
       assertContent: expectInputValue("PUBLIC_TOKEN", "test_token"),
     },
     {
-      id: "QXBwOjcx",
       identifier: "saleor.app.dummy.tax",
       name: "Dummy Tax",
       heading: "Welcome to Saleor Dummy Tax App",
       assertContent: expectText("See what your app can do"),
     },
     {
-      id: "QXBwOjgw",
       identifier: "saleor.app.search",
       name: "Search",
       heading: "Configuration",
       assertContent: expectText("DISABLED"),
     },
     {
-      id: "QXBwOjExNg==",
       identifier: "saleor.app.smtp",
       name: "SMTP",
       heading: "Configuration",
       assertContent: expectText("Saleor Cloud SMTP available"),
     },
     {
-      id: "QXBwOjc4",
       identifier: "saleor.app.payment.np-atobarai",
       name: "NP Atobarai",
       heading: "Configuration",
       assertContent: expectText("No configurations found"),
     },
     {
-      id: "QXBwOjc5",
       identifier: "saleor.app.product-feed",
       name: "Product Feed",
       heading: "Configuration",
@@ -217,14 +190,12 @@ export const APP_SMOKE_DATA: Record<string, AppSmokeEntry[]> = {
       ),
     },
     {
-      id: "QXBwOjgy",
       identifier: "saleor.app.payment.stripe",
       name: "Stripe",
       heading: "Configuration",
       assertContent: expectText("No configurations found"),
     },
     {
-      id: "QXBwOjgz",
       identifier: "saleor.app.segment-v2",
       name: "Segment",
       heading: "Configuration",
@@ -260,4 +231,75 @@ export function resolveAppUrl(version: string, appId: string): string {
   }
 
   return `extensions/app/${encodeURIComponent(appId)}`;
+}
+
+const APPS_QUERY = `
+  query FetchAppsForSmokeTest {
+    apps(first: 100) {
+      edges {
+        node {
+          id
+          identifier
+        }
+      }
+    }
+  }
+`;
+
+interface AppsQueryResponse {
+  data: {
+    apps: {
+      edges: Array<{
+        node: {
+          id: string;
+          identifier: string | null;
+        };
+      }>;
+    };
+  };
+}
+
+let cachedAppMap: Map<string, string> | null = null;
+
+async function fetchAppMap(request: APIRequestContext): Promise<Map<string, string>> {
+  if (cachedAppMap) {
+    return cachedAppMap;
+  }
+
+  const apiUrl = process.env.API_URL;
+
+  if (!apiUrl) {
+    throw new Error("API_URL environment variable is not set");
+  }
+
+  const response = await request.post(apiUrl, {
+    data: { query: APPS_QUERY },
+  });
+
+  const json: AppsQueryResponse = await response.json();
+
+  cachedAppMap = new Map(
+    json.data.apps.edges
+      .filter(
+        (edge): edge is typeof edge & { node: { identifier: string } } =>
+          edge.node.identifier !== null,
+      )
+      .map(edge => [edge.node.identifier, edge.node.id]),
+  );
+
+  return cachedAppMap;
+}
+
+export async function fetchAppIdByIdentifier(
+  request: APIRequestContext,
+  identifier: string,
+): Promise<string> {
+  const appMap = await fetchAppMap(request);
+  const appId = appMap.get(identifier);
+
+  if (!appId) {
+    throw new Error(`App with identifier "${identifier}" not found in Saleor`);
+  }
+
+  return appId;
 }
