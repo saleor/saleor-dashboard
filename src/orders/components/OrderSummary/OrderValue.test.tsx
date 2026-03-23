@@ -9,8 +9,16 @@ import { type OrderDiscountData } from "@dashboard/products/components/OrderDisc
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { type ReactNode } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { OrderValue } from "./OrderValue";
+
+const RouterWrapper = ({ children }: { children: ReactNode }) => (
+  <MemoryRouter>
+    <Wrapper>{children}</Wrapper>
+  </MemoryRouter>
+);
 
 type BaseOrderValueProps = {
   orderSubtotal: OrderLinesUpdateFragment["subtotal"];
@@ -126,9 +134,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -156,9 +164,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -178,9 +186,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -198,9 +206,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -220,9 +228,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -244,9 +252,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const setShippingLink = screen.getByText("Set shipping method");
@@ -271,9 +279,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -300,9 +308,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -323,9 +331,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -345,9 +353,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -366,9 +374,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const addDiscountLink = screen.getByText("Add Discount");
@@ -395,9 +403,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -421,9 +429,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -448,9 +456,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -479,9 +487,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert - query by the title attribute which is reliably set
@@ -514,9 +522,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -534,9 +542,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -558,9 +566,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -581,9 +589,9 @@ describe("OrderValue", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderValue {...props} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
