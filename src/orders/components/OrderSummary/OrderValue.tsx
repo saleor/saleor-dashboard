@@ -369,7 +369,12 @@ export const OrderValue = (props: Props): ReactNode => {
 
     return (
       <Box as="li" display="grid" gap={0.5} __minWidth={0}>
-        <Text size={4}>{intl.formatMessage(messages.discount)}</Text>
+        <Text size={4}>
+          {intl.formatMessage(messages.discount)}{" "}
+          <Text as="span" color="default2" fontWeight="medium" size={3}>
+            (applied)
+          </Text>
+        </Text>
 
         <Box display="grid" gap={0.5} paddingLeft={1} __minWidth={0}>
           {hasManualDiscount ? (
