@@ -1,0 +1,25 @@
+.github/actions/get-env-vars/action.yml
+  90144c5adb69d1ec 32,42
+.github/workflows/automation-tests-on-repository-dispatch.yml
+  90144c5adb69d1ec 30,36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "16f6881618211963cdcae24446131bc4cc5b5d81",
+  "prompts": {
+    "90144c5adb69d1ec": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ebc2bdea-f5f3-43a6-b523-bd24e6ed48c9",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
