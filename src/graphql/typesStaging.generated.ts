@@ -2397,59 +2397,6 @@ export enum DeliveryOptionsCalculateErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-export type DigitalContentInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean'];
-};
-
-export type DigitalContentUploadInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
-  /** Represents an file in a multipart request. */
-  contentFile: Scalars['Upload'];
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean'];
-};
-
-export type DigitalContentUrlCreateInput = {
-  /** Digital content ID which URL will belong to. */
-  content: Scalars['ID'];
-};
-
 export enum DiscountErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
@@ -6836,8 +6783,7 @@ export enum ProductErrorCode {
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE',
   UNSUPPORTED_MEDIA_PROVIDER = 'UNSUPPORTED_MEDIA_PROVIDER',
-  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE',
-  VARIANT_NO_DIGITAL_CONTENT = 'VARIANT_NO_DIGITAL_CONTENT'
+  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE'
 }
 
 export enum ProductFieldEnum {
@@ -7061,6 +7007,7 @@ export enum ProductTypeConfigurable {
 }
 
 export enum ProductTypeEnum {
+  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
   DIGITAL = 'DIGITAL',
   SHIPPABLE = 'SHIPPABLE'
 }
@@ -7082,7 +7029,7 @@ export type ProductTypeInput = {
    * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
    */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
-  /** Determines if products are digital. */
+  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
   isDigital?: InputMaybe<Scalars['Boolean']>;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: InputMaybe<Scalars['Boolean']>;
@@ -7113,7 +7060,10 @@ export enum ProductTypeKindEnum {
 }
 
 export enum ProductTypeSortField {
-  /** Sort products by type. */
+  /**
+   * Sort products by type.
+   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
+   */
   DIGITAL = 'DIGITAL',
   /** Sort products by name. */
   NAME = 'NAME',
@@ -7996,8 +7946,6 @@ export enum ShopErrorCode {
 export type ShopSettingsInput = {
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
-  /** Enable automatic fulfillment for all digital products. */
-  automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
   /**
    * Charge taxes on shipping.
    * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
@@ -8005,10 +7953,6 @@ export type ShopSettingsInput = {
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
-  /** Default number of max downloads per digital content URL. */
-  defaultDigitalMaxDownloads?: InputMaybe<Scalars['Int']>;
-  /** Default number of days which digital content URL will be valid. */
-  defaultDigitalUrlValidDays?: InputMaybe<Scalars['Int']>;
   /** Default email sender's address. */
   defaultMailSenderAddress?: InputMaybe<Scalars['String']>;
   /** Default email sender's name. */
