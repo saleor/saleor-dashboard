@@ -1,13 +1,12 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Maximize, Minimize, PlusIcon } from "lucide-react";
 import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
   onToggle: React.MouseEventHandler<HTMLButtonElement>;
 }
-
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Maximize, Minimize, PlusIcon } from "lucide-react";
 
 const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   isOpen,
