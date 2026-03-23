@@ -10,9 +10,7 @@ const orderFixture = order(placeholderImage);
 const meta: Meta<typeof OrderDetailsDatagrid> = {
   title: "Orders/OrderDetailsDatagrid",
   component: OrderDetailsDatagrid,
-  parameters: {
-    chromatic: { diffThreshold: 0.3, delay: 500 },
-  },
+
   args: {
     lines: orderFixture.lines,
     loading: false,

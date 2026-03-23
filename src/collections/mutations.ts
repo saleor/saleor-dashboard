@@ -42,28 +42,6 @@ export const assignCollectionProduct = gql`
       }
     }
     collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-      collection {
-        id
-        products(
-          first: $first
-          after: $after
-          before: $before
-          last: $last
-          sortBy: { field: COLLECTION, direction: ASC }
-        ) {
-          edges {
-            node {
-              ...CollectionProduct
-            }
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-            hasPreviousPage
-            startCursor
-          }
-        }
-      }
       errors {
         message
       }
@@ -163,28 +141,6 @@ export const reorderProductsInCollection = gql`
     $before: String
   ) {
     collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-      collection {
-        id
-        products(
-          first: $first
-          after: $after
-          before: $before
-          last: $last
-          sortBy: { field: COLLECTION, direction: ASC }
-        ) {
-          edges {
-            node {
-              ...CollectionProduct
-            }
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-            hasPreviousPage
-            startCursor
-          }
-        }
-      }
       errors {
         message
       }
