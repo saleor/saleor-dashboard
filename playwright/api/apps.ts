@@ -31,10 +31,12 @@ interface AppsQueryResponse {
  * when we already fetched the list reuses fetched data */
 export class AppsApiService {
   private readonly request: APIRequestContext;
+  private readonly token: string;
   private fetchPromise: Promise<Map<string, string>> | null = null;
 
-  constructor(request: APIRequestContext) {
+  constructor(request: APIRequestContext, token: string) {
     this.request = request;
+    this.token = token;
   }
 
   async getAppIdByIdentifier(identifier: string): Promise<string> {
@@ -64,6 +66,7 @@ export class AppsApiService {
     }
 
     const response = await this.request.post(apiUrl, {
+      headers: { Authorization: `Bearer ${this.token}` },
       data: { query: APPS_QUERY },
     });
 

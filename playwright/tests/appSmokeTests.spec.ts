@@ -29,13 +29,14 @@ test.beforeAll(async () => {
   requestContext = await playwrightRequest.newContext();
 
   const basicApi = new BasicApiService(requestContext);
-
-  await basicApi.logInUserViaApi({
+  const loginResponse = await basicApi.logInUserViaApi({
     email: process.env.E2E_USER_NAME!,
     password: process.env.E2E_USER_PASSWORD!,
   });
 
-  appsApi = new AppsApiService(requestContext);
+  const token = loginResponse.data.tokenCreate.token;
+
+  appsApi = new AppsApiService(requestContext, token);
 });
 
 test.afterAll(async () => {
