@@ -1,5 +1,5 @@
 import { type Locale } from "@dashboard/components/Locale";
-import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
+import { formatPriceInput, getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   type CustomCell,
   type CustomRenderer,
@@ -7,7 +7,7 @@ import {
   GridCellKind,
   type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { type ChangeEvent, type KeyboardEvent, useMemo } from "react";
+import { type ChangeEvent, type CSSProperties, useMemo, useState } from "react";
 
 import { hasDiscountValue } from "./utils";
 
@@ -27,37 +27,62 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
     () => getCurrencyDecimalPoints(cell.data.currency),
     [cell.data.currency],
   );
-  const step = 1 / Math.pow(10, maxDecimalPlaces ?? 2);
+
+  const [inputValue, setInputValue] = useState<string>(
+    Array.isArray(cell.data.value) ? "" : String(cell.data.value ?? ""),
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = String(e.target.value ?? "");
+    const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
+
+    if (!formattedValue && rawValue) return;
+
+    setInputValue(formattedValue);
     onChangeBase({
       ...cell,
       data: {
         ...cell.data,
-        value: e.target.value ? parseFloat(e.target.value) : null,
+        value: formattedValue ? parseFloat(formattedValue) : null,
       },
     });
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    // Block exponent notation and negative sign
-    if (e.key === "e" || e.key === "E" || e.key === "-") {
-      e.preventDefault();
-    }
+  const editorInputStyle: CSSProperties = {
+    appearance: "none",
+    background: "none",
+    border: "none",
+    boxSizing: "border-box",
+    height: "20px",
+    lineHeight: "20px",
+    outline: "none",
+    padding: 0,
+    textAlign: "right",
+    width: "100%",
+  };
+  const editorContainerStyle: CSSProperties = {
+    alignItems: "center",
+    boxSizing: "border-box",
+    display: "flex",
+    height: "100%",
+    padding: "0 8px",
+    width: "100%",
   };
 
   // TODO: range is read only - we don't need support for editing,
   // it is better to split component into range and editable money cell
   return (
-    <input
-      type="number"
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-      value={Array.isArray(cell.data.value) ? "" : (cell.data.value ?? "")}
-      min={0}
-      step={step}
-      autoFocus
-    />
+    <div style={editorContainerStyle}>
+      <input
+        type="text"
+        inputMode="decimal"
+        autoComplete="off"
+        onChange={handleChange}
+        value={inputValue}
+        style={editorInputStyle}
+        autoFocus
+      />
+    </div>
   );
 };
 
@@ -142,7 +167,19 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
     }),
   }),
   onPaste: (value, data) => ({
-    ...data,
-    value: parseFloat(value),
+    ...(() => {
+      const maxDecimalPlaces = getCurrencyDecimalPoints(data.currency);
+      const rawValue = String(value ?? "");
+      const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
+
+      if (!formattedValue && rawValue) {
+        return data;
+      }
+
+      return {
+        ...data,
+        value: formattedValue ? parseFloat(formattedValue) : null,
+      };
+    })(),
   }),
 });
