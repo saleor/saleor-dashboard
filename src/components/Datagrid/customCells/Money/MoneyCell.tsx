@@ -53,36 +53,27 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
     background: "none",
     border: "none",
     boxSizing: "border-box",
-    height: "20px",
-    lineHeight: "20px",
-    outline: "none",
-    padding: 0,
-    textAlign: "right",
-    width: "100%",
-  };
-  const editorContainerStyle: CSSProperties = {
-    alignItems: "center",
-    boxSizing: "border-box",
-    display: "flex",
+    fontFamily: "inherit",
+    fontSize: "inherit",
     height: "100%",
+    outline: "none",
     padding: "0 8px",
+    textAlign: "right",
     width: "100%",
   };
 
   // TODO: range is read only - we don't need support for editing,
   // it is better to split component into range and editable money cell
   return (
-    <div style={editorContainerStyle}>
-      <input
-        type="text"
-        inputMode="decimal"
-        autoComplete="off"
-        onChange={handleChange}
-        value={inputValue}
-        style={editorInputStyle}
-        autoFocus
-      />
-    </div>
+    <input
+      type="text"
+      inputMode="decimal"
+      autoComplete="off"
+      onChange={handleChange}
+      value={inputValue}
+      style={editorInputStyle}
+      autoFocus
+    />
   );
 };
 
@@ -157,6 +148,13 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
   provideEditor: () => ({
     editor: MoneyCellEdit,
     disablePadding: true,
+    disableStyling: true,
+    styleOverride: {
+      backgroundColor: "var(--gdg-bg-cell)",
+      boxShadow: "inset 0 0 0 1.5px var(--gdg-accent-color)",
+      width: 0,
+      height: 0,
+    },
     deletedValue: cell => ({
       ...cell,
       copyData: "",

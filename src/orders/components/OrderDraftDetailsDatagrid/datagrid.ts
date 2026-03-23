@@ -106,7 +106,7 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
           allowOverlay: false,
         });
       case "quantity":
-        return numberCell(change?.value || rowData.quantity);
+        return numberCell(change?.value || rowData.quantity, { hasFloatingPoint: false });
       case "price":
         return moneyDiscountedCell(
           {

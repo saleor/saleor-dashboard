@@ -119,7 +119,7 @@ export function getData({
       dataRow?.stocks.find(stock => stock.warehouse.id === getColumnStock(columnId))?.quantity ??
       numberCellEmptyValue;
 
-    return numberCell(value);
+    return numberCell(value, { hasFloatingPoint: false });
   }
 
   if (getColumnChannel(columnId)) {
