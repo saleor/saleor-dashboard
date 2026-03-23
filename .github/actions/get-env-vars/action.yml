@@ -23,13 +23,14 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
     - uses: actions/setup-node@v4
       with:
         node-version-file: "package.json"
         cache: pnpm
+        cache-dependency-path: .github/scripts/pnpm-lock.yaml
     - name: install dependencies
-      working-directory: .github/workflows
+      working-directory: .github/scripts
       shell: bash
       run: pnpm install
     - name: Get environment variables
@@ -39,7 +40,7 @@ runs:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
       run: |
-        node .github/workflows/testsHelpers/getEnvironmentVariables.js \
+        node .github/scripts/get-release-env-vars.js \
           --version ${{ inputs.version }} \
           --token "$TOKEN" \
           --repo_token "$REPO_TOKEN" \

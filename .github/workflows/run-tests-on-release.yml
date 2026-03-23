@@ -61,9 +61,9 @@ jobs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -142,7 +142,7 @@ jobs:
       matrix:
         shard: [1/2, 2/2]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: refs/tags/${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
           fetch-tags: true
@@ -179,7 +179,7 @@ jobs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
       PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
@@ -215,7 +215,7 @@ jobs:
       always() &&
       (needs.tests-complete != 'success' && cancelled())
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Change job status if cancelled
         if: cancelled()

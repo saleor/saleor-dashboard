@@ -24,10 +24,10 @@ jobs:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ steps.get-token.outputs.token }}
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Publishing version
-        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
@@ -79,7 +79,7 @@ jobs:
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.VERSION }}
 
@@ -104,7 +104,7 @@ jobs:
           minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
           echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_ENV"
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
