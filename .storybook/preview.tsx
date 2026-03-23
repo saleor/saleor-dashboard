@@ -4,11 +4,15 @@ import "@saleor/macaw-ui-next/style";
 import type { Preview } from "@storybook/react-vite";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
+import { configure } from "storybook/test";
 import { LocaleContext } from "../src/components/Locale/Locale";
 import { apolloClient } from "../src/graphql/client";
+import { PaginatorContext } from "../src/hooks/usePaginator";
 import "../src/index.css";
 import { ThemeProvider } from "../src/theme";
 import { paletteOverrides, themeOverrides } from "../src/themeOverrides";
+
+configure({ testIdAttribute: "data-test-id" });
 
 const preview: Preview = {
   decorators: [
@@ -20,7 +24,17 @@ const preview: Preview = {
               {/* @ts-expect-error legacy types  */}
               <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
                 <ThemeProvider>
-                  <Story />
+                  <PaginatorContext.Provider
+                    value={{
+                      hasNextPage: false,
+                      hasPreviousPage: false,
+                      paginatorType: "link",
+                      nextHref: undefined,
+                      prevHref: undefined,
+                    }}
+                  >
+                    <Story />
+                  </PaginatorContext.Provider>
                 </ThemeProvider>
               </LegacyThemeProvider>
             </IntlProvider>
@@ -30,6 +44,16 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    chromatic: {
+      /**
+       * Tweaking values, mostly to get rid of false negatives from Datagrid (canvas)
+       * We can try to tweak this value, also on a component level
+       *
+       * https://www.chromatic.com/docs/threshold/
+       */
+      diffThreshold: 0.8,
+      delay: 500,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

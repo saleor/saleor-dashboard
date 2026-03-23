@@ -12,7 +12,7 @@ import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
-import { cloneElement, useState } from "react";
+import { cloneElement, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
@@ -79,6 +79,15 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
     errors,
   );
   const [categoryInputActive, setCategoryInputActive] = useState(false);
+
+  // Memoize value to preserve referential identity — DynamicCombobox uses
+  // Downshift which compares selectedItem by reference. A new object on every
+  // render causes Downshift to reset the input text to the selected label,
+  // overwriting what the user is typing.
+  const categoryValue = useMemo<Option | null>(
+    () => (data.category ? { value: data.category, label: categoryInputDisplayValue } : null),
+    [data.category, categoryInputDisplayValue],
+  );
 
   // Input is hide to proper handle showing nested category structure
   const hideInput = !categoryInputActive && data.category && !disabled;
@@ -147,6 +156,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 fetchMoreProductTypes.onFetchMore();
               }
             }}
+            onInputValueChange={fetchProductTypes}
             onFocus={() => fetchProductTypes("")}
             label={intl.formatMessage({
               id: "anK7jD",
@@ -177,14 +187,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
           <DynamicCombobox
             disabled={disabled}
             options={disabled ? [] : categories}
-            value={
-              data.category
-                ? {
-                    value: data.category,
-                    label: categoryInputDisplayValue,
-                  }
-                : null
-            }
+            value={categoryValue}
             error={!!(formErrors.category || noCategoryError)}
             helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
             loading={fetchMoreCategories?.loading}
@@ -208,6 +211,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 fetchMoreCategories.onFetchMore();
               }
             }}
+            onInputValueChange={fetchCategories}
             onFocus={() => {
               setCategoryInputActive(true);
               fetchCategories("");

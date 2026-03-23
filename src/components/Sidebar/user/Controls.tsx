@@ -2,15 +2,8 @@ import { useUser } from "@dashboard/auth/useUser";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
-import {
-  Box,
-  Button,
-  Dropdown,
-  List,
-  MoreOptionsIcon,
-  sprinkles,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { EllipsisVertical } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
@@ -62,7 +55,7 @@ export const UserControls = () => {
         <Dropdown.Trigger>
           <Button
             variant="tertiary"
-            icon={<MoreOptionsIcon />}
+            icon={<EllipsisVertical />}
             data-test-id="userMenu"
             size="medium"
             onClick={() => setOpen(true)}

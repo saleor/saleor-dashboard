@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   type AttributeTranslationDetailsFragment,
   type AttributeValueTranslatableFragment,
@@ -40,10 +39,10 @@ export const getParsedTranslationInputData = ({
 };
 
 export const getTranslationFields = (
-  fields: AttributeTranslationDetailsFragment["attribute"]["choices"],
+  fields: NonNullable<NonNullable<AttributeTranslationDetailsFragment["attribute"]>["choices"]>,
   intl: IntlShape,
 ) =>
-  mapEdgesToItems(fields).map(({ id, name, translation }, attributeValueIndex) => {
+  mapEdgesToItems(fields)?.map(({ id, name, translation }, attributeValueIndex) => {
     const displayName = intl.formatMessage(messages.valueNumber, {
       number: attributeValueIndex + 1,
     });
@@ -55,14 +54,14 @@ export const getTranslationFields = (
       type: "short" as TranslationField["type"],
       value: name,
     };
-  }) || [];
+  }) ?? [];
 
 export const mapAttributeValuesToTranslationFields = (
   attributeValues: AttributeValueTranslatableFragment[],
   intl: IntlShape,
 ) =>
   attributeValues.map<TranslationField>(attrVal => ({
-    id: attrVal.attributeValue.id,
+    id: attrVal.attributeValue?.id,
     displayName: intl.formatMessage(
       {
         id: "zgqPGF",
@@ -70,7 +69,7 @@ export const mapAttributeValuesToTranslationFields = (
         description: "attribute list",
       },
       {
-        name: attrVal.attribute.name,
+        name: attrVal.attribute?.name,
       },
     ),
     name: attrVal.name,

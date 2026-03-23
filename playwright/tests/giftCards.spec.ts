@@ -51,9 +51,15 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
   await giftCardsPage.gotoGiftCardsListView();
-  await giftCardsPage.searchAndFindRowIndexes(fullCode);
+  await giftCardsPage.clickFilterButton();
+  await giftCardsPage.filtersPage.pickTextFilter("Code", fullCode);
+  await giftCardsPage.filtersPage.clickSaveFiltersButton();
+
+  const last4 = fullCode.slice(-4);
+
+  await giftCardsPage.waitForCanvasContainsText(`Code ending with ${last4}`);
   expect(
-    await giftCardsPage.gridCanvas.locator("table tbody tr").count(),
+    await giftCardsPage.getNumberOfGridRowsWithText(`Code ending with ${last4}`),
     "There should be only one gift card visible on list",
   ).toEqual(1);
 });

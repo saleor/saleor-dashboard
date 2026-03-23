@@ -36,7 +36,9 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [".storybook/*.tsx", ".storybook/*.ts"],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -336,6 +338,9 @@ export default tseslint.config(
       "@graphql-eslint/no-anonymous-operations": "error",
       "@graphql-eslint/no-duplicate-fields": "error",
       "@graphql-eslint/no-deprecated": "warn",
+      "@graphql-eslint/no-unused-fragments": "warn",
+      "@graphql-eslint/no-unused-variables": "warn",
+      "@graphql-eslint/no-unused-fields": "warn",
     },
   }, // Disable any rules that conflict with Prettier
   prettierConfig,

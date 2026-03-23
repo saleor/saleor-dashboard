@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Updated MacawUI to 1.4.2
+Updated Jotai package to 2.18.1

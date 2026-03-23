@@ -43,9 +43,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_RELEASE,
     ENVIRONMENT,
     STATIC_URL,
-    APPS_MARKETPLACE_API_URL,
     EXTENSIONS_API_URL,
-    APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
@@ -84,9 +82,7 @@ export default defineConfig(({ command, mode }) => {
           API_URL,
           APP_MOUNT_URI,
           STATIC_URL,
-          APPS_MARKETPLACE_API_URL,
-          EXTENSIONS_API_URL,
-          APPS_TUNNEL_URL_KEYWORDS,
+          EXTENSIONS_API_URL: EXTENSIONS_API_URL ?? "",
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
           POSTHOG_KEY,
@@ -201,6 +197,9 @@ export default defineConfig(({ command, mode }) => {
         "@locale": path.resolve(__dirname, "./locale"),
         "@dashboard": path.resolve(__dirname, "./src"),
         src: path.resolve(__dirname, "./src"),
+        // Force locally linked packages to use dashboard's React
+        react: path.resolve(__dirname, "./node_modules/react"),
+        "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
         /*
           Moment.js/react-moment does not fully suport ES modules.
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.

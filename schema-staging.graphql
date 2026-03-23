@@ -686,6 +686,13 @@ type Query {
     """Where filtering options for transactions."""
     where: TransactionWhereInput
 
+    """
+    Sort transactions.
+    
+    Added in Saleor 3.23.
+    """
+    sortBy: TransactionSortingInput
+
     """Return the elements in the list that come before the specified cursor."""
     before: String
 
@@ -11425,7 +11432,7 @@ type GiftCard implements Node & ObjectWithMetadata @doc(category: "Gift cards") 
   product: Product
 
   """
-  List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER events.
+  List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER and REFUNDED_IN_ORDER events.
   
   Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
   """
@@ -11519,6 +11526,7 @@ enum GiftCardEventsEnum @doc(category: "Gift cards") {
   RESENT
   NOTE_ADDED
   USED_IN_ORDER
+  REFUNDED_IN_ORDER
 }
 
 type GiftCardEventBalance @doc(category: "Gift cards") {
@@ -12748,9 +12756,6 @@ type Payment implements Node & ObjectWithMetadata @doc(category: "Payments") {
 
   """The details of the card used for this payment."""
   creditCard: CreditCard
-
-  """Informs whether this is a partial payment."""
-  partial: Boolean!
 
   """PSP reference of the payment."""
   pspReference: String
@@ -15185,6 +15190,13 @@ type Shop implements ObjectWithMetadata {
   """
   preserveAllAddressFields: Boolean!
 
+  """
+  Controls whether password-based authentication is allowed.
+  
+  Added in Saleor 3.23.
+  """
+  passwordLoginMode: PasswordLoginModeEnum!
+
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean! @deprecated(reason: "Use `Channel.taxConfiguration.pricesEnteredWithTax` to determine whether prices are entered with tax.")
 
@@ -15286,6 +15298,21 @@ type Limits {
 
   """Defines the number of warehouses."""
   warehouses: Int
+}
+
+"""
+Controls whether password-based authentication is allowed.
+
+    ENABLED - any user can log in with a password. This is the default behavior.
+    CUSTOMERS_ONLY - only customer users can log in with a password.
+        If a staff user logs in with a password, they will be treated as a customer
+        — the issued token will not contain any staff permissions.
+    DISABLED - no user can log in with a password.
+"""
+enum PasswordLoginModeEnum @doc(category: "Authentication") {
+  ENABLED
+  CUSTOMERS_ONLY
+  DISABLED
 }
 
 """Gift card related settings from site settings."""
@@ -15550,11 +15577,85 @@ input TransactionWhereInput @doc(category: "Payments") {
   """Filter by app identifier."""
   appIdentifier: StringFilterInput
 
+  """
+  Filter transactions by created at date.
+  
+  Added in Saleor 3.23.
+  """
+  createdAt: DateTimeRangeInput
+
+  """
+  Filter transactions by modified at date.
+  
+  Added in Saleor 3.23.
+  """
+  modifiedAt: DateTimeRangeInput
+
+  """
+  Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+  
+  Added in Saleor 3.23.
+  """
+  events: [TransactionEventFilterInput!]
+
   """List of conditions that must be met."""
   AND: [TransactionWhereInput!]
 
   """A list of conditions of which at least one must be met."""
   OR: [TransactionWhereInput!]
+}
+
+"""
+Filter input for transaction events data.
+
+Added in Saleor 3.23.
+"""
+input TransactionEventFilterInput @doc(category: "Payments") {
+  """
+  Filter transaction events by created at date.
+  
+  Added in Saleor 3.23.
+  """
+  createdAt: DateTimeRangeInput
+
+  """
+  Filter transaction events by type.
+  
+  Added in Saleor 3.23.
+  """
+  type: TransactionEventTypeEnumFilterInput
+}
+
+input TransactionEventTypeEnumFilterInput @doc(category: "Payments") {
+  """The value equal to."""
+  eq: TransactionEventTypeEnum
+
+  """The value included in."""
+  oneOf: [TransactionEventTypeEnum!]
+}
+
+input TransactionSortingInput @doc(category: "Payments") {
+  """Specifies the direction in which to sort transactions."""
+  direction: OrderDirection!
+
+  """Sort transactions by the selected field."""
+  field: TransactionSortField!
+}
+
+enum TransactionSortField @doc(category: "Payments") {
+  """
+  Sort transactions by creation date. 
+  
+  Added in Saleor 3.23.
+  """
+  CREATED_AT
+
+  """
+  Sort transactions by modification date. 
+  
+  Added in Saleor 3.23.
+  """
+  MODIFIED_AT
 }
 
 type PageCountableConnection @doc(category: "Pages") {
@@ -15955,10 +16056,12 @@ Represents possible payment method types.
     The following types are possible:
     CARD - represents a card payment method.
     OTHER - represents any payment method that is not a card payment.
+    GIFT_CARD - represents a gift card payment method.
 """
 enum PaymentMethodTypeEnum @doc(category: "Payments") {
   CARD
   OTHER
+  GIFT_CARD
 }
 
 input PaymentMethodDetailsCardFilterInput {
@@ -17782,6 +17885,20 @@ type Mutation {
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   refundReasonReferenceClear: RefundReasonReferenceTypeClear @doc(category: "Orders")
+
+  """
+  Calculates available delivery options for a checkout.
+  
+  Added in Saleor 3.23.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+  """
+  deliveryOptionsCalculate(
+    """The ID of the checkout."""
+    id: ID!
+  ): DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   Manage shipping method's availability in channels. 
@@ -20924,6 +21041,7 @@ type Mutation {
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutShippingMethodUpdate(
@@ -20938,17 +21056,22 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
+  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
 
   """
   Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutDeliveryMethodUpdate(
-    """Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID)."""
+    """
+    Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID or `CheckoutDelivery` ID).
+    
+    DEPRECATED: Usage of `ShippingMethod` ID is deprecated. Use CheckoutDelivery ID instead.
+    """
     deliveryMethodId: ID
 
     """The checkout's ID."""
@@ -20956,7 +21079,7 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT])
+  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   Updates language code in the existing checkout.
@@ -22922,6 +23045,7 @@ enum ShopErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
+  PASSWORD_AUTH_RESTRICTION
 }
 
 input StaffNotificationRecipientInput {
@@ -23072,6 +23196,13 @@ input ShopSettingsInput {
   Added in Saleor 3.22.
   """
   preserveAllAddressFields: Boolean
+
+  """
+  Controls whether password-based authentication is allowed.
+  
+  Added in Saleor 3.23.
+  """
+  passwordLoginMode: PasswordLoginModeEnum
 
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean @deprecated(reason: "Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.")
@@ -23306,6 +23437,40 @@ type RefundReasonReferenceTypeClearError @doc(category: "Shop") {
 
   """Failed to clear refund reason reference type"""
   code: RefundSettingsErrorCode!
+}
+
+"""
+Calculates available delivery options for a checkout.
+
+Added in Saleor 3.23.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+"""
+type DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
+  """List of the available deliveries."""
+  deliveries: [Delivery!]!
+  errors: [DeliveryOptionsCalculateError!]!
+}
+
+type DeliveryOptionsCalculateError @doc(category: "Shipping") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: DeliveryOptionsCalculateErrorCode!
+}
+
+enum DeliveryOptionsCalculateErrorCode @doc(category: "Shipping") {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INVALID
 }
 
 """
@@ -25984,7 +26149,7 @@ input TransactionCreateInput @doc(category: "Payments") {
 }
 
 """
-Details of the payment method used for the transaction. One of `card` or `other` is required.
+Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
 
 Added in Saleor 3.22.
 """
@@ -25994,6 +26159,13 @@ input PaymentMethodDetailsInput {
 
   """Details of the non-card payment method used for this transaction."""
   other: OtherPaymentMethodDetailsInput
+
+  """
+  Details of the gift card payment method used for the transaction.
+  
+  Added in Saleor 3.23.
+  """
+  giftCard: GiftCardPaymentMethodDetailsInput
 }
 
 input CardPaymentMethodDetailsInput {
@@ -26031,6 +26203,29 @@ input CardPaymentMethodDetailsInput {
 input OtherPaymentMethodDetailsInput {
   """Name of the payment method used for the transaction."""
   name: String!
+}
+
+input GiftCardPaymentMethodDetailsInput {
+  """
+  Name of the payment method used for the transaction. Max length is 256 characters.
+  
+  Added in Saleor 3.23.
+  """
+  name: String!
+
+  """
+  Brand of the gift card used for the transaction. Max length is 40 characters.
+  
+  Added in Saleor 3.23.
+  """
+  brand: String
+
+  """
+  Last characters of the gift card used for the transaction. Max length is 4 characters.
+  
+  Added in Saleor 3.23.
+  """
+  lastChars: String
 }
 
 input TransactionEventInput @doc(category: "Payments") {
@@ -26924,7 +27119,7 @@ input DraftOrderCreateInput @doc(category: "Orders") {
   shippingMethod: ID
 
   """ID of the voucher associated with the order."""
-  voucher: ID
+  voucher: ID @deprecated(reason: "Use `voucherCode` instead.")
 
   """
   A code of the voucher associated with the order.
@@ -27074,7 +27269,7 @@ input DraftOrderInput @doc(category: "Orders") {
   shippingMethod: ID
 
   """ID of the voucher associated with the order."""
-  voucher: ID
+  voucher: ID @deprecated(reason: "Use `voucherCode` instead.")
 
   """
   A code of the voucher associated with the order.
@@ -30936,9 +31131,10 @@ Updates the shipping method of the checkout.
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
+type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
   """An updated checkout."""
   checkout: Checkout
   checkoutErrors: [CheckoutError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -30950,9 +31146,10 @@ Updates the delivery method (shipping method or pick up point) of the checkout. 
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
+type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
   """An updated checkout."""
   checkout: Checkout
   errors: [CheckoutError!]!
@@ -32145,10 +32342,10 @@ type AppInstall @doc(category: "Apps") {
 
 input AppInstallInput @doc(category: "Apps") {
   """Name of the app to install."""
-  appName: String
+  appName: String!
 
   """URL to app's manifest in JSON format."""
-  manifestUrl: String
+  manifestUrl: String!
 
   """Determine if app will be set active or not."""
   activateAfterInstallation: Boolean = true
@@ -32569,6 +32766,7 @@ enum AccountErrorCode @doc(category: "Users") {
   MISSING_CHANNEL_SLUG
   ACCOUNT_NOT_CONFIRMED
   LOGIN_ATTEMPT_DELAYED
+  DISABLED_AUTHENTICATION_METHOD
   UNKNOWN_IP_ADDRESS
 }
 
@@ -37401,6 +37599,37 @@ type CardPaymentMethodDetails implements PaymentMethodDetails {
 
   """Four-digit number representing the card’s expiration year."""
   expYear: Int
+}
+
+"""
+Represents a gift card payment method used for a transaction.
+
+Added in Saleor 3.23.
+"""
+type GiftCardPaymentMethodDetails implements PaymentMethodDetails {
+  """Name of the gift card."""
+  name: String!
+
+  """
+  Brand of the gift card.
+  
+  Added in Saleor 3.23.
+  """
+  brand: String
+
+  """
+  Last characters of the gift card code. Max 4 characters.
+  
+  Added in Saleor 3.23.
+  """
+  lastChars: String
+
+  """
+  Indicates whether the gift card is a built-in Saleor gift card.
+  
+  Added in Saleor 3.23.
+  """
+  isSaleorGiftcard: Boolean!
 }
 
 """

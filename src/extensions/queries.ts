@@ -94,7 +94,6 @@ export const appDetails = gql`
         code
         name
       }
-      dataPrivacy
       dataPrivacyUrl
       brand {
         logo {
