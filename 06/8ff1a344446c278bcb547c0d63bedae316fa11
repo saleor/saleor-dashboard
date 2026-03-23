@@ -1,0 +1,25 @@
+.github/workflows/deploy-staging-and-prepare-release.yaml
+  0abb127473c1e7b1 51
+.github/workflows/cleanup-after-release.yml
+  0abb127473c1e7b1 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "068ff1a344446c278bcb547c0d63bedae316fa11",
+  "prompts": {
+    "0abb127473c1e7b1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7079fb52-8280-4bc1-8603-dc9ac77f9c2f",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
