@@ -273,7 +273,8 @@ const OrderHistory = ({
 
                 if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED && lines?.length > 0) {
                   const productLine = lines[0];
-                  const productName = productLine.orderLine?.productName || productLine.itemName;
+                  const productName =
+                    productLine.orderLine?.productName || productLine.itemName || "Product";
                   const variantName = productLine.orderLine?.variantName;
                   const displayName = variantName ? `${productName} (${variantName})` : productName;
 
@@ -342,8 +343,8 @@ const OrderHistory = ({
                             <OrderLineItem
                               key={`${id}-line-${line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}`}
                               orderLine={line.orderLine}
-                              quantity={line.quantity}
-                              itemName={line.itemName}
+                              quantity={line.quantity ?? 0}
+                              fallbackItemName={line.itemName ?? "Product"}
                             />
                           ))}
                         {hasRelatedOrder && (

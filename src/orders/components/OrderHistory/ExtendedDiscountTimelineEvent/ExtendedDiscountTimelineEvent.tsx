@@ -3,6 +3,7 @@ import { type TitleElement } from "@dashboard/components/Timeline/TimelineEventH
 import { toActor } from "@dashboard/components/Timeline/utils";
 import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderHistoryDate } from "../OrderHistoryDate";
@@ -18,7 +19,7 @@ const messages = defineMessages({
 
 interface ExtendedDiscountTimelineEventProps {
   event: OrderEventFragment;
-  title?: React.ReactNode;
+  title?: ReactNode;
   titleElements?: TitleElement[];
   isLastInGroup?: boolean;
 }

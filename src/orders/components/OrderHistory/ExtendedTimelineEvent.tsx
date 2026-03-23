@@ -90,6 +90,9 @@ const eventTypeToTitleKey: Partial<Record<OrderEventsEnum, keyof typeof titles>>
   [OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED]: "orderLineDiscountUpdated",
 };
 
+// Some timeline events intentionally do not map to a dedicated title in this component.
+const FALLBACK_TITLE_TEXT = "";
+
 const localMessages = defineMessages({
   refundedAmount: {
     id: "nngeI3",
@@ -128,7 +131,7 @@ const ExtendedTimelineEvent = ({
 
   if (isTimelineEventOfDiscountType(type)) {
     if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
-      const productName = lines[0]?.itemName;
+      const productName = lines?.[0]?.itemName;
       const isAdded = hasOrderLineDiscountWithNoPreviousValue(event);
       const messageDescriptor = isAdded
         ? titles.orderLineDiscountAdded
@@ -168,7 +171,7 @@ const ExtendedTimelineEvent = ({
 
   const titleKey = eventTypeToTitleKey[type];
   const titleMessage = titleKey ? titles[titleKey] : undefined;
-  const titleText = titleMessage ? intl.formatMessage(titleMessage) : "";
+  const titleText = titleMessage ? intl.formatMessage(titleMessage) : FALLBACK_TITLE_TEXT;
   const titleElement: TitleElement = { text: titleText };
 
   const selectTitleElements = (): TitleElement[] => {
@@ -209,8 +212,8 @@ const ExtendedTimelineEvent = ({
               <OrderLineItem
                 key={orderLine?.id ? `${id}-line-${orderLine.id}` : `${id}-line-${i}`}
                 orderLine={orderLine}
-                quantity={quantity}
-                itemName={itemName}
+                quantity={quantity ?? 0}
+                fallbackItemName={itemName ?? "Product"}
               />
             ))}
           </>
