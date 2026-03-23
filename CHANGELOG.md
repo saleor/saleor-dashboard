@@ -1,5 +1,39 @@
 # Changelog
 
+## 3.22.36
+
+### Patch Changes
+
+- [#6406](https://github.com/saleor/saleor-dashboard/pull/6406) [`142b8cf`](https://github.com/saleor/saleor-dashboard/commit/142b8cfaa13d621b87849714289e548b9e666599) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replaced a few instances of moment.js usage with native Intl API
+
+- [#6409](https://github.com/saleor/saleor-dashboard/pull/6409) [`32d03dc`](https://github.com/saleor/saleor-dashboard/commit/32d03dce6e5655f73ca79b04b282c4d71fcd0977) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Gift cards filters now have option to filder by gift card code explicitly. Previously this was available only in search box, which uses `search` query, this however might not be available immediately after creating a gift card, due to indexing running in the background.
+
+- [#6450](https://github.com/saleor/saleor-dashboard/pull/6450) [`3bfd607`](https://github.com/saleor/saleor-dashboard/commit/3bfd607d39edcd957ed5af68a528faf02d6dbe88) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Fixed missing Product Variant webhook events group in the webhook creation UI.
+
+- [#6421](https://github.com/saleor/saleor-dashboard/pull/6421) [`e7890fc`](https://github.com/saleor/saleor-dashboard/commit/e7890fceb028e2500db45b2b7e6e2401a36e3d3a) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Added graceful fallback for product media images that fail to load, showing a placeholder icon and message instead of a broken image
+
+- [#6438](https://github.com/saleor/saleor-dashboard/pull/6438) [`0e11960`](https://github.com/saleor/saleor-dashboard/commit/0e11960d577b7b55ec11d570f6c4549af094e742) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Bumped Node to v24 in Dockerfiles (Github Actions, Docker, Devcontainers)
+
+- [#6405](https://github.com/saleor/saleor-dashboard/pull/6405) [`23a4ee7`](https://github.com/saleor/saleor-dashboard/commit/23a4ee721f51d11b0a886a6530d5b08abb92e08d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Pull @saleor/sdk dependency into Dashboard codebase, to restore control of external dependencies like Apollo
+
+- [#6426](https://github.com/saleor/saleor-dashboard/pull/6426) [`d280080`](https://github.com/saleor/saleor-dashboard/commit/d280080c82832cd7451847fc0e5677f019f617d5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Store Dashboard hostname as Sentry user, for better aggregation of errors. No PII leak (user is not attached to people, but service)
+
+- [#6427](https://github.com/saleor/saleor-dashboard/pull/6427) [`80ba3cf`](https://github.com/saleor/saleor-dashboard/commit/80ba3cfaafcd0cd042c097e1e2a782ce0bd4fecd) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated Vite bundler to 7.3.1 (from 6.4.1). This is a dev/build-time dependency update; no user-facing changes are expected.
+
+- [#6404](https://github.com/saleor/saleor-dashboard/pull/6404) [`659142b`](https://github.com/saleor/saleor-dashboard/commit/659142bd5fe708e6e7edd883c347320f5b510446) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Replace a few moment.js invocations with native browser APIs
+
+- [#6414](https://github.com/saleor/saleor-dashboard/pull/6414) [`bbc0cb1`](https://github.com/saleor/saleor-dashboard/commit/bbc0cb1390198d22b18bf8d0c173757715d5a939) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated Jotai package to 2.18.1
+
+- [#6432](https://github.com/saleor/saleor-dashboard/pull/6432) [`dc53906`](https://github.com/saleor/saleor-dashboard/commit/dc53906f60482d4641eff5f11e308e4d47213a75) Thanks [@mirekm](https://github.com/mirekm)! - Fix datagrid header selection color (regression)
+
+- [#6447](https://github.com/saleor/saleor-dashboard/pull/6447) [`f5c2172`](https://github.com/saleor/saleor-dashboard/commit/f5c217210640473a86d02ffdcfb0ec501b194478) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug where extensions() query was executed multiple times
+
+- [#6407](https://github.com/saleor/saleor-dashboard/pull/6407) [`65922df`](https://github.com/saleor/saleor-dashboard/commit/65922dfd77174e95d919a15e2701206072a09561) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Add password login mode setting to Site Settings, allowing administrators to control whether password-based authentication is enabled, restricted to customers only, or fully disabled. The Sign In page now respects this setting — when password login is disabled or restricted to customers only, the email/password form is hidden and only external authentication methods (e.g. SSO) are shown.
+
+- [#6437](https://github.com/saleor/saleor-dashboard/pull/6437) [`e5a6dbd`](https://github.com/saleor/saleor-dashboard/commit/e5a6dbde53e9632f202e11af873cf376b3ac5008) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed dynamic fetching of categories (Combobox) in the Product Page (assign product to category)
+
+- [#6419](https://github.com/saleor/saleor-dashboard/pull/6419) [`75b85d9`](https://github.com/saleor/saleor-dashboard/commit/75b85d90d6097164e3cde9698e3c537efc2928ff) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Support REFUNDED_IN_ORDER event in gift card history
+
 ## 3.22.35
 
 ### Patch Changes
