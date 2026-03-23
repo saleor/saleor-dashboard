@@ -1,7 +1,8 @@
 import { AppsApiService } from "@api/apps";
+import { BasicApiService } from "@api/basics";
 import { APP_SMOKE_DATA, getAppsForCurrentEnv, resolveAppUrl } from "@data/appSmokeTestData";
 import { LOCATORS } from "@data/commonLocators";
-import { expect, request as playwrightRequest } from "@playwright/test";
+import { type APIRequestContext, expect, request as playwrightRequest } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -22,11 +23,23 @@ if (!version || apps.length === 0) {
 }
 
 let appsApi: AppsApiService;
+let requestContext: APIRequestContext;
 
 test.beforeAll(async () => {
-  const requestContext = await playwrightRequest.newContext();
+  requestContext = await playwrightRequest.newContext();
+
+  const basicApi = new BasicApiService(requestContext);
+
+  await basicApi.logInUserViaApi({
+    email: process.env.E2E_USER_NAME!,
+    password: process.env.E2E_USER_PASSWORD!,
+  });
 
   appsApi = new AppsApiService(requestContext);
+});
+
+test.afterAll(async () => {
+  await requestContext?.dispose();
 });
 
 apps.forEach(app => {
