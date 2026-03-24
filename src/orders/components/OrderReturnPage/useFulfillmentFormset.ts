@@ -17,7 +17,7 @@ export const useFulfillmentFormset = ({
   formData,
 }: {
   order: OrderDetailsFragment;
-  formData: { refundShipmentCosts: boolean; amount: number };
+  formData: { refundShipmentCosts: boolean; amount: number | null | undefined };
 }) => {
   const fulfiledItemsQuatities = useFormset<LineItemData, number>(
     getItemsFulfilled(order).map(mapWithLabel),

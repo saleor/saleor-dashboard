@@ -211,7 +211,7 @@ export const getReturnRefundValue = ({
 }: {
   autoGrantRefund: boolean | undefined;
   isAmountDirty: boolean;
-  customRefundValue: number | undefined;
+  customRefundValue: number | null | undefined;
   amountData: PaymentSubmitCardValuesProps | undefined;
 }) => {
   if (!autoGrantRefund) {

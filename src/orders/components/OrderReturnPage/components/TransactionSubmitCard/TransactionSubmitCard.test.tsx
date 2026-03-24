@@ -178,4 +178,25 @@ describe("TransactionSubmitCard", () => {
     expect(onAmountChangeFn).toHaveBeenCalledWith(5);
     expect(submitFn).toHaveBeenCalled();
   });
+  it("calls onAmountChange with null when refund amount field is cleared", async () => {
+    // Arrange
+    const onAmountChangeFn = jest.fn();
+
+    render(
+      <TransactionSubmitCard
+        {...transactionSubmitCardProps}
+        autoGrantRefund={true}
+        onAmountChange={onAmountChangeFn}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    const priceField = screen.getByTestId("price-field");
+
+    // Act
+    await userEvent.clear(priceField);
+
+    // Assert
+    expect(onAmountChangeFn).toHaveBeenCalledWith(null);
+  });
 });

@@ -35,14 +35,14 @@ interface TransactionSubmitCardProps {
   canRefundShipping: boolean;
   shippingCosts: IMoney;
   amountData: PaymentSubmitCardValuesProps;
-  customRefundValue: number | undefined;
+  customRefundValue: number | null | undefined;
   onChange: FormChange;
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
   transactions: OrderDetailsFragment["transactions"];
   isAmountDirty: boolean;
   transactionId?: string;
-  onAmountChange: (value: number) => void;
+  onAmountChange: (value: number | null) => void;
 }
 
 export const TransactionSubmitCard = ({
@@ -129,13 +129,21 @@ export const TransactionSubmitCard = ({
             label={intl.formatMessage(submitCardMessages.returnRefundValueLabel)}
             onFocus={() => setIsAmountFocused(true)}
             onChange={e => {
-              const value = e.target.value ?? "";
+              const displayValue = e.target.value ?? "";
 
-              setAmountInput(value);
+              setAmountInput(displayValue);
 
-              const parsed = parseFloat(value);
+              const trimmed = displayValue.trim();
 
-              onAmountChange(Number.isNaN(parsed) ? 0 : parsed);
+              if (trimmed === "") {
+                onAmountChange(null);
+
+                return;
+              }
+
+              const parsed = parseFloat(trimmed);
+
+              onAmountChange(Number.isNaN(parsed) ? null : parsed);
             }}
             onBlur={() => {
               setIsAmountFocused(false);

@@ -47,6 +47,20 @@ describe("getReturnRefundValue", () => {
     // Assert
     expect(result).toEqual("");
   });
+  it("should return empty string if autoGrantRefund is true, isAmountDirty is true, but customRefundValue is null", () => {
+    // Arrange
+    const testData = {
+      autoGrantRefund: true,
+      isAmountDirty: true,
+      customRefundValue: null,
+      amountData: undefined,
+    };
+    // Act
+    const result = getReturnRefundValue(testData);
+
+    // Assert
+    expect(result).toEqual("");
+  });
   it("should return refundTotalAmount as string if autoGrantRefund is true, isAmountDirty is false, and amountData is defined", () => {
     // Arrange
     const testData = {
