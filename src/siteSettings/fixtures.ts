@@ -1,7 +1,7 @@
 import { type SiteSettingsQuery } from "@dashboard/graphql";
-import { PasswordLoginModeEnum, type SiteSettingsStagingQuery } from "@dashboard/graphql/staging";
+import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
 
-export const shop: SiteSettingsQuery["shop"] & Partial<SiteSettingsStagingQuery["shop"]> = {
+export const shop: SiteSettingsQuery["shop"] = {
   __typename: "Shop",
   companyAddress: {
     __typename: "Address",
