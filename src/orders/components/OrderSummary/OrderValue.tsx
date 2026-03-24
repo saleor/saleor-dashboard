@@ -140,8 +140,8 @@ const messages = defineMessages({
     description: "sub-header for line-level discounts in summary",
   },
   beforeDiscounts: {
-    id: "wBcA2j",
-    defaultMessage: "before discounts",
+    id: "5p5Zzz",
+    defaultMessage: "Before discounts",
     description: "label for undiscounted subtotal reference",
   },
   lineCount: {
