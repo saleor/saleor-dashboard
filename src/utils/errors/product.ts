@@ -55,10 +55,6 @@ const messages = defineMessages({
     id: "DILs4b",
     defaultMessage: "Unsupported media provider or incorrect URL",
   },
-  variantNoDigitalContent: {
-    id: "Z6QAbw",
-    defaultMessage: "This variant does not have any digital content",
-  },
   variantUnique: {
     id: "i3Mvj8",
     defaultMessage: "This variant already exists",
@@ -92,8 +88,6 @@ function getProductErrorMessage(
         return intl.formatMessage(messages.attributeVariantsDisabled);
       case ProductErrorCode.DUPLICATED_INPUT_ITEM:
         return intl.formatMessage(messages.duplicatedInputItem);
-      case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
-        return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.UNSUPPORTED_MEDIA_PROVIDER:
         return intl.formatMessage(messages.unsupportedMediaProvider);
       case ProductErrorCode.PRODUCT_WITHOUT_CATEGORY:
