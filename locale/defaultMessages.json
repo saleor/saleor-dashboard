@@ -1358,6 +1358,10 @@
   "5oVmhu": {
     "string": "Cancel request sent to payment provider"
   },
+  "5p5Zzz": {
+    "context": "label for undiscounted subtotal reference",
+    "string": "Before discounts"
+  },
   "5pHBSU": {
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
@@ -10688,10 +10692,6 @@
   "wBRaTi": {
     "context": "no models placeholder",
     "string": "No models available"
-  },
-  "wBcA2j": {
-    "context": "label for undiscounted subtotal reference",
-    "string": "Before discounts"
   },
   "wDUBLR": {
     "context": "order refund amount",
