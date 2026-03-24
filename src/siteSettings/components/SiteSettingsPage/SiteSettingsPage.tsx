@@ -154,9 +154,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     onChange={change}
                   />
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -182,9 +180,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     onCountryChange={handleCountrySelect}
                   />
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -212,28 +208,21 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
-
-                {isStagingSchema() && (
-                  <>
-                    <Divider />
-
-                    <Box
-                      display="grid"
-                      __gridTemplateColumns="1fr 3fr"
-                      paddingLeft={6}
-                      paddingBottom={8}
-                    >
-                      <PageSectionHeader
-                        title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
-                        description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
-                      />
-                      <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
-                    </Box>
-                  </>
-                )}
-
                 <Divider />
 
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                  />
+                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
+                </Box>
+                <Divider />
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -261,9 +250,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
