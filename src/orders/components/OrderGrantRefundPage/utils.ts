@@ -120,12 +120,17 @@ export const getRefundAmountValue = ({
 }: {
   isAmountInputDirty: boolean;
   totalCalulatedPrice: number;
-  refundAmount: number;
+  refundAmount: number | undefined;
   isEditedRefundAmount: boolean;
 }) => {
   // User provided value into input or we are editing refund amount
   if (isAmountInputDirty || isEditedRefundAmount) {
-    return refundAmount;
+    if (refundAmount !== undefined && Number.isFinite(refundAmount)) {
+      return refundAmount;
+    }
+
+    // Cleared or invalid input: same as no explicit amount — use line/shipping total for display
+    return totalCalulatedPrice ?? 0;
   }
 
   return totalCalulatedPrice ?? 0;

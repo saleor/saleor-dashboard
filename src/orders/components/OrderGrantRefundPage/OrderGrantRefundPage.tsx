@@ -95,7 +95,7 @@ const OrderGrantRefundPage = ({
   const amountValue = getRefundAmountValue({
     isEditedRefundAmount: grantedRefund !== undefined,
     isAmountInputDirty: isFormDirty.amount,
-    refundAmount: Number(data.amount),
+    refundAmount: data.amount,
     totalCalulatedPrice: totalSelectedPrice,
   });
   const currency = order?.total?.gross?.currency ?? "";
@@ -107,7 +107,7 @@ const OrderGrantRefundPage = ({
     submit();
   };
   const getRefundAmountDisplayValue = () => {
-    if (isFormDirty) {
+    if (isFormDirty.amount) {
       return amountValue.toString();
     }
 

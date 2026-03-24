@@ -181,12 +181,16 @@ describe("TransactionSubmitCard", () => {
   it("calls onAmountChange with null when refund amount field is cleared", async () => {
     // Arrange
     const onAmountChangeFn = jest.fn();
+    const onChangeFn = jest.fn();
+    const submitFn = jest.fn();
 
     render(
       <TransactionSubmitCard
         {...transactionSubmitCardProps}
         autoGrantRefund={true}
         onAmountChange={onAmountChangeFn}
+        onChange={onChangeFn}
+        onSubmit={submitFn}
       />,
       { wrapper: Wrapper },
     );
