@@ -395,6 +395,7 @@ export const ChannelDetailsFragmentDoc = gql`
     automaticallyCompleteFullyPaidCheckouts
     automaticCompletionDelay
     automaticCompletionCutOffDate
+    allowLegacyGiftCardUse
   }
 }
     ${ChannelFragmentDoc}
