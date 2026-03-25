@@ -10296,10 +10296,6 @@ export type CollectionAssignProductMutationVariables = Exact<{
   collectionId: Scalars['ID'];
   productIds: Array<Scalars['ID']> | Scalars['ID'];
   moves: Array<MoveProductInput> | MoveProductInput;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -10349,10 +10345,6 @@ export type CollectionChannelListingUpdateMutation = { __typename: 'Mutation', c
 export type ReorderProductsInCollectionMutationVariables = Exact<{
   collectionId: Scalars['ID'];
   moves: Array<MoveProductInput> | MoveProductInput;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -11915,9 +11907,7 @@ export type GiftCardTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GiftCardTotalCountQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null } | null };
 
-export type GiftCardProductsCountQueryVariables = Exact<{
-  channel: Scalars['String'];
-}>;
+export type GiftCardProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GiftCardProductsCountQuery = { __typename: 'Query', giftCardProductTypes: { __typename: 'ProductTypeCountableConnection', totalCount: number | null } | null };

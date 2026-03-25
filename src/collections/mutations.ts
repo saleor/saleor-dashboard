@@ -31,10 +31,6 @@ export const assignCollectionProduct = gql`
     $collectionId: ID!
     $productIds: [ID!]!
     $moves: [MoveProductInput!]!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
   ) {
     collectionAddProducts(collectionId: $collectionId, products: $productIds) {
       errors {
@@ -132,14 +128,7 @@ export const collectionChannelListingUpdate = gql`
 `;
 
 export const reorderProductsInCollection = gql`
-  mutation ReorderProductsInCollection(
-    $collectionId: ID!
-    $moves: [MoveProductInput!]!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
+  mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!) {
     collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
       errors {
         message

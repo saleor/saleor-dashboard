@@ -64,7 +64,7 @@ export const giftCardTotalCount = gql`
 `;
 
 export const giftCardProductsCount = gql`
-  query GiftCardProductsCount($channel: String!) {
+  query GiftCardProductsCount {
     giftCardProductTypes: productTypes(filter: { kind: GIFT_CARD }) {
       totalCount
     }
