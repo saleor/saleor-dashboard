@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { type LazyQueryResult } from "@apollo/client/react";
+import { type QueryResult } from "@apollo/client/react";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
@@ -49,6 +49,7 @@ import {
 } from "./datagrid";
 import { messages } from "./messages";
 import { usePriceClick } from "./usePriceClick";
+import { useProductListAttributes } from "./useProductListAttributes";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -56,7 +57,7 @@ interface ProductListDatagridProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  gridAttributesOpts: LazyQueryResult<
+  gridAttributesOpts: QueryResult<
     GridAttributesQuery,
     Exact<{
       ids: string | string[];
@@ -97,6 +98,32 @@ export const ProductListDatagrid = ({
   const location = useLocation();
   const productsLength = getProductRowsLength(disabled, products, disabled);
   const onPriceClick = usePriceClick({ isChannelSelected });
+
+  const productIds = useMemo(() => products?.map(p => p.id) ?? [], [products]);
+
+  const visibleAttributeSlugs = useMemo(() => {
+    const selectedAttributes = mapEdgesToItems(gridAttributesOpts.data?.selectedAttributes);
+    const visibleAttrIds = (settings?.columns ?? [])
+      .filter(isAttributeColumnValue)
+      .map(getAttributeIdFromColumnValue);
+
+    if (visibleAttrIds.length === 0 || !selectedAttributes) {
+      return [];
+    }
+
+    return visibleAttrIds
+      .map(id => {
+        const attr = selectedAttributes.find(a => a.id === id);
+
+        return attr?.slug ? { id, slug: attr.slug } : null;
+      })
+      .filter(Boolean) as Array<{ id: string; slug: string }>;
+  }, [settings?.columns, gridAttributesOpts.data]);
+
+  const { getAssignedAttribute, attributesLoading } = useProductListAttributes({
+    productIds,
+    visibleAttributeSlugs,
+  });
 
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
@@ -247,8 +274,18 @@ export const ProductListDatagrid = ({
         theme,
         locale,
         selectedChannelId,
+        getAssignedAttribute,
+        attributesLoading,
       }),
-    [visibleColumns, products, intl, locale, selectedChannelId],
+    [
+      visibleColumns,
+      products,
+      intl,
+      locale,
+      selectedChannelId,
+      getAssignedAttribute,
+      attributesLoading,
+    ],
   );
 
   return (

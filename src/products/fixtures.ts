@@ -701,7 +701,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -727,7 +726,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -804,7 +803,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -830,7 +828,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -974,7 +972,6 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDox",
             name: "Channel-USD",
-            slug: "channel-usd",
             currencyCode: "USD",
             __typename: "Channel",
           },
@@ -1000,7 +997,7 @@ export const product: (
           channel: {
             id: "Q2hhbm5lbDoy",
             name: "Channel-PLN",
-            slug: "channel-pln",
+
             currencyCode: "PLN",
             __typename: "Channel",
           },
@@ -1216,20 +1213,19 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    attributes: [],
+
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1254,20 +1250,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1292,14 +1286,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo2MQ==",
     name: "Nebula Night Sky Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1314,22 +1307,21 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    attributes: [],
+
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1354,20 +1346,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1392,14 +1382,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo2NA==",
     name: "Light Speed Yellow Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1414,22 +1403,21 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    attributes: [],
+
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1454,20 +1442,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1492,14 +1478,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo2NQ==",
     name: "Hyperspace Turquoise Paint",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6Nw==",
       name: "Paint",
     },
@@ -1516,42 +1501,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6MQ==",
-            name: "Pineapple",
-            reference: null,
-            slug: "pineapple",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1576,20 +1537,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1614,14 +1573,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3NQ==",
     name: "Pineapple Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1638,42 +1596,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6Mg==",
-            name: "Coconut",
-            reference: null,
-            slug: "coconut",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1698,20 +1632,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1736,14 +1668,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Ng==",
     name: "Coconut Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1760,42 +1691,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6Mw==",
-            name: "Apple",
-            reference: null,
-            slug: "apple",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1820,21 +1727,19 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
 
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1859,14 +1764,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Mg==",
     name: "Apple Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -1883,42 +1787,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NDk=",
-            name: "Orange",
-            reference: null,
-            slug: "orange",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1943,20 +1823,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -1981,14 +1859,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3MQ==",
     name: "Orange Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2005,42 +1882,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NTA=",
-            name: "Banana",
-            reference: null,
-            slug: "banana",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2065,20 +1918,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2103,14 +1954,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3NA==",
     name: "Banana Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2127,42 +1977,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NTE=",
-            name: "Bean",
-            reference: null,
-            slug: "bean",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2187,20 +2013,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2225,14 +2049,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo3OQ==",
     name: "Bean Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2249,42 +2072,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     created: "2020-06-22T13:52:05.094636+00:00",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NTI=",
-            name: "Carrot",
-            reference: null,
-            slug: "carrot",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2309,20 +2108,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2347,14 +2144,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDo3Mw==",
     name: "Carrot Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2371,42 +2167,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjE2",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NTM=",
-            name: "Sprouty",
-            reference: null,
-            slug: "sprouty",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2431,20 +2203,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2469,14 +2239,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo3OA==",
     name: "Green Juice",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6OQ==",
       name: "Juice",
     },
@@ -2493,42 +2262,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2553,20 +2298,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2591,14 +2334,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo4OQ==",
     name: "Code Division T-shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2615,42 +2357,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2675,20 +2393,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2713,14 +2429,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMDc=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2737,42 +2452,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2797,20 +2488,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2835,14 +2524,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMDg=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2859,42 +2547,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2919,20 +2583,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -2957,14 +2619,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMDk=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -2981,42 +2642,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3041,20 +2678,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3079,14 +2714,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTA=",
     name: "Polo Shirt",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3103,42 +2737,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3163,20 +2773,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: false,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3201,14 +2809,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: false,
       },
     ],
     id: "UHJvZHVjdDoxMTU=",
     name: "Black Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3225,42 +2832,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3285,20 +2868,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3323,14 +2904,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTY=",
     name: "Blue Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3347,42 +2927,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjI1",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6ODI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3407,20 +2963,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3445,14 +2999,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDoxMTc=",
     name: "Mustard Hoodie",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTQ=",
       name: "Top (clothing)",
     },
@@ -3469,42 +3022,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
     created: "2020-06-22T13:52:05.094636+00:00",
     description:
       "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
-    attributes: [
-      {
-        __typename: "SelectedAttribute",
-        attribute: {
-          __typename: "Attribute",
-          id: "QXR0cmlidXRlOjIz",
-        },
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "QXR0cmlidXRlVmFsdWU6NzI=",
-            name: "Cotton",
-            reference: null,
-            slug: "cotton",
-            boolean: null,
-            date: null,
-            dateTime: null,
-            value: null,
-          },
-        ],
-      },
-    ],
     channelListings: [
       {
         id: "UHJvZHVjdEltYWdlOjE=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "123",
           name: "Channel1",
-          slug: "channel1",
         },
-        isAvailableForPurchase: false,
+
         isPublished: true,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3529,20 +3058,18 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-14",
-        visibleInListings: true,
       },
       {
         id: "UHJvZHVjdEltYWdlOjI=",
         __typename: "ProductChannelListing",
-        availableForPurchaseAt: null,
+
         channel: {
           __typename: "Channel",
-          currencyCode: "USD",
+
           id: "124",
           name: "Channel2",
-          slug: "channel2",
         },
-        isAvailableForPurchase: false,
+
         isPublished: false,
         pricing: {
           __typename: "ProductPricingInfo",
@@ -3567,14 +3094,13 @@ export const products = (placeholderImage: string): RelayToFlat<ProductListQuery
           },
         },
         publishedAt: "2020-07-30",
-        visibleInListings: true,
       },
     ],
     id: "UHJvZHVjdDo4NQ==",
     name: "Colored Parrot Cushion",
     productType: {
       __typename: "ProductType",
-      hasVariants: true,
+
       id: "UHJvZHVjdFR5cGU6MTI=",
       name: "Cushion",
     },
@@ -4298,6 +3824,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjIx",
           name: "ABV",
+          slug: "abv",
         },
       },
       {
@@ -4306,6 +3833,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI3",
           name: "Author",
+          slug: "author",
         },
       },
       {
@@ -4314,6 +3842,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjE1",
           name: "Bottle Size",
+          slug: "bottle-size",
         },
       },
       {
@@ -4322,6 +3851,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjMw",
           name: "Details",
+          slug: "details",
         },
       },
       {
@@ -4330,6 +3860,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI1",
           name: "Format",
+          slug: "format",
         },
       },
       {
@@ -4338,6 +3869,7 @@ export const gridAttributesResult: GridAttributesQuery = {
           __typename: "Attribute",
           id: "QXR0cmlidXRlOjI2",
           name: "Publisher",
+          slug: "publisher",
         },
       },
     ],

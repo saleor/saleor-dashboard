@@ -2895,6 +2895,47 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
+export const ChannelListingProductForListFragmentDoc = gql`
+    fragment ChannelListingProductForList on ProductChannelListing {
+  id
+  isPublished
+  publishedAt
+  channel {
+    id
+    name
+  }
+}
+    `;
+export const ProductForListFragmentDoc = gql`
+    fragment ProductForList on Product {
+  id
+  name
+  thumbnail(size: 1024) {
+    url
+  }
+  productType {
+    id
+    name
+  }
+  category @include(if: $includeCategories) {
+    id
+    name
+  }
+  collections @include(if: $includeCollections) {
+    id
+    name
+  }
+  channelListings {
+    ...ChannelListingProductForList
+    pricing @include(if: $hasChannel) {
+      priceRange {
+        ...PriceRange
+      }
+    }
+  }
+}
+    ${ChannelListingProductForListFragmentDoc}
+${PriceRangeFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -3235,16 +3276,93 @@ export const ExportFileFragmentDoc = gql`
   url
 }
     `;
-export const ProductListAttributeFragmentDoc = gql`
-    fragment ProductListAttribute on SelectedAttribute {
+export const ProductListAssignedAttributeFragmentDoc = gql`
+    fragment ProductListAssignedAttribute on AssignedAttribute {
   attribute {
     id
   }
-  values {
-    ...AttributeValue
+  ... on AssignedSingleChoiceAttribute {
+    singleChoiceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiChoiceAttribute {
+    multiChoiceValue: value {
+      name
+    }
+  }
+  ... on AssignedNumericAttribute {
+    numericValue: value
+  }
+  ... on AssignedPlainTextAttribute {
+    plainTextValue: value
+  }
+  ... on AssignedBooleanAttribute {
+    booleanValue: value
+  }
+  ... on AssignedDateAttribute {
+    dateValue: value
+  }
+  ... on AssignedDateTimeAttribute {
+    dateTimeValue: value
+  }
+  ... on AssignedSwatchAttribute {
+    swatchValue: value {
+      name
+    }
+  }
+  ... on AssignedSinglePageReferenceAttribute {
+    pageReferenceValue: value {
+      title
+    }
+  }
+  ... on AssignedSingleProductReferenceAttribute {
+    productReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleProductVariantReferenceAttribute {
+    variantReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleCategoryReferenceAttribute {
+    categoryReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedSingleCollectionReferenceAttribute {
+    collectionReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiPageReferenceAttribute {
+    multiPageReferenceValue: value {
+      title
+    }
+  }
+  ... on AssignedMultiProductReferenceAttribute {
+    multiProductReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiProductVariantReferenceAttribute {
+    multiVariantReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiCategoryReferenceAttribute {
+    multiCategoryReferenceValue: value {
+      name
+    }
+  }
+  ... on AssignedMultiCollectionReferenceAttribute {
+    multiCollectionReferenceValue: value {
+      name
+    }
   }
 }
-    ${AttributeValueFragmentDoc}`;
+    `;
 export const ShippingMethodWithPostalCodesFragmentDoc = gql`
     fragment ShippingMethodWithPostalCodes on ShippingMethodType {
   id
@@ -15677,13 +15795,10 @@ export const ProductListDocument = gql`
   ) {
     edges {
       node {
-        ...ProductWithChannelListings
+        ...ProductForList
         updatedAt
         created
         description
-        attributes {
-          ...ProductListAttribute
-        }
       }
     }
     pageInfo {
@@ -15695,8 +15810,7 @@ export const ProductListDocument = gql`
     totalCount
   }
 }
-    ${ProductWithChannelListingsFragmentDoc}
-${ProductListAttributeFragmentDoc}`;
+    ${ProductForListFragmentDoc}`;
 
 /**
  * __useProductListQuery__
@@ -16059,6 +16173,7 @@ export const GridAttributesDocument = gql`
       node {
         id
         name
+        slug
       }
     }
   }
@@ -16188,6 +16303,49 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const ProductListAttributeDocument = gql`
+    query ProductListAttribute($ids: [ID!]!, $slug: String!) {
+  products(where: {ids: $ids}, first: 100) {
+    edges {
+      node {
+        id
+        assignedAttribute(slug: $slug) {
+          ...ProductListAssignedAttribute
+        }
+      }
+    }
+  }
+}
+    ${ProductListAssignedAttributeFragmentDoc}`;
+
+/**
+ * __useProductListAttributeQuery__
+ *
+ * To run a query within a React component, call `useProductListAttributeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductListAttributeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductListAttributeQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useProductListAttributeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>(ProductListAttributeDocument, options);
+      }
+export function useProductListAttributeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>(ProductListAttributeDocument, options);
+        }
+export type ProductListAttributeQueryHookResult = ReturnType<typeof useProductListAttributeQuery>;
+export type ProductListAttributeLazyQueryHookResult = ReturnType<typeof useProductListAttributeLazyQuery>;
+export type ProductListAttributeQueryResult = Apollo.QueryResult<Types.ProductListAttributeQuery, Types.ProductListAttributeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
   channels {

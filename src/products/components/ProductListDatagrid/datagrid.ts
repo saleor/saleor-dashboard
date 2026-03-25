@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type LazyQueryResult, type QueryLazyOptions } from "@apollo/client";
+import { getDisplayValueFromAssignedAttribute } from "@dashboard/attributes/utils/assignedAttributes";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
   getChannelAvailabilityLabel,
@@ -8,6 +9,7 @@ import {
 import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dateCell,
+  loadingCell,
   moneyCell,
   pillCell,
   readonlyTextCell,
@@ -182,6 +184,8 @@ interface GetCellContentProps {
   theme: DefaultTheme;
   locale: Locale;
   selectedChannelId?: string;
+  getAssignedAttribute?: (productId: string, attributeId: string) => unknown;
+  attributesLoading?: boolean;
 }
 
 export function createGetCellContent({
@@ -190,6 +194,8 @@ export function createGetCellContent({
   theme,
   products,
   selectedChannelId,
+  getAssignedAttribute,
+  attributesLoading,
 }: GetCellContentProps) {
   return ([column, row]: Item, { changes, getChangeIndex, added, removed }: GetCellContentOpts) => {
     const columnId = columns[column]?.id;
@@ -228,7 +234,12 @@ export function createGetCellContent({
     }
 
     if (columnId.startsWith("attribute")) {
-      return getAttributeCellContent(columnId, rowData);
+      return getAttributeCellContent(
+        columnId,
+        rowData?.id,
+        getAssignedAttribute,
+        attributesLoading,
+      );
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
@@ -375,27 +386,27 @@ function getPriceCellContent(
 
 function getAttributeCellContent(
   columnId: string,
-  rowData: RelayToFlat<ProductListQuery["products"]>[number],
+  productId: string | undefined,
+  getAssignedAttribute?: (productId: string, attributeId: string) => unknown,
+  attributesLoading?: boolean,
 ) {
+  if (attributesLoading) {
+    return loadingCell();
+  }
+
+  if (!productId || !getAssignedAttribute) {
+    return readonlyTextCell("");
+  }
+
   const attributeId = getAttributeIdFromColumnValue(columnId);
-  const productAttribute = rowData?.attributes.find(
-    attribute => attribute.attribute.id === attributeId,
-  );
+  const assignedAttribute = getAssignedAttribute(productId, attributeId);
 
-  if (productAttribute) {
-    if (productAttribute.values.length) {
-      if (productAttribute.values[0].date) {
-        return readonlyTextCell(productAttribute.values[0].date);
-      }
-
-      if (productAttribute.values[0].dateTime) {
-        return readonlyTextCell(productAttribute.values[0].dateTime);
-      }
-    }
-
-    const textValue = productAttribute.values.map(value => value.name).join(", ");
-
-    return readonlyTextCell(textValue);
+  if (assignedAttribute) {
+    return readonlyTextCell(
+      getDisplayValueFromAssignedAttribute(
+        assignedAttribute as Parameters<typeof getDisplayValueFromAssignedAttribute>[0],
+      ),
+    );
   }
 
   return readonlyTextCell("");

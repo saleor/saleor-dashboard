@@ -16,7 +16,7 @@ import {
   AttributeTypeEnum,
   type ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
-  useGridAttributesLazyQuery,
+  useGridAttributesQuery,
   useProductBulkDeleteMutation,
   useProductCountQuery,
   useProductExportMutation,
@@ -56,7 +56,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
@@ -255,18 +255,13 @@ const ProductList = ({ params }: ProductListProps) => {
     [products, selectedRowIds],
   );
   const availableColumnsAttributesOpts = useAvailableColumnAttributesLazyQuery();
-  const [gridAttributesQuery, gridAttributesOpts] = useGridAttributesLazyQuery();
-
-  useEffect(() => {
-    // Fetch this only on initial render
-    gridAttributesQuery({
-      variables: {
-        ids: filteredColumnIds,
-        hasAttributes: !!filteredColumnIds.length,
-        type: AttributeTypeEnum.PRODUCT_TYPE,
-      },
-    });
-  }, []);
+  const gridAttributesOpts = useGridAttributesQuery({
+    variables: {
+      ids: filteredColumnIds,
+      hasAttributes: !!filteredColumnIds.length,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+    },
+  });
 
   const {
     loadMore: loadMoreDialogProductTypes,
