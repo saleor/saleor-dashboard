@@ -44,7 +44,7 @@ jobs:
           # Get the commit message to check if it's from changeset-release branch
           COMMIT_MSG="${{ github.event.head_commit.message }}"
 
-          if echo "$COMMIT_MSG" | grep -q "\[automated\]"; then
+          if echo "$COMMIT_MSG" | grep -q "Release.*\[automated\]"; then
             echo "is_release_merge=true" >> $GITHUB_OUTPUT
             echo "✅ This is a release PR merge from changeset-release/$CURRENT_RELEASE"
           else
