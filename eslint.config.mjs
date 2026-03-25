@@ -339,7 +339,7 @@ export default tseslint.config(
       "@graphql-eslint/no-duplicate-fields": "error",
       "@graphql-eslint/no-deprecated": "warn",
       "@graphql-eslint/no-unused-fragments": "warn",
-      "@graphql-eslint/no-unused-variables": "warn",
+      "@graphql-eslint/no-unused-variables": "error",
       "@graphql-eslint/no-unused-fields": "warn",
     },
   }, // Disable any rules that conflict with Prettier
