@@ -1,5 +1,4 @@
-import { type SiteSettingsQuery } from "@dashboard/graphql";
-import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
+import { PasswordLoginModeEnum, type SiteSettingsQuery } from "@dashboard/graphql";
 
 export const shop: SiteSettingsQuery["shop"] = {
   __typename: "Shop",

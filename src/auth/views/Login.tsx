@@ -1,5 +1,7 @@
-import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
-import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
+import {
+  PasswordLoginModeEnum,
+  useAvailableExternalAuthenticationsQuery,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
