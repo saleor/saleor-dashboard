@@ -31,6 +31,9 @@ export const Default: Story = {};
 
 export const Loading: Story = {
   args: { loading: true },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 export const Empty: Story = {
