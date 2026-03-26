@@ -203,6 +203,7 @@ export default tseslint.config(
         },
       ],
       "formatjs/enforce-id": ["error", { idInterpolationPattern: "[sha512:contenthash:base64:6]" }],
+      "local-rules/named-effects": "warn",
       "local-rules/named-styles": "error",
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
