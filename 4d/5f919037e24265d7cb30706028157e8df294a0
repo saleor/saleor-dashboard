@@ -1,0 +1,29 @@
+package.json
+  e56d3a98ba5ed532 53-54
+vitest.config.ts
+  e56d3a98ba5ed532 1-32
+.github/workflows/main.yml
+  e56d3a98ba5ed532 96-97,110-118
+.storybook/vitest.setup.ts
+  e56d3a98ba5ed532 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "4d5f919037e24265d7cb30706028157e8df294a0",
+  "prompts": {
+    "e56d3a98ba5ed532": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74497465-83ae-40cd-a8f9-9abb3b450536",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 53,
+      "total_deletions": 10,
+      "accepted_lines": 53,
+      "overriden_lines": 0
+    }
+  }
+}
