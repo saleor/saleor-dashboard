@@ -91,6 +91,30 @@ jobs:
           pnpm run extract-messages
           git diff --exit-code ./locale
 
+  storybook-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Storybook
+        run: pnpm run build-storybook
+
+      - name: Run Storybook tests
+        run: |
+          npx http-server storybook-static --port 6006 --silent &
+          pnpm run test-storybook --url http://127.0.0.1:6006
+
   chromatic:
     runs-on: ubuntu-22.04
     steps:
