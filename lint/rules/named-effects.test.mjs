@@ -20,6 +20,12 @@ ruleTester.run("named-effects", namedEffectsRule, {
     {
       code: `useEffect(function syncData() { fetch("/api"); }, []);`,
     },
+    {
+      code: `React.useEffect(function updateTitle() { document.title = count; }, [count]);`,
+    },
+    {
+      code: `React.useEffect(myCallback, [dep]);`,
+    },
   ],
   invalid: [
     {
@@ -28,6 +34,18 @@ ruleTester.run("named-effects", namedEffectsRule, {
     },
     {
       code: `useEffect(() => {}, []);`,
+      errors: [{ messageId: "namedEffect" }],
+    },
+    {
+      code: `React.useEffect(() => { document.title = count; }, [count]);`,
+      errors: [{ messageId: "namedEffect" }],
+    },
+    {
+      code: `useEffect(function () { document.title = count; }, [count]);`,
+      errors: [{ messageId: "namedEffect" }],
+    },
+    {
+      code: `React.useEffect(function () { fetch("/api"); }, []);`,
       errors: [{ messageId: "namedEffect" }],
     },
   ],
