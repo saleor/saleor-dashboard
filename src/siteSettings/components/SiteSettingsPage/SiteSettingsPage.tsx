@@ -9,9 +9,11 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type ShopErrorFragment, type SiteSettingsQuery } from "@dashboard/graphql";
-import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
-import { PasswordLoginModeEnum, type SiteSettingsStagingQuery } from "@dashboard/graphql/staging";
+import {
+  type PasswordLoginModeEnum,
+  type ShopErrorFragment,
+  type SiteSettingsQuery,
+} from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -51,7 +53,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
 interface SiteSettingsPageProps {
   disabled: boolean;
   errors: ShopErrorFragment[];
-  shop?: SiteSettingsQuery["shop"] | SiteSettingsStagingQuery["shop"];
+  shop?: SiteSettingsQuery["shop"];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;
 }
@@ -100,10 +102,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
-    // Force staging type to access the new field. Once field is available in main schema, casting should be removed.
-    passwordLoginMode:
-      (isStagingSchema() && (shop as SiteSettingsStagingQuery["shop"])?.passwordLoginMode) ||
-      PasswordLoginModeEnum.ENABLED,
+    passwordLoginMode: shop?.passwordLoginMode,
   };
 
   return (
@@ -155,9 +154,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     onChange={change}
                   />
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -183,9 +180,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     onCountryChange={handleCountrySelect}
                   />
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -213,28 +208,21 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
-
-                {isStagingSchema() && (
-                  <>
-                    <Divider />
-
-                    <Box
-                      display="grid"
-                      __gridTemplateColumns="1fr 3fr"
-                      paddingLeft={6}
-                      paddingBottom={8}
-                    >
-                      <PageSectionHeader
-                        title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
-                        description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
-                      />
-                      <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
-                    </Box>
-                  </>
-                )}
-
                 <Divider />
 
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
+                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
+                  />
+                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
+                </Box>
+                <Divider />
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
@@ -262,9 +250,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
-
                 <Divider />
-
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"

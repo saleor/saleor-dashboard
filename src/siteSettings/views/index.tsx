@@ -2,14 +2,10 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
   type ShopErrorFragment,
+  type ShopSettingsInput,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
-import { isMainSchema, isStagingSchema } from "@dashboard/graphql/schemaVersion";
-import {
-  useShopSettingsUpdateStagingMutation,
-  useSiteSettingsStagingQuery,
-} from "@dashboard/graphql/staging";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -23,15 +19,9 @@ import SiteSettingsPage, {
 const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
-  const siteSettingsMain = useSiteSettingsQuery({
+  const siteSettings = useSiteSettingsQuery({
     displayLoader: true,
-    skip: isStagingSchema(),
   });
-  const siteSettingsStaging = useSiteSettingsStagingQuery({
-    displayLoader: true,
-    skip: isMainSchema(),
-  });
-  const siteSettings = isStagingSchema() ? siteSettingsStaging : siteSettingsMain;
 
   const onUpdateCompleted = (data: {
     shopSettingsUpdate?: { errors: unknown[] } | null;
@@ -48,15 +38,9 @@ const SiteSettings = () => {
     }
   };
 
-  const [updateShopSettings, updateShopSettingsOpts] = useShopSettingsUpdateMutation({
+  const [updateShopSettings, updateOpts] = useShopSettingsUpdateMutation({
     onCompleted: onUpdateCompleted,
   });
-  const [updateShopSettingsStaging, updateShopSettingsOptsStaging] =
-    useShopSettingsUpdateStagingMutation({
-      onCompleted: onUpdateCompleted,
-    });
-
-  const updateOpts = isStagingSchema() ? updateShopSettingsOptsStaging : updateShopSettingsOpts;
 
   // Staging schema errors have a superset of ShopErrorCode values,
   // but they share the same shape (code, field, message) used by UI components.
@@ -81,7 +65,7 @@ const SiteSettings = () => {
           companyName: data.companyName,
         };
 
-    const shopSettingsInput = {
+    const shopSettingsInput: ShopSettingsInput = {
       description: data.description,
       reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
       reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,
@@ -89,21 +73,8 @@ const SiteSettings = () => {
       limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
       useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
       preserveAllAddressFields: data.preserveAllAddressFields,
+      passwordLoginMode: data.passwordLoginMode,
     };
-
-    if (isStagingSchema()) {
-      return extractMutationErrors(
-        updateShopSettingsStaging({
-          variables: {
-            addressInput,
-            shopSettingsInput: {
-              ...shopSettingsInput,
-              passwordLoginMode: data.passwordLoginMode,
-            },
-          },
-        }),
-      );
-    }
 
     return extractMutationErrors(
       updateShopSettings({

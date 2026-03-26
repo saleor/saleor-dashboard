@@ -50,8 +50,6 @@ import type {
   AppExtensionCountableConnection,
   AppExtensionCountableEdge,
   AppExtensionFilterInput,
-  AppExtensionOptionsNewTab,
-  AppExtensionOptionsWidget,
   AppFetchManifest,
   AppFilterInput,
   AppInput,
@@ -254,6 +252,8 @@ import type {
   CheckoutLinesUpdate,
   CheckoutMetadataUpdated,
   CheckoutPaymentCreate,
+  CheckoutProblemDeliveryMethodInvalid,
+  CheckoutProblemDeliveryMethodStale,
   CheckoutRemovePromoCode,
   CheckoutSettings,
   CheckoutSettingsInput,
@@ -326,17 +326,9 @@ import type {
   DecimalRangeInput,
   DeleteMetadata,
   DeletePrivateMetadata,
-  DigitalContent,
-  DigitalContentCountableConnection,
-  DigitalContentCountableEdge,
-  DigitalContentCreate,
-  DigitalContentDelete,
-  DigitalContentInput,
-  DigitalContentUpdate,
-  DigitalContentUploadInput,
-  DigitalContentUrl,
-  DigitalContentUrlCreate,
-  DigitalContentUrlCreateInput,
+  Delivery,
+  DeliveryOptionsCalculate,
+  DeliveryOptionsCalculateError,
   DiscountError,
   DiscountedObjectWhereInput,
   Domain,
@@ -429,6 +421,8 @@ import type {
   GiftCardExportCompleted,
   GiftCardFilterInput,
   GiftCardMetadataUpdated,
+  GiftCardPaymentMethodDetails,
+  GiftCardPaymentMethodDetailsInput,
   GiftCardResend,
   GiftCardResendInput,
   GiftCardSent,
@@ -521,7 +515,6 @@ import type {
   MoveProductInput,
   Mutation,
   NameTranslationInput,
-  NewTabTargetOptions,
   Order,
   OrderAddNote,
   OrderAddNoteInput,
@@ -1078,9 +1071,11 @@ import type {
   TransactionCreateError,
   TransactionCreateInput,
   TransactionEvent,
+  TransactionEventFilterInput,
   TransactionEventInput,
   TransactionEventReport,
   TransactionEventReportError,
+  TransactionEventTypeEnumFilterInput,
   TransactionFilterInput,
   TransactionInitialize,
   TransactionInitializeError,
@@ -1096,6 +1091,7 @@ import type {
   TransactionRequestActionError,
   TransactionRequestRefundForGrantedRefund,
   TransactionRequestRefundForGrantedRefundError,
+  TransactionSortingInput,
   TransactionUpdate,
   TransactionUpdateError,
   TransactionUpdateInput,
@@ -1188,7 +1184,6 @@ import type {
   WebhookUpdate,
   WebhookUpdateInput,
   Weight,
-  WidgetTargetOptions,
   _Service,
 } from './fabbricaTypes.generated';
 
@@ -2553,32 +2548,22 @@ export type OptionalAppExtension = {
   id?: AppExtension['id'] | undefined;
   /** Label of the extension to show in the dashboard. */
   label?: AppExtension['label'] | undefined;
-  /** Place where given extension will be mounted. */
-  mount?: AppExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Replaces `mount`
+ * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtension['mountName'] | undefined;
-  /**
- * App extension options.
- *
- * Added in Saleor 3.22.
- */
-  options?: Maybe<OptionalAppExtensionPossibleOptions> | undefined;
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * App extension settings. Replaces `options` field.
+ * App extension settings.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppExtension['settings'] | undefined;
-  /** Type of way how app extension will be opened. */
-  target?: AppExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Replaces `target`
+ * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -2639,16 +2624,12 @@ export const defineAppExtensionCountableEdgeFactory: DefineTypeFactoryInterface<
 
 export type OptionalAppExtensionFilterInput = {
   __typename?: 'AppExtensionFilterInput';
-  /** DEPRECATED: Use `mountName` instead. */
-  mount?: AppExtensionFilterInput['mount'] | undefined;
   /**
  * Plain-text mount name (case insensitive)
  *
  * Added in Saleor 3.22.
  */
   mountName?: AppExtensionFilterInput['mountName'] | undefined;
-  /** DEPRECATED: Use `targetName` instead. */
-  target?: AppExtensionFilterInput['target'] | undefined;
   /**
  * Plain-text target name (case insensitive)
  *
@@ -2667,44 +2648,6 @@ export const defineAppExtensionFilterInputFactory: DefineTypeFactoryInterface<
   OptionalAppExtensionFilterInput,
   {}
 > = defineTypeFactory;
-
-/** Represents the options for an app extension. */
-export type OptionalAppExtensionOptionsNewTab = {
-  __typename?: 'AppExtensionOptionsNewTab';
-  /** Options controlling behavior of the NEW_TAB extension target */
-  newTabTarget?: Maybe<OptionalNewTabTargetOptions> | undefined;
-};
-
-/**
- * Define factory for {@link AppExtensionOptionsNewTab} model.
- *
- * @param options
- * @returns factory {@link AppExtensionOptionsNewTabFactoryInterface}
- */
-export const defineAppExtensionOptionsNewTabFactory: DefineTypeFactoryInterface<
-  OptionalAppExtensionOptionsNewTab,
-  {}
-> = defineTypeFactory;
-
-/** Represents the options for an app extension. */
-export type OptionalAppExtensionOptionsWidget = {
-  __typename?: 'AppExtensionOptionsWidget';
-  /** Options for displaying a Widget */
-  widgetTarget?: Maybe<OptionalWidgetTargetOptions> | undefined;
-};
-
-/**
- * Define factory for {@link AppExtensionOptionsWidget} model.
- *
- * @param options
- * @returns factory {@link AppExtensionOptionsWidgetFactoryInterface}
- */
-export const defineAppExtensionOptionsWidgetFactory: DefineTypeFactoryInterface<
-  OptionalAppExtensionOptionsWidget,
-  {}
-> = defineTypeFactory;
-
-export type OptionalAppExtensionPossibleOptions = OptionalAppExtensionOptionsNewTab | OptionalAppExtensionOptionsWidget;
 
 /**
  * Fetch and validate manifest.
@@ -2913,10 +2856,8 @@ export type OptionalAppManifestExtension = {
   __typename?: 'AppManifestExtension';
   /** Label of the extension to show in the dashboard. */
   label?: AppManifestExtension['label'] | undefined;
-  /** Place where given extension will be mounted. */
-  mount?: AppManifestExtension['mount'] | undefined;
   /**
- * Name of the extension mount point in the dashboard. Replaces `mount`
+ * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -2924,15 +2865,13 @@ export type OptionalAppManifestExtension = {
   /** List of the app extension's permissions. */
   permissions?: OptionalPermission[] | undefined;
   /**
- * JSON object with settings for this extension.
+ * App extension settings.
  *
  * Added in Saleor 3.22.
  */
   settings?: AppManifestExtension['settings'] | undefined;
-  /** Type of way how app extension will be opened. */
-  target?: AppManifestExtension['target'] | undefined;
   /**
- * Name of the extension target in the dashboard. Replaces `target`
+ * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
  * Added in Saleor 3.22.
  */
@@ -7247,6 +7186,12 @@ export type OptionalCheckout = {
   /**
  * The delivery method selected for this checkout.
  *
+ * Added in Saleor 3.23.
+ */
+  delivery?: Maybe<OptionalDelivery> | undefined;
+  /**
+ * The delivery method selected for this checkout.
+ *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
  * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
@@ -7815,6 +7760,7 @@ export const defineCheckoutCustomerNoteUpdateFactory: DefineTypeFactoryInterface
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutDeliveryMethodUpdate = {
@@ -8397,7 +8343,49 @@ export const defineCheckoutPaymentCreateFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** Represents an problem in the checkout. */
-export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable;
+export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientStock | OptionalCheckoutLineProblemVariantNotAvailable | OptionalCheckoutProblemDeliveryMethodInvalid | OptionalCheckoutProblemDeliveryMethodStale;
+
+/**
+ * Indicates that the selected delivery method is invalid.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCheckoutProblemDeliveryMethodInvalid = {
+  __typename?: 'CheckoutProblemDeliveryMethodInvalid';
+  delivery?: OptionalDelivery | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutProblemDeliveryMethodInvalid} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutProblemDeliveryMethodInvalidFactoryInterface}
+ */
+export const defineCheckoutProblemDeliveryMethodInvalidFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutProblemDeliveryMethodInvalid,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Indicates that the delivery methods are stale.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCheckoutProblemDeliveryMethodStale = {
+  __typename?: 'CheckoutProblemDeliveryMethodStale';
+  delivery?: OptionalDelivery | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutProblemDeliveryMethodStale} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutProblemDeliveryMethodStaleFactoryInterface}
+ */
+export const defineCheckoutProblemDeliveryMethodStaleFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutProblemDeliveryMethodStale,
+  {}
+> = defineTypeFactory;
 
 /**
  * Remove a gift card or a voucher from a checkout.
@@ -8427,6 +8415,12 @@ export const defineCheckoutRemovePromoCodeFactory: DefineTypeFactoryInterface<
 /** Represents the channel-specific checkout settings. */
 export type OptionalCheckoutSettings = {
   __typename?: 'CheckoutSettings';
+  /**
+ * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowLegacyGiftCardUse?: CheckoutSettings['allowLegacyGiftCardUse'] | undefined;
   /**
  * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
  *
@@ -8462,6 +8456,12 @@ export const defineCheckoutSettingsFactory: DefineTypeFactoryInterface<
 
 export type OptionalCheckoutSettingsInput = {
   __typename?: 'CheckoutSettingsInput';
+  /**
+ * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowLegacyGiftCardUse?: CheckoutSettingsInput['allowLegacyGiftCardUse'] | undefined;
   /**
  * Settings for automatic completion of fully paid checkouts.
  *
@@ -8519,6 +8519,7 @@ export const defineCheckoutShippingAddressUpdateFactory: DefineTypeFactoryInterf
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type OptionalCheckoutShippingMethodUpdate = {
@@ -9880,8 +9881,6 @@ export type OptionalCustomerEvent = {
   message?: CustomerEvent['message'] | undefined;
   /** The concerned order. */
   order?: Maybe<OptionalOrder> | undefined;
-  /** The concerned order line. */
-  orderLine?: Maybe<OptionalOrderLine> | undefined;
   /** Customer event type. */
   type?: CustomerEvent['type'] | undefined;
   /** User who performed the action. */
@@ -10317,309 +10316,78 @@ export const defineDeletePrivateMetadataFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Represents a delivery option for the checkout.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalDelivery = {
+  __typename?: 'Delivery';
+  /** The ID of the delivery. */
+  id?: Delivery['id'] | undefined;
+  /** Shipping method represented by the delivery. */
+  shippingMethod?: Maybe<OptionalShippingMethod> | undefined;
+};
+
+/**
+ * Define factory for {@link Delivery} model.
+ *
+ * @param options
+ * @returns factory {@link DeliveryFactoryInterface}
+ */
+export const defineDeliveryFactory: DefineTypeFactoryInterface<
+  OptionalDelivery,
+  {}
+> = defineTypeFactory;
+
 /** Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise. */
 export type OptionalDeliveryMethod = OptionalShippingMethod | OptionalWarehouse;
 
-/** Represents digital content associated with a product variant. */
-export type OptionalDigitalContent = {
-  __typename?: 'DigitalContent';
-  /** Indicator for automatic fulfillment of digital content. */
-  automaticFulfillment?: DigitalContent['automaticFulfillment'] | undefined;
-  /** File associated with digital content. */
-  contentFile?: DigitalContent['contentFile'] | undefined;
-  /** The ID of the digital content. */
-  id?: DigitalContent['id'] | undefined;
-  /** Maximum number of allowed downloads for the digital content. */
-  maxDownloads?: DigitalContent['maxDownloads'] | undefined;
-  /** List of public metadata items. Can be accessed without permissions. */
-  metadata?: OptionalMetadataItem[] | undefined;
-  /**
- * A single key from public metadata.
+/**
+ * Calculates available delivery options for a checkout.
  *
- * Tip: Use GraphQL aliases to fetch multiple keys.
- */
-  metafield?: DigitalContent['metafield'] | undefined;
-  /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
-  metafields?: DigitalContent['metafields'] | undefined;
-  /** List of private metadata items. Requires staff permissions to access. */
-  privateMetadata?: OptionalMetadataItem[] | undefined;
-  /**
- * A single key from private metadata. Requires staff permissions to access.
+ * Added in Saleor 3.23.
  *
- * Tip: Use GraphQL aliases to fetch multiple keys.
+ * Triggers the following webhook events:
+ * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
  */
-  privateMetafield?: DigitalContent['privateMetafield'] | undefined;
-  /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
-  privateMetafields?: DigitalContent['privateMetafields'] | undefined;
-  /** Product variant assigned to digital content. */
-  productVariant?: OptionalProductVariant | undefined;
-  /** Number of days the URL for the digital content remains valid. */
-  urlValidDays?: DigitalContent['urlValidDays'] | undefined;
-  /** List of URLs for the digital variant. */
-  urls?: Maybe<OptionalDigitalContentUrl[]> | undefined;
-  /** Default settings indicator for digital content. */
-  useDefaultSettings?: DigitalContent['useDefaultSettings'] | undefined;
+export type OptionalDeliveryOptionsCalculate = {
+  __typename?: 'DeliveryOptionsCalculate';
+  /** List of the available deliveries. */
+  deliveries?: OptionalDelivery[] | undefined;
+  errors?: OptionalDeliveryOptionsCalculateError[] | undefined;
 };
 
 /**
- * Define factory for {@link DigitalContent} model.
+ * Define factory for {@link DeliveryOptionsCalculate} model.
  *
  * @param options
- * @returns factory {@link DigitalContentFactoryInterface}
+ * @returns factory {@link DeliveryOptionsCalculateFactoryInterface}
  */
-export const defineDigitalContentFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContent,
+export const defineDeliveryOptionsCalculateFactory: DefineTypeFactoryInterface<
+  OptionalDeliveryOptionsCalculate,
   {}
 > = defineTypeFactory;
 
-/** A connection to a list of digital content items. */
-export type OptionalDigitalContentCountableConnection = {
-  __typename?: 'DigitalContentCountableConnection';
-  edges?: OptionalDigitalContentCountableEdge[] | undefined;
-  /** Pagination data for this connection. */
-  pageInfo?: OptionalPageInfo | undefined;
-  /** A total count of items in the collection. */
-  totalCount?: DigitalContentCountableConnection['totalCount'] | undefined;
+export type OptionalDeliveryOptionsCalculateError = {
+  __typename?: 'DeliveryOptionsCalculateError';
+  /** The error code. */
+  code?: DeliveryOptionsCalculateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: DeliveryOptionsCalculateError['field'] | undefined;
+  /** The error message. */
+  message?: DeliveryOptionsCalculateError['message'] | undefined;
 };
 
 /**
- * Define factory for {@link DigitalContentCountableConnection} model.
+ * Define factory for {@link DeliveryOptionsCalculateError} model.
  *
  * @param options
- * @returns factory {@link DigitalContentCountableConnectionFactoryInterface}
+ * @returns factory {@link DeliveryOptionsCalculateErrorFactoryInterface}
  */
-export const defineDigitalContentCountableConnectionFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentCountableConnection,
-  {}
-> = defineTypeFactory;
-
-export type OptionalDigitalContentCountableEdge = {
-  __typename?: 'DigitalContentCountableEdge';
-  /** A cursor for use in pagination. */
-  cursor?: DigitalContentCountableEdge['cursor'] | undefined;
-  /** The item at the end of the edge. */
-  node?: OptionalDigitalContent | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentCountableEdge} model.
- *
- * @param options
- * @returns factory {@link DigitalContentCountableEdgeFactoryInterface}
- */
-export const defineDigitalContentCountableEdgeFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentCountableEdge,
-  {}
-> = defineTypeFactory;
-
-/**
- * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type OptionalDigitalContentCreate = {
-  __typename?: 'DigitalContentCreate';
-  content?: Maybe<OptionalDigitalContent> | undefined;
-  errors?: OptionalProductError[] | undefined;
-  productErrors?: OptionalProductError[] | undefined;
-  variant?: Maybe<OptionalProductVariant> | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentCreate} model.
- *
- * @param options
- * @returns factory {@link DigitalContentCreateFactoryInterface}
- */
-export const defineDigitalContentCreateFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentCreate,
-  {}
-> = defineTypeFactory;
-
-/**
- * Remove digital content assigned to given variant.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type OptionalDigitalContentDelete = {
-  __typename?: 'DigitalContentDelete';
-  errors?: OptionalProductError[] | undefined;
-  productErrors?: OptionalProductError[] | undefined;
-  variant?: Maybe<OptionalProductVariant> | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentDelete} model.
- *
- * @param options
- * @returns factory {@link DigitalContentDeleteFactoryInterface}
- */
-export const defineDigitalContentDeleteFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentDelete,
-  {}
-> = defineTypeFactory;
-
-export type OptionalDigitalContentInput = {
-  __typename?: 'DigitalContentInput';
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: DigitalContentInput['automaticFulfillment'] | undefined;
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: DigitalContentInput['maxDownloads'] | undefined;
-  /**
- * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
- *
- * Warning: never store sensitive information, including financial data such as credit card details.
- */
-  metadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /**
- * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
- *
- * Warning: never store sensitive information, including financial data such as credit card details.
- */
-  privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: DigitalContentInput['urlValidDays'] | undefined;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings?: DigitalContentInput['useDefaultSettings'] | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentInput} model.
- *
- * @param options
- * @returns factory {@link DigitalContentInputFactoryInterface}
- */
-export const defineDigitalContentInputFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentInput,
-  {}
-> = defineTypeFactory;
-
-/**
- * Updates digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type OptionalDigitalContentUpdate = {
-  __typename?: 'DigitalContentUpdate';
-  content?: Maybe<OptionalDigitalContent> | undefined;
-  errors?: OptionalProductError[] | undefined;
-  productErrors?: OptionalProductError[] | undefined;
-  variant?: Maybe<OptionalProductVariant> | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentUpdate} model.
- *
- * @param options
- * @returns factory {@link DigitalContentUpdateFactoryInterface}
- */
-export const defineDigitalContentUpdateFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentUpdate,
-  {}
-> = defineTypeFactory;
-
-export type OptionalDigitalContentUploadInput = {
-  __typename?: 'DigitalContentUploadInput';
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: DigitalContentUploadInput['automaticFulfillment'] | undefined;
-  /** Represents an file in a multipart request. */
-  contentFile?: DigitalContentUploadInput['contentFile'] | undefined;
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: DigitalContentUploadInput['maxDownloads'] | undefined;
-  /**
- * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
- *
- * Warning: never store sensitive information, including financial data such as credit card details.
- */
-  metadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /**
- * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
- *
- * Warning: never store sensitive information, including financial data such as credit card details.
- */
-  privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: DigitalContentUploadInput['urlValidDays'] | undefined;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings?: DigitalContentUploadInput['useDefaultSettings'] | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentUploadInput} model.
- *
- * @param options
- * @returns factory {@link DigitalContentUploadInputFactoryInterface}
- */
-export const defineDigitalContentUploadInputFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentUploadInput,
-  {}
-> = defineTypeFactory;
-
-/** Represents a URL for digital content. */
-export type OptionalDigitalContentUrl = {
-  __typename?: 'DigitalContentUrl';
-  /** Digital content associated with the URL. */
-  content?: OptionalDigitalContent | undefined;
-  /** Date and time when the digital content URL was created. */
-  created?: DigitalContentUrl['created'] | undefined;
-  /** Number of times digital content has been downloaded. */
-  downloadNum?: DigitalContentUrl['downloadNum'] | undefined;
-  /** The ID of the digital content URL. */
-  id?: DigitalContentUrl['id'] | undefined;
-  /** UUID of digital content. */
-  token?: DigitalContentUrl['token'] | undefined;
-  /** URL for digital content. */
-  url?: DigitalContentUrl['url'] | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentUrl} model.
- *
- * @param options
- * @returns factory {@link DigitalContentUrlFactoryInterface}
- */
-export const defineDigitalContentUrlFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentUrl,
-  {}
-> = defineTypeFactory;
-
-/**
- * Generate new URL to digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type OptionalDigitalContentUrlCreate = {
-  __typename?: 'DigitalContentUrlCreate';
-  digitalContentUrl?: Maybe<OptionalDigitalContentUrl> | undefined;
-  errors?: OptionalProductError[] | undefined;
-  productErrors?: OptionalProductError[] | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentUrlCreate} model.
- *
- * @param options
- * @returns factory {@link DigitalContentUrlCreateFactoryInterface}
- */
-export const defineDigitalContentUrlCreateFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentUrlCreate,
-  {}
-> = defineTypeFactory;
-
-export type OptionalDigitalContentUrlCreateInput = {
-  __typename?: 'DigitalContentUrlCreateInput';
-  /** Digital content ID which URL will belong to. */
-  content?: DigitalContentUrlCreateInput['content'] | undefined;
-};
-
-/**
- * Define factory for {@link DigitalContentUrlCreateInput} model.
- *
- * @param options
- * @returns factory {@link DigitalContentUrlCreateInputFactoryInterface}
- */
-export const defineDigitalContentUrlCreateInputFactory: DefineTypeFactoryInterface<
-  OptionalDigitalContentUrlCreateInput,
+export const defineDeliveryOptionsCalculateErrorFactory: DefineTypeFactoryInterface<
+  OptionalDeliveryOptionsCalculateError,
   {}
 > = defineTypeFactory;
 
@@ -11646,8 +11414,6 @@ export const defineExportProductsInputFactory: DefineTypeFactoryInterface<
  *
  * Added in Saleor 3.18.
  *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
  * Triggers the following webhook events:
@@ -12444,7 +12210,7 @@ export type OptionalGiftCard = {
   /** End date of gift card. */
   endDate?: GiftCard['endDate'] | undefined;
   /**
- * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER events.
+ * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER and REFUNDED_IN_ORDER events.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
  */
@@ -13116,6 +12882,79 @@ export type OptionalGiftCardMetadataUpdated = {
  */
 export const defineGiftCardMetadataUpdatedFactory: DefineTypeFactoryInterface<
   OptionalGiftCardMetadataUpdated,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Represents a gift card payment method used for a transaction.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalGiftCardPaymentMethodDetails = {
+  __typename?: 'GiftCardPaymentMethodDetails';
+  /**
+ * Brand of the gift card.
+ *
+ * Added in Saleor 3.23.
+ */
+  brand?: GiftCardPaymentMethodDetails['brand'] | undefined;
+  /**
+ * Indicates whether the gift card is a built-in Saleor gift card.
+ *
+ * Added in Saleor 3.23.
+ */
+  isSaleorGiftcard?: GiftCardPaymentMethodDetails['isSaleorGiftcard'] | undefined;
+  /**
+ * Last characters of the gift card code. Max 4 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  lastChars?: GiftCardPaymentMethodDetails['lastChars'] | undefined;
+  /** Name of the gift card. */
+  name?: GiftCardPaymentMethodDetails['name'] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardPaymentMethodDetails} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardPaymentMethodDetailsFactoryInterface}
+ */
+export const defineGiftCardPaymentMethodDetailsFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardPaymentMethodDetails,
+  {}
+> = defineTypeFactory;
+
+export type OptionalGiftCardPaymentMethodDetailsInput = {
+  __typename?: 'GiftCardPaymentMethodDetailsInput';
+  /**
+ * Brand of the gift card used for the transaction. Max length is 40 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  brand?: GiftCardPaymentMethodDetailsInput['brand'] | undefined;
+  /**
+ * Last characters of the gift card used for the transaction. Max length is 4 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  lastChars?: GiftCardPaymentMethodDetailsInput['lastChars'] | undefined;
+  /**
+ * Name of the payment method used for the transaction. Max length is 256 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  name?: GiftCardPaymentMethodDetailsInput['name'] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardPaymentMethodDetailsInput} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardPaymentMethodDetailsInputFactoryInterface}
+ */
+export const defineGiftCardPaymentMethodDetailsInputFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardPaymentMethodDetailsInput,
   {}
 > = defineTypeFactory;
 
@@ -15828,6 +15667,7 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutDeliveryMethodUpdate?: Maybe<OptionalCheckoutDeliveryMethodUpdate> | undefined;
@@ -15894,6 +15734,7 @@ export type OptionalMutation = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutShippingMethodUpdate?: Maybe<OptionalCheckoutShippingMethodUpdate> | undefined;
@@ -16036,29 +15877,15 @@ export type OptionalMutation = {
  */
   deleteWarehouse?: Maybe<OptionalWarehouseDelete> | undefined;
   /**
- * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+ * Calculates available delivery options for a checkout.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContentCreate?: Maybe<OptionalDigitalContentCreate> | undefined;
-  /**
- * Remove digital content assigned to given variant.
+ * Added in Saleor 3.23.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
+ * Triggers the following webhook events:
+ * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
  */
-  digitalContentDelete?: Maybe<OptionalDigitalContentDelete> | undefined;
-  /**
- * Updates digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContentUpdate?: Maybe<OptionalDigitalContentUpdate> | undefined;
-  /**
- * Generate new URL to digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContentUrlCreate?: Maybe<OptionalDigitalContentUrlCreate> | undefined;
+  deliveryOptionsCalculate?: Maybe<OptionalDeliveryOptionsCalculate> | undefined;
   /**
  * Deletes draft orders.
  *
@@ -16125,8 +15952,6 @@ export type OptionalMutation = {
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -17669,26 +17494,8 @@ export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents the NEW_TAB target options for an app extension. */
-export type OptionalNewTabTargetOptions = {
-  __typename?: 'NewTabTargetOptions';
-  /** HTTP method for New Tab target (GET or POST) */
-  method?: NewTabTargetOptions['method'] | undefined;
-};
-
-/**
- * Define factory for {@link NewTabTargetOptions} model.
- *
- * @param options
- * @returns factory {@link NewTabTargetOptionsFactoryInterface}
- */
-export const defineNewTabTargetOptionsFactory: DefineTypeFactoryInterface<
-  OptionalNewTabTargetOptions,
-  {}
-> = defineTypeFactory;
-
 /** An object with an ID */
-export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalDigitalContent | OptionalDigitalContentUrl | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
+export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
 /**
  * An object with attributes.
@@ -17697,7 +17504,7 @@ export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | 
  */
 export type OptionalObjectWithAttributes = OptionalPage | OptionalProduct | OptionalProductVariant;
 
-export type OptionalObjectWithMetadata = OptionalAddress | OptionalApp | OptionalAttribute | OptionalCategory | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalDigitalContent | OptionalFulfillment | OptionalGiftCard | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalOrder | OptionalOrderLine | OptionalPage | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductMedia | OptionalProductType | OptionalProductVariant | OptionalPromotion | OptionalSale | OptionalShippingMethod | OptionalShippingMethodType | OptionalShippingZone | OptionalShop | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalWarehouse;
+export type OptionalObjectWithMetadata = OptionalAddress | OptionalApp | OptionalAttribute | OptionalCategory | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalFulfillment | OptionalGiftCard | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalOrder | OptionalOrderLine | OptionalPage | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductMedia | OptionalProductType | OptionalProductVariant | OptionalPromotion | OptionalSale | OptionalShippingMethod | OptionalShippingMethodType | OptionalShippingZone | OptionalShop | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalWarehouse;
 
 /** Represents an order in the shop. */
 export type OptionalOrder = {
@@ -19709,7 +19516,6 @@ export type OptionalOrderLine = {
  * Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
  */
   allocations?: Maybe<OptionalAllocation[]> | undefined;
-  digitalContentUrl?: Maybe<OptionalDigitalContentUrl> | undefined;
   /**
  * List of applied discounts
  *
@@ -21878,7 +21684,7 @@ export type OptionalPageTypeUpdateInput = {
   addAttributes?: PageTypeUpdateInput['addAttributes'] | undefined;
   /** Name of the page type. */
   name?: PageTypeUpdateInput['name'] | undefined;
-  /** List of attribute IDs to be assigned to the page type. */
+  /** List of attribute IDs to be unassigned from the page type. */
   removeAttributes?: PageTypeUpdateInput['removeAttributes'] | undefined;
   /** Page type slug. */
   slug?: PageTypeUpdateInput['slug'] | undefined;
@@ -22079,8 +21885,6 @@ export type OptionalPayment = {
   modified?: Payment['modified'] | undefined;
   /** Order associated with a payment. */
   order?: Maybe<OptionalOrder> | undefined;
-  /** Informs whether this is a partial payment. */
-  partial?: Payment['partial'] | undefined;
   /** Type of method used for payment. */
   paymentMethodType?: Payment['paymentMethodType'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
@@ -22680,7 +22484,7 @@ export const definePaymentListGatewaysFactory: DefineTypeFactoryInterface<
  *
  * Added in Saleor 3.22.
  */
-export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
+export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalGiftCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
 
 export type OptionalPaymentMethodDetailsCardFilterInput = {
   __typename?: 'PaymentMethodDetailsCardFilterInput';
@@ -22719,7 +22523,7 @@ export const definePaymentMethodDetailsFilterInputFactory: DefineTypeFactoryInte
 > = defineTypeFactory;
 
 /**
- * Details of the payment method used for the transaction. One of `card` or `other` is required.
+ * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
  *
  * Added in Saleor 3.22.
  */
@@ -22727,6 +22531,12 @@ export type OptionalPaymentMethodDetailsInput = {
   __typename?: 'PaymentMethodDetailsInput';
   /** Details of the card payment method used for the transaction. */
   card?: Maybe<OptionalCardPaymentMethodDetailsInput> | undefined;
+  /**
+ * Details of the gift card payment method used for the transaction.
+ *
+ * Added in Saleor 3.23.
+ */
+  giftCard?: Maybe<OptionalGiftCardPaymentMethodDetailsInput> | undefined;
   /** Details of the non-card payment method used for this transaction. */
   other?: Maybe<OptionalOtherPaymentMethodDetailsInput> | undefined;
 };
@@ -25423,7 +25233,7 @@ export type OptionalProductType = {
   hasVariants?: ProductType['hasVariants'] | undefined;
   /** The ID of the product type. */
   id?: ProductType['id'] | undefined;
-  /** Whether the product type is digital. */
+  /** Whether the product type is digital - doesn't have any effect, it's present for backward-compatibility. */
   isDigital?: ProductType['isDigital'] | undefined;
   /** Whether shipping is required for this product type. */
   isShippingRequired?: ProductType['isShippingRequired'] | undefined;
@@ -25617,7 +25427,7 @@ export type OptionalProductTypeInput = {
   __typename?: 'ProductTypeInput';
   /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
   hasVariants?: ProductTypeInput['hasVariants'] | undefined;
-  /** Determines if products are digital. */
+  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
   isDigital?: ProductTypeInput['isDigital'] | undefined;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: ProductTypeInput['isShippingRequired'] | undefined;
@@ -25794,12 +25604,6 @@ export type OptionalProductVariant = {
   channelListings?: Maybe<OptionalProductVariantChannelListing[]> | undefined;
   /** The date and time when the product variant was created. */
   created?: ProductVariant['created'] | undefined;
-  /**
- * Digital content for the product variant.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContent?: Maybe<OptionalDigitalContent> | undefined;
   /** External ID of this product. */
   externalReference?: ProductVariant['externalReference'] | undefined;
   /** The ID of the product variant. */
@@ -26251,7 +26055,9 @@ export type OptionalProductVariantChannelListing = {
   /** The price of the variant. */
   price?: Maybe<OptionalMoney> | undefined;
   /**
- * Prior price of the variant used for discount calculations.
+ * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
+ *
+ *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
  *
  * Added in Saleor 3.21.
  */
@@ -28619,18 +28425,6 @@ export type OptionalQuery = {
  */
   customers?: Maybe<OptionalUserCountableConnection> | undefined;
   /**
- * Look up digital content by ID.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContent?: Maybe<OptionalDigitalContent> | undefined;
-  /**
- * List of digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-  digitalContents?: Maybe<OptionalDigitalContentCountableConnection> | undefined;
-  /**
  * List of draft orders. The query will not initiate any external requests, including filtering available shipping methods, or performing external tax calculations.
  *
  * Requires one of the following permissions: MANAGE_ORDERS.
@@ -29078,7 +28872,7 @@ export type OptionalRefundSettingsUpdate = {
   __typename?: 'RefundSettingsUpdate';
   errors?: OptionalRefundSettingsUpdateError[] | undefined;
   /** Refund settings. */
-  refundSettings?: OptionalRefundSettings | undefined;
+  refundSettings?: Maybe<OptionalRefundSettings> | undefined;
   refundSettingsErrors?: OptionalRefundSettingsUpdateError[] | undefined;
 };
 
@@ -31103,12 +30897,6 @@ export type OptionalShop = {
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
   allowLoginWithoutConfirmation?: Shop['allowLoginWithoutConfirmation'] | undefined;
-  /**
- * Enable automatic fulfillment for all digital products.
- *
- * Requires one of the following permissions: MANAGE_SETTINGS.
- */
-  automaticFulfillmentDigitalProducts?: Shop['automaticFulfillmentDigitalProducts'] | undefined;
   /** List of available external authentications. */
   availableExternalAuthentications?: OptionalExternalAuthentication[] | undefined;
   /** List of available payment gateways. */
@@ -31139,18 +30927,6 @@ export type OptionalShop = {
   customerSetPasswordUrl?: Shop['customerSetPasswordUrl'] | undefined;
   /** Shop's default country. */
   defaultCountry?: Maybe<OptionalCountryDisplay> | undefined;
-  /**
- * Default number of max downloads per digital content URL.
- *
- * Requires one of the following permissions: MANAGE_SETTINGS.
- */
-  defaultDigitalMaxDownloads?: Shop['defaultDigitalMaxDownloads'] | undefined;
-  /**
- * Default number of days which digital content URL will be valid.
- *
- * Requires one of the following permissions: MANAGE_SETTINGS.
- */
-  defaultDigitalUrlValidDays?: Shop['defaultDigitalUrlValidDays'] | undefined;
   /**
  * Default shop's email sender's address.
  *
@@ -31213,6 +30989,12 @@ export type OptionalShop = {
   metafields?: Shop['metafields'] | undefined;
   /** Shop's name. */
   name?: Shop['name'] | undefined;
+  /**
+ * Controls whether password-based authentication is allowed.
+ *
+ * Added in Saleor 3.23.
+ */
+  passwordLoginMode?: Shop['passwordLoginMode'] | undefined;
   /** List of available permissions. */
   permissions?: OptionalPermission[] | undefined;
   /** List of possible phone prefixes. */
@@ -31407,16 +31189,10 @@ export type OptionalShopSettingsInput = {
   __typename?: 'ShopSettingsInput';
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: ShopSettingsInput['allowLoginWithoutConfirmation'] | undefined;
-  /** Enable automatic fulfillment for all digital products. */
-  automaticFulfillmentDigitalProducts?: ShopSettingsInput['automaticFulfillmentDigitalProducts'] | undefined;
   /** Charge taxes on shipping. */
   chargeTaxesOnShipping?: ShopSettingsInput['chargeTaxesOnShipping'] | undefined;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: ShopSettingsInput['customerSetPasswordUrl'] | undefined;
-  /** Default number of max downloads per digital content URL. */
-  defaultDigitalMaxDownloads?: ShopSettingsInput['defaultDigitalMaxDownloads'] | undefined;
-  /** Default number of days which digital content URL will be valid. */
-  defaultDigitalUrlValidDays?: ShopSettingsInput['defaultDigitalUrlValidDays'] | undefined;
   /** Default email sender's address. */
   defaultMailSenderAddress?: ShopSettingsInput['defaultMailSenderAddress'] | undefined;
   /** Default email sender's name. */
@@ -31445,6 +31221,12 @@ export type OptionalShopSettingsInput = {
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
+  /**
+ * Controls whether password-based authentication is allowed.
+ *
+ * Added in Saleor 3.23.
+ */
+  passwordLoginMode?: ShopSettingsInput['passwordLoginMode'] | undefined;
   /**
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
@@ -33907,6 +33689,38 @@ export const defineTransactionEventFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Filter input for transaction events data.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalTransactionEventFilterInput = {
+  __typename?: 'TransactionEventFilterInput';
+  /**
+ * Filter transaction events by created at date.
+ *
+ * Added in Saleor 3.23.
+ */
+  createdAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
+  /**
+ * Filter transaction events by type.
+ *
+ * Added in Saleor 3.23.
+ */
+  type?: Maybe<OptionalTransactionEventTypeEnumFilterInput> | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionEventFilterInput} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionEventFilterInputFactoryInterface}
+ */
+export const defineTransactionEventFilterInputFactory: DefineTypeFactoryInterface<
+  OptionalTransactionEventFilterInput,
+  {}
+> = defineTypeFactory;
+
 export type OptionalTransactionEventInput = {
   __typename?: 'TransactionEventInput';
   /** The message related to the event. */
@@ -33976,6 +33790,25 @@ export type OptionalTransactionEventReportError = {
  */
 export const defineTransactionEventReportErrorFactory: DefineTypeFactoryInterface<
   OptionalTransactionEventReportError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalTransactionEventTypeEnumFilterInput = {
+  __typename?: 'TransactionEventTypeEnumFilterInput';
+  /** The value equal to. */
+  eq?: TransactionEventTypeEnumFilterInput['eq'] | undefined;
+  /** The value included in. */
+  oneOf?: TransactionEventTypeEnumFilterInput['oneOf'] | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionEventTypeEnumFilterInput} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionEventTypeEnumFilterInputFactoryInterface}
+ */
+export const defineTransactionEventTypeEnumFilterInputFactory: DefineTypeFactoryInterface<
+  OptionalTransactionEventTypeEnumFilterInput,
   {}
 > = defineTypeFactory;
 
@@ -34429,6 +34262,25 @@ export const defineTransactionRequestRefundForGrantedRefundErrorFactory: DefineT
   {}
 > = defineTypeFactory;
 
+export type OptionalTransactionSortingInput = {
+  __typename?: 'TransactionSortingInput';
+  /** Specifies the direction in which to sort transactions. */
+  direction?: TransactionSortingInput['direction'] | undefined;
+  /** Sort transactions by the selected field. */
+  field?: TransactionSortingInput['field'] | undefined;
+};
+
+/**
+ * Define factory for {@link TransactionSortingInput} model.
+ *
+ * @param options
+ * @returns factory {@link TransactionSortingInputFactoryInterface}
+ */
+export const defineTransactionSortingInputFactory: DefineTypeFactoryInterface<
+  OptionalTransactionSortingInput,
+  {}
+> = defineTypeFactory;
+
 /**
  * Update transaction.
  *
@@ -34531,7 +34383,25 @@ export type OptionalTransactionWhereInput = {
   OR?: Maybe<OptionalTransactionWhereInput[]> | undefined;
   /** Filter by app identifier. */
   appIdentifier?: Maybe<OptionalStringFilterInput> | undefined;
+  /**
+ * Filter transactions by created at date.
+ *
+ * Added in Saleor 3.23.
+ */
+  createdAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
+  /**
+ * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+ *
+ * Added in Saleor 3.23.
+ */
+  events?: Maybe<OptionalTransactionEventFilterInput[]> | undefined;
   ids?: TransactionWhereInput['ids'] | undefined;
+  /**
+ * Filter transactions by modified at date.
+ *
+ * Added in Saleor 3.23.
+ */
+  modifiedAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /** Filter by PSP reference. */
   pspReference?: Maybe<OptionalStringFilterInput> | undefined;
 };
@@ -36963,24 +36833,6 @@ export type OptionalWeight = {
  */
 export const defineWeightFactory: DefineTypeFactoryInterface<
   OptionalWeight,
-  {}
-> = defineTypeFactory;
-
-/** Represents the WIDGET target options for an app extension. */
-export type OptionalWidgetTargetOptions = {
-  __typename?: 'WidgetTargetOptions';
-  /** HTTP method for Widget target (GET or POST) */
-  method?: WidgetTargetOptions['method'] | undefined;
-};
-
-/**
- * Define factory for {@link WidgetTargetOptions} model.
- *
- * @param options
- * @returns factory {@link WidgetTargetOptionsFactoryInterface}
- */
-export const defineWidgetTargetOptionsFactory: DefineTypeFactoryInterface<
-  OptionalWidgetTargetOptions,
   {}
 > = defineTypeFactory;
 
