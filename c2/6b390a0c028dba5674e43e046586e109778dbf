@@ -1,0 +1,33 @@
+eslint.config.mjs
+  72bfcf3a52ac38f2 206
+lint/rules/named-styles.test.cjs
+  72bfcf3a52ac38f2 4,42-43,45-47,54-55
+lint/rules/named-effects.cjs
+  72bfcf3a52ac38f2 1-27
+lint/rules/index.mjs
+  72bfcf3a52ac38f2 1,6
+package.json
+  72bfcf3a52ac38f2 52-53
+lint/rules/named-effects.test.cjs
+  72bfcf3a52ac38f2 1-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "c26b390a0c028dba5674e43e046586e109778dbf",
+  "prompts": {
+    "72bfcf3a52ac38f2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "43682f07-38af-4b59-a951-4b18d4d9ebc4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 76,
+      "total_deletions": 6,
+      "accepted_lines": 75,
+      "overriden_lines": 0
+    }
+  }
+}
