@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { RuleTester } = require("eslint");
+import { RuleTester } from "eslint";
+import tsParser from "@typescript-eslint/parser";
 
-const namedStylesRule = require("./named-styles.cjs");
+import namedStylesRule from "./named-styles.mjs";
 
 const okCode =
   'const useStyles = makeStyles( \
@@ -38,8 +38,6 @@ const badCode = `const useStyles = makeStyles(theme => ({
       width: 148
     }
 }));`;
-
-const tsParser = require("@typescript-eslint/parser");
 
 const ruleTester = new RuleTester({
   languageOptions: {

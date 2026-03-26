@@ -50,9 +50,9 @@
     "prestart": "pnpm run generate",
     "storybook": "storybook dev -p 6006",
     "test": "jest && pnpm run test:lint-rules",
-    "test:lint-rules": "node lint/rules/named-styles.test.cjs && node lint/rules/named-effects.test.cjs",
     "test:ci": "CI=true jest --coverage --silent",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
+    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs",
     "test:quiet": "jest --silent",
     "test:watch": "jest --watch",
     "update-payment-assets": "node scripts/update-payment-assets.cjs"

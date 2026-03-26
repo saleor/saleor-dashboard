@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   create: context => ({
     CallExpression: node => {
       if (node.callee.name === "useEffect" && node.arguments.length > 0) {

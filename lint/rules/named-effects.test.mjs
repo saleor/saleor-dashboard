@@ -1,8 +1,7 @@
-const { RuleTester } = require("eslint");
+import { RuleTester } from "eslint";
+import tsParser from "@typescript-eslint/parser";
 
-const namedEffectsRule = require("./named-effects.cjs");
-
-const tsParser = require("@typescript-eslint/parser");
+import namedEffectsRule from "./named-effects.mjs";
 
 const ruleTester = new RuleTester({
   languageOptions: {
