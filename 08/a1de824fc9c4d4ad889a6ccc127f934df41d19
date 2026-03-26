@@ -1,0 +1,27 @@
+lint/rules/named-effects.test.mjs
+  72bfcf3a52ac38f2 23-28,39-48
+lint/rules/named-effects.mjs
+  72bfcf3a52ac38f2 4-13,23-28
+package.json
+  72bfcf3a52ac38f2 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "08a1de824fc9c4d4ad889a6ccc127f934df41d19",
+  "prompts": {
+    "72bfcf3a52ac38f2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "43682f07-38af-4b59-a951-4b18d4d9ebc4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 37,
+      "total_deletions": 2,
+      "accepted_lines": 37,
+      "overriden_lines": 0
+    }
+  }
+}
