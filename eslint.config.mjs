@@ -340,7 +340,6 @@ export default tseslint.config(
       // TODO: These rules should be enabled later on
       "@graphql-eslint/selection-set-depth": ["warn", { maxDepth: 7 }], // some queries use hacks to do recursive fragments
       "@graphql-eslint/require-selections": "warn", // this is useful for Apollo caching
-      "@graphql-eslint/no-unused-fragments": "off", // this might break types used in codebase
     },
   },
   {
