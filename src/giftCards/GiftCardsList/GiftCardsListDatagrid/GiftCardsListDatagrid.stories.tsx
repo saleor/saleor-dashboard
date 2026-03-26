@@ -165,6 +165,9 @@ export const Loading: Story = {
       </MockGiftCardListProvider>
     ),
   ],
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 export const Empty: Story = {

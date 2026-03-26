@@ -373,7 +373,7 @@ export const pageTypeDeleteErrorFragment = gql`
 `;
 
 export const pageTypeBulkDeleteErrorFragment = gql`
-  fragment PageTypeDeleteErrorFragment on PageError {
+  fragment PageTypeBulkDeleteErrorFragment on PageError {
     code
     field
     message

@@ -22,7 +22,6 @@ import {
   type SearchWarehousesQuery,
   type StockSettingsInput,
 } from "@dashboard/graphql";
-import { type ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
@@ -111,7 +110,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     paymentSettings,
     checkoutSettings,
     ...formData
-  } = channel || ({} as ChannelDetailsFragment | ChannelDetailsFragmentWithAllowLegacyGiftCardUse);
+  } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -137,11 +136,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    allowLegacyGiftCardUse: checkoutSettings
-      ? "allowLegacyGiftCardUse" in checkoutSettings
-        ? checkoutSettings.allowLegacyGiftCardUse
-        : undefined
-      : undefined,
+    allowLegacyGiftCardUse: checkoutSettings.allowLegacyGiftCardUse,
     automaticallyCompleteCheckouts:
       checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
     automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
