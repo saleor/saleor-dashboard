@@ -76,11 +76,9 @@ export const GiftCardPaymentMethod = ({ details }: GiftCardPaymentMethodProps) =
   return (
     <Box display="flex" alignItems="center" gap={2}>
       <ExternalGiftCardIcon brand={details.brand} />
-      {details.brand && (
-        <Text size={2} color="default2">
-          {details.brand}
-        </Text>
-      )}
+      <Text size={2} color="default2">
+        {details.brand ?? "Gift Card"}
+      </Text>
       {formattedCode && (
         <Text size={2} color="default2">
           <code>{formattedCode}</code>

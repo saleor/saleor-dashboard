@@ -200,6 +200,22 @@ export const WithExternalGiftCardPaymentMethod: Story = {
   },
 };
 
+export const WithExternalGiftCardNoBrand: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "GiftCardPaymentMethodDetails",
+        name: "Gift card",
+        lastChars: "B72M",
+        isSaleorGiftcard: false,
+        brand: null,
+      },
+    },
+  },
+};
+
 export const WithoutPaymentMethod: Story = {
   args: {
     transaction: {
