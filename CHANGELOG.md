@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.37
+
+### Patch Changes
+
+- [#6466](https://github.com/saleor/saleor-dashboard/pull/6466) [`fa3fb8c`](https://github.com/saleor/saleor-dashboard/commit/fa3fb8ceba12083a9d184434869d04ee1d1b59c5) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed re-ordering products causing 400 error
+
 ## 3.22.36
 
 ### Patch Changes
