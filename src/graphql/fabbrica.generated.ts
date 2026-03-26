@@ -928,7 +928,6 @@ import type {
   SaleTranslation,
   SaleUpdate,
   SaleUpdated,
-  SaleorGiftcardPaymentMethodDetails,
   SelectedAttribute,
   SendConfirmationEmail,
   SendConfirmationEmailError,
@@ -22485,7 +22484,7 @@ export const definePaymentListGatewaysFactory: DefineTypeFactoryInterface<
  *
  * Added in Saleor 3.22.
  */
-export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalGiftCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails | OptionalSaleorGiftcardPaymentMethodDetails;
+export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalGiftCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
 
 export type OptionalPaymentMethodDetailsCardFilterInput = {
   __typename?: 'PaymentMethodDetailsCardFilterInput';
@@ -29653,34 +29652,6 @@ export type OptionalSaleUpdated = {
  */
 export const defineSaleUpdatedFactory: DefineTypeFactoryInterface<
   OptionalSaleUpdated,
-  {}
-> = defineTypeFactory;
-
-/**
- * Represents a Saleor gift card payment method. Set by Saleor when a gift card is used as a payment method.
- *
- * Added in Saleor 3.23.
- */
-export type OptionalSaleorGiftcardPaymentMethodDetails = {
-  __typename?: 'SaleorGiftcardPaymentMethodDetails';
-  /**
- * Last 4 characters of the gift card code.
- *
- * Added in Saleor 3.23.
- */
-  code?: SaleorGiftcardPaymentMethodDetails['code'] | undefined;
-  /** Name of the payment method. */
-  name?: SaleorGiftcardPaymentMethodDetails['name'] | undefined;
-};
-
-/**
- * Define factory for {@link SaleorGiftcardPaymentMethodDetails} model.
- *
- * @param options
- * @returns factory {@link SaleorGiftcardPaymentMethodDetailsFactoryInterface}
- */
-export const defineSaleorGiftcardPaymentMethodDetailsFactory: DefineTypeFactoryInterface<
-  OptionalSaleorGiftcardPaymentMethodDetails,
   {}
 > = defineTypeFactory;
 

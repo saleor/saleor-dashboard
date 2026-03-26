@@ -361,8 +361,7 @@
     "PaymentMethodDetails": [
       "CardPaymentMethodDetails",
       "GiftCardPaymentMethodDetails",
-      "OtherPaymentMethodDetails",
-      "SaleorGiftcardPaymentMethodDetails"
+      "OtherPaymentMethodDetails"
     ],
     "PromotionEvent": [
       "PromotionCreatedEvent",

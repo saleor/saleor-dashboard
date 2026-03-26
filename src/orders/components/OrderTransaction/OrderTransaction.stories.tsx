@@ -168,15 +168,33 @@ export const WithOtherPaymentMethod: Story = {
   ),
 };
 
-export const WithGiftCardPaymentMethod: Story = {
+export const WithSaleorGiftCardPaymentMethod: Story = {
   args: {
     transaction: {
       ...transactions.chargeSuccess[0],
       index: 0,
       paymentMethodDetails: {
-        __typename: "SaleorGiftcardPaymentMethodDetails",
+        __typename: "GiftCardPaymentMethodDetails",
         name: "Gift card",
-        code: "A34F",
+        lastChars: "A34F",
+        isSaleorGiftcard: true,
+        brand: null,
+      },
+    },
+  },
+};
+
+export const WithExternalGiftCardPaymentMethod: Story = {
+  args: {
+    transaction: {
+      ...transactions.chargeSuccess[0],
+      index: 0,
+      paymentMethodDetails: {
+        __typename: "GiftCardPaymentMethodDetails",
+        name: "Gift card",
+        lastChars: "X9K2",
+        isSaleorGiftcard: false,
+        brand: "givex",
       },
     },
   },

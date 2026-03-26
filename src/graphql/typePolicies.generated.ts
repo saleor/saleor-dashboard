@@ -5628,11 +5628,6 @@ export type SaleUpdatedFieldPolicy = {
 	sale?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SaleorGiftcardPaymentMethodDetailsKeySpecifier = ('code' | 'name' | SaleorGiftcardPaymentMethodDetailsKeySpecifier)[];
-export type SaleorGiftcardPaymentMethodDetailsFieldPolicy = {
-	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type SelectedAttributeKeySpecifier = ('attribute' | 'values' | SelectedAttributeKeySpecifier)[];
 export type SelectedAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -9914,10 +9909,6 @@ export type StrictTypedTypePolicies = {
 	SaleUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | SaleUpdatedKeySpecifier | (() => undefined | SaleUpdatedKeySpecifier),
 		fields?: SaleUpdatedFieldPolicy,
-	},
-	SaleorGiftcardPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | SaleorGiftcardPaymentMethodDetailsKeySpecifier | (() => undefined | SaleorGiftcardPaymentMethodDetailsKeySpecifier),
-		fields?: SaleorGiftcardPaymentMethodDetailsFieldPolicy,
 	},
 	SelectedAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | SelectedAttributeKeySpecifier | (() => undefined | SelectedAttributeKeySpecifier),

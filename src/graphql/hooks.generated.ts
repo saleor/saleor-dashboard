@@ -1840,10 +1840,12 @@ export const OtherPaymentMethodDetailsFragmentDoc = gql`
   name
 }
     `;
-export const SaleorGiftcardPaymentMethodDetailsFragmentDoc = gql`
-    fragment SaleorGiftcardPaymentMethodDetails on SaleorGiftcardPaymentMethodDetails {
+export const GiftCardPaymentMethodDetailsFragmentDoc = gql`
+    fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
   name
-  code
+  brand
+  lastChars
+  isSaleorGiftcard
 }
     `;
 export const StaffMemberFragmentDoc = gql`
@@ -1915,8 +1917,8 @@ export const TransactionItemFragmentDoc = gql`
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
     }
-    ... on SaleorGiftcardPaymentMethodDetails {
-      ...SaleorGiftcardPaymentMethodDetails
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
     }
   }
   events {
@@ -1950,7 +1952,7 @@ export const TransactionItemFragmentDoc = gql`
     ${TransactionBaseItemFragmentDoc}
 ${CardPaymentMethodDetailsFragmentDoc}
 ${OtherPaymentMethodDetailsFragmentDoc}
-${SaleorGiftcardPaymentMethodDetailsFragmentDoc}
+${GiftCardPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`

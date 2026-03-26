@@ -20,7 +20,7 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
       return <CardPaymentMethod details={paymentMethodDetails} />;
     case "OtherPaymentMethodDetails":
       return <OtherPaymentMethod details={paymentMethodDetails} />;
-    case "SaleorGiftcardPaymentMethodDetails":
+    case "GiftCardPaymentMethodDetails":
       return <GiftCardPaymentMethod details={paymentMethodDetails} />;
     default:
       throw new Error("Unknown payment method details type:");

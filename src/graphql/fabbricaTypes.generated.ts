@@ -20252,11 +20252,7 @@ export type PaymentMethodTokenizationResult =
  *     The following types are possible:
  *     CARD - represents a card payment method.
  *     OTHER - represents any payment method that is not a card payment.
- * <<<<<<< HEAD
- *     GIFT_CARD - represents a Saleor gift card payment method.
- * =======
  *     GIFT_CARD - represents a gift card payment method.
- * >>>>>>> main
  */
 export type PaymentMethodTypeEnum =
   | 'CARD'
@@ -26276,23 +26272,6 @@ export type SaleUpdated = Event & {
  */
 export type SaleUpdatedSaleArgs = {
   channel: InputMaybe<Scalars['String']>;
-};
-
-/**
- * Represents a Saleor gift card payment method. Set by Saleor when a gift card is used as a payment method.
- *
- * Added in Saleor 3.23.
- */
-export type SaleorGiftcardPaymentMethodDetails = PaymentMethodDetails & {
-  __typename: 'SaleorGiftcardPaymentMethodDetails';
-  /**
-   * Last 4 characters of the gift card code.
-   *
-   * Added in Saleor 3.23.
-   */
-  code: Scalars['String'];
-  /** Name of the payment method. */
-  name: Scalars['String'];
 };
 
 /** Represents an assigned attribute to an object. */

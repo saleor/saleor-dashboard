@@ -642,9 +642,11 @@ export const transactionItemFragment = gql`
     lastDigits
   }
 
-  fragment SaleorGiftcardPaymentMethodDetails on SaleorGiftcardPaymentMethodDetails {
+  fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
     name
-    code
+    brand
+    lastChars
+    isSaleorGiftcard
   }
 
   fragment TransactionItem on TransactionItem {
@@ -671,8 +673,8 @@ export const transactionItemFragment = gql`
       ... on OtherPaymentMethodDetails {
         ...OtherPaymentMethodDetails
       }
-      ... on SaleorGiftcardPaymentMethodDetails {
-        ...SaleorGiftcardPaymentMethodDetails
+      ... on GiftCardPaymentMethodDetails {
+        ...GiftCardPaymentMethodDetails
       }
     }
     events {
