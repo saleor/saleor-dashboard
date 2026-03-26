@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   create: context => ({
     CallExpression: (codePath, node) => {
       if (
