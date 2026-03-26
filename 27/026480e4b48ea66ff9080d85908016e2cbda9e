@@ -1,0 +1,27 @@
+vitest.config.ts
+  e56d3a98ba5ed532 5,25
+vitest.shims.d.ts
+  e56d3a98ba5ed532 1
+.storybook/vitest.setup.ts
+  e56d3a98ba5ed532 1,3,5-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "27026480e4b48ea66ff9080d85908016e2cbda9e",
+  "prompts": {
+    "e56d3a98ba5ed532": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74497465-83ae-40cd-a8f9-9abb3b450536",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 3,
+      "accepted_lines": 11,
+      "overriden_lines": 0
+    }
+  }
+}
