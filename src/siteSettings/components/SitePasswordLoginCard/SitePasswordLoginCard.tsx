@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
-import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
+import { PasswordLoginModeEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

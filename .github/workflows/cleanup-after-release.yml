@@ -3,21 +3,21 @@ name: Cleanup After Release
 on:
   push:
     branches:
-      - "3.22"
+      - "3.23"
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  # When a release PR (changeset-release/3.22) is merged to the release branch,
+  # When a release PR (changeset-release/3.23 etc) is merged to the release branch,
   # we need to sync those changes back to main to keep it up to date.
   # This workflow creates a PR from the release branch to main for cleanup.
   create-cleanup-pr:
     runs-on: ubuntu-22.04
-    if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Release 3.22')
+    if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Release 3.23')
     env:
-      CURRENT_RELEASE: "3.22"
+      CURRENT_RELEASE: "3.23"
 
     steps:
       - name: Get Token
