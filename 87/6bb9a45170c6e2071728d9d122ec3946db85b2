@@ -1,0 +1,25 @@
+src/orders/components/OrderTransaction/OrderTransaction.stories.tsx
+  0c7f2302e66d4d5d 203-218
+src/orders/components/OrderTransaction/components/GiftCardPaymentMethod.tsx
+  0c7f2302e66d4d5d 79-81
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "876bb9a45170c6e2071728d9d122ec3946db85b2",
+  "prompts": {
+    "0c7f2302e66d4d5d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c0ce7b57-06a5-4cdc-b1e2-392af791272b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 19,
+      "total_deletions": 5,
+      "accepted_lines": 19,
+      "overriden_lines": 0
+    }
+  }
+}
