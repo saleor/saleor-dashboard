@@ -118,6 +118,9 @@ export const fragmentOrderLine = gql`
     totalPrice {
       ...TaxedMoney
     }
+    undiscountedTotalPrice {
+      ...TaxedMoney
+    }
     unitDiscount {
       amount
       currency

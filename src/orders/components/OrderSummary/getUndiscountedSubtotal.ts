@@ -1,13 +1,14 @@
 import { type OrderLineFragment } from "@dashboard/graphql";
 
-type LineInput = Pick<OrderLineFragment, "undiscountedUnitPrice" | "quantity">;
+type LineInput = Pick<OrderLineFragment, "undiscountedTotalPrice">;
 
-export function getUndiscountedSubtotal(lines: LineInput[], displayGrossPrices: boolean): number {
+/** Sums each line's `undiscountedTotalPrice` from the API (not unit × qty on the client). */
+export function getUndiscountedSubtotal(lines: LineInput[], useGrossAmount: boolean): number {
   return lines.reduce((sum, line) => {
-    const price = displayGrossPrices
-      ? line.undiscountedUnitPrice.gross.amount
-      : line.undiscountedUnitPrice.net.amount;
+    const amount = useGrossAmount
+      ? line.undiscountedTotalPrice.gross.amount
+      : line.undiscountedTotalPrice.net.amount;
 
-    return sum + price * line.quantity;
+    return sum + amount;
   }, 0);
 }

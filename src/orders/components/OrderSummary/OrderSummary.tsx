@@ -60,8 +60,10 @@ export const OrderSummary = (props: Props) => {
 
   const lineDiscountsSummary = useMemo(() => getLineDiscountsSummary(order.lines), [order.lines]);
   const undiscountedSubtotal = useMemo(
-    () => getUndiscountedSubtotal(order.lines, order.displayGrossPrices),
-    [order.lines, order.displayGrossPrices],
+    // Subtotal/shipping/total amounts in OrderValue always use gross; `displayGrossPrices`
+    // only changes how the taxes row is labeled (included vs broken out).
+    () => getUndiscountedSubtotal(order.lines, true),
+    [order.lines],
   );
 
   return (

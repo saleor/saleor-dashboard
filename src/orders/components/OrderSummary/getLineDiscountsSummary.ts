@@ -6,7 +6,7 @@ export interface LineDiscountSummaryEntry {
   totalAmount: number;
 }
 
-type LineInput = Pick<OrderLineFragment, "discounts" | "unitDiscount" | "quantity">;
+export type LineInput = Pick<OrderLineFragment, "discounts" | "unitDiscount" | "quantity">;
 
 export function getLineDiscountsSummary(lines: LineInput[]): LineDiscountSummaryEntry[] {
   const grouped = new Map<OrderDiscountType, { lineCount: number; totalAmount: number }>();

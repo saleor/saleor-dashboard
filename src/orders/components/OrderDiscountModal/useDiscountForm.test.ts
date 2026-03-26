@@ -1,6 +1,7 @@
 import { DiscountValueTypeEnum } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
 
+import { messages } from "./messages";
 import { useDiscountForm } from "./useDiscountForm";
 
 describe("useDiscountForm", () => {
@@ -94,7 +95,7 @@ describe("useDiscountForm", () => {
       });
 
       // Assert
-      expect(result.current.valueErrorMsg).toBeTruthy();
+      expect(result.current.valueErrorMsg).toBe(messages.valueBiggerThan100.defaultMessage);
       expect(result.current.isSubmitDisabled).toBe(true);
     });
 
@@ -112,7 +113,7 @@ describe("useDiscountForm", () => {
       });
 
       // Assert
-      expect(result.current.valueErrorMsg).toBeTruthy();
+      expect(result.current.valueErrorMsg).toBe(messages.valueBiggerThanPrice.defaultMessage);
       expect(result.current.isSubmitDisabled).toBe(true);
     });
 

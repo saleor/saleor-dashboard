@@ -50,7 +50,7 @@ export const OrderDiscountProvider = ({ children, order }: OrderDiscountProvider
   const [orderDiscountRemove, orderDiscountRemoveOpts] = useOrderDiscountDeleteMutation({
     onCompleted: ({ orderDiscountDelete: { errors } }) => handleDiscountDataSubmission(errors),
   });
-  const handleDiscountDataSubmission = async (errors: any[]) => {
+  const handleDiscountDataSubmission = async (errors: unknown[]) => {
     if (errors.length === 0) {
       await apolloClient.refetchQueries({
         include: [OrderDetailsWithMetadataDocument],

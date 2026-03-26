@@ -4,7 +4,7 @@ import commonErrorMessages from "@dashboard/utils/errors/common";
 import { type IntlShape } from "react-intl";
 
 export const getDefaultNotifierSuccessErrorData = (
-  errors: any[],
+  errors: unknown[],
   intl: IntlShape,
 ): INotification =>
   !errors.length

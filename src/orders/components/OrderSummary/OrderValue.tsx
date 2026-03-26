@@ -139,10 +139,15 @@ const messages = defineMessages({
     defaultMessage: "Lines",
     description: "sub-header for line-level discounts in summary",
   },
-  beforeDiscounts: {
-    id: "5p5Zzz",
+  beforeDiscountsTooltipTitle: {
+    id: "zcyBm+",
     defaultMessage: "Before discounts",
-    description: "label for undiscounted subtotal reference",
+    description: "tooltip title for undiscounted subtotal next to order subtotal",
+  },
+  beforeDiscountsTooltipDescription: {
+    id: "R06XZQ",
+    defaultMessage: "Sum of each line's undiscounted total from the order",
+    description: "tooltip explanation for before-discounts subtotal amount",
   },
   lineCount: {
     id: "U2il94",
@@ -682,14 +687,20 @@ export const OrderValue = (props: Props): ReactNode => {
                 </Tooltip.Trigger>
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  <Text size={3}>
-                    {intl.formatMessage(messages.beforeDiscounts)}
-                    {": "}
-                    {intl.formatNumber(undiscountedSubtotal, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
-                  </Text>
+                  <Box display="flex" flexDirection="column" gap={2} __maxWidth="min(92vw, 20rem)">
+                    <Text size={3} fontWeight="medium">
+                      {intl.formatMessage(messages.beforeDiscountsTooltipTitle)}
+                    </Text>
+                    <Text size={4} fontWeight="medium">
+                      {intl.formatNumber(undiscountedSubtotal, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </Text>
+                    <Text size={1} color="default2">
+                      {intl.formatMessage(messages.beforeDiscountsTooltipDescription)}
+                    </Text>
+                  </Box>
                 </Tooltip.Content>
               </Tooltip>
             </>

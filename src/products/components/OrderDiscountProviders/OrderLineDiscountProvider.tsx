@@ -84,7 +84,7 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
         handleDiscountDataSubmission(errors),
     },
   );
-  const handleDiscountDataSubmission = async (errors: any[]) => {
+  const handleDiscountDataSubmission = async (errors: unknown[]) => {
     if (errors.length === 0) {
       await apolloClient.refetchQueries({
         include: [OrderDetailsWithMetadataDocument],

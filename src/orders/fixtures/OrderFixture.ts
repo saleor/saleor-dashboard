@@ -263,6 +263,19 @@ export class OrderFixture {
           currency: "USD",
         },
       },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 100,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 100,
+          currency: "USD",
+        },
+      },
       variant: {
         __typename: "ProductVariant",
         id: "variant-id-1",
@@ -373,6 +386,19 @@ export class OrderFixture {
           undiscountedUnitPrice: {
             __typename: "TaxedMoney",
             currency: "",
+            gross: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            net: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+          },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
             gross: {
               __typename: "Money",
               amount: 0,

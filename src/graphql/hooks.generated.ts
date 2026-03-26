@@ -1644,6 +1644,9 @@ export const OrderLineFragmentDoc = gql`
   totalPrice {
     ...TaxedMoney
   }
+  undiscountedTotalPrice {
+    ...TaxedMoney
+  }
   unitDiscount {
     amount
     currency

@@ -1,6 +1,10 @@
 import { DiscountValueTypeEnum, OrderDiscountType } from "@dashboard/graphql";
 
-import { getLineDiscountsSummary, type LineDiscountSummaryEntry } from "./getLineDiscountsSummary";
+import {
+  getLineDiscountsSummary,
+  type LineDiscountSummaryEntry,
+  type LineInput,
+} from "./getLineDiscountsSummary";
 
 const makeLine = ({
   unitDiscountAmount = 0,
@@ -10,7 +14,7 @@ const makeLine = ({
   unitDiscountAmount?: number;
   quantity?: number;
   discountType?: OrderDiscountType;
-}) => ({
+}): LineInput => ({
   unitDiscount: { __typename: "Money" as const, amount: unitDiscountAmount, currency: "USD" },
   quantity,
   discounts: discountType

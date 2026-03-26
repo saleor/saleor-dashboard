@@ -601,6 +601,10 @@
     "context": "sale channel",
     "string": "Channel"
   },
+  "1CDAXp": {
+    "context": "tooltip explanation for before-discounts subtotal amount",
+    "string": "Sum of each line's undiscounted total from the order"
+  },
   "1H+V6k": {
     "context": "error message",
     "string": "Page with these attributes already exists."
@@ -1357,10 +1361,6 @@
   },
   "5oVmhu": {
     "string": "Cancel request sent to payment provider"
-  },
-  "5p5Zzz": {
-    "context": "label for undiscounted subtotal reference",
-    "string": "Before discounts"
   },
   "5pHBSU": {
     "context": "switch button",
@@ -11240,6 +11240,10 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zcyBm+": {
+    "context": "tooltip title for undiscounted subtotal next to order subtotal",
+    "string": "Before discounts"
   },
   "zehNKT": {
     "string": "Rule has error, open rule to see details"
