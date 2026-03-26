@@ -232,14 +232,6 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
-export const UserUserPermissionWithSourcePermissionGroupsFragmentDoc = gql`
-    fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
-  ...UserPermission
-  sourcePermissionGroups(userId: $userId) {
-    id
-  }
-}
-    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -395,6 +387,7 @@ export const ChannelDetailsFragmentDoc = gql`
     automaticallyCompleteFullyPaidCheckouts
     automaticCompletionDelay
     automaticCompletionCutOffDate
+    allowLegacyGiftCardUse
   }
 }
     ${ChannelFragmentDoc}
@@ -1013,13 +1006,6 @@ export const BulkStockErrorFragmentDoc = gql`
   message
 }
     `;
-export const StockErrorFragmentDoc = gql`
-    fragment StockError on StockError {
-  code
-  field
-  message
-}
-    `;
 export const ShippingChannelsErrorFragmentDoc = gql`
     fragment ShippingChannelsError on ShippingError {
   code
@@ -1122,13 +1108,6 @@ export const GiftCardErrorFragmentDoc = gql`
     `;
 export const GiftCardSettingsErrorFragmentDoc = gql`
     fragment GiftCardSettingsError on GiftCardSettingsError {
-  code
-  field
-  message
-}
-    `;
-export const SaleBulkDeleteErrorFragmentDoc = gql`
-    fragment SaleBulkDeleteError on DiscountError {
   code
   field
   message
@@ -1242,13 +1221,6 @@ export const ProductAttributeAssignmentUpdateErrorFragmentFragmentDoc = gql`
     `;
 export const ShopSettingsUpdateErrorFragmentFragmentDoc = gql`
     fragment ShopSettingsUpdateErrorFragment on ShopError {
-  code
-  field
-  message
-}
-    `;
-export const ShopFetchTaxRatesErrorFragmentFragmentDoc = gql`
-    fragment ShopFetchTaxRatesErrorFragment on ShopError {
   code
   field
   message
@@ -2394,45 +2366,6 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
-export const OrderFulfillLineFragmentDoc = gql`
-    fragment OrderFulfillLine on OrderLine {
-  id
-  isShippingRequired
-  productName
-  quantity
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  quantityFulfilled
-  quantityToFulfill
-  variant {
-    id
-    name
-    sku
-    preorder {
-      endDate
-    }
-    attributes {
-      values {
-        id
-        name
-      }
-    }
-    stocks {
-      ...Stock
-    }
-    trackInventory
-  }
-  thumbnail(size: 64) {
-    url
-  }
-}
-    ${StockFragmentDoc}`;
 export const OrderLineStockDataFragmentDoc = gql`
     fragment OrderLineStockData on OrderLine {
   id
@@ -2451,6 +2384,38 @@ export const OrderLineStockDataFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}`;
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
+  ...OrderLineStockData
+  isShippingRequired
+  productName
+  allocations {
+    id
+    warehouse {
+      name
+    }
+  }
+  quantityFulfilled
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${OrderLineStockDataFragmentDoc}`;
 export const OrderLineGrantRefundFragmentDoc = gql`
     fragment OrderLineGrantRefund on OrderLine {
   id
@@ -2874,17 +2839,6 @@ export const PriceRangeFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const ChannelListingProductFragmentDoc = gql`
-    fragment ChannelListingProduct on ProductChannelListing {
-  ...ChannelListingProductWithoutPricing
-  pricing {
-    priceRange {
-      ...PriceRange
-    }
-  }
-}
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${PriceRangeFragmentDoc}`;
 export const ProductWithChannelListingsFragmentDoc = gql`
     fragment ProductWithChannelListings on Product {
   id
@@ -3431,6 +3385,7 @@ export const ShopFragmentDoc = gql`
   enableAccountConfirmationByEmail
   useLegacyUpdateWebhookEmission
   preserveAllAddressFields
+  passwordLoginMode
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
@@ -3527,12 +3482,6 @@ export const TaxClassFragmentDoc = gql`
     ${TaxClassBaseFragmentDoc}
 ${TaxRateFragmentDoc}
 ${MetadataFragmentDoc}`;
-export const TimePeriodFragmentDoc = gql`
-    fragment TimePeriod on TimePeriod {
-  amount
-  type
-}
-    `;
 export const CategoryTranslationFragmentDoc = gql`
     fragment CategoryTranslation on CategoryTranslatableContent {
   translation(languageCode: $language) {
@@ -3721,26 +3670,6 @@ export const PageTranslationFragmentDoc = gql`
   }
 }
     ${AttributeValueTranslatableFragmentDoc}`;
-export const PageTranslatableFragmentDoc = gql`
-    fragment PageTranslatable on PageTranslatableContent {
-  id
-  content
-  seoDescription
-  seoTitle
-  title
-  translation(languageCode: $language) {
-    id
-    content
-    seoDescription
-    seoTitle
-    title
-    language {
-      code
-      language
-    }
-  }
-}
-    `;
 export const AttributeTranslationFragmentDoc = gql`
     fragment AttributeTranslation on AttributeTranslatableContent {
   id
@@ -4366,6 +4295,7 @@ export const AvailableExternalAuthenticationsDocument = gql`
       id
       name
     }
+    passwordLoginMode
   }
 }
     `;
@@ -5079,7 +5009,7 @@ export type CollectionUpdateMutationHookResult = ReturnType<typeof useCollection
 export type CollectionUpdateMutationResult = Apollo.MutationResult<Types.CollectionUpdateMutation>;
 export type CollectionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>;
 export const CollectionAssignProductDocument = gql`
-    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!) {
   collectionAddProducts(collectionId: $collectionId, products: $productIds) {
     errors {
       ...CollectionError
@@ -5110,10 +5040,6 @@ export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.Co
  *      collectionId: // value for 'collectionId'
  *      productIds: // value for 'productIds'
  *      moves: // value for 'moves'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
  *   },
  * });
  */
@@ -5333,7 +5259,7 @@ export type CollectionChannelListingUpdateMutationHookResult = ReturnType<typeof
 export type CollectionChannelListingUpdateMutationResult = Apollo.MutationResult<Types.CollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
 export const ReorderProductsInCollectionDocument = gql`
-    mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!) {
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
     errors {
       message
@@ -5358,10 +5284,6 @@ export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Type
  *   variables: {
  *      collectionId: // value for 'collectionId'
  *      moves: // value for 'moves'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
  *   },
  * });
  */
@@ -10764,7 +10686,7 @@ export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTot
 export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
 export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
 export const GiftCardProductsCountDocument = gql`
-    query GiftCardProductsCount($channel: String!) {
+    query GiftCardProductsCount {
   giftCardProductTypes: productTypes(filter: {kind: GIFT_CARD}) {
     totalCount
   }
@@ -10783,11 +10705,10 @@ export const GiftCardProductsCountDocument = gql`
  * @example
  * const { data, loading, error } = useGiftCardProductsCountQuery({
  *   variables: {
- *      channel: // value for 'channel'
  *   },
  * });
  */
-export function useGiftCardProductsCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
+export function useGiftCardProductsCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountDocument, options);
       }

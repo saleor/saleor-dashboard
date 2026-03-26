@@ -186,13 +186,6 @@ export const bulkStockErrorFragment = gql`
     message
   }
 `;
-export const stockErrorFragment = gql`
-  fragment StockError on StockError {
-    code
-    field
-    message
-  }
-`;
 
 export const shippingChannelsErrorFragment = gql`
   fragment ShippingChannelsError on ShippingError {
@@ -316,14 +309,6 @@ export const giftCardSettingsErrorFragment = gql`
   }
 `;
 
-export const saleBulkDeleteError = gql`
-  fragment SaleBulkDeleteError on DiscountError {
-    code
-    field
-    message
-  }
-`;
-
 export const voucherBulkDeleteError = gql`
   fragment VoucherBulkDeleteError on DiscountError {
     code
@@ -365,14 +350,6 @@ export const pageBulkRemoveErrorFragment = gql`
 `;
 
 export const pageTypeDeleteErrorFragment = gql`
-  fragment PageTypeDeleteErrorFragment on PageError {
-    code
-    field
-    message
-  }
-`;
-
-export const pageTypeBulkDeleteErrorFragment = gql`
   fragment PageTypeDeleteErrorFragment on PageError {
     code
     field
@@ -455,14 +432,6 @@ export const productAttributeAssignmentUpdateErrorFragment = gql`
 
 export const shopSettingsUpdateErrorFragment = gql`
   fragment ShopSettingsUpdateErrorFragment on ShopError {
-    code
-    field
-    message
-  }
-`;
-
-export const shopFetchTaxRatesErrorFragment = gql`
-  fragment ShopFetchTaxRatesErrorFragment on ShopError {
     code
     field
     message

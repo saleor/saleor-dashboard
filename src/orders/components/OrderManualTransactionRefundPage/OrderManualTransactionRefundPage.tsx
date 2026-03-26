@@ -10,10 +10,8 @@ import { type ManualRefundForm } from "@dashboard/orders/components/OrderManualT
 import { ModelsPicker } from "@dashboard/orders/components/OrderTransactionRefundPage/components/ModelsPicker/ModelsPicker";
 import { OrderTransactionReasonUi } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
-import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,9 +127,6 @@ export const OrderManualTransactionRefundPage = ({
               <DashboardCard>
                 <DashboardCard.Header>
                   <DashboardCard.Title>Refund reason</DashboardCard.Title>
-                  <Box marginLeft={4}>
-                    <Ripple model={rippleNewRefundReasons} />
-                  </Box>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   <ModelsPickerManualTransaction

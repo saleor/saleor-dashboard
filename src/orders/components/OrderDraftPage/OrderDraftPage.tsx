@@ -31,7 +31,7 @@ import { useIntl } from "react-intl";
 import OrderCustomer, { type CustomerEditData } from "../OrderCustomer";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import OrderHistory, { type FormData as HistoryFormData } from "../OrderHistory";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 

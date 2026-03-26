@@ -15,9 +15,7 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
-import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -26,6 +24,7 @@ import { ExtendedTimelineEvent } from "./ExtendedTimelineEvent";
 import { HistoryComponentLoader } from "./HistoryComponentLoader";
 import { getEventMessage } from "./messages";
 import { OrderHistoryDate } from "./OrderHistoryDate";
+import { OrderLineItem } from "./OrderLineItem";
 import { groupEventsByDate, isTimelineEventOfType } from "./utils";
 
 // Date group header component with internationalized labels
@@ -111,10 +110,7 @@ const OrderHistory = ({
     <DashboardCard>
       <DashboardCard.Header flexDirection="column" alignItems="start">
         <DashboardCard.Title size={6} fontWeight="medium">
-          <Box display="flex" alignItems="center" justifyContent="center" gap={4}>
-            <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
-            <Ripple model={rippleRefreshedOrderSections} />
-          </Box>
+          <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
         </DashboardCard.Title>
         <DashboardCard.Subtitle fontSize={3} color="default2">
           <FormattedMessage
@@ -180,7 +176,7 @@ const OrderHistory = ({
                 index: number,
                 groupEvents: OrderEventFragment[],
               ) => {
-                const { id, user, date, message, type, app, related } = event;
+                const { id, user, date, message, type, app, related, lines } = event;
                 const isLastInGroup = index === groupEvents.length - 1;
 
                 if (isTimelineEventOfType("note", type)) {
@@ -270,6 +266,38 @@ const OrderHistory = ({
                   );
                 }
 
+                if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED && lines?.length > 0) {
+                  const productLine = lines[0];
+                  const productName =
+                    productLine.orderLine?.productName || productLine.itemName || "Product";
+                  const variantName = productLine.orderLine?.variantName;
+                  const displayName = variantName ? `${productName} (${variantName})` : productName;
+
+                  return (
+                    <TimelineEvent
+                      date={<OrderHistoryDate date={date} />}
+                      title={
+                        <FormattedMessage
+                          id="OErjoA"
+                          defaultMessage="{productName} discount was removed"
+                          values={{
+                            productName: (
+                              <Text size={3} fontWeight="medium" as="span">
+                                {displayName}
+                              </Text>
+                            ),
+                          }}
+                        />
+                      }
+                      key={id}
+                      eventData={event}
+                      actor={toActor(user, app)}
+                      eventType={type}
+                      isLastInGroup={isLastInGroup}
+                    />
+                  );
+                }
+
                 if (isTimelineEventOfType("extendable", type)) {
                   return (
                     <ExtendedTimelineEvent
@@ -284,7 +312,7 @@ const OrderHistory = ({
                 }
 
                 const hasRelatedOrder = !!event.relatedOrder;
-                const hasLines = event.lines && event.lines.length > 0;
+                const hasLines = lines && lines.length > 0;
                 const isFoldable = message || hasRelatedOrder || hasLines;
 
                 if (isFoldable) {
@@ -306,28 +334,13 @@ const OrderHistory = ({
                           </Text>
                         )}
                         {hasLines &&
-                          event.lines.map((line, i) => (
-                            <Box
+                          lines.map((line, i) => (
+                            <OrderLineItem
                               key={`${id}-line-${line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}`}
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="space-between"
-                              gap={3}
-                            >
-                              <Box display="flex" flexDirection="column">
-                                <Text size={3} fontWeight="medium">
-                                  {line.orderLine?.productName || line.itemName}
-                                </Text>
-                                {line.orderLine?.variantName && (
-                                  <Text size={2} color="default2">
-                                    {line.orderLine.variantName}
-                                  </Text>
-                                )}
-                              </Box>
-                              <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
-                                ×{line.quantity}
-                              </Text>
-                            </Box>
+                              orderLine={line.orderLine}
+                              quantity={line.quantity ?? 0}
+                              fallbackItemName={line.itemName ?? "Product"}
+                            />
                           ))}
                         {hasRelatedOrder && (
                           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -377,4 +390,4 @@ const OrderHistory = ({
 };
 
 OrderHistory.displayName = "OrderHistory";
-export default OrderHistory;
+export { OrderHistory };

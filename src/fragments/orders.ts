@@ -546,46 +546,6 @@ export const fragmentShopOrderSettings = gql`
   }
 `;
 
-export const fragmentOrderFulfillLine = gql`
-  fragment OrderFulfillLine on OrderLine {
-    id
-    isShippingRequired
-    productName
-    quantity
-    allocations {
-      id
-      quantity
-      warehouse {
-        id
-        name
-      }
-    }
-    quantityFulfilled
-    quantityToFulfill
-    variant {
-      id
-      name
-      sku
-      preorder {
-        endDate
-      }
-      attributes {
-        values {
-          id
-          name
-        }
-      }
-      stocks {
-        ...Stock
-      }
-      trackInventory
-    }
-    thumbnail(size: 64) {
-      url
-    }
-  }
-`;
-
 export const fragmentOrderLineStockData = gql`
   fragment OrderLineStockData on OrderLine {
     id
@@ -601,6 +561,39 @@ export const fragmentOrderLineStockData = gql`
       stocks {
         ...Stock
       }
+    }
+  }
+`;
+
+export const fragmentOrderFulfillLine = gql`
+  fragment OrderFulfillLine on OrderLine {
+    ...OrderLineStockData
+    isShippingRequired
+    productName
+    allocations {
+      id
+      warehouse {
+        name
+      }
+    }
+    quantityFulfilled
+    variant {
+      id
+      name
+      sku
+      preorder {
+        endDate
+      }
+      attributes {
+        values {
+          id
+          name
+        }
+      }
+      trackInventory
+    }
+    thumbnail(size: 64) {
+      url
     }
   }
 `;
