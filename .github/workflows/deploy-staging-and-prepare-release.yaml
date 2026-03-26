@@ -39,7 +39,7 @@ jobs:
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         id: changesets
         with:
-          title: "Prepare release ${{ github.ref_name }}"
+          title: "Release ${{ github.ref_name }} [automated]"
           commit: "Release ${{ github.ref_name }} [automated]"
           publish: "pnpm run release"
         env:
@@ -48,7 +48,7 @@ jobs:
         if: steps.changesets.outputs.pullRequestNumber != ''
         run: |
           VERSION=$(jq -r .version package.json)
-          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --title "Prepare release ${VERSION}"
+          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --title "Release ${VERSION} [automated]"
         env:
           GH_TOKEN: ${{ steps.get-token.outputs.token }}
 
