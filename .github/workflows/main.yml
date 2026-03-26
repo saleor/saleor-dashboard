@@ -93,6 +93,8 @@ jobs:
 
   storybook-tests:
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
@@ -104,16 +106,16 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      - name: Install Playwright
-        run: npx playwright install --with-deps chromium
-
-      - name: Build Storybook
-        run: pnpm run build-storybook
-
       - name: Run Storybook tests
-        run: |
-          npx http-server storybook-static --port 6006 --silent &
-          pnpm run test-storybook --url http://127.0.0.1:6006
+        run: pnpm run test-storybook:coverage
+
+      - name: Upload coverage reports to Codecov
+        if: always()
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: saleor/saleor-dashboard
+          flags: storybook
 
   chromatic:
     runs-on: ubuntu-22.04
