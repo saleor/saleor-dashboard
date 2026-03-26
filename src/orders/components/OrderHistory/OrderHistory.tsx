@@ -15,9 +15,7 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
-import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -112,10 +110,7 @@ const OrderHistory = ({
     <DashboardCard>
       <DashboardCard.Header flexDirection="column" alignItems="start">
         <DashboardCard.Title size={6} fontWeight="medium">
-          <Box display="flex" alignItems="center" justifyContent="center" gap={4}>
-            <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
-            <Ripple model={rippleRefreshedOrderSections} />
-          </Box>
+          <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
         </DashboardCard.Title>
         <DashboardCard.Subtitle fontSize={3} color="default2">
           <FormattedMessage
