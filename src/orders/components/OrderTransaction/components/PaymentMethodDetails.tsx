@@ -1,4 +1,5 @@
 import { type TransactionItemFragment } from "@dashboard/graphql";
+import { errorTracker } from "@dashboard/services/errorTracking";
 
 import { CardPaymentMethod } from "./CardPaymentMethod";
 import { GiftCardPaymentMethod } from "./GiftCardPaymentMethod";
@@ -23,6 +24,12 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
     case "GiftCardPaymentMethodDetails":
       return <GiftCardPaymentMethod details={paymentMethodDetails} />;
     default:
-      throw new Error("Unknown payment method details type:");
+      errorTracker.captureException(
+        new Error(
+          `Unknown payment method details type: ${(paymentMethodDetails as { __typename: string }).__typename}`,
+        ),
+      );
+
+      return null;
   }
 };
