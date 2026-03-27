@@ -1,44 +1,9 @@
 import { Pill } from "@dashboard/components/Pill";
-import { getPromotionStatus, type PromotionStatus } from "@dashboard/discounts/utils";
+import { getPromotionStatus, getRelativePromotionTimeParts } from "@dashboard/discounts/utils";
 import { type PromotionDetailsFragment, PromotionTypeEnum } from "@dashboard/graphql";
 import { type PillStatusType } from "@dashboard/misc";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { type IntlShape, useIntl } from "react-intl";
-
-function getRelativeTimeHint(
-  status: PromotionStatus,
-  startDate: string | null | undefined,
-  endDate: string | null | undefined,
-  intl: IntlShape,
-): string | null {
-  const referenceDate = status === "scheduled" ? startDate : status === "finished" ? endDate : null;
-
-  if (!referenceDate) {
-    return null;
-  }
-
-  const diffMs = new Date(referenceDate).getTime() - Date.now();
-  const absDiffMs = Math.abs(diffMs);
-  const MINUTE = 60_000;
-  const HOUR = 3_600_000;
-  const DAY = 86_400_000;
-
-  let value: number;
-  let unit: Intl.RelativeTimeFormatUnit;
-
-  if (absDiffMs < HOUR) {
-    value = Math.round(diffMs / MINUTE);
-    unit = "minute";
-  } else if (absDiffMs < DAY) {
-    value = Math.round(diffMs / HOUR);
-    unit = "hour";
-  } else {
-    value = Math.round(diffMs / DAY);
-    unit = "day";
-  }
-
-  return intl.formatRelativeTime(value, unit, { numeric: "auto", style: "long" });
-}
+import { useIntl } from "react-intl";
 
 interface DiscountDetailsTitleProps {
   data: PromotionDetailsFragment | undefined | null;
@@ -69,7 +34,10 @@ export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps) => {
   );
   const statusColor: PillStatusType =
     promotionStatus === "active" ? "success" : promotionStatus === "scheduled" ? "info" : "neutral";
-  const timeHint = getRelativeTimeHint(promotionStatus, data.startDate, data.endDate, intl);
+  const timeParts = getRelativePromotionTimeParts(promotionStatus, data.startDate, data.endDate);
+  const timeHint = timeParts
+    ? intl.formatRelativeTime(timeParts.value, timeParts.unit, { numeric: "auto", style: "long" })
+    : null;
 
   return (
     <Box display="flex" alignItems="center" gap={2}>

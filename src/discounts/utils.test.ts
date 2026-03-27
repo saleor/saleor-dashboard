@@ -1,4 +1,4 @@
-import { getPromotionStatus } from "./utils";
+import { getPromotionStatus, getRelativePromotionTimeParts } from "./utils";
 
 describe("getPromotionStatus", () => {
   it("returns scheduled when start date is in the future", () => {
@@ -53,5 +53,95 @@ describe("getPromotionStatus", () => {
     expect(getPromotionStatus("", "", now)).toBe("active");
     expect(getPromotionStatus("not-a-date", null, now)).toBe("active");
     expect(getPromotionStatus(null, "garbage", now)).toBe("active");
+  });
+});
+
+describe("getRelativePromotionTimeParts", () => {
+  const now = new Date("2026-03-21T12:00:00.000Z");
+
+  it("returns null for active status", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts("active", "2026-03-20T00:00:00.000Z", null, now);
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
+  it("returns null when scheduled but start date is missing", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts("scheduled", null, null, now);
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
+  it("returns null when finished but end date is missing", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts("finished", "2026-03-20T00:00:00.000Z", null, now);
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
+  it("returns null when reference date is invalid", () => {
+    // Arrange & Act
+    const scheduled = getRelativePromotionTimeParts("scheduled", "not-a-date", null, now);
+    const finished = getRelativePromotionTimeParts("finished", null, "also-bad", now);
+
+    // Assert
+    expect(scheduled).toBeNull();
+    expect(finished).toBeNull();
+  });
+
+  it("uses minute unit when less than one hour from start", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts(
+      "scheduled",
+      "2026-03-21T12:45:00.000Z",
+      null,
+      now,
+    );
+
+    // Assert
+    expect(result).toEqual({ unit: "minute", value: 45 });
+  });
+
+  it("uses hour unit when one hour or more but less than one day from start", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts(
+      "scheduled",
+      "2026-03-21T15:00:00.000Z",
+      null,
+      now,
+    );
+
+    // Assert
+    expect(result).toEqual({ unit: "hour", value: 3 });
+  });
+
+  it("uses day unit when one day or more from start", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts(
+      "scheduled",
+      "2026-03-24T12:00:00.000Z",
+      null,
+      now,
+    );
+
+    // Assert
+    expect(result).toEqual({ unit: "day", value: 3 });
+  });
+
+  it("returns negative values for finished promotions in the past", () => {
+    // Arrange & Act
+    const result = getRelativePromotionTimeParts(
+      "finished",
+      "2026-03-20T00:00:00.000Z",
+      "2026-03-18T12:00:00.000Z",
+      now,
+    );
+
+    // Assert
+    expect(result).toEqual({ unit: "day", value: -3 });
   });
 });

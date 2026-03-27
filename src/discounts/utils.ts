@@ -125,3 +125,52 @@ export function getPromotionStatus(
 
   return "active";
 }
+
+/**
+ * Relative time value/unit for scheduled (vs start) or finished (vs end) promotions.
+ * Active promotions have no reference date for this hint.
+ */
+export function getRelativePromotionTimeParts(
+  status: PromotionStatus,
+  startDate: string | null | undefined,
+  endDate: string | null | undefined,
+  now = new Date(),
+): { unit: Intl.RelativeTimeFormatUnit; value: number } | null {
+  const referenceDate = status === "scheduled" ? startDate : status === "finished" ? endDate : null;
+
+  if (!referenceDate) {
+    return null;
+  }
+
+  const referenceMs = new Date(referenceDate).getTime();
+
+  if (!Number.isFinite(referenceMs)) {
+    return null;
+  }
+
+  const diffMs = referenceMs - now.getTime();
+  const absDiffMs = Math.abs(diffMs);
+  const MINUTE = 60_000;
+  const HOUR = 3_600_000;
+  const DAY = 86_400_000;
+
+  let value: number;
+  let unit: Intl.RelativeTimeFormatUnit;
+
+  if (absDiffMs < HOUR) {
+    value = Math.round(diffMs / MINUTE);
+    unit = "minute";
+  } else if (absDiffMs < DAY) {
+    value = Math.round(diffMs / HOUR);
+    unit = "hour";
+  } else {
+    value = Math.round(diffMs / DAY);
+    unit = "day";
+  }
+
+  if (!Number.isFinite(value)) {
+    return null;
+  }
+
+  return { unit, value };
+}
