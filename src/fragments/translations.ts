@@ -193,26 +193,6 @@ export const pageTranslationFragment = gql`
     }
   }
 `;
-export const pageTranslatableFragment = gql`
-  fragment PageTranslatable on PageTranslatableContent {
-    id
-    content
-    seoDescription
-    seoTitle
-    title
-    translation(languageCode: $language) {
-      id
-      content
-      seoDescription
-      seoTitle
-      title
-      language {
-        code
-        language
-      }
-    }
-  }
-`;
 
 export const attributeChoicesTranslationFragment = gql`
   fragment AttributeChoicesTranslation on AttributeValueCountableConnection {

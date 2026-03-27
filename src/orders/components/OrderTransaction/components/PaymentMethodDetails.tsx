@@ -1,6 +1,7 @@
 import { type TransactionItemFragment } from "@dashboard/graphql";
 
 import { CardPaymentMethod } from "./CardPaymentMethod";
+import { GiftCardPaymentMethod } from "./GiftCardPaymentMethod";
 import { OtherPaymentMethod } from "./OtherPaymentMethod";
 
 type PaymentMethodDetailsType = TransactionItemFragment["paymentMethodDetails"];
@@ -17,6 +18,8 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
   switch (paymentMethodDetails.__typename) {
     case "CardPaymentMethodDetails":
       return <CardPaymentMethod details={paymentMethodDetails} />;
+    case "GiftCardPaymentMethodDetails":
+      return <GiftCardPaymentMethod details={paymentMethodDetails} />;
     case "OtherPaymentMethodDetails":
       return <OtherPaymentMethod details={paymentMethodDetails} />;
     default:
