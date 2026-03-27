@@ -117,22 +117,28 @@ const CardMenu = (props: CardMenuProps) => {
   };
   const prevOpen = useRef(open);
 
-  useEffect(() => {
-    if (prevOpen.current && !open) {
-      anchorRef.current!.focus();
-    }
+  useEffect(
+    function focusMenuTriggerWhenMenuCloses() {
+      if (prevOpen.current && !open) {
+        anchorRef.current!.focus();
+      }
 
-    prevOpen.current = open;
-  }, [open]);
-  useEffect(() => {
-    const hasAnyItemsLoadingOrWithError = menuItems
-      ?.filter(({ withLoading }) => withLoading)
-      ?.some(({ loading, hasError }) => loading || hasError);
+      prevOpen.current = open;
+    },
+    [open],
+  );
+  useEffect(
+    function closeMenuWhenLoadingItemsSettle() {
+      const hasAnyItemsLoadingOrWithError = menuItems
+        ?.filter(({ withLoading }) => withLoading)
+        ?.some(({ loading, hasError }) => loading || hasError);
 
-    if (!hasAnyItemsLoadingOrWithError) {
-      setOpen(false);
-    }
-  }, [menuItems]);
+      if (!hasAnyItemsLoadingOrWithError) {
+        setOpen(false);
+      }
+    },
+    [menuItems],
+  );
 
   const handleMenuClick = (index: number) => {
     const selectedItem = menuItems[index];

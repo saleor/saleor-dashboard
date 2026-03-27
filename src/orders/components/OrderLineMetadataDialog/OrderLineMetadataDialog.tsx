@@ -97,11 +97,14 @@ export const OrderLineMetadataDialog = ({
     onClose();
   };
 
-  useEffect(() => {
-    if (!open) {
-      reset();
-    }
-  }, [open, reset]);
+  useEffect(
+    function resetMetadataFormWhenDialogCloses() {
+      if (!open) {
+        reset();
+      }
+    },
+    [open, reset],
+  );
 
   return (
     <DashboardModal open={open} onChange={handleClose}>

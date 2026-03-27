@@ -14,13 +14,16 @@ export const useMetadataValues = ({
   const hasManageProducts = useHasManageProductsPermission();
   const [fetchMetadata, { data, loading }] = useOrderLinesMetadataLazyQuery();
 
-  useEffect(() => {
-    if (open) {
-      fetchMetadata({
-        variables: { id: orderId, hasManageProducts },
-      });
-    }
-  }, [fetchMetadata, hasManageProducts, open, orderId]);
+  useEffect(
+    function fetchOrderLinesMetadataWhenDialogOpens() {
+      if (open) {
+        fetchMetadata({
+          variables: { id: orderId, hasManageProducts },
+        });
+      }
+    },
+    [fetchMetadata, hasManageProducts, open, orderId],
+  );
 
   const lineData = useMemo(() => {
     if (!lineId) {
