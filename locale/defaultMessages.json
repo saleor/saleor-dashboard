@@ -601,10 +601,6 @@
     "context": "sale channel",
     "string": "Channel"
   },
-  "1CDAXp": {
-    "context": "tooltip explanation for before-discounts subtotal amount",
-    "string": "Sum of each line's undiscounted total from the order"
-  },
   "1H+V6k": {
     "context": "error message",
     "string": "Page with these attributes already exists."
@@ -5152,6 +5148,10 @@
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
     "string": "Already captured"
+  },
+  "R06XZQ": {
+    "context": "tooltip explanation for before-discounts subtotal amount",
+    "string": "Sum of each line's undiscounted total from the order"
   },
   "R4IIw1": {
     "context": "tracking number of the shipment",
