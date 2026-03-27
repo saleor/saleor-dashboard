@@ -1155,6 +1155,13 @@ export const PageTypeDeleteErrorFragmentFragmentDoc = gql`
   message
 }
     `;
+export const PageTypeBulkDeleteErrorFragmentFragmentDoc = gql`
+    fragment PageTypeBulkDeleteErrorFragment on PageError {
+  code
+  field
+  message
+}
+    `;
 export const ProductVariantStocksDeleteErrorFragmentDoc = gql`
     fragment ProductVariantStocksDeleteError on StockError {
   code
@@ -1799,6 +1806,14 @@ export const CardPaymentMethodDetailsFragmentDoc = gql`
   lastDigits
 }
     `;
+export const GiftCardPaymentMethodDetailsFragmentDoc = gql`
+    fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
+  name
+  brand
+  lastChars
+  isSaleorGiftcard
+}
+    `;
 export const OtherPaymentMethodDetailsFragmentDoc = gql`
     fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
   name
@@ -1870,6 +1885,9 @@ export const TransactionItemFragmentDoc = gql`
     ... on CardPaymentMethodDetails {
       ...CardPaymentMethodDetails
     }
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
+    }
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
     }
@@ -1904,6 +1922,7 @@ export const TransactionItemFragmentDoc = gql`
 }
     ${TransactionBaseItemFragmentDoc}
 ${CardPaymentMethodDetailsFragmentDoc}
+${GiftCardPaymentMethodDetailsFragmentDoc}
 ${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
