@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { RuleTester } = require("eslint");
+import { RuleTester } from "eslint";
+import tsParser from "@typescript-eslint/parser";
 
-const namedStylesRule = require("./named-styles");
+import namedStylesRule from "./named-styles.mjs";
 
 const okCode =
   'const useStyles = makeStyles( \
@@ -40,14 +40,17 @@ const badCode = `const useStyles = makeStyles(theme => ({
 }));`;
 
 const ruleTester = new RuleTester({
-  parser: require.resolve("@typescript-eslint/parser"),
+  languageOptions: {
+    parser: tsParser,
+  },
 });
 
 ruleTester.run("named-styles", namedStylesRule, {
   invalid: [
     {
       code: badCode,
-      errors: [{ message: "makeStyles hook should be named." }],
+      output: badCode.replace("}));", '}),{ name: "<input>" });'),
+      errors: [{ messageId: "expectedNameHook" }],
     },
   ],
   valid: [
