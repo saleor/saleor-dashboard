@@ -600,6 +600,7 @@ export const OrderValue = (props: Props): ReactNode => {
     return (
       <Box as="li" display="grid" gap={1.5} __minWidth={0}>
         <Box
+          className={styles.discountSectionToggle}
           display="grid"
           __gridTemplateColumns="1fr auto"
           alignItems="baseline"
@@ -608,17 +609,26 @@ export const OrderValue = (props: Props): ReactNode => {
           onClick={() => setDiscountsExpanded(prev => !prev)}
           data-test-id="discount-section-toggle"
         >
-          <Text size={4}>
-            {intl.formatMessage(messages.discount)}{" "}
-            <Text as="span" color="default2" fontWeight="medium" size={3}>
+          <Box display="flex" alignItems="center" flexWrap="wrap" __minWidth={0}>
+            <Text size={4} color="default1">
+              {intl.formatMessage(messages.discount)}
+            </Text>
+            <Text as="span" color="default2" fontWeight="regular" size={4} marginLeft={1}>
               (applied)
-            </Text>{" "}
-            <Box as="span" display="inline-flex" style={{ verticalAlign: "middle" }}>
+            </Text>
+            <Box
+              as="span"
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              marginLeft={1}
+              className={styles.discountToggleChevron}
+            >
               <ToggleIcon size={14} />
             </Box>
-          </Text>
+          </Box>
           <Box title={intl.formatMessage(messages.discountTitle)}>
-            <OrderSummaryListAmount amount={totalDiscountAmount} size={4} />
+            <OrderSummaryListAmount amount={totalDiscountAmount} size={4} color="default1" />
           </Box>
         </Box>
 
