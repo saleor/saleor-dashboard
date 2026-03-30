@@ -54,6 +54,18 @@ describe("getPromotionStatus", () => {
     expect(getPromotionStatus("not-a-date", null, now)).toBe("active");
     expect(getPromotionStatus(null, "garbage", now)).toBe("active");
   });
+
+  it("accepts Date instances for start and end", () => {
+    // Arrange
+    const now = new Date("2026-03-21T12:00:00.000Z");
+    const futureStart = new Date("2026-03-22T00:00:00.000Z");
+
+    // Act
+    const result = getPromotionStatus(futureStart, null, now);
+
+    // Assert
+    expect(result).toBe("scheduled");
+  });
 });
 
 describe("getRelativePromotionTimeParts", () => {
@@ -140,6 +152,17 @@ describe("getRelativePromotionTimeParts", () => {
       "2026-03-18T12:00:00.000Z",
       now,
     );
+
+    // Assert
+    expect(result).toEqual({ unit: "day", value: -3 });
+  });
+
+  it("accepts a Date for the reference end time", () => {
+    // Arrange
+    const end = new Date("2026-03-18T12:00:00.000Z");
+
+    // Act
+    const result = getRelativePromotionTimeParts("finished", "2026-03-20T00:00:00.000Z", end, now);
 
     // Assert
     expect(result).toEqual({ unit: "day", value: -3 });

@@ -106,14 +106,30 @@ export function sortAPIRules(rules: PromotionRuleDetailsFragment[]) {
   return rules.sort(sortAlphabetically("name"));
 }
 
+/** ISO / API date strings or pre-parsed {@link Date}; invalid values yield NaN (never throws). */
+function toUtcMillis(value: string | Date | null | undefined): number {
+  if (value == null || value === "") {
+    return NaN;
+  }
+
+  try {
+    const instant = value instanceof Date ? value : new Date(value);
+    const ms = instant.getTime();
+
+    return Number.isFinite(ms) ? ms : NaN;
+  } catch {
+    return NaN;
+  }
+}
+
 export function getPromotionStatus(
-  startDate: string | null | undefined,
-  endDate: string | null | undefined,
+  startDate: string | Date | null | undefined,
+  endDate: string | Date | null | undefined,
   now = new Date(),
 ): PromotionStatus {
   const nowTimestamp = now.getTime();
-  const startTimestamp = startDate ? new Date(startDate).getTime() : NaN;
-  const endTimestamp = endDate ? new Date(endDate).getTime() : NaN;
+  const startTimestamp = toUtcMillis(startDate);
+  const endTimestamp = toUtcMillis(endDate);
 
   if (Number.isFinite(startTimestamp) && startTimestamp > nowTimestamp) {
     return "scheduled";
@@ -132,17 +148,17 @@ export function getPromotionStatus(
  */
 export function getRelativePromotionTimeParts(
   status: PromotionStatus,
-  startDate: string | null | undefined,
-  endDate: string | null | undefined,
+  startDate: string | Date | null | undefined,
+  endDate: string | Date | null | undefined,
   now = new Date(),
 ): { unit: Intl.RelativeTimeFormatUnit; value: number } | null {
   const referenceDate = status === "scheduled" ? startDate : status === "finished" ? endDate : null;
 
-  if (!referenceDate) {
+  if (referenceDate == null || referenceDate === "") {
     return null;
   }
 
-  const referenceMs = new Date(referenceDate).getTime();
+  const referenceMs = toUtcMillis(referenceDate);
 
   if (!Number.isFinite(referenceMs)) {
     return null;
