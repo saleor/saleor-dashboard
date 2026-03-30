@@ -1,7 +1,7 @@
-import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
-import { useAvailableExternalAuthenticationsStagingQuery } from "@dashboard/graphql/hooksStaging.generated";
-import { isMainSchema, isStagingSchema } from "@dashboard/graphql/schemaVersion";
-import { PasswordLoginModeEnum } from "@dashboard/graphql/staging";
+import {
+  PasswordLoginModeEnum,
+  useAvailableExternalAuthenticationsQuery,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
@@ -34,21 +34,11 @@ const LoginView = ({ params }: LoginViewProps) => {
 
   const isCallbackFlow = !!(params.code && params.state && isCallbackPath);
 
-  const { data: externalAuthenticationsMain, loading: externalAuthenticationsLoadingMain } =
+  const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
     useAvailableExternalAuthenticationsQuery({
-      skip: isCallbackFlow || isStagingSchema(),
+      skip: isCallbackFlow,
       fetchPolicy: "network-only",
     });
-  const { data: externalAuthenticationsStaging, loading: externalAuthenticationsLoadingStaging } =
-    useAvailableExternalAuthenticationsStagingQuery({
-      skip: isCallbackFlow || isMainSchema(),
-      fetchPolicy: "network-only",
-    });
-  const externalAuthentications = isStagingSchema()
-    ? externalAuthenticationsStaging
-    : externalAuthenticationsMain;
-  const externalAuthenticationsLoading =
-    externalAuthenticationsLoadingMain || externalAuthenticationsLoadingStaging;
 
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
 
@@ -104,9 +94,8 @@ const LoginView = ({ params }: LoginViewProps) => {
     };
   }, []);
 
-  const isMain = isMainSchema();
-  const passwordLoginMode = externalAuthenticationsStaging?.shop?.passwordLoginMode;
-  const passwordLoginEnabled = isMain || passwordLoginMode === PasswordLoginModeEnum.ENABLED;
+  const passwordLoginMode = externalAuthentications?.shop?.passwordLoginMode;
+  const passwordLoginEnabled = passwordLoginMode === PasswordLoginModeEnum.ENABLED;
 
   return (
     <LoginPage
