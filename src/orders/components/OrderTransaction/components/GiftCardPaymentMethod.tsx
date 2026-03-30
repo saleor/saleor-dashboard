@@ -48,7 +48,7 @@ const formatGiftCardCode = (lastChars: string | null): string | null => {
     return null;
   }
 
-  return `${MASKED_GROUP} ${MASKED_GROUP} ${MASKED_GROUP} ${lastChars}`;
+  return `${MASKED_GROUP} ${lastChars}`;
 };
 
 interface GiftCardPaymentMethodProps {
