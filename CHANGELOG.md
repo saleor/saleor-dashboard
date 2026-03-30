@@ -2,6 +2,20 @@
 
 ## 3.23.0
 
+### Patch Changes
+
+- [#6476](https://github.com/saleor/saleor-dashboard/pull/6476) [`465f952`](https://github.com/saleor/saleor-dashboard/commit/465f952416b1c331e76ade8484a9cc670a14acc1) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Fix displaying gift card payment method details in order view.
+
+- [#6451](https://github.com/saleor/saleor-dashboard/pull/6451) [`6775911`](https://github.com/saleor/saleor-dashboard/commit/677591175850e34f81bd881ccf645e32c8ef3a2a) Thanks [@mirekm](https://github.com/mirekm)! - Fix discount content display in the order timeline
+
+- [#6475](https://github.com/saleor/saleor-dashboard/pull/6475) [`53aac0b`](https://github.com/saleor/saleor-dashboard/commit/53aac0b2a9178f46adfb22e1a413072c25eab3ab) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Tolerate checkoutSettings being undefined while the GraphQL query is still loading.
+
+- [#6465](https://github.com/saleor/saleor-dashboard/pull/6465) [`5e4d040`](https://github.com/saleor/saleor-dashboard/commit/5e4d040ed94147afaae19469e4f50e7f4741260e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed re-ordering products causing 400 error
+
+- [#6471](https://github.com/saleor/saleor-dashboard/pull/6471) [`7bf722f`](https://github.com/saleor/saleor-dashboard/commit/7bf722f63e4cbe17975b86a53d0554e0748a6f30) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed Ripples introduced in 3.22
+
+## 3.23.0
+
 TODO
 
 ## 3.22.36
