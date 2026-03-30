@@ -25,12 +25,10 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
-import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Divider } from "@saleor/macaw-ui-next";
+import { Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useContext } from "react";
 import { useIntl } from "react-intl";
@@ -42,7 +40,7 @@ import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
-import OrderHistory, { type FormData as HistoryFormData } from "../OrderHistory";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
@@ -205,18 +203,14 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <Box position="relative" marginRight={3}>
-                <Button
-                  variant="secondary"
-                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                  onClick={onOrderShowMetadata}
-                  data-test-id="show-order-metadata"
-                  title="Edit order metadata"
-                />
-                <Box position="absolute" __top="-4px" __right="-4px">
-                  <Ripple model={rippleOrderMetadata} />
-                </Box>
-              </Box>
+              <Button
+                variant="secondary"
+                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                onClick={onOrderShowMetadata}
+                data-test-id="show-order-metadata"
+                title="Edit order metadata"
+                marginRight={3}
+              />
 
               <TopNav.Menu
                 dataTestId="menu"

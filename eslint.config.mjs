@@ -203,6 +203,7 @@ export default tseslint.config(
         },
       ],
       "formatjs/enforce-id": ["error", { idInterpolationPattern: "[sha512:contenthash:base64:6]" }],
+      "local-rules/named-effects": "warn",
       "local-rules/named-styles": "error",
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
@@ -333,14 +334,20 @@ export default tseslint.config(
       "@graphql-eslint": eslintGraphql,
     },
     rules: {
-      // TODO Enable recommended ruleset incrementally
-      // ...eslintGraphql.configs["flat/operations-recommended"].rules,
-      "@graphql-eslint/no-anonymous-operations": "error",
-      "@graphql-eslint/no-duplicate-fields": "error",
+      ...eslintGraphql.configs["flat/operations-recommended"].rules,
       "@graphql-eslint/no-deprecated": "warn",
-      "@graphql-eslint/no-unused-fragments": "warn",
-      "@graphql-eslint/no-unused-variables": "warn",
-      "@graphql-eslint/no-unused-fields": "warn",
+      "@graphql-eslint/naming-convention": "off",
+      // TODO: These rules should be enabled later on
+      "@graphql-eslint/selection-set-depth": ["warn", { maxDepth: 7 }], // some queries use hacks to do recursive fragments
+      "@graphql-eslint/require-selections": "warn", // this is useful for Apollo caching
+    },
+  },
+  {
+    // Legacy SDK uses Apollo Client local-only fields (@client directive) not in the schema
+    files: ["src/legacy-sdk/**/*.graphql"],
+    rules: {
+      "@graphql-eslint/fields-on-correct-type": "off",
+      "@graphql-eslint/known-directives": "off",
     },
   }, // Disable any rules that conflict with Prettier
   prettierConfig,
