@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.23.0
+## 3.23.0-a.1
 
 ### Patch Changes
 
@@ -14,7 +14,7 @@
 
 - [#6471](https://github.com/saleor/saleor-dashboard/pull/6471) [`7bf722f`](https://github.com/saleor/saleor-dashboard/commit/7bf722f63e4cbe17975b86a53d0554e0748a6f30) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed Ripples introduced in 3.22
 
-## 3.23.0
+## 3.23.0-a.0
 
 TODO
 
