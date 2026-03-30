@@ -2,6 +2,7 @@ import { getStaticUrl } from "@dashboard/config";
 import { type GiftCardPaymentMethodDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Gift } from "lucide-react";
+import { FormattedMessage } from "react-intl";
 
 import icon from "./saleor-gift-card.svg";
 
@@ -77,7 +78,7 @@ export const GiftCardPaymentMethod = ({ details }: GiftCardPaymentMethodProps) =
     <Box display="flex" alignItems="center" gap={2}>
       <ExternalGiftCardIcon brand={details.brand} />
       <Text size={2} color="default2">
-        {details.brand ?? "Gift Card"}
+        {details.brand ?? <FormattedMessage defaultMessage="Gift card" id="4X0ZI8" />}
       </Text>
       {formattedCode && (
         <Text size={2} color="default2">

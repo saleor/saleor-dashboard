@@ -1102,6 +1102,9 @@
     "context": "modal button",
     "string": "Upload URL"
   },
+  "4X0ZI8": {
+    "string": "Gift card"
+  },
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"

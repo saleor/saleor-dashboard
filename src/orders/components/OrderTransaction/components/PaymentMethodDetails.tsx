@@ -19,10 +19,10 @@ export const PaymentMethodDetails = ({ paymentMethodDetails }: PaymentMethodDeta
   switch (paymentMethodDetails.__typename) {
     case "CardPaymentMethodDetails":
       return <CardPaymentMethod details={paymentMethodDetails} />;
-    case "OtherPaymentMethodDetails":
-      return <OtherPaymentMethod details={paymentMethodDetails} />;
     case "GiftCardPaymentMethodDetails":
       return <GiftCardPaymentMethod details={paymentMethodDetails} />;
+    case "OtherPaymentMethodDetails":
+      return <OtherPaymentMethod details={paymentMethodDetails} />;
     default:
       errorTracker.captureException(
         new Error(

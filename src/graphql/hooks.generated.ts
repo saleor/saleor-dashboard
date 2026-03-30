@@ -232,14 +232,6 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
-export const UserUserPermissionWithSourcePermissionGroupsFragmentDoc = gql`
-    fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
-  ...UserPermission
-  sourcePermissionGroups(userId: $userId) {
-    id
-  }
-}
-    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -1014,13 +1006,6 @@ export const BulkStockErrorFragmentDoc = gql`
   message
 }
     `;
-export const StockErrorFragmentDoc = gql`
-    fragment StockError on StockError {
-  code
-  field
-  message
-}
-    `;
 export const ShippingChannelsErrorFragmentDoc = gql`
     fragment ShippingChannelsError on ShippingError {
   code
@@ -1128,13 +1113,6 @@ export const GiftCardSettingsErrorFragmentDoc = gql`
   message
 }
     `;
-export const SaleBulkDeleteErrorFragmentDoc = gql`
-    fragment SaleBulkDeleteError on DiscountError {
-  code
-  field
-  message
-}
-    `;
 export const VoucherBulkDeleteErrorFragmentDoc = gql`
     fragment VoucherBulkDeleteError on DiscountError {
   code
@@ -1172,13 +1150,6 @@ export const PageBulkRemoveErrorFragmentFragmentDoc = gql`
     `;
 export const PageTypeDeleteErrorFragmentFragmentDoc = gql`
     fragment PageTypeDeleteErrorFragment on PageError {
-  code
-  field
-  message
-}
-    `;
-export const PageTypeBulkDeleteErrorFragmentFragmentDoc = gql`
-    fragment PageTypeBulkDeleteErrorFragment on PageError {
   code
   field
   message
@@ -1250,13 +1221,6 @@ export const ProductAttributeAssignmentUpdateErrorFragmentFragmentDoc = gql`
     `;
 export const ShopSettingsUpdateErrorFragmentFragmentDoc = gql`
     fragment ShopSettingsUpdateErrorFragment on ShopError {
-  code
-  field
-  message
-}
-    `;
-export const ShopFetchTaxRatesErrorFragmentFragmentDoc = gql`
-    fragment ShopFetchTaxRatesErrorFragment on ShopError {
   code
   field
   message
@@ -1835,17 +1799,17 @@ export const CardPaymentMethodDetailsFragmentDoc = gql`
   lastDigits
 }
     `;
-export const OtherPaymentMethodDetailsFragmentDoc = gql`
-    fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
-  name
-}
-    `;
 export const GiftCardPaymentMethodDetailsFragmentDoc = gql`
     fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
   name
   brand
   lastChars
   isSaleorGiftcard
+}
+    `;
+export const OtherPaymentMethodDetailsFragmentDoc = gql`
+    fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
+  name
 }
     `;
 export const StaffMemberFragmentDoc = gql`
@@ -1914,6 +1878,9 @@ export const TransactionItemFragmentDoc = gql`
     ... on CardPaymentMethodDetails {
       ...CardPaymentMethodDetails
     }
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
+    }
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
     }
@@ -1951,8 +1918,8 @@ export const TransactionItemFragmentDoc = gql`
 }
     ${TransactionBaseItemFragmentDoc}
 ${CardPaymentMethodDetailsFragmentDoc}
-${OtherPaymentMethodDetailsFragmentDoc}
 ${GiftCardPaymentMethodDetailsFragmentDoc}
+${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
@@ -2393,45 +2360,6 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
-export const OrderFulfillLineFragmentDoc = gql`
-    fragment OrderFulfillLine on OrderLine {
-  id
-  isShippingRequired
-  productName
-  quantity
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  quantityFulfilled
-  quantityToFulfill
-  variant {
-    id
-    name
-    sku
-    preorder {
-      endDate
-    }
-    attributes {
-      values {
-        id
-        name
-      }
-    }
-    stocks {
-      ...Stock
-    }
-    trackInventory
-  }
-  thumbnail(size: 64) {
-    url
-  }
-}
-    ${StockFragmentDoc}`;
 export const OrderLineStockDataFragmentDoc = gql`
     fragment OrderLineStockData on OrderLine {
   id
@@ -2450,6 +2378,38 @@ export const OrderLineStockDataFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}`;
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
+  ...OrderLineStockData
+  isShippingRequired
+  productName
+  allocations {
+    id
+    warehouse {
+      name
+    }
+  }
+  quantityFulfilled
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${OrderLineStockDataFragmentDoc}`;
 export const OrderLineGrantRefundFragmentDoc = gql`
     fragment OrderLineGrantRefund on OrderLine {
   id
@@ -2873,17 +2833,6 @@ export const PriceRangeFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const ChannelListingProductFragmentDoc = gql`
-    fragment ChannelListingProduct on ProductChannelListing {
-  ...ChannelListingProductWithoutPricing
-  pricing {
-    priceRange {
-      ...PriceRange
-    }
-  }
-}
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${PriceRangeFragmentDoc}`;
 export const ProductWithChannelListingsFragmentDoc = gql`
     fragment ProductWithChannelListings on Product {
   id
@@ -3527,12 +3476,6 @@ export const TaxClassFragmentDoc = gql`
     ${TaxClassBaseFragmentDoc}
 ${TaxRateFragmentDoc}
 ${MetadataFragmentDoc}`;
-export const TimePeriodFragmentDoc = gql`
-    fragment TimePeriod on TimePeriod {
-  amount
-  type
-}
-    `;
 export const CategoryTranslationFragmentDoc = gql`
     fragment CategoryTranslation on CategoryTranslatableContent {
   translation(languageCode: $language) {
@@ -3721,26 +3664,6 @@ export const PageTranslationFragmentDoc = gql`
   }
 }
     ${AttributeValueTranslatableFragmentDoc}`;
-export const PageTranslatableFragmentDoc = gql`
-    fragment PageTranslatable on PageTranslatableContent {
-  id
-  content
-  seoDescription
-  seoTitle
-  title
-  translation(languageCode: $language) {
-    id
-    content
-    seoDescription
-    seoTitle
-    title
-    language {
-      code
-      language
-    }
-  }
-}
-    `;
 export const AttributeTranslationFragmentDoc = gql`
     fragment AttributeTranslation on AttributeTranslatableContent {
   id
