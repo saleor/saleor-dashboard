@@ -9,14 +9,19 @@ import {
 import { type AutomaticDiscountInfo, type OrderLineDiscountData } from "./types";
 import { getAutomaticLineDiscounts, getOrderLineDiscount } from "./utils";
 
+/** Minimal order line shape for these tests; cast to full fragment at the boundary. */
+type OrderDetailsLineStub = Partial<OrderDetailsFragment["lines"][number]> &
+  Pick<OrderDetailsFragment["lines"][number], "id">;
+
 type OrderLinePriceStub = Pick<
   OrderDetailsFragment["lines"][number],
   "id" | "unitPrice" | "undiscountedUnitPrice"
 >;
 
-const orderAsDetails = (
-  partial: Pick<OrderDetailsFragment, "lines" | "discounts">,
-): OrderDetailsFragment => partial as OrderDetailsFragment;
+const orderAsDetails = (partial: {
+  lines: OrderDetailsLineStub[];
+  discounts: OrderDetailsFragment["discounts"];
+}): OrderDetailsFragment => partial as OrderDetailsFragment;
 
 const lineBase = (
   id: string,
