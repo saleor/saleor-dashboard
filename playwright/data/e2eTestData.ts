@@ -280,7 +280,7 @@ export const GIFT_CARDS = {
     name: "Code ending with rd_1",
   },
   giftCardsToBeDeleted: {
-    names: ["to be deleted 1/2", "to be deleted 2/2"],
+    names: ["Code ending with d_15", "Code ending with rd_5"],
     last4: ["d_15", "rd_5"],
   },
   giftCardToBeActivated: {

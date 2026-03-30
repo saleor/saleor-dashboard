@@ -52,6 +52,7 @@ export class GiftCardsPage extends BasePage {
     ),
     readonly tagsInput = page.getByTestId("gift-card-tag-select-field"),
     readonly tagsInputOptions = page.locator('[data-test-id*="select-option"]'),
+    readonly expiryDateInput = page.locator('input[name="expiryDate"]'),
   ) {
     super(page);
     this.page = page;
@@ -73,6 +74,7 @@ export class GiftCardsPage extends BasePage {
   }
 
   async clickBulkDeleteButton() {
+    await this.bulkDeleteButton.waitFor({ state: "visible" });
     await this.bulkDeleteButton.click();
   }
 
@@ -86,6 +88,16 @@ export class GiftCardsPage extends BasePage {
 
   async clickCardExpiresCheckbox() {
     await this.giftCardExpiresCheckbox.click();
+  }
+
+  async setExpiryDateTwoMonthsFromNow() {
+    await this.expiryDateInput.waitFor({ state: "visible" });
+    const date = new Date();
+    date.setMonth(date.getMonth() + 2);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    await this.expiryDateInput.fill(`${year}-${month}-${day}`);
   }
 
   async clickDeactivateButton() {

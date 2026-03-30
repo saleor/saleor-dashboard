@@ -46,8 +46,7 @@ test("TC: SALEOR_106 Issue gift card with specific customer and expiry date #e2e
   await giftCardsPage.expectSuccessBanner({ message: "Gift card created" });
   await expect(giftCardsPage.issueGiftCardDialog.cardCode).toBeVisible();
 
-  // Skipping search for gift card code not working on main
-  // const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
+  const fullCode = await giftCardsPage.issueGiftCardDialog.cardCode.innerText();
 
   await giftCardsPage.issueGiftCardDialog.clickOkButton();
   await giftCardsPage.giftCardDialog.waitFor({ state: "hidden" });
@@ -92,6 +91,7 @@ test("TC: SALEOR_110 Edit gift card #e2e #gift", async () => {
   await giftCardsPage.selectFirstTag();
   await giftCardsPage.closeTagInput();
   await giftCardsPage.clickCardExpiresCheckbox();
+  await giftCardsPage.setExpiryDateTwoMonthsFromNow();
   await giftCardsPage.metadataSeoPage.expandAndAddAllMetadata();
   await giftCardsPage.clickSaveButton();
   await giftCardsPage.expectSuccessBanner();
