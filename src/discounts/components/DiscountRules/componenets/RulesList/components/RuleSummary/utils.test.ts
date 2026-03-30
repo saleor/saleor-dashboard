@@ -99,10 +99,10 @@ describe("hasNoRuleConditions", () => {
 
 describe("getConditionEntityUrl", () => {
   beforeEach(() => {
-    jest.mocked(productUrl).mockClear();
-    jest.mocked(productVariantEditUrl).mockClear();
-    jest.mocked(collectionUrl).mockClear();
-    jest.mocked(categoryUrl).mockClear();
+    (productUrl as jest.Mock).mockClear();
+    (productVariantEditUrl as jest.Mock).mockClear();
+    (collectionUrl as jest.Mock).mockClear();
+    (categoryUrl as jest.Mock).mockClear();
   });
 
   it("returns undefined when conditionType is missing", () => {
