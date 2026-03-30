@@ -669,6 +669,9 @@ export const transactionItemFragment = gql`
       ... on OtherPaymentMethodDetails {
         ...OtherPaymentMethodDetails
       }
+      ... on GiftCardPaymentMethodDetails {
+        ...GiftCardPaymentMethodDetails
+      }
     }
     events {
       ...TransactionEvent
