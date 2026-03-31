@@ -577,8 +577,12 @@ export const USERS = {
 export const APPS = {
   appToBeDeleted: {
     id: "QXBwOjcw",
-    name: "Saleor QA App",
+    name: "Saleor Dummy tax app",
     info: "App used in delete app test",
+  },
+  appToBeInstalled: {
+    name: "Dummy Payment App",
+    manifestUrl: "https://dummy-payment.saleor.app/api/manifest",
   },
 };
 
