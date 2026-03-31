@@ -9,6 +9,9 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   test: {
+    coverage: {
+      reportsDirectory: path.join(dirname, "coverage", "storybook"),
+    },
     projects: [
       {
         extends: ".storybook/vite.storybook.config.js",
@@ -26,6 +29,16 @@ export default defineConfig({
             instances: [{ browser: "chromium" }],
           },
           setupFiles: ["./.storybook/vitest.setup.ts"],
+          onConsoleLog(log) {
+            if (
+              log.includes("Warning: findDOMNode") ||
+              log.includes("Warning: validateDOMNesting") ||
+              log.includes("Warning: Unknown event handler property") ||
+              log.includes("Warning: Encountered two children with the same key")
+            ) {
+              return false;
+            }
+          },
         },
       },
     ],

@@ -72,6 +72,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: saleor/saleor-dashboard
+          directory: coverage/units
+          flags: units
 
   translation-messages:
     runs-on: ubuntu-22.04
@@ -115,6 +117,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: saleor/saleor-dashboard
+          directory: coverage/storybook
           flags: storybook
 
   chromatic:
