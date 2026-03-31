@@ -7,6 +7,8 @@ import {
 } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
+import { SearchTooltip } from "./SearchTooltip/SearchTooltip";
+
 interface SearchInputProps extends SearchPageProps {
   placeholder: string;
   size?: MacawSearchInputProps["size"];
@@ -29,14 +31,17 @@ const SearchInput = (props: SearchInputProps) => {
         };
 
         return (
-          <Box as="label" display="flex" alignItems="center" width="100%">
-            <MacawSearchInput
-              size={size}
-              value={search}
-              onChange={handleSearchChange}
-              placeholder={placeholder}
-              data-test-id="search-input"
-            />
+          <Box display="flex" alignItems="center" gap={1.5} width="100%">
+            <Box as="label" display="flex" alignItems="center" width="100%">
+              <MacawSearchInput
+                size={size}
+                value={search}
+                onChange={handleSearchChange}
+                placeholder={placeholder}
+                data-test-id="search-input"
+              />
+            </Box>
+            <SearchTooltip />
           </Box>
         );
       }}
