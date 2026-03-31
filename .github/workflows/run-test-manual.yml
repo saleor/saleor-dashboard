@@ -52,6 +52,9 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/NEW_E2E_PERMISSIONS_USERS_PASSWORD/password"
 
       - name: Generate variables
         id: cloud_variables
@@ -79,10 +82,10 @@ jobs:
         with:
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-tests:
     runs-on: ubuntu-22.04
@@ -94,18 +97,31 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/NEW_E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ needs.initialize-cloud.outputs.ACCOUNTS }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ENABLED_SERVICE_NAME_HEADER: true
@@ -132,9 +148,9 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
+          TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
-          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
