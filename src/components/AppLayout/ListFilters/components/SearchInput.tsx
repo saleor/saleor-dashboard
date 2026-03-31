@@ -12,10 +12,11 @@ import { SearchTooltip } from "./SearchTooltip/SearchTooltip";
 interface SearchInputProps extends SearchPageProps {
   placeholder: string;
   size?: MacawSearchInputProps["size"];
+  showSearchTooltip?: boolean;
 }
 
 const SearchInput = (props: SearchInputProps) => {
-  const { initialSearch, onSearchChange, placeholder, size = "small" } = props;
+  const { initialSearch, onSearchChange, placeholder, size = "small", showSearchTooltip } = props;
   const [search, setSearch] = React.useState(initialSearch);
 
   React.useEffect(() => setSearch(initialSearch), [initialSearch]);
@@ -41,7 +42,7 @@ const SearchInput = (props: SearchInputProps) => {
                 data-test-id="search-input"
               />
             </Box>
-            <SearchTooltip />
+            {showSearchTooltip && <SearchTooltip />}
           </Box>
         );
       }}
