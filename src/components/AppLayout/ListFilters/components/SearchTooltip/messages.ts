@@ -53,4 +53,16 @@ export const messages = defineMessages({
     id: "Fyd+zC",
     defaultMessage: "Matches the exact phrase only",
   },
+  operatorHeader: {
+    id: "3yf2ND",
+    defaultMessage: "Operator",
+  },
+  exampleHeader: {
+    id: "xrCRnH",
+    defaultMessage: "Example",
+  },
+  descriptionHeader: {
+    id: "Q8Qw5B",
+    defaultMessage: "Description",
+  },
 });

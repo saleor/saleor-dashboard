@@ -993,6 +993,9 @@
     "context": "channel settings",
     "string": "Channel Settings"
   },
+  "3yf2ND": {
+    "string": "Operator"
+  },
   "3zdm8A": {
     "context": "Dialog title",
     "string": "Transaction {actionType}"
@@ -10917,6 +10920,9 @@
   "xqXYF+": {
     "context": "section header",
     "string": "Eligible Products"
+  },
+  "xrCRnH": {
+    "string": "Example"
   },
   "xrF9JK": {
     "string": "No structures found"

@@ -45,10 +45,15 @@ export const SearchTooltip = () => {
     <Tooltip>
       <Tooltip.Trigger>
         <Box
-          as="span"
+          as="button"
+          type="button"
           display="flex"
           alignItems="center"
           cursor="pointer"
+          padding={0}
+          borderWidth={0}
+          backgroundColor="transparent"
+          aria-label={intl.formatMessage(messages.searchSyntaxTitle)}
           data-test-id="search-syntax-tooltip"
         >
           <CircleHelp size={16} color="var(--mu-colors-text-default2)" />
@@ -63,9 +68,9 @@ export const SearchTooltip = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Operator</th>
-                <th>Example</th>
-                <th>Description</th>
+                <th>{intl.formatMessage(messages.operatorHeader)}</th>
+                <th>{intl.formatMessage(messages.exampleHeader)}</th>
+                <th>{intl.formatMessage(messages.descriptionHeader)}</th>
               </tr>
             </thead>
             <tbody>
