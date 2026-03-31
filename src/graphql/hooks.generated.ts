@@ -1155,13 +1155,6 @@ export const PageTypeDeleteErrorFragmentFragmentDoc = gql`
   message
 }
     `;
-export const PageTypeBulkDeleteErrorFragmentFragmentDoc = gql`
-    fragment PageTypeBulkDeleteErrorFragment on PageError {
-  code
-  field
-  message
-}
-    `;
 export const ProductVariantStocksDeleteErrorFragmentDoc = gql`
     fragment ProductVariantStocksDeleteError on StockError {
   code
@@ -1890,6 +1883,9 @@ export const TransactionItemFragmentDoc = gql`
     }
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
+    }
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
     }
   }
   events {
