@@ -1,0 +1,29 @@
+codecov.yml
+  e56d3a98ba5ed532 10-22
+jest.config.js
+  e56d3a98ba5ed532 39
+.github/workflows/main.yml
+  e56d3a98ba5ed532 75-76,120
+vitest.config.ts
+  e56d3a98ba5ed532 12-14,32-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.23",
+  "base_commit_sha": "d63856d26bd810ec0bbf81fc2262662ae9ce34c1",
+  "prompts": {
+    "e56d3a98ba5ed532": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74497465-83ae-40cd-a8f9-9abb3b450536",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>",
+      "messages": [],
+      "total_additions": 34,
+      "total_deletions": 4,
+      "accepted_lines": 30,
+      "overriden_lines": 0
+    }
+  }
+}
