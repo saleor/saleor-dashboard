@@ -6,6 +6,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Name",
     description: "sale name",
   },
+  status: {
+    id: "uT3VS+",
+    defaultMessage: "Status",
+    description: "promotion status",
+  },
   starts: {
     id: "iBSq6l",
     defaultMessage: "Starts",

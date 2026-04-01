@@ -12,6 +12,7 @@ import { type PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
+import { useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -36,6 +37,7 @@ export const DiscountListDatagrid = ({
   settings,
 }: DiscountListDatagridProps) => {
   const intl = useIntl();
+  const { theme: currentTheme } = useTheme();
   const datagrid = useDatagridChangeState();
   const emptyColumn = useEmptyColumn();
   const discountListStaticColumns = useMemo(
@@ -62,8 +64,9 @@ export const DiscountListDatagrid = ({
       promotions,
       columns: visibleColumns,
       intl,
+      currentTheme,
     }),
-    [promotions, visibleColumns],
+    [promotions, visibleColumns, currentTheme],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {

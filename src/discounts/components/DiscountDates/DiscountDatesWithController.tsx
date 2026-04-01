@@ -7,11 +7,13 @@ import DiscountDates from "./DiscountDates";
 
 interface DiscountDatesWithControllerProps<ErrorCode> {
   disabled?: boolean;
+  stacked?: boolean;
   errors: Array<CommonError<ErrorCode>>;
 }
 
 export const DiscountDatesWithController = <ErrorCode,>({
   disabled,
+  stacked,
   errors,
 }: DiscountDatesWithControllerProps<ErrorCode>) => {
   const { formState } = useFormContext<DiscoutFormData>();
@@ -30,6 +32,7 @@ export const DiscountDatesWithController = <ErrorCode,>({
     <DiscountDates
       data={field.value}
       disabled={disabled || !!field.disabled}
+      stacked={stacked}
       errors={errors}
       formErrors={{
         startDate: startDateError,

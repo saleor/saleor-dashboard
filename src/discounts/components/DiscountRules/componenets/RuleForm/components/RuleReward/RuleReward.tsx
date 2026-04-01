@@ -1,12 +1,10 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardTypeEnum } from "@dashboard/graphql";
-import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useFormContext } from "react-hook-form";
-import { useIntl } from "react-intl";
 
-import { messages } from "../../../../messages";
 import { RuleRewardGifts } from "../RuleRewardGifts";
 import { RuleRewardTypeSelect } from "../RuleRewardTypeSelect/RuleRewardTypeSelect";
 import { RuleRewardValue } from "../RuleRewardValue";
@@ -36,18 +34,15 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   }
 
   return (
-    <RuleRewardWrapper __width={315}>
+    <RuleRewardWrapper>
       <RuleRewardValue currencySymbol={currencySymbol} error={error} />
     </RuleRewardWrapper>
   );
 };
 
 function RuleRewardWrapper({ children, ...props }: { children: React.ReactNode } & BoxProps) {
-  const intl = useIntl();
-
   return (
-    <Box display="grid" gap={4} {...props}>
-      <Text as="p">{intl.formatMessage(messages.reward)}</Text>
+    <Box display="grid" gap={2} {...props}>
       {children}
     </Box>
   );

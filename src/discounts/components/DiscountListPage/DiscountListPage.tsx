@@ -106,16 +106,16 @@ const DiscountListPage = ({
                 onClick={() => navigation(discountAddUrl())}
               >
                 <FormattedMessage
-                  id="+MJW+8"
-                  defaultMessage="Create Discount"
+                  id="iWmfMe"
+                  defaultMessage="Create promotion"
                   description="button"
                 />
               </ButtonGroupWithDropdown>
             ) : (
               <Button data-test-id="create-discount" onClick={() => navigation(discountAddUrl())}>
                 <FormattedMessage
-                  id="+MJW+8"
-                  defaultMessage="Create Discount"
+                  id="iWmfMe"
+                  defaultMessage="Create promotion"
                   description="button"
                 />
               </Button>

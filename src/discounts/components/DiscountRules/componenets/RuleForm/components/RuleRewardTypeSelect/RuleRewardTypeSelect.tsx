@@ -33,7 +33,7 @@ export const RuleRewardTypeSelect = () => {
         setValue("rewardValue", null);
         rewardType.onChange((type as unknown as Option).value);
       }}
-      size="small"
+      size="medium"
       options={rewardTypeOptions}
       disabled={disabled}
     />

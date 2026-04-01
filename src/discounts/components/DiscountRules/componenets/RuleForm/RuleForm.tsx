@@ -7,7 +7,7 @@ import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/uti
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Combobox, Input, type Option } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -39,8 +39,9 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannel;
   const currencySymbol = getCurencySymbol(selectedChannel, channels);
+  const initialDescription = useRef(getValues("description"));
   const richText = useRichText({
-    initial: getValues("description"),
+    initial: initialDescription.current,
     loading: false,
     triggerChange: trigger,
   });
@@ -80,52 +81,70 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
 
   return (
     <RichTextContext.Provider value={richText}>
-      <Box width="100%" __minHeight={515} __maxHeight="75vh" overflowY="auto">
-        <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
-          <Box display="grid" __gridTemplateColumns="315px 1fr" gap={2}>
-            <RuleInputWrapper>
-              <Input
-                {...nameField}
-                data-test-id="rule-name-input"
-                disabled={disabled || nameField.disabled}
-                size="small"
-                label={intl.formatMessage(commonMessages.name)}
-                error={!!formState.errors?.name?.message}
-                helperText={formState.errors?.name?.message}
-              />
-            </RuleInputWrapper>
+      <Box width="100%">
+        <Box display="flex" flexDirection="column" gap={5} paddingY={1}>
+          <Box display="flex" flexWrap="wrap" gap={2} alignItems="start">
+            <Box __flex="1 1 280px" __minWidth="280px">
+              <RuleInputWrapper>
+                <Input
+                  {...nameField}
+                  data-test-id="rule-name-input"
+                  disabled={disabled || nameField.disabled}
+                  size="small"
+                  label={intl.formatMessage(commonMessages.name)}
+                  error={!!formState.errors?.name?.message}
+                  helperText={formState.errors?.name?.message}
+                />
+              </RuleInputWrapper>
+            </Box>
 
-            <RuleInputWrapper>
-              <Combobox
-                {...channelfield}
-                onChange={v =>
-                  handleChannelChange({
-                    target: {
-                      name: channelfield.name,
-                      value: v?.value ?? "",
-                    },
-                  })
-                }
-                size="small"
-                data-test-id="channel-dropdown"
-                label={intl.formatMessage(commonMessages.channel)}
-                options={channelOptions}
-                error={!!formState.errors?.channel?.message}
-                helperText={formState.errors?.channel?.message}
-                disabled={disabled || channelfield.disabled}
+            <Box __flex="1 1 280px" __minWidth="280px">
+              <RuleInputWrapper>
+                <Combobox
+                  {...channelfield}
+                  onChange={v =>
+                    handleChannelChange({
+                      target: {
+                        name: channelfield.name,
+                        value: v?.value ?? "",
+                      },
+                    })
+                  }
+                  size="small"
+                  data-test-id="channel-dropdown"
+                  label={intl.formatMessage(commonMessages.channel)}
+                  options={channelOptions}
+                  error={!!formState.errors?.channel?.message}
+                  helperText={formState.errors?.channel?.message}
+                  disabled={disabled || channelfield.disabled}
+                />
+              </RuleInputWrapper>
+            </Box>
+
+            <Box
+              __flex="1 1 260px"
+              __minWidth={discountType === PromotionTypeEnum.ORDER ? "420px" : "260px"}
+            >
+              <RuleReward
+                currencySymbol={currencySymbol}
+                error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
               />
-            </RuleInputWrapper>
+            </Box>
           </Box>
 
-          <RuleConditions
-            hasSelectedChannels={hasSelectedChannel}
-            openPlayground={openPlayground}
-          />
-
-          <RuleReward
-            currencySymbol={currencySymbol}
-            error={getCommonFormFieldErrorMessage(formErrors.rewardValue, intl)}
-          />
+          <Box
+            borderRadius={4}
+            borderWidth={1}
+            borderStyle="solid"
+            borderColor="default1"
+            backgroundColor="default2"
+            padding={4}
+          >
+            <RuleConditions
+              hasSelectedChannels={hasSelectedChannel}
+              openPlayground={openPlayground}
+            />
+          </Box>
 
           <RuleDescription />
 
