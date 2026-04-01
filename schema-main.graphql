@@ -308,39 +308,6 @@ type Query {
     last: Int
   ): ShippingZoneCountableConnection @doc(category: "Shipping")
 
-  """
-  Look up digital content by ID.
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContent(
-    """ID of the digital content."""
-    id: ID!
-  ): DigitalContent @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
-
-  """
-  List of digital content.
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContents(
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): DigitalContentCountableConnection @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
-
   """List of the shop's categories."""
   categories(
     """Filtering options for categories."""
@@ -685,6 +652,13 @@ type Query {
   transactions(
     """Where filtering options for transactions."""
     where: TransactionWhereInput
+
+    """
+    Sort transactions.
+    
+    Added in Saleor 3.23.
+    """
+    sortBy: TransactionSortingInput
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -1690,7 +1664,7 @@ type Query {
     """External ID of the user."""
     externalReference: String
   ): User @doc(category: "Users")
-  _entities(representations: [_Any]): [_Entity]
+  _entities(representations: [_Any!]!): [_Entity]
   _service: _Service
 }
 
@@ -3065,28 +3039,22 @@ type AppExtension implements Node @doc(category: "Apps") {
   """URL of a view where extension's iframe is placed."""
   url: String!
 
-  """Place where given extension will be mounted."""
-  mount: AppExtensionMountEnum! @deprecated(reason: "Use `mountName` instead.")
-
-  """Type of way how app extension will be opened."""
-  target: AppExtensionTargetEnum! @deprecated(reason: "Use `targetName` instead.")
-
   """
-  Name of the extension mount point in the dashboard. Replaces `mount`
+  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Replaces `target`
+  Name of the extension target in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  App extension settings. Replaces `options` field.
+  App extension settings.
   
   Added in Saleor 3.22.
   """
@@ -3097,114 +3065,9 @@ type AppExtension implements Node @doc(category: "Apps") {
 
   """JWT token used to authenticate by third-party app extension."""
   accessToken: String
-
-  """
-  App extension options.
-  
-  Added in Saleor 3.22.
-  """
-  options: AppExtensionPossibleOptions @deprecated(reason: "Use `settings` field instead.")
-}
-
-"""All places where app extension can be mounted."""
-enum AppExtensionMountEnum @doc(category: "Apps") {
-  CATEGORY_OVERVIEW_CREATE
-  CATEGORY_OVERVIEW_MORE_ACTIONS
-  CATEGORY_DETAILS_MORE_ACTIONS
-  COLLECTION_OVERVIEW_CREATE
-  COLLECTION_OVERVIEW_MORE_ACTIONS
-  COLLECTION_DETAILS_MORE_ACTIONS
-  COLLECTION_DETAILS_WIDGETS
-  GIFT_CARD_OVERVIEW_CREATE
-  GIFT_CARD_OVERVIEW_MORE_ACTIONS
-  GIFT_CARD_DETAILS_MORE_ACTIONS
-  GIFT_CARD_DETAILS_WIDGETS
-  CUSTOMER_OVERVIEW_CREATE
-  CUSTOMER_OVERVIEW_MORE_ACTIONS
-  CUSTOMER_DETAILS_MORE_ACTIONS
-  CUSTOMER_DETAILS_WIDGETS
-  PRODUCT_OVERVIEW_CREATE
-  PRODUCT_OVERVIEW_MORE_ACTIONS
-  PRODUCT_DETAILS_MORE_ACTIONS
-  PRODUCT_DETAILS_WIDGETS
-  NAVIGATION_CATALOG
-  NAVIGATION_ORDERS
-  NAVIGATION_CUSTOMERS
-  NAVIGATION_DISCOUNTS
-  NAVIGATION_TRANSLATIONS
-  NAVIGATION_PAGES
-  ORDER_DETAILS_MORE_ACTIONS
-  ORDER_OVERVIEW_CREATE
-  ORDER_OVERVIEW_MORE_ACTIONS
-  ORDER_DETAILS_WIDGETS
-  DRAFT_ORDER_DETAILS_MORE_ACTIONS
-  DRAFT_ORDER_OVERVIEW_CREATE
-  DRAFT_ORDER_OVERVIEW_MORE_ACTIONS
-  DRAFT_ORDER_DETAILS_WIDGETS
-  DISCOUNT_DETAILS_MORE_ACTIONS
-  DISCOUNT_OVERVIEW_CREATE
-  DISCOUNT_OVERVIEW_MORE_ACTIONS
-  VOUCHER_DETAILS_MORE_ACTIONS
-  VOUCHER_OVERVIEW_CREATE
-  VOUCHER_OVERVIEW_MORE_ACTIONS
-  VOUCHER_DETAILS_WIDGETS
-  PAGE_DETAILS_MORE_ACTIONS
-  PAGE_OVERVIEW_CREATE
-  PAGE_OVERVIEW_MORE_ACTIONS
-  PAGE_TYPE_OVERVIEW_CREATE
-  PAGE_TYPE_OVERVIEW_MORE_ACTIONS
-  PAGE_TYPE_DETAILS_MORE_ACTIONS
-  MENU_OVERVIEW_CREATE
-  MENU_OVERVIEW_MORE_ACTIONS
-  MENU_DETAILS_MORE_ACTIONS
-  TRANSLATIONS_MORE_ACTIONS
-}
-
-"""
-All available ways of opening an app extension.
-
-    POPUP - app's extension will be mounted as a popup window
-    APP_PAGE - redirect to app's page
-"""
-enum AppExtensionTargetEnum @doc(category: "Apps") {
-  POPUP
-  APP_PAGE
-  NEW_TAB
-  WIDGET
 }
 
 scalar JSON
-
-union AppExtensionPossibleOptions = AppExtensionOptionsWidget | AppExtensionOptionsNewTab
-
-"""Represents the options for an app extension."""
-type AppExtensionOptionsWidget @doc(category: "Apps") {
-  """Options for displaying a Widget"""
-  widgetTarget: WidgetTargetOptions @deprecated(reason: "Use `settings` field directly.")
-}
-
-"""Represents the WIDGET target options for an app extension."""
-type WidgetTargetOptions @doc(category: "Apps") {
-  """HTTP method for Widget target (GET or POST)"""
-  method: HttpMethod! @deprecated(reason: "Use `settings` field directly.")
-}
-
-enum HttpMethod {
-  POST
-  GET
-}
-
-"""Represents the options for an app extension."""
-type AppExtensionOptionsNewTab @doc(category: "Apps") {
-  """Options controlling behavior of the NEW_TAB extension target"""
-  newTabTarget: NewTabTargetOptions @deprecated(reason: "Use `settings` field directly.")
-}
-
-"""Represents the NEW_TAB target options for an app extension."""
-type NewTabTargetOptions @doc(category: "Apps") {
-  """HTTP method for New Tab target (GET or POST)"""
-  method: HttpMethod! @deprecated(reason: "Use `settings` field directly.")
-}
 
 """
 Represents a problem associated with an app.
@@ -3792,13 +3655,20 @@ type Checkout implements Node & ObjectWithMetadata @doc(category: "Checkout") {
   shippingPrice: TaxedMoney! @webhookEventsInfo(asyncEvents: [], syncEvents: [CHECKOUT_CALCULATE_TAXES])
 
   """
+  The delivery method selected for this checkout.
+  
+  Added in Saleor 3.23.
+  """
+  delivery: Delivery
+
+  """
   The shipping method related with checkout.
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
   - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   """
-  shippingMethod: ShippingMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `deliveryMethod` instead.")
+  shippingMethod: ShippingMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `delivery` instead.")
 
   """
   The delivery method selected for this checkout.
@@ -3807,7 +3677,7 @@ type Checkout implements Node & ObjectWithMetadata @doc(category: "Checkout") {
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
   - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   """
-  deliveryMethod: DeliveryMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
+  deliveryMethod: DeliveryMethod @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `delivery` instead.")
 
   """
   The price of the checkout before shipping, with taxes included.
@@ -7170,13 +7040,13 @@ type Attribute implements Node & ObjectWithMetadata @doc(category: "Attributes")
   ): [ReferenceType!]
 
   """Name of an attribute displayed in the interface."""
-  name: String
+  name: String!
 
   """Internal representation of an attribute name."""
-  slug: String
+  slug: String!
 
   """The attribute type."""
-  type: AttributeTypeEnum
+  type: AttributeTypeEnum!
 
   """The unit of attribute values."""
   unit: MeasurementUnitsEnum
@@ -7381,13 +7251,15 @@ type ProductType implements Node & ObjectWithMetadata @doc(category: "Products")
   slug: String!
 
   """Whether the product type has variants."""
-  hasVariants: Boolean!
+  hasVariants: Boolean! @deprecated(reason: "This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting. ")
 
   """Whether shipping is required for this product type."""
   isShippingRequired: Boolean!
 
-  """Whether the product type is digital."""
-  isDigital: Boolean!
+  """
+  Whether the product type is digital - doesn't have any effect, it's present for backward-compatibility.
+  """
+  isDigital: Boolean! @deprecated(reason: "Will be removed in v3.24.0, use metadata or attributes instead.")
 
   """Weight of the product type."""
   weight: Weight
@@ -8887,13 +8759,6 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
   ): ProductVariantTranslation
 
   """
-  Digital content for the product variant.
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContent: DigitalContent
-
-  """
   Stocks for the product variant.
   
   Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
@@ -8951,7 +8816,9 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
   costPrice: Money
 
   """
-  Prior price of the variant used for discount calculations.
+  Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
+  
+   Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
   
   Added in Saleor 3.21.
   """
@@ -10003,86 +9870,6 @@ type ProductVariantTranslatableContent implements Node @doc(category: "Products"
   attributeValues: [AttributeValueTranslatableContent!]!
 }
 
-"""Represents digital content associated with a product variant."""
-type DigitalContent implements Node & ObjectWithMetadata @doc(category: "Products") {
-  """The ID of the digital content."""
-  id: ID!
-
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """List of public metadata items. Can be accessed without permissions."""
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  metafields(keys: [String!]): Metadata
-
-  """Default settings indicator for digital content."""
-  useDefaultSettings: Boolean!
-
-  """Indicator for automatic fulfillment of digital content."""
-  automaticFulfillment: Boolean!
-
-  """File associated with digital content."""
-  contentFile: String!
-
-  """Maximum number of allowed downloads for the digital content."""
-  maxDownloads: Int
-
-  """Number of days the URL for the digital content remains valid."""
-  urlValidDays: Int
-
-  """List of URLs for the digital variant."""
-  urls: [DigitalContentUrl!]
-
-  """Product variant assigned to digital content."""
-  productVariant: ProductVariant!
-}
-
-"""Represents a URL for digital content."""
-type DigitalContentUrl implements Node @doc(category: "Products") {
-  """The ID of the digital content URL."""
-  id: ID!
-
-  """Digital content associated with the URL."""
-  content: DigitalContent!
-
-  """Date and time when the digital content URL was created."""
-  created: DateTime!
-
-  """Number of times digital content has been downloaded."""
-  downloadNum: Int!
-
-  """URL for digital content."""
-  url: String
-
-  """UUID of digital content."""
-  token: UUID!
-}
-
-scalar UUID
-
 """Represents stock."""
 type Stock implements Node @doc(category: "Products") {
   """The ID of stock."""
@@ -10759,10 +10546,10 @@ type ShippingMethod implements Node & ObjectWithMetadata @doc(category: "Shippin
   price: Money!
 
   """Maximum order price for this shipping method."""
-  maximumOrderPrice: Money
+  maximumOrderPrice: Money @deprecated
 
   """Minimal order price for this shipping method."""
-  minimumOrderPrice: Money
+  minimumOrderPrice: Money @deprecated
 
   """Describes if this shipping method is active and can be selected."""
   active: Boolean!
@@ -10905,6 +10692,13 @@ type CheckoutSettings {
   Added in Saleor 3.22.
   """
   automaticCompletionCutOffDate: DateTime
+
+  """
+  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+  
+  Added in Saleor 3.23.
+  """
+  allowLegacyGiftCardUse: Boolean!
 }
 
 """Represents the channel-specific payment settings."""
@@ -11520,7 +11314,7 @@ type GiftCard implements Node & ObjectWithMetadata @doc(category: "Gift cards") 
   product: Product
 
   """
-  List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER events.
+  List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER and REFUNDED_IN_ORDER events.
   
   Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
   """
@@ -11614,6 +11408,7 @@ enum GiftCardEventsEnum @doc(category: "Gift cards") {
   RESENT
   NOTE_ADDED
   USED_IN_ORDER
+  REFUNDED_IN_ORDER
 }
 
 type GiftCardEventBalance @doc(category: "Gift cards") {
@@ -11763,9 +11558,24 @@ type CheckoutLineProblemVariantNotAvailable @doc(category: "Checkout") {
 }
 
 """
+Represents a delivery option for the checkout.
+
+Added in Saleor 3.23.
+"""
+type Delivery {
+  """The ID of the delivery."""
+  id: ID!
+
+  """Shipping method represented by the delivery."""
+  shippingMethod: ShippingMethod
+}
+
+"""
 Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise.
 """
 union DeliveryMethod = Warehouse | ShippingMethod
+
+scalar UUID
 
 """Represents a payment transaction."""
 type TransactionItem implements Node & ObjectWithMetadata @doc(category: "Payments") {
@@ -12378,7 +12188,6 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
 
   """Rate of tax applied on product variant."""
   taxRate: Float!
-  digitalContentUrl: DigitalContentUrl
   thumbnail(
     """
     Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
@@ -12830,9 +12639,6 @@ type Payment implements Node & ObjectWithMetadata @doc(category: "Payments") {
 
   """The details of the card used for this payment."""
   creditCard: CreditCard
-
-  """Informs whether this is a partial payment."""
-  partial: Boolean! @deprecated(reason: "This field is reserved for the Adyen Gateway plugin. For other gateways, its value is always `false`. This field will be removed in 3.23 along with the plugin.")
 
   """PSP reference of the payment."""
   pspReference: String
@@ -13677,7 +13483,25 @@ enum TokenizedPaymentFlowEnum @doc(category: "Payments") {
 }
 
 """Represents an problem in the checkout."""
-union CheckoutProblem = CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable
+union CheckoutProblem = CheckoutProblemDeliveryMethodStale | CheckoutProblemDeliveryMethodInvalid | CheckoutLineProblemInsufficientStock | CheckoutLineProblemVariantNotAvailable
+
+"""
+Indicates that the delivery methods are stale.
+
+Added in Saleor 3.23.
+"""
+type CheckoutProblemDeliveryMethodStale @doc(category: "Checkout") {
+  delivery: Delivery!
+}
+
+"""
+Indicates that the selected delivery method is invalid.
+
+Added in Saleor 3.23.
+"""
+type CheckoutProblemDeliveryMethodInvalid @doc(category: "Checkout") {
+  delivery: Delivery!
+}
 
 type CheckoutCountableConnection @doc(category: "Checkout") {
   """Pagination data for this connection."""
@@ -13995,9 +13819,6 @@ type CustomerEvent implements Node @doc(category: "Users") {
 
   """The concerned order."""
   order: Order
-
-  """The concerned order line."""
-  orderLine: OrderLine
 }
 
 enum CustomerEventsEnum @doc(category: "Users") {
@@ -15146,13 +14967,6 @@ type Shop implements ObjectWithMetadata {
   ): ShopTranslation
 
   """
-  Enable automatic fulfillment for all digital products.
-  
-  Requires one of the following permissions: MANAGE_SETTINGS.
-  """
-  automaticFulfillmentDigitalProducts: Boolean
-
-  """
   Default number of minutes stock will be reserved for anonymous checkout or null when stock reservation is disabled.
   
   Requires one of the following permissions: MANAGE_SETTINGS.
@@ -15172,20 +14986,6 @@ type Shop implements ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   limitQuantityPerCheckout: Int
-
-  """
-  Default number of max downloads per digital content URL.
-  
-  Requires one of the following permissions: MANAGE_SETTINGS.
-  """
-  defaultDigitalMaxDownloads: Int
-
-  """
-  Default number of days which digital content URL will be valid.
-  
-  Requires one of the following permissions: MANAGE_SETTINGS.
-  """
-  defaultDigitalUrlValidDays: Int
 
   """Company address."""
   companyAddress: Address
@@ -15248,6 +15048,13 @@ type Shop implements ObjectWithMetadata {
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   preserveAllAddressFields: Boolean!
+
+  """
+  Controls whether password-based authentication is allowed.
+  
+  Added in Saleor 3.23.
+  """
+  passwordLoginMode: PasswordLoginModeEnum!
 
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean! @deprecated(reason: "Use `Channel.taxConfiguration.pricesEnteredWithTax` to determine whether prices are entered with tax.")
@@ -15352,6 +15159,21 @@ type Limits {
   warehouses: Int
 }
 
+"""
+Controls whether password-based authentication is allowed.
+
+    ENABLED - any user can log in with a password. This is the default behavior.
+    CUSTOMERS_ONLY - only customer users can log in with a password.
+        If a staff user logs in with a password, they will be treated as a customer
+        — the issued token will not contain any staff permissions.
+    DISABLED - no user can log in with a password.
+"""
+enum PasswordLoginModeEnum @doc(category: "Authentication") {
+  ENABLED
+  CUSTOMERS_ONLY
+  DISABLED
+}
+
 """Gift card related settings from site settings."""
 type GiftCardSettings @doc(category: "Gift cards") {
   """The gift card expiry type settings."""
@@ -15394,24 +15216,6 @@ type RefundSettings @doc(category: "Orders") {
 input ShippingZoneFilterInput @doc(category: "Shipping") {
   search: String
   channels: [ID!]
-}
-
-"""A connection to a list of digital content items."""
-type DigitalContentCountableConnection @doc(category: "Products") {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-  edges: [DigitalContentCountableEdge!]!
-
-  """A total count of items in the collection."""
-  totalCount: Int
-}
-
-type DigitalContentCountableEdge @doc(category: "Products") {
-  """The item at the end of the edge."""
-  node: DigitalContent!
-
-  """A cursor for use in pagination."""
-  cursor: String!
 }
 
 input CategoryFilterInput @doc(category: "Products") {
@@ -15526,7 +15330,9 @@ enum CollectionSortField @doc(category: "Products") {
 
 input ProductTypeFilterInput @doc(category: "Products") {
   search: String
-  configurable: ProductTypeConfigurable
+
+  """"""
+  configurable: ProductTypeConfigurable @deprecated(reason: "The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.")
   productType: ProductTypeEnum
   metadata: [MetadataFilter!]
   kind: ProductTypeKindEnum
@@ -15540,7 +15346,7 @@ enum ProductTypeConfigurable @doc(category: "Products") {
 }
 
 enum ProductTypeEnum @doc(category: "Products") {
-  DIGITAL
+  DIGITAL @deprecated(reason: "DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead.")
   SHIPPABLE
 }
 
@@ -15557,7 +15363,7 @@ enum ProductTypeSortField @doc(category: "Products") {
   NAME
 
   """Sort products by type."""
-  DIGITAL
+  DIGITAL @deprecated(reason: "DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.")
 
   """Sort products by shipping."""
   SHIPPING_REQUIRED
@@ -15612,11 +15418,85 @@ input TransactionWhereInput @doc(category: "Payments") {
   """Filter by app identifier."""
   appIdentifier: StringFilterInput
 
+  """
+  Filter transactions by created at date.
+  
+  Added in Saleor 3.23.
+  """
+  createdAt: DateTimeRangeInput
+
+  """
+  Filter transactions by modified at date.
+  
+  Added in Saleor 3.23.
+  """
+  modifiedAt: DateTimeRangeInput
+
+  """
+  Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+  
+  Added in Saleor 3.23.
+  """
+  events: [TransactionEventFilterInput!]
+
   """List of conditions that must be met."""
   AND: [TransactionWhereInput!]
 
   """A list of conditions of which at least one must be met."""
   OR: [TransactionWhereInput!]
+}
+
+"""
+Filter input for transaction events data.
+
+Added in Saleor 3.23.
+"""
+input TransactionEventFilterInput @doc(category: "Payments") {
+  """
+  Filter transaction events by created at date.
+  
+  Added in Saleor 3.23.
+  """
+  createdAt: DateTimeRangeInput
+
+  """
+  Filter transaction events by type.
+  
+  Added in Saleor 3.23.
+  """
+  type: TransactionEventTypeEnumFilterInput
+}
+
+input TransactionEventTypeEnumFilterInput @doc(category: "Payments") {
+  """The value equal to."""
+  eq: TransactionEventTypeEnum
+
+  """The value included in."""
+  oneOf: [TransactionEventTypeEnum!]
+}
+
+input TransactionSortingInput @doc(category: "Payments") {
+  """Specifies the direction in which to sort transactions."""
+  direction: OrderDirection!
+
+  """Sort transactions by the selected field."""
+  field: TransactionSortField!
+}
+
+enum TransactionSortField @doc(category: "Payments") {
+  """
+  Sort transactions by creation date. 
+  
+  Added in Saleor 3.23.
+  """
+  CREATED_AT
+
+  """
+  Sort transactions by modification date. 
+  
+  Added in Saleor 3.23.
+  """
+  MODIFIED_AT
 }
 
 type PageCountableConnection @doc(category: "Pages") {
@@ -15665,6 +15545,11 @@ enum PageSortField @doc(category: "Pages") {
 
   """Sort pages by creation date."""
   CREATED_AT
+
+  """
+  Sort pages by rank. Note: This option is available only with the `search` filter.
+  """
+  RANK
 }
 
 input PageFilterInput @doc(category: "Pages") {
@@ -16012,10 +15897,12 @@ Represents possible payment method types.
     The following types are possible:
     CARD - represents a card payment method.
     OTHER - represents any payment method that is not a card payment.
+    GIFT_CARD - represents a gift card payment method.
 """
 enum PaymentMethodTypeEnum @doc(category: "Payments") {
   CARD
   OTHER
+  GIFT_CARD
 }
 
 input PaymentMethodDetailsCardFilterInput {
@@ -16220,6 +16107,11 @@ enum GiftCardSortField @doc(category: "Gift cards") {
 
   """Sort gift cards by created at."""
   CREATED_AT
+
+  """
+  Sort gift cards by rank. Note: This option is available only with the `search` filter.
+  """
+  RANK
 }
 
 input GiftCardFilterInput @doc(category: "Gift cards") {
@@ -17053,6 +16945,11 @@ enum CheckoutSortField @doc(category: "Checkout") {
 
   """Sort checkouts by payment."""
   PAYMENT
+
+  """
+  Sort checkouts by rank. Note: This option is available only with the `search` filter.
+  """
+  RANK
 }
 
 input CheckoutFilterInput @doc(category: "Checkout") {
@@ -17206,12 +17103,6 @@ type AppExtensionCountableEdge @doc(category: "Apps") {
 }
 
 input AppExtensionFilterInput @doc(category: "Apps") {
-  """DEPRECATED: Use `mountName` instead."""
-  mount: [AppExtensionMountEnum!] @deprecated
-
-  """DEPRECATED: Use `targetName` instead."""
-  target: AppExtensionTargetEnum @deprecated
-
   """
   Plain-text mount name (case insensitive)
   
@@ -17419,6 +17310,11 @@ enum UserSortField @doc(category: "Users") {
 
   """Sort users by last modified at."""
   LAST_MODIFIED_AT
+
+  """
+  Sort users by rank. Note: This option is available only with the `search` filter.
+  """
+  RANK
 }
 
 type GroupCountableConnection @doc(category: "Users") {
@@ -17830,6 +17726,20 @@ type Mutation {
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
   refundReasonReferenceClear: RefundReasonReferenceTypeClear @doc(category: "Orders")
+
+  """
+  Calculates available delivery options for a checkout.
+  
+  Added in Saleor 3.23.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+  """
+  deliveryOptionsCalculate(
+    """The ID of the checkout."""
+    id: ID!
+  ): DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   Manage shipping method's availability in channels. 
@@ -18437,52 +18347,6 @@ type Mutation {
     """ID of a product."""
     productId: ID!
   ): ProductReorderAttributeValues @doc(category: "Products")
-
-  """
-  Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContentCreate(
-    """Fields required to create a digital content."""
-    input: DigitalContentUploadInput!
-
-    """ID of a product variant to upload digital content."""
-    variantId: ID!
-  ): DigitalContentCreate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
-
-  """
-  Remove digital content assigned to given variant. 
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContentDelete(
-    """ID of a product variant with digital content to remove."""
-    variantId: ID!
-  ): DigitalContentDelete @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
-
-  """
-  Updates digital content. 
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContentUpdate(
-    """Fields required to update a digital content."""
-    input: DigitalContentInput!
-
-    """ID of a product variant with digital content to update."""
-    variantId: ID!
-  ): DigitalContentUpdate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
-
-  """
-  Generate new URL to digital content. 
-  
-  Requires one of the following permissions: MANAGE_PRODUCTS.
-  """
-  digitalContentUrlCreate(
-    """Fields required to create a new url."""
-    input: DigitalContentUrlCreateInput!
-  ): DigitalContentUrlCreate @doc(category: "Products") @deprecated(reason: "Support for Digital Content is deprecated and will be removed in Saleor v3.23.0. This functionality is legacy and undocumented, and is not part of the supported API. Users should not rely on this behavior.")
 
   """
   Creates a new variant for a product. 
@@ -20585,7 +20449,7 @@ type Mutation {
   exportProducts(
     """Fields required to export product data."""
     input: ExportProductsInput!
-  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Export gift cards to csv file. 
@@ -20599,14 +20463,12 @@ type Mutation {
   exportGiftCards(
     """Fields required to export gift cards data."""
     input: ExportGiftCardsInput!
-  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Export voucher codes to csv/xlsx file.
   
-  Added in Saleor 3.18.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  Added in Saleor 3.18. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   
@@ -20616,7 +20478,7 @@ type Mutation {
   exportVoucherCodes(
     """Fields required to export voucher codes."""
     input: ExportVoucherCodesInput!
-  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: [])
+  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
@@ -20974,6 +20836,7 @@ type Mutation {
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutShippingMethodUpdate(
@@ -20988,17 +20851,22 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
+  ): CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) @deprecated(reason: "Use `checkoutDeliveryMethodUpdate` instead.")
 
   """
   Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address. 
   
   Triggers the following webhook events:
   - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutDeliveryMethodUpdate(
-    """Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID)."""
+    """
+    Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID or `CheckoutDelivery` ID).
+    
+    DEPRECATED: Usage of `ShippingMethod` ID is deprecated. Use CheckoutDelivery ID instead.
+    """
     deliveryMethodId: ID
 
     """The checkout's ID."""
@@ -21006,7 +20874,7 @@ type Mutation {
 
     """Checkout token."""
     token: UUID @deprecated(reason: "Use `id` instead.")
-  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT])
+  ): CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS])
 
   """
   Updates language code in the existing checkout.
@@ -22972,6 +22840,7 @@ enum ShopErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
+  PASSWORD_AUTH_RESTRICTION
 }
 
 input StaffNotificationRecipientInput {
@@ -23057,20 +22926,11 @@ input ShopSettingsInput {
   """Default weight unit."""
   defaultWeightUnit: WeightUnitsEnum
 
-  """Enable automatic fulfillment for all digital products."""
-  automaticFulfillmentDigitalProducts: Boolean
-
   """Enable automatic approval of all new fulfillments."""
   fulfillmentAutoApprove: Boolean
 
   """Enable ability to approve fulfillments which are unpaid."""
   fulfillmentAllowUnpaid: Boolean
-
-  """Default number of max downloads per digital content URL."""
-  defaultDigitalMaxDownloads: Int
-
-  """Default number of days which digital content URL will be valid."""
-  defaultDigitalUrlValidDays: Int
 
   """Default email sender's name."""
   defaultMailSenderName: String
@@ -23122,6 +22982,13 @@ input ShopSettingsInput {
   Added in Saleor 3.22.
   """
   preserveAllAddressFields: Boolean
+
+  """
+  Controls whether password-based authentication is allowed.
+  
+  Added in Saleor 3.23.
+  """
+  passwordLoginMode: PasswordLoginModeEnum
 
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean @deprecated(reason: "Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.")
@@ -23298,7 +23165,7 @@ Requires one of the following permissions: MANAGE_SETTINGS.
 """
 type RefundSettingsUpdate @doc(category: "Shop") {
   """Refund settings."""
-  refundSettings: RefundSettings!
+  refundSettings: RefundSettings
   refundSettingsErrors: [RefundSettingsUpdateError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [RefundSettingsUpdateError!]!
 }
@@ -23356,6 +23223,40 @@ type RefundReasonReferenceTypeClearError @doc(category: "Shop") {
 
   """Failed to clear refund reason reference type"""
   code: RefundSettingsErrorCode!
+}
+
+"""
+Calculates available delivery options for a checkout.
+
+Added in Saleor 3.23.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
+"""
+type DeliveryOptionsCalculate @doc(category: "Shipping") @webhookEventsInfo(asyncEvents: [], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
+  """List of the available deliveries."""
+  deliveries: [Delivery!]!
+  errors: [DeliveryOptionsCalculateError!]!
+}
+
+type DeliveryOptionsCalculateError @doc(category: "Shipping") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: DeliveryOptionsCalculateErrorCode!
+}
+
+enum DeliveryOptionsCalculateErrorCode @doc(category: "Shipping") {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  INVALID
 }
 
 """
@@ -23718,7 +23619,6 @@ enum ProductErrorCode @doc(category: "Products") {
   NOT_FOUND
   REQUIRED
   UNIQUE
-  VARIANT_NO_DIGITAL_CONTENT
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL
   UNSUPPORTED_MEDIA_PROVIDER
@@ -25021,7 +24921,7 @@ input ProductTypeInput @doc(category: "Products") {
   """
   Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
   """
-  hasVariants: Boolean
+  hasVariants: Boolean @deprecated(reason: "The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.")
 
   """List of attributes shared among all product variants."""
   productAttributes: [ID!]
@@ -25034,7 +24934,9 @@ input ProductTypeInput @doc(category: "Products") {
   """Determines if shipping is required for products of this variant."""
   isShippingRequired: Boolean
 
-  """Determines if products are digital."""
+  """
+  Determines if products are digital - doesn't have any effect, it's present for backward-compatibility.
+  """
   isDigital: Boolean
 
   """Weight of the ProductType items."""
@@ -25105,124 +25007,6 @@ type ProductReorderAttributeValues @doc(category: "Products") {
   product: Product
   productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [ProductError!]!
-}
-
-"""
-Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
-
-Requires one of the following permissions: MANAGE_PRODUCTS.
-"""
-type DigitalContentCreate @doc(category: "Products") {
-  variant: ProductVariant
-  content: DigitalContent
-  productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
-  errors: [ProductError!]!
-}
-
-input DigitalContentUploadInput @doc(category: "Products") {
-  """Use default digital content settings for this product."""
-  useDefaultSettings: Boolean!
-
-  """
-  Determines how many times a download link can be accessed by a customer.
-  """
-  maxDownloads: Int
-
-  """
-  Determines for how many days a download link is active since it was generated.
-  """
-  urlValidDays: Int
-
-  """Overwrite default automatic_fulfillment setting for variant."""
-  automaticFulfillment: Boolean
-
-  """
-  Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-  
-  Warning: never store sensitive information, including financial data such as credit card details.
-  """
-  metadata: [MetadataInput!]
-
-  """
-  Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-  
-  Warning: never store sensitive information, including financial data such as credit card details.
-  """
-  privateMetadata: [MetadataInput!]
-
-  """Represents an file in a multipart request."""
-  contentFile: Upload!
-}
-
-"""
-Remove digital content assigned to given variant. 
-
-Requires one of the following permissions: MANAGE_PRODUCTS.
-"""
-type DigitalContentDelete @doc(category: "Products") {
-  variant: ProductVariant
-  productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
-  errors: [ProductError!]!
-}
-
-"""
-Updates digital content. 
-
-Requires one of the following permissions: MANAGE_PRODUCTS.
-"""
-type DigitalContentUpdate @doc(category: "Products") {
-  variant: ProductVariant
-  content: DigitalContent
-  productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
-  errors: [ProductError!]!
-}
-
-input DigitalContentInput @doc(category: "Products") {
-  """Use default digital content settings for this product."""
-  useDefaultSettings: Boolean!
-
-  """
-  Determines how many times a download link can be accessed by a customer.
-  """
-  maxDownloads: Int
-
-  """
-  Determines for how many days a download link is active since it was generated.
-  """
-  urlValidDays: Int
-
-  """Overwrite default automatic_fulfillment setting for variant."""
-  automaticFulfillment: Boolean
-
-  """
-  Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-  
-  Warning: never store sensitive information, including financial data such as credit card details.
-  """
-  metadata: [MetadataInput!]
-
-  """
-  Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-  
-  Warning: never store sensitive information, including financial data such as credit card details.
-  """
-  privateMetadata: [MetadataInput!]
-}
-
-"""
-Generate new URL to digital content. 
-
-Requires one of the following permissions: MANAGE_PRODUCTS.
-"""
-type DigitalContentUrlCreate @doc(category: "Products") {
-  productErrors: [ProductError!]! @deprecated(reason: "Use `errors` field instead.")
-  errors: [ProductError!]!
-  digitalContentUrl: DigitalContentUrl
-}
-
-input DigitalContentUrlCreateInput @doc(category: "Products") {
-  """Digital content ID which URL will belong to."""
-  content: ID!
 }
 
 """
@@ -26034,7 +25818,7 @@ input TransactionCreateInput @doc(category: "Payments") {
 }
 
 """
-Details of the payment method used for the transaction. One of `card` or `other` is required.
+Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
 
 Added in Saleor 3.22.
 """
@@ -26044,6 +25828,13 @@ input PaymentMethodDetailsInput {
 
   """Details of the non-card payment method used for this transaction."""
   other: OtherPaymentMethodDetailsInput
+
+  """
+  Details of the gift card payment method used for the transaction.
+  
+  Added in Saleor 3.23.
+  """
+  giftCard: GiftCardPaymentMethodDetailsInput
 }
 
 input CardPaymentMethodDetailsInput {
@@ -26081,6 +25872,29 @@ input CardPaymentMethodDetailsInput {
 input OtherPaymentMethodDetailsInput {
   """Name of the payment method used for the transaction."""
   name: String!
+}
+
+input GiftCardPaymentMethodDetailsInput {
+  """
+  Name of the payment method used for the transaction. Max length is 256 characters.
+  
+  Added in Saleor 3.23.
+  """
+  name: String!
+
+  """
+  Brand of the gift card used for the transaction. Max length is 40 characters.
+  
+  Added in Saleor 3.23.
+  """
+  brand: String
+
+  """
+  Last characters of the gift card used for the transaction. Max length is 4 characters.
+  
+  Added in Saleor 3.23.
+  """
+  lastChars: String
 }
 
 input TransactionEventInput @doc(category: "Payments") {
@@ -26842,7 +26656,7 @@ input PageTypeUpdateInput @doc(category: "Pages") {
   """List of attribute IDs to be assigned to the page type."""
   addAttributes: [ID!]
 
-  """List of attribute IDs to be assigned to the page type."""
+  """List of attribute IDs to be unassigned from the page type."""
   removeAttributes: [ID!]
 }
 
@@ -26974,7 +26788,7 @@ input DraftOrderCreateInput @doc(category: "Orders") {
   shippingMethod: ID
 
   """ID of the voucher associated with the order."""
-  voucher: ID
+  voucher: ID @deprecated(reason: "Use `voucherCode` instead.")
 
   """
   A code of the voucher associated with the order.
@@ -27124,7 +26938,7 @@ input DraftOrderInput @doc(category: "Orders") {
   shippingMethod: ID
 
   """ID of the voucher associated with the order."""
-  voucher: ID
+  voucher: ID @deprecated(reason: "Use `voucherCode` instead.")
 
   """
   A code of the voucher associated with the order.
@@ -30402,9 +30216,7 @@ input ExportGiftCardsInput @doc(category: "Gift cards") {
 """
 Export voucher codes to csv/xlsx file.
 
-Added in Saleor 3.18.
-
-Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+Added in Saleor 3.18. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
 
@@ -30988,9 +30800,10 @@ Updates the shipping method of the checkout.
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
+type CheckoutShippingMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
   """An updated checkout."""
   checkout: Checkout
   checkoutErrors: [CheckoutError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -31002,9 +30815,10 @@ Updates the delivery method (shipping method or pick up point) of the checkout. 
 
 Triggers the following webhook events:
 - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
 - CHECKOUT_UPDATED (async): A checkout was updated.
 """
-type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT]) {
+type CheckoutDeliveryMethodUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [SHIPPING_LIST_METHODS_FOR_CHECKOUT, CHECKOUT_FILTER_SHIPPING_METHODS]) {
   """An updated checkout."""
   checkout: Checkout
   errors: [CheckoutError!]!
@@ -31266,6 +31080,13 @@ input CheckoutSettingsInput @doc(category: "Checkout") {
   Added in Saleor 3.22.
   """
   automaticCompletion: CheckoutAutoCompleteInput
+
+  """
+  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+  
+  Added in Saleor 3.23.
+  """
+  allowLegacyGiftCardUse: Boolean
 }
 
 input CheckoutAutoCompleteInput @doc(category: "Checkout") {
@@ -32190,10 +32011,10 @@ type AppInstall @doc(category: "Apps") {
 
 input AppInstallInput @doc(category: "Apps") {
   """Name of the app to install."""
-  appName: String
+  appName: String!
 
   """URL to app's manifest in JSON format."""
-  manifestUrl: String
+  manifestUrl: String!
 
   """Determine if app will be set active or not."""
   activateAfterInstallation: Boolean = true
@@ -32310,28 +32131,22 @@ type AppManifestExtension @doc(category: "Apps") {
   """URL of a view where extension's iframe is placed."""
   url: String!
 
-  """Place where given extension will be mounted."""
-  mount: AppExtensionMountEnum! @deprecated(reason: "Use `mountName` instead.")
-
-  """Type of way how app extension will be opened."""
-  target: AppExtensionTargetEnum! @deprecated(reason: "Use `targetName` instead.")
-
   """
-  Name of the extension mount point in the dashboard. Replaces `mount`
+  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Replaces `target`
+  Name of the extension target in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  JSON object with settings for this extension.
+  App extension settings.
   
   Added in Saleor 3.22.
   """
@@ -32620,6 +32435,7 @@ enum AccountErrorCode @doc(category: "Users") {
   MISSING_CHANNEL_SLUG
   ACCOUNT_NOT_CONFIRMED
   LOGIN_ATTEMPT_DELAYED
+  DISABLED_AUTHENTICATION_METHOD
   UNKNOWN_IP_ADDRESS
 }
 
@@ -37452,6 +37268,37 @@ type CardPaymentMethodDetails implements PaymentMethodDetails {
 
   """Four-digit number representing the card’s expiration year."""
   expYear: Int
+}
+
+"""
+Represents a gift card payment method used for a transaction.
+
+Added in Saleor 3.23.
+"""
+type GiftCardPaymentMethodDetails implements PaymentMethodDetails {
+  """Name of the gift card."""
+  name: String!
+
+  """
+  Brand of the gift card.
+  
+  Added in Saleor 3.23.
+  """
+  brand: String
+
+  """
+  Last characters of the gift card code. Max 4 characters.
+  
+  Added in Saleor 3.23.
+  """
+  lastChars: String
+
+  """
+  Indicates whether the gift card is a built-in Saleor gift card.
+  
+  Added in Saleor 3.23.
+  """
+  isSaleorGiftcard: Boolean!
 }
 
 """

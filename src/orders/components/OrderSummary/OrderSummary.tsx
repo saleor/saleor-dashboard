@@ -1,8 +1,6 @@
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
-import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
@@ -58,16 +56,12 @@ export const OrderSummary = (props: Props) => {
   return (
     <Box padding={6} display="grid" gap={6} data-test-id="OrderSummary">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box display="flex" alignItems="center" justifyContent="center" gap={4}>
-          <Text size={6} fontWeight="medium">
-            {intl.formatMessage({
-              defaultMessage: "Summary",
-              id: "RrCui3",
-            })}
-          </Text>
-
-          <Ripple model={rippleRefreshedOrderSections} />
-        </Box>
+        <Text size={6} fontWeight="medium">
+          {intl.formatMessage({
+            defaultMessage: "Summary",
+            id: "RrCui3",
+          })}
+        </Text>
 
         {useLegacyPaymentsApi ? (
           <LegacyPaymentsApiButtons

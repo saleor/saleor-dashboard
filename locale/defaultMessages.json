@@ -1105,6 +1105,9 @@
     "context": "modal button",
     "string": "Upload URL"
   },
+  "4X0ZI8": {
+    "string": "Gift card"
+  },
   "4XhJY+": {
     "context": "dialog header",
     "string": "Add product from {channelName}"
@@ -4638,6 +4641,9 @@
     "context": "title for unsupported required attributes error",
     "string": "Cannot use generator"
   },
+  "OErjoA": {
+    "string": "{productName} discount was removed"
+  },
   "OFTsI1": {
     "string": "Attempts:"
   },
@@ -5552,10 +5558,6 @@
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
-  },
-  "TQlnsR": {
-    "context": "order marked as paid event title",
-    "string": "Order was marked as paid"
   },
   "TSJRiZ": {
     "context": "channel status title",
@@ -6562,9 +6564,6 @@
   "Z3T6zR": {
     "context": "card title",
     "string": "Return & Replace"
-  },
-  "Z6QAbw": {
-    "string": "This variant does not have any digital content"
   },
   "Z7Tf8e": {
     "context": "stock exceeded dialog description",
@@ -8782,6 +8781,10 @@
     "context": "export items as csv file",
     "string": "Plain CSV file"
   },
+  "ljwv+L": {
+    "context": "discount value label",
+    "string": "Discount value"
+  },
   "llBnr+": {
     "string": "Warehouse Name"
   },
@@ -9264,10 +9267,6 @@
   "oiuwOl": {
     "context": "button",
     "string": "Assign"
-  },
-  "ojHyj3": {
-    "context": "discount value label",
-    "string": "discount value"
   },
   "onUvP+": {
     "context": "discount type",

@@ -1,2 +1,2 @@
-export { default } from "./OrderHistory";
-export * from "./OrderHistory";
+export type { FormData } from "./OrderHistory";
+export { OrderHistory } from "./OrderHistory";
