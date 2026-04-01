@@ -62,6 +62,24 @@ const useStyles = makeStyles(
       alignItems: "center",
       justifyContent: "flex-end",
     },
+    menuItemContent: {
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      gap: theme.spacing(2),
+    },
+    menuItemIconSlot: {
+      width: 24,
+      minWidth: 24,
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      lineHeight: 0,
+    },
+    menuItemLabel: {
+      lineHeight: "24px",
+    },
   }),
   { name: "CardMenu" },
 );
@@ -99,22 +117,28 @@ const CardMenu = (props: CardMenuProps) => {
   };
   const prevOpen = useRef(open);
 
-  useEffect(() => {
-    if (prevOpen.current && !open) {
-      anchorRef.current!.focus();
-    }
+  useEffect(
+    function focusMenuTriggerWhenMenuCloses() {
+      if (prevOpen.current && !open) {
+        anchorRef.current!.focus();
+      }
 
-    prevOpen.current = open;
-  }, [open]);
-  useEffect(() => {
-    const hasAnyItemsLoadingOrWithError = menuItems
-      ?.filter(({ withLoading }) => withLoading)
-      ?.some(({ loading, hasError }) => loading || hasError);
+      prevOpen.current = open;
+    },
+    [open],
+  );
+  useEffect(
+    function closeMenuWhenLoadingItemsSettle() {
+      const hasAnyItemsLoadingOrWithError = menuItems
+        ?.filter(({ withLoading }) => withLoading)
+        ?.some(({ loading, hasError }) => loading || hasError);
 
-    if (!hasAnyItemsLoadingOrWithError) {
-      setOpen(false);
-    }
-  }, [menuItems]);
+      if (!hasAnyItemsLoadingOrWithError) {
+        setOpen(false);
+      }
+    },
+    [menuItems],
+  );
 
   const handleMenuClick = (index: number) => {
     const selectedItem = menuItems[index];
@@ -190,9 +214,14 @@ const CardMenu = (props: CardMenuProps) => {
                             <SaleorThrobber size={24} />
                           </>
                         ) : (
-                          <Text>
-                            {showMenuIcon && menuItem.Icon} {menuItem.label}
-                          </Text>
+                          <div className={classes.menuItemContent}>
+                            {showMenuIcon && (
+                              <span className={classes.menuItemIconSlot}>
+                                {menuItem.Icon ?? null}
+                              </span>
+                            )}
+                            <Text className={classes.menuItemLabel}>{menuItem.label}</Text>
+                          </div>
                         )}
                       </div>
                     </MenuItem>

@@ -3,8 +3,16 @@ import { order as orderFixture, prepareMoney } from "@dashboard/orders/fixtures"
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { type ReactNode } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { OrderSummary } from "./OrderSummary";
+
+const RouterWrapper = ({ children }: { children: ReactNode }) => (
+  <Wrapper>
+    <MemoryRouter>{children}</MemoryRouter>
+  </Wrapper>
+);
 
 // Helper to create order with no payment (hasNoPayment === true)
 const createOrderWithNoPayment = (actions: OrderAction[] = [OrderAction.MARK_AS_PAID]) => ({
@@ -80,9 +88,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -98,9 +106,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -114,9 +122,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -137,9 +145,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -158,13 +166,13 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
             useLegacyPaymentsApi={false}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -178,9 +186,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -194,9 +202,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -216,9 +224,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -238,9 +246,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -260,9 +268,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -276,9 +284,9 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const markAsPaidButton = screen.getByText("Mark as Paid");
@@ -304,7 +312,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -313,7 +321,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -333,7 +341,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -342,7 +350,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -362,7 +370,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -371,7 +379,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -391,7 +399,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -400,7 +408,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -420,7 +428,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -429,7 +437,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -449,7 +457,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -458,7 +466,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const captureButton = screen.getByText("Capture");
@@ -482,7 +490,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -491,7 +499,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const refundButton = screen.getByTestId("refund-button");
@@ -515,7 +523,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -524,7 +532,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const voidButton = screen.getByText("Void");
@@ -548,7 +556,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -557,7 +565,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       const markAsPaidButton = screen.getByTestId("mark-as-paid-button");
@@ -586,7 +594,7 @@ describe("OrderSummary", () => {
 
       // Act
       render(
-        <Wrapper>
+        <RouterWrapper>
           <OrderSummary
             order={mockOrder}
             onMarkAsPaid={onMarkAsPaid}
@@ -595,7 +603,7 @@ describe("OrderSummary", () => {
             onLegacyPaymentsApiRefund={onRefund}
             onLegacyPaymentsApiVoid={onVoid}
           />
-        </Wrapper>,
+        </RouterWrapper>,
       );
 
       // Assert
@@ -639,9 +647,9 @@ describe("OrderSummary", () => {
 
     // Act
     render(
-      <Wrapper>
+      <RouterWrapper>
         <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-      </Wrapper>,
+      </RouterWrapper>,
     );
 
     // Assert - should not show Mark as Paid button because has gift cards
@@ -661,9 +669,9 @@ describe("OrderSummary", () => {
 
     // Act
     render(
-      <Wrapper>
+      <RouterWrapper>
         <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-      </Wrapper>,
+      </RouterWrapper>,
     );
 
     // Assert - should not show Mark as Paid button because has granted refunds
@@ -677,9 +685,9 @@ describe("OrderSummary", () => {
 
     // Act
     render(
-      <Wrapper>
+      <RouterWrapper>
         <OrderSummary order={mockOrder} onMarkAsPaid={onMarkAsPaid} />
-      </Wrapper>,
+      </RouterWrapper>,
     );
 
     // Assert

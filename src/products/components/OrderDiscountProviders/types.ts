@@ -1,5 +1,9 @@
-import { type MoneyFragment, type TaxedMoneyFragment } from "@dashboard/graphql";
-import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import {
+  type MoneyFragment,
+  type OrderDiscountType,
+  type TaxedMoneyFragment,
+} from "@dashboard/graphql";
+import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountModal/types";
 
 import { type OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 
@@ -14,6 +18,11 @@ export type GetOrderLineDiscountContextConsumerProps = (
 export interface OrderLineDiscountData extends OrderDiscountCommonInput {
   moneyValue: MoneyFragment;
   undiscountedPrice: TaxedMoneyFragment;
+}
+
+export interface AutomaticDiscountInfo {
+  type: OrderDiscountType;
+  name: string | null;
 }
 
 export interface OrderDiscountConsumerCommonProps {

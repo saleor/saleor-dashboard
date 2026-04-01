@@ -52,9 +52,38 @@ export const messages = defineMessages({
     id: "DhFqJF",
     defaultMessage: "Edit discount",
   },
+  addDiscount: {
+    id: "HpxNPd",
+    defaultMessage: "Add discount",
+  },
   showMetadata: {
     id: "11ep0q",
     defaultMessage: "Show metadata",
     description: "button",
+  },
+  removeProductDialogTitle: {
+    id: "fdJjic",
+    defaultMessage: "Remove product",
+    description: "dialog title for removing product from draft order",
+  },
+  keepProductButton: {
+    id: "uY8rPp",
+    defaultMessage: "Keep product",
+    description: "button label to cancel product removal",
+  },
+  removeProductButton: {
+    id: "McotWC",
+    defaultMessage: "Remove product",
+    description: "button label to confirm product removal",
+  },
+  removeProductDialogContent: {
+    id: "th06kZ",
+    defaultMessage: "Are you sure you want to remove {productName} from this draft order?",
+    description: "dialog body asking to confirm product removal from draft order",
+  },
+  unknownProductFallback: {
+    id: "GrMiRT",
+    defaultMessage: "this product",
+    description: "fallback product name in remove product confirmation dialog",
   },
 });
