@@ -72,6 +72,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: saleor/saleor-dashboard
+          directory: coverage/units
+          flags: units
 
   translation-messages:
     runs-on: ubuntu-22.04
@@ -90,6 +92,33 @@ jobs:
         run: |
           pnpm run extract-messages
           git diff --exit-code ./locale
+
+  storybook-tests:
+    runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Run Storybook tests
+        run: pnpm run test-storybook:coverage
+
+      - name: Upload coverage reports to Codecov
+        if: always()
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: saleor/saleor-dashboard
+          directory: coverage/storybook
+          flags: storybook
 
   chromatic:
     runs-on: ubuntu-22.04

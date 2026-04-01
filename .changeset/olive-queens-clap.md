@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Removed Ripples introduced in 3.22
+Add tooltip for search inputs
