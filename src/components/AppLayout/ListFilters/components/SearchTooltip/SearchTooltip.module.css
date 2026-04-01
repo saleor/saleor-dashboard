@@ -1,0 +1,24 @@
+.table {
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.table th,
+.table td {
+  padding: 3px 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table th {
+  font-weight: 600;
+  padding-bottom: 4px;
+}
+
+.syntax {
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
