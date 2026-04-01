@@ -1,0 +1,23 @@
+docs/performance-report-orders-2026-04-01.md
+  0a0d7cfaf8698594 44,77,139,145
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.3",
+  "base_commit_sha": "4f1e6ca7334f17d12ade37f281f235d52ac279d0",
+  "prompts": {
+    "0a0d7cfaf8698594": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "55129c1c-11c4-44be-8462-473bd399dd18",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
