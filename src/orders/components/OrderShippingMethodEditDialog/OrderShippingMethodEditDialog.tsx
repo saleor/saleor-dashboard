@@ -57,16 +57,12 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
   const availableChoices = shippingMethods
     ? shippingMethods
         .map(s => ({
-          label: (
-            <Box display="flex" width="100%" gap={3}>
-              <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-                {s.name}
-              </Box>
-
-              <Box>
-                <Money money={s.price} />
-              </Box>
-
+          label: s.name,
+          disabled: !s.active,
+          value: s.id,
+          endAdornment: (
+            <Box display="flex" gap={3} alignItems="center">
+              <Money money={s.price} />
               {!s.active && (
                 <Text color="defaultDisabled" size={2} fontWeight="light">
                   {s.message}
@@ -74,8 +70,6 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
               )}
             </Box>
           ),
-          disabled: !s.active,
-          value: s.id,
         }))
         .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
     : [];
@@ -86,28 +80,22 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
     shippingMethod && !currentMethodInChoices
       ? [
           {
-            label: (
-              <Box display="flex" width="100%" gap={3}>
-                <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-                  <Text as="span" color="defaultDisabled">
-                    {shippingMethodName || (
-                      <FormattedMessage
-                        id="12K83x"
-                        defaultMessage="Current method"
-                        description="shipping method option when name unknown"
-                      />
-                    )}
-                  </Text>
-                </Box>
-
+            label:
+              shippingMethodName ||
+              intl.formatMessage({
+                id: "12K83x",
+                defaultMessage: "Current method",
+                description: "shipping method option when name unknown",
+              }),
+            disabled: true,
+            value: shippingMethod,
+            endAdornment: (
+              <Box display="flex" gap={3} alignItems="center">
                 {shippingPrice && (
-                  <Box>
-                    <Text color="defaultDisabled">
-                      <Money money={shippingPrice.gross} />
-                    </Text>
-                  </Box>
+                  <Text color="defaultDisabled">
+                    <Money money={shippingPrice.gross} />
+                  </Text>
                 )}
-
                 <Text color="defaultDisabled" size={2} fontWeight="light">
                   <FormattedMessage
                     id="X1NCdA"
@@ -117,26 +105,16 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                 </Text>
               </Box>
             ),
-            disabled: true,
-            value: shippingMethod,
           },
         ]
       : [];
 
   const noShippingOption = {
-    label: (
-      <Box display="flex" width="100%" gap={3}>
-        <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-          <Text>
-            <FormattedMessage
-              id="7ZKQU3"
-              defaultMessage="No shipping method"
-              description="no shipping method option"
-            />
-          </Text>
-        </Box>
-      </Box>
-    ),
+    label: intl.formatMessage({
+      id: "7ZKQU3",
+      defaultMessage: "No shipping method",
+      description: "no shipping method option",
+    }),
     value: NO_SHIPPING_METHOD_ID,
     disabled: false,
   };
@@ -183,7 +161,7 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                 </DashboardModal.Header>
 
                 <Select
-                  options={choices as unknown as Option[]}
+                  options={choices}
                   error={!!formErrors.shippingMethod}
                   helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
                   name="shippingMethod"
