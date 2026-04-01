@@ -1,4 +1,5 @@
 import { type Locale } from "@dashboard/components/Locale";
+import { formatPriceInput, getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   type CustomCell,
   type CustomRenderer,
@@ -6,8 +7,8 @@ import {
   GridCellKind,
   type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
+import { type ChangeEvent, type CSSProperties, useMemo, useState } from "react";
 
-import { usePriceField } from "../../../PriceField/usePriceField";
 import { hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
@@ -22,26 +23,55 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   value: cell,
   onChange: onChangeBase,
 }) => {
-  const { onChange, onKeyDown, minValue, step } = usePriceField(cell.data.currency, event =>
+  const maxDecimalPlaces = useMemo(
+    () => getCurrencyDecimalPoints(cell.data.currency),
+    [cell.data.currency],
+  );
+
+  const [inputValue, setInputValue] = useState<string>(
+    Array.isArray(cell.data.value) ? "" : String(cell.data.value ?? ""),
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = String(e.target.value ?? "");
+    const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
+
+    if (!formattedValue && rawValue) return;
+
+    setInputValue(formattedValue);
     onChangeBase({
       ...cell,
       data: {
         ...cell.data,
-        value: event.target.value,
+        value: formattedValue ? parseFloat(formattedValue) : null,
       },
-    }),
-  );
+    });
+  };
+
+  const editorInputStyle: CSSProperties = {
+    appearance: "none",
+    background: "none",
+    border: "none",
+    boxSizing: "border-box",
+    fontFamily: "inherit",
+    fontSize: "inherit",
+    height: "100%",
+    outline: "none",
+    padding: "0 8px",
+    textAlign: "right",
+    width: "100%",
+  };
 
   // TODO: range is read only - we don't need support for editing,
   // it is better to split component into range and editable money cell
   return (
     <input
-      type="number"
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      value={Array.isArray(cell.data.value) ? "" : (cell.data.value ?? "")}
-      min={minValue}
-      step={step}
+      type="text"
+      inputMode="decimal"
+      autoComplete="off"
+      onChange={handleChange}
+      value={inputValue}
+      style={editorInputStyle}
       autoFocus
     />
   );
@@ -118,17 +148,36 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
   provideEditor: () => ({
     editor: MoneyCellEdit,
     disablePadding: true,
+    disableStyling: true,
+    styleOverride: {
+      backgroundColor: "var(--gdg-bg-cell)",
+      boxShadow: "inset 0 0 0 1.5px var(--gdg-accent-color)",
+      width: 0,
+      height: 0,
+    },
     deletedValue: cell => ({
       ...cell,
       copyData: "",
       data: {
         ...cell.data,
-        value: cell.data.value ?? null,
+        value: null,
       },
     }),
   }),
   onPaste: (value, data) => ({
-    ...data,
-    value: parseFloat(value),
+    ...(() => {
+      const maxDecimalPlaces = getCurrencyDecimalPoints(data.currency);
+      const rawValue = String(value ?? "");
+      const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
+
+      if (!formattedValue && rawValue) {
+        return data;
+      }
+
+      return {
+        ...data,
+        value: formattedValue ? parseFloat(formattedValue) : null,
+      };
+    })(),
   }),
 });

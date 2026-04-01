@@ -1,15 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
+import { PriceField } from "@dashboard/components/PriceField";
 import { type IMoney } from "@dashboard/utils/intl";
-import {
-  Box,
-  type BoxProps,
-  Checkbox,
-  Input,
-  Skeleton,
-  Text,
-  Tooltip,
-} from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Checkbox, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
 import { type Control, type FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -68,6 +62,14 @@ export const OrderTransactionSummary = ({
     name: "amount",
     control,
   });
+  const [amountInputValue, setAmountInputValue] = useState(amountField.value?.toString() ?? "");
+  const [isAmountInputFocused, setIsAmountInputFocused] = useState(false);
+
+  useEffect(() => {
+    if (!isAmountInputFocused) {
+      setAmountInputValue(amountField.value?.toString() ?? "");
+    }
+  }, [amountField.value, isAmountInputFocused]);
 
   return (
     <DashboardCard {...props}>
@@ -159,14 +161,37 @@ export const OrderTransactionSummary = ({
             <Text gridColumnStart="2" size={5}>
               <FormattedMessage {...messages.totalAmount} />
             </Text>
-            <Input
-              type="number"
-              value={amountField.value}
-              onChange={amountField.onChange}
-              onBlur={event => amountField.onChange(parseFloat(event.target.value))}
+            <PriceField
+              name={amountField.name}
+              value={amountInputValue}
+              onChange={event => {
+                const value = event.target.value;
+
+                setAmountInputValue(value ?? "");
+
+                if (!value) {
+                  amountField.onChange(undefined);
+
+                  return;
+                }
+
+                const parsed = parseFloat(value);
+
+                amountField.onChange(Number.isNaN(parsed) ? undefined : parsed);
+              }}
+              onFocus={() => setIsAmountInputFocused(true)}
+              onBlur={() => {
+                const parsed = parseFloat(amountInputValue);
+                const normalized = Number.isNaN(parsed) ? undefined : parsed;
+
+                amountField.onChange(normalized);
+                amountField.onBlur();
+                setIsAmountInputFocused(false);
+                setAmountInputValue(normalized?.toString() ?? "");
+              }}
               error={!!amountError}
               __width={100}
-              endAdornment={currency}
+              currencySymbol={currency}
             />
 
             {/* Error message */}

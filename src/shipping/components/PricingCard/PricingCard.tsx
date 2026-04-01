@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -88,7 +88,7 @@ const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps)
                       onChange={e =>
                         onChange(channel.id, {
                           ...channel,
-                          price: e.target.value,
+                          price: e.target.value ?? "",
                         })
                       }
                       currencySymbol={channel.currency}

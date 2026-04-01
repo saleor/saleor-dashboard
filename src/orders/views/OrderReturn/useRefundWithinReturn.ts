@@ -36,7 +36,7 @@ export function useRefundWithinReturn({
       ? await grantRefund({
           variables: {
             orderId,
-            amount: formData.amount,
+            ...(typeof formData.amount === "number" ? { amount: formData.amount } : {}),
             transactionId: formData.transactionId,
             reason: "",
             lines: squashLines([

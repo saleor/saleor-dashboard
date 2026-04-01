@@ -1,56 +1,35 @@
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { type TextFieldProps } from "@material-ui/core";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
-import { SEPARATOR_CHARACTERS } from "./consts";
-import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
+import { formatPriceInput, getCurrencyDecimalPoints } from "./utils";
 
+/**
+ * Hook for handling price input with currency-aware decimal validation.
+ * - Filters non-numeric input
+ * - Limits decimal places based on currency (e.g., 2 for USD, 0 for JPY)
+ * - Normalizes decimal separator to dot (10,50 → 10.50)
+ */
 export function usePriceField(currency: string | undefined, onChange: FormChange) {
-  const minValue = 0;
-  const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
-  const handleChange: FormChange = e => {
-    let value = e.target.value;
-    const splitCharacter = findPriceSeparator(value);
-    const [integerPart, decimalPart] = value.split(splitCharacter);
+  const maxDecimalPlaces = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
 
-    if ((maxDecimalLength ?? 0) === 0 && decimalPart) {
-      // This shouldn't happen - decimal character should be ignored
-      value = integerPart;
-    }
+  const handleChange: FormChange = useCallback(
+    e => {
+      const rawValue = String(e.target.value ?? "");
+      const formattedValue = formatPriceInput(rawValue, maxDecimalPlaces);
 
-    if (decimalPart?.length && maxDecimalLength && decimalPart.length > maxDecimalLength) {
-      const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
+      if (!formattedValue && rawValue) return;
 
-      value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
-    }
-
-    onChange({
-      target: {
-        name: e.target.name,
-        value: value ? parseFloat(value) : null,
-      },
-    });
-  };
-  const handleKeyDown: TextFieldProps["onKeyDown"] = e => {
-    // Disallow entering e (exponent)
-    if (e.key === "e" || e.key === "E" || e.key === "-") {
-      e.preventDefault();
-    }
-
-    // ignore separator input when currency doesn't support decimal values
-    if (
-      (maxDecimalLength ?? 0) === 0 &&
-      SEPARATOR_CHARACTERS.some(separator => e.key === separator)
-    ) {
-      e.preventDefault();
-    }
-  };
-  const step = 1 / Math.pow(10, maxDecimalLength ?? 2);
+      onChange({
+        target: {
+          name: e.target.name,
+          value: formattedValue || null,
+        },
+      });
+    },
+    [maxDecimalPlaces, onChange],
+  );
 
   return {
     onChange: handleChange,
-    onKeyDown: handleKeyDown,
-    minValue,
-    step,
   };
 }

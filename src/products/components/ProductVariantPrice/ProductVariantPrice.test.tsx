@@ -38,7 +38,7 @@ describe("ProductVariantPrice", () => {
     });
 
     // Assert
-    expect(screen.getByTestId("price-field")).toHaveValue(0);
+    expect(screen.getByTestId("price-field")).toHaveValue("0");
   });
 
   it("should allow to set price value", () => {
@@ -71,9 +71,9 @@ describe("ProductVariantPrice", () => {
 
     // Assert
     expect(onChange).toHaveBeenCalledWith("1", {
-      price: 0,
+      price: "0",
       preorderThreshold: 0,
-      costPrice: undefined,
+      costPrice: "",
     });
   });
 });

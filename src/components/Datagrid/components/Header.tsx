@@ -1,12 +1,12 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Maximize, Minimize, PlusIcon } from "lucide-react";
 import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
   onToggle: React.MouseEventHandler<HTMLButtonElement>;
 }
-
-import { Maximize, Minimize, PlusIcon } from "lucide-react";
 
 const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   isOpen,
@@ -16,7 +16,11 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   return (
     <Button data-test-id="button-exit-fullscreen" variant="secondary" onClick={onToggle}>
       <Box as="span" display="flex">
-        {isOpen ? <Minimize /> : <Maximize />}
+        {isOpen ? (
+          <Minimize size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        ) : (
+          <Maximize size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        )}
       </Box>
       {children}
     </Button>
@@ -40,7 +44,7 @@ const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
       onClick={onAddRow}
       disabled={disabled}
     >
-      <PlusIcon />
+      <PlusIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       {children}
     </Button>
   );
