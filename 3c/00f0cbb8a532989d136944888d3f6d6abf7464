@@ -1,0 +1,23 @@
+package.json
+  e56d3a98ba5ed532 166,219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.3",
+  "base_commit_sha": "3c00f0cbb8a532989d136944888d3f6d6abf7464",
+  "prompts": {
+    "e56d3a98ba5ed532": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74497465-83ae-40cd-a8f9-9abb3b450536",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
