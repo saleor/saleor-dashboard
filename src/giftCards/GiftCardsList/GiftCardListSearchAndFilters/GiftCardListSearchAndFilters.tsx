@@ -31,6 +31,7 @@ const GiftCardListSearchAndFilters = () => {
         type="expression-filter"
         initialSearch={params?.query || ""}
         onSearchChange={handleSearchChange}
+        showSearchTooltip
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
         actions={
           <Box display="flex" gap={4}>

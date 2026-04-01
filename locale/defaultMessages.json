@@ -993,6 +993,9 @@
     "context": "channel settings",
     "string": "Channel Settings"
   },
+  "3yf2ND": {
+    "string": "Operator"
+  },
   "3zdm8A": {
     "context": "Dialog title",
     "string": "Transaction {actionType}"
@@ -1525,6 +1528,9 @@
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
+  "6sr5Sp": {
+    "string": "Either term matches"
+  },
   "6vf8AS": {
     "context": "section title",
     "string": "Address Validation"
@@ -1799,6 +1805,9 @@
     "context": "order discount was updated automatically event title",
     "string": "Order discount was updated automatically"
   },
+  "8VDOUy": {
+    "string": "Matches \"coffee\", \"coffeehouse\", etc."
+  },
   "8W1v0N": {
     "context": "Warning when channel has no shipping zones",
     "string": "No shipping zones for \"{channelName}\""
@@ -2012,6 +2021,9 @@
   "9gb9b4": {
     "context": "address type",
     "string": "Add new address"
+  },
+  "9kF+go": {
+    "string": "AND (implicit)"
   },
   "9kzIFd": {
     "context": "WarehouseSettings stock title",
@@ -3070,6 +3082,9 @@
     "context": "modal title",
     "string": "Add refund reason for this line"
   },
+  "Fyd+zC": {
+    "string": "Matches the exact phrase only"
+  },
   "Fz3kic": {
     "context": "error message",
     "string": "Billing address is not set or invoice is not ready to be send"
@@ -3584,6 +3599,9 @@
     "context": "payment status",
     "string": "Partially paid"
   },
+  "INlWvJ": {
+    "string": "OR"
+  },
   "INw68F": {
     "string": "Search model types..."
   },
@@ -3855,6 +3873,9 @@
   "Jo01VZ": {
     "context": "bought by label",
     "string": "Bought by"
+  },
+  "JotAJ3": {
+    "string": "AND (explicit)"
   },
   "JqiqNj": {
     "string": "Something went wrong"
@@ -5832,6 +5853,9 @@
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
   },
+  "V2JtVu": {
+    "string": "Same as implicit AND, using explicit keyword"
+  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -6334,6 +6358,9 @@
   "Xy2T+y": {
     "context": "header",
     "string": "Edit Authorization Field"
+  },
+  "XyURe6": {
+    "string": "Exact phrase"
   },
   "Xz/sDf": {
     "context": "Dry run items list item",
@@ -7152,6 +7179,9 @@
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
+  },
+  "cEoeGG": {
+    "string": "Both terms must match"
   },
   "cErw9O": {
     "context": "Shown when warehouse count cannot be determined",
@@ -8282,6 +8312,9 @@
   "jNoqH0": {
     "string": "Create promotion"
   },
+  "jOgiMP": {
+    "string": "NOT"
+  },
   "jUuHVn": {
     "context": "description",
     "string": "No members found"
@@ -8820,6 +8853,9 @@
   "m9ndUn": {
     "context": "Link label to navigate to webhook settings for an app",
     "string": "Check webhooks"
+  },
+  "mBSBtn": {
+    "string": "Prefix matching"
   },
   "mCP0UD": {
     "context": "order draft creation date",
@@ -9893,6 +9929,9 @@
     "context": "error message",
     "string": "Only pre-authorized payments can be voided"
   },
+  "sZ4enl": {
+    "string": "Excludes results matching the term"
+  },
   "saKXY3": {
     "context": "product label",
     "string": "Not published"
@@ -10513,6 +10552,9 @@
     "context": "site settings section name",
     "string": "Site Settings"
   },
+  "vitgwA": {
+    "string": "Search syntax"
+  },
   "vjsfyn": {
     "string": "Max Value"
   },
@@ -10877,6 +10919,9 @@
   "xqXYF+": {
     "context": "section header",
     "string": "Eligible Products"
+  },
+  "xrCRnH": {
+    "string": "Example"
   },
   "xrF9JK": {
     "string": "No structures found"
