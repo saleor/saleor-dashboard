@@ -113,6 +113,8 @@ interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
   showTopBorder?: boolean;
   themeOverride?: Partial<Theme>;
+  controlledSelection?: GridSelection;
+  onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
 }
 
 export const Datagrid = ({
@@ -150,6 +152,8 @@ export const Datagrid = ({
   navigatorOpts,
   showTopBorder = true,
   themeOverride,
+  controlledSelection,
+  onControlledSelectionChange,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -175,7 +179,21 @@ export const Datagrid = ({
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
   const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
-  const [selection, setSelection] = useState<GridSelection>();
+  const [uncontrolledSelection, setUncontrolledSelection] = useState<GridSelection>();
+  const isSelectionControlled = typeof onControlledSelectionChange === "function";
+  const selection = isSelectionControlled ? controlledSelection : uncontrolledSelection;
+  const setSelectionState = useCallback(
+    (newSelection: GridSelection | undefined) => {
+      if (isSelectionControlled) {
+        onControlledSelectionChange?.(newSelection);
+
+        return;
+      }
+
+      setUncontrolledSelection(newSelection);
+    },
+    [isSelectionControlled, onControlledSelectionChange],
+  );
   const [areCellsDirty, setCellsDirty] = useState(true);
 
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
@@ -195,10 +213,10 @@ export const Datagrid = ({
     if (onRowSelectionChange && selection) {
       // Second parameter is callback to clear selection from parent component
       onRowSelectionChange(Array.from(selection.rows), () => {
-        setSelection(undefined);
+        setSelectionState(undefined);
       });
     }
-  }, [onRowSelectionChange, selection]);
+  }, [onRowSelectionChange, selection, setSelectionState]);
   useEffect(() => {
     if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(column => column.id === recentlyAddedColumn);
@@ -329,11 +347,11 @@ export const Datagrid = ({
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
     if (readonly && !gridSelection.current) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
 
     if (!readonly) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
@@ -400,10 +418,10 @@ export const Datagrid = ({
     (rows: number[]) => {
       if (selection?.rows) {
         onRowsRemoved(rows);
-        setSelection(undefined);
+        setSelectionState(undefined);
       }
     },
-    [selection, onRowsRemoved],
+    [selection, onRowsRemoved, setSelectionState],
   );
   const handleColumnResize = useCallback(
     (column: GridColumn, newSize: number) => {

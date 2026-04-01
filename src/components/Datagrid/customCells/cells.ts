@@ -50,6 +50,27 @@ export function readonlyTextCell(
   };
 }
 
+interface ChevronCellData {
+  kind: "chevron-cell";
+  direction: "down" | "right";
+}
+
+export type ChevronCell = CustomCell<ChevronCellData>;
+
+export function chevronCell(expanded: boolean, hasCursorPointer = true): ChevronCell {
+  return {
+    cursor: hasCursorPointer ? "pointer" : "default",
+    allowOverlay: false,
+    readonly: true,
+    kind: GridCellKind.Custom,
+    copyData: "",
+    data: {
+      kind: "chevron-cell",
+      direction: expanded ? "down" : "right",
+    },
+  };
+}
+
 export function tagsCell(
   tags: Array<{ tag: string; color: string }>,
   selectedTags: string[],
