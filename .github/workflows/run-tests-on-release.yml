@@ -16,17 +16,9 @@ on:
         default: "Dashboard Automation test run "
 
     secrets:
-      STAGING_TOKEN:
+      OP_SERVICE_ACCOUNT_TOKEN:
         required: true
-      E2E_USER_NAME:
-        required: true
-      E2E_USER_PASSWORD:
-        required: true
-      E2E_PERMISSIONS_USERS_PASSWORD:
-        required: true
-      MAILPITURL:
-        required: true
-      SLACK_QA_STATUSES_WEBHOOK_URL:
+      E2E_ENCODE_PASS:
         required: true
 
     outputs:
@@ -91,6 +83,9 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/NEW_E2E_PERMISSIONS_USERS_PASSWORD/password"
 
       - name: Generate variables
         id: cloud_variables
@@ -128,10 +123,10 @@ jobs:
         with:
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-pw-tests:
     runs-on: ubuntu-22.04
@@ -147,25 +142,37 @@ jobs:
           ref: refs/tags/${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
           fetch-tags: true
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        id: load-secrets
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
+          E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
+          E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/NEW_E2E_PERMISSIONS_USERS_PASSWORD/password"
+          MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
           API_URL: ${{ needs.add-check-and-prepare-instance.outputs.API_URL }}
-          E2E_USER_NAME: ${{ secrets.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ needs.add-check-and-prepare-instance.outputs.ACCOUNTS }}
-          MAILPITURL: ${{ secrets.MAILPITURL }}
+          MAILPITURL: ${{ env.MAILPITURL }}
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           PROJECT: "e2e apps-e2e app-smoke"
           DASHBOARD_VERSION: ${{inputs.CUSTOM_VERSION}}
           BRANCH_NAME: ${{ github.ref}}
-          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          SALEOR_CLOUD_SERVICE: ${{ needs.add-check-and-prepare-instance.outputs.SALEOR_CLOUD_SERVICE }}
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -181,11 +188,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Merge playwright reports
-        uses: ./.github/actions/merge-pw-reports
-        with:
-          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
-
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets
@@ -194,10 +196,15 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
+          TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
+
+      - name: Merge playwright reports
+        uses: ./.github/actions/merge-pw-reports
+        with:
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
 
       - id: update-check
-        if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
+        if: always() && needs.add-check-and-prepare-instance.outputs.CHECK_ID
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}

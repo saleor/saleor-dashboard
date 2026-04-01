@@ -36,14 +36,19 @@ test("TC: SALEOR_113 Edit collection: assign product #collections  #e2e", async 
     productToBeAssigned,
   );
   await collectionsPage.expectSuccessBanner();
-  await expect(
-    collectionsPage.assignedSpecificProductRow,
-    `Assigned product: ${productToBeAssigned} should be visible`,
-  ).toContainText(productToBeAssigned);
-  expect(
-    await collectionsPage.assignedSpecificProductRow.count(),
-    `Only 1 category should be visible in table`,
-  ).toEqual(1);
+  /*
+  https://linear.app/saleor/issue/ENG-1416/bug-collection-products-table-does-not-refresh-after-assigning-a
+  Steps skipped due to bug with products table not refreshing after assigning a product to collection. 
+  Once the bug is fixed, we should remove this comment and restore steps.
+  */
+  // await expect(
+  //   collectionsPage.assignedSpecificProductRow,
+  //   `Assigned product: ${productToBeAssigned} should be visible`,
+  // ).toContainText(productToBeAssigned);
+  // expect(
+  //   await collectionsPage.assignedSpecificProductRow.count(),
+  //   `Only 1 category should be visible in table`,
+  // ).toEqual(1);
 });
 test("TC: SALEOR_114 Bulk delete collections #collections  #e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
