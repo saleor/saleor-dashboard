@@ -47,6 +47,7 @@ import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
+import { initCache } from "./graphql/cachePersistence";
 import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
@@ -345,12 +346,17 @@ const root = createRoot(document.querySelector("#dashboard-app")!);
 // Set VITE_DISABLE_STRICT_MODE=true to disable for testing
 const enableStrictMode = import.meta.env.DEV && import.meta.env.VITE_DISABLE_STRICT_MODE !== "true";
 
-root.render(
-  enableStrictMode ? (
-    <StrictMode>
+// Restore persisted Apollo cache from sessionStorage before rendering.
+// This enables stale-while-revalidate: cached data renders instantly,
+// then cache-and-network fetch policy refreshes it in the background.
+initCache().then(() => {
+  root.render(
+    enableStrictMode ? (
+      <StrictMode>
+        <App />
+      </StrictMode>
+    ) : (
       <App />
-    </StrictMode>
-  ) : (
-    <App />
-  ),
-);
+    ),
+  );
+});
