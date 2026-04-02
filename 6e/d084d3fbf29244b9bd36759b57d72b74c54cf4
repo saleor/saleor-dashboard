@@ -1,0 +1,55 @@
+src/utils/handlers/metadataUpdateHelpers.ts
+  55324a71de51d1bd 1
+src/auth/hooks/useAuthProvider.ts
+  55324a71de51d1bd 2,6-20,24,36,38,45-46,61-63,65-66,72-74,76,79-153,155-163,165-170,203,205-226,252-254,257-264,279-281,326-331,342-347,350-358,370-372,406-408
+src/auth/hooks/useAuthProvider.test.ts
+  55324a71de51d1bd 8-16,33-38,42-43,45,47-48,50,54-62,79-84,90-106,108-110,133-146,169-182,203-210,232-245
+src/auth/AuthProvider.test.tsx
+  55324a71de51d1bd 39-73,75,77-78,80-89,143,145-160,162-163,177,179-180,184-185,187-191,196-197,213,215-231,233,235-237,240,248
+src/components/AddressEdit/useAddressValidation.ts
+  55324a71de51d1bd 8-10
+src/auth/mutations.ts
+  55324a71de51d1bd 12-119
+src/auth/tokenStorage.ts
+  55324a71de51d1bd 1-83
+src/shipping/views/RateUpdate.tsx
+  55324a71de51d1bd 65-68
+src/auth/types.ts
+  55324a71de51d1bd 2-6,21-24,54
+src/products/fixtures.ts
+  55324a71de51d1bd 4179
+src/graphql/client.ts
+  55324a71de51d1bd 2,6-8
+src/components/DevModePanel/utils.ts
+  55324a71de51d1bd 2
+src/components/DevModePanel/utils.test.ts
+  55324a71de51d1bd 2,11
+src/utils/credentialsManagement.ts
+  55324a71de51d1bd 34
+src/products/views/ProductList/export.test.ts
+  55324a71de51d1bd 2
+src/auth/views/NewPassword.tsx
+  55324a71de51d1bd 2,13,21,24-25,29-34
+src/graphql/createFetch.ts
+  55324a71de51d1bd 1-195
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.3",
+  "base_commit_sha": "6ed084d3fbf29244b9bd36759b57d72b74c54cf4",
+  "prompts": {
+    "55324a71de51d1bd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fda8a49d-d8c2-4c90-bf0e-28ae77db0e2b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 937,
+      "total_deletions": 467,
+      "accepted_lines": 833,
+      "overriden_lines": 0
+    }
+  }
+}
