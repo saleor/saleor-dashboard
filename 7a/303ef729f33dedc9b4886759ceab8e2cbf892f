@@ -1,0 +1,25 @@
+src/extensions/queries.ts
+  02decfc9e6b4794a 175
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  02decfc9e6b4794a 140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "7a303ef729f33dedc9b4886759ceab8e2cbf892f",
+  "prompts": {
+    "02decfc9e6b4794a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "faf37b06-ab53-4e29-bfcd-5873c4ea2081",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 4,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
