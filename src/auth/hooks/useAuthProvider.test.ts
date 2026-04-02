@@ -1,21 +1,19 @@
 import { ApolloError } from "@apollo/client";
 import { AccountErrorCode } from "@dashboard/graphql";
-import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { waitFor } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useAuthProvider } from "./useAuthProvider";
 
-// Mock dependencies
-jest.mock("@dashboard/legacy-sdk");
-
-const useAuthStateMock = {
-  authenticated: false,
-  authenticating: false,
-  user: null,
-};
-
-const mockLogin = jest.fn();
+jest.mock("@dashboard/auth/tokenStorage", () => ({
+  storage: {
+    getRefreshToken: jest.fn(() => null),
+    getAuthPluginId: jest.fn(() => null),
+    setAccessToken: jest.fn(),
+    setTokens: jest.fn(),
+    clear: jest.fn(),
+  },
+}));
 
 jest.mock("@dashboard/utils/credentialsManagement", () => ({
   login: jest.fn(),
@@ -31,42 +29,37 @@ const mockNotify = jest.fn();
 const mockIntl = {
   formatMessage: jest.fn(message => message.defaultMessage),
 };
-const mockApolloClient = {
+
+const createMockApolloClient = (mutateImpl?: jest.Mock) => ({
   clearStore: jest.fn(),
-};
-
-jest.mock("@dashboard/graphql", () => {
-  const actualModule = jest.requireActual("@dashboard/graphql");
-
-  return {
-    __esModule: true,
-    ...actualModule,
-    useUserDetailsQuery: jest.fn(() => ({
-      data: undefined,
-    })),
-  };
+  mutate:
+    mutateImpl ??
+    jest.fn(() =>
+      Promise.resolve({
+        data: {
+          tokenCreate: {
+            errors: [],
+            token: "test-token",
+            refreshToken: "test-refresh",
+            user: {
+              id: "1",
+              email: "admin@example.com",
+              firstName: "Admin",
+              lastName: "User",
+              isStaff: true,
+              userPermissions: ["MANAGE_ORDERS"],
+            },
+          },
+        },
+      }),
+    ),
 });
 
-(useAuthState as jest.Mock).mockReturnValue(useAuthStateMock);
-(useAuth as jest.Mock).mockReturnValue({
-  login: mockLogin,
-});
 describe("useAuthProvider", () => {
   describe("handleLogin", () => {
     it("should handle successful login", async () => {
       // Arrange
-      mockLogin.mockResolvedValueOnce({
-        data: {
-          tokenCreate: {
-            errors: [],
-            user: {
-              email: "admin@example.com",
-              userPermissions: ["MANAGE_ORDERS"],
-              isStaff: true,
-            },
-          },
-        },
-      });
+      const mockApolloClient = createMockApolloClient();
 
       // Act
       const { result } = renderHook(() =>
@@ -83,29 +76,38 @@ describe("useAuthProvider", () => {
 
       // Assert
       waitFor(() => {
-        expect(mockLogin).toBeCalledtimes(1);
-        expect(mockLogin).toHaveBeenCalledWith({
-          email: "admin@example.com",
-          password: "password",
-          includeDetails: false,
-        });
+        expect(mockApolloClient.mutate).toHaveBeenCalledTimes(1);
+        expect(mockApolloClient.mutate).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: { email: "admin@example.com", password: "password" },
+          }),
+        );
       });
     });
 
     it("should handle login with no permissions", async () => {
       // Arrange
-      mockLogin.mockResolvedValueOnce({
-        data: {
-          tokenCreate: {
-            errors: [],
-            user: {
-              email: "user@example.com",
-              userPermissions: [],
-              isStaff: false,
+      const mockApolloClient = createMockApolloClient(
+        jest.fn(() =>
+          Promise.resolve({
+            data: {
+              tokenCreate: {
+                errors: [],
+                token: "test-token",
+                refreshToken: "test-refresh",
+                user: {
+                  id: "2",
+                  email: "user@example.com",
+                  firstName: "User",
+                  lastName: "Test",
+                  isStaff: false,
+                  userPermissions: [],
+                },
+              },
             },
-          },
-        },
-      });
+          }),
+        ),
+      );
 
       // Act
       const { result } = renderHook(() =>
@@ -128,14 +130,20 @@ describe("useAuthProvider", () => {
 
     it("should handle invalid credentials error", async () => {
       // Arrange
-      mockLogin.mockResolvedValueOnce({
-        data: {
-          tokenCreate: {
-            errors: [{ code: AccountErrorCode.INVALID_CREDENTIALS }],
-            user: null,
-          },
-        },
-      });
+      const mockApolloClient = createMockApolloClient(
+        jest.fn(() =>
+          Promise.resolve({
+            data: {
+              tokenCreate: {
+                errors: [{ code: AccountErrorCode.INVALID_CREDENTIALS }],
+                token: null,
+                refreshToken: null,
+                user: null,
+              },
+            },
+          }),
+        ),
+      );
 
       // Act
       const { result } = renderHook(() =>
@@ -158,14 +166,20 @@ describe("useAuthProvider", () => {
 
     it("should handle login attempt delayed error", async () => {
       // Arrange
-      mockLogin.mockResolvedValueOnce({
-        data: {
-          tokenCreate: {
-            errors: [{ code: AccountErrorCode.LOGIN_ATTEMPT_DELAYED }],
-            user: null,
-          },
-        },
-      });
+      const mockApolloClient = createMockApolloClient(
+        jest.fn(() =>
+          Promise.resolve({
+            data: {
+              tokenCreate: {
+                errors: [{ code: AccountErrorCode.LOGIN_ATTEMPT_DELAYED }],
+                token: null,
+                refreshToken: null,
+                user: null,
+              },
+            },
+          }),
+        ),
+      );
 
       // Act
       const { result } = renderHook(() =>
@@ -186,10 +200,14 @@ describe("useAuthProvider", () => {
 
     it("should handle Apollo error", async () => {
       // Arrange
-      mockLogin.mockRejectedValueOnce(
-        new ApolloError({
-          networkError: new Error("Network error"),
-        }),
+      const mockApolloClient = createMockApolloClient(
+        jest.fn(() =>
+          Promise.reject(
+            new ApolloError({
+              networkError: new Error("Network error"),
+            }),
+          ),
+        ),
       );
 
       // Act
@@ -211,14 +229,20 @@ describe("useAuthProvider", () => {
 
     it("should handle other login errors", async () => {
       // Arrange
-      mockLogin.mockResolvedValueOnce({
-        data: {
-          tokenCreate: {
-            errors: [{ code: AccountErrorCode.ACCOUNT_NOT_CONFIRMED }],
-            user: null,
-          },
-        },
-      });
+      const mockApolloClient = createMockApolloClient(
+        jest.fn(() =>
+          Promise.resolve({
+            data: {
+              tokenCreate: {
+                errors: [{ code: AccountErrorCode.ACCOUNT_NOT_CONFIRMED }],
+                token: null,
+                refreshToken: null,
+                user: null,
+              },
+            },
+          }),
+        ),
+      );
 
       // Act
       const { result } = renderHook(() =>

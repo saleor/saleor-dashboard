@@ -1,10 +1,9 @@
-import { type ApolloQueryResult } from "@apollo/client";
-import { type UserDetailsQuery, type UserFragment } from "@dashboard/graphql";
 import {
-  type GetExternalAccessTokenData,
-  type GetExternalAuthUrlData,
-  type LoginData,
-} from "@dashboard/legacy-sdk";
+  type ExternalAuthenticationUrlMutation,
+  type ExternalObtainAccessTokensMutation,
+  type LoginMutation,
+  type UserFragment,
+} from "@dashboard/graphql";
 
 export interface RequestExternalLoginInput {
   redirectUri: string;
@@ -18,6 +17,11 @@ export interface ExternalLoginInput {
 export interface RequestExternalLogoutInput {
   returnTo: string;
 }
+
+export type LoginData = LoginMutation["tokenCreate"];
+export type GetExternalAccessTokenData =
+  ExternalObtainAccessTokensMutation["externalObtainAccessTokens"];
+export type GetExternalAuthUrlData = ExternalAuthenticationUrlMutation["externalAuthenticationUrl"];
 
 export const UserContextError = {
   loginError: "loginError",
@@ -47,5 +51,5 @@ export interface UserContext {
   isCredentialsLogin: boolean;
   authenticated: boolean;
   errors: UserContextError[];
-  refetchUser?: () => Promise<ApolloQueryResult<UserDetailsQuery>>;
+  refetchUser?: () => Promise<unknown>;
 }

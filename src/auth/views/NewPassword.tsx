@@ -1,6 +1,6 @@
-import { type AccountErrorFragment } from "@dashboard/graphql";
+import { storage } from "@dashboard/auth/tokenStorage";
+import { type AccountErrorFragment, useSetPasswordMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useAuth } from "@dashboard/legacy-sdk";
 import { parseQs } from "@dashboard/url-utils";
 import { useState } from "react";
 import { type RouteComponentProps } from "react-router";
@@ -10,7 +10,7 @@ import { type NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword = ({ location }: RouteComponentProps) => {
   const navigate = useNavigator();
-  const { setPassword } = useAuth();
+  const [setPassword] = useSetPasswordMutation();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<AccountErrorFragment[]>([]);
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1)) as any;
@@ -18,11 +18,20 @@ const NewPassword = ({ location }: RouteComponentProps) => {
     setLoading(true);
 
     const result = await setPassword({
-      email: params.email,
-      password: data.password,
-      token: params.token,
+      variables: {
+        email: params.email,
+        password: data.password,
+        token: params.token,
+      },
     });
     const errors = (result.data?.setPassword?.errors || []) as AccountErrorFragment[];
+
+    if (result.data?.setPassword?.token) {
+      storage.setTokens({
+        accessToken: result.data.setPassword.token,
+        refreshToken: result.data.setPassword.refreshToken,
+      });
+    }
 
     setErrors(errors);
     setLoading(false);
