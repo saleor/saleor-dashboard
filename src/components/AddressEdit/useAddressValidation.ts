@@ -4,7 +4,10 @@ import {
   CountryCode,
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
-import { type ChoiceValue } from "@dashboard/legacy-sdk/apollo/types";
+
+type ChoiceValue = NonNullable<
+  AddressValidationRulesQuery["addressValidationRules"]
+>["countryAreaChoices"][number];
 
 interface AreaChoices {
   label: string;

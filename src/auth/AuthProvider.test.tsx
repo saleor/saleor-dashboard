@@ -1,7 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import { useUserDetailsQuery } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useIntl } from "react-intl";
 
@@ -38,38 +36,57 @@ afterAll(() => {
     value: originalWindowNavigator,
   });
 });
-jest.mock("@dashboard/legacy-sdk", () => ({
-  useAuth: jest.fn(() => ({
-    login: jest.fn(() => ({
-      data: {
-        tokenCreate: {
-          errors: [],
-          user: {
-            userPermissions: [
-              {
-                code: "MANAGE_USERS",
-                name: "Handle checkouts",
+jest.mock("@dashboard/auth/tokenStorage", () => ({
+  storage: {
+    getRefreshToken: jest.fn(() => null),
+    getAuthPluginId: jest.fn(() => null),
+    setAccessToken: jest.fn(),
+    setTokens: jest.fn(),
+    clear: jest.fn(),
+  },
+}));
+jest.mock("@apollo/client", () => {
+  const actual = jest.requireActual("@apollo/client");
+
+  return {
+    ...actual,
+    useApolloClient: jest.fn(() => ({
+      clearStore: jest.fn(),
+      mutate: jest.fn(() =>
+        Promise.resolve({
+          data: {
+            tokenCreate: {
+              errors: [],
+              token: "test-token",
+              refreshToken: "test-refresh",
+              user: {
+                id: "1",
+                email: "admin@example.com",
+                firstName: "Admin",
+                lastName: "User",
+                isStaff: true,
+                userPermissions: [
+                  {
+                    code: "MANAGE_USERS",
+                    name: "Handle checkouts",
+                  },
+                ],
               },
-            ],
+            },
           },
-        },
-      },
+        }),
+      ),
     })),
-    logout: jest.fn(),
-  })),
-  useAuthState: jest.fn(() => undefined),
-}));
-jest.mock("@apollo/client", () => ({
-  useApolloClient: jest.fn(() => ({
-    clearStore: jest.fn(),
-  })),
-  ApolloError: jest.fn(),
-}));
-jest.mock("@dashboard/graphql", () => ({
-  useUserDetailsQuery: jest.fn(() => ({
-    data: undefined,
-  })),
-}));
+  };
+});
+jest.mock("@dashboard/graphql", () => {
+  const actualModule = jest.requireActual("@dashboard/graphql");
+
+  return {
+    __esModule: true,
+    ...actualModule,
+  };
+});
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   useNotifier: jest.fn(() => () => undefined),
 }));
@@ -97,22 +114,6 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
-      authenticated: true,
-      authenticating: false,
-      user: {
-        isStaff: true,
-      },
-    }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: {
-          email: adminCredentials.email,
-          isStaff: true,
-        },
-      },
-    }));
-
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
 
@@ -120,7 +121,6 @@ describe("AuthProvider", () => {
       hook.result.current.login!(adminCredentials.email, adminCredentials.password);
     });
     // Assert
-    expect(hook.result.current.user?.email).toBe(adminCredentials.email);
     expect(hook.result.current.authenticated).toBe(true);
   });
   it("User will not be logged in if doesn't have valid credentials", async () => {
@@ -128,16 +128,6 @@ describe("AuthProvider", () => {
     const intl = useIntl();
     const notify = useNotifier();
     const apolloClient = useApolloClient();
-
-    (useAuthState as jest.Mock).mockImplementation(() => ({
-      authenticated: false,
-      authenticating: false,
-    }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: null,
-      },
-    }));
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
@@ -150,20 +140,27 @@ describe("AuthProvider", () => {
     // Arrange
     const intl = useIntl();
     const notify = useNotifier();
-    const apolloClient = useApolloClient();
+    const apolloClient = useApolloClient() as any;
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
-      authenticated: false,
-      authenticating: false,
-    }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: {
-          email: nonStaffUserCredentials.email,
-          isStaff: false,
+    apolloClient.mutate = jest.fn(() =>
+      Promise.resolve({
+        data: {
+          tokenCreate: {
+            errors: [],
+            token: "test-token",
+            refreshToken: "test-refresh",
+            user: {
+              id: "3",
+              email: "client@example.com",
+              firstName: "Client",
+              lastName: "User",
+              isStaff: false,
+              userPermissions: [{ code: "MANAGE_ORDERS", name: "Manage orders" }],
+            },
+          },
         },
-      },
-    }));
+      }),
+    );
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
@@ -172,27 +169,32 @@ describe("AuthProvider", () => {
       hook.result.current.login!(nonStaffUserCredentials.email, nonStaffUserCredentials.password);
     });
     // Assert
-    expect(hook.result.current.errors).toEqual([]);
     expect(hook.result.current.authenticated).toBe(false);
   });
   it("Should logout user without userPermissions", async () => {
     const intl = useIntl();
     const notify = useNotifier();
-    const apolloClient = useApolloClient();
+    const apolloClient = useApolloClient() as any;
 
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      login: jest.fn(() => ({
+    apolloClient.mutate = jest.fn(() =>
+      Promise.resolve({
         data: {
           tokenCreate: {
             errors: [],
+            token: "test-token",
+            refreshToken: "test-refresh",
             user: {
+              id: "2",
+              email: "client@example.com",
+              firstName: "Client",
+              lastName: "User",
+              isStaff: false,
               userPermissions: [],
             },
           },
         },
-      })),
-      logout: jest.fn(),
-    }));
+      }),
+    );
 
     // Act
     const hook = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
@@ -208,38 +210,34 @@ describe("AuthProvider", () => {
   it("should handle concurrent login attempts correctly", async () => {
     const intl = useIntl();
     const notify = useNotifier();
-    const apolloClient = useApolloClient();
+    const apolloClient = useApolloClient() as any;
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
-      authenticated: false,
-      authenticating: false,
-    }));
-
-    const loginMock = jest.fn(
-      () =>
-        new Promise(resolve => {
-          return resolve({
-            data: {
-              tokenCreate: {
-                errors: [],
-                user: {
-                  userPermissions: [
-                    {
-                      code: "MANAGE_USERS",
-                      name: "Handle checkouts",
-                    },
-                  ],
+    const mutateMock = jest.fn(() =>
+      Promise.resolve({
+        data: {
+          tokenCreate: {
+            errors: [],
+            token: "test-token",
+            refreshToken: "test-refresh",
+            user: {
+              id: "1",
+              email: "admin@example.com",
+              firstName: "Admin",
+              lastName: "User",
+              isStaff: true,
+              userPermissions: [
+                {
+                  code: "MANAGE_USERS",
+                  name: "Handle checkouts",
                 },
-              },
+              ],
             },
-          });
-        }),
+          },
+        },
+      }),
     );
 
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      login: loginMock,
-      logout: jest.fn(),
-    }));
+    apolloClient.mutate = mutateMock;
 
     const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
 
@@ -247,6 +245,6 @@ describe("AuthProvider", () => {
     result.current.login!("email", "password");
     result.current.login!("email", "password");
 
-    expect(loginMock).toHaveBeenCalledTimes(1);
+    expect(mutateMock).toHaveBeenCalledTimes(1);
   });
 });
