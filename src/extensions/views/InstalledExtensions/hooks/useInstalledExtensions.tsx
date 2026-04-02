@@ -137,9 +137,7 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      filter: {
-        isActive: true,
-      },
+      filter: {},
       canFetchAppEvents: hasManagedAppsPermission,
     },
   });
