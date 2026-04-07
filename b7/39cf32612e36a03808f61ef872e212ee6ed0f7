@@ -1,0 +1,33 @@
+src/translations/components/TranslationFields/TranslationFieldsLong.tsx
+  63f7873ba36db302 13,34-35
+src/translations/components/TranslationFields/TranslationFieldsShort.tsx
+  63f7873ba36db302 13,35-36
+src/translations/types.ts
+  63f7873ba36db302 34
+src/translations/utils.ts
+  63f7873ba36db302 76
+src/translations/components/TranslationFields/useRichTextSubmit.ts
+  63f7873ba36db302 8
+src/translations/components/TranslationFields/TranslationFieldsRich.tsx
+  63f7873ba36db302 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "b739cf32612e36a03808f61ef872e212ee6ed0f7",
+  "prompts": {
+    "63f7873ba36db302": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019d68a5-7958-78a3-b2e2-0b7b33d293ed",
+        "model": "gpt-5.3-codex"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 10,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    }
+  }
+}
