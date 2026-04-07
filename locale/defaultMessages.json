@@ -3239,7 +3239,7 @@
   },
   "Ge+dUe": {
     "context": "currency channel",
-    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
+    "string": "To delete {channelSlug} you have to create a channel with currency: {currency} to be able to move all existing orders."
   },
   "Gfbp36": {
     "context": "dialog header",
