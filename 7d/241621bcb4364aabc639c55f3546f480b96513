@@ -1,0 +1,39 @@
+src/discounts/models/predicateSchemas.ts
+  a69ab77572d91b50 1-71
+src/discounts/models/predicateSchemas.test.ts
+  a69ab77572d91b50 1-115,117-152
+src/translations/utils.ts
+  a69ab77572d91b50 76,78
+src/products/components/ProductUpdatePage/parseEditorJsOutput.ts
+  a69ab77572d91b50 1,3-42
+src/discounts/views/DiscountDetails/hooks/useFetchConditionsOptionsDetails.ts
+  a69ab77572d91b50 56-60
+src/discounts/models/transformRule.ts
+  a69ab77572d91b50 17,39-44,58-63
+src/products/components/ProductUpdatePage/ProductUpdatePage.tsx
+  a69ab77572d91b50 325,332
+src/products/utils/handlers.test.ts
+  a69ab77572d91b50 19,26,50,82,89,96,128,135
+src/products/components/ProductUpdatePage/parseEditorJsOutput.test.ts
+  a69ab77572d91b50 1-118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "7d241621bcb4364aabc639c55f3546f480b96513",
+  "prompts": {
+    "a69ab77572d91b50": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61f9e3bd-fff1-4add-ac47-162ec81d67f3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 435,
+      "total_deletions": 28,
+      "accepted_lines": 411,
+      "overriden_lines": 1
+    }
+  }
+}
