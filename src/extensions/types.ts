@@ -67,6 +67,7 @@ export type InstalledExtension = {
   actions?: ReactNode;
   problems?: AppProblem[];
   appType?: AppTypeEnum | null;
+  isActive?: boolean | null;
   activeProblemCount: number;
   criticalProblemCount: number;
 };
