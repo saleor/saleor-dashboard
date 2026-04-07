@@ -31,7 +31,7 @@ const messages = defineMessages({
     description: "note on currency",
   },
   noAvailableChannel: {
-    id: "Ge+dUe",
+    id: "a24HjK",
     defaultMessage:
       "To delete {channelSlug} you have to create a channel with currency: {currency} to be able to move all existing orders.",
     description: "currency channel",

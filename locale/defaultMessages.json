@@ -3237,7 +3237,7 @@
     "context": "model types section name",
     "string": "Model Types"
   },
-  "Ge+dUe": {
+  "a24HjK": {
     "context": "currency channel",
     "string": "To delete {channelSlug} you have to create a channel with currency: {currency} to be able to move all existing orders."
   },
