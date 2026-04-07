@@ -1,0 +1,41 @@
+src/extensions/views/InstalledExtensions/components/InstalledExtensionsList/InstalledExtensionsList.tsx
+  02decfc9e6b4794a 155,170
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.test.tsx
+  02decfc9e6b4794a 128,140
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  02decfc9e6b4794a 168
+src/extensions/types.ts
+  02decfc9e6b4794a 70
+src/extensions/views/InstalledExtensions/components/AppProblems/utils.ts
+  02decfc9e6b4794a 37,46
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList/ProblemsList.tsx
+  02decfc9e6b4794a 23,36,95,150
+src/extensions/views/InstalledExtensions/components/AppProblems/utils.test.ts
+  02decfc9e6b4794a 103,105,114-121,124
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.tsx
+  02decfc9e6b4794a 31,41,49
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemCard/ProblemCard.stories.tsx
+  02decfc9e6b4794a 29-30,39-42,58-77
+src/extensions/views/InstalledExtensions/components/AppProblems/ProblemsList/ProblemsList.stories.tsx
+  02decfc9e6b4794a 1,3,29,38,54,73-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "b890b191460f75658069d5110720b1cdcaa1fced",
+  "prompts": {
+    "02decfc9e6b4794a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "faf37b06-ab53-4e29-bfcd-5873c4ea2081",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 69,
+      "total_deletions": 9,
+      "accepted_lines": 68,
+      "overriden_lines": 0
+    }
+  }
+}
