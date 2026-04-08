@@ -2,4 +2,4 @@
 "saleor-dashboard": minor
 ---
 
-Release 3.23
+Version bump for the 3.23 release
