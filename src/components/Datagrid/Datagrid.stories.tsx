@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ReactElement } from "react";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../storybook/chromatic";
 import {
   dateCell,
   dropdownCell,
@@ -162,6 +163,9 @@ const meta: Meta<typeof Datagrid> = {
     menuItems,
     selectionActions: () => null,
     onChange: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

@@ -2,6 +2,7 @@ import { voucherList } from "@dashboard/discounts/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { VoucherListDatagrid } from "./VoucherListDatagrid";
 
 const meta: Meta<typeof VoucherListDatagrid> = {
@@ -21,6 +22,9 @@ const meta: Meta<typeof VoucherListDatagrid> = {
     onUpdateListSettings: fn(),
     onSelectVouchersIds: fn(),
     filterDependency: { label: "Channel", value: "channel-1" },
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

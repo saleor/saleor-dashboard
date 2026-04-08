@@ -9622,7 +9622,7 @@ export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWe
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
 export const AppHasProblemsDocument = gql`
     query AppHasProblems($first: Int!) {
-  apps(first: $first, filter: {isActive: true}) {
+  apps(first: $first) {
     edges {
       node {
         id

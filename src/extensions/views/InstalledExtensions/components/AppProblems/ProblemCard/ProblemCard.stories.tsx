@@ -26,6 +26,8 @@ type Story = StoryObj<typeof ProblemCard>;
 export const Critical: Story = {
   args: {
     problem: criticalAppProblem,
+    appType: AppTypeEnum.THIRDPARTY,
+    isActive: true,
     onClearProblem: fn(),
     hasManagedAppsPermission: true,
   },
@@ -34,6 +36,10 @@ export const Critical: Story = {
 export const Warning: Story = {
   args: {
     problem: warningAppProblem,
+    appType: AppTypeEnum.THIRDPARTY,
+    isActive: true,
+    onClearProblem: fn(),
+    hasManagedAppsPermission: true,
   },
 };
 
@@ -47,5 +53,25 @@ export const WebhookError: Story = {
   args: {
     problem: webhookDeliveryError,
     appType: AppTypeEnum.THIRDPARTY,
+  },
+};
+
+export const CriticalDisabledApp: Story = {
+  args: {
+    problem: criticalAppProblem,
+    appType: AppTypeEnum.THIRDPARTY,
+    isActive: false,
+    onClearProblem: fn(),
+    hasManagedAppsPermission: true,
+  },
+};
+
+export const WarningDisabledApp: Story = {
+  args: {
+    problem: warningAppProblem,
+    appType: AppTypeEnum.THIRDPARTY,
+    isActive: false,
+    onClearProblem: fn(),
+    hasManagedAppsPermission: true,
   },
 };
