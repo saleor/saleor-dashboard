@@ -63,10 +63,17 @@ export const GiftCardCustomerSelectField = ({
   );
 
   const handleSelect = (option: Option | null): void => {
-    if (!option?.value) {
+    if (!option) {
+      setSelectedCustomer({
+        email: "",
+        name: "",
+      });
       return;
     }
 
+    if (!option.value) {
+      return;
+    }
     const email = String(option.value);
     const matchedCustomer = options.find(o => o.value === email);
 
