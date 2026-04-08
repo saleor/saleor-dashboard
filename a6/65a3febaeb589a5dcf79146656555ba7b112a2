@@ -1,0 +1,41 @@
+src/utils/richText/useRichText.test.ts
+  748ed763b4baa14a 2,24-27,30,36-39,42,67-69
+src/welcomePage/WelcomePageOnboarding/WelcomePageOnboarding.test.tsx
+  748ed763b4baa14a 4,88-93,119-121,147-149,154-156,199-204,235-237,241-243,245-247,279-281,284-286
+src/extensions/views/InstalledExtensions/hooks/useActiveAppsInstallations.test.ts
+  748ed763b4baa14a 9-11
+src/extensions/components/AppExtensionContext/AppExtensionContextProvider.test.tsx
+  748ed763b4baa14a 221-223,285-287
+src/hooks/useForm/useChangedData.test.tsx
+  748ed763b4baa14a 1,18-21,42-47
+src/orders/components/OrderReturnPage/useFulfillmentFormset.test.ts
+  748ed763b4baa14a 1,96-98
+src/utils/hook-form/auto-submit.test.tsx
+  748ed763b4baa14a 135,138-141,143-146
+src/auth/AuthProvider.test.tsx
+  748ed763b4baa14a 218,222,233-260
+src/orders/components/OrderManualTransactionRefundPage/OrderManualTransactionRefundPage.test.tsx
+  748ed763b4baa14a 12,113,117,151,156-157
+src/extensions/views/AddCustomExtension/AddCustomExtension.test.tsx
+  748ed763b4baa14a 2,92-94,108-119,138-145,147-149,171-178,180-182,215-222,224-226,271-278,280-282
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "a665a3febaeb589a5dcf79146656555ba7b112a2",
+  "prompts": {
+    "748ed763b4baa14a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "11194fd4-34d0-4c61-8995-38dc9c33bed0",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 190,
+      "total_deletions": 124,
+      "accepted_lines": 180,
+      "overriden_lines": 0
+    }
+  }
+}
