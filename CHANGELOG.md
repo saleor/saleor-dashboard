@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.38
+
+### Patch Changes
+
+- [#6486](https://github.com/saleor/saleor-dashboard/pull/6486) [`ac2efda`](https://github.com/saleor/saleor-dashboard/commit/ac2efda315ee76d24b2073b99d8176663d87f46b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show apps' Problems even for disabled apps
+
 ## 3.22.37
 
 ### Patch Changes
