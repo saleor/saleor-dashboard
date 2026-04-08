@@ -18,7 +18,7 @@ interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> 
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent = ({
+export const GiftCardCreateDialogContent = ({
   onClose,
   refetchQueries,
   initialCustomer,
@@ -93,5 +93,3 @@ const GiftCardCreateDialogContent = ({
     </DashboardModal.Content>
   );
 };
-
-export default GiftCardCreateDialogContent;
