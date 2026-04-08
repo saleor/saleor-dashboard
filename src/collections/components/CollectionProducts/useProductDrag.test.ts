@@ -1,5 +1,5 @@
 import type { DragEndEvent } from "@dnd-kit/core";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { type Product } from "./types";
 import { useProductDrag } from "./useProductDrag";

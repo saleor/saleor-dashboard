@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { type PropsWithChildren, useContext } from "react";
 
 import { NotificationContext } from ".";

@@ -1,6 +1,5 @@
 import { useVoucherCodesQuery } from "@dashboard/graphql";
-import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useVoucherCodes } from "./useVoucherCodes";
 

@@ -1,5 +1,5 @@
 import { Locale, LocaleContext } from "@dashboard/components/Locale";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { type ReactNode } from "react";
 
 import useDateLocalize from "./useDateLocalize";

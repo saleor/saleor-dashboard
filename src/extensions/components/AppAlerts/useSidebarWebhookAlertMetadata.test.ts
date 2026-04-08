@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useUserAccountUpdateMutation } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import {
   DELIVERY_ATTEMPT_KEY,

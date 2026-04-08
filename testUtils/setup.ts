@@ -2,6 +2,8 @@ import "@testing-library/jest-dom";
 
 import { configure } from "@testing-library/react";
 
+(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
+
 jest.mock("@sentry/react");
 jest.mock("react-hotkeys-hook", () => ({
   useHotkeys: jest.fn(),
