@@ -9773,6 +9773,10 @@
   "rbrahO": {
     "string": "Close"
   },
+  "rccigC": {
+    "context": "option label prefix for using a typed email address",
+    "string": "Use email:"
+  },
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
