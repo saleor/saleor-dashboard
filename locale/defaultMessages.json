@@ -3237,10 +3237,6 @@
     "context": "model types section name",
     "string": "Model Types"
   },
-  "Ge+dUe": {
-    "context": "currency channel",
-    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
-  },
   "Gfbp36": {
     "context": "dialog header",
     "string": "Unassign Products From Shipping"
@@ -6741,6 +6737,10 @@
   "a0TDWs": {
     "context": "search section name",
     "string": "All Search Results"
+  },
+  "a24HjK": {
+    "context": "currency channel",
+    "string": "To delete {channelSlug} you have to create a channel with currency: {currency} to be able to move all existing orders."
   },
   "a2o5uc": {
     "context": "custom extension page create, tooltip",
