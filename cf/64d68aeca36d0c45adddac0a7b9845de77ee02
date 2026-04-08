@@ -1,0 +1,33 @@
+testUtils/setup.ts
+  ef3eabcc18cc2803 5-6
+src/extensions/views/EditManifestExtension/components/AppPermissionsDialog/AppPermissionsDialogState.test.ts
+  ef3eabcc18cc2803 2
+src/extensions/views/ViewManifestExtension/components/AppFrame/useUpdateAppToken.test.ts
+  ef3eabcc18cc2803 1,12,26,47
+src/extensions/views/ExploreExtensions/hooks/useAppStoreExtensions.test.ts
+  ef3eabcc18cc2803 1,72-74,94-96,123-125
+src/components/ModalFilters/useModalUrlValueProvider.test.tsx
+  ef3eabcc18cc2803 85-86
+package.json
+  ef3eabcc18cc2803 233
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "cf64d68aeca36d0c45adddac0a7b9845de77ee02",
+  "prompts": {
+    "ef3eabcc18cc2803": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "592a68cb-74c8-4205-8782-538ab799ccda",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 24,
+      "total_deletions": 26,
+      "accepted_lines": 20,
+      "overriden_lines": 0
+    }
+  }
+}
