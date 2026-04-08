@@ -73,9 +73,9 @@ export const mapAttributeValuesToTranslationFields = (
       },
     ),
     name: attrVal.name,
-    translation: attrVal.translation?.richText || attrVal.translation?.plainText || null,
+    translation: attrVal.translation?.richText || attrVal.translation?.plainText || "",
     type: attrVal.richText ? "rich" : "short",
-    value: attrVal.richText || attrVal.plainText,
+    value: attrVal.richText || attrVal.plainText || "",
   })) || [];
 
 export const getAttributeValueTranslationsInputData = (
