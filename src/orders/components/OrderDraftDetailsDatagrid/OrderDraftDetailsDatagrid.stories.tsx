@@ -4,6 +4,7 @@ import { type GetOrderLineDiscountContextConsumerProps } from "@dashboard/produc
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { OrderDraftDetailsDatagrid } from "./OrderDraftDetailsDatagrid";
 
 const placeholderImage = "https://via.placeholder.com/64";
@@ -48,6 +49,9 @@ const meta: Meta<typeof OrderDraftDetailsDatagrid> = {
     onOrderLineChange: fn(),
     onOrderLineRemove: fn(),
     onOrderLineShowMetadata: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

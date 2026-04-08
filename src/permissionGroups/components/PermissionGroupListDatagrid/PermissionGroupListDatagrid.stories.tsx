@@ -2,6 +2,7 @@ import { permissionGroups } from "@dashboard/permissionGroups/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { PermissionGroupListDatagrid } from "./PermissionGroupListDatagrid";
 
 const meta: Meta<typeof PermissionGroupListDatagrid> = {
@@ -15,6 +16,9 @@ const meta: Meta<typeof PermissionGroupListDatagrid> = {
     onSort: fn(),
     settings: { columns: ["name", "members"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 
