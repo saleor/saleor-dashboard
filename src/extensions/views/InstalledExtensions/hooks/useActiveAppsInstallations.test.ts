@@ -6,7 +6,9 @@ import { useActiveAppsInstallations } from "./useActiveAppsInstallations";
 
 jest.mock("@apollo/client", () => ({
   gql: jest.fn(),
-  useApolloClient: jest.fn(),
+  useApolloClient: jest.fn(() => ({
+    refetchQueries: jest.fn(),
+  })),
 }));
 
 jest.mock("@dashboard/hooks/useLocalStorage");

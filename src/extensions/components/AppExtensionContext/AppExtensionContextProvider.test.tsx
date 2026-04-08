@@ -218,7 +218,9 @@ describe("ExternalAppContext", () => {
       // Act
       const button = screen.getByTestId("open-app-button");
 
-      button.click();
+      act(() => {
+        button.click();
+      });
 
       // Assert
       const dialog = screen.getByTestId("app-dialog");
@@ -280,7 +282,9 @@ describe("ExternalAppContext", () => {
 
       const button = screen.getByTestId("open-version-app-button");
 
-      button.click();
+      act(() => {
+        button.click();
+      });
 
       // Assert
       const frame = screen.getByTestId("app-frame");
