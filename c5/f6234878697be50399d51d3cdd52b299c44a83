@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "c5f6234878697be50399d51d3cdd52b299c44a83",
+  "prompts": {
+    "0bd5aab2cbabf97c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ea1d7322-7d31-419b-9b31-29bd36859617",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 12,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
