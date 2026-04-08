@@ -100,9 +100,9 @@ describe("AppProblems / utils / getActionLink", () => {
     });
   });
 
-  it("returns 'openTheApp' link for THIRDPARTY AppProblem", () => {
+  it("returns 'openTheApp' link for active THIRDPARTY AppProblem", () => {
     // Act
-    const result = getActionLink(criticalProblemFixture, "app-456", AppTypeEnum.THIRDPARTY);
+    const result = getActionLink(criticalProblemFixture, "app-456", AppTypeEnum.THIRDPARTY, true);
 
     // Assert
     expect(result).toEqual({
@@ -111,9 +111,17 @@ describe("AppProblems / utils / getActionLink", () => {
     });
   });
 
+  it("returns null for disabled THIRDPARTY AppProblem", () => {
+    // Act
+    const result = getActionLink(criticalProblemFixture, "app-456", AppTypeEnum.THIRDPARTY, false);
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
   it("returns null for AppProblem with non-THIRDPARTY type", () => {
     // Act
-    const result = getActionLink(criticalProblemFixture, "app-789", AppTypeEnum.LOCAL);
+    const result = getActionLink(criticalProblemFixture, "app-789", AppTypeEnum.LOCAL, true);
 
     // Assert
     expect(result).toBeNull();

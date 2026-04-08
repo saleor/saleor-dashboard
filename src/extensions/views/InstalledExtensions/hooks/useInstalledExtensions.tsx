@@ -137,9 +137,7 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      filter: {
-        isActive: true,
-      },
+      filter: {},
       canFetchAppEvents: hasManagedAppsPermission,
     },
   });
@@ -167,6 +165,7 @@ export const useInstalledExtensions = () => {
         return {
           id: id,
           name: name ?? "",
+          isActive,
           logo: getExtensionLogo({
             logo: brand?.logo?.default,
             type,

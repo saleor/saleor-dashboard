@@ -2,6 +2,7 @@ import { customerList } from "@dashboard/customers/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { CustomerListDatagrid } from "./CustomerListDatagrid";
 
 const meta: Meta<typeof CustomerListDatagrid> = {
@@ -19,6 +20,9 @@ const meta: Meta<typeof CustomerListDatagrid> = {
     onUpdateListSettings: fn(),
     onSelectCustomerIds: fn(),
     onRowClick: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 
