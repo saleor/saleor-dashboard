@@ -320,7 +320,8 @@ const ProductUpdatePage = ({
       const newProductDescription = productDescriptionField.value;
 
       // cache may be empty if editor was not used before sending event to app
-      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+      const productDescriptionWithFallback =
+        descriptionCache.current ?? (JSON.parse(product.description) as OutputData);
 
       try {
         const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
