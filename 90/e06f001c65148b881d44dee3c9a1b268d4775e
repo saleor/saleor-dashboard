@@ -1,0 +1,23 @@
+src/discounts/models/transformRule.ts
+  a69ab77572d91b50 44-45,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.5",
+  "base_commit_sha": "90e06f001c65148b881d44dee3c9a1b268d4775e",
+  "prompts": {
+    "a69ab77572d91b50": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61f9e3bd-fff1-4add-ac47-162ec81d67f3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
