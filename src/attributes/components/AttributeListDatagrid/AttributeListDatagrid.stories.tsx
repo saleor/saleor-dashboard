@@ -2,6 +2,7 @@ import { attributes } from "@dashboard/attributes/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { AttributeListDatagrid } from "./AttributeListDatagrid";
 
 const meta: Meta<typeof AttributeListDatagrid> = {
@@ -16,6 +17,9 @@ const meta: Meta<typeof AttributeListDatagrid> = {
     settings: { columns: ["slug", "name", "visible", "use-in-faceted-search"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectAttributesIds: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

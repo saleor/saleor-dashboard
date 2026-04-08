@@ -2,6 +2,7 @@ import { categories } from "@dashboard/categories/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { CategoryListDatagrid } from "./CategoryListDatagrid";
 
 const meta: Meta<typeof CategoryListDatagrid> = {
@@ -16,6 +17,9 @@ const meta: Meta<typeof CategoryListDatagrid> = {
     settings: { columns: ["name", "subcategories", "products"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectCategoriesIds: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

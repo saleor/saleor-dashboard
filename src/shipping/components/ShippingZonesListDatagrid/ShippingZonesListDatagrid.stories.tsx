@@ -2,6 +2,7 @@ import { shippingZones } from "@dashboard/shipping/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { ShippingZoneListDatagrid } from "./ShippingZonesListDatagrid";
 
 const meta: Meta<typeof ShippingZoneListDatagrid> = {
@@ -14,6 +15,9 @@ const meta: Meta<typeof ShippingZoneListDatagrid> = {
     settings: { columns: ["name", "priceRange", "countries"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectShippingZones: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

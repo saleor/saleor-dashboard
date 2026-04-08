@@ -3,6 +3,7 @@ import { type RelayToFlat } from "@dashboard/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { CategoryProductListDatagrid } from "./CategoryProductListDatagrid";
 
 const mockProducts: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]> = [
@@ -30,6 +31,9 @@ const meta: Meta<typeof CategoryProductListDatagrid> = {
     settings: { columns: ["name"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
     onSelectProductsIds: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

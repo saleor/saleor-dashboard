@@ -2,6 +2,7 @@ import { staffMembers } from "@dashboard/staff/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { StaffListDatagrid } from "./StaffListDatagrid";
 
 const meta: Meta<typeof StaffListDatagrid> = {
@@ -14,6 +15,9 @@ const meta: Meta<typeof StaffListDatagrid> = {
     onSort: fn(),
     settings: { columns: ["name", "status", "email"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

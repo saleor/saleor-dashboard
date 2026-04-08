@@ -2,6 +2,7 @@ import { order } from "@dashboard/orders/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { OrderDetailsDatagrid } from "./OrderDetailsDatagrid";
 
 const placeholderImage = "https://via.placeholder.com/64";
@@ -15,6 +16,9 @@ const meta: Meta<typeof OrderDetailsDatagrid> = {
     lines: orderFixture.lines,
     loading: false,
     onOrderLineShowMetadata: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 
