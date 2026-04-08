@@ -19,7 +19,7 @@ import { Box, Textarea } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
+import { GiftCardSendToCustomer } from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import { GiftCardCreateMoneyInput } from "./GiftCardCreateMoneyInput";
@@ -57,7 +57,7 @@ interface GiftCardCreateDialogFormProps {
 
 const defaultInitialCustomer = { email: "", name: "" };
 
-const GiftCardCreateDialogForm = ({
+export const GiftCardCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
@@ -175,5 +175,3 @@ const GiftCardCreateDialogForm = ({
     </>
   );
 };
-
-export default GiftCardCreateDialogForm;
