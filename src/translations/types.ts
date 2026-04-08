@@ -31,7 +31,7 @@ export interface TranslationField<T extends string = string> {
   id?: string;
   displayName: string;
   name: T;
-  translation: string;
+  translation: string | null;
   type: TranslationFieldType;
   value: string;
 }
