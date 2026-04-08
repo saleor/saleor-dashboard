@@ -15,7 +15,7 @@ export class TaxesPage extends BasePage {
   constructor(
     page: Page,
     readonly appOrFlatRateSelect = page.getByTestId("tax-calculation-strategy-select"),
-    readonly chanelListRow = page.getByTestId("channels-list-rows"),
+    readonly channelListRow = page.getByTestId("channels-list-rows"),
     readonly countriesListRow = page.getByTestId("countries-list-rows"),
     readonly classListRow = page.getByTestId("class-list-rows"),
     readonly countriesTab = page.getByTestId("countries-tab"),
@@ -150,7 +150,7 @@ export class TaxesPage extends BasePage {
   }
 
   async selectChannel(channelName: string) {
-    await this.chanelListRow.filter({ hasText: channelName }).click();
+    await this.channelListRow.filter({ hasText: channelName }).click();
   }
 
   async gotoChannelsTabUrl() {
