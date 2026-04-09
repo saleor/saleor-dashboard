@@ -125,6 +125,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
         {
           id: "1",
           name: "Test App",
+          isActive: true,
           logo: expect.any(Object),
           info: null,
           href: expect.any(String),
@@ -136,6 +137,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
         {
           id: "2",
           name: "Test App 2",
+          isActive: false,
           logo: expect.any(Object),
           info: expect.any(Object),
           href: expect.any(String),

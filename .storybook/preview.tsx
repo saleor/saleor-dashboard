@@ -45,13 +45,6 @@ const preview: Preview = {
   ],
   parameters: {
     chromatic: {
-      /**
-       * Tweaking values, mostly to get rid of false negatives from Datagrid (canvas)
-       * We can try to tweak this value, also on a component level
-       *
-       * https://www.chromatic.com/docs/threshold/
-       */
-      diffThreshold: 0.8,
       delay: 500,
     },
     controls: {

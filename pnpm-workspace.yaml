@@ -1,26 +1,13 @@
 blockExoticSubdeps: true
 
-minimumReleaseAge: 720 # 12h
+# Requires versions to be older than 21 days
+# Follows recommendations from https://snyk.io/articles/npm-security-best-practices-shai-hulud-attack/
+minimumReleaseAge: 30240 # in minutes
 minimumReleaseAgeExclude:
   - "@saleor/app-sdk"
   - "@saleor/macaw-ui"
 
 trustPolicy: no-downgrade
-trustPolicyExclude:
-  - vite@6.4.1
-  # due to "@types/node@20.19.31"
-  - "undici-types@6.21.0"
-  # due to eslint-plugin-import@2.32.0
-  - "semver@6.3.1"
-  # due to @graphql-tools/url-loader@8.0.33
-  - "jose@4.15.9"
-  - "@graphql-tools/executor-graphql-ws@2.0.7"
-  - "@graphql-tools/executor-http@1.3.3"
-  - "@graphql-tools/wrap@10.1.4"
-  - "@graphql-tools/delegate@10.2.23"
-  - "@graphql-tools/batch-execute@9.0.19"
-  # due to @graphql-codegen/import-types-preset@2.2.6
-  - "ua-parser-js@1.0.41"
 
 packages:
   - "."

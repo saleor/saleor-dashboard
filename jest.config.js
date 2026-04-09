@@ -36,6 +36,7 @@ const config = {
     "^react$": "<rootDir>/node_modules/react",
     "^react-dom$": "<rootDir>/node_modules/react-dom",
   },
+  coverageDirectory: "<rootDir>/coverage/units",
   collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
 };
 

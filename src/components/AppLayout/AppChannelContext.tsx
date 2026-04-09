@@ -38,7 +38,7 @@ export const AppChannelProvider = ({ children }: { children: ReactNode }) => {
   const { authenticated, user } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsQuery({
-    skip: !authenticated || !user,
+    skip: !authenticated,
   });
   const [isPickerActive, setPickerActive] = useState(false);
 

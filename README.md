@@ -36,12 +36,9 @@
 
 ## Prerequisites
 
-- Node.js v22 (recommended)
+- Node.js v24
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 - PNPM package manager - preferably installed via [corepack](https://pnpm.io/installation#using-corepack)
-
-> [!NOTE]
-> Currently both Node v22, v20 are supported. We recommend using Node v22, since support for older versions will be dropped.
 
 ## Development
 
