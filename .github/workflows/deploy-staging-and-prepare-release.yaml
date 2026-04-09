@@ -212,6 +212,12 @@ jobs:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
         run: |
+          # Ensure '--delete' never tries to wipe a whole bucket, instead it should
+          # always have a S3 prefix
+          if [[ -z "$DEPLOYMENT_BUCKET" ]] || [[ -z "$ENVIRONMENT" ]] || [[ -z "$CDN_DISTRIBUTIONS" ]]; then
+            echo "Missing required variable(s)" >&2
+          fi
+
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 

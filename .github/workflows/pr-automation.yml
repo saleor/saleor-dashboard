@@ -173,7 +173,14 @@ jobs:
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
           BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}" --delete
+        run: |
+          # Ensure '--delete' never tries to wipe a whole bucket, instead it should
+          # always have a S3 prefix
+          if [[ -z "$AWS_TEST_DEPLOYMENT_BUCKET" ]] || [[ -z "$BASE_URL_DOMAIN" ]]; then
+            echo "Missing required variable(s)" >&2
+          fi
+
+          aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}" --delete
 
       - name: Invalidate cache
         env:
@@ -214,6 +221,10 @@ jobs:
         with:
           persist-credentials: false
 
+      # Needed by ./.github/actions/prepare-accounts and ./.github/actions/run-pw-tests
+      - name: Install deps
+        run: pnpm install
+
       - name: Prepare accounts
         if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
         id: accounts
@@ -235,9 +246,6 @@ jobs:
           E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
           MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
-
-      - name: Install deps
-        run: pnpm install
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
