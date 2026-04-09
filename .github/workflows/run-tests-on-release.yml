@@ -40,13 +40,20 @@ on:
         value: ${{ jobs.tests-complete.outputs.PR_COMMENT }}
         description: Comment for release PR
 
+permissions: {}
+
 jobs:
   add-check-and-prepare-instance:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+
+    permissions:
+      contents: read
+
     env:
       VERSION: ${{inputs.VERSION}}
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
+
     outputs:
       VERSION: ${{ env.VERSION }}
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
@@ -60,6 +67,7 @@ jobs:
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -73,7 +81,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Create check if release PR exists
         id: create-check
@@ -137,10 +145,15 @@ jobs:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
     timeout-minutes: 30
+
+    permissions:
+      contents: read
+
     strategy:
       fail-fast: false
       matrix:
         shard: [1/2, 2/2]
+
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -178,9 +191,14 @@ jobs:
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
+
+    permissions:
+      contents: read
+
     outputs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
       PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -206,8 +224,10 @@ jobs:
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
     needs: [tests-complete, add-check-and-prepare-instance]
+
     permissions:
       contents: read
+
     if: |
       always() &&
       (needs.tests-complete != 'success' && cancelled())
