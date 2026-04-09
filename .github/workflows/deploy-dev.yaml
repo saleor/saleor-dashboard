@@ -28,9 +28,10 @@ jobs:
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.DEV_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
       IS_CLOUD_INSTANCE: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.inputs.git_ref }}
+          persist-credentials: false
 
       - name: Set custom version
         run: |
@@ -41,7 +42,7 @@ jobs:
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
@@ -55,7 +56,7 @@ jobs:
           pnpm run build
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_DEV_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_DEV_CICD_ROLE_NAME }}
           aws-region: us-east-1

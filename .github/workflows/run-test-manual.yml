@@ -6,6 +6,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   initialize-cloud:
     runs-on: ubuntu-22.04
@@ -21,15 +23,21 @@ jobs:
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
 
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
-          cache: "pnpm"
+          package-manager-cache: false
 
       - name: Install deps
         run: pnpm install
@@ -39,9 +47,9 @@ jobs:
         shell: bash
         run: |
           if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-            echo "MODE=main" >> $GITHUB_OUTPUT
+            echo "MODE=main" >> "$GITHUB_OUTPUT"
           else
-            echo "MODE=release" >> $GITHUB_OUTPUT
+            echo "MODE=release" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Load secrets for initialize-cloud
@@ -87,12 +95,19 @@ jobs:
   run-tests:
     runs-on: ubuntu-22.04
     needs: ["initialize-cloud"]
+
+    permissions:
+      contents: read
+
     strategy:
       fail-fast: false
       matrix:
         shard: [1/2, 2/2]
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -121,8 +136,14 @@ jobs:
     if: "!cancelled()"
     needs: ["initialize-cloud", "run-tests"]
     runs-on: ubuntu-22.04
+
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0

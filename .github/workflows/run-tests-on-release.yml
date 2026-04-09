@@ -61,17 +61,19 @@ jobs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Install deps
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Create check if release PR exists
         id: create-check
@@ -142,10 +144,11 @@ jobs:
       matrix:
         shard: [1/2, 2/2]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: refs/tags/${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
           fetch-tags: true
+          persist-credentials: false
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -170,8 +173,7 @@ jobs:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   tests-complete:
-    if: |
-      !cancelled() && always()
+    if: ${{ !cancelled() && always() }}
     needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -179,7 +181,9 @@ jobs:
       TESTS_CONCLUSION: "${{ steps.send-slack-message.outputs.status }}"
       PR_COMMENT: "${{ steps.send-slack-message.outputs.status }} - run details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
@@ -197,7 +201,7 @@ jobs:
           SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
 
       - id: update-check
-        if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
+        if: ${{ always() && needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
@@ -215,7 +219,9 @@ jobs:
       always() &&
       (needs.tests-complete != 'success' && cancelled())
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Change job status if cancelled
         if: cancelled()
