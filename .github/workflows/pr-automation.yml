@@ -264,7 +264,7 @@ jobs:
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
-    needs: [run-tests, deploy-dashboard]
+    needs: [run-tests, deploy-dashboard-start]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

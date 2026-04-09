@@ -81,7 +81,7 @@ jobs:
       - name: Package
         timeout-minutes: 15
         run: |
-          pnpm install --frozen-lockfile || npm ci
+          pnpm install || npm ci
 
       - name: Build
         run: |

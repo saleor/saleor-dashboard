@@ -87,7 +87,7 @@ jobs:
 
           echo "release_body=$(cat /tmp/release_body.txt)" >> "$GITHUB_OUTPUT"
 
-  create-release:
+  create-draft-release:
     needs: [prepare-draft-release]
     runs-on: ubuntu-24.04
 

@@ -35,7 +35,7 @@ jobs:
       - name: Invalidate cache
         run: aws cloudfront create-invalidation --distribution-id "$CF_DIST_ID" --paths "/${DOMAIN}/*"
         env:
-          CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID {{}
+          CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
           DOMAIN: ${{ steps.set-domain.outputs.domain }}
 
       - name: Mark deployment as deactivated
