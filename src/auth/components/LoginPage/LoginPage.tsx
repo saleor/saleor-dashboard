@@ -34,7 +34,7 @@ const LoginPage = (props: LoginCardProps) => {
     errors,
     disabled,
     loading,
-    externalAuthentications = [],
+    externalAuthentications,
     passwordLoginEnabled,
     onExternalAuthentication,
     onSubmit,
@@ -45,7 +45,7 @@ const LoginPage = (props: LoginCardProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
   const showLastLoginIndicatorForPassword =
-    lastLoginMethod === "password" && externalAuthentications.length > 0;
+    lastLoginMethod === "password" && (externalAuthentications?.length ?? 0) > 0;
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -142,10 +142,10 @@ const LoginPage = (props: LoginCardProps) => {
             </>
           )}
           {!passwordLoginEnabled &&
-            externalAuthentications.length === 0 &&
-            (loading ? (
+            (!externalAuthentications || externalAuthentications.length === 0) &&
+            (loading || !externalAuthentications ? (
               <Box display="flex" justifyContent="center" width="100%">
-                <Spinner />
+                <Spinner aria-label="Loading login methods" data-test-id="login-methods-loading" />
               </Box>
             ) : (
               <Text color="default2" fontSize={3}>
@@ -156,7 +156,7 @@ const LoginPage = (props: LoginCardProps) => {
                 />
               </Text>
             ))}
-          {externalAuthentications.map(externalAuthentication => (
+          {externalAuthentications?.map(externalAuthentication => (
             <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <ButtonWithLoader
