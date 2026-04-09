@@ -215,6 +215,8 @@ jobs:
   update-check-status-if-previous-job-fails:
     runs-on: ubuntu-latest
     needs: [tests-complete, add-check-and-prepare-instance]
+    permissions:
+      contents: read
     if: |
       always() &&
       (needs.tests-complete != 'success' && cancelled())

@@ -36,7 +36,7 @@ jobs:
       - name: Set custom version
         id: get-version
         env:
-          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+          VERSION: ${{ github.ref_name }}
         # Add commit hash to basic version number
         run: |
           set -x
@@ -122,7 +122,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   build:
-    needs: [prepare-build, prepare-release]
+    needs: [prepare-build, prepare-release, prepare-release]
     if: always()
     runs-on: ubuntu-22.04
 
@@ -132,7 +132,7 @@ jobs:
     outputs:
       MINOR_VERSION: ${{ needs.prepare-release.outputs.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ needs.prepare-release.outputs.CUSTOM_VERSION || env.VERSION }}
-      ENVIRONMENT: ${{ steps.set-environment.outputs.ENVIRONMENT }}
+      ENVIRONMENT: ${{ needs.prepare-release.outputs.ENVIRONMENT }}
     env:
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
@@ -181,7 +181,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-24.04
-    needs: [build]
+    needs: [build, prepare-release]
 
     permissions:
       id-token: write

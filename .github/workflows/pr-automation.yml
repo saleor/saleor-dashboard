@@ -153,7 +153,7 @@ jobs:
           retention-days: 7
 
   deploy:
-    needs: [build]
+    needs: [build, initialize-cloud]
     runs-on: ubuntu-24.04
 
     permissions:
@@ -184,7 +184,7 @@ jobs:
         run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
   finalize-deployment:
-    needs: [deploy-dashboard-start, deploy]
+    needs: [deploy-dashboard-start, initialize-cloud, deploy]
     runs-on: ubuntu-24.04
 
     permissions:
@@ -199,7 +199,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          deployment_id: ${{ needs.deploy-dashboard-start.deployment-id }}
+          deployment_id: ${{ needs.deploy-dashboard-start.outputs.deployment-id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
 
   run-tests:
