@@ -8,7 +8,7 @@ import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Spinner, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -141,15 +141,21 @@ const LoginPage = (props: LoginCardProps) => {
               </div>
             </>
           )}
-          {!passwordLoginEnabled && externalAuthentications.length === 0 && (
-            <Text color="default2" fontSize={3}>
-              <FormattedMessage
-                id="BtsJ+e"
-                defaultMessage="Password login is disabled. Contact your administrator to configure an external authentication method or enable password login."
-                description="empty state message when no login method is available"
-              />
-            </Text>
-          )}
+          {!passwordLoginEnabled &&
+            externalAuthentications.length === 0 &&
+            (loading ? (
+              <Box display="flex" justifyContent="center" width="100%">
+                <Spinner />
+              </Box>
+            ) : (
+              <Text color="default2" fontSize={3}>
+                <FormattedMessage
+                  id="BtsJ+e"
+                  defaultMessage="Password login is disabled. Contact your administrator to configure an external authentication method or enable password login."
+                  description="empty state message when no login method is available"
+                />
+              </Text>
+            ))}
           {externalAuthentications.map(externalAuthentication => (
             <Fragment key={externalAuthentication.id}>
               <FormSpacer />
