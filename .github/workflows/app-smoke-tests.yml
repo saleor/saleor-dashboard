@@ -65,11 +65,9 @@ jobs:
 
       - name: Load secrets from 1Password
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        with:
-          export-env: true
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
           E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
           E2E_USER_PASSWORD: "op://Continuous Integration/E2E_USER/password"
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
@@ -96,10 +94,10 @@ jobs:
         with:
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
           E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -107,12 +105,12 @@ jobs:
           SHARD: "1/1"
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
-          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
           E2E_ENCODE_PASS: ${{ env.E2E_ENCODE_PASS }}
           ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
-          MAILPITURL: ${{ env.MAILPITURL }}
+          MAILPITURL: ${{ steps.load-secrets.outputs.MAILPITURL }}
           PW_WORKERS: "1"
           PW_RETRIES: "1"
           PROJECT: "app-smoke"
@@ -136,9 +134,8 @@ jobs:
           persist-credentials: false
 
       - name: Load secrets from 1Password
+        id: load-secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        with:
-          export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           TESTS_RESULT_PASSWORD: "op://Continuous Integration/TESTS_RESULT_PASSWORD/password"
@@ -146,7 +143,7 @@ jobs:
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
-          PASSWORD_FOR_DECODING_ARTIFACT: ${{ env.TESTS_RESULT_PASSWORD }}
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ steps.load-secrets.outputs.TESTS_RESULT_PASSWORD }}
           ARTIFACT_PREFIX: ${{ inputs.VERSION }}
 
       - name: Determine conclusion

@@ -45,9 +45,7 @@ jobs:
 
       - name: Load secrets for initialize-cloud
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets-init
-        with:
-          export-env: true
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
@@ -56,14 +54,14 @@ jobs:
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           MODE: pull-request
 
       - name: Prepare instances
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ inputs.API_URL || steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -231,9 +229,6 @@ jobs:
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets
-        with:
-          # Export loaded secrets as environment variables
-          export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
@@ -241,15 +236,18 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: "op://Continuous Integration/E2E_PERMISSIONS_USERS_PASSWORD/password"
           MAILPITURL: "op://Continuous Integration/MAILPITURL_STAGING/password"
 
+      - name: Install deps
+        run: pnpm install
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
@@ -270,16 +268,6 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-
-      - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets
-        with:
-          # Export loaded secrets as environment variables
-          export-env: true
-        env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports

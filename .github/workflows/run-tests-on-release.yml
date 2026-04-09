@@ -87,9 +87,7 @@ jobs:
 
       - name: Load secrets for initialize-cloud
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets-init
-        with:
-          export-env: true
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
@@ -98,7 +96,7 @@ jobs:
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           MODE: "from-version"
           VERSION: ${{ env.VERSION }}
 
@@ -107,7 +105,7 @@ jobs:
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -150,6 +148,9 @@ jobs:
           fetch-tags: true
           persist-credentials: false
 
+      - name: Install deps
+        run: pnpm install
+
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
         with:
@@ -189,16 +190,6 @@ jobs:
         uses: ./.github/actions/merge-pw-reports
         with:
           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
-
-      - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets
-        with:
-          # Export loaded secrets as environment variables
-          export-env: true
-        env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
 
       - id: update-check
         if: ${{ always() && needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
