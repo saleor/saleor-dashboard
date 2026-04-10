@@ -144,8 +144,13 @@ const LoginPage = (props: LoginCardProps) => {
           {!passwordLoginEnabled &&
             (!externalAuthentications || externalAuthentications.length === 0) &&
             (loading || !externalAuthentications ? (
-              <Box display="flex" justifyContent="center" width="100%">
-                <Spinner aria-label="Loading login methods" data-test-id="login-methods-loading" />
+              <Box
+                display="flex"
+                justifyContent="center"
+                width="100%"
+                data-test-id="login-methods-loading"
+              >
+                <Spinner aria-label="Loading login methods" />
               </Box>
             ) : (
               <Text color="default2" fontSize={3}>
