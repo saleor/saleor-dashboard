@@ -18,6 +18,7 @@ const mockUser: UserFragment = {
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
   userPermissions: [],
+  permissionGroups: null,
   avatar: null,
   accessibleChannels: [],
   restrictedAccessToChannels: false,

@@ -271,6 +271,10 @@ export const UserFragmentDoc = gql`
   userPermissions {
     ...UserPermission
   }
+  permissionGroups {
+    id
+    name
+  }
   avatar(size: 128) {
     url
   }
