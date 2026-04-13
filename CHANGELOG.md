@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.23.1
+
+### Patch Changes
+
+- [#6499](https://github.com/saleor/saleor-dashboard/pull/6499) [`b652a58`](https://github.com/saleor/saleor-dashboard/commit/b652a58b497b401d57dbd74f781ecc382cf81fcd) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Show a spinner instead of "no login method available" error message while the login page is loading authentication configuration.
+
+- [#6495](https://github.com/saleor/saleor-dashboard/pull/6495) [`cb8679d`](https://github.com/saleor/saleor-dashboard/commit/cb8679df28f82f2f8d2ae8f15ca2959781096ba2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug where arbitrary email couldn't be used to send giftcard to
+
 ## 3.23.0
 
 ### Minor Changes
