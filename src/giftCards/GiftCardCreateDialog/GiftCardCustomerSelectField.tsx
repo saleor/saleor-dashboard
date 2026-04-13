@@ -16,6 +16,12 @@ interface GiftCardCustomerSelectFieldProps {
   disabled?: boolean;
 }
 
+export const isValidEmailPattern = (email: string) => {
+  return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+    email,
+  );
+};
+
 export const GiftCardCustomerSelectField = ({
   selectedCustomer,
   setSelectedCustomer,
@@ -40,7 +46,7 @@ export const GiftCardCustomerSelectField = ({
     }));
     const trimmed = inputValue.trim();
 
-    if (trimmed && trimmed.includes("@")) {
+    if (isValidEmailPattern(trimmed)) {
       const hasExactMatch = opts.some(opt => opt.value.toLowerCase() === trimmed.toLowerCase());
 
       if (!hasExactMatch) {
