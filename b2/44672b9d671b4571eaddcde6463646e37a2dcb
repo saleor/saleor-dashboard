@@ -1,0 +1,25 @@
+src/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField.tsx
+  ea7969f2a5c56ef9 20-23
+src/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField.test.tsx
+  ea7969f2a5c56ef9 1-2,4-37,39-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "b244672b9d671b4571eaddcde6463646e37a2dcb",
+  "prompts": {
+    "ea7969f2a5c56ef9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d819b269-38f9-46a4-8389-c4f88d1e9a0a",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 46,
+      "total_deletions": 5,
+      "accepted_lines": 44,
+      "overriden_lines": 0
+    }
+  }
+}
