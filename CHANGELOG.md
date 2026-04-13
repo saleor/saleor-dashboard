@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.39
+
+### Patch Changes
+
+- [#6493](https://github.com/saleor/saleor-dashboard/pull/6493) [`69f23f9`](https://github.com/saleor/saleor-dashboard/commit/69f23f945930887ccf5ae108647960c43211b1df) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug where arbitrary email couldn't be used to send giftcard to
+
 ## 3.22.38
 
 ### Patch Changes
