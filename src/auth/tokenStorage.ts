@@ -1,7 +1,8 @@
-import { LOCAL_STORAGE_EXISTS } from "../constants";
-import { SALEOR_AUTH_PLUGIN_ID, SALEOR_REFRESH_TOKEN } from "./constants";
+const SALEOR_REFRESH_TOKEN = "_saleorRefreshToken";
+const SALEOR_AUTH_PLUGIN_ID = "_saleorAuthPluginId";
+const LOCAL_STORAGE_EXISTS = typeof localStorage !== "undefined";
 
-export let storage: {
+export interface TokenStorage {
   setAuthPluginId: (method: string | null) => void;
   getAuthPluginId: () => string | null;
   setAccessToken: (token: string | null) => void;
@@ -10,7 +11,9 @@ export let storage: {
   getRefreshToken: () => string | null;
   setTokens: (tokens: { accessToken: string | null; refreshToken: string | null }) => void;
   clear: () => void;
-};
+}
+
+export let storage: TokenStorage;
 
 export const createStorage = (autologinEnabled: boolean): void => {
   let authPluginId: string | null = LOCAL_STORAGE_EXISTS

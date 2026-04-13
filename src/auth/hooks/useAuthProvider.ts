@@ -1,15 +1,31 @@
 import { type ApolloClient, ApolloError } from "@apollo/client";
+import { storage } from "@dashboard/auth/tokenStorage";
 import { type INotificationCallback } from "@dashboard/components/notifications";
-import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
+import {
+  AccountErrorCode,
+  ExternalAuthenticationUrlDocument,
+  type ExternalAuthenticationUrlMutation,
+  type ExternalAuthenticationUrlMutationVariables,
+  ExternalLogoutDocument,
+  type ExternalLogoutMutation,
+  type ExternalLogoutMutationVariables,
+  ExternalObtainAccessTokensDocument,
+  type ExternalObtainAccessTokensMutation,
+  type ExternalObtainAccessTokensMutationVariables,
+  ExternalRefreshWithUserDocument,
+  type ExternalRefreshWithUserMutation,
+  type ExternalRefreshWithUserMutationVariables,
+  LoginDocument,
+  type LoginMutation,
+  type LoginMutationVariables,
+  RefreshTokenWithUserDocument,
+  type RefreshTokenWithUserMutation,
+  type RefreshTokenWithUserMutationVariables,
+  type UserFragment,
+} from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
-import {
-  type GetExternalAccessTokenData,
-  type LoginData,
-  useAuth,
-  useAuthState,
-} from "@dashboard/legacy-sdk";
 import {
   checkIfCredentialsExist,
   isSupported as isCredentialsManagementAPISupported,
@@ -17,14 +33,17 @@ import {
   saveCredentials,
 } from "@dashboard/utils/credentialsManagement";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
+import jwtDecode from "jwt-decode";
 import isEmpty from "lodash/isEmpty";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { type IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { parseAuthError } from "../errors";
 import {
   type ExternalLoginInput,
+  type GetExternalAccessTokenData,
+  type LoginData,
   type RequestExternalLoginInput,
   type RequestExternalLogoutInput,
   type UserContext,
@@ -39,15 +58,115 @@ interface UseAuthProviderOpts {
 }
 type AuthErrorCodes = `${AccountErrorCode}`;
 
+interface JWTToken {
+  owner: string;
+}
+
+const isInternalToken = (owner: string): boolean => owner === "saleor";
+
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
-  const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
   const navigate = useNavigator();
-  const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
   const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
+  const [userDetails, setUserDetails] = useState<UserFragment | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticating, setAuthenticating] = useState(!!storage?.getRefreshToken());
   const permitCredentialsAPI = useRef(true);
+  const autologinAttempted = useRef(false);
   const { setLastLoginMethod } = useLastLoginMethod();
+
+  const performAutologin = useCallback(async () => {
+    const refreshToken = storage.getRefreshToken();
+
+    if (!refreshToken) {
+      setAuthenticating(false);
+
+      return;
+    }
+
+    try {
+      const owner = jwtDecode<JWTToken>(refreshToken).owner;
+
+      if (isInternalToken(owner)) {
+        const result = await apolloClient.mutate<
+          RefreshTokenWithUserMutation,
+          RefreshTokenWithUserMutationVariables
+        >({
+          mutation: RefreshTokenWithUserDocument,
+          variables: { refreshToken },
+        });
+
+        const data = result.data?.tokenRefresh;
+
+        if (data?.token && data.user) {
+          storage.setAccessToken(data.token);
+          setUserDetails(data.user);
+          setAuthenticated(true);
+        }
+      } else {
+        const authPluginId = storage.getAuthPluginId();
+        const result = await apolloClient.mutate<
+          ExternalRefreshWithUserMutation,
+          ExternalRefreshWithUserMutationVariables
+        >({
+          mutation: ExternalRefreshWithUserDocument,
+          variables: {
+            pluginId: authPluginId,
+            input: JSON.stringify({ refreshToken }),
+          },
+        });
+
+        const data = result.data?.externalRefresh;
+
+        if (data?.token && data.user) {
+          storage.setTokens({
+            accessToken: data.token,
+            refreshToken: data.refreshToken,
+          });
+          setUserDetails(data.user);
+          setAuthenticated(true);
+        }
+      }
+    } catch {
+      // Token refresh failed — user will need to re-login
+    } finally {
+      setAuthenticating(false);
+    }
+  }, [apolloClient]);
+
+  const refetchUser = useCallback(async () => {
+    const refreshToken = storage.getRefreshToken();
+
+    if (!refreshToken) {
+      throw new Error("No refresh token available");
+    }
+
+    const result = await apolloClient.mutate<
+      RefreshTokenWithUserMutation,
+      RefreshTokenWithUserMutationVariables
+    >({
+      mutation: RefreshTokenWithUserDocument,
+      variables: { refreshToken },
+    });
+
+    const data = result.data?.tokenRefresh;
+
+    if (data?.token && data.user) {
+      storage.setAccessToken(data.token);
+      setUserDetails(data.user);
+    }
+
+    return result;
+  }, [apolloClient]);
+
+  // Autologin: refresh token + fetch user in a single network call
+  useEffect(() => {
+    if (!autologinAttempted.current) {
+      autologinAttempted.current = true;
+      performAutologin();
+    }
+  }, [performAutologin]);
 
   useEffect(() => {
     if (authenticating && errors.length) {
@@ -71,13 +190,6 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   }, [authenticated, authenticating]);
 
-  const userDetails = useUserDetailsQuery({
-    client: apolloClient,
-    skip: !authenticated,
-    // Don't change this to 'network-only' - update of intl provider's
-    // state will cause an error
-    fetchPolicy: "cache-and-network",
-  });
   const handleLoginError = (error: ApolloError) => {
     const parsedErrors = parseAuthError(error);
 
@@ -88,12 +200,30 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
   };
   const handleLogout = async () => {
+    const authPluginId = storage.getAuthPluginId();
     const returnTo = urlJoin(window.location.origin, getAppMountUriForRedirect());
-    const result = await logout({
-      input: JSON.stringify({
-        returnTo,
-      } as RequestExternalLogoutInput),
-    });
+
+    storage.clear();
+    setAuthenticated(false);
+    setUserDetails(null);
+
+    let externalLogoutUrl = "";
+
+    if (authPluginId) {
+      const result = await apolloClient.mutate<
+        ExternalLogoutMutation,
+        ExternalLogoutMutationVariables
+      >({
+        mutation: ExternalLogoutDocument,
+        variables: {
+          pluginId: authPluginId,
+          input: JSON.stringify({ returnTo } as RequestExternalLogoutInput),
+        },
+      });
+
+      externalLogoutUrl = JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl;
+    }
+
     // Clear credentials from browser's credential manager only when exist.
     // Chrome 115 crash when calling preventSilentAccess() when no credentials exist.
     const hasCredentials = await checkIfCredentialsExist();
@@ -102,21 +232,12 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       navigator.credentials.preventSilentAccess();
     }
 
-    // Forget last logged in user data.
-    // On next login, user details query will be refetched due to cache-and-network fetch policy.
     apolloClient.clearStore();
 
-    const errors = result?.errors || [];
-    const externalLogoutUrl = result
-      ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
-      : "";
-
-    if (!errors.length) {
-      if (externalLogoutUrl) {
-        window.location.href = externalLogoutUrl;
-      } else {
-        navigate("/");
-      }
+    if (externalLogoutUrl) {
+      window.location.href = externalLogoutUrl;
+    } else {
+      navigate("/");
     }
   };
 
@@ -128,29 +249,36 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     try {
       setIsCredentialsLogin(true);
 
-      const result = await login({
-        email,
-        password,
-        includeDetails: false,
+      const result = await apolloClient.mutate<LoginMutation, LoginMutationVariables>({
+        mutation: LoginDocument,
+        variables: { email, password },
       });
 
-      const errorList = result.data?.tokenCreate?.errors?.map(
-        ({ code }) => code,
-        // SDK is deprecated and has outdated types - we need to use ones from Dashboard
-      ) as AuthErrorCodes[];
+      const tokenCreate = result.data?.tokenCreate;
+
+      if (tokenCreate?.token) {
+        storage.setTokens({
+          accessToken: tokenCreate.token,
+          refreshToken: tokenCreate.refreshToken,
+        });
+      }
+
+      const errorList = tokenCreate?.errors?.map(({ code }) => code) as AuthErrorCodes[];
 
       const userLoggedInButHasNoPermissions =
-        result.data?.tokenCreate?.user && isEmpty(result.data?.tokenCreate?.user?.userPermissions);
+        tokenCreate?.user && isEmpty(tokenCreate?.user?.userPermissions);
 
       if (userLoggedInButHasNoPermissions) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      const hasUser = !!result.data?.tokenCreate?.user;
+      const hasUser = !!tokenCreate?.user;
 
       if (hasUser && !errorList?.length) {
-        saveCredentials(result.data!.tokenCreate!.user!, password);
+        setAuthenticated(true);
+        setUserDetails(tokenCreate!.user!);
+        saveCredentials(tokenCreate!.user!, password);
       } else {
         const userContextErrorList: UserContextError[] = [];
 
@@ -171,9 +299,9 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         setErrors(userContextErrorList);
       }
 
-      await logoutNonStaffUser(result.data?.tokenCreate!);
+      await logoutNonStaffUser(tokenCreate);
 
-      return result.data?.tokenCreate;
+      return tokenCreate;
     } catch (error) {
       if (error instanceof ApolloError) {
         handleLoginError(error);
@@ -195,12 +323,15 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       return;
     }
 
-    const result = await getExternalAuthUrl({
-      pluginId,
-      input: stringifyInput,
+    const result = await apolloClient.mutate<
+      ExternalAuthenticationUrlMutation,
+      ExternalAuthenticationUrlMutationVariables
+    >({
+      mutation: ExternalAuthenticationUrlDocument,
+      variables: { pluginId, input: stringifyInput },
     });
 
-    return result?.data?.externalAuthenticationUrl;
+    return result.data?.externalAuthenticationUrl;
   };
   const handleExternalLogin = async (pluginId: string | null, input: ExternalLoginInput) => {
     if (!pluginId) {
@@ -208,12 +339,25 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     }
 
     try {
-      const result = await getExternalAccessToken({
-        pluginId,
-        input: JSON.stringify(input),
+      const result = await apolloClient.mutate<
+        ExternalObtainAccessTokensMutation,
+        ExternalObtainAccessTokensMutationVariables
+      >({
+        mutation: ExternalObtainAccessTokensDocument,
+        variables: { pluginId, input: JSON.stringify(input) },
       });
 
-      if (isEmpty(result.data?.externalObtainAccessTokens?.user?.userPermissions)) {
+      const data = result.data?.externalObtainAccessTokens;
+
+      if (data?.token) {
+        storage.setAuthPluginId(pluginId);
+        storage.setTokens({
+          accessToken: data.token,
+          refreshToken: data.refreshToken,
+        });
+      }
+
+      if (isEmpty(data?.user?.userPermissions)) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
@@ -223,11 +367,16 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         await handleLogout();
       }
 
-      await logoutNonStaffUser(result.data?.externalObtainAccessTokens!);
+      if (data?.user) {
+        setAuthenticated(true);
+        setUserDetails(data.user);
+      }
+
+      await logoutNonStaffUser(data);
 
       setLastLoginMethod(pluginId);
 
-      return result?.data?.externalObtainAccessTokens;
+      return data;
     } catch (error) {
       if (error instanceof ApolloError) {
         handleLoginError(error);
@@ -236,7 +385,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       }
     }
   };
-  const logoutNonStaffUser = async (data: LoginData | GetExternalAccessTokenData) => {
+  const logoutNonStaffUser = async (data: LoginData | GetExternalAccessTokenData | undefined) => {
     if (data?.user && !data.user.isStaff) {
       notify({
         status: "error",
@@ -254,9 +403,9 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
     isCredentialsLogin,
-    authenticated: authenticated && !!user?.isStaff && !errors.length,
-    user: userDetails.data?.me,
-    refetchUser: userDetails.refetch,
+    authenticated: authenticated && !!userDetails?.isStaff && !errors.length,
+    user: userDetails,
+    refetchUser,
     errors,
   };
 }

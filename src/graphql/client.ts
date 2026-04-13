@@ -1,9 +1,11 @@
-// DON'T TOUCH THIS
-// These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { createStorage } from "@dashboard/auth/tokenStorage";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
-import { createFetch, createSaleorClient } from "@dashboard/legacy-sdk";
 import { createUploadLink } from "apollo-upload-client";
+
+import { createFetch } from "./createFetch";
+
+createStorage(true);
 
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
@@ -91,9 +93,4 @@ export const apolloClient = new ApolloClient({
     } as TypedTypePolicies,
   }),
   link,
-});
-
-export const saleorClient = createSaleorClient({
-  apiUrl: getApiUrl(),
-  channel: "",
 });

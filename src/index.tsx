@@ -7,7 +7,6 @@ import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppE
 import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
-import { SaleorProvider } from "@dashboard/legacy-sdk";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
@@ -47,7 +46,7 @@ import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
-import { apolloClient, saleorClient } from "./graphql/client";
+import { apolloClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import { NotFound } from "./NotFound";
@@ -114,46 +113,44 @@ const handleLegacyTheming = (): void => {
 handleLegacyTheming();
 
 const App = (): JSX.Element => (
-  <SaleorProvider client={saleorClient}>
-    <ApolloProvider client={apolloClient}>
-      <Router>
-        {/* @ts-expect-error legacy types */}
-        <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
-          <ThemeProvider>
-            <LocaleProvider>
-              <NotificationProvider>
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <AuthProvider>
-                      <ProductAnalytics>
-                        <ShopProvider>
-                          <AppChannelProvider>
-                            <ExitFormDialogProvider>
-                              <DevModeProvider>
-                                <NavigatorSearchProvider>
-                                  <SavebarRefProvider>
-                                    <FeatureFlagsProviderWithUser>
-                                      <OnboardingProvider>
-                                        <Routes />
-                                      </OnboardingProvider>
-                                    </FeatureFlagsProviderWithUser>
-                                  </SavebarRefProvider>
-                                </NavigatorSearchProvider>
-                              </DevModeProvider>
-                            </ExitFormDialogProvider>
-                          </AppChannelProvider>
-                        </ShopProvider>
-                      </ProductAnalytics>
-                    </AuthProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </NotificationProvider>
-            </LocaleProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
-      </Router>
-    </ApolloProvider>
-  </SaleorProvider>
+  <ApolloProvider client={apolloClient}>
+    <Router>
+      {/* @ts-expect-error legacy types */}
+      <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
+        <ThemeProvider>
+          <LocaleProvider>
+            <NotificationProvider>
+              <BackgroundTasksProvider>
+                <AppStateProvider>
+                  <AuthProvider>
+                    <ProductAnalytics>
+                      <ShopProvider>
+                        <AppChannelProvider>
+                          <ExitFormDialogProvider>
+                            <DevModeProvider>
+                              <NavigatorSearchProvider>
+                                <SavebarRefProvider>
+                                  <FeatureFlagsProviderWithUser>
+                                    <OnboardingProvider>
+                                      <Routes />
+                                    </OnboardingProvider>
+                                  </FeatureFlagsProviderWithUser>
+                                </SavebarRefProvider>
+                              </NavigatorSearchProvider>
+                            </DevModeProvider>
+                          </ExitFormDialogProvider>
+                        </AppChannelProvider>
+                      </ShopProvider>
+                    </ProductAnalytics>
+                  </AuthProvider>
+                </AppStateProvider>
+              </BackgroundTasksProvider>
+            </NotificationProvider>
+          </LocaleProvider>
+        </ThemeProvider>
+      </LegacyThemeProvider>
+    </Router>
+  </ApolloProvider>
 );
 const Routes = () => {
   const intl = useIntl();
