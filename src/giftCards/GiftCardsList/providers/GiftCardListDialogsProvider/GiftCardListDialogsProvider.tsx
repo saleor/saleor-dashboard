@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import { GiftCardBulkCreateDialog } from "@dashboard/giftCards/GiftCardBulkCreateDialog/GiftCardBulkCreateDialog";
-import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
+import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog";
 import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
