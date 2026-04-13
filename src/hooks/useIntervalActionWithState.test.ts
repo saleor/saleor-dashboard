@@ -1,7 +1,6 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { renderHook } from "@testing-library/react";
-import { useState } from "react";
-import { act } from "react-dom/test-utils";
+import { act, useState } from "react";
 
 import { useIntervalActionWithState } from "./useIntervalActionWithState";
 
