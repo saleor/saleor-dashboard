@@ -1,7 +1,7 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type ExtensionListQuery, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useExtensions } from "./useExtensions";
 

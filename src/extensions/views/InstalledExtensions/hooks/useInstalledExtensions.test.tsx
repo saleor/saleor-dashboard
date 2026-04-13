@@ -4,8 +4,7 @@ import {
   warningProblemFixture,
 } from "@dashboard/extensions/fixtures";
 import { useInstalledAppsListQuery } from "@dashboard/graphql";
-import { render, screen } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { render, renderHook, screen } from "@testing-library/react";
 
 import { getExtensionInfo, useInstalledExtensions } from "./useInstalledExtensions";
 

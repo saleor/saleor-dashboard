@@ -1,5 +1,5 @@
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 
 import { EventDataAction, EventDataField, type MetadataFormData } from "../Metadata/types";

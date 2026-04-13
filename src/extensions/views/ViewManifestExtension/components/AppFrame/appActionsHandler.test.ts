@@ -1,5 +1,5 @@
 import * as dashboardConfig from "@dashboard/config";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import * as ReactIntl from "react-intl";
 import { type IntlShape } from "react-intl";
 

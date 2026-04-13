@@ -1,5 +1,5 @@
 import { type PaginationState } from "@dashboard/hooks/usePaginator";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { type Product } from "./types";
 import { useCollectionId } from "./useCollectionId";

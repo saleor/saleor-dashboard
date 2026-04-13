@@ -1,6 +1,6 @@
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import { AppErrorCode, useAppFetchMutation } from "@dashboard/graphql";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useFetchManifest } from "./useFetchManifest";
 

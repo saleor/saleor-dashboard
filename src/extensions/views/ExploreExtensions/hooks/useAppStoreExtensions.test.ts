@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, waitFor } from "@testing-library/react";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 
@@ -63,15 +63,16 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
 
   it("should load fallback data when appStoreUrl is not provided", async () => {
     // Act
-    const { result, waitForNextUpdate } = renderHook(() => useAppStoreExtensions());
+    const { result } = renderHook(() => useAppStoreExtensions());
 
     // Assert
     expect(result.current.loading).toBe(true);
     expect(result.current.isFallback).toBe(true);
 
-    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
 
-    expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe(null);
     expect(result.current.isFallback).toBe(true);
   });
@@ -84,17 +85,16 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
     });
 
     // Act
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useAppStoreExtensions("https://mockapi.com"),
-    );
+    const { result } = renderHook(() => useAppStoreExtensions("https://mockapi.com"));
 
     // Assert
     expect(result.current.loading).toBe(true);
     expect(result.current.isFallback).toBe(false);
 
-    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
 
-    expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe(null);
     expect(result.current.data).toEqual({
       payments: {
@@ -115,16 +115,15 @@ describe("Extensions / hooks / useAppStoreExtensions", () => {
     (fetch as jest.Mock).mockRejectedValueOnce(new Error("Network Error"));
 
     // Act
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useAppStoreExtensions("https://mockapi.com"),
-    );
+    const { result } = renderHook(() => useAppStoreExtensions("https://mockapi.com"));
 
     // Assert
     expect(result.current.loading).toBe(true);
 
-    await waitForNextUpdate();
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
 
-    expect(result.current.loading).toBe(false);
     expect(result.current.error).toBe("Network Error");
     expect(result.current.data).toEqual({});
   });

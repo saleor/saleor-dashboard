@@ -1,5 +1,5 @@
 import { type OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 
 import { getRefundEditOrderLinesToRefund } from "./formDefaults";
