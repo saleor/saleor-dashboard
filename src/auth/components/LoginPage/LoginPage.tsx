@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import useStyles from "../styles";
 import LoginForm, { type LoginFormData } from "./form";
 import { LastLoginIndicator } from "./LastLoginIndicator";
-import { getErrorMessage } from "./messages";
+import { getErrorMessage, loginPageMessages } from "./messages";
 
 interface LoginCardProps {
   errors: UserContextError[];
@@ -44,8 +44,14 @@ const LoginPage = (props: LoginCardProps) => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = useState(false);
   const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
+  const hasExternalAuthentications = (externalAuthentications?.length ?? 0) > 0;
+  const isLoadingLoginMethods = loading || !externalAuthentications;
+  const showLoginMethodsSpinner =
+    !passwordLoginEnabled && !hasExternalAuthentications && isLoadingLoginMethods;
+  const showPasswordLoginDisabledMessage =
+    !passwordLoginEnabled && !hasExternalAuthentications && !isLoadingLoginMethods;
   const showLastLoginIndicatorForPassword =
-    lastLoginMethod === "password" && (externalAuthentications?.length ?? 0) > 0;
+    lastLoginMethod === "password" && hasExternalAuthentications;
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -141,26 +147,21 @@ const LoginPage = (props: LoginCardProps) => {
               </div>
             </>
           )}
-          {!passwordLoginEnabled &&
-            (!externalAuthentications || externalAuthentications.length === 0) &&
-            (loading || !externalAuthentications ? (
-              <Box
-                display="flex"
-                justifyContent="center"
-                width="100%"
-                data-test-id="login-methods-loading"
-              >
-                <Spinner aria-label="Loading login methods" />
-              </Box>
-            ) : (
-              <Text color="default2" fontSize={3}>
-                <FormattedMessage
-                  id="BtsJ+e"
-                  defaultMessage="Password login is disabled. Contact your administrator to configure an external authentication method or enable password login."
-                  description="empty state message when no login method is available"
-                />
-              </Text>
-            ))}
+          {showLoginMethodsSpinner && (
+            <Box
+              display="flex"
+              justifyContent="center"
+              width="100%"
+              data-test-id="login-methods-loading"
+            >
+              <Spinner aria-label={intl.formatMessage(loginPageMessages.loadingLoginMethods)} />
+            </Box>
+          )}
+          {showPasswordLoginDisabledMessage && (
+            <Text color="default2" fontSize={3}>
+              {intl.formatMessage(loginPageMessages.passwordLoginDisabled)}
+            </Text>
+          )}
           {externalAuthentications?.map(externalAuthentication => (
             <Fragment key={externalAuthentication.id}>
               <FormSpacer />
