@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";

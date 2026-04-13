@@ -10095,6 +10095,10 @@
   "tWbE34": {
     "string": "Start Hour"
   },
+  "tZ+8E3": {
+    "context": "spinner aria label on login page",
+    "string": "Loading login methods"
+  },
   "tZ/9Sl": {
     "string": "Invite user/staff member"
   },

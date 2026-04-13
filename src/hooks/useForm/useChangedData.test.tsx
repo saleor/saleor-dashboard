@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useChangedData } from "./useChangedData";
 
@@ -15,8 +15,10 @@ describe("useForm / useChangedData", () => {
     );
 
     // Act
-    result.current.add("field-1");
-    result.current.add("field-2");
+    act(() => {
+      result.current.add("field-1");
+      result.current.add("field-2");
+    });
 
     // Assert
     expect(result.current.data).toEqual({
@@ -37,8 +39,12 @@ describe("useForm / useChangedData", () => {
     );
 
     // Act
-    result.current.add("field-1");
-    result.current.clean();
+    act(() => {
+      result.current.add("field-1");
+    });
+    act(() => {
+      result.current.clean();
+    });
 
     // Assert
     expect(result.current.data).toEqual({});

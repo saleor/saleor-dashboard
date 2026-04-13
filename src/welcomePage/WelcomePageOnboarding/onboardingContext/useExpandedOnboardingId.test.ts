@@ -2,7 +2,7 @@ import {
   type OnboardingState,
   type OnboardingStep,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/types";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useExpandedOnboardingId } from "./useExpandedOnboardingId";
 

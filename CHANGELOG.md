@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.23.0
+
+### Minor Changes
+
+- [#6496](https://github.com/saleor/saleor-dashboard/pull/6496) [`aa31922`](https://github.com/saleor/saleor-dashboard/commit/aa31922521279029eb9803918f7dbb40d7918280) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Version bump for the 3.23 release
+
+### Patch Changes
+
+- [#6483](https://github.com/saleor/saleor-dashboard/pull/6483) [`fadf41c`](https://github.com/saleor/saleor-dashboard/commit/fadf41c4f94b8532a4d1ab2cf947994ce64d6559) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Improved performance of initial GraphQL queries on page load. Now user, shop and channels are parallelized
+
+- [#6485](https://github.com/saleor/saleor-dashboard/pull/6485) [`94e85a4`](https://github.com/saleor/saleor-dashboard/commit/94e85a4817ca90d846e3de9adc859b6944dce663) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show apps' Problems even for disabled apps
+
+- [#6481](https://github.com/saleor/saleor-dashboard/pull/6481) [`d0a4ebd`](https://github.com/saleor/saleor-dashboard/commit/d0a4ebdfaa46af3ebedd633201ee0ee8c9e93536) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Add tooltip for search inputs
+
+- [#6487](https://github.com/saleor/saleor-dashboard/pull/6487) [`5fe6bd7`](https://github.com/saleor/saleor-dashboard/commit/5fe6bd709b282fea5402ab143d05e1e0fac4b7bc) Thanks [@NyanKiyoshi](https://github.com/NyanKiyoshi)! - Fixed a typo in channel deletion confirmation modal.
+
 ## 3.23.0-a.1
 
 ### Patch Changes

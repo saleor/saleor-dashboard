@@ -59,6 +59,40 @@ describe("LoginPage", () => {
       expect(screen.getByText(/Password login is disabled/)).toBeInTheDocument();
     });
 
+    it("shows spinner when loading and no login methods are known yet", () => {
+      // Arrange & Act
+      render(
+        <LoginPage
+          lastLoginMethod={null}
+          {...defaultProps}
+          passwordLoginEnabled={false}
+          externalAuthentications={undefined}
+          loading={true}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByTestId("login-methods-loading")).toBeInTheDocument();
+      expect(screen.queryByText(/Password login is disabled/)).not.toBeInTheDocument();
+    });
+
+    it("shows spinner when externalAuthentications is undefined even if loading is false", () => {
+      // Arrange & Act
+      render(
+        <LoginPage
+          lastLoginMethod={null}
+          {...defaultProps}
+          passwordLoginEnabled={false}
+          externalAuthentications={undefined}
+          loading={false}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByTestId("login-methods-loading")).toBeInTheDocument();
+      expect(screen.queryByText(/Password login is disabled/)).not.toBeInTheDocument();
+    });
+
     it("shows email and password inputs when password login is enabled", () => {
       // Arrange & Act
       render(<LoginPage lastLoginMethod={null} {...defaultProps} passwordLoginEnabled={true} />);

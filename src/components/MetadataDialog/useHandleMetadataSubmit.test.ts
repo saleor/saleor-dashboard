@@ -5,8 +5,8 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
-import { act } from "react-dom/test-utils";
+import { renderHook } from "@testing-library/react";
+import { act } from "react";
 
 import { useHandleMetadataSubmit } from "./useHandleMetadataSubmit";
 

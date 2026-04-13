@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useFulfillmentFormset } from "./useFulfillmentFormset";
 
@@ -93,7 +93,9 @@ describe("useFulfillmentFormset", () => {
       }),
     );
 
-    result.current.fulfiledItemsQuatities.change("id", 21.37);
+    act(() => {
+      result.current.fulfiledItemsQuatities.change("id", 21.37);
+    });
 
     // Assert
     expect(result.current.fulfiledItemsQuatities.data.length).toBe(1);

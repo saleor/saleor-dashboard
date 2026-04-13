@@ -11,7 +11,7 @@ import { getStatusColor } from "@dashboard/misc";
 import { type RelayToFlat } from "@dashboard/types";
 import { type TextCell } from "@glideapps/glide-data-grid";
 import { testIntlInstance } from "@test/intl";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
 
