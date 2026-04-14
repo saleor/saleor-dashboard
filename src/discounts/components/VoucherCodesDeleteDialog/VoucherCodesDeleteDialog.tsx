@@ -1,4 +1,7 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
@@ -43,9 +46,14 @@ export const VoucherCodesDeleteDialog = ({
             {intl.formatMessage(buttonMessages.back)}
           </Button>
 
-          <Button variant="error" onClick={handleSubmit} disabled={isDeleting}>
+          <ConfirmButton
+            transitionState={confirmButtonTransitionState}
+            onClick={handleSubmit}
+            variant="error"
+            data-test-id="submit"
+          >
             {intl.formatMessage(buttonMessages.delete)}
-          </Button>
+          </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
