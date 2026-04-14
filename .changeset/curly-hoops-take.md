@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix deleting saverd, server-side Voucher codes
+Fix deleting saved, server-side Voucher codes
