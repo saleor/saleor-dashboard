@@ -308,17 +308,6 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
                 </Box>
               </Box>
             </Box>
-            {detail.payment_method === "COD" && detail.cod_refund_email && (
-              <Box
-                marginTop={3}
-                paddingTop={3}
-                borderTopWidth={1}
-                borderColor="default1"
-                borderStyle="solid"
-              >
-                <FieldSmall label="COD Refund Email" value={detail.cod_refund_email} />
-              </Box>
-            )}
           </Card>
 
           {/* Customer-Uploaded Images */}
