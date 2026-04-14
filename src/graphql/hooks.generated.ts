@@ -644,6 +644,7 @@ ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
 export const VoucherCodeFragmentDoc = gql`
     fragment VoucherCode on VoucherCode {
+  id
   code
   used
   isActive
@@ -1117,6 +1118,13 @@ export const VoucherBulkDeleteErrorFragmentDoc = gql`
     fragment VoucherBulkDeleteError on DiscountError {
   code
   field
+  message
+}
+    `;
+export const VoucherCodeBulkDeleteErrorFragmentDoc = gql`
+    fragment VoucherCodeBulkDeleteError on VoucherCodeBulkDeleteError {
+  code
+  path
   message
 }
     `;
@@ -7799,6 +7807,42 @@ export function useVoucherBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type VoucherBulkDeleteMutationHookResult = ReturnType<typeof useVoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>;
+export const VoucherCodeBulkDeleteDocument = gql`
+    mutation VoucherCodeBulkDelete($ids: [ID!]!) {
+  voucherCodeBulkDelete(ids: $ids) {
+    count
+    errors {
+      ...VoucherCodeBulkDeleteError
+    }
+  }
+}
+    ${VoucherCodeBulkDeleteErrorFragmentDoc}`;
+export type VoucherCodeBulkDeleteMutationFn = Apollo.MutationFunction<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>;
+
+/**
+ * __useVoucherCodeBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `useVoucherCodeBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCodeBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [voucherCodeBulkDeleteMutation, { data, loading, error }] = useVoucherCodeBulkDeleteMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useVoucherCodeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>(VoucherCodeBulkDeleteDocument, options);
+      }
+export type VoucherCodeBulkDeleteMutationHookResult = ReturnType<typeof useVoucherCodeBulkDeleteMutation>;
+export type VoucherCodeBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherCodeBulkDeleteMutation>;
+export type VoucherCodeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>;
 export const PromotionCreateDocument = gql`
     mutation PromotionCreate($input: PromotionCreateInput!) {
   promotionCreate(input: $input) {
