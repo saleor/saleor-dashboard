@@ -1,8 +1,8 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { VOUCHER_CODE_DRAFT_STATUS } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
 import { useVoucherCodeBulkDeleteMutation } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { getMutationStatus } from "@dashboard/misc";
 import { type ListSettings, ListViews } from "@dashboard/types";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -11,22 +11,6 @@ import { getVoucherCodesToDisplay } from "../utils";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
 import { useVoucherCodesServer } from "./useVoucherCodesServer";
-
-function getMutationTransitionState(opts: {
-  loading: boolean;
-  called: boolean;
-  error?: unknown;
-}): ConfirmButtonTransitionState {
-  if (opts.loading) {
-    return "loading";
-  }
-
-  if (opts.error) {
-    return "error";
-  }
-
-  return "default";
-}
 
 export const useVoucherCodes = ({ id }: { id: string }) => {
   const notify = useNotifier();
@@ -223,7 +207,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodes,
     addedVoucherCodes,
     voucherCodesLoading,
-    voucherCodesDeleteTransitionState: getMutationTransitionState(voucherCodeBulkDeleteOpts),
+    voucherCodesDeleteTransitionState: getMutationStatus(voucherCodeBulkDeleteOpts),
     voucherCodesPagination: {
       ...voucherCodesPagination,
       pageInfo: {
