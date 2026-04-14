@@ -5,7 +5,7 @@ import {
   type PageWhereInput,
   type ProductWhereInput,
 } from "@dashboard/graphql";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "./useAssignAttributeValueDialogFilterChangeHandlers";
 

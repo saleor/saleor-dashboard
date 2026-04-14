@@ -5,8 +5,7 @@ import {
   type CountryWithCodeFragment,
   type SearchProductFragment,
 } from "@dashboard/graphql";
-import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { type SpecificItemsData, useSpecificItemsAssign } from "./useSpecificItemsAssign";
 

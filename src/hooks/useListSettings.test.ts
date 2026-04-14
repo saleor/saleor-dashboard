@@ -1,6 +1,6 @@
 import { defaultListSettings } from "@dashboard/config";
 import { ListViews } from "@dashboard/types";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import useListSettings, { listSettingsStorageKey } from "./useListSettings";
 

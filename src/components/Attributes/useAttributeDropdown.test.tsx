@@ -1,5 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useAttributeDropdown } from "./useAttributeDropdown";
 

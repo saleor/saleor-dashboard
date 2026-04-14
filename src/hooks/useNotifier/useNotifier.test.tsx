@@ -1,7 +1,7 @@
 import { type INotification } from "@dashboard/components/notifications";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { type PropsWithChildren } from "react";
 import { IntlProvider } from "react-intl";
 import { toast } from "sonner";

@@ -1,6 +1,5 @@
 import { VoucherCreatePageTab } from "@dashboard/discounts/components/VoucherCreatePage/types";
-import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useActiveTab } from "./useActiveTab";
 

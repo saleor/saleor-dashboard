@@ -1,5 +1,5 @@
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useRichTextSubmit } from "./useRichTextSubmit";
 

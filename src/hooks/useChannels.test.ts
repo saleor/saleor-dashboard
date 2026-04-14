@@ -1,5 +1,5 @@
 import { type ChannelData } from "@dashboard/channels/utils";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import useChannels from "./useChannels";
 

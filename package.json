@@ -230,8 +230,7 @@
   },
   "optionalDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^26.0.24",
     "@types/setup-polly-jest": "^0.5.5",
