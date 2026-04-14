@@ -1135,9 +1135,6 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
-  "4gJAm6": {
-    "string": "Can't delete saved codes"
-  },
   "4hl9rS": {
     "context": "variant price in channel",
     "string": "Price"
@@ -5563,6 +5560,9 @@
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
   },
+  "TV940D": {
+    "string": "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}"
+  },
   "TVR4E6": {
     "string": "Open playground"
   },
@@ -6395,6 +6395,9 @@
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
+  },
+  "Y8XVvH": {
+    "string": "Failed to delete voucher codes"
   },
   "Y9lv8z": {
     "context": "product unavailability",

@@ -110,6 +110,17 @@ export const voucherBulkDelete = gql`
   }
 `;
 
+export const voucherCodeBulkDelete = gql`
+  mutation VoucherCodeBulkDelete($ids: [ID!]!) {
+    voucherCodeBulkDelete(ids: $ids) {
+      count
+      errors {
+        ...VoucherCodeBulkDeleteError
+      }
+    }
+  }
+`;
+
 export const promotionCreate = gql`
   mutation PromotionCreate($input: PromotionCreateInput!) {
     promotionCreate(input: $input) {

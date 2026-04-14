@@ -193,7 +193,7 @@ const VoucherCreatePage = ({
     });
   };
 
-  const handleDeleteVoucherCodes = () => {
+  const handleDeleteVoucherCodes = async () => {
     clearRowSelection();
     set({
       codes: data.codes.filter(({ code }) => !selectedRowIds.includes(code)),
@@ -283,6 +283,7 @@ const VoucherCreatePage = ({
             <VoucherCodes
               codes={paginatedCodes}
               onDeleteCodes={handleDeleteVoucherCodes}
+              deleteCodesTransitionState="default"
               onMultiCodesGenerate={handleGenerateMultipleCodes}
               onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
               onSettingsChange={onSettingsChange}

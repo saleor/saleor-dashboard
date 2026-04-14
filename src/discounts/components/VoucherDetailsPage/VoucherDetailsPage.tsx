@@ -128,7 +128,8 @@ interface VoucherDetailsPageProps
   openChannelsModal: () => void;
   onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
-  onDeleteVoucherCodes: () => void;
+  deleteVoucherCodesTransitionState: ConfirmButtonTransitionState;
+  onDeleteVoucherCodes: () => Promise<void>;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
   voucherCodesPagination: LocalPagination;
   voucherCodesSettings: UseListSettings["settings"];
@@ -164,6 +165,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onRemove,
   onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
+  deleteVoucherCodesTransitionState,
   onDeleteVoucherCodes,
   onSubmit,
   toggle,
@@ -288,6 +290,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 selectedCodesIds={selectedVoucherCodesIds}
                 onSelectVoucherCodesIds={onSelectVoucherCodesIds}
                 onDeleteCodes={onDeleteVoucherCodes}
+                deleteCodesTransitionState={deleteVoucherCodesTransitionState}
                 loading={voucherCodesLoading}
                 onMultiCodesGenerate={codes => {
                   triggerChange();
