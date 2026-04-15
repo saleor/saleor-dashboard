@@ -1,0 +1,27 @@
+.github/workflows/deploy-staging-and-prepare-release.yaml
+  1877078a2c7c5ddc 305
+.github/workflows/new-current-patch-release.yml
+  1877078a2c7c5ddc 31
+src/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField.tsx
+  1877078a2c7c5ddc 107-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "641a6b086aa6834fe3c4fc94447653faee084501",
+  "prompts": {
+    "1877078a2c7c5ddc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e30904f4-7751-4ff5-9a7a-c59a70778d15",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 544,
+      "total_deletions": 147,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
