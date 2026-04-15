@@ -23105,6 +23105,31 @@ export type ProductVariantDeletedProductVariantArgs = {
   channel: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ */
+export type ProductVariantDiscountedPriceUpdated = Event & {
+  __typename: 'ProductVariantDiscountedPriceUpdated';
+  /** The channel where the price changed. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt: Maybe<Scalars['DateTime']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal: Maybe<IssuingPrincipal>;
+  /** The new discounted price. */
+  newPrice: Money;
+  /** The previous discounted price. */
+  previousPrice: Money;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version: Maybe<Scalars['String']>;
+};
+
 export type ProductVariantFilterInput = {
   isPreorder: InputMaybe<Scalars['Boolean']>;
   metadata: InputMaybe<Array<MetadataFilter>>;
@@ -27374,6 +27399,12 @@ export type Shop = ObjectWithMetadata & {
   /** Returns translated shop fields for the given language code. */
   translation: Maybe<ShopTranslation>;
   /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability: Scalars['Boolean'];
+  /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
    * Added in Saleor 3.22.
@@ -27584,6 +27615,12 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault: InputMaybe<Scalars['Boolean']>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability: InputMaybe<Scalars['Boolean']>;
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
@@ -28357,6 +28394,14 @@ export type Subscription = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderUpdated: Maybe<OrderUpdated>;
+  /**
+   * Event sent when product variant discounted price is recalculated.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantDiscountedPriceUpdated: Maybe<ProductVariantDiscountedPriceUpdated>;
 };
 
 
@@ -28456,6 +28501,11 @@ export type SubscriptionOrderRefundedArgs = {
 
 
 export type SubscriptionOrderUpdatedArgs = {
+  channels: InputMaybe<Array<Scalars['String']>>;
+};
+
+
+export type SubscriptionProductVariantDiscountedPriceUpdatedArgs = {
   channels: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -31957,6 +32007,7 @@ export type WebhookEventTypeAsyncEnum =
   | 'PRODUCT_VARIANT_CREATED'
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   /** A product variant metadata is updated. */
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   /** A product variant is out of stock. */
@@ -32282,6 +32333,7 @@ export type WebhookEventTypeEnum =
   | 'PRODUCT_VARIANT_CREATED'
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   /** A product variant metadata is updated. */
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   /** A product variant is out of stock. */
@@ -32523,6 +32575,7 @@ export type WebhookSampleEventTypeEnum =
   | 'PRODUCT_VARIANT_BACK_IN_STOCK'
   | 'PRODUCT_VARIANT_CREATED'
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   | 'PRODUCT_VARIANT_OUT_OF_STOCK'
   | 'PRODUCT_VARIANT_STOCK_UPDATED'

@@ -154,6 +154,7 @@
       "ProductVariantBackInStock",
       "ProductVariantCreated",
       "ProductVariantDeleted",
+      "ProductVariantDiscountedPriceUpdated",
       "ProductVariantMetadataUpdated",
       "ProductVariantOutOfStock",
       "ProductVariantStockUpdated",
