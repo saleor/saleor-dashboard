@@ -116,9 +116,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
-  const cutOffDateTime = parseDateTimeToDateAndTime(
-    checkoutSettings?.automaticCompletionCutOffDate,
-  );
+  const cutOffDateTime = parseDateTimeToDateAndTime(null);
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -144,7 +142,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       : undefined,
     automaticallyCompleteCheckouts:
       checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
-    automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
+    automaticCompletionDelay: null,
     automaticCompletionCutOffDate: cutOffDateTime.date,
     automaticCompletionCutOffTime: cutOffDateTime.time,
   };

@@ -20,7 +20,6 @@ export const page: PageDetailsFragment = {
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -88,8 +87,6 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
-        availableInGrid: false,
-        storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
         filterableInDashboard: false,
@@ -207,13 +204,10 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
-        availableInGrid: false,
-        storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
         filterableInDashboard: false,
         filterableInStorefront: false,
-        referenceTypes: [],
       },
       values: [
         {

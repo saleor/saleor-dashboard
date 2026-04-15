@@ -114,9 +114,8 @@ export const extensionList = gql`
           id
           label
           url
-          mountName
-          targetName
-          settings
+          mountName: mount
+          targetName: target
           accessToken
           permissions {
             code
@@ -177,9 +176,6 @@ export const appHasProblems = gql`
       edges {
         node {
           id
-          problems(limit: 1) {
-            __typename
-          }
         }
       }
     }
@@ -190,20 +186,6 @@ export const appAllProblems = gql`
   query AppAllProblems($id: ID!) {
     app(id: $id) {
       id
-      problems {
-        __typename
-        key
-        message
-        createdAt
-        count
-        isCritical
-        dismissed {
-          by
-          userEmail
-        }
-        updatedAt
-        id
-      }
     }
   }
 `;

@@ -124,7 +124,6 @@ export const orderTransactions: TransactionItemFragment[] = [
         type: TransactionEventTypeEnum.CHARGE_SUCCESS,
         createdBy: null,
         externalUrl: null,
-        reasonReference: null,
         message: null,
         amount: {
           amount: 58.98,
@@ -142,15 +141,6 @@ export const orderTransactions: TransactionItemFragment[] = [
     refundPendingAmount: prepareMoney(0),
     canceledAmount: prepareMoney(0),
     cancelPendingAmount: prepareMoney(0),
-    paymentMethodDetails: {
-      __typename: "CardPaymentMethodDetails",
-      name: "Credit card",
-      brand: "visa",
-      expMonth: 12,
-      expYear: 2025,
-      firstDigits: "4242",
-      lastDigits: "4242",
-    },
     __typename: "TransactionItem",
   },
   {
@@ -170,7 +160,6 @@ export const orderTransactions: TransactionItemFragment[] = [
         createdBy: null,
         externalUrl: null,
         message: null,
-        reasonReference: null,
         amount: {
           amount: 35.42,
           currency: "USD",
@@ -185,7 +174,6 @@ export const orderTransactions: TransactionItemFragment[] = [
         type: TransactionEventTypeEnum.REFUND_REQUEST,
         createdBy: null,
         externalUrl: null,
-        reasonReference: null,
         message: null,
         amount: {
           amount: 33.21,
@@ -199,7 +187,6 @@ export const orderTransactions: TransactionItemFragment[] = [
         pspReference: "SDFDS34543SS",
         createdAt: "2022-08-12T16:14:29.119138+00:00",
         type: TransactionEventTypeEnum.REFUND_SUCCESS,
-        reasonReference: null,
         createdBy: null,
         externalUrl: null,
         message: null,
@@ -219,10 +206,6 @@ export const orderTransactions: TransactionItemFragment[] = [
     refundPendingAmount: prepareMoney(0),
     canceledAmount: prepareMoney(0),
     cancelPendingAmount: prepareMoney(0),
-    paymentMethodDetails: {
-      __typename: "OtherPaymentMethodDetails",
-      name: "PayPal",
-    },
     __typename: "TransactionItem",
   },
 ];
@@ -2775,7 +2758,6 @@ export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
   message: null,
   externalUrl: null,
   createdBy: transactionApp,
-  reasonReference: null,
   amount: {
     amount: 58.98,
     currency: "USD",
@@ -2811,7 +2793,6 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
-          reasonReference: null,
           externalUrl: null,
           createdBy: transactionApp,
           amount: {
@@ -2830,15 +2811,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "CardPaymentMethodDetails",
-        name: "Credit card",
-        brand: "visa",
-        expMonth: 12,
-        expYear: 2025,
-        firstDigits: "4242",
-        lastDigits: "4242",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -2858,7 +2830,6 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:22:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
-          reasonReference: null,
           externalUrl: null,
           createdBy: staffMember,
           amount: {
@@ -2875,7 +2846,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -2893,15 +2863,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "CardPaymentMethodDetails",
-        name: "Credit card",
-        brand: "visa",
-        expMonth: 12,
-        expYear: 2025,
-        firstDigits: "4242",
-        lastDigits: "4242",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -2921,7 +2882,6 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:40:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
-          reasonReference: null,
           externalUrl: null,
           createdBy: transactionApp,
           amount: {
@@ -2936,7 +2896,6 @@ export const transactions: Record<
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
-          reasonReference: null,
           message: null,
           externalUrl: null,
           createdBy: staffMember,
@@ -2951,7 +2910,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
@@ -2972,15 +2930,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "CardPaymentMethodDetails",
-        name: "Credit card",
-        brand: "mastercard",
-        expMonth: 3,
-        expYear: 2026,
-        firstDigits: "5555",
-        lastDigits: "4444",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -3001,7 +2950,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 10,
@@ -3014,7 +2962,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
@@ -3029,7 +2976,6 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
-          reasonReference: null,
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
@@ -3051,10 +2997,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "OtherPaymentMethodDetails",
-        name: "PayPal",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -3075,7 +3017,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_FAILURE,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 10,
@@ -3091,7 +3032,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -3105,7 +3045,6 @@ export const transactions: Record<
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
-          reasonReference: null,
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
@@ -3125,7 +3064,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: null,
       __typename: "TransactionItem",
     },
   ],
@@ -3146,7 +3084,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -3163,7 +3100,6 @@ export const transactions: Record<
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
-          reasonReference: null,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3178,7 +3114,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -3195,7 +3130,6 @@ export const transactions: Record<
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
-          reasonReference: null,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3212,15 +3146,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(58.98),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "CardPaymentMethodDetails",
-        name: "Credit card",
-        brand: "visa",
-        expMonth: 6,
-        expYear: 2027,
-        firstDigits: "4111",
-        lastDigits: "1111",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -3237,7 +3162,6 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
-          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
@@ -3254,7 +3178,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
           createdAt: "2022-08-14T10:40:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
@@ -3269,7 +3192,6 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
-          reasonReference: null,
           createdAt: "2022-08-12T14:40:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
@@ -3286,7 +3208,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
@@ -3302,7 +3223,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
@@ -3323,10 +3243,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: {
-        __typename: "OtherPaymentMethodDetails",
-        name: "Bank Transfer",
-      },
       __typename: "TransactionItem",
     },
   ],
@@ -3343,7 +3259,6 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
-          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
@@ -3359,7 +3274,6 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
-          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
@@ -3376,7 +3290,6 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:40:22.226875+00:00",
-          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
@@ -3395,7 +3308,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -3411,7 +3323,6 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
-          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -3429,7 +3340,6 @@ export const transactions: Record<
       refundPendingAmount: prepareMoney(0),
       canceledAmount: prepareMoney(0),
       cancelPendingAmount: prepareMoney(0),
-      paymentMethodDetails: null,
       __typename: "TransactionItem",
     },
   ],
@@ -3588,7 +3498,6 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
-    reasonReference: null,
     lines: [
       {
         __typename: "OrderGrantedRefundLine" as const,
@@ -3619,7 +3528,6 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
-    reasonReference: null,
     lines: [
       {
         __typename: "OrderGrantedRefundLine" as const,

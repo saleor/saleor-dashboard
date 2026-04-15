@@ -217,7 +217,7 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(sectionNames.orders),
+          label: `${intl.formatMessage(sectionNames.orders)} 😊`,
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "orders",
           url: orderListUrl(),

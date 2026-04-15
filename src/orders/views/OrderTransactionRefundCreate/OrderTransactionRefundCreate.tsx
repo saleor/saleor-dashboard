@@ -58,8 +58,7 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       return;
     }
 
-    const { amount, reason, linesToRefund, includeShipping, transactionId, reasonReference } =
-      submitData;
+    const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
 
     if (
       checkAmountExceedsChargedAmount({
@@ -81,8 +80,6 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
         lines: prepareRefundAddLines({ linesToRefund, data }),
         grantRefundForShipping: includeShipping,
         transactionId,
-        // due to select api, object is passed, todo fix this in macaw
-        reasonReferenceId: reasonReference.length ? reasonReference : undefined,
       },
     });
   };

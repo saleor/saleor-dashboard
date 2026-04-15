@@ -22,98 +22,118 @@ const prepareExtensionsWithActions = ({
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
 }): ExtensionWithParams[] =>
-  extensions.map(
-    ({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
-      const isNewTab = targetName === "NEW_TAB";
-      const isWidget = targetName === "WIDGET";
-      const appUrl = app.appUrl;
+  extensions.map(({ id, accessToken, permissions, url, label, mountName, targetName, app }) => {
+    const isNewTab = targetName === "NEW_TAB";
+    const isWidget = targetName === "WIDGET";
+    const appUrl = app.appUrl;
 
-      const settingsValidation = appExtensionManifestOptionsSchemaWithDefault.safeParse(settings);
+    const settingsValidation = appExtensionManifestOptionsSchemaWithDefault.safeParse(undefined);
 
+    /**
+     * Options are not required so fall back to safe GET
+     */
+    const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
+
+    return {
+      id,
+      app,
+      accessToken: accessToken || "",
+      permissions: permissions.map(({ code }) => code),
+      url,
+      label,
+      mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
+      targetName: AppExtensionManifestTarget.parse(targetName),
+      settings: null,
       /**
-       * Options are not required so fall back to safe GET
+       * Only available for NEW_TAB, POPUP, APP_PAGE
+       * TODO: Change interface to *not* contain this method if type is WIDGET
        */
-      const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
+      open: (params: AppDetailsUrlMountQueryParams) => {
+        if (!settingsValidation.success) {
+          console.error("Invalid extension configuration", settingsValidation.error);
 
-      return {
-        id,
-        app,
-        accessToken: accessToken || "",
-        permissions: permissions.map(({ code }) => code),
-        url,
-        label,
-        mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
-        targetName: AppExtensionManifestTarget.parse(targetName),
-        settings,
-        /**
-         * Only available for NEW_TAB, POPUP, APP_PAGE
-         * TODO: Change interface to *not* contain this method if type is WIDGET
-         */
-        open: (params: AppDetailsUrlMountQueryParams) => {
-          if (!settingsValidation.success) {
-            console.error("Invalid extension configuration", settingsValidation.error);
+          return;
+        }
 
-            return;
-          }
+        if (isWidget) {
+          console.error("Widget-type app should not execute 'open' method");
 
-          if (isWidget) {
-            console.error("Widget-type app should not execute 'open' method");
+          return;
+        }
 
-            return;
-          }
+        const isAbsolute = isUrlAbsolute(url);
+        const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
 
-          const isAbsolute = isUrlAbsolute(url);
-          const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
+        if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
+          console.error("Invalid url");
 
-          if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
-            console.error("Invalid url");
+          return;
+        }
 
-            return;
-          }
+        if (isNewTab && newTabMethod === "GET") {
+          const redirectUrl = new URL(absoluteUrl);
 
-          if (isNewTab && newTabMethod === "GET") {
-            const redirectUrl = new URL(absoluteUrl);
-
-            Object.entries(params ?? {}).forEach(([key, value]) => {
-              redirectUrl.searchParams.append(key, value);
-            });
-
-            return newTabActions.openGETinNewTab(redirectUrl.toString());
-          }
-
-          if (isNewTab && newTabMethod === "POST") {
-            return newTabActions.openPOSTinNewTab({
-              appParams: params,
-              accessToken,
-              appId: app.id,
-              extensionUrl: absoluteUrl,
-            });
-          }
-
-          openAppInContext({
-            id: app.id,
-            appToken: accessToken || "",
-            src: url,
-            label,
-            targetName: AppExtensionManifestTarget.parse(targetName),
-            params,
-            formState: {},
+          Object.entries(params ?? {}).forEach(([key, value]) => {
+            redirectUrl.searchParams.append(key, value);
           });
-        },
-      };
-    },
-  );
+
+          return newTabActions.openGETinNewTab(redirectUrl.toString());
+        }
+
+        if (isNewTab && newTabMethod === "POST") {
+          return newTabActions.openPOSTinNewTab({
+            appParams: params,
+            accessToken,
+            appId: app.id,
+            extensionUrl: absoluteUrl,
+          });
+        }
+
+        openAppInContext({
+          id: app.id,
+          appToken: accessToken || "",
+          src: url,
+          label,
+          targetName: AppExtensionManifestTarget.parse(targetName),
+          params,
+          formState: {},
+        });
+      },
+    };
+  });
+
+// Mount points supported by the current API version.
+// The dashboard defines additional mounts that may not exist in older Saleor backends.
+const API_SUPPORTED_MOUNTS = new Set([
+  "CUSTOMER_OVERVIEW_CREATE",
+  "CUSTOMER_OVERVIEW_MORE_ACTIONS",
+  "CUSTOMER_DETAILS_MORE_ACTIONS",
+  "PRODUCT_OVERVIEW_CREATE",
+  "PRODUCT_OVERVIEW_MORE_ACTIONS",
+  "PRODUCT_DETAILS_MORE_ACTIONS",
+  "NAVIGATION_CATALOG",
+  "NAVIGATION_ORDERS",
+  "NAVIGATION_CUSTOMERS",
+  "NAVIGATION_DISCOUNTS",
+  "NAVIGATION_TRANSLATIONS",
+  "NAVIGATION_PAGES",
+  "ORDER_DETAILS_MORE_ACTIONS",
+  "ORDER_OVERVIEW_CREATE",
+  "ORDER_OVERVIEW_MORE_ACTIONS",
+]);
 
 export const useExtensions = <T extends AllAppExtensionMounts>(
   mountList: readonly T[],
 ): Record<T, Extension[]> => {
   const { activate } = useActiveAppExtension();
+  const supportedMounts = mountList.filter(m => API_SUPPORTED_MOUNTS.has(m));
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
+    skip: supportedMounts.length === 0,
     variables: {
       filter: {
         // @ts-expect-error - type is fine, but generated type is mutable instead of readonly. We must fix codegen
-        mountName: mountList,
+        mount: supportedMounts,
       },
     },
   });

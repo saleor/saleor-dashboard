@@ -18,12 +18,12 @@ export const AppManifestFragmentDoc = gql`
   homepageUrl
   supportUrl
   extensions {
-    targetName
+    targetName: target
     permissions {
       code
       name
     }
-    mountName
+    mountName: mount
     url
     label
   }
@@ -198,20 +198,6 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
-  problems {
-    __typename
-    key
-    message
-    createdAt
-    count
-    isCritical
-    dismissed {
-      by
-      userEmail
-    }
-    updatedAt
-    id
-  }
   brand {
     logo {
       default(format: WEBP, size: 64)
@@ -397,8 +383,6 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   checkoutSettings {
     automaticallyCompleteFullyPaidCheckouts
-    automaticCompletionDelay
-    automaticCompletionCutOffDate
   }
 }
     ${ChannelFragmentDoc}
@@ -1750,7 +1734,7 @@ export const OrderLineMetadataFragmentDoc = gql`
   metadata {
     ...MetadataItem
   }
-  privateMetadata {
+  privateMetadata @include(if: $hasManageProducts) {
     ...MetadataItem
   }
   variant {
@@ -1805,10 +1789,6 @@ export const TransactionBaseEventFragmentDoc = gql`
   type
   message
   createdAt
-  reasonReference {
-    id
-    title
-  }
 }
     ${MoneyFragmentDoc}`;
 export const TransactionBaseItemFragmentDoc = gql`
@@ -1821,21 +1801,6 @@ export const TransactionBaseItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseEventFragmentDoc}`;
-export const CardPaymentMethodDetailsFragmentDoc = gql`
-    fragment CardPaymentMethodDetails on CardPaymentMethodDetails {
-  name
-  brand
-  expMonth
-  expYear
-  firstDigits
-  lastDigits
-}
-    `;
-export const OtherPaymentMethodDetailsFragmentDoc = gql`
-    fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
-  name
-}
-    `;
 export const StaffMemberFragmentDoc = gql`
     fragment StaffMember on User {
   id
@@ -1896,16 +1861,6 @@ export const TransactionItemFragmentDoc = gql`
       }
     }
   }
-  paymentMethodDetails {
-    name
-    __typename
-    ... on CardPaymentMethodDetails {
-      ...CardPaymentMethodDetails
-    }
-    ... on OtherPaymentMethodDetails {
-      ...OtherPaymentMethodDetails
-    }
-  }
   events {
     ...TransactionEvent
   }
@@ -1935,8 +1890,6 @@ export const TransactionItemFragmentDoc = gql`
   }
 }
     ${TransactionBaseItemFragmentDoc}
-${CardPaymentMethodDetailsFragmentDoc}
-${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
 export const OrderPaymentFragmentDoc = gql`
@@ -2025,10 +1978,6 @@ export const OrderGrantedRefundFragmentDoc = gql`
     id
   }
   reason
-  reasonReference {
-    id
-    title
-  }
   user {
     ...UserBaseAvatar
   }
@@ -2469,10 +2418,6 @@ export const OrderDetailsGrantedRefundFragmentDoc = gql`
     fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
   id
   reason
-  reasonReference {
-    id
-    title
-  }
   amount {
     ...Money
   }
@@ -2624,26 +2569,14 @@ ${AttributeValueDetailsFragmentDoc}`;
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
-  availableInGrid
   entityType
-  storefrontSearchPosition
   valueRequired
-  referenceTypes {
-    ... on ProductType {
-      id
-      name
-    }
-    ... on PageType {
-      id
-      name
-    }
-  }
   choices(
     first: $firstValues
     after: $afterValues
     last: $lastValues
     before: $beforeValues
-    search: $searchValues
+    filter: {search: $searchValues}
   ) {
     ...AttributeValueList
   }
@@ -2908,16 +2841,6 @@ export const VariantAttributeFragmentDoc = gql`
   entityType
   valueRequired
   unit
-  referenceTypes {
-    ... on ProductType {
-      id
-      name
-    }
-    ... on PageType {
-      id
-      name
-    }
-  }
   choices(
     first: $firstValues
     after: $afterValues
@@ -3412,8 +3335,6 @@ export const ShopFragmentDoc = gql`
   reserveStockDurationAuthenticatedUser
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
-  useLegacyUpdateWebhookEmission
-  preserveAllAddressFields
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
@@ -9622,9 +9543,8 @@ export const ExtensionListDocument = gql`
         id
         label
         url
-        mountName
-        targetName
-        settings
+        mountName: mount
+        targetName: target
         accessToken
         permissions {
           code
@@ -9740,9 +9660,6 @@ export const AppHasProblemsDocument = gql`
     edges {
       node {
         id
-        problems(limit: 1) {
-          __typename
-        }
       }
     }
   }
@@ -9780,20 +9697,6 @@ export const AppAllProblemsDocument = gql`
     query AppAllProblems($id: ID!) {
   app(id: $id) {
     id
-    problems {
-      __typename
-      key
-      message
-      createdAt
-      count
-      isCritical
-      dismissed {
-        by
-        userEmail
-      }
-      updatedAt
-      id
-    }
   }
 }
     `;
@@ -13377,14 +13280,13 @@ export type CreateManualTransactionRefundMutationHookResult = ReturnType<typeof 
 export type CreateManualTransactionRefundMutationResult = Apollo.MutationResult<Types.CreateManualTransactionRefundMutation>;
 export type CreateManualTransactionRefundMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
 export const OrderListDocument = gql`
-    query OrderList($first: Int, $after: String, $last: Int, $before: String, $where: OrderWhereInput, $search: String, $sort: OrderSortingInput) {
+    query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(
     before: $before
     after: $after
     first: $first
     last: $last
-    where: $where
-    search: $search
+    filter: $filter
     sortBy: $sort
   ) {
     edges {
@@ -13440,8 +13342,7 @@ export const OrderListDocument = gql`
  *      after: // value for 'after'
  *      last: // value for 'last'
  *      before: // value for 'before'
- *      where: // value for 'where'
- *      search: // value for 'search'
+ *      filter: // value for 'filter'
  *      sort: // value for 'sort'
  *   },
  * });
@@ -17335,8 +17236,8 @@ export type SearchOrderVariantQueryHookResult = ReturnType<typeof useSearchOrder
 export type SearchOrderVariantLazyQueryHookResult = ReturnType<typeof useSearchOrderVariantLazyQuery>;
 export type SearchOrderVariantQueryResult = Apollo.QueryResult<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>;
 export const SearchPagesDocument = gql`
-    query SearchPages($after: String, $first: Int!, $query: String!, $where: PageWhereInput) {
-  search: pages(after: $after, first: $first, search: $query, where: $where) {
+    query SearchPages($after: String, $first: Int!, $query: String!) {
+  search: pages(after: $after, first: $first, filter: {search: $query}) {
     edges {
       node {
         id
@@ -17365,7 +17266,6 @@ export const SearchPagesDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
- *      where: // value for 'where'
  *   },
  * });
  */

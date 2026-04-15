@@ -151,12 +151,11 @@ export const useInstalledExtensions = () => {
 
   const installedApps = useMemo<InstalledExtension[]>(
     () =>
-      installedAppsData.map(({ id, name, isActive, brand, type, problems }) => {
+      installedAppsData.map(({ id, name, isActive, brand, type }) => {
         const appEvents = eventDeliveriesMap.get(id);
         const lastFailedAttempt = getLatestFailedAttemptFromWebhooks(appEvents?.webhooks ?? []);
 
         const allProblems = [
-          ...(problems ?? []),
           ...(lastFailedAttempt
             ? [buildWebhookProblem(lastFailedAttempt, webhookErrorMessage)]
             : []),

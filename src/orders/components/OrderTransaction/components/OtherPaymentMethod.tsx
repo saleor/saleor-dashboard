@@ -1,5 +1,9 @@
 import { getStaticUrl } from "@dashboard/config";
-import { type OtherPaymentMethodDetailsFragment } from "@dashboard/graphql";
+
+// OtherPaymentMethodDetailsFragment was removed from the GraphQL schema
+interface OtherPaymentMethodDetailsFragment {
+  name: string;
+}
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 

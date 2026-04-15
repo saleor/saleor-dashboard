@@ -41,10 +41,9 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
           query,
         });
       },
-      [AttributeEntityTypeEnum.PAGE]: (where, query): void => {
+      [AttributeEntityTypeEnum.PAGE]: (_filterVariables, query): void => {
         refetchPages({
           ...DEFAULT_INITIAL_SEARCH_DATA,
-          where,
           query,
         });
       },

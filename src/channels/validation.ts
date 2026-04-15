@@ -1,18 +1,10 @@
 import { ChannelErrorCode, type ChannelErrorFragment } from "@dashboard/graphql";
 
 import { type FormData } from "./components/ChannelForm";
-import { isCutoffDateTooOld } from "./components/ChannelForm/automatic-checkout-complete/utils";
 
 const createEmptyRequiredError = (field: string): ChannelErrorFragment => ({
   __typename: "ChannelError",
   code: ChannelErrorCode.REQUIRED,
-  field,
-  message: null,
-});
-
-const createInvalidError = (field: string): ChannelErrorFragment => ({
-  __typename: "ChannelError",
-  code: ChannelErrorCode.INVALID,
   field,
   message: null,
 });
@@ -34,13 +26,6 @@ export const validateChannelFormData = (data: FormData) => {
 
   if (!data.defaultCountry) {
     errors = [...errors, createEmptyRequiredError("defaultCountry")];
-  }
-
-  if (
-    data.automaticallyCompleteCheckouts &&
-    isCutoffDateTooOld(data.automaticCompletionCutOffDate)
-  ) {
-    errors = [...errors, createInvalidError("automaticCompletionCutOffDate")];
   }
 
   return errors;

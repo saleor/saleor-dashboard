@@ -1,6 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
-import { type ExtensionListQuery, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
+import { PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useExtensions } from "./useExtensions";
@@ -40,7 +40,7 @@ const useActiveAppExtensionMock = jest.fn();
 (useActiveAppExtension as jest.Mock).mockImplementation(useActiveAppExtensionMock);
 
 describe("Extensions / hooks / useExtensions", () => {
-  const mockExtensionsData = {
+  const mockExtensionsData: any = {
     appExtensions: {
       edges: [
         {
@@ -200,7 +200,7 @@ describe("Extensions / hooks / useExtensions", () => {
       __typename: "AppExtensionCountableConnection",
     },
     __typename: "Query",
-  } satisfies ExtensionListQuery;
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();

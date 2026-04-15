@@ -57,7 +57,6 @@ export class TransactionFixture {
       currency: "USD",
     },
     createdBy: null,
-    paymentMethodDetails: null,
   } satisfies OrderDetailsFragment["transactions"][number];
 
   static stripeApp = {
@@ -86,7 +85,6 @@ export class TransactionFixture {
       externalUrl: "https://dashboard.stripe.com/payments/ch_ABC123",
       createdAt: "2024-12-01T10:05:00Z",
       message: "Payment captured successfully",
-      reasonReference: null,
       createdBy: TransactionFixture.stripeApp,
       ...overrides,
     }),
@@ -101,7 +99,6 @@ export class TransactionFixture {
       externalUrl: "https://dashboard.stripe.com/refunds/re_XYZ789",
       createdAt: "2024-12-02T14:30:00Z",
       message: "Customer requested partial refund",
-      reasonReference: null,
       createdBy: null,
       ...overrides,
     }),
@@ -116,7 +113,6 @@ export class TransactionFixture {
       externalUrl: "https://dashboard.stripe.com/refunds/re_XYZ789",
       createdAt: "2024-12-02T14:31:00Z",
       message: "Refund processed",
-      reasonReference: null,
       createdBy: TransactionFixture.stripeApp,
       ...overrides,
     }),
@@ -150,7 +146,6 @@ export class TransactionFixture {
       externalUrl: "",
       createdAt: "2024-12-03T09:00:00Z",
       message: "Authorization requested",
-      reasonReference: null,
       createdBy: null,
       ...overrides,
     }),
@@ -165,7 +160,6 @@ export class TransactionFixture {
       externalUrl: "https://ca-test.adyen.com/payments/AUTH-456-REQ",
       createdAt: "2024-12-03T09:01:00Z",
       message: "Authorization successful - 3DS verified",
-      reasonReference: null,
       createdBy: TransactionFixture.adyenApp,
       ...overrides,
     }),

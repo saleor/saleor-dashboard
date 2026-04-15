@@ -11,13 +11,13 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Theme } from "@glideapps/glide-data-grid";
 import { ExternalLink } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
@@ -38,6 +38,7 @@ export const OrderDetailsDatagrid = ({
   datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
@@ -76,17 +77,17 @@ export const OrderDetailsDatagrid = ({
       {
         disabled: !lines[index]?.variant?.product.id,
         label: intl.formatMessage(messages.productDetails),
-        Icon: lines[index]?.variant?.product.id ? (
-          <Link to={productPath(lines[index].variant.product.id)} target="_blank">
-            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-          </Link>
-        ) : (
-          <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-        ),
-        onSelect: () => false,
+        Icon: <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+        onSelect: () => {
+          const productId = lines[index]?.variant?.product.id;
+
+          if (productId) {
+            navigate(productPath(productId));
+          }
+        },
       },
     ],
-    [intl, lines],
+    [intl, lines, navigate],
   );
 
   const renderRowActions = useCallback(

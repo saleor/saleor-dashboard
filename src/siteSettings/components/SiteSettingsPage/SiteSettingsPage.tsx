@@ -94,8 +94,8 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
-    useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
-    preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
+    useLegacyUpdateWebhookEmission: true,
+    preserveAllAddressFields: false,
   };
 
   return (

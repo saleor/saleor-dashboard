@@ -19,16 +19,9 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import {
-  type Control,
-  type SubmitHandler,
-  useController,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { type Control, type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ModelsPicker } from "./components/ModelsPicker/ModelsPicker";
 import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
@@ -86,30 +79,15 @@ export interface OrderTransactionRefundPageFormData {
   includeShipping: boolean;
   reason: string;
   transactionId: string;
-  reasonReference: string;
 }
 
-const ModelsPickerTransactionRefund = (props: {
+// ModelsPickerTransactionRefund disabled: reasonReference was removed from the API
+const ModelsPickerTransactionRefund = (_props: {
   referenceModelTypeId: string;
   control: Control<OrderTransactionRefundPageFormData>;
   disabled: boolean;
 }) => {
-  const { field } = useController({ name: "reasonReference", control: props.control });
-  const intl = useIntl();
-
-  return (
-    <ModelsPicker
-      referenceModelTypeId={props.referenceModelTypeId}
-      disabled={props.disabled}
-      field={field}
-      sortByName
-      skip={props.disabled}
-      emptyOptionLabel={intl.formatMessage({
-        defaultMessage: "Select a reason type",
-        id: "vSLaZ7",
-      })}
-    />
-  );
+  return null;
 };
 
 const OrderTransactionRefundPage = ({

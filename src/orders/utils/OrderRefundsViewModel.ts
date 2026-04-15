@@ -166,7 +166,7 @@ export abstract class OrderRefundsViewModel {
 
       if (eventRequestType) {
         resultModel.reasonNote = eventRequestType.message ?? null;
-        resultModel.reasonType = eventRequestType.reasonReference?.title ?? null;
+        resultModel.reasonType = null;
       }
 
       return resultModel;
@@ -205,7 +205,7 @@ export abstract class OrderRefundsViewModel {
     return grantedRefunds.map(refund => ({
       ...refund,
       type: "standard",
-      reasonType: refund.reasonReference?.title ?? null,
+      reasonType: null,
       reasonNote: refund.reason,
       creator: this.getCreator(refund.app || refund.user),
     }));

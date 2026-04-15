@@ -50,8 +50,6 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   checkoutSettings {
     automaticallyCompleteFullyPaidCheckouts
-    automaticCompletionDelay
-    automaticCompletionCutOffDate
     allowLegacyGiftCardUse
   }
 }
