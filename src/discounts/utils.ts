@@ -106,20 +106,15 @@ export function sortAPIRules(rules: PromotionRuleDetailsFragment[]) {
   return rules.sort(sortAlphabetically("name"));
 }
 
-/** ISO / API date strings or pre-parsed {@link Date}; invalid values yield NaN (never throws). */
-function toUtcMillis(value: string | Date | null | undefined): number {
-  if (value == null || value === "") {
-    return NaN;
+/** Normalize a date-like value to UTC milliseconds. Returns `null` for invalid input. */
+function normalizeToMillis(value: string | Date): number | null {
+  if (value === "") {
+    return null;
   }
 
-  try {
-    const instant = value instanceof Date ? value : new Date(value);
-    const ms = instant.getTime();
+  const ms = (value instanceof Date ? value : new Date(value)).getTime();
 
-    return Number.isFinite(ms) ? ms : NaN;
-  } catch {
-    return NaN;
-  }
+  return Number.isFinite(ms) ? ms : null;
 }
 
 export function getPromotionStatus(
@@ -128,14 +123,14 @@ export function getPromotionStatus(
   now = new Date(),
 ): PromotionStatus {
   const nowTimestamp = now.getTime();
-  const startTimestamp = toUtcMillis(startDate);
-  const endTimestamp = toUtcMillis(endDate);
+  const startTimestamp = startDate != null ? normalizeToMillis(startDate) : null;
+  const endTimestamp = endDate != null ? normalizeToMillis(endDate) : null;
 
-  if (Number.isFinite(startTimestamp) && startTimestamp > nowTimestamp) {
+  if (startTimestamp !== null && startTimestamp > nowTimestamp) {
     return "scheduled";
   }
 
-  if (Number.isFinite(endTimestamp) && endTimestamp < nowTimestamp) {
+  if (endTimestamp !== null && endTimestamp < nowTimestamp) {
     return "finished";
   }
 
@@ -158,9 +153,9 @@ export function getRelativePromotionTimeParts(
     return null;
   }
 
-  const referenceMs = toUtcMillis(referenceDate);
+  const referenceMs = normalizeToMillis(referenceDate);
 
-  if (!Number.isFinite(referenceMs)) {
+  if (referenceMs === null) {
     return null;
   }
 
