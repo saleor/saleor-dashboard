@@ -146,7 +146,7 @@ export const GiftCardCustomerSelectField = ({
               });
             }}
           >
-            Use custom email: {customEmail}
+            {intl.formatMessage(messages.useEmail)} {customEmail}
           </Button>
         </Box>
       )}
