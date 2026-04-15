@@ -22,16 +22,17 @@ jobs:
     steps:
       - name: Get Token
         id: get-token
-        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
         with:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
 
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.get-token.outputs.token }}
           fetch-depth: 0 # Fetch all history to get proper version info
+          persist-credentials: false
 
       - name: Configure Git
         run: |
@@ -40,10 +41,10 @@ jobs:
 
       - name: Check if merged PR was from changeset-release
         id: check-release
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
           # Get the commit message to check if it's from changeset-release branch
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
-
           if echo "$COMMIT_MSG" | grep -q "Release.*\[automated\]"; then
             echo "is_release_merge=true" >> $GITHUB_OUTPUT
             echo "✅ This is a release PR merge from changeset-release/$CURRENT_RELEASE"
@@ -64,19 +65,18 @@ jobs:
         if: steps.check-release.outputs.is_release_merge == 'true'
         env:
           GH_TOKEN: ${{ steps.get-token.outputs.token }}
+          VERSION: ${{ steps.get-version.outputs.version }}
         run: |
-          VERSION="${{ steps.get-version.outputs.version }}"
-
           # Fetch latest changes
           git fetch origin
 
           echo "Creating new cleanup PR from $CURRENT_RELEASE to main"
 
           gh pr create \
-            --base main \
-            --head "$CURRENT_RELEASE" \
-            --title "Clean up after release $VERSION" \
-            --body "$(cat <<EOF
+            --base=main \
+            --head="$CURRENT_RELEASE" \
+            --title="Clean up after release $VERSION" \
+            --body="$(cat <<EOF
           This PR syncs changes from the release branch back to main after a release.
 
           - Release branch: $CURRENT_RELEASE

@@ -178,6 +178,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const {
     voucherCodes,
     voucherCodesLoading,
+    voucherCodesDeleteTransitionState,
     voucherCodesPagination,
     voucherCodesSettings,
     selectedVoucherCodesIds,
@@ -378,6 +379,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         voucherCodesPagination={voucherCodesPagination}
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}
+        deleteVoucherCodesTransitionState={voucherCodesDeleteTransitionState}
         onDeleteVoucherCodes={handleDeleteVoucherCodes}
         onMultipleVoucherCodesGenerate={handleGenerateMultipleCodes}
         onCustomVoucherCodeGenerate={handleAddVoucherCode}

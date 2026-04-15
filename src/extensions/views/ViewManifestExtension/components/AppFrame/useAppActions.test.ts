@@ -1,7 +1,7 @@
 import { type Actions } from "@saleor/app-sdk/app-bridge";
 import { captureMessage } from "@sentry/react";
-import { renderHook } from "@testing-library/react-hooks";
-import { act } from "react-dom/test-utils";
+import { renderHook } from "@testing-library/react";
+import { act } from "react";
 
 import { AppActionsHandler } from "./appActionsHandler";
 import { useAppActions } from "./useAppActions";

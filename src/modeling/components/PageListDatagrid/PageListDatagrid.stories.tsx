@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { PageListDatagrid } from "./PageListDatagrid";
 
 const mockPages = [
@@ -45,6 +46,9 @@ const meta: Meta<typeof PageListDatagrid> = {
     onUpdateListSettings: fn(),
     onSelectPageIds: fn(),
     onRowClick: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

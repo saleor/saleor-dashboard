@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { type AvailableColumn } from "../types";
 import { type ColumnCategory, useColumns } from "./useColumns";

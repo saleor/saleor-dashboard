@@ -1,5 +1,5 @@
 import { type AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { type AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
 import { useAppFrameReferences } from "./popup-frame-reference";

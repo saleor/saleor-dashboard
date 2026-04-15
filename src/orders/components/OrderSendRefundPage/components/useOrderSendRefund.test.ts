@@ -4,7 +4,7 @@ import {
   PermissionEnum,
   useOrderSendRefundMutation,
 } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useOrderSendRefund } from "./useOrderSendRefund";
 

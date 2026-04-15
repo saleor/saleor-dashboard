@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type * as React from "react";
 
@@ -89,7 +89,9 @@ describe("AddCustomExtension", () => {
     await userEvent.click(screen.getByText("save"));
 
     // Assert
-    expect(screen.getByText("Extension name is required")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Extension name is required")).toBeInTheDocument();
+    });
   });
 
   it("creates app without permissions", async () => {
@@ -103,16 +105,18 @@ describe("AddCustomExtension", () => {
     await userEvent.click(screen.getByText("save"));
 
     // Assert
-    expect(mockSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({
-        appName: "Test App",
-        permissions: {
-          MANAGE_ORDERS: false,
-          MANAGE_PRODUCTS: false,
-        },
-      }),
-      expect.anything(),
-    );
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          appName: "Test App",
+          permissions: {
+            MANAGE_ORDERS: false,
+            MANAGE_PRODUCTS: false,
+          },
+        }),
+        expect.anything(),
+      );
+    });
   });
 
   it("creates app with some permissions when checked by user", async () => {
@@ -131,16 +135,18 @@ describe("AddCustomExtension", () => {
     // Assert
     expect(ordersCheckbox).toBeChecked();
     expect(productsCheckbox).not.toBeChecked();
-    expect(mockSubmit).toHaveBeenCalledWith(
-      {
-        appName,
-        permissions: {
-          MANAGE_ORDERS: true,
-          MANAGE_PRODUCTS: false,
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith(
+        {
+          appName,
+          permissions: {
+            MANAGE_ORDERS: true,
+            MANAGE_PRODUCTS: false,
+          },
         },
-      },
-      expect.anything(), // Submit event
-    );
+        expect.anything(), // Submit event
+      );
+    });
   });
 
   it("creates app with all permissions when toggled 'Grant full access'", async () => {
@@ -162,16 +168,18 @@ describe("AddCustomExtension", () => {
     // Assert
     expect(ordersCheckbox).toBeChecked();
     expect(productsCheckbox).toBeChecked();
-    expect(mockSubmit).toHaveBeenCalledWith(
-      {
-        appName,
-        permissions: {
-          MANAGE_ORDERS: true,
-          MANAGE_PRODUCTS: true,
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith(
+        {
+          appName,
+          permissions: {
+            MANAGE_ORDERS: true,
+            MANAGE_PRODUCTS: true,
+          },
         },
-      },
-      expect.anything(), // Submit event
-    );
+        expect.anything(), // Submit event
+      );
+    });
   });
 
   it("creates app with no permissions when toggling between 'Grant full access'", async () => {
@@ -204,16 +212,18 @@ describe("AddCustomExtension", () => {
     await userEvent.click(screen.getByText("save"));
 
     // Assert
-    expect(mockSubmit).toHaveBeenCalledWith(
-      {
-        appName,
-        permissions: {
-          MANAGE_ORDERS: false,
-          MANAGE_PRODUCTS: false,
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith(
+        {
+          appName,
+          permissions: {
+            MANAGE_ORDERS: false,
+            MANAGE_PRODUCTS: false,
+          },
         },
-      },
-      expect.anything(), // Submit event
-    );
+        expect.anything(), // Submit event
+      );
+    });
   });
 
   it("displays warning when permissions are exceeded", () => {
@@ -258,15 +268,17 @@ describe("AddCustomExtension", () => {
     await userEvent.click(screen.getByText("save"));
 
     // Assert
-    expect(mockSubmit).toHaveBeenCalledWith(
-      {
-        appName,
-        permissions: {
-          MANAGE_ORDERS: true,
-          MANAGE_PRODUCTS: false,
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith(
+        {
+          appName,
+          permissions: {
+            MANAGE_ORDERS: true,
+            MANAGE_PRODUCTS: false,
+          },
         },
-      },
-      expect.anything(), // Submit event
-    );
+        expect.anything(), // Submit event
+      );
+    });
   });
 });

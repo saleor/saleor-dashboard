@@ -1127,9 +1127,6 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
-  "4gJAm6": {
-    "string": "Can't delete saved codes"
-  },
   "4hl9rS": {
     "context": "variant price in channel",
     "string": "Price"
@@ -3246,10 +3243,6 @@
   "Gbhrqd": {
     "context": "model types section name",
     "string": "Model Types"
-  },
-  "Ge+dUe": {
-    "context": "currency channel",
-    "string": "To delete {channelSlug} you have to create a chanel with currency: {currency} to be able to move all existing orders."
   },
   "Gfbp36": {
     "context": "dialog header",
@@ -5580,6 +5573,9 @@
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
   },
+  "TV940D": {
+    "string": "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}"
+  },
   "TVR4E6": {
     "string": "Open playground"
   },
@@ -6413,6 +6409,9 @@
     "context": "app extensions subsection",
     "string": "Apps"
   },
+  "Y8XVvH": {
+    "string": "Failed to delete voucher codes"
+  },
   "Y9lv8z": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
@@ -6754,6 +6753,10 @@
   "a0TDWs": {
     "context": "search section name",
     "string": "All Search Results"
+  },
+  "a24HjK": {
+    "context": "currency channel",
+    "string": "To delete {channelSlug} you have to create a channel with currency: {currency} to be able to move all existing orders."
   },
   "a2o5uc": {
     "context": "custom extension page create, tooltip",
@@ -9794,6 +9797,10 @@
   "rbrahO": {
     "string": "Close"
   },
+  "rccigC": {
+    "context": "option label prefix for using a typed email address",
+    "string": "Use email:"
+  },
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
@@ -10111,6 +10118,10 @@
   },
   "tWbE34": {
     "string": "Start Hour"
+  },
+  "tZ+8E3": {
+    "context": "spinner aria label on login page",
+    "string": "Loading login methods"
   },
   "tZ/9Sl": {
     "string": "Invite user/staff member"

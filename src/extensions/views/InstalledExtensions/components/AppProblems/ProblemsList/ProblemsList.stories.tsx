@@ -1,4 +1,6 @@
+import { AppTypeEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
 
 import {
   criticalAppProblem,
@@ -24,7 +26,7 @@ export const SingleProblem: Story = {
     problems: [warningAppProblem],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => {},
+    onClearProblem: fn(),
   },
 };
 
@@ -33,7 +35,7 @@ export const MixedProblems: Story = {
     problems: [criticalAppProblem, warningAppProblem, webhookDeliveryError],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => {},
+    onClearProblem: fn(),
   },
 };
 
@@ -49,7 +51,7 @@ export const ManyProblemsWithShowMore: Story = {
     ],
     appId: "app-123",
     hasManagedAppsPermission: true,
-    onClearProblem: () => {},
+    onClearProblem: fn(),
   },
 };
 
@@ -66,5 +68,16 @@ export const WithoutPermissions: Story = {
     problems: [criticalAppProblem, warningAppProblem],
     appId: "app-123",
     hasManagedAppsPermission: false,
+  },
+};
+
+export const DisabledAppProblems: Story = {
+  args: {
+    problems: [criticalAppProblem, warningAppProblem, webhookDeliveryError],
+    appId: "app-123",
+    appType: AppTypeEnum.THIRDPARTY,
+    isActive: false,
+    hasManagedAppsPermission: true,
+    onClearProblem: fn(),
   },
 };

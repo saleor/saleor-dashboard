@@ -10,16 +10,23 @@ on:
       - edited
       - synchronize
 
+permissions: {}
+
 jobs:
   changeset_present:
     # Adding 'skip changesets' label to the PR will skip this job
     if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip changeset') && !startsWith(github.head_ref, 'changeset-release/') }}
     runs-on: ubuntu-22.04
+
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           sparse-checkout: ./.changeset
+          persist-credentials: false
 
       - name: Changeset file lookup
         env:

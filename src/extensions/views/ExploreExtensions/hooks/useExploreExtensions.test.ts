@@ -1,6 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { PermissionEnum, useInstalledAppsQuery, usePluginsQuery } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 import { useExploreExtensions } from "./useExploreExtensions";

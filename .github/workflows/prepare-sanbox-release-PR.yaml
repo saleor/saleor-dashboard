@@ -10,33 +10,32 @@ on:
         description: Git ref (tag, branch or commit hash) to deploy
         required: true
 
+permissions: {}
+
 jobs:
   prepare-sandbox-PR:
     runs-on: ubuntu-22.04
+
     env:
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: "package.json"
-          cache: pnpm
-
       - name: Prepare Sandbox release pull request
+        env:
+          VAULT_JWT: ${{ secrets.VAULT_URL }}
+          VAULT_URL: ${{ secrets.VAULT_JWT }}
         run: |
           export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+            curl --request GET --url "$VAULT_URL" --header "Authorization: JWT $VAULT_JWT" | jq -r .token \
           )
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
-            --input - <<< '{
+          payload=$(
+            jq --arg version "$VERSION" '{
               "event_type": "open-release-pull-request",
               "client_payload": {
                 "project": "DASHBOARD",
                 "environment": "SANDBOX",
-                "version": "${{ env.VERSION }}"
+                "version": $version
               }
             }'
+          )
+          gh api /repos/saleor/saleor-cloud-deployments/dispatches --input <(echo "$payload")

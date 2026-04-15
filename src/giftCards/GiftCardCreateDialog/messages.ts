@@ -21,6 +21,11 @@ export const giftCardCreateMessages = defineMessages({
     defaultMessage: "Customer",
     description: "customer input label",
   },
+  useEmail: {
+    id: "rccigC",
+    defaultMessage: "Use email:",
+    description: "option label prefix for using a typed email address",
+  },
   noteLabel: {
     id: "UKgP89",
     defaultMessage: "Note",

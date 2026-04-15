@@ -8,18 +8,26 @@ on:
       - edited
       - synchronize
 
+permissions: {}
+
 jobs:
   current_state:
     runs-on: ubuntu-latest
     name: "Calculate current state"
+
+    permissions:
+      contents: read
+
     outputs:
       main_statistics: ${{ steps.store_import_stats.outputs.MAIN_STATISTICS }}
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.base_ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
@@ -38,10 +46,16 @@ jobs:
     name: "Migration check"
     needs: current_state
     if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip macaw migration check') }}
+
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
@@ -61,10 +75,10 @@ jobs:
       - name: "MacawUI regression reported"
         if: ${{ env.IMPORT_DIFFERENCE > 0 }}
         run: |
-          echo "Regression detected: +${{ env.IMPORT_DIFFERENCE }} imports"
+          echo "Regression detected: +${IMPORT_DIFFERENCE} imports"
           exit 1
       - name: "MacawUI migration progress"
         if: ${{ env.IMPORT_DIFFERENCE <= 0 }}
         run: |
-          echo "Progress by: ${{ env.IMPORT_DIFFERENCE }} imports"
+          echo "Progress by: ${IMPORT_DIFFERENCE} imports"
           exit 0

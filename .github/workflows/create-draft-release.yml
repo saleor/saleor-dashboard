@@ -5,17 +5,21 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
-  create-draft-release:
+  prepare-draft-release:
     runs-on: ubuntu-latest
+
+    outputs:
+      release-body: ${{ steps.release_body.outputs.release_body }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0 # Fetch all history for all tags
+          persist-credentials: false
 
       - name: Extract changelog for version
         id: changelog
@@ -62,6 +66,10 @@ jobs:
 
       - name: Create release body
         id: release_body
+        env:
+          HAS_PREV_TAG: ${{ steps.prev_tag.outputs.has_prev_tag }}
+          PREV_TAG: ${{ steps.prev_tag.outputs.prev_tag }}
+          REPO: ${{ github.repository }}
         run: |
           CURRENT_TAG="${GITHUB_REF#refs/tags/}"
           CHANGELOG=$(cat /tmp/changelog.txt)
@@ -72,25 +80,32 @@ jobs:
             echo ""
 
             # Add diff link if we have a previous tag
-            if [ "${{ steps.prev_tag.outputs.has_prev_tag }}" = "true" ]; then
-              PREV_TAG="${{ steps.prev_tag.outputs.prev_tag }}"
-              echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_TAG}"
+            if [[ "${HAS_PREV_TAG}" == "true" ]]; then
+              echo "**Full Changelog**: https://github.com/$REPO/compare/${PREV_TAG}...${CURRENT_TAG}"
             fi
           } > /tmp/release_body.txt
 
-          echo "release_body_file=/tmp/release_body.txt" >> $GITHUB_OUTPUT
+          echo "release_body=$(cat /tmp/release_body.txt)" >> "$GITHUB_OUTPUT"
 
+  create-draft-release:
+    needs: [prepare-draft-release]
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: write
+
+    steps:
       - name: Create draft release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BODY: ${{ needs.prepare-draft-release.outputs.release-body }}
         run: |
           CURRENT_TAG="${GITHUB_REF#refs/tags/}"
-          RELEASE_BODY=$(cat /tmp/release_body.txt)
 
           gh release create "$CURRENT_TAG" \
             --draft \
-            --title "$CURRENT_TAG" \
-            --notes "$RELEASE_BODY"
+            --title="$CURRENT_TAG" \
+            --notes="$RELEASE_BODY"
 
           echo "✅ Draft release created for $CURRENT_TAG"
 
@@ -102,7 +117,7 @@ jobs:
       slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
     steps:
       - name: Load secrets
-        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
         id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
@@ -111,7 +126,6 @@ jobs:
   notify-failure:
     if: failure()
     needs: [create-draft-release, load-failure-secrets]
-    permissions: {}
     uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       custom_title: "🚨 Draft Release Creation Failed for *${{ github.ref_name }}*"

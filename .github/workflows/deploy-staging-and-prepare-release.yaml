@@ -7,34 +7,76 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions: {}
+
 jobs:
   prepare-release:
     name: Prepare release with Changesets
     runs-on: ubuntu-22.04
     outputs:
       hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
+      ENVIRONMENT: ${{ steps.set-environment.outputs.ENVIRONMENT }}
+      MINOR_VERSION: ${{ steps.get-version.outputs.MINOR_VERSION }}
+      SENTRY_RELEASE: ${{ steps.get-version.outputs.SENTRY_RELEASE }}
+      CUSTOM_VERSION: ${{ steps.get-version.outputs.CUSTOM_VERSION }}
+
     permissions:
       contents: write
       pull-requests: write
+
     steps:
+      - name: Set environment
+        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
+        id: set-environment
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          set -x
+          environment=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
+          echo "ENVIRONMENT=${environment}" >> "$GITHUB_OUTPUT"
+
+      - name: Set custom version
+        id: get-version
+        env:
+          VERSION: ${{ github.ref_name }}
+        # Add commit hash to basic version number
+        run: |
+          set -x
+
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          RELEASE="${CURRENT_VERSION}-${HASH}"
+
+          echo "CUSTOM_VERSION=${RELEASE}" >> "$GITHUB_OUTPUT"
+          echo "SENTRY_RELEASE=${RELEASE}" >> "$GITHUB_OUTPUT"
+
+          minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
+          echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_OUTPUT"
+
       - name: Get Token
         id: get-token
-        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
         with:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
+
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.get-token.outputs.token }}
+          persist-credentials: false
+
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
+
       - name: Install Dependencies
         run: pnpm install
+
       - name: Publishing version
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         id: changesets
@@ -44,26 +86,55 @@ jobs:
           publish: "pnpm run release"
         env:
           GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
+
       - name: Update PR title with version from package.json
         if: steps.changesets.outputs.pullRequestNumber != ''
-        run: |
-          VERSION=$(jq -r .version package.json)
-          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --title "Release ${VERSION} [automated]"
         env:
           GH_TOKEN: ${{ steps.get-token.outputs.token }}
+          PR_NUM: ${{ steps.changesets.outputs.pullRequestNumber }}
+        run: |
+          VERSION=$(jq -r .version package.json)
+          gh pr edit "$PR_NUM" --title="Release ${VERSION} [automated]"
+
+  prepare-build:
+    needs: [prepare-release]
+    if: always()
+    runs-on: ubuntu-24.04
+
+    permissions:
+      checks: write
+
+    outputs:
+      check-id: ${{ steps.create-check.outputs.CHECK_ID }}
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Create check in prepare release PR
+        if: needs.prepare-release.outputs.hasChangesets == 'true'
+        id: create-check
+        uses: ./.github/actions/checks/create-pull-request-check
+        with:
+          PR_HEAD: "changeset-release/${{ needs.prepare-release.outputs.MINOR_VERSION }}"
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "in_progress"
+          TITLE: "Deploy staging"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   build:
-    needs: prepare-release
+    needs: [prepare-build, prepare-release, prepare-release]
     if: always()
     runs-on: ubuntu-22.04
+
     permissions:
-      id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
-      checks: write
+
     outputs:
-      MINOR_VERSION: ${{ env.MINOR_VERSION }}
-      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
-      ENVIRONMENT: ${{ env.ENVIRONMENT }}
+      MINOR_VERSION: ${{ needs.prepare-release.outputs.MINOR_VERSION }}
+      CUSTOM_VERSION: ${{ needs.prepare-release.outputs.CUSTOM_VERSION || env.VERSION }}
+      ENVIRONMENT: ${{ needs.prepare-release.outputs.ENVIRONMENT }}
     env:
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
@@ -73,54 +144,25 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_RELEASE: ${{ needs.prepare-release.outputs.SENTRY_RELEASE }}
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
-      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+      VERSION: ${{ github.ref_name }}
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ env.VERSION }}
-
-      - name: Set environment
-        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
-        run: |
-          set -x
-          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
-          echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
-
-      - name: Set custom version
-        env:
-          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
-        # Add commit hash to basic version number
-        run: |
-          set -x
-          HASH=$(git rev-parse --short HEAD)
-          CURRENT_VERSION=$(jq -r .version package.json)
-          RELEASE="${CURRENT_VERSION}-${HASH}"
-          echo "CUSTOM_VERSION=${RELEASE}" >> "$GITHUB_ENV"
-          echo "SENTRY_RELEASE=${RELEASE}" >> "$GITHUB_ENV"
-          minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
-          echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_ENV"
+          persist-credentials: false
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
-          cache: "pnpm"
-
-      - name: Create check in prepare release PR
-        if: needs.prepare-release.outputs.hasChangesets == 'true'
-        id: create-check
-        uses: ./.github/actions/checks/create-pull-request-check
-        with:
-          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
-          CHECK_NAME: "Deploy_staging"
-          STATUS: "in_progress"
-          TITLE: "Deploy staging"
-          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          package-manager-cache: false
 
       - name: Package
         timeout-minutes: 15
@@ -131,15 +173,53 @@ jobs:
         run: |
           pnpm run build
 
+      - name: Upload Build
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: "build"
+          path: "build/"
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    runs-on: ubuntu-24.04
+    needs: [build, prepare-release]
+
+    permissions:
+      id-token: write
+
+    outputs:
+      outcome: ${{ steps.deploy.outcome }}
+
+    environment:
+      deployment: false
+      name: deploy-staging
+
+    steps:
+      - uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          name: build
+          path: build/
+
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_STAGING_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_STAGING_CICD_ROLE_NAME }}
           aws-region: us-east-1
 
       - name: Deploy
         id: deploy
+        env:
+          ENVIRONMENT: ${{ needs.build.outputs.ENVIRONMENT }}
+          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
+          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
         run: |
+          # Ensure '--delete' never tries to wipe a whole bucket, instead it should
+          # always have a S3 prefix
+          if [[ -z "$DEPLOYMENT_BUCKET" ]] || [[ -z "$ENVIRONMENT" ]] || [[ -z "$CDN_DISTRIBUTIONS" ]]; then
+            echo "Missing required variable(s)" >&2
+          fi
+
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
@@ -148,29 +228,20 @@ jobs:
             echo "::add-mask::$DISTRIBUTION"
             for i in {1..3}; do aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths "/dashboard*" && break || sleep 5; done
           done
-        env:
-          DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_STAGING_DEPLOYMENT_BUCKET }}
-          CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
 
-      - name: Update check
-        if: always() && steps.create-check.outputs.CHECK_ID
-        uses: ./.github/actions/checks/update-pull-request-check
+      - name: Get Token
+        if: needs.prepare-release.outputs.hasChangesets == 'false'
+        id: get-token
+        uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
         with:
-          CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-          CHECK_NAME: "Deploy_staging"
-          STATUS: "completed"
-          CONCLUSION: "${{ steps.deploy.outcome }}"
-          TITLE: "Deploy staging"
-          SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          vault-url: ${{ secrets.VAULT_URL }}
+          vault-jwt: ${{ secrets.VAULT_JWT }}
 
       - name: Prepare Sandbox release pull request
         if: needs.prepare-release.outputs.hasChangesets == 'false'
+        env:
+          GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
         run: |
-          export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
-          )
-
           version=$(cat package.json | jq -r .version)
           payload=$(jq --null-input --arg version "$version" '{
             "event_type": "open-release-pull-request",
@@ -182,6 +253,32 @@ jobs:
           }')
 
           gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
+
+  finish-release:
+    if: always()
+
+    runs-on: ubuntu-24.04
+    needs: [deploy, prepare-build]
+
+    permissions:
+      checks: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Update check
+        if: always() && needs.prepare-build.outputs.check-id
+        uses: ./.github/actions/checks/update-pull-request-check
+        with:
+          CHECK_ID: ${{ needs.prepare-build.outputs.check-id }}
+          CHECK_NAME: "Deploy_staging"
+          STATUS: "completed"
+          CONCLUSION: "${{ needs.deploy.outputs.outcome }}"
+          TITLE: "Deploy staging"
+          SUMMARY: "Deploy finished with status ${{ needs.deploy.outputs.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
   notify-slack:
     needs: build
@@ -204,6 +301,6 @@ jobs:
     if: needs.prepare-release.outputs.hasChangesets == 'true'
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: ${{ needs.build.outputs.MINOR_VERSION }} # eg. "3.19"
-      CUSTOM_VERSION: ${{ needs.build.outputs.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
+      VERSION: ${{ needs.prepare-release.outputs.MINOR_VERSION }} # eg. "3.19"
+      CUSTOM_VERSION: ${{ needs.prepare-release.outputs.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
     secrets: inherit

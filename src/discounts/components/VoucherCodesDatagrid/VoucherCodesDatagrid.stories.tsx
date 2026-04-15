@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { type VoucherCode } from "./types";
 import { VoucherCodesDatagrid } from "./VoucherCodesDatagrid";
 
@@ -22,6 +23,9 @@ const meta: Meta<typeof VoucherCodesDatagrid> = {
     settings: { columns: ["code", "usage", "status"], rowsPerPage: 20 },
     onSettingsChange: fn(),
     onSelectVoucherCodesIds: fn(),
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

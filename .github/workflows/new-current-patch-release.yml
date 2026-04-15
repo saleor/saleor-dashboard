@@ -3,8 +3,7 @@ name: New Current Patch Release
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   # Patching current stable version is basically merging commits from main to release branch
@@ -14,18 +13,22 @@ jobs:
   # This workflow is automating this and ensuring branch protection is omitted for authorized actor.
   recreate-release-branch:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
 
     steps:
       - name: Get Token
         id: get-token
-        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        uses: saleor/saleor-internal-actions/request-vault-token@6a0fa7c073b3857a11d414f25a149065fe5a0fcf # v1.4.0
         with:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
+
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.get-token.outputs.token }}
+          persist-credentials: false
 
       - name: Configure Git
         run: |
@@ -47,22 +50,22 @@ jobs:
           # Delete the old release branch locally if it exists
           if git show-ref --verify --quiet refs/heads/$CURRENT_RELEASE; then
             echo "Deleting local branch $CURRENT_RELEASE"
-            git branch -D $CURRENT_RELEASE
+            git branch -D "$CURRENT_RELEASE"
           fi
 
           # Delete the remote release branch if it exists
           if git ls-remote --heads origin $CURRENT_RELEASE | grep -q $CURRENT_RELEASE; then
             echo "Deleting remote branch $CURRENT_RELEASE"
-            git push origin --delete refs/heads/$CURRENT_RELEASE
+            git push origin --delete "refs/heads/$CURRENT_RELEASE"
           fi
 
           # Create new branch from main
           echo "Creating new branch $CURRENT_RELEASE from main"
-          git checkout -b $CURRENT_RELEASE
+          git checkout -b "$CURRENT_RELEASE"
 
           # Push the new branch
           echo "Pushing new branch $CURRENT_RELEASE to remote"
-          git push origin refs/heads/$CURRENT_RELEASE:refs/heads/$CURRENT_RELEASE
+          git push origin "refs/heads/$CURRENT_RELEASE:refs/heads/$CURRENT_RELEASE"
 
           echo "✅ Successfully recreated release branch $CURRENT_RELEASE from main"
 
@@ -74,7 +77,7 @@ jobs:
       slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
     steps:
       - name: Load secrets
-        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
         id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}

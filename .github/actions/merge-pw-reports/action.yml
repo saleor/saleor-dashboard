@@ -14,7 +14,7 @@ runs:
   using: "composite"
   steps:
     - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: "package.json"
         cache: "pnpm"
@@ -24,7 +24,7 @@ runs:
       run: pnpm install
 
     - name: Download blob reports from GitHub Actions Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
       with:
         path: all-blob-reports
         pattern: ${{ inputs.ARTIFACT_PREFIX && format('{0}-all-blob-reports-*', inputs.ARTIFACT_PREFIX) || 'all-blob-reports-*' }}
@@ -39,16 +39,15 @@ runs:
         zip -P "$PASSWORD_FOR_DECODING_ARTIFACT" secure-report.zip -r ./playwright-report
 
     - name: Upload HTML report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: ${{ inputs.ARTIFACT_PREFIX && format('{0}-html-report--attempt-{1}', inputs.ARTIFACT_PREFIX, github.run_attempt) || format('html-report--attempt-{0}', github.run_attempt) }}
         path: secure-report.zip
         retention-days: 14
 
     - name: Merge blob reports
-      uses: actions/upload-artifact/merge@v4
+      uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: ${{ inputs.ARTIFACT_PREFIX && format('{0}-merged-blob-reports', inputs.ARTIFACT_PREFIX) || 'merged-blob-reports' }}
         pattern: ${{ inputs.ARTIFACT_PREFIX && format('{0}-all-blob-reports-*', inputs.ARTIFACT_PREFIX) || 'all-blob-reports-*' }}
         retention-days: 7
-        delete-merged: true
