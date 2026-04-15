@@ -117,11 +117,15 @@ function normalizeToMillis(value: string | Date): number | null {
   return Number.isFinite(ms) ? ms : null;
 }
 
-export function getPromotionStatus(
-  startDate: string | Date | null | undefined,
-  endDate: string | Date | null | undefined,
+export function getPromotionStatus({
+  startDate,
+  endDate,
   now = new Date(),
-): PromotionStatus {
+}: {
+  startDate: string | Date | null | undefined;
+  endDate: string | Date | null | undefined;
+  now?: Date;
+}): PromotionStatus {
   const nowTimestamp = now.getTime();
   const startTimestamp = startDate != null ? normalizeToMillis(startDate) : null;
   const endTimestamp = endDate != null ? normalizeToMillis(endDate) : null;
@@ -141,12 +145,17 @@ export function getPromotionStatus(
  * Relative time value/unit for scheduled (vs start) or finished (vs end) promotions.
  * Active promotions have no reference date for this hint.
  */
-export function getRelativePromotionTimeParts(
-  status: PromotionStatus,
-  startDate: string | Date | null | undefined,
-  endDate: string | Date | null | undefined,
+export function getRelativePromotionTimeParts({
+  status,
+  startDate,
+  endDate,
   now = new Date(),
-): { unit: Intl.RelativeTimeFormatUnit; value: number } | null {
+}: {
+  status: PromotionStatus;
+  startDate: string | Date | null | undefined;
+  endDate: string | Date | null | undefined;
+  now?: Date;
+}): { unit: Intl.RelativeTimeFormatUnit; value: number } | null {
   const referenceDate = status === "scheduled" ? startDate : status === "finished" ? endDate : null;
 
   if (referenceDate == null || referenceDate === "") {

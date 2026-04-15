@@ -6,7 +6,11 @@ describe("getPromotionStatus", () => {
     const now = new Date("2026-03-21T12:00:00.000Z");
 
     // Act
-    const result = getPromotionStatus("2026-03-22T00:00:00.000Z", null, now);
+    const result = getPromotionStatus({
+      startDate: "2026-03-22T00:00:00.000Z",
+      endDate: null,
+      now,
+    });
 
     // Assert
     expect(result).toBe("scheduled");
@@ -17,7 +21,11 @@ describe("getPromotionStatus", () => {
     const now = new Date("2026-03-21T12:00:00.000Z");
 
     // Act
-    const result = getPromotionStatus("2026-03-20T00:00:00.000Z", "2026-03-22T00:00:00.000Z", now);
+    const result = getPromotionStatus({
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: "2026-03-22T00:00:00.000Z",
+      now,
+    });
 
     // Assert
     expect(result).toBe("active");
@@ -28,7 +36,11 @@ describe("getPromotionStatus", () => {
     const now = new Date("2026-03-21T12:00:00.000Z");
 
     // Act
-    const result = getPromotionStatus("2026-03-20T00:00:00.000Z", "2026-03-21T12:00:00.000Z", now);
+    const result = getPromotionStatus({
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: "2026-03-21T12:00:00.000Z",
+      now,
+    });
 
     // Assert
     expect(result).toBe("active");
@@ -39,7 +51,11 @@ describe("getPromotionStatus", () => {
     const now = new Date("2026-03-21T12:00:00.000Z");
 
     // Act
-    const result = getPromotionStatus("2026-03-20T00:00:00.000Z", "2026-03-21T11:59:59.000Z", now);
+    const result = getPromotionStatus({
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: "2026-03-21T11:59:59.000Z",
+      now,
+    });
 
     // Assert
     expect(result).toBe("finished");
@@ -50,9 +66,9 @@ describe("getPromotionStatus", () => {
     const now = new Date("2026-03-21T12:00:00.000Z");
 
     // Act & Assert
-    expect(getPromotionStatus("", "", now)).toBe("active");
-    expect(getPromotionStatus("not-a-date", null, now)).toBe("active");
-    expect(getPromotionStatus(null, "garbage", now)).toBe("active");
+    expect(getPromotionStatus({ startDate: "", endDate: "", now })).toBe("active");
+    expect(getPromotionStatus({ startDate: "not-a-date", endDate: null, now })).toBe("active");
+    expect(getPromotionStatus({ startDate: null, endDate: "garbage", now })).toBe("active");
   });
 
   it("accepts Date instances for start and end", () => {
@@ -61,7 +77,7 @@ describe("getPromotionStatus", () => {
     const futureStart = new Date("2026-03-22T00:00:00.000Z");
 
     // Act
-    const result = getPromotionStatus(futureStart, null, now);
+    const result = getPromotionStatus({ startDate: futureStart, endDate: null, now });
 
     // Assert
     expect(result).toBe("scheduled");
@@ -73,7 +89,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("returns null for active status", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts("active", "2026-03-20T00:00:00.000Z", null, now);
+    const result = getRelativePromotionTimeParts({
+      status: "active",
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: null,
+      now,
+    });
 
     // Assert
     expect(result).toBeNull();
@@ -81,7 +102,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("returns null when scheduled but start date is missing", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts("scheduled", null, null, now);
+    const result = getRelativePromotionTimeParts({
+      status: "scheduled",
+      startDate: null,
+      endDate: null,
+      now,
+    });
 
     // Assert
     expect(result).toBeNull();
@@ -89,7 +115,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("returns null when finished but end date is missing", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts("finished", "2026-03-20T00:00:00.000Z", null, now);
+    const result = getRelativePromotionTimeParts({
+      status: "finished",
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: null,
+      now,
+    });
 
     // Assert
     expect(result).toBeNull();
@@ -97,8 +128,18 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("returns null when reference date is invalid", () => {
     // Arrange & Act
-    const scheduled = getRelativePromotionTimeParts("scheduled", "not-a-date", null, now);
-    const finished = getRelativePromotionTimeParts("finished", null, "also-bad", now);
+    const scheduled = getRelativePromotionTimeParts({
+      status: "scheduled",
+      startDate: "not-a-date",
+      endDate: null,
+      now,
+    });
+    const finished = getRelativePromotionTimeParts({
+      status: "finished",
+      startDate: null,
+      endDate: "also-bad",
+      now,
+    });
 
     // Assert
     expect(scheduled).toBeNull();
@@ -107,12 +148,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("uses minute unit when less than one hour from start", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts(
-      "scheduled",
-      "2026-03-21T12:45:00.000Z",
-      null,
+    const result = getRelativePromotionTimeParts({
+      status: "scheduled",
+      startDate: "2026-03-21T12:45:00.000Z",
+      endDate: null,
       now,
-    );
+    });
 
     // Assert
     expect(result).toEqual({ unit: "minute", value: 45 });
@@ -120,12 +161,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("uses hour unit when one hour or more but less than one day from start", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts(
-      "scheduled",
-      "2026-03-21T15:00:00.000Z",
-      null,
+    const result = getRelativePromotionTimeParts({
+      status: "scheduled",
+      startDate: "2026-03-21T15:00:00.000Z",
+      endDate: null,
       now,
-    );
+    });
 
     // Assert
     expect(result).toEqual({ unit: "hour", value: 3 });
@@ -133,12 +174,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("uses day unit when one day or more from start", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts(
-      "scheduled",
-      "2026-03-24T12:00:00.000Z",
-      null,
+    const result = getRelativePromotionTimeParts({
+      status: "scheduled",
+      startDate: "2026-03-24T12:00:00.000Z",
+      endDate: null,
       now,
-    );
+    });
 
     // Assert
     expect(result).toEqual({ unit: "day", value: 3 });
@@ -146,12 +187,12 @@ describe("getRelativePromotionTimeParts", () => {
 
   it("returns negative values for finished promotions in the past", () => {
     // Arrange & Act
-    const result = getRelativePromotionTimeParts(
-      "finished",
-      "2026-03-20T00:00:00.000Z",
-      "2026-03-18T12:00:00.000Z",
+    const result = getRelativePromotionTimeParts({
+      status: "finished",
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: "2026-03-18T12:00:00.000Z",
       now,
-    );
+    });
 
     // Assert
     expect(result).toEqual({ unit: "day", value: -3 });
@@ -162,7 +203,12 @@ describe("getRelativePromotionTimeParts", () => {
     const end = new Date("2026-03-18T12:00:00.000Z");
 
     // Act
-    const result = getRelativePromotionTimeParts("finished", "2026-03-20T00:00:00.000Z", end, now);
+    const result = getRelativePromotionTimeParts({
+      status: "finished",
+      startDate: "2026-03-20T00:00:00.000Z",
+      endDate: end,
+      now,
+    });
 
     // Assert
     expect(result).toEqual({ unit: "day", value: -3 });

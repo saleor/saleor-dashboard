@@ -118,7 +118,7 @@ function getStatusCellContent(
   intl: IntlShape,
   currentTheme: DefaultTheme,
 ): GridCell {
-  const status = getPromotionStatus(rowData.startDate, rowData.endDate);
+  const status = getPromotionStatus({ startDate: rowData.startDate, endDate: rowData.endDate });
   const label = getStatusLabel(status, intl);
   const color = getStatusColor({ status: statusToPillColor[status], currentTheme });
 

@@ -24,7 +24,7 @@ export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps) => {
     data.type === PromotionTypeEnum.CATALOGUE
       ? intl.formatMessage({ defaultMessage: "Catalog", id: "GOdq5V" })
       : intl.formatMessage({ defaultMessage: "Order", id: "XPruqs" });
-  const promotionStatus = getPromotionStatus(data.startDate, data.endDate);
+  const promotionStatus = getPromotionStatus({ startDate: data.startDate, endDate: data.endDate });
   const statusLabel = intl.formatMessage(
     promotionStatus === "scheduled"
       ? { defaultMessage: "Scheduled", id: "cXAlMR" }
@@ -34,7 +34,11 @@ export const DiscountDetailsTitle = ({ data }: DiscountDetailsTitleProps) => {
   );
   const statusColor: PillStatusType =
     promotionStatus === "active" ? "success" : promotionStatus === "scheduled" ? "info" : "neutral";
-  const timeParts = getRelativePromotionTimeParts(promotionStatus, data.startDate, data.endDate);
+  const timeParts = getRelativePromotionTimeParts({
+    status: promotionStatus,
+    startDate: data.startDate,
+    endDate: data.endDate,
+  });
   const timeHint = timeParts
     ? intl.formatRelativeTime(timeParts.value, timeParts.unit, { numeric: "auto", style: "long" })
     : null;
