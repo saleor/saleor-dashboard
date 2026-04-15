@@ -46,7 +46,7 @@ export const GiftCardCustomerSelectField = ({
     }));
 
     return opts;
-  }, [customers, inputValue, intl]);
+  }, [customers]);
 
   const customEmail = useMemo((): string | null => {
     const trimmedCustomValue = inputValue.trim();
@@ -71,7 +71,7 @@ export const GiftCardCustomerSelectField = ({
     }
 
     return null;
-  }, [options, inputValue]);
+  }, [options, inputValue, selectedCustomer.email]);
 
   const value = useMemo<Option | null>(
     () =>
