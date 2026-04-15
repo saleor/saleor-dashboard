@@ -1,0 +1,38 @@
+.github/workflows/new-current-patch-release.yml
+  1877078a2c7c5ddc 31
+.github/workflows/deploy-staging-and-prepare-release.yaml
+  1877078a2c7c5ddc 305
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "c7cfaefa641a6b62b7ae44ee5c29edb90357c8da",
+  "prompts": {
+    "1877078a2c7c5ddc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e30904f4-7751-4ff5-9a7a-c59a70778d15",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 116,
+      "total_deletions": 91,
+      "accepted_lines": 43,
+      "overriden_lines": 1
+    },
+    "1d861b72e82996b2": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1776256304107",
+        "model": "unknown"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 4
+    }
+  }
+}
