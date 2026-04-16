@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Changed behavior of Gift Card customer attachment, now it will show a separate button for custom value instead of buggy combobox
+Updated Gift Card customer attachment to show a separate button for entering a custom value instead of using a combobox.
