@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.40
+
+### Patch Changes
+
+- [#6515](https://github.com/saleor/saleor-dashboard/pull/6515) [`040a627`](https://github.com/saleor/saleor-dashboard/commit/040a627021b05cfbed4b487987caab333bd80ccf) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Changed behavior of Gift Card customer attachment, now it will show a separate button for custom value instead of buggy combobox
+
 ## 3.22.39
 
 ### Patch Changes
