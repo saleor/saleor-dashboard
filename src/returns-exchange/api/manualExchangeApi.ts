@@ -1,6 +1,6 @@
 import { type CXManualExchange } from "../types";
 
-const BASE_URL = import.meta.env.VITE_TENEXU_API_URL || "http://localhost:4567";
+const BASE_URL = import.meta.env.VITE_TENEXU_API_URL || "https://api.tenxyou.infinitelocus.com";
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("_saleor_auth_token") || "";
