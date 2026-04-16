@@ -51,7 +51,23 @@ jobs:
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: "package.json"
-          # Cache disabled to prevent poisonings due to lack of cryptographic signatures
+          # Cache is intentionally disabled for security.
+          #
+          # GitHub Actions cache doesn't provide any trust boundary:
+          # - Any workflow that can run in this repository (e.g., pull_request
+          #   or push events) can populate cache entries (using any cache keys)
+          # - A trusted workflow (like this build job) can then later restore
+          #   that cache and execute or deploy malicious content
+          #
+          # This enables cache poisoning, meaning someone could inject
+          # malicious NPM dependencies or malicious binaries (by replacing
+          # the node or npm executable with a malicious one) then leading to
+          # code execution during build or compromised deployments (e.g.,
+          # implanting backdoors inside the JS or HTML files generated
+          # during `pnpm run build`)
+          #
+          # Since this workflow deploys to AWS, it must not consume artifacts
+          # from shared cache.
           package-manager-cache: false
           cache: ""
 
