@@ -1,11 +1,18 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
-import { dateCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  dateCell,
+  pillCell,
+  readonlyTextCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
+import { getPromotionStatus, type PromotionStatus } from "@dashboard/discounts/utils";
 import { type PromotionFragment, PromotionTypeEnum } from "@dashboard/graphql";
+import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -21,6 +28,11 @@ export const dicountListStaticColumnsAdapter = (
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
       width: 350,
+    },
+    {
+      id: "status",
+      title: intl.formatMessage(columnsMessages.status),
+      width: 150,
     },
     {
       id: "type",
@@ -49,10 +61,12 @@ export const createGetCellContent =
     promotions,
     columns,
     intl,
+    currentTheme,
   }: {
     promotions: PromotionFragment[];
     columns: AvailableColumn[];
     intl: IntlShape;
+    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = promotions[row];
@@ -65,6 +79,8 @@ export const createGetCellContent =
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData.name);
+      case "status":
+        return getStatusCellContent(rowData, intl, currentTheme);
       case "startDate":
         return rowData.startDate
           ? dateCell(rowData.startDate, COMMON_CELL_PROPS)
@@ -79,6 +95,35 @@ export const createGetCellContent =
         return readonlyTextCell("");
     }
   };
+
+const statusToPillColor: Record<PromotionStatus, PillStatusType> = {
+  active: "success",
+  scheduled: "info",
+  finished: "neutral",
+};
+
+function getStatusLabel(status: PromotionStatus, intl: IntlShape): string {
+  switch (status) {
+    case "active":
+      return intl.formatMessage({ defaultMessage: "Active", id: "3a5wL8" });
+    case "scheduled":
+      return intl.formatMessage({ defaultMessage: "Scheduled", id: "cXAlMR" });
+    case "finished":
+      return intl.formatMessage({ defaultMessage: "Finished", id: "EQpfkS" });
+  }
+}
+
+function getStatusCellContent(
+  rowData: PromotionFragment,
+  intl: IntlShape,
+  currentTheme: DefaultTheme,
+): GridCell {
+  const status = getPromotionStatus({ startDate: rowData.startDate, endDate: rowData.endDate });
+  const label = getStatusLabel(status, intl);
+  const color = getStatusColor({ status: statusToPillColor[status], currentTheme });
+
+  return pillCell(label, color, COMMON_CELL_PROPS);
+}
 
 function getDiscountType(promotion: PromotionFragment, intl: IntlShape) {
   switch (promotion.type) {
