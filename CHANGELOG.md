@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.1
+
+### Patch Changes
+
+- [#6499](https://github.com/saleor/saleor-dashboard/pull/6499) [`b652a58`](https://github.com/saleor/saleor-dashboard/commit/b652a58b497b401d57dbd74f781ecc382cf81fcd) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Show a spinner instead of "no login method available" error message while the login page is loading authentication configuration.
+
+- [#6504](https://github.com/saleor/saleor-dashboard/pull/6504) [`d0cb8ef`](https://github.com/saleor/saleor-dashboard/commit/d0cb8ef8afa25da3a79138394cb195467b3c1e02) Thanks [@mirekm](https://github.com/mirekm)! - Fix deleting saved, server-side Voucher codes
+
+- [#6495](https://github.com/saleor/saleor-dashboard/pull/6495) [`cb8679d`](https://github.com/saleor/saleor-dashboard/commit/cb8679df28f82f2f8d2ae8f15ca2959781096ba2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug where arbitrary email couldn't be used to send giftcard to
+
+- [#6453](https://github.com/saleor/saleor-dashboard/pull/6453) [`01c6fca`](https://github.com/saleor/saleor-dashboard/commit/01c6fca3a6c87824a65e45bb4ebb75bcc347a4ca) Thanks [@mirekm](https://github.com/mirekm)! - Clean up and update Promotions UI. Now rules are easier to understand with all the items that rule apply to clickable directly from the rule card, and improved Edit/Add rule modal.
+
+- [#6513](https://github.com/saleor/saleor-dashboard/pull/6513) [`100df98`](https://github.com/saleor/saleor-dashboard/commit/100df98ffdfeed0687582d4d73336e658588b47f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated Gift Card customer attachment to show a separate button for entering a custom value instead of using a combobox.
+
 ## 3.23.0
 
 ### Minor Changes
