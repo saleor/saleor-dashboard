@@ -1,4 +1,5 @@
 import { type ApolloClient } from "@apollo/client";
+import { createBooleanOptions } from "@dashboard/components/ConditionalFilter/constants";
 import {
   _GetAttributeChoicesDocument,
   type _GetAttributeChoicesQuery,
@@ -40,6 +41,7 @@ import {
   _GetWarehouseChoicesDocument,
   type _GetWarehouseChoicesQuery,
   type _GetWarehouseChoicesQueryVariables,
+  AttributeInputTypeEnum,
   ChannelCurrenciesDocument,
   type ChannelCurrenciesQuery,
   type ChannelCurrenciesQueryVariables,
@@ -120,9 +122,18 @@ export class AttributeChoicesHandler implements Handler {
     public client: ApolloClient<unknown>,
     public attributeSlug: string,
     public query: string,
+    public type: string,
   ) {}
 
   fetch = async () => {
+    /**
+     * Entity-specific handlers don't work with Boolean type because it doesn't have options declared to fetch.
+     * It's just true/false, so statically use it for Booleans, no matter the entity type.
+     */
+    if (this.type === AttributeInputTypeEnum.BOOLEAN) {
+      return createBooleanOptions();
+    }
+
     const { client, attributeSlug, query } = this;
     const { data } = await client.query<
       _GetAttributeChoicesQuery,
