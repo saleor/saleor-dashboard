@@ -1,0 +1,29 @@
+src/components/ConditionalFilter/FiltersQueryBuilder/queryVarsBuilders/AttributeQueryVarsBuilder.ts
+  bd90b5d2b6a406e4 10,18,25,43-44,49-51
+  h_463c3d2f499c35 45-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "9a8efd98fd58fa8afa5f734a0253f94c56dc5570",
+  "prompts": {
+    "bd90b5d2b6a406e4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e6a67070-4abc-4795-bd75-eaa48740e133",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 257,
+      "total_deletions": 2,
+      "accepted_lines": 255,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
