@@ -3,7 +3,7 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -44,21 +44,34 @@ export const GiftCardCustomerSelectField = ({
       value: email,
       label: getFullName({ firstName, lastName }) || email,
     }));
-    const trimmed = inputValue.trim();
-
-    if (isValidEmailPattern(trimmed)) {
-      const hasExactMatch = opts.some(opt => opt.value.toLowerCase() === trimmed.toLowerCase());
-
-      if (!hasExactMatch) {
-        opts.unshift({
-          label: `${intl.formatMessage(messages.useEmail)} ${trimmed}`,
-          value: trimmed,
-        });
-      }
-    }
 
     return opts;
-  }, [customers, inputValue, intl]);
+  }, [customers]);
+
+  const customEmail = useMemo((): string | null => {
+    const trimmedCustomValue = inputValue.trim();
+
+    if (
+      selectedCustomer.email &&
+      trimmedCustomValue.toLowerCase() === selectedCustomer.email.toLowerCase()
+    ) {
+      return null;
+    }
+
+    const hasExactMatch = options.some(
+      opt => opt.value.toLowerCase() === trimmedCustomValue.toLowerCase(),
+    );
+
+    if (hasExactMatch) {
+      return null;
+    }
+
+    if (isValidEmailPattern(trimmedCustomValue)) {
+      return trimmedCustomValue;
+    }
+
+    return null;
+  }, [options, inputValue, selectedCustomer.email]);
 
   const value = useMemo<Option | null>(
     () =>
@@ -94,30 +107,49 @@ export const GiftCardCustomerSelectField = ({
   const label = intl.formatMessage(messages.customerLabel);
 
   return (
-    <DynamicCombobox
-      data-test-id="customer-field"
-      disabled={disabled}
-      label={label}
-      options={options}
-      value={value}
-      onChange={handleSelect}
-      onInputValueChange={val => {
-        setInputValue(val);
-        debouncedSearch(val);
-      }}
-      onFocus={() => {
-        if (!hasFetchedRef.current) {
-          search("");
-          hasFetchedRef.current = true;
-        }
-      }}
-      onScrollEnd={() => {
-        if (!result?.loading && result?.data?.search?.pageInfo?.hasNextPage) {
-          loadMore();
-        }
-      }}
-      loading={result?.loading}
-      name="customer"
-    />
+    <>
+      <DynamicCombobox
+        data-test-id="customer-field"
+        disabled={disabled}
+        label={label}
+        options={options}
+        value={value}
+        onChange={handleSelect}
+        onInputValueChange={val => {
+          setInputValue(val);
+          debouncedSearch(val);
+        }}
+        onFocus={() => {
+          if (!hasFetchedRef.current) {
+            search("");
+            hasFetchedRef.current = true;
+          }
+        }}
+        onScrollEnd={() => {
+          if (!result?.loading && result?.data?.search?.pageInfo?.hasNextPage) {
+            loadMore();
+          }
+        }}
+        loading={result?.loading}
+        name="customer"
+      />
+      {customEmail && (
+        <Box>
+          <Button
+            display="inline-block"
+            variant="tertiary"
+            onClick={() => {
+              setInputValue(customEmail);
+              setSelectedCustomer({
+                email: customEmail,
+                name: customEmail,
+              });
+            }}
+          >
+            {intl.formatMessage(messages.useEmail)} {customEmail}
+          </Button>
+        </Box>
+      )}
+    </>
   );
 };

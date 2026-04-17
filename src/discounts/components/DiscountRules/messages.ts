@@ -5,6 +5,10 @@ export const messages = defineMessages({
     defaultMessage: "Rules",
     id: "kAAlGL",
   },
+  titleDescription: {
+    defaultMessage: "Each rule is an alternative. Customers get the best matching discount.",
+    id: "XMFpAP",
+  },
   addRule: {
     defaultMessage: "Add rule",
     id: "gzM1em",
@@ -73,6 +77,10 @@ export const messages = defineMessages({
     id: "v1vJ77",
     defaultMessage: "Edit rule",
   },
+  ruleModalSubtitle: {
+    id: "xBulM3",
+    defaultMessage: "Set reward and conditions for the selected channel",
+  },
   ruleError: {
     id: "zehNKT",
     defaultMessage: "Rule has error, open rule to see details",
@@ -89,7 +97,7 @@ export const messages = defineMessages({
     id: "w7jT4W",
     defaultMessage: "No channels selected",
   },
-  noHanldedConditions: {
+  noHandledConditions: {
     id: "ckSjjv",
     defaultMessage: "Too complex conditions to display, use playground to see details.",
   },
@@ -98,8 +106,28 @@ export const messages = defineMessages({
     defaultMessage:
       "Please remember that conditions will not be updated when you change the channel.",
   },
-  noConditonsCreate: {
-    id: "Xu4ST7",
-    defaultMessage: "No conditions added, click button bellow to create one",
+  noConditionsCreate: {
+    id: "jL7f0z",
+    defaultMessage: "No conditions added, click button below to create one",
+  },
+  untitledRule: {
+    id: "mSS92b",
+    defaultMessage: "Untitled rule",
+  },
+  channelInactive: {
+    id: "6Tps09",
+    defaultMessage: "Inactive",
+  },
+  giftCount: {
+    id: "B8MRsI",
+    defaultMessage: "{count, plural, one {# item} other {# items}}",
+  },
+  appliesTo: {
+    id: "6WqHWi",
+    defaultMessage: "Applies to",
+  },
+  rewardOff: {
+    id: "C0MnAi",
+    defaultMessage: "off",
   },
 });
