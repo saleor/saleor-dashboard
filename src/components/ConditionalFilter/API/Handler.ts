@@ -127,8 +127,8 @@ export class AttributeChoicesHandler implements Handler {
 
   fetch = async () => {
     /**
-     * Entity-specific handlers don't work with Boolean type because it doesn't have options declared to fetch.
-     * It's just true/false, so statically use it for Booleans, no matter the entity type.
+     * Boolean attributes don't expose `choices` to fetch.
+     * Use static true/false options instead.
      */
     if (this.type === AttributeInputTypeEnum.BOOLEAN) {
       return createBooleanOptions();
