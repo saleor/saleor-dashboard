@@ -302,7 +302,7 @@ jobs:
 
     permissions:
       contents: read
-    
+
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
       VERSION: ${{ needs.prepare-release.outputs.MINOR_VERSION }} # eg. "3.19"

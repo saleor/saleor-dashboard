@@ -22,14 +22,14 @@ jobs:
     steps:
       - name: Prepare Sandbox release pull request
         env:
-          VAULT_JWT: ${{ secrets.VAULT_URL }}
-          VAULT_URL: ${{ secrets.VAULT_JWT }}
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}
         run: |
           export GITHUB_TOKEN=$( \
             curl --request GET --url "$VAULT_URL" --header "Authorization: JWT $VAULT_JWT" | jq -r .token \
           )
           payload=$(
-            jq --arg version "$VERSION" '{
+            jq --arg version "$VERSION" -n '{
               "event_type": "open-release-pull-request",
               "client_payload": {
                 "project": "DASHBOARD",

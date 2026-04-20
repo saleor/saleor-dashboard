@@ -2,7 +2,11 @@ import { Chip, useTheme } from "@saleor/macaw-ui-next";
 
 import { conditionTypeToHue } from "../../utils";
 
-export const RuleSummaryChips = ({ value, label }: { value: string; label: string }) => {
+interface RuleSummaryChipsProps {
+  label: string;
+}
+
+export const RuleSummaryChips = ({ label }: RuleSummaryChipsProps) => {
   const { theme } = useTheme();
   const color = conditionTypeToHue(label, theme);
 
@@ -11,10 +15,9 @@ export const RuleSummaryChips = ({ value, label }: { value: string; label: strin
       __backgroundColor={color.base}
       __color={color.text}
       __borderColor={color.border}
-      marginRight={1.5}
       data-test-id="rule-summary-chip"
     >
-      {label}: {value}
+      {label}
     </Chip>
   );
 };

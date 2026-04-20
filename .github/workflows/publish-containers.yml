@@ -76,7 +76,7 @@ jobs:
 
   build-push:
     needs: prepare-variables
-    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
+    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@49a069ae9731cfccf3a1033fe1da4e3da84f4f2a # v1.11.0
     permissions:
       contents: read
       id-token: write # needed for AWS/ECR login (not used, but required permission)
