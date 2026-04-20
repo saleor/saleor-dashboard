@@ -1,3 +1,7 @@
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
@@ -5,18 +9,21 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 interface VoucherCodesDeleteDialogProps {
   open: boolean;
+  confirmButtonTransitionState: ConfirmButtonTransitionState;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: () => Promise<void>;
 }
 
 export const VoucherCodesDeleteDialog = ({
   open,
+  confirmButtonTransitionState,
   onClose,
   onDelete,
 }: VoucherCodesDeleteDialogProps) => {
   const intl = useIntl();
+  const isDeleting = confirmButtonTransitionState === "loading";
   const handleSubmit = async () => {
-    onDelete();
+    await onDelete();
     onClose();
   };
 
@@ -35,11 +42,18 @@ export const VoucherCodesDeleteDialog = ({
         </Text>
 
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary">
+          <Button onClick={onClose} variant="secondary" disabled={isDeleting}>
             {intl.formatMessage(buttonMessages.back)}
           </Button>
 
-          <Button onClick={handleSubmit}>{intl.formatMessage(buttonMessages.delete)}</Button>
+          <ConfirmButton
+            transitionState={confirmButtonTransitionState}
+            onClick={handleSubmit}
+            variant="error"
+            data-test-id="submit"
+          >
+            {intl.formatMessage(buttonMessages.delete)}
+          </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>

@@ -1,5 +1,5 @@
 import { type UseDebounceFn } from "@dashboard/hooks/useDebounce";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { PersistedColumn, type RawColumn } from "./persistedColumn";
 import { useMetadata } from "./useMetadata";

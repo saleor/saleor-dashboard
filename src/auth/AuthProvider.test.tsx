@@ -2,7 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { useIntl } from "react-intl";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
@@ -215,24 +215,11 @@ describe("AuthProvider", () => {
       authenticating: false,
     }));
 
+    let resolveLogin: (value: any) => void;
     const loginMock = jest.fn(
       () =>
         new Promise(resolve => {
-          return resolve({
-            data: {
-              tokenCreate: {
-                errors: [],
-                user: {
-                  userPermissions: [
-                    {
-                      code: "MANAGE_USERS",
-                      name: "Handle checkouts",
-                    },
-                  ],
-                },
-              },
-            },
-          });
+          resolveLogin = resolve;
         }),
     );
 
@@ -243,9 +230,34 @@ describe("AuthProvider", () => {
 
     const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
 
-    // Simulate two concurrent login attempts
-    result.current.login!("email", "password");
-    result.current.login!("email", "password");
+    // Start first login (will be pending)
+    act(() => {
+      result.current.login!("email", "password");
+    });
+
+    // Attempt second login while first is still in progress
+    act(() => {
+      result.current.login!("email", "password");
+    });
+
+    // Resolve the first login
+    await act(async () => {
+      resolveLogin!({
+        data: {
+          tokenCreate: {
+            errors: [],
+            user: {
+              userPermissions: [
+                {
+                  code: "MANAGE_USERS",
+                  name: "Handle checkouts",
+                },
+              ],
+            },
+          },
+        },
+      });
+    });
 
     expect(loginMock).toHaveBeenCalledTimes(1);
   });

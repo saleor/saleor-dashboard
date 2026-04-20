@@ -219,6 +219,7 @@ const OrderListPage = ({
           type="expression-filter"
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
+          showSearchTooltip
           searchPlaceholder={intl.formatMessage({
             id: "wTHjt3",
             defaultMessage: "Search Orders...",

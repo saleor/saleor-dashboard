@@ -1,8 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import type * as React from "react";
 
 import { onboardingCompletedMock, onboardingInitState } from "./mocks";
@@ -86,8 +85,12 @@ describe("WelcomePageOnboarding", () => {
       </Wrapper>,
     );
 
-    screen.getByTestId("onboarding-accordion-trigger").click();
-    jest.runAllTimers();
+    act(() => {
+      screen.getByTestId("onboarding-accordion-trigger").click();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
     // Assert
     expect(saveOnboardingState).toHaveBeenNthCalledWith(3, {
@@ -113,7 +116,9 @@ describe("WelcomePageOnboarding", () => {
       </Wrapper>,
     );
 
-    screen.getByTestId("mark-as-done").click();
+    act(() => {
+      screen.getByTestId("mark-as-done").click();
+    });
 
     // Assert
     expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
@@ -121,15 +126,13 @@ describe("WelcomePageOnboarding", () => {
     expect(screen.queryByText("Mark all as done")).toBeNull();
   });
 
-  it("should show 'Onboarding completed' after marking each steps as done", async () => {
+  it("should show 'Onboarding completed' after marking each steps as done", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
     (useOnboardingStorage as jest.Mock).mockReturnValue({
       getOnboardingState: jest.fn(() => onboardingInitState),
       saveOnboardingState: jest.fn(),
     });
-
-    const user = userEvent.setup();
 
     // Act
     render(
@@ -141,16 +144,16 @@ describe("WelcomePageOnboarding", () => {
     // 'get-started' has only 'Next step' button
     const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
 
-    user.click(getStartedNextStepBtn);
+    act(() => {
+      getStartedNextStepBtn.click();
+    });
 
     for (const stepId of allMarkAsDoneStepsIds) {
-      await waitFor(() => {
-        expect(screen.getByTestId(stepId + "-mark-as-done")).toBeInTheDocument();
-      });
-
       const markAsDone = screen.getByTestId(stepId + "-mark-as-done");
 
-      markAsDone.click();
+      act(() => {
+        markAsDone.click();
+      });
     }
 
     // Assert
@@ -193,8 +196,12 @@ describe("WelcomePageOnboarding", () => {
       </Wrapper>,
     );
 
-    screen.getByTestId("get-started-next-step-btn").click();
-    jest.runAllTimers();
+    act(() => {
+      screen.getByTestId("get-started-next-step-btn").click();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
 
     // Assert
     expect(saveOnboardingState).toBeCalledWith({
@@ -225,13 +232,19 @@ describe("WelcomePageOnboarding", () => {
     const graphqlPlaygroundId = "graphql-playground";
     const exploreGraphql = screen.getByTestId("accordion-step-trigger-" + graphqlPlaygroundId);
 
-    exploreGraphql.click();
+    act(() => {
+      exploreGraphql.click();
+    });
 
     const markAsDone = screen.getByTestId(graphqlPlaygroundId + "-mark-as-done");
 
-    markAsDone.click();
+    act(() => {
+      markAsDone.click();
+    });
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
 
     // Assert
     await waitFor(() => {
@@ -263,10 +276,14 @@ describe("WelcomePageOnboarding", () => {
     );
 
     // Click through the first step to reveal others
-    screen.getByTestId("get-started-next-step-btn").click();
+    act(() => {
+      screen.getByTestId("get-started-next-step-btn").click();
+    });
 
     // Open the relevant step accordion
-    screen.getByTestId("accordion-step-trigger-view-extensions").click();
+    act(() => {
+      screen.getByTestId("accordion-step-trigger-view-extensions").click();
+    });
 
     // Assert
     // Check for 'view-extensions' step

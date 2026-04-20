@@ -19,7 +19,7 @@ interface GiftCardSendToCustomerProps {
   disabled?: boolean;
 }
 
-const GiftCardSendToCustomer = ({
+export const GiftCardSendToCustomer = ({
   change,
   sendToCustomerSelected,
   selectedChannelSlug,
@@ -74,5 +74,3 @@ const GiftCardSendToCustomer = ({
     </>
   );
 };
-
-export default GiftCardSendToCustomer;

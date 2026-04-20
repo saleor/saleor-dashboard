@@ -2,6 +2,7 @@ import { collections } from "@dashboard/collections/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { CollectionListDatagrid } from "./CollectionListDatagrid";
 
 const meta: Meta<typeof CollectionListDatagrid> = {
@@ -21,6 +22,9 @@ const meta: Meta<typeof CollectionListDatagrid> = {
     onSelectCollectionIds: fn(),
     onRowClick: fn(),
     filterDependency: { label: "Channel", value: "channel-1" },
+  },
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
   },
 };
 

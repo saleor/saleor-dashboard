@@ -1,12 +1,11 @@
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
 import { type Rule } from "@dashboard/discounts/models";
-import { Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Tag } from "lucide-react";
+import { useIntl } from "react-intl";
 
-import { RuleChannelChips } from "./components/RuleChannelChips";
 import { RuleConditionsChips } from "./components/RuleConditionsChips";
 import { RuleUnknownChips } from "./components/RuleUnknownChips";
-import { RuleValueChips } from "./components/RuleValueChips";
 import { hasNoRuleConditions } from "./utils";
 
 interface RuleSummaryProps {
@@ -15,49 +14,41 @@ interface RuleSummaryProps {
 }
 
 export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
-  if (!rule.channel || (!rule.rewardValue && rule.rewardType === null)) {
+  const intl = useIntl();
+
+  if (!rule.channel) {
     return null;
   }
 
-  if (rule.hasPredicateNestedConditions) {
-    return (
-      <Text>
-        <FormattedMessage
-          {...messages.ruleSummaryWithComplexConditions}
-          values={{
-            value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-            unknown: <RuleUnknownChips />,
-            channel: <RuleChannelChips channel={rule.channel} />,
-          }}
-        />
-      </Text>
-    );
-  }
+  const showConditions = !hasNoRuleConditions(rule) || rule.hasPredicateNestedConditions;
 
-  if (hasNoRuleConditions(rule)) {
-    return (
-      <Text>
-        <FormattedMessage
-          {...messages.ruleSummaryWithoutConditions}
-          values={{
-            value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-            channel: <RuleChannelChips channel={rule.channel} />,
-          }}
-        />
-      </Text>
-    );
+  if (!showConditions) {
+    return null;
   }
 
   return (
-    <Text data-test-id="rule-summary">
-      <FormattedMessage
-        {...messages.ruleSummary}
-        values={{
-          value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-          conditions: <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />,
-          channel: <RuleChannelChips channel={rule.channel} />,
-        }}
+    <Box data-test-id="rule-summary" display="flex" flexDirection="column" gap={3}>
+      <Box
+        __height="1px"
+        __backgroundColor="var(--mu-colors-border-default1)"
+        __marginLeft="calc(-1 * var(--mu-spacing-4))"
+        __marginRight="calc(-1 * var(--mu-spacing-4))"
       />
-    </Text>
+
+      <Box display="flex" flexDirection="column" gap={2}>
+        <Text size={2} color="default2" display="flex" alignItems="center" gap={1.5}>
+          <Tag size={16} />
+          {intl.formatMessage(messages.appliesTo)}
+        </Text>
+
+        <Box display="flex" flexWrap="wrap" alignItems="center" gap={1.5}>
+          {rule.hasPredicateNestedConditions ? (
+            <RuleUnknownChips />
+          ) : (
+            <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />
+          )}
+        </Box>
+      </Box>
+    </Box>
   );
 };

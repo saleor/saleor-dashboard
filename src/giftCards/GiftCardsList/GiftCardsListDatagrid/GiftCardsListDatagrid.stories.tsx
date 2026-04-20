@@ -9,6 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ReactElement } from "react";
 import { fn } from "storybook/test";
 
+import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
 import { GiftCardsListDatagrid } from "./GiftCardsListDatagrid";
 
 type GiftCardNode = ExtendedGiftCard<
@@ -150,6 +151,9 @@ const meta: Meta<typeof GiftCardsListDatagrid> = {
       </MockGiftCardListProvider>
     ),
   ],
+  parameters: {
+    chromatic: STORYBOOK_CHROMATIC_PARAMS.datagrid,
+  },
 };
 
 export default meta;

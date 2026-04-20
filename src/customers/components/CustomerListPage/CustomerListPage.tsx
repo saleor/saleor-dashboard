@@ -125,6 +125,7 @@ const CustomerListPage = ({
         <ListFilters
           type="expression-filter"
           initialSearch={initialSearch}
+          showSearchTooltip
           searchPlaceholder={intl.formatMessage({
             id: "kdRcqU",
             defaultMessage: "Search customers...",

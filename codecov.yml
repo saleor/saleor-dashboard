@@ -7,6 +7,19 @@ coverage:
       default:
         target: auto
 
+flag_management:
+  default_rules:
+    carryforward: true
+  individual_flags:
+    - name: units
+      paths:
+        - src/
+      carryforward: true
+    - name: storybook
+      paths:
+        - src/
+      carryforward: true
+
 ignore:
   - "src/graphql/**"
   - "./src/**/queries.ts"

@@ -4,7 +4,6 @@ import { useDiscountRulesContext } from "@dashboard/discounts/components/Discoun
 import { type Rule } from "@dashboard/discounts/models";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
-import { Box, Text } from "@saleor/macaw-ui-next";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -23,31 +22,28 @@ export const RuleDescription = ({ error = false }: RuleDescriptionProps) => {
   });
 
   return (
-    <Box overflow="hidden">
-      <Text marginBottom={4} as="p">
-        {intl.formatMessage(commonMessages.description)}
-      </Text>
-
-      <RuleInputWrapper>
-        {isReadyForMount ? (
-          <RichTextEditor
-            defaultValue={defaultValue}
-            editorRef={editorRef}
-            onChange={data => {
-              handleChange();
-              field.onChange(JSON.stringify(data));
-            }}
-            onBlur={field.onBlur}
-            disabled={disabled}
-            error={error}
-            helperText=""
-            label=" "
-            name="rule-description"
-          />
-        ) : (
-          <RichTextEditorLoading label="" name="description" />
-        )}
-      </RuleInputWrapper>
-    </Box>
+    <RuleInputWrapper>
+      {isReadyForMount ? (
+        <RichTextEditor
+          defaultValue={defaultValue}
+          editorRef={editorRef}
+          onChange={data => {
+            handleChange();
+            field.onChange(JSON.stringify(data));
+          }}
+          onBlur={field.onBlur}
+          disabled={disabled}
+          error={error}
+          helperText=""
+          label={intl.formatMessage(commonMessages.description)}
+          name="rule-description"
+        />
+      ) : (
+        <RichTextEditorLoading
+          label={intl.formatMessage(commonMessages.description)}
+          name="description"
+        />
+      )}
+    </RuleInputWrapper>
   );
 };

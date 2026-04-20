@@ -19,6 +19,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   initialize-cloud:
     if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'test deployment') || contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
@@ -36,15 +38,14 @@ jobs:
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           sparse-checkout: ./.github/actions
+          persist-credentials: false
 
       - name: Load secrets for initialize-cloud
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets-init
-        with:
-          export-env: true
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
@@ -53,14 +54,14 @@ jobs:
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           MODE: pull-request
 
       - name: Prepare instances
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ inputs.API_URL || steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -85,26 +86,18 @@ jobs:
           shard_matrix=( $(IFS=,; echo "[${shard_matrix[*]}]") ) # Join the elements of the shard_matrix array with commas and wrap the result in square brackets to create a valid JSON array string.
           echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
 
-  deploy-dashboard:
+  deploy-dashboard-start:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    outputs:
-      ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
     needs: initialize-cloud
+
     permissions:
       deployments: write
-      id-token: write # needed by aws-actions/configure-aws-credentials
-      contents: read
+
+    outputs:
+      deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: "package.json"
-          cache: "pnpm"
-
       - name: Start deployment
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         id: deployment
@@ -113,6 +106,26 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
+
+  build:
+    needs: [initialize-cloud, deploy-dashboard-start]
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: "package.json"
+          package-manager-cache: false
 
       - name: Install deps
         run: pnpm install
@@ -129,8 +142,29 @@ jobs:
           ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
         run: pnpm run build
 
+      - name: Upload Build
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: "build"
+          path: "build/"
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    needs: [build, initialize-cloud]
+    runs-on: ubuntu-24.04
+
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          name: build
+          path: build/
+
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_TESTENVS_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_TESTENVS_CICD_ROLE_NAME }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
@@ -139,7 +173,14 @@ jobs:
         env:
           AWS_TEST_DEPLOYMENT_BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
           BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
-        run: aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}" --delete
+        run: |
+          # Ensure '--delete' never tries to wipe a whole bucket, instead it should
+          # always have a S3 prefix
+          if [[ -z "$AWS_TEST_DEPLOYMENT_BUCKET" ]] || [[ -z "$BASE_URL_DOMAIN" ]]; then
+            echo "Missing required variable(s)" >&2
+          fi
+
+          aws s3 sync ./build/dashboard "s3://${AWS_TEST_DEPLOYMENT_BUCKET}/${BASE_URL_DOMAIN}" --delete
 
       - name: Invalidate cache
         env:
@@ -147,6 +188,14 @@ jobs:
           BASE_URL_DOMAIN: ${{ needs.initialize-cloud.outputs.BASE_URL_DOMAIN }}
         run: aws cloudfront create-invalidation --distribution-id "$AWS_TEST_CF_DIST_ID" --paths "/${BASE_URL_DOMAIN}/*"
 
+  finalize-deployment:
+    needs: [deploy-dashboard-start, initialize-cloud, deploy]
+    runs-on: ubuntu-24.04
+
+    permissions:
+      deployments: write
+
+    steps:
       - name: Update deployment status
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
         if: always()
@@ -155,8 +204,32 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           env_url: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment_id: ${{ needs.deploy-dashboard-start.outputs.deployment-id }}
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
+
+  run-tests:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
+    runs-on: ubuntu-22.04
+    needs: [initialize-cloud, finalize-deployment]
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: "package.json"
+          package-manager-cache: false
+
+      # Needed by ./.github/actions/prepare-accounts and ./.github/actions/run-pw-tests
+      - name: Install deps
+        run: corepack enable && pnpm install
 
       - name: Prepare accounts
         if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
@@ -170,24 +243,9 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
-  run-tests:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'run pw-e2e') }}
-    runs-on: ubuntu-22.04
-    needs: [initialize-cloud, deploy-dashboard]
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: ${{ fromJson(needs.initialize-cloud.outputs.SHARD_MATRIX) }}
-
-    steps:
-      - uses: actions/checkout@v6
-
       - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
         id: load-secrets
-        with:
-          # Export loaded secrets as environment variables
-          export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           E2E_USER_NAME: "op://Continuous Integration/E2E_USER/username"
@@ -201,13 +259,13 @@ jobs:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
           MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
-          ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
+          ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
           BRANCH_NAME: ${{ github.ref}}
@@ -218,20 +276,12 @@ jobs:
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"
 
-    needs: [run-tests, deploy-dashboard]
+    needs: [run-tests, deploy-dashboard-start]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          # Export loaded secrets as environment variables
-          export-env: true
-        env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
+          persist-credentials: false
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports

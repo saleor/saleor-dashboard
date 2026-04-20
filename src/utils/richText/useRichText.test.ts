@@ -1,5 +1,5 @@
 import { type OutputData } from "@editorjs/editorjs";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import useRichText from "./useRichText";
 
@@ -21,27 +21,25 @@ const triggerChange = jest.fn();
 
 describe("useRichText", () => {
   it("properly informs RichTextEditor when data is ready to mount", () => {
-    let initial: string | undefined;
-    let loading = true;
-    const { result, rerender } = renderHook(() => useRichText({ initial, loading, triggerChange }));
+    const { result, rerender } = renderHook(
+      ({ initial, loading }) => useRichText({ initial, loading, triggerChange }),
+      { initialProps: { initial: undefined as string | undefined, loading: true } },
+    );
 
     expect(result.current.isReadyForMount).toBe(false);
-    initial = JSON.stringify(fixtures.short); // for JSON.parse()
-    loading = false;
-    rerender();
+    rerender({ initial: JSON.stringify(fixtures.short), loading: false });
     expect(result.current.defaultValue).toStrictEqual(fixtures.short);
     expect(result.current.isReadyForMount).toBe(true);
     expect(result.current.isDirty).toBe(false);
   });
   it("returns undefined when JSON cannot be parsed", () => {
-    let initial: string | undefined;
-    let loading = true;
-    const { result, rerender } = renderHook(() => useRichText({ initial, loading, triggerChange }));
+    const { result, rerender } = renderHook(
+      ({ initial, loading }) => useRichText({ initial, loading, triggerChange }),
+      { initialProps: { initial: undefined as string | undefined, loading: true } },
+    );
 
     expect(result.current.isReadyForMount).toBe(false);
-    initial = "this-isnt-valid-json";
-    loading = false;
-    rerender();
+    rerender({ initial: "this-isnt-valid-json", loading: false });
     expect(result.current.defaultValue).toBe(undefined);
     expect(result.current.isReadyForMount).toBe(false);
     expect(result.current.isDirty).toBe(false);
@@ -66,7 +64,9 @@ describe("useRichText", () => {
 
     const { result } = renderHook(() => useRichText({ initial: "", triggerChange }));
 
-    result.current.handleChange();
+    act(() => {
+      result.current.handleChange();
+    });
     expect(triggerChange).toHaveBeenCalled();
     expect(result.current.isDirty).toBe(true);
   });

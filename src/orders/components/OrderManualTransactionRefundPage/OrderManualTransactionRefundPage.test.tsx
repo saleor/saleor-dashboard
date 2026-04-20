@@ -9,7 +9,7 @@ import {
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -110,9 +110,11 @@ describe("OrderManualTransactionRefundPage", () => {
     await userEvent.type(screen.getByTestId("refund-amount"), "5");
     await userEvent.click(screen.getByRole("button", { name: "save" }));
     // Assert
-    expect(mockNofitication).toHaveBeenCalledWith({
-      status: "success",
-      text: "Refund request sent to payment provider",
+    await waitFor(() => {
+      expect(mockNofitication).toHaveBeenCalledWith({
+        status: "success",
+        text: "Refund request sent to payment provider",
+      });
     });
   });
   it("should fail validation when refund amount is higher than transaction charged amount", async () => {
@@ -146,9 +148,13 @@ describe("OrderManualTransactionRefundPage", () => {
     await userEvent.click(screen.getByRole("button", { name: "save" }));
 
     // Assert
-    expect(
-      screen.getByText("Provided amount cannot exceed charged amount for the selected transaction"),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "Provided amount cannot exceed charged amount for the selected transaction",
+        ),
+      ).toBeInTheDocument();
+    });
   });
   it("should display skeleton when loading", async () => {
     // Arrange &&  Act

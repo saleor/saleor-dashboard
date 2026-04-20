@@ -34,6 +34,7 @@ export const getActionLink = (
   problem: AppProblem,
   appId: string,
   appType?: AppTypeEnum | null,
+  isActive?: boolean | null,
 ): { href: string; label: keyof typeof problemMessages } | null => {
   if (problem.__typename === "WebhookDeliveryError") {
     return {
@@ -42,7 +43,7 @@ export const getActionLink = (
     };
   }
 
-  if (problem.__typename === "AppProblem" && appType === AppTypeEnum.THIRDPARTY) {
+  if (problem.__typename === "AppProblem" && appType === AppTypeEnum.THIRDPARTY && isActive) {
     return {
       href: ExtensionsUrls.resolveViewManifestExtensionUrl(appId),
       label: "openTheApp",

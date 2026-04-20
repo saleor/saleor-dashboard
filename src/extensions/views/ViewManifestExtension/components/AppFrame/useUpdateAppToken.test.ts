@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, waitFor } from "@testing-library/react";
 
 import { useUpdateAppToken } from "./useUpdateAppToken";
 
@@ -9,7 +9,7 @@ describe("useUpdateAppToken", function () {
     jest.resetAllMocks();
   });
   it("Doesnt do anything if disabled", () => {
-    const { waitFor } = renderHook(props => useUpdateAppToken(props), {
+    renderHook(props => useUpdateAppToken(props), {
       initialProps: {
         enabled: true,
         appToken: "initialToken",
@@ -23,7 +23,7 @@ describe("useUpdateAppToken", function () {
   });
   it("Doesnt do anything if re-rendered, but token stays the same between renders", () => {
     const localPostMessage = jest.fn();
-    const { rerender, waitFor } = renderHook(props => useUpdateAppToken(props), {
+    const { rerender } = renderHook(props => useUpdateAppToken(props), {
       initialProps: {
         enabled: true,
         appToken: "initialToken",
@@ -44,7 +44,7 @@ describe("useUpdateAppToken", function () {
     });
   });
   it("Calls postMessage if token changes in props and enabled", async () => {
-    const { rerender, waitFor } = renderHook(props => useUpdateAppToken(props), {
+    const { rerender } = renderHook(props => useUpdateAppToken(props), {
       initialProps: {
         enabled: true,
         appToken: "initialToken",

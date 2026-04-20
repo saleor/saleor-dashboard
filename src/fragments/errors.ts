@@ -317,6 +317,14 @@ export const voucherBulkDeleteError = gql`
   }
 `;
 
+export const voucherCodeBulkDeleteError = gql`
+  fragment VoucherCodeBulkDeleteError on VoucherCodeBulkDeleteError {
+    code
+    path
+    message
+  }
+`;
+
 export const giftCardBulkCreateErrorFragment = gql`
   fragment GiftCardBulkCreateErrorFragment on GiftCardError {
     code

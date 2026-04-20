@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { type ComponentType, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 

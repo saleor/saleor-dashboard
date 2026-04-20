@@ -172,7 +172,7 @@ export const appWebhookDeliveries = gql`
 
 export const appHasProblems = gql`
   query AppHasProblems($first: Int!) {
-    apps(first: $first, filter: { isActive: true }) {
+    apps(first: $first) {
       edges {
         node {
           id

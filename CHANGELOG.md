@@ -1,6 +1,58 @@
 # Changelog
 
+## 3.23.2
+
+### Patch Changes
+
+- [#6522](https://github.com/saleor/saleor-dashboard/pull/6522) [`46384c3`](https://github.com/saleor/saleor-dashboard/commit/46384c3e2cc562a5132f3c841d4f958a34712a1e) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed filtering by attributes of type boolean
+
+## 3.23.1
+
+### Patch Changes
+
+- [#6499](https://github.com/saleor/saleor-dashboard/pull/6499) [`b652a58`](https://github.com/saleor/saleor-dashboard/commit/b652a58b497b401d57dbd74f781ecc382cf81fcd) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Show a spinner instead of "no login method available" error message while the login page is loading authentication configuration.
+
+- [#6504](https://github.com/saleor/saleor-dashboard/pull/6504) [`d0cb8ef`](https://github.com/saleor/saleor-dashboard/commit/d0cb8ef8afa25da3a79138394cb195467b3c1e02) Thanks [@mirekm](https://github.com/mirekm)! - Fix deleting saved, server-side Voucher codes
+
+- [#6495](https://github.com/saleor/saleor-dashboard/pull/6495) [`cb8679d`](https://github.com/saleor/saleor-dashboard/commit/cb8679df28f82f2f8d2ae8f15ca2959781096ba2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug where arbitrary email couldn't be used to send giftcard to
+
+- [#6453](https://github.com/saleor/saleor-dashboard/pull/6453) [`01c6fca`](https://github.com/saleor/saleor-dashboard/commit/01c6fca3a6c87824a65e45bb4ebb75bcc347a4ca) Thanks [@mirekm](https://github.com/mirekm)! - Clean up and update Promotions UI. Now rules are easier to understand with all the items that rule apply to clickable directly from the rule card, and improved Edit/Add rule modal.
+
+- [#6513](https://github.com/saleor/saleor-dashboard/pull/6513) [`100df98`](https://github.com/saleor/saleor-dashboard/commit/100df98ffdfeed0687582d4d73336e658588b47f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Updated Gift Card customer attachment to show a separate button for entering a custom value instead of using a combobox.
+
 ## 3.23.0
+
+### Minor Changes
+
+- [#6496](https://github.com/saleor/saleor-dashboard/pull/6496) [`aa31922`](https://github.com/saleor/saleor-dashboard/commit/aa31922521279029eb9803918f7dbb40d7918280) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Version bump for the 3.23 release
+
+### Patch Changes
+
+- [#6483](https://github.com/saleor/saleor-dashboard/pull/6483) [`fadf41c`](https://github.com/saleor/saleor-dashboard/commit/fadf41c4f94b8532a4d1ab2cf947994ce64d6559) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Improved performance of initial GraphQL queries on page load. Now user, shop and channels are parallelized
+
+- [#6485](https://github.com/saleor/saleor-dashboard/pull/6485) [`94e85a4`](https://github.com/saleor/saleor-dashboard/commit/94e85a4817ca90d846e3de9adc859b6944dce663) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show apps' Problems even for disabled apps
+
+- [#6481](https://github.com/saleor/saleor-dashboard/pull/6481) [`d0a4ebd`](https://github.com/saleor/saleor-dashboard/commit/d0a4ebdfaa46af3ebedd633201ee0ee8c9e93536) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Add tooltip for search inputs
+
+- [#6487](https://github.com/saleor/saleor-dashboard/pull/6487) [`5fe6bd7`](https://github.com/saleor/saleor-dashboard/commit/5fe6bd709b282fea5402ab143d05e1e0fac4b7bc) Thanks [@NyanKiyoshi](https://github.com/NyanKiyoshi)! - Fixed a typo in channel deletion confirmation modal.
+
+## 3.23.0-a.1
+
+### Patch Changes
+
+- [#6476](https://github.com/saleor/saleor-dashboard/pull/6476) [`465f952`](https://github.com/saleor/saleor-dashboard/commit/465f952416b1c331e76ade8484a9cc670a14acc1) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Fix displaying gift card payment method details in order view.
+
+- [#6396](https://github.com/saleor/saleor-dashboard/pull/6396) [`6cbec4c`](https://github.com/saleor/saleor-dashboard/commit/6cbec4c91366804303808421a0d350159979116b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added support for displaying transactions' payment method details - for gift cards. Now both Saleor built-in gift cards and apps that reported gift card payment will have dedicated display in order view
+
+- [#6451](https://github.com/saleor/saleor-dashboard/pull/6451) [`6775911`](https://github.com/saleor/saleor-dashboard/commit/677591175850e34f81bd881ccf645e32c8ef3a2a) Thanks [@mirekm](https://github.com/mirekm)! - Fix discount content display in the order timeline
+
+- [#6475](https://github.com/saleor/saleor-dashboard/pull/6475) [`53aac0b`](https://github.com/saleor/saleor-dashboard/commit/53aac0b2a9178f46adfb22e1a413072c25eab3ab) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Tolerate checkoutSettings being undefined while the GraphQL query is still loading.
+
+- [#6465](https://github.com/saleor/saleor-dashboard/pull/6465) [`5e4d040`](https://github.com/saleor/saleor-dashboard/commit/5e4d040ed94147afaae19469e4f50e7f4741260e) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed re-ordering products causing 400 error
+
+- [#6471](https://github.com/saleor/saleor-dashboard/pull/6471) [`7bf722f`](https://github.com/saleor/saleor-dashboard/commit/7bf722f63e4cbe17975b86a53d0554e0748a6f30) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed Ripples introduced in 3.22
+
+## 3.23.0-a.0
 
 TODO
 

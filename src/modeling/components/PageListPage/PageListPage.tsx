@@ -121,6 +121,7 @@ const PageListPage = ({
         <ListFilters
           type="expression-filter"
           initialSearch={initialSearch}
+          showSearchTooltip
           searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
           onSearchChange={onSearchChange}
           actions={

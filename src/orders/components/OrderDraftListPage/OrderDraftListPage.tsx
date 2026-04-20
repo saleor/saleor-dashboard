@@ -88,6 +88,7 @@ const OrderDraftListPage = ({
             type="expression-filter"
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
+            showSearchTooltip
             searchPlaceholder={intl.formatMessage({
               id: "IzECoP",
               defaultMessage: "Search draft orders...",

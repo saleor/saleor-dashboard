@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.23.0-a.0",
+  "version": "3.23.2",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -50,6 +50,8 @@
     "prestart": "pnpm run generate",
     "storybook": "storybook dev -p 6006",
     "test": "jest && pnpm run test:lint-rules",
+    "test-storybook": "vitest --project=storybook",
+    "test-storybook:coverage": "vitest --project=storybook --coverage",
     "test:ci": "CI=true jest --coverage --silent && pnpm run test:lint-rules",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
     "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs",
@@ -161,10 +163,11 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@mizdra/graphql-codegen-typescript-fabbrica": "^0.6.1",
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.58.2",
     "@saleor/app-sdk": "1.7.0",
     "@sentry/cli": "^2.58.2",
     "@storybook/addon-mcp": "^0.4.1",
+    "@storybook/addon-vitest": "10.2.16",
     "@storybook/react-vite": "10.2.16",
     "@swc/jest": "^0.2.39",
     "@types/apollo-upload-client": "^17.0.5",
@@ -185,6 +188,8 @@
     "@types/uuid": "^9.0.8",
     "@types/webappsec-credential-management": "^0.5.1",
     "@vitejs/plugin-react-swc": "^4.3.0",
+    "@vitest/browser-playwright": "^4.1.1",
+    "@vitest/coverage-v8": "^4.1.1",
     "chromatic": "^15.2.0",
     "code-inspector-plugin": "^0.6.5",
     "core-js": "^3.46.0",
@@ -211,6 +216,7 @@
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
     "knip": "^5.69.1",
+    "playwright": "1.58.2",
     "playwright-ctrf-json-reporter": "0.0.26",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "sort-package-json": "3.4.0",
@@ -219,12 +225,12 @@
     "typescript-eslint": "^8.46.4",
     "typescript-strict-plugin": "^2.4.4",
     "vite": "7.3.1",
-    "vite-plugin-html": "^3.2.2"
+    "vite-plugin-html": "^3.2.2",
+    "vitest": "^4.1.1"
   },
   "optionalDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^26.0.24",
     "@types/setup-polly-jest": "^0.5.5",
@@ -240,7 +246,7 @@
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5"
   },
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
   "engines": {
     "node": ">=24 <25",
     "pnpm": ">=10"

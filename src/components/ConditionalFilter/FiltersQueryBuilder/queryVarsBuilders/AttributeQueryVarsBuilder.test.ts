@@ -181,6 +181,32 @@ describe("AttributeQueryVarsBuilder", () => {
       expect(handler).toBeInstanceOf(AttributeChoicesHandler);
     });
 
+    it("should return static boolean options without API call for BOOLEAN attributes", async () => {
+      // Arrange
+      const mockQuery = jest.fn();
+      const mockClient = { query: mockQuery } as unknown as ApolloClient<unknown>;
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue("bool-attr", "BoolAttr", AttributeInputTypeEnum.BOOLEAN),
+      );
+      const def = new AttributeQueryVarsBuilder();
+
+      // Act
+      const handler = def.createOptionFetcher(mockClient, inputValue, element);
+      const options = await handler.fetch();
+
+      // Assert
+      expect(handler).toBeInstanceOf(AttributeChoicesHandler);
+      expect(mockQuery).not.toHaveBeenCalled();
+      expect(options).toEqual([
+        { label: "Yes", value: "true", slug: "true", type: undefined },
+        { label: "No", value: "false", slug: "false", type: undefined },
+      ]);
+    });
+
     it("should handle gracefully if attribute is not selected", () => {
       // Arrange
       const element = new FilterElement(
