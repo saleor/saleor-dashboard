@@ -44,6 +44,8 @@ overrides:
   "immutable@<3.8.3": ">=3.8.3"
   "flatted@<3.4.0": ">=3.4.0"
   "@tootallnate/once@<3.0.1": ">=3.0.1"
+  "protobufjs@<7.5.5": ">=7.5.5"
+  "flatted@<=3.4.1": ">=3.4.2"
 
 auditConfig:
   ignoreCves:
