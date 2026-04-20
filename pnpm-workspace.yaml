@@ -9,6 +9,10 @@ minimumReleaseAgeExclude:
 
 trustPolicy: no-downgrade
 
+trustPolicyExclude:
+  # Semver packages are not signed before 7.x. Check pnpm-lock which package is still using 6.x and plan upgrade entire tree.
+  - "semver@6.3.1"
+
 packages:
   - "."
 
