@@ -1,5 +1,5 @@
 import { DiscountValueTypeEnum } from "@dashboard/graphql";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { messages } from "./messages";
 import { useDiscountForm } from "./useDiscountForm";
