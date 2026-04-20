@@ -37,7 +37,7 @@ export class AttributeQueryVarsBuilder
     inputValue: string,
     element: FilterElement,
   ): Handler {
-    const { entityType, value: id } = element.selectedAttribute || element.value;
+    const { entityType, value: id, type } = element.selectedAttribute || element.value;
 
     switch (entityType) {
       case AttributeEntityTypeEnum.PAGE:
@@ -51,7 +51,7 @@ export class AttributeQueryVarsBuilder
       case AttributeEntityTypeEnum.COLLECTION:
         return new CollectionHandler(client, inputValue);
       default:
-        return new AttributeChoicesHandler(client, id, inputValue);
+        return new AttributeChoicesHandler(client, id, inputValue, type);
     }
   }
 

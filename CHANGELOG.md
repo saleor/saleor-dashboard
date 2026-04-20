@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.2
+
+### Patch Changes
+
+- [#6522](https://github.com/saleor/saleor-dashboard/pull/6522) [`46384c3`](https://github.com/saleor/saleor-dashboard/commit/46384c3e2cc562a5132f3c841d4f958a34712a1e) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed filtering by attributes of type boolean
+
 ## 3.23.1
 
 ### Patch Changes
