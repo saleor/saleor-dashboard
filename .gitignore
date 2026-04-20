@@ -49,7 +49,7 @@ mochawesome.json
 django-queries-results.html
 
 !.env.template
-!.dependency-cruiser.js
+!.dependency-cruiser.mjs
 !.featureFlags
 /test-results/
 /playwright-report/
