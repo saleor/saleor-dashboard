@@ -78,6 +78,8 @@ export const DiscountModalBase = ({
               size="small"
               variant="tertiary"
               flexShrink="0"
+              aria-label={intl.formatMessage(buttonMessages.close)}
+              title={intl.formatMessage(buttonMessages.close)}
             />
           </Modal.Close>
         </Box>
