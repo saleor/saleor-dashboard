@@ -4,7 +4,6 @@ import {
   type HookFormRadioGroupChoice,
 } from "@dashboard/components/HookFormRadioGroup/HookFormRadioGroup";
 import { DiscountValueTypeEnum } from "@dashboard/graphql";
-import { toFixed } from "@dashboard/utils/toFixed";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { type Control, Controller } from "react-hook-form";
@@ -53,9 +52,9 @@ export const DiscountFormFields = ({
       />
       <Box display="flex" gap={2} alignItems="flex-end">
         <Box flexGrow="1" overflow="hidden">
-          {/* Kept as Controller: this field has a display transform (toFixed)
-              and a cross-field error (valueErrorMsg) derived outside RHF's
-              formState — see useDiscountForm for why we don't use setError. */}
+          {/* Kept as Controller: the error (valueErrorMsg) is derived
+              cross-field (value × calculationMode) outside RHF's formState
+              — see useDiscountForm for why we don't use setError. */}
           <Controller
             name="value"
             control={control}
@@ -63,14 +62,13 @@ export const DiscountFormFields = ({
               <Input
                 className={styles.priceInput}
                 size="small"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 label={intl.formatMessage(messages.discountValueLabel)}
                 error={!!valueErrorMsg}
                 helperText={valueErrorMsg || ""}
-                value={toFixed(field.value, 2)}
+                value={field.value}
                 onChange={field.onChange}
-                min="0"
-                step="0.01"
               />
             )}
           />
