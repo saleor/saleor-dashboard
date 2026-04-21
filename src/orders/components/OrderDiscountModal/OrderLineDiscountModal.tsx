@@ -13,10 +13,15 @@ import { type OrderDiscountCommonInput } from "./types";
 
 const discountMessages = defineMessages({
   helperText: {
-    id: "B5VCeZ",
-    defaultMessage:
-      "This line is already discounted by {source}. A manual discount will replace the existing one.",
+    id: "ZaDvwq",
+    defaultMessage: "This line is already discounted by {source}.",
     description: "helper text shown in line discount modal when automatic discount is applied",
+  },
+  helperSubtext: {
+    id: "MtBjgE",
+    defaultMessage: "A manual discount below will replace the existing one.",
+    description:
+      "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
   },
 });
 
@@ -70,11 +75,16 @@ export const OrderLineDiscountModal = ({
       <Box color="default2" __lineHeight="0" __marginTop="2px" flexShrink="0">
         <TicketPercent size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </Box>
-      <Text size={2} color="default2">
-        {intl.formatMessage(discountMessages.helperText, {
-          source: formatDiscountSource(automaticDiscounts, intl),
-        })}
-      </Text>
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Text size={2} color="default2">
+          {intl.formatMessage(discountMessages.helperText, {
+            source: formatDiscountSource(automaticDiscounts, intl),
+          })}
+        </Text>
+        <Text size={2} color="default2">
+          {intl.formatMessage(discountMessages.helperSubtext)}
+        </Text>
+      </Box>
     </Box>
   ) : null;
 

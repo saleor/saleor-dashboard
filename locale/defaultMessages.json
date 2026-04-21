@@ -2265,10 +2265,6 @@
     "context": "Empty filters text",
     "string": "Add filter to start"
   },
-  "B5VCeZ": {
-    "context": "helper text shown in line discount modal when automatic discount is applied",
-    "string": "This line is already discounted by {source}. A manual discount will replace the existing one."
-  },
   "B8MRsI": {
     "string": "{count, plural, one {# item} other {# items}}"
   },
@@ -4397,6 +4393,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MtBjgE": {
+    "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
+    "string": "A manual discount below will replace the existing one."
   },
   "MwfSVA": {
     "context": "input helper text",
@@ -6693,6 +6693,10 @@
   "ZZb4E+": {
     "context": "automatically complete checkouts checkbox description",
     "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}"
+  },
+  "ZaDvwq": {
+    "context": "helper text shown in line discount modal when automatic discount is applied",
+    "string": "This line is already discounted by {source}."
   },
   "ZayvsI": {
     "context": "metric unit system",
@@ -10130,10 +10134,6 @@
   },
   "tIc6ZH": {
     "string": "Go to shipping methods"
-  },
-  "tIdHHK": {
-    "context": "named discount source in line discount modal, e.g. promotion Summer Sale",
-    "string": "{type} \"{name}\""
   },
   "tKxCld": {
     "context": "set balance dialog title label",

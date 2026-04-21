@@ -1,37 +1,28 @@
 import { OrderDiscountType } from "@dashboard/graphql";
 import { type AutomaticDiscountInfo } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { render, screen } from "@testing-library/react";
 import { type IntlShape, type MessageDescriptor } from "react-intl";
 
 import { formatDiscountSource } from "./formatDiscountSource";
 
-/** Jest maps `react-intl` to a mock whose formatMessage drops ICU values; use a minimal real formatter. */
-const createFormatMessageIntl = (): IntlShape =>
+/** react-intl is mocked in jest.config.js; use a minimal real formatter for labels. */
+const createIntl = (): IntlShape =>
   ({
-    formatMessage(descriptor: MessageDescriptor, values?: Record<string, string>) {
-      let template = descriptor.defaultMessage ?? "";
-
-      if (values) {
-        for (const [key, value] of Object.entries(values)) {
-          template = template.split(`{${key}}`).join(value);
-        }
-      }
-
-      return template;
-    },
+    formatMessage: (descriptor: MessageDescriptor) => descriptor.defaultMessage ?? "",
   }) as IntlShape;
 
 describe("formatDiscountSource", () => {
-  const intl = createFormatMessageIntl();
+  const intl = createIntl();
 
   it("returns generic fallback when there are no discounts", () => {
     // Arrange
     const discounts: AutomaticDiscountInfo[] = [];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe("a voucher or promotion");
+    expect(container.textContent).toBe("a voucher or promotion");
   });
 
   it("returns type label when discount has no name", () => {
@@ -39,10 +30,10 @@ describe("formatDiscountSource", () => {
     const discounts: AutomaticDiscountInfo[] = [{ type: OrderDiscountType.VOUCHER, name: null }];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe("voucher");
+    expect(container.textContent).toBe("voucher");
   });
 
   it("maps promotion-like types to the promotion label", () => {
@@ -50,23 +41,27 @@ describe("formatDiscountSource", () => {
     const discounts: AutomaticDiscountInfo[] = [{ type: OrderDiscountType.PROMOTION, name: null }];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe("promotion");
+    expect(container.textContent).toBe("promotion");
   });
 
-  it("returns named format when discount has a name", () => {
+  it("renders the discount name in its own span so it can be emphasised", () => {
     // Arrange
     const discounts: AutomaticDiscountInfo[] = [
       { type: OrderDiscountType.VOUCHER, name: "SAVE10" },
     ];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe('voucher "SAVE10"');
+    expect(container.textContent).toBe('voucher "SAVE10"');
+
+    const nameElement = screen.getByText('"SAVE10"');
+
+    expect(nameElement.tagName.toLowerCase()).toBe("span");
   });
 
   it("uses generic type label for manual discounts with a name", () => {
@@ -74,10 +69,10 @@ describe("formatDiscountSource", () => {
     const discounts: AutomaticDiscountInfo[] = [{ type: OrderDiscountType.MANUAL, name: "Staff" }];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe('a voucher or promotion "Staff"');
+    expect(container.textContent).toBe('a voucher or promotion "Staff"');
   });
 
   it("joins multiple discounts with comma and space", () => {
@@ -88,9 +83,13 @@ describe("formatDiscountSource", () => {
     ];
 
     // Act
-    const result = formatDiscountSource(discounts, intl);
+    const { container } = render(<>{formatDiscountSource(discounts, intl)}</>);
 
     // Assert
-    expect(result).toBe('voucher, promotion "Summer Sale"');
+    expect(container.textContent).toBe('voucher, promotion "Summer Sale"');
+
+    const nameElement = screen.getByText('"Summer Sale"');
+
+    expect(nameElement.tagName.toLowerCase()).toBe("span");
   });
 });
