@@ -21,7 +21,10 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
     const { ctx, theme, rect } = args;
     const { currency, value, undiscounted, locale } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const formattedValue = getFormattedMoney(value ?? "", currency, locale, "-");
+    // When the value is unknown we leave the price area blank; `drawCurrency`
+    // below already renders a single "-" in the currency column, so emitting
+    // another "-" here would produce a duplicate indicator.
+    const formattedValue = hasValue ? getFormattedMoney(value ?? "", currency, locale) : "";
     const formattedUndiscounted = getFormattedMoney(
       undiscounted !== value ? (undiscounted ?? "") : "",
       currency,
