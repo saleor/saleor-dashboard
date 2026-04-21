@@ -1,9 +1,13 @@
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
+import { HookFormInput } from "@dashboard/components/HookFormInput";
+import {
+  HookFormRadioGroup,
+  type HookFormRadioGroupChoice,
+} from "@dashboard/components/HookFormRadioGroup/HookFormRadioGroup";
 import { DiscountValueTypeEnum } from "@dashboard/graphql";
 import { toFixed } from "@dashboard/utils/toFixed";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
-import { type Control, Controller, useWatch } from "react-hook-form";
+import { type Control, Controller } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -24,9 +28,8 @@ export const DiscountFormFields = ({
   onCalculationModeChange,
 }: DiscountFormFieldsProps) => {
   const intl = useIntl();
-  const calculationMode = useWatch({ control, name: "calculationMode" });
 
-  const discountTypeChoices = useMemo(
+  const discountTypeChoices = useMemo<HookFormRadioGroupChoice<DiscountValueTypeEnum>[]>(
     () => [
       {
         label: intl.formatMessage(messages.percentageOption),
@@ -42,14 +45,17 @@ export const DiscountFormFields = ({
 
   return (
     <Box display="flex" flexDirection="column" gap={3} overflow="hidden">
-      <RadioGroupField
+      <HookFormRadioGroup
+        control={control}
+        name="calculationMode"
         choices={discountTypeChoices}
-        name="discountType"
-        value={calculationMode}
-        onChange={event => onCalculationModeChange(event.target.value as DiscountValueTypeEnum)}
+        onValueChange={onCalculationModeChange}
       />
       <Box display="flex" gap={2} alignItems="flex-end">
         <Box flexGrow="1" overflow="hidden">
+          {/* Kept as Controller: this field has a display transform (toFixed)
+              and a cross-field error (valueErrorMsg) derived outside RHF's
+              formState — see useDiscountForm for why we don't use setError. */}
           <Controller
             name="value"
             control={control}
@@ -73,20 +79,14 @@ export const DiscountFormFields = ({
           {valueFieldSymbol}
         </Text>
       </Box>
-      <Controller
-        name="reason"
-        control={control}
-        render={({ field }) => (
-          <Box overflow="hidden">
-            <Input
-              label={intl.formatMessage(messages.discountReasonLabel)}
-              value={field.value}
-              data-test-id="discount-reason"
-              onChange={field.onChange}
-            />
-          </Box>
-        )}
-      />
+      <Box overflow="hidden">
+        <HookFormInput
+          control={control}
+          name="reason"
+          label={intl.formatMessage(messages.discountReasonLabel)}
+          data-test-id="discount-reason"
+        />
+      </Box>
     </Box>
   );
 };
