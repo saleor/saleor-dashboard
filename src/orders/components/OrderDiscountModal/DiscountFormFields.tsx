@@ -69,6 +69,7 @@ export const DiscountFormFields = ({
                 helperText={valueErrorMsg || ""}
                 value={field.value}
                 onChange={field.onChange}
+                data-test-id="discount-value"
               />
             )}
           />

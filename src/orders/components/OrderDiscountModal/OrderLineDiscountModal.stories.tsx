@@ -1,9 +1,12 @@
-import { DiscountValueTypeEnum } from "@dashboard/graphql";
+import { DiscountValueTypeEnum, OrderDiscountType } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
+import { type ComponentProps } from "react";
+import { expect, fn, userEvent, within } from "storybook/test";
 
 import { OrderLineDiscountModal } from "./OrderLineDiscountModal";
 import { type OrderDiscountCommonInput } from "./types";
+
+type Props = ComponentProps<typeof OrderLineDiscountModal>;
 
 const defaultMaxPrice = {
   __typename: "Money" as const,
@@ -54,6 +57,13 @@ const meta: Meta<typeof OrderLineDiscountModal> = {
 
 export default meta;
 type Story = StoryObj<typeof OrderLineDiscountModal>;
+
+const findDialog = async () => {
+  const body = within(document.body);
+  const dialog = await body.findByRole("dialog");
+
+  return within(dialog);
+};
 
 export const NewDiscount: Story = {};
 
@@ -121,5 +131,63 @@ export const ConfirmLoading: Story = {
   args: {
     existingDiscount,
     confirmStatus: "loading",
+  },
+};
+
+export const WithAutomaticPromotion: Story = {
+  args: {
+    automaticDiscounts: [
+      {
+        type: OrderDiscountType.PROMOTION,
+        name: "Summer Sale 2024",
+      },
+    ],
+  },
+  play: async () => {
+    const dialog = await findDialog();
+
+    // The promotion name is rendered inside its own bolded <span> to stand
+    // out within the callout, while the rest of the sentence stays default.
+    const promotionName = await dialog.findByText(/Summer Sale 2024/);
+
+    await expect(promotionName.tagName.toLowerCase()).toBe("span");
+    await expect(dialog.getByText(/already discounted by/i)).toBeInTheDocument();
+    await expect(
+      dialog.getByText("A manual discount below will replace the existing one."),
+    ).toBeInTheDocument();
+  },
+};
+
+export const WithAutomaticVoucher: Story = {
+  args: {
+    automaticDiscounts: [
+      {
+        type: OrderDiscountType.VOUCHER,
+        name: "WELCOME10",
+      },
+    ],
+  },
+  play: async () => {
+    const dialog = await findDialog();
+    const voucherName = await dialog.findByText(/WELCOME10/);
+
+    await expect(voucherName.tagName.toLowerCase()).toBe("span");
+    await expect(dialog.getByText(/voucher/i)).toBeInTheDocument();
+  },
+};
+
+export const SubmitsLineDiscount: Story = {
+  play: async ({ args }: { args: Props }) => {
+    const dialog = await findDialog();
+
+    await userEvent.type(dialog.getByTestId("discount-value"), "20");
+    await userEvent.click(dialog.getByTestId("submit"));
+
+    await expect(args.onConfirm).toHaveBeenCalledOnce();
+    await expect(args.onConfirm).toHaveBeenCalledWith({
+      calculationMode: DiscountValueTypeEnum.PERCENTAGE,
+      reason: "",
+      value: 20,
+    });
   },
 };
