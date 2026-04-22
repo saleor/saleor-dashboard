@@ -1,5 +1,5 @@
 /** @type {import('dependency-cruiser').IConfiguration} */
-module.exports = {
+export default {
   forbidden: [
     {
       name: "Macaw UI - migration",
@@ -36,7 +36,6 @@ module.exports = {
     },
     reporterOptions: {
       dot: {
-        collapsePattern: "node_modules/[^/]+",
         collapsePattern: "^(packages|src|lib|app|bin|test(s?)|spec(s?))/[^/]+|node_modules/[^/]+",
       },
       text: {
