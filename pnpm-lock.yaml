@@ -20,9 +20,8 @@ overrides:
   ws@>=8.0.0 <8.17.1: ">=8.17.1"
   rollup@>=4.0.0 <4.59.0: ">=4.59.0"
   immutable@<3.8.3: ">=3.8.3"
-  flatted@<3.4.0: ">=3.4.0"
   "@tootallnate/once@<3.0.1": ">=3.0.1"
-  protobufjs@<7.5.5: ">=7.5.5"
+  protobufjs@<7.5.5: ">=7.5.5 < 8"
   flatted@<=3.4.1: ">=3.4.2"
 
 importers:
@@ -11399,10 +11398,10 @@ packages:
         integrity: sha512-KXUM8UEV+IK4JYWHNyxkPGDGbxeTEUHQv3POApfyTRN5eMcPFbY4cB0mDJr0LPelVvYPghmZDOCqfCIm9mYHtQ==,
       }
 
-  protobufjs@8.0.0:
+  protobufjs@7.5.5:
     resolution:
       {
-        integrity: sha512-jx6+sE9h/UryaCZhsJWbJtTEy47yXoGNYI4z8ZaRncM0zBKeRqjO2JEcOUYwrYGb1WLhXM1FfMzW3annvFv0rw==,
+        integrity: sha512-3wY1AxV+VBNW8Yypfd1yQY9pXnqTAN+KwQxL8iYm3/BjKYMNg4i0owhEe26PWDOMaIrzeeF98Lqd5NGz4omiIg==,
       }
     engines: { node: ">=12.0.0" }
 
@@ -16304,7 +16303,7 @@ snapshots:
       "@opentelemetry/sdk-logs": 0.208.0(@opentelemetry/api@1.9.0)
       "@opentelemetry/sdk-metrics": 2.2.0(@opentelemetry/api@1.9.0)
       "@opentelemetry/sdk-trace-base": 2.2.0(@opentelemetry/api@1.9.0)
-      protobufjs: 8.0.0
+      protobufjs: 7.5.5
 
   "@opentelemetry/resources@2.2.0(@opentelemetry/api@1.9.0)":
     dependencies:
@@ -22108,7 +22107,7 @@ snapshots:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.4
 
-  protobufjs@8.0.0:
+  protobufjs@7.5.5:
     dependencies:
       "@protobufjs/aspromise": 1.1.2
       "@protobufjs/base64": 1.1.2
