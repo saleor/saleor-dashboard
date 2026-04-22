@@ -1,0 +1,14 @@
+pnpm-workspace.yaml
+  h_463c3d2f499c35 9-10,48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "0c95a086583a11aa6f32f3e008ddc03ffa68e09f",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
