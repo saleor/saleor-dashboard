@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      release-body: ${{ steps.release_body.outputs.release_body }}
+      b64-release-body: ${{ steps.release_body.outputs.b64_release_body }}
 
     steps:
       - name: Checkout repository
@@ -85,7 +85,8 @@ jobs:
             fi
           } > /tmp/release_body.txt
 
-          echo "release_body=$(cat /tmp/release_body.txt)" >> "$GITHUB_OUTPUT"
+          # Base64 encoded to avoid errors "Unable to process file command 'output'"
+          echo "b64_release_body=$(base64 -w0 /tmp/release_body.txt)" >> "$GITHUB_OUTPUT"
 
   create-draft-release:
     needs: [prepare-draft-release]
@@ -98,14 +99,15 @@ jobs:
       - name: Create draft release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_BODY: ${{ needs.prepare-draft-release.outputs.release-body }}
+          B64_RELEASE_BODY: ${{ needs.prepare-draft-release.outputs.b64-release-body }}
         run: |
           CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+          body=$(base64 -d <<< "$B64_RELEASE_BODY")
 
           gh release create "$CURRENT_TAG" \
             --draft \
             --title="$CURRENT_TAG" \
-            --notes="$RELEASE_BODY"
+            --notes="$body"
 
           echo "✅ Draft release created for $CURRENT_TAG"
 
