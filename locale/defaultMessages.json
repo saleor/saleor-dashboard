@@ -1435,6 +1435,10 @@
     "context": "Error when no variant has price set",
     "string": "No variant has a price in \"{channelName}\""
   },
+  "6LdQvx": {
+    "context": "section description",
+    "string": "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link."
+  },
   "6LqbaB": {
     "string": "Collection created"
   },
@@ -10027,14 +10031,6 @@
     "context": "error message",
     "string": "Promo code already exists"
   },
-  "stockAvailabilityDesc": {
-    "context": "section description",
-    "string": "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link."
-  },
-  "stockAvailabilityWebhooks": {
-    "context": "intro to webhook list",
-    "string": "When disabled, the following channel-scoped stock webhooks become available:"
-  },
   "suAexp": {
     "context": "aria label for list view button",
     "string": "List view"
@@ -10821,6 +10817,10 @@
   "wmeRVH": {
     "context": "dialog header",
     "string": "Cancel order #{orderNumber}"
+  },
+  "wmybDi": {
+    "context": "intro to webhook list",
+    "string": "When disabled, the following channel-scoped stock webhooks become available:"
   },
   "wn3di2": {
     "string": "This password is too commonly used"
