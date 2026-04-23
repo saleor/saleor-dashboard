@@ -13,6 +13,7 @@ import {
   type PasswordLoginModeEnum,
   type ShopErrorFragment,
   type SiteSettingsQuery,
+  WebhookEventTypeAsyncEnum,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -27,6 +28,13 @@ import { useIntl } from "react-intl";
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
+
+const stockAvailabilityWebhooks = [
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT,
+];
 
 interface SiteSettingsPageAddressFormData {
   city: string;
@@ -46,6 +54,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
+  useLegacyShippingZoneStockAvailability: boolean;
   preserveAllAddressFields: boolean;
   passwordLoginMode: PasswordLoginModeEnum;
 }
@@ -101,6 +110,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
+    useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
     passwordLoginMode: shop?.passwordLoginMode,
   };
@@ -132,6 +142,9 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
         };
         const handlePreserveAddressFieldsChange = isEnabled => {
           change({ target: { name: "preserveAllAddressFields", value: isEnabled } });
+        };
+        const handleLegacyStockAvailabilityChange = isEnabled => {
+          change({ target: { name: "useLegacyShippingZoneStockAvailability", value: isEnabled } });
         };
 
         return (
@@ -247,6 +260,48 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                       >
                         <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
                       </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+                <Divider />
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionStockAvailabilityTitle)}
+                    description={intl.formatMessage(messages.sectionStockAvailabilityDescription)}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionStockAvailabilityHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Box display="flex" flexDirection="column" gap={3}>
+                        <Checkbox
+                          data-test-id="legacy-shipping-zone-stock-availability-checkbox"
+                          checked={data.useLegacyShippingZoneStockAvailability}
+                          onCheckedChange={handleLegacyStockAvailabilityChange}
+                        >
+                          <Text>{intl.formatMessage(messages.sectionStockAvailabilityHeader)}</Text>
+                        </Checkbox>
+                        <Box display="flex" flexDirection="column" gap={1}>
+                          <Text size={2} color="default2">
+                            {intl.formatMessage(messages.sectionStockAvailabilityWebhooksIntro)}
+                          </Text>
+                          <Box as="ul" margin={0} paddingLeft={5}>
+                            {stockAvailabilityWebhooks.map(name => (
+                              <Box as="li" key={name}>
+                                <Text size={2}>{name}</Text>
+                              </Box>
+                            ))}
+                          </Box>
+                        </Box>
+                      </Box>
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>

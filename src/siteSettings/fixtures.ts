@@ -42,6 +42,7 @@ export const shop: SiteSettingsQuery["shop"] = {
   limitQuantityPerCheckout: 50,
   enableAccountConfirmationByEmail: true,
   useLegacyUpdateWebhookEmission: true,
+  useLegacyShippingZoneStockAvailability: true,
   preserveAllAddressFields: false,
   passwordLoginMode: PasswordLoginModeEnum.ENABLED,
 };

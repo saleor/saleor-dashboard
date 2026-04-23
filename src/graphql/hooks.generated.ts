@@ -3386,6 +3386,7 @@ export const ShopFragmentDoc = gql`
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
   useLegacyUpdateWebhookEmission
+  useLegacyShippingZoneStockAvailability
   preserveAllAddressFields
   passwordLoginMode
 }
