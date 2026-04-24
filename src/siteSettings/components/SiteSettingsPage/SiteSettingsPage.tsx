@@ -6,8 +6,10 @@ import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { Link } from "@dashboard/components/Link";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   type PasswordLoginModeEnum,
@@ -23,7 +25,7 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
@@ -35,6 +37,9 @@ const stockAvailabilityWebhooks = [
   WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT,
   WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT,
 ];
+
+const stockAvailabilityDocsUrl =
+  "https://docs.saleor.io/developer/stock/overview#legacy-stock-availability";
 
 interface SiteSettingsPageAddressFormData {
   city: string;
@@ -270,10 +275,24 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                   paddingLeft={6}
                   paddingBottom={8}
                 >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionStockAvailabilityTitle)}
-                    description={intl.formatMessage(messages.sectionStockAvailabilityDescription)}
-                  />
+                  <Box paddingTop={6}>
+                    <Text size={3} fontWeight="bold" lineHeight={2}>
+                      {intl.formatMessage(messages.sectionStockAvailabilityTitle)}
+                    </Text>
+                    <VerticalSpacer />
+                    <Text size={3} fontWeight="regular">
+                      <FormattedMessage
+                        {...messages.sectionStockAvailabilityDescription}
+                        values={{
+                          a: chunks => (
+                            <Link href={stockAvailabilityDocsUrl} target="_blank">
+                              {chunks}
+                            </Link>
+                          ),
+                        }}
+                      />
+                    </Text>
+                  </Box>
                   <DashboardCard>
                     <DashboardCard.Header>
                       <DashboardCard.Title>

@@ -94,9 +94,9 @@ export const messages = defineMessages({
     description: "section title",
   },
   sectionStockAvailabilityDescription: {
-    id: "6LdQvx",
+    id: "qeAmFa",
     defaultMessage:
-      "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link.",
+      "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link. <a>Learn more</a>.",
     description: "section description",
   },
   sectionStockAvailabilityHeader: {

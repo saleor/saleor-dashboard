@@ -1435,10 +1435,6 @@
     "context": "Error when no variant has price set",
     "string": "No variant has a price in \"{channelName}\""
   },
-  "6LdQvx": {
-    "context": "section description",
-    "string": "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link."
-  },
   "6LqbaB": {
     "string": "Collection created"
   },
@@ -9663,6 +9659,10 @@
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
+  },
+  "qeAmFa": {
+    "context": "section description",
+    "string": "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link. <a>Learn more</a>."
   },
   "qf8OtW": {
     "string": "Continue with Saleor Cloud"
