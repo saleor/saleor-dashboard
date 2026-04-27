@@ -5,8 +5,8 @@ import {
   InMemoryCache,
   Observable,
 } from "@apollo/client";
-import { Decorator } from "@storybook/react-vite";
-import { DocumentNode, print } from "graphql";
+import { type Decorator } from "@storybook/react-vite";
+import { type DocumentNode, print } from "graphql";
 
 export type MockResponse = {
   query: DocumentNode;

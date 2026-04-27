@@ -9,11 +9,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
-import {
-  getCurrencyDecimalPoints,
-  limitDecimalPlaces,
-  parseDecimalValue,
-} from "@dashboard/components/PriceField/utils";
+import { formatPriceInput, getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   type OrderErrorFragment,
   type TransactionRequestActionErrorFragment,
@@ -125,10 +121,12 @@ export const OrderCaptureDialog = ({
   const maxDecimalPlaces = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
 
   const handleCustomAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const limitedValue = limitDecimalPlaces(e.target.value, maxDecimalPlaces);
+    const formattedValue = formatPriceInput(e.target.value, maxDecimalPlaces);
 
-    setCustomAmountInput(limitedValue);
-    setCustomAmount(parseDecimalValue(limitedValue));
+    if (!formattedValue && e.target.value) return;
+
+    setCustomAmountInput(formattedValue);
+    setCustomAmount(parseFloat(formattedValue) || 0);
   };
 
   const getSelectedAmount = (): number => {

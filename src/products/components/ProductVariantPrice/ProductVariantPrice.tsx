@@ -5,7 +5,7 @@ import {
   type ChannelPriceArgs,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -149,8 +149,8 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           currencySymbol={listing.currency}
                           onChange={e =>
                             onChange(listing.id, {
-                              costPrice: listing.costPrice,
-                              price: e.target.value,
+                              costPrice: listing.costPrice ?? "",
+                              price: e.target.value ?? "",
                               preorderThreshold: listing.preorderThreshold,
                             })
                           }
@@ -171,8 +171,8 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           currencySymbol={listing.currency}
                           onChange={e =>
                             onChange(listing.id, {
-                              costPrice: e.target.value,
-                              price: listing.price,
+                              costPrice: e.target.value ?? "",
+                              price: listing.price ?? "",
                               preorderThreshold: listing.preorderThreshold,
                             })
                           }

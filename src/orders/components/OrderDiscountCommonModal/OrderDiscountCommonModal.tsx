@@ -4,7 +4,7 @@ import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField, type PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
@@ -141,8 +141,8 @@ const OrderDiscountCommonModal = ({
     },
   ];
   const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
-  const handleSetDiscountValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
+  const handleSetDiscountValue = (event: PriceFieldChangeEvent) => {
+    const value = event.target.value ?? "";
 
     setValueErrorMsg(getErrorMessage(value));
     setValue(value);

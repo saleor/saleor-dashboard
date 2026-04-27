@@ -1,6 +1,9 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { type OrderGrantRefundCreateLineInput } from "@dashboard/graphql";
-import useForm, { type FormChange } from "@dashboard/hooks/useForm";
+import useForm, {
+  type ChangeEvent as FormChangeEvent,
+  type FormChange,
+} from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { useEffect, useState } from "react";
 
@@ -80,6 +83,21 @@ export const useGrantRefundForm = ({
     if (e.target.name === "amount") setIsFormDirty({ ...isFormDirty, amount: true });
 
     if (e.target.name === "reason") setIsFormDirty({ ...isFormDirty, reason: true });
+
+    if (e.target.name === "amount") {
+      const rawAmount = String(e.target.value ?? "");
+      const parsedAmount = rawAmount ? Number(rawAmount) : undefined;
+      const amountEvent: FormChangeEvent<number | undefined> = {
+        target: {
+          name: e.target.name,
+          value: Number.isFinite(parsedAmount) ? parsedAmount : undefined,
+        },
+      };
+
+      change(amountEvent);
+
+      return;
+    }
 
     change(e);
   };

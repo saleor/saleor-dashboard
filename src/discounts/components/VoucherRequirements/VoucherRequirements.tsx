@@ -2,7 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { Placeholder } from "@dashboard/components/Placeholder";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
@@ -142,7 +142,7 @@ const VoucherRequirements = ({
                               value={listing.minSpent || ""}
                               onChange={e =>
                                 onChannelChange(listing.id, {
-                                  minSpent: e.target.value,
+                                  minSpent: e.target.value ?? "",
                                 })
                               }
                             />

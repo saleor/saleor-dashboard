@@ -4,7 +4,7 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import {
   type OrderDetailsFragment,
   type OrderGrantRefundCreateErrorFragment,
@@ -15,6 +15,7 @@ import { type PaymentSubmitCardValuesProps } from "@dashboard/orders/components/
 import { type IMoney } from "@dashboard/utils/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
@@ -34,14 +35,14 @@ interface TransactionSubmitCardProps {
   canRefundShipping: boolean;
   shippingCosts: IMoney;
   amountData: PaymentSubmitCardValuesProps;
-  customRefundValue: number | undefined;
+  customRefundValue: number | null | undefined;
   onChange: FormChange;
   grantRefundErrors: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
   transactions: OrderDetailsFragment["transactions"];
   isAmountDirty: boolean;
   transactionId?: string;
-  onAmountChange: (value: number) => void;
+  onAmountChange: (value: number | null) => void;
 }
 
 export const TransactionSubmitCard = ({
@@ -67,6 +68,20 @@ export const TransactionSubmitCard = ({
     autoGrantRefund,
     transactions,
   });
+  const [amountInput, setAmountInput] = useState("");
+  const [isAmountFocused, setIsAmountFocused] = useState(false);
+  const defaultValue = getReturnRefundValue({
+    autoGrantRefund,
+    isAmountDirty,
+    customRefundValue,
+    amountData,
+  });
+
+  useEffect(() => {
+    if (!isAmountFocused) {
+      setAmountInput(defaultValue);
+    }
+  }, [defaultValue, isAmountFocused]);
 
   const isSubmitDisabled = (!transactionId && autoGrantRefund) || disabled;
 
@@ -112,14 +127,30 @@ export const TransactionSubmitCard = ({
           />
           <PriceField
             label={intl.formatMessage(submitCardMessages.returnRefundValueLabel)}
-            onChange={e => onAmountChange(e.target.value)}
+            onFocus={() => setIsAmountFocused(true)}
+            onChange={e => {
+              const displayValue = e.target.value ?? "";
+
+              setAmountInput(displayValue);
+
+              const trimmed = displayValue.trim();
+
+              if (trimmed === "") {
+                onAmountChange(null);
+
+                return;
+              }
+
+              const parsed = parseFloat(trimmed);
+
+              onAmountChange(Number.isNaN(parsed) ? null : parsed);
+            }}
+            onBlur={() => {
+              setIsAmountFocused(false);
+              setAmountInput(defaultValue);
+            }}
             name="amount"
-            value={getReturnRefundValue({
-              autoGrantRefund,
-              isAmountDirty,
-              customRefundValue,
-              amountData,
-            })}
+            value={amountInput}
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
             width="100%"

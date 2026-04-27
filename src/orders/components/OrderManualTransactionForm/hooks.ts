@@ -1,4 +1,5 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type PriceFieldChangeEvent } from "@dashboard/components/PriceField";
 import * as React from "react";
 
 interface ManualRefundHookProps {
@@ -14,6 +15,9 @@ export type ManualRefundData = ReturnType<typeof useManualRefund>;
 
 export const useManualRefund = ({ submitState, initialData }: ManualRefundHookProps) => {
   const [amount, setAmount] = React.useState<number | undefined>(initialData?.amount);
+  const [amountInput, setAmountInput] = React.useState<string>(
+    initialData?.amount?.toString() ?? "",
+  );
   const [description, setDescription] = React.useState(initialData?.description ?? "");
   const [pspReference, setPspReference] = React.useState<string | undefined>(
     initialData?.pspReference,
@@ -23,6 +27,7 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
     if (submitState === "success") {
       // reset state after submit
       setAmount(undefined);
+      setAmountInput("");
       setDescription("");
       setPspReference(undefined);
     }
@@ -31,8 +36,11 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
   const handleChangeDescription: React.ChangeEventHandler<HTMLInputElement> = e => {
     setDescription(e.target.value);
   };
-  const handleChangeAmount: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const value = parseFloat(e.target.value);
+  const handleChangeAmount = (e: PriceFieldChangeEvent) => {
+    const rawValue = e.target.value ?? "";
+    const value = parseFloat(rawValue);
+
+    setAmountInput(rawValue);
 
     if (!Number.isNaN(value)) {
       setAmount(value);
@@ -40,16 +48,21 @@ export const useManualRefund = ({ submitState, initialData }: ManualRefundHookPr
       setAmount(undefined);
     }
   };
+  const handleBlurAmount: React.FocusEventHandler<HTMLInputElement> = () => {
+    setAmountInput(amount?.toString() ?? "");
+  };
   const handleChangePspReference: React.ChangeEventHandler<HTMLInputElement> = e => {
     setPspReference(e.target.value);
   };
 
   return {
     amount,
+    amountInput,
     description,
     pspReference,
     handleChangeDescription,
     handleChangeAmount,
+    handleBlurAmount,
     handleChangePspReference,
   };
 };

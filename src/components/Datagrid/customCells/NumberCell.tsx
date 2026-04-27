@@ -5,6 +5,7 @@ import {
   GridCellKind,
   type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
+import { type ChangeEvent, type CSSProperties, useState } from "react";
 
 import { type Locale } from "../../Locale";
 
@@ -23,25 +24,82 @@ export type NumberCell = CustomCell<NumberCellProps>;
 
 const floatOrDigits = /^\d+$|^[0-9]+[.,]?[0-9]+$/;
 
+const editorInputStyle: CSSProperties = {
+  appearance: "none",
+  background: "none",
+  border: "none",
+  boxSizing: "border-box",
+  fontFamily: "inherit",
+  fontSize: "inherit",
+  height: "100%",
+  outline: "none",
+  padding: "0 8px",
+  textAlign: "right",
+  width: "100%",
+};
+
+const formatNumberInput = (value: string, hasFloatingPoint: boolean): string => {
+  const normalized = value.replace(/,/g, ".");
+  const filtered = normalized.replace(/[^\d.]/g, "");
+
+  if (!filtered) return "";
+
+  if (!hasFloatingPoint) {
+    return filtered.replace(/\./g, "").replace(/^0+(\d)/, "$1");
+  }
+
+  const firstDotIndex = filtered.indexOf(".");
+
+  if (firstDotIndex === -1) {
+    return filtered.replace(/^0+(\d)/, "$1");
+  }
+
+  let integerPart = filtered.slice(0, firstDotIndex) || "0";
+  const decimalPart = filtered.slice(firstDotIndex + 1).replace(/\./g, "");
+
+  integerPart = integerPart.replace(/^0+(\d)/, "$1");
+
+  return `${integerPart}.${decimalPart}`;
+};
+
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
   onChange,
-}) => (
-  <input
-    type="number"
-    onChange={event =>
-      onChange({
-        ...cell,
-        data: {
-          ...cell.data,
-          value: event.target.value ? parseFloat(event.target.value) : numberCellEmptyValue,
-        },
-      })
-    }
-    value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
-    autoFocus
-  />
-);
+}) => {
+  const hasFloatingPoint = cell.data.options?.hasFloatingPoint ?? true;
+
+  const [inputValue, setInputValue] = useState<string>(
+    cell.data.value === numberCellEmptyValue ? "" : String(cell.data.value),
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawValue = String(e.target.value ?? "");
+    const formattedValue = formatNumberInput(rawValue, hasFloatingPoint);
+
+    if (!formattedValue && rawValue) return;
+
+    setInputValue(formattedValue);
+    onChange({
+      ...cell,
+      data: {
+        ...cell.data,
+        value: formattedValue ? parseFloat(formattedValue) : numberCellEmptyValue,
+      },
+    });
+  };
+
+  return (
+    <input
+      type="text"
+      inputMode={hasFloatingPoint ? "decimal" : "numeric"}
+      autoComplete="off"
+      onChange={handleChange}
+      value={inputValue}
+      style={editorInputStyle}
+      autoFocus
+    />
+  );
+};
 
 export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> => ({
   kind: GridCellKind.Custom,
@@ -68,6 +126,13 @@ export const numberCellRenderer = (locale: Locale): CustomRenderer<NumberCell> =
   provideEditor: () => ({
     editor: NumberCellEdit,
     disablePadding: true,
+    disableStyling: true,
+    styleOverride: {
+      backgroundColor: "var(--gdg-bg-cell)",
+      boxShadow: "inset 0 0 0 1.5px var(--gdg-accent-color)",
+      width: 0,
+      height: 0,
+    },
     deletedValue: cell => ({
       ...cell,
       copyData: "",

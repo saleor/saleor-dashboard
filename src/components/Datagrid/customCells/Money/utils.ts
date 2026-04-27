@@ -62,5 +62,5 @@ export function getFormattedMoney(
 }
 
 export function hasDiscountValue(value: number | null | undefined): value is number {
-  return value !== undefined && value !== null;
+  return value !== undefined && value !== null && !Number.isNaN(value);
 }

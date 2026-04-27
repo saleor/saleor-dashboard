@@ -38,7 +38,7 @@ export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
 export interface OrderReturnData {
   transactionId: string;
-  amount: number;
+  amount: number | null | undefined;
   refundShipmentCosts: boolean;
   autoGrantRefund: boolean;
   autoSendRefund: boolean;
@@ -52,7 +52,7 @@ interface OrderReturnHandlers {
   changeItemsToBeReplaced: FormsetChange<boolean>;
   handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
-  handleAmountChange: (value: number) => void;
+  handleAmountChange: (value: number | null) => void;
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
@@ -183,7 +183,7 @@ function useOrderReturnForm(
     triggerChange();
     quantities.set(newQuantities);
   };
-  const handleAmountChange = (value: number) => {
+  const handleAmountChange = (value: number | null) => {
     setAmountDirty(true);
     handleChange({
       target: {

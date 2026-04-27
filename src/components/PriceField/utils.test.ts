@@ -1,116 +1,38 @@
-import {
-  getCurrencyDecimalPoints,
-  limitDecimalPlaces,
-  normalizeDecimalSeparator,
-  parseDecimalValue,
-} from "./utils";
+import { formatPercentInput, formatPriceInput, getCurrencyDecimalPoints } from "./utils";
 
-describe("normalizeDecimalSeparator", () => {
-  it("converts comma to dot", () => {
-    expect(normalizeDecimalSeparator("10,50")).toBe("10.50");
+describe("formatPercentInput", () => {
+  it("filters non-numeric characters", () => {
+    expect(formatPercentInput("abc23.5def")).toBe("23.5");
+    expect(formatPercentInput("%8.5")).toBe("8.5");
   });
 
-  it("leaves dot unchanged", () => {
-    expect(normalizeDecimalSeparator("10.50")).toBe("10.50");
+  it("normalizes comma to dot", () => {
+    expect(formatPercentInput("8,5")).toBe("8.5");
   });
 
-  it("handles integers without separator", () => {
-    expect(normalizeDecimalSeparator("100")).toBe("100");
+  it("limits to 3 decimal places by default", () => {
+    expect(formatPercentInput("8.12345")).toBe("8.123");
+  });
+
+  it("accepts custom decimal places", () => {
+    expect(formatPercentInput("8.12345", 2)).toBe("8.12");
+  });
+
+  it("handles integers", () => {
+    expect(formatPercentInput("23")).toBe("23");
   });
 
   it("handles empty string", () => {
-    expect(normalizeDecimalSeparator("")).toBe("");
+    expect(formatPercentInput("")).toBe("");
   });
 
-  it("handles European format with thousand separator (dot) and decimal comma", () => {
-    // 1.234,56 = one thousand two hundred thirty-four and 56 cents
-    expect(normalizeDecimalSeparator("1.234,56")).toBe("1234.56");
+  it("preserves trailing decimal while typing", () => {
+    expect(formatPercentInput("23.")).toBe("23.");
   });
 
-  it("handles US format with thousand separator (comma) and decimal dot", () => {
-    // 1,234.56 = one thousand two hundred thirty-four and 56 cents
-    expect(normalizeDecimalSeparator("1,234.56")).toBe("1234.56");
-  });
-
-  it("handles large European format numbers", () => {
-    expect(normalizeDecimalSeparator("1.234.567,89")).toBe("1234567.89");
-  });
-
-  it("handles large US format numbers", () => {
-    expect(normalizeDecimalSeparator("1,234,567.89")).toBe("1234567.89");
-  });
-
-  it("handles US thousands-only format without decimal", () => {
-    // 1,234,567 = one million two hundred thirty-four thousand five hundred sixty-seven
-    expect(normalizeDecimalSeparator("1,234,567")).toBe("1234567");
-  });
-
-  it("handles European thousands-only format without decimal", () => {
-    // 1.234.567 = one million two hundred thirty-four thousand five hundred sixty-seven
-    expect(normalizeDecimalSeparator("1.234.567")).toBe("1234567");
-  });
-});
-
-describe("parseDecimalValue", () => {
-  it("parses dot-separated value", () => {
-    expect(parseDecimalValue("10.50")).toBe(10.5);
-  });
-
-  it("parses comma-separated value", () => {
-    expect(parseDecimalValue("10,50")).toBe(10.5);
-  });
-
-  it("parses integer", () => {
-    expect(parseDecimalValue("100")).toBe(100);
-  });
-
-  it("returns 0 for empty string", () => {
-    expect(parseDecimalValue("")).toBe(0);
-  });
-
-  it("returns 0 for invalid input", () => {
-    expect(parseDecimalValue("abc")).toBe(0);
-  });
-
-  it("handles negative values", () => {
-    expect(parseDecimalValue("-10.50")).toBe(-10.5);
-  });
-});
-
-describe("limitDecimalPlaces", () => {
-  it("limits decimal places with dot separator", () => {
-    expect(limitDecimalPlaces("10.12345", 2)).toBe("10.12");
-  });
-
-  it("limits decimal places with comma separator", () => {
-    expect(limitDecimalPlaces("10,12345", 2)).toBe("10,12");
-  });
-
-  it("preserves original separator when limiting", () => {
-    expect(limitDecimalPlaces("10,999", 2)).toBe("10,99");
-    expect(limitDecimalPlaces("10.999", 2)).toBe("10.99");
-  });
-
-  it("returns integer when maxDecimalPlaces is 0", () => {
-    expect(limitDecimalPlaces("10.50", 0)).toBe("10");
-    expect(limitDecimalPlaces("10,50", 0)).toBe("10");
-  });
-
-  it("returns value unchanged if decimal places are within limit", () => {
-    expect(limitDecimalPlaces("10.12", 2)).toBe("10.12");
-    expect(limitDecimalPlaces("10.1", 2)).toBe("10.1");
-  });
-
-  it("returns value unchanged if no decimal part", () => {
-    expect(limitDecimalPlaces("100", 2)).toBe("100");
-  });
-
-  it("handles three decimal places for currencies like KWD", () => {
-    expect(limitDecimalPlaces("10.1234", 3)).toBe("10.123");
-  });
-
-  it("handles zero decimal places for currencies like JPY", () => {
-    expect(limitDecimalPlaces("1000.99", 0)).toBe("1000");
+  it("handles multiple separators as typing accidents (first wins)", () => {
+    expect(formatPercentInput("8.5.3")).toBe("8.53");
+    expect(formatPercentInput("8,5,3")).toBe("8.53");
   });
 });
 
@@ -137,5 +59,227 @@ describe("getCurrencyDecimalPoints", () => {
 
   it("returns 2 as fallback for invalid currency code", () => {
     expect(getCurrencyDecimalPoints("INVALID")).toBe(2);
+  });
+});
+
+describe("formatPriceInput", () => {
+  describe("basic input", () => {
+    it("filters non-numeric characters", () => {
+      expect(formatPriceInput("abc123.45def", 2)).toBe("123.45");
+      expect(formatPriceInput("$100.00", 2)).toBe("100.00");
+    });
+
+    it("normalizes comma to dot", () => {
+      expect(formatPriceInput("10,50", 2)).toBe("10.50");
+    });
+
+    it("limits decimal places", () => {
+      expect(formatPriceInput("10.12345", 2)).toBe("10.12");
+      expect(formatPriceInput("10,12345", 2)).toBe("10.12");
+    });
+
+    it("handles integers without decimal", () => {
+      expect(formatPriceInput("100", 2)).toBe("100");
+    });
+
+    it("handles empty string", () => {
+      expect(formatPriceInput("", 2)).toBe("");
+    });
+
+    it("preserves trailing decimal point while typing", () => {
+      expect(formatPriceInput("10.", 2)).toBe("10.");
+    });
+
+    it("adds leading zero for decimal-only values", () => {
+      expect(formatPriceInput(".5", 2)).toBe("0.5");
+      expect(formatPriceInput(",5", 2)).toBe("0.5");
+      expect(formatPriceInput(".50", 2)).toBe("0.50");
+    });
+  });
+
+  describe("currency-specific decimal places", () => {
+    it("truncates to zero decimal places for currencies like JPY", () => {
+      expect(formatPriceInput("1000.99", 0)).toBe("1000");
+      expect(formatPriceInput("1000,99", 0)).toBe("1000");
+      expect(formatPriceInput("1,234.56", 0)).toBe("1234");
+      expect(formatPriceInput("1'234.56", 0)).toBe("1234");
+    });
+
+    it("truncates to three decimal places for currencies like KWD", () => {
+      expect(formatPriceInput("10.12345", 3)).toBe("10.123");
+      expect(formatPriceInput("1,234.5678", 3)).toBe("1234.567");
+      expect(formatPriceInput("1.234,5678", 3)).toBe("1234.567");
+      expect(formatPriceInput("1'234.5678", 3)).toBe("1234.567");
+      expect(formatPriceInput("1'234,5678", 3)).toBe("1234.567");
+      expect(formatPriceInput("1,000", 3)).toBe("1000");
+    });
+  });
+
+  describe("typing (same separator type) - first wins", () => {
+    it("handles multiple dots as typing accidents", () => {
+      expect(formatPriceInput("10.5.6", 2)).toBe("10.56");
+    });
+
+    it("handles consecutive dots", () => {
+      expect(formatPriceInput("10..5", 2)).toBe("10.5");
+    });
+
+    it("handles trailing dot after decimal", () => {
+      expect(formatPriceInput("10.5.", 2)).toBe("10.5");
+    });
+
+    it("handles many same separators as typing accidents", () => {
+      expect(formatPriceInput("1,2,3,4", 2)).toBe("1.23");
+      expect(formatPriceInput("1.2.3.4", 2)).toBe("1.23");
+    });
+
+    it("handles double-tap comma as typing accident", () => {
+      expect(formatPriceInput("123,,45", 2)).toBe("123.45");
+      expect(formatPriceInput("10,,50", 2)).toBe("10.50");
+    });
+
+    it("collapses trailing adjacent separators (double-tap at end)", () => {
+      expect(formatPriceInput("123.,", 2)).toBe("123.");
+      expect(formatPriceInput("123,.", 2)).toBe("123.");
+      expect(formatPriceInput("123,,", 2)).toBe("123.");
+      expect(formatPriceInput("123..", 2)).toBe("123.");
+    });
+
+    it("returns empty for just separators (no digits)", () => {
+      expect(formatPriceInput(".", 2)).toBe("");
+      expect(formatPriceInput(",", 2)).toBe("");
+      expect(formatPriceInput("....", 2)).toBe("");
+      expect(formatPriceInput(".,.,", 2)).toBe("");
+    });
+  });
+
+  describe("paste (mixed separators) - smart detection", () => {
+    it("handles pasted European format", () => {
+      expect(formatPriceInput("1.234,56", 2)).toBe("1234.56");
+    });
+
+    it("handles pasted US format", () => {
+      expect(formatPriceInput("1,234.56", 2)).toBe("1234.56");
+    });
+
+    it("handles large pasted numbers", () => {
+      expect(formatPriceInput("1,234,567.89", 2)).toBe("1234567.89");
+      expect(formatPriceInput("1.234.567,89", 2)).toBe("1234567.89");
+    });
+
+    it("handles mixed separators with smart detection", () => {
+      expect(formatPriceInput("1,234.5", 2)).toBe("1234.5");
+      expect(formatPriceInput("1.234,5", 2)).toBe("1234.5");
+    });
+  });
+
+  describe("comma-only thousands detection", () => {
+    it("recognizes comma as thousand separator when all groups are exactly 3 digits", () => {
+      expect(formatPriceInput("1,000", 2)).toBe("1000");
+      expect(formatPriceInput("1,000,000", 2)).toBe("1000000");
+    });
+
+    it("still treats single comma as decimal when group after is not 3 digits", () => {
+      expect(formatPriceInput("10,50", 2)).toBe("10.50");
+      expect(formatPriceInput("10,5", 2)).toBe("10.5");
+    });
+  });
+
+  describe("apostrophe as thousand separator", () => {
+    it("strips apostrophes and parses with dot decimal", () => {
+      expect(formatPriceInput("1'222.33", 2)).toBe("1222.33");
+      expect(formatPriceInput("1'234'567.89", 2)).toBe("1234567.89");
+    });
+
+    it("handles apostrophe-only without decimal point", () => {
+      expect(formatPriceInput("1'000", 2)).toBe("1000");
+    });
+
+    it("handles apostrophe with dot decimal and trailing zeros", () => {
+      expect(formatPriceInput("1'000.00", 2)).toBe("1000.00");
+    });
+
+    it("handles apostrophe thousands with comma decimal (Swiss-EU hybrid)", () => {
+      expect(formatPriceInput("1'222,33", 2)).toBe("1222.33");
+    });
+
+    it("strips leading zeros from formatted numbers", () => {
+      expect(formatPriceInput("01'234.56", 2)).toBe("1234.56");
+      expect(formatPriceInput("001,234.56", 2)).toBe("1234.56");
+    });
+  });
+
+  describe("edge cases", () => {
+    it("handles zero", () => {
+      expect(formatPriceInput("0", 2)).toBe("0");
+      expect(formatPriceInput("0.00", 2)).toBe("0.00");
+    });
+
+    it("handles large numbers without separators", () => {
+      expect(formatPriceInput("9999999.99", 2)).toBe("9999999.99");
+      expect(formatPriceInput("1000000.99", 2)).toBe("1000000.99");
+    });
+
+    it("strips negative sign (prices are positive)", () => {
+      expect(formatPriceInput("-10.50", 2)).toBe("10.50");
+    });
+
+    it("strips leading zeros from integer part", () => {
+      expect(formatPriceInput("007.50", 2)).toBe("7.50");
+      expect(formatPriceInput("0001.23", 2)).toBe("1.23");
+      expect(formatPriceInput("00100", 2)).toBe("100");
+    });
+
+    it("rejects malformed mixed format (multiple of both separators)", () => {
+      expect(formatPriceInput("1.222,333.88", 2)).toBe("");
+      expect(formatPriceInput("1,222.333,88", 2)).toBe("");
+    });
+
+    it("limits integer part to 15 digits (float64 precision)", () => {
+      expect(formatPriceInput("123456789012345678", 2)).toBe("123456789012345");
+      expect(formatPriceInput("12345678901234567.89", 2)).toBe("123456789012345.89");
+    });
+  });
+
+  describe("invalid formatted inputs", () => {
+    it("rejects doubled separators in formatted numbers", () => {
+      expect(formatPriceInput("1,,000.01", 2)).toBe("");
+      expect(formatPriceInput("1''222.33", 2)).toBe("");
+    });
+
+    it("rejects leading thousand separator", () => {
+      expect(formatPriceInput(",1000.01", 2)).toBe("");
+      expect(formatPriceInput("'999.99", 2)).toBe("");
+    });
+
+    it("rejects inconsistent comma grouping", () => {
+      expect(formatPriceInput("1,00,001.01", 2)).toBe("");
+      expect(formatPriceInput("1,2345.67", 2)).toBe("");
+    });
+
+    it("rejects inconsistent apostrophe grouping", () => {
+      expect(formatPriceInput("1'22'2.33", 2)).toBe("");
+    });
+
+    it("rejects adjacent different separators", () => {
+      expect(formatPriceInput("1,000,.01", 2)).toBe("");
+    });
+
+    it("rejects multiple decimal points in formatted number", () => {
+      expect(formatPriceInput("1,000,001.0.1", 2)).toBe("");
+    });
+
+    it("rejects ambiguous all-comma with non-3-digit final group", () => {
+      expect(formatPriceInput("1,234,567,89", 2)).toBe("");
+      expect(formatPriceInput("1,222,33", 2)).toBe("");
+    });
+
+    it("rejects wrong final apostrophe group", () => {
+      expect(formatPriceInput("1'234'567'89", 2)).toBe("");
+    });
+
+    it("rejects space as thousand separator", () => {
+      expect(formatPriceInput("1 222.33", 2)).toBe("");
+    });
   });
 });

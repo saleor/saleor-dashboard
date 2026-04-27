@@ -135,5 +135,22 @@ describe("OrderGrantRefundPage utils", () => {
       // Assert
       expect(refundAmountValue).toBe(totalCalulatedPrice);
     });
+    it("should return total calculated when amount input is dirty but amount was cleared", () => {
+      // Arrange
+      const isAmountInputDirty = true;
+      const isEditedRefundAmount = false;
+      const totalCalulatedPrice = 42;
+      const refundAmount = undefined;
+      // Act
+      const refundAmountValue = getRefundAmountValue({
+        isAmountInputDirty,
+        isEditedRefundAmount,
+        totalCalulatedPrice,
+        refundAmount,
+      });
+
+      // Assert
+      expect(refundAmountValue).toBe(totalCalulatedPrice);
+    });
   });
 });

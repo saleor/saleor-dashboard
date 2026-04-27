@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import PriceField from "@dashboard/components/PriceField";
+import { PriceField } from "@dashboard/components/PriceField";
 import {
   type OrderDetailsFragment,
   TransactionActionEnum,
@@ -53,12 +53,15 @@ export const TransactionCard = ({
   const id = useId();
 
   const [value, setValue] = React.useState<number | undefined>();
+  const [valueInput, setValueInput] = React.useState("");
+  const [isValueFocused, setIsValueFocused] = React.useState(false);
 
   const { data, error, loading, status, sendRefund } = useOrderSendRefund({
     transactionId: transaction.id,
     orderId,
     amount: value,
   });
+  const submitError = error || data?.transactionRequestAction?.errors?.[0];
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
@@ -68,7 +71,10 @@ export const TransactionCard = ({
     }
   };
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const value = parseFloat(e.target.value);
+    const rawValue = e.target.value ?? "";
+    const value = parseFloat(rawValue);
+
+    setValueInput(rawValue);
 
     if (!Number.isNaN(value)) {
       setValue(value);
@@ -77,11 +83,34 @@ export const TransactionCard = ({
     }
   };
   const setMaxRefundValue = () => {
-    setValue(Math.min(totalRemainingGrant.amount, transaction.chargedAmount.amount));
+    const maxValue = Math.min(totalRemainingGrant.amount, transaction.chargedAmount.amount);
+
+    setValue(maxValue);
+    setValueInput(maxValue.toString());
+  };
+
+  React.useEffect(() => {
+    if (submitError) return;
+
+    if (isValueFocused) return;
+
+    setValueInput(value?.toString() ?? "");
+  }, [value, isValueFocused, submitError]);
+
+  React.useEffect(() => {
+    if (status === "success") {
+      setValue(undefined);
+      setValueInput("");
+      setIsValueFocused(false);
+    }
+  }, [status]);
+
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = () => {
+    setIsValueFocused(false);
+    setValueInput(value?.toString() ?? "");
   };
   const inputId = `refund-amount-${id}`;
   const errorId = `refund-error-${id}`;
-  const submitError = error || data?.transactionRequestAction?.errors?.[0];
   const canBeRefunded = transaction.actions.includes(TransactionActionEnum.REFUND);
 
   return (
@@ -105,8 +134,10 @@ export const TransactionCard = ({
                 className={classes.input}
                 label={intl.formatMessage(refundPageMessages.refundAmount)}
                 name="amount"
+                onFocus={() => setIsValueFocused(true)}
                 onChange={handleChange}
-                value={value?.toString() ?? ""}
+                onBlur={handleBlur}
+                value={valueInput}
                 currencySymbol={transaction?.authorizedAmount?.currency}
               />
               <ConfirmButton

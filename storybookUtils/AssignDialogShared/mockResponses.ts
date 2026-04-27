@@ -6,7 +6,7 @@ import {
   _GetPageTypesChoicesDocument,
   _GetProductTypesChoicesDocument,
 } from "@dashboard/graphql/hooks.generated";
-import { MockResponse } from "@storybookUtils/apollo";
+import { type MockResponse } from "@storybookUtils/apollo";
 
 import {
   AttributeConnectionFactory,
