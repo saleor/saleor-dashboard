@@ -117,7 +117,8 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
             locale,
           },
           {
-            allowOverlay: true,
+            allowOverlay: false,
+            readonly: true,
           },
         );
       case "status": {

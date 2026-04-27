@@ -15879,6 +15879,16 @@ export type OptionalMutation = {
  * Deletes selected warehouse.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - WAREHOUSE_DELETED (async): A warehouse is deleted.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   deleteWarehouse?: Maybe<OptionalWarehouseDelete> | undefined;
   /**
@@ -16814,18 +16824,53 @@ export type OptionalMutation = {
  * Creates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksCreate?: Maybe<OptionalProductVariantStocksCreate> | undefined;
   /**
  * Deletes stocks from product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksDelete?: Maybe<OptionalProductVariantStocksDelete> | undefined;
   /**
  * Updates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksUpdate?: Maybe<OptionalProductVariantStocksUpdate> | undefined;
   /**
@@ -26771,6 +26816,15 @@ export const defineProductVariantStockUpdatedFactory: DefineTypeFactoryInterface
  * Creates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksCreate = {
   __typename?: 'ProductVariantStocksCreate';
@@ -26795,6 +26849,15 @@ export const defineProductVariantStocksCreateFactory: DefineTypeFactoryInterface
  * Deletes stocks from product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksDelete = {
   __typename?: 'ProductVariantStocksDelete';
@@ -26819,6 +26882,23 @@ export const defineProductVariantStocksDeleteFactory: DefineTypeFactoryInterface
  * Updates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksUpdate = {
   __typename?: 'ProductVariantStocksUpdate';
@@ -36447,6 +36527,16 @@ export const defineWarehouseCreatedFactory: DefineTypeFactoryInterface<
  * Deletes selected warehouse.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - WAREHOUSE_DELETED (async): A warehouse is deleted.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalWarehouseDelete = {
   __typename?: 'WarehouseDelete';

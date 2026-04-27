@@ -10,6 +10,7 @@ import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasMa
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
@@ -96,18 +97,35 @@ export const OrderLineMetadataDialog = ({
     onClose();
   };
 
-  useEffect(() => {
-    if (!open) {
-      reset();
-    }
-  }, [open, reset]);
+  useEffect(
+    function resetMetadataFormWhenDialogCloses() {
+      if (!open) {
+        reset();
+      }
+    },
+    [open, reset],
+  );
 
   return (
     <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content size="md" overflowY="hidden">
-        <DashboardModal.Header>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          gap={4}
+          overflow="hidden"
+        >
           <OrderLineDetails data={data} loading={loading} />
-        </DashboardModal.Header>
+          <Button
+            data-test-id="close-button"
+            icon={<X size={20} />}
+            size="small"
+            variant="tertiary"
+            onClick={handleClose}
+            flexShrink="0"
+          />
+        </Box>
 
         {/* This is scroll container so that Save and title are always visible */}
         <Box

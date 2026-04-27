@@ -4837,6 +4837,24 @@ export type ProductVariantBackInStockFieldPolicy = {
 	version?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ProductVariantBackInStockForClickAndCollectKeySpecifier = ('channel' | 'issuedAt' | 'issuingPrincipal' | 'productVariant' | 'recipient' | 'version' | ProductVariantBackInStockForClickAndCollectKeySpecifier)[];
+export type ProductVariantBackInStockForClickAndCollectFieldPolicy = {
+	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductVariantBackInStockInChannelKeySpecifier = ('channel' | 'issuedAt' | 'issuingPrincipal' | 'productVariant' | 'recipient' | 'version' | ProductVariantBackInStockInChannelKeySpecifier)[];
+export type ProductVariantBackInStockInChannelFieldPolicy = {
+	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ProductVariantBulkCreateKeySpecifier = ('bulkProductErrors' | 'count' | 'errors' | 'productVariants' | 'results' | ProductVariantBulkCreateKeySpecifier)[];
 export type ProductVariantBulkCreateFieldPolicy = {
 	bulkProductErrors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4974,6 +4992,24 @@ export type ProductVariantOutOfStockFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductVariantOutOfStockForClickAndCollectKeySpecifier = ('channel' | 'issuedAt' | 'issuingPrincipal' | 'productVariant' | 'recipient' | 'version' | ProductVariantOutOfStockForClickAndCollectKeySpecifier)[];
+export type ProductVariantOutOfStockForClickAndCollectFieldPolicy = {
+	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductVariantOutOfStockInChannelKeySpecifier = ('channel' | 'issuedAt' | 'issuingPrincipal' | 'productVariant' | 'recipient' | 'version' | ProductVariantOutOfStockInChannelKeySpecifier)[];
+export type ProductVariantOutOfStockInChannelFieldPolicy = {
+	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductVariantPreorderDeactivateKeySpecifier = ('errors' | 'productVariant' | ProductVariantPreorderDeactivateKeySpecifier)[];
 export type ProductVariantPreorderDeactivateFieldPolicy = {
@@ -6195,7 +6231,7 @@ export type StoredPaymentMethodRequestDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	result?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | 'productVariantDiscountedPriceUpdated' | SubscriptionKeySpecifier)[];
+export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | 'productVariantBackInStockForClickAndCollect' | 'productVariantBackInStockInChannel' | 'productVariantDiscountedPriceUpdated' | 'productVariantOutOfStockForClickAndCollect' | 'productVariantOutOfStockInChannel' | SubscriptionKeySpecifier)[];
 export type SubscriptionFieldPolicy = {
 	checkoutCreated?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutFullyAuthorized?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6218,7 +6254,11 @@ export type SubscriptionFieldPolicy = {
 	orderPaid?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderRefunded?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
-	productVariantDiscountedPriceUpdated?: FieldPolicy<any> | FieldReadFunction<any>
+	productVariantBackInStockForClickAndCollect?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantBackInStockInChannel?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantDiscountedPriceUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantOutOfStockForClickAndCollect?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantOutOfStockInChannel?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxClassKeySpecifier = ('countries' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | TaxClassKeySpecifier)[];
 export type TaxClassFieldPolicy = {
@@ -9527,6 +9567,14 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | ProductVariantBackInStockKeySpecifier | (() => undefined | ProductVariantBackInStockKeySpecifier),
 		fields?: ProductVariantBackInStockFieldPolicy,
 	},
+	ProductVariantBackInStockForClickAndCollect?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductVariantBackInStockForClickAndCollectKeySpecifier | (() => undefined | ProductVariantBackInStockForClickAndCollectKeySpecifier),
+		fields?: ProductVariantBackInStockForClickAndCollectFieldPolicy,
+	},
+	ProductVariantBackInStockInChannel?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductVariantBackInStockInChannelKeySpecifier | (() => undefined | ProductVariantBackInStockInChannelKeySpecifier),
+		fields?: ProductVariantBackInStockInChannelFieldPolicy,
+	},
 	ProductVariantBulkCreate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantBulkCreateKeySpecifier | (() => undefined | ProductVariantBulkCreateKeySpecifier),
 		fields?: ProductVariantBulkCreateFieldPolicy,
@@ -9602,6 +9650,14 @@ export type StrictTypedTypePolicies = {
 	ProductVariantOutOfStock?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantOutOfStockKeySpecifier | (() => undefined | ProductVariantOutOfStockKeySpecifier),
 		fields?: ProductVariantOutOfStockFieldPolicy,
+	},
+	ProductVariantOutOfStockForClickAndCollect?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductVariantOutOfStockForClickAndCollectKeySpecifier | (() => undefined | ProductVariantOutOfStockForClickAndCollectKeySpecifier),
+		fields?: ProductVariantOutOfStockForClickAndCollectFieldPolicy,
+	},
+	ProductVariantOutOfStockInChannel?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductVariantOutOfStockInChannelKeySpecifier | (() => undefined | ProductVariantOutOfStockInChannelKeySpecifier),
+		fields?: ProductVariantOutOfStockInChannelFieldPolicy,
 	},
 	ProductVariantPreorderDeactivate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantPreorderDeactivateKeySpecifier | (() => undefined | ProductVariantPreorderDeactivateKeySpecifier),

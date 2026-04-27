@@ -46,6 +46,7 @@ export class OrderFixture {
     transactions: [],
     payments: [],
     giftCards: [],
+    voucher: null,
     grantedRefunds: [],
     discounts: [],
     events: [],
@@ -234,6 +235,7 @@ export class OrderFixture {
         __typename: "Image",
         url: "https://example.com/image.jpg",
       },
+      discounts: [],
       unitPrice: {
         __typename: "TaxedMoney",
         gross: {
@@ -258,6 +260,19 @@ export class OrderFixture {
         net: {
           __typename: "Money",
           amount: 50,
+          currency: "USD",
+        },
+      },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 100,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 100,
           currency: "USD",
         },
       },
@@ -382,6 +397,19 @@ export class OrderFixture {
               currency: "",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            net: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+          },
           unitPrice: {
             __typename: "TaxedMoney",
             gross: {
@@ -399,6 +427,7 @@ export class OrderFixture {
             __typename: "Image",
             url: "",
           },
+          discounts: [],
         },
       },
     ],

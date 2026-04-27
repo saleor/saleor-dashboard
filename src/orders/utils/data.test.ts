@@ -597,6 +597,19 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -622,6 +635,7 @@ describe("Get the total value of all replaced products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
       {
@@ -712,6 +726,19 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -737,6 +764,7 @@ describe("Get the total value of all replaced products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
       {
@@ -827,6 +855,19 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -852,6 +893,7 @@ describe("Get the total value of all replaced products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
     ];
@@ -947,6 +989,19 @@ describe("Get the total value of all replaced products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -972,6 +1027,7 @@ describe("Get the total value of all replaced products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -1067,6 +1123,19 @@ describe("Get the total value of all replaced products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -1092,6 +1161,7 @@ describe("Get the total value of all replaced products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -1187,6 +1257,19 @@ describe("Get the total value of all replaced products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -1212,6 +1295,7 @@ describe("Get the total value of all replaced products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -1307,6 +1391,19 @@ describe("Get the total value of all replaced products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -1332,6 +1429,7 @@ describe("Get the total value of all replaced products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -1427,6 +1525,19 @@ describe("Get the total value of all replaced products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -1452,6 +1563,7 @@ describe("Get the total value of all replaced products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -1676,6 +1788,19 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 159.42,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -1701,6 +1826,7 @@ describe("Get the total value of all selected products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
       {
@@ -1791,6 +1917,19 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 797.1,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -1816,6 +1955,7 @@ describe("Get the total value of all selected products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
       {
@@ -1906,6 +2046,19 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
         },
+        undiscountedTotalPrice: {
+          __typename: "TaxedMoney",
+          gross: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+          net: {
+            __typename: "Money",
+            amount: 478.26,
+            currency: "USD",
+          },
+        },
         unitDiscount: {
           __typename: "Money",
           amount: 79.71,
@@ -1931,6 +2084,7 @@ describe("Get the total value of all selected products", () => {
           url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
+        discounts: [],
         __typename: "OrderLine",
       },
     ];
@@ -2026,6 +2180,19 @@ describe("Get the total value of all selected products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1594.2,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2051,6 +2218,7 @@ describe("Get the total value of all selected products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -2146,6 +2314,19 @@ describe("Get the total value of all selected products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 1992.75,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2171,6 +2352,7 @@ describe("Get the total value of all selected products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -2266,6 +2448,19 @@ describe("Get the total value of all selected products", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 797.1,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2291,6 +2486,7 @@ describe("Get the total value of all selected products", () => {
             url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -2508,6 +2704,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2533,6 +2742,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -2628,6 +2838,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 159.42,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2653,6 +2876,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",
@@ -2748,6 +2972,19 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               currency: "USD",
             },
           },
+          undiscountedTotalPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 239.13,
+              currency: "USD",
+            },
+            net: {
+              __typename: "Money",
+              amount: 239.13,
+              currency: "USD",
+            },
+          },
           unitDiscount: {
             __typename: "Money",
             amount: 79.71,
@@ -2773,6 +3010,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
+          discounts: [],
           __typename: "OrderLine",
         },
         __typename: "FulfillmentLine",

@@ -1,0 +1,29 @@
+.subtleLink {
+  cursor: pointer;
+}
+
+.subtleLink:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Discount row: label + amount use Macaw default1; "(applied)" uses default2.
+ * Only the chevron shifts default2 → default1 on row hover (Macaw Text color wins otherwise).
+ */
+.discountToggleChevron,
+.discountToggleChevron * {
+  color: var(--mu-colors-text-default2) !important;
+  transition: color 0.15s ease-in-out;
+}
+
+.discountToggleChevron {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+@media (hover: hover) {
+  .discountSectionToggle:hover .discountToggleChevron,
+  .discountSectionToggle:hover .discountToggleChevron * {
+    color: var(--mu-colors-text-default1) !important;
+  }
+}
