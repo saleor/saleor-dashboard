@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.3
+
+### Patch Changes
+
+- [#6434](https://github.com/saleor/saleor-dashboard/pull/6434) [`71222e4`](https://github.com/saleor/saleor-dashboard/commit/71222e4cff7148b0ff8439a0af23b8cd123917fc) Thanks [@mirekm](https://github.com/mirekm)! - Order-level and order-line discount flows now share the same UX in Draft and Unconfirmed orders. Access Add/Edit order line discount now also from the order row menu.
+
 ## 3.23.2
 
 ### Patch Changes
