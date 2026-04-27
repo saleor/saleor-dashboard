@@ -133,7 +133,7 @@ export const ManualExchangeListView = () => {
       <Box display="flex" gap={3} marginBottom={5} flexWrap="wrap">
         <Box __flexGrow="1" __minWidth="220px">
           <Input
-            placeholder="Search by MX ID, order, customer..."
+            label="Search by MX ID, order, customer..."
             value={search}
             onChange={e => {
               setSearch(e.target.value);

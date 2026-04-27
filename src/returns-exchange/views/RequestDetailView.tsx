@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { getUserName } from "@dashboard/misc";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ArrowLeft, CheckCircle, ChevronDown, Phone, RotateCcw, UserX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -33,14 +34,14 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
   const cxActionsRef = useRef<HTMLDivElement>(null);
 
   const agentId = user?.id || "unknown";
-  const agentName = user?.email || "CX Agent";
+  const agentName = getUserName(user, true) || "CX Agent";
 
   const load = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await fetchReturn(requestId);
+      const data = await fetchReturn(requestId, agentId, agentName);
 
       setDetail(data);
       setCallLogs(data.call_logs || []);

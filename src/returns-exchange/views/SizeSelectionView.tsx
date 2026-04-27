@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { getUserName } from "@dashboard/misc";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -24,7 +25,7 @@ export const SizeSelectionView = ({ requestId }: SizeSelectionViewProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const agentId = user?.id || "unknown";
-  const agentName = user?.email || "CX Agent";
+  const agentName = getUserName(user, true) || "CX Agent";
 
   useEffect(() => {
     const load = async () => {
@@ -32,7 +33,7 @@ export const SizeSelectionView = ({ requestId }: SizeSelectionViewProps) => {
 
       try {
         const [det, vars] = await Promise.all([
-          fetchReturn(requestId),
+          fetchReturn(requestId, agentId, agentName),
           fetchProductVariants(requestId),
         ]);
 
@@ -133,6 +134,10 @@ export const SizeSelectionView = ({ requestId }: SizeSelectionViewProps) => {
             const isCurrentSize = v.id === detail?.product_variant_id;
             const isSelected = v.id === selectedVariantId;
             const outOfStock = v.quantityAvailable === 0;
+            const sizeAttr = (v.attributes || []).find(
+              (a: any) => a.attribute?.name?.toLowerCase() === "size",
+            );
+            const sizeLabel: string = sizeAttr?.values?.[0]?.name || v.name;
 
             return (
               <Box
@@ -144,26 +149,31 @@ export const SizeSelectionView = ({ requestId }: SizeSelectionViewProps) => {
                 padding={3}
                 __minWidth={80}
                 textAlign="center"
-                onClick={() => !outOfStock && !isCurrentSize && setSelectedVariantId(v.id)}
+                onClick={() => !outOfStock && setSelectedVariantId(v.id)}
                 style={{
-                  cursor: outOfStock || isCurrentSize ? "not-allowed" : "pointer",
+                  cursor: outOfStock ? "not-allowed" : "pointer",
                   opacity: outOfStock ? 0.4 : 1,
                 }}
               >
                 <Text size={3} fontWeight={isSelected ? "bold" : "regular"}>
-                  {v.name}
+                  {sizeLabel}
                 </Text>
-                {isCurrentSize && (
+                {isCurrentSize && !outOfStock && (
                   <Text size={2} color="default2" display="block">
-                    Current
+                    Current ({v.quantityAvailable} avail)
                   </Text>
                 )}
-                {outOfStock && !isCurrentSize && (
+                {isCurrentSize && outOfStock && (
+                  <Text size={2} color="critical1" display="block">
+                    Current · Out of stock
+                  </Text>
+                )}
+                {!isCurrentSize && outOfStock && (
                   <Text size={2} color="critical1" display="block">
                     Out of stock
                   </Text>
                 )}
-                {!outOfStock && !isCurrentSize && (
+                {!isCurrentSize && !outOfStock && (
                   <Text size={2} color="success1" display="block">
                     {v.quantityAvailable} avail
                   </Text>

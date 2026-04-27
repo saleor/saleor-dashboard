@@ -75,8 +75,20 @@ export async function fetchReturns(params: {
   return { data: result.data, pagination: result.pagination };
 }
 
-export async function fetchReturn(requestId: string): Promise<CXReturnDetail> {
-  const result = await apiRequest<any>("GET", `/cx/returns/${requestId}`);
+export async function fetchReturn(
+  requestId: string,
+  agentId?: string,
+  agentName?: string,
+): Promise<CXReturnDetail> {
+  const qs = new URLSearchParams();
+
+  if (agentId) qs.set("cx_agent_id", agentId);
+
+  if (agentName) qs.set("cx_agent_name", agentName);
+
+  const query = qs.toString();
+  const path = query ? `/cx/returns/${requestId}?${query}` : `/cx/returns/${requestId}`;
+  const result = await apiRequest<any>("GET", path);
 
   return result.data;
 }

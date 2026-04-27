@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { getUserName } from "@dashboard/misc";
 import { Box, Button, Input, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, ArrowLeft, Search } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -261,7 +262,7 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
   const { user } = useUser();
 
   const agentId = user?.id || "unknown";
-  const agentName = user?.email || "CX Agent";
+  const agentName = getUserName(user, true) || "CX Agent";
 
   // Step 1
   const [orderInput, setOrderInput] = useState(orderId || "");
@@ -333,37 +334,19 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
       .finally(() => setVariantsLoading(false));
   }, [selectedItem]);
 
-  // Derive colour options + filtered sizes from allVariants
-  const colourOptions = (() => {
-    const seen = new Set<string>();
-    const opts: { value: string; label: string }[] = [];
-
-    for (const v of allVariants) {
-      const colourAttr = (v.attributes || []).find(
-        (a: any) =>
-          a.attribute?.name?.toLowerCase() === "color" ||
-          a.attribute?.name?.toLowerCase() === "colour",
-      );
-      const col: string = colourAttr?.values?.[0]?.name || "Unknown";
-
-      if (!seen.has(col)) {
-        seen.add(col);
-        opts.push({ value: col, label: col });
-      }
-    }
-
-    return opts;
-  })();
-
+  // Variants are locked to the original item's colour — only same-colour
+  // variants surface as exchangeable sizes. Case-insensitive match defends
+  // against attribute-value casing mismatches between the order line and the
+  // product variant attribute.
   const sizeVariants = allVariants.filter(v => {
     const colourAttr = (v.attributes || []).find(
       (a: any) =>
         a.attribute?.name?.toLowerCase() === "color" ||
         a.attribute?.name?.toLowerCase() === "colour",
     );
-    const col: string = colourAttr?.values?.[0]?.name || "Unknown";
+    const col: string = colourAttr?.values?.[0]?.name || "";
 
-    return col === selectedColour;
+    return col.toLowerCase() === (selectedColour || "").toLowerCase();
   });
 
   const selectedVariant = sizeVariants.find(v => v.id === selectedVariantId);
@@ -482,7 +465,7 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
         <Box display="flex" gap={3} marginBottom={4}>
           <Box __flexGrow="1">
             <Input
-              placeholder="Enter order number (e.g. 62598)"
+              label="Enter order number (e.g. 62598)"
               value={orderInput}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOrderInput(e.target.value)}
               onKeyDown={(e: React.KeyboardEvent) => e.key === "Enter" && handleOrderLookup()}
@@ -574,9 +557,7 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
                 month: "short",
                 year: "numeric",
               })
-            : ""}{" "}
-          · {fmtPrice(orderData.orderTotal, orderData.orderTotalCurrency)} · {orderData.itemCount}{" "}
-          items
+            : ""}
         </Text>
 
         {/* Customer */}
@@ -604,12 +585,14 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
 
         <Box display="flex" flexDirection="column" gap={3}>
           {(orderData.items || []).map((item: any, i: number) => {
-            const canExchange = item.isFulfilled;
+            const canExchange = item.isFulfilled && !item.orderStatus;
             const eligible = canExchange && !item.requiresOverride;
             const needsOverride = canExchange && item.requiresOverride;
 
             let ctaText = "Cannot Exchange";
-            let ctaHelper = "Item not yet delivered";
+            let ctaHelper = item.orderStatus
+              ? `Status: ${String(item.orderStatus).replace(/_/g, " ")}`
+              : "Item not yet delivered";
 
             if (eligible) {
               ctaText = "Exchange → Select Size";
@@ -679,7 +662,9 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
                   )}
                   {!item.isFulfilled && (
                     <Text size={2} color="default2" display="block">
-                      Not yet delivered
+                      {item.orderStatus
+                        ? `Status: ${String(item.orderStatus).replace(/_/g, " ")}`
+                        : "Not yet delivered"}
                     </Text>
                   )}
                 </Box>
@@ -693,7 +678,10 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
                   style={{ minWidth: 170 }}
                 >
                   <Text size={4} fontWeight="bold">
-                    {fmtPrice(item.price * item.quantity, item.currency)}
+                    {fmtPrice(item.unitPrice ?? 0, item.currency)}
+                  </Text>
+                  <Text size={2} color="default2">
+                    Qty: {item.quantity}
                   </Text>
 
                   {canExchange ? (
@@ -807,24 +795,22 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
           <Skeleton __height={200} />
         ) : (
           <>
-            {/* Colour dropdown */}
-            {colourOptions.length > 0 && (
+            {/* Colour — disabled; locked to the original item's colour */}
+            {selectedColour && (
               <Box marginBottom={5}>
                 <Text size={3} fontWeight="bold" display="block" marginBottom={2}>
                   Colour
                 </Text>
                 <Select
                   value={selectedColour}
-                  onChange={v => {
-                    setSelectedColour(v as string);
-                    setSelectedVariantId(null);
-                  }}
-                  options={colourOptions}
+                  onChange={() => undefined}
+                  options={[{ value: selectedColour, label: selectedColour }]}
+                  disabled
                 />
               </Box>
             )}
 
-            {/* Size grid */}
+            {/* Size grid (variants are restricted to the original item's colour) */}
             <Box marginBottom={5}>
               <Text size={3} fontWeight="bold" display="block" marginBottom={2}>
                 Size{" "}

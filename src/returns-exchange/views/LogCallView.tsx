@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { getUserName } from "@dashboard/misc";
 import { Box, Button, Input, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -46,14 +47,17 @@ export const LogCallView = ({ requestId }: LogCallViewProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const agentId = user?.id || "unknown";
-  const agentName = user?.email || "CX Agent";
+  const agentName = getUserName(user, true) || "CX Agent";
 
   useEffect(() => {
     const load = async () => {
       setLoadingDetail(true);
 
       try {
-        const [det, logs] = await Promise.all([fetchReturn(requestId), fetchCallLogs(requestId)]);
+        const [det, logs] = await Promise.all([
+          fetchReturn(requestId, agentId, agentName),
+          fetchCallLogs(requestId),
+        ]);
 
         setDetail(det);
         setCallLogs(logs);

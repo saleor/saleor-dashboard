@@ -149,7 +149,7 @@ export const ReturnsQueueView = () => {
         {/* Row 1: Search */}
         <Box marginBottom={3}>
           <Input
-            placeholder="Search by customer, email, order #, REQ-ID..."
+            label="Search by customer, email, order #, REQ-ID..."
             value={filters.search}
             onChange={e => setFilter("search", e.target.value)}
             size="small"
@@ -195,7 +195,7 @@ export const ReturnsQueueView = () => {
               Product
             </Text>
             <Input
-              placeholder="Product name or SKU..."
+              label="Product name or SKU..."
               value={filters.product}
               onChange={e => setFilter("product", e.target.value)}
               size="small"
@@ -208,7 +208,7 @@ export const ReturnsQueueView = () => {
               Return Reason
             </Text>
             <Input
-              placeholder="Filter by reason..."
+              label="Filter by reason..."
               value={filters.return_reason}
               onChange={e => setFilter("return_reason", e.target.value)}
               size="small"
@@ -258,7 +258,7 @@ export const ReturnsQueueView = () => {
               Last Activity By
             </Text>
             <Input
-              placeholder="Agent name..."
+              label="Agent name..."
               value={filters.last_activity_by}
               onChange={e => setFilter("last_activity_by", e.target.value)}
               size="small"
