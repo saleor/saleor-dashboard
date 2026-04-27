@@ -115,7 +115,7 @@ export const ConvertsValueWhenSwitchingCalculationMode: Story = {
     const dialog = await findDialog();
 
     // Switching PERCENTAGE (10%) -> FIXED with maxPrice=250 should compute 25.
-    await userEvent.click(dialog.getByTestId("FIXED"));
+    await userEvent.click(dialog.getByRole("radio", { name: /fixed amount/i }));
     await userEvent.click(dialog.getByTestId("submit"));
 
     await expect(args.onConfirm).toHaveBeenCalledOnce();
