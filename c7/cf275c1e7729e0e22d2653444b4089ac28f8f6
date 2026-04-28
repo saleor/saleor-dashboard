@@ -1,0 +1,31 @@
+src/extensions/views/customExtensionHiddenPermissions.test.ts
+  0f1a2248379b7564 1-63
+src/extensions/views/EditCustomExtension/EditCustomApp.tsx
+  0f1a2248379b7564 39,218-220,277
+src/extensions/views/AddCustomExtension/hooks/usePermissions.ts
+  0f1a2248379b7564 4-5,10,12
+src/extensions/views/AddCustomExtension/hooks/usePermissions.test.ts
+  0f1a2248379b7564 60-81
+src/extensions/views/customExtensionHiddenPermissions.ts
+  0f1a2248379b7564 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "c7cf275c1e7729e0e22d2653444b4089ac28f8f6",
+  "prompts": {
+    "0f1a2248379b7564": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01b32c49-9488-436c-bc18-a8baff6fbc5c",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 103,
+      "total_deletions": 5,
+      "accepted_lines": 103,
+      "overriden_lines": 0
+    }
+  }
+}
