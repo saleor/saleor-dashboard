@@ -9,10 +9,15 @@ const BASE_URL = import.meta.env.VITE_TENEXU_API_URL || "https://api.tenxyou.inf
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("_saleor_auth_token") || "";
+  // Saleor SDK stores the user's refresh token under "_saleorRefreshToken"
+  // (see node_modules/@saleor/sdk). The CX backend middleware needs this so it
+  // can refresh an expired auth token without forcing a re-login.
+  const refreshToken = localStorage.getItem("_saleorRefreshToken") || "";
 
   return {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
+    "X-Refresh-Token": refreshToken,
   };
 }
 
