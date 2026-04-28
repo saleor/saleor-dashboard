@@ -949,7 +949,7 @@
   },
   "2HfSiT": {
     "context": "pagination",
-    "string": "No. of rows"
+    "string": "N° de paginas"
   },
   "2J6EFz": {
     "context": "button",
@@ -1113,7 +1113,7 @@
   },
   "31hYP2": {
     "context": "alert card message",
-    "string": "Os cartões-presente aparecerão após o pedido ser atendido. <link>Ver pedidos com cartões-presente</link>"
+    "string": "Os vale-presentes aparecerão após o pedido ser atendido. <link>Ver pedidos com vale-presentes</link>"
   },
   "32Capp": {
     "context": "page title",
@@ -1213,7 +1213,7 @@
   },
   "3bQz2o": {
     "context": "bulk issue gift cards success alert title",
-    "string": "Cartões-presente emitidos"
+    "string": "Vale-presentes emitidos"
   },
   "3d1RXL": {
     "context": "",
@@ -1249,7 +1249,7 @@
   },
   "3kwdxJ": {
     "context": "gift card export type label",
-    "string": "gift cards"
+    "string": "vale-presentes"
   },
   "3mvL2Q": {
     "context": "",
@@ -1341,7 +1341,7 @@
   },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
-    "string": "Após a criação, a Saleor gerará uma lista de códigos de cartões-presente que você poderá baixar."
+    "string": "Após a criação, a Saleor gerará uma lista de códigos de vale-presentes que você poderá baixar."
   },
   "45zP+r": {
     "context": "voucher discount",
@@ -1441,7 +1441,7 @@
   },
   "4X0ZI8": {
     "context": "",
-    "string": "Cartão-presente"
+    "string": "Vale-presente"
   },
   "4XhJY+": {
     "context": "dialog header",
@@ -1545,7 +1545,7 @@
   },
   "5/BH83": {
     "context": "success activate alert message",
-    "string": "{count,plural,one{Cartão-presente} outro{{count} cartões-presente}} ativado"
+    "string": "{count,plural,one{Vale-presente} outro{{count} vale-presentes}} ativado"
   },
   "51HE+Q": {
     "context": "",
@@ -1757,7 +1757,7 @@
   },
   "5kODlC": {
     "context": "",
-    "string": "{usedGiftCards, plural, um {Gift card} outro {Gift cards} } {giftCardCodesList}"
+    "string": "{usedGiftCards, plural, um {Vale-presente} outro {Vale-presentes} } {giftCardCodesList}"
   },
   "5kvaFR": {
     "context": "product field",
@@ -2097,7 +2097,7 @@
   },
   "7EDqed": {
     "context": "tab name",
-    "string": "Todos os cartões-presente"
+    "string": "Todos os vale-presentes"
   },
   "7FL+WZ": {
     "context": "export products to csv file, button",
@@ -2169,7 +2169,7 @@
   },
   "7UG1Lx": {
     "context": "checkbox gift cards label",
-    "string": "Processar automaticamente cartões-presente que não podem ser enviados"
+    "string": "Processar automaticamente vale-presentes que não podem ser enviados"
   },
   "7WEC+G": {
     "context": "page title",
@@ -2201,7 +2201,7 @@
   },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
-    "string": "Cartões-presente de emissão em massa"
+    "string": "Vale-presentes de emissão em massa"
   },
   "7eGvyy": {
     "context": "extension install page, extension permissions (from manifest)",
@@ -2517,7 +2517,7 @@
   },
   "9B5R2I": {
     "context": "success gift card enable message",
-    "string": "Cartão-presente ativado"
+    "string": "Vale-presente ativado"
   },
   "9BvYb9": {
     "context": "",
@@ -2577,7 +2577,7 @@
   },
   "9OtpHt": {
     "context": "",
-    "string": "Linha de pedido excluída"
+    "string": "Item do pedido excluída"
   },
   "9PmyrU": {
     "context": "product variant inventory",
@@ -2629,7 +2629,7 @@
   },
   "9XYfOt": {
     "context": "fulfillment section name",
-    "string": "Cumprimento"
+    "string": "Pedidos"
   },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
@@ -2981,7 +2981,7 @@
   },
   "B54f/g": {
     "context": "dialog, editing order line metadata",
-    "string": "Metadados da linha de pedido"
+    "string": "Metadados do item do pedido"
   },
   "B5KI59": {
     "context": "Empty filters text",
@@ -3105,7 +3105,7 @@
   },
   "BalldE": {
     "context": "",
-    "string": "Linha de pedido"
+    "string": "Item do pedido"
   },
   "BanAhF": {
     "context": "sale status",
@@ -3417,7 +3417,7 @@
   },
   "Cn6l5R": {
     "context": "playground shortcut",
-    "string": "Parque infantil"
+    "string": "Playground"
   },
   "Co2U4u": {
     "context": "",
@@ -3841,7 +3841,7 @@
   },
   "EewziG": {
     "context": "checkbox gift cards label description",
-    "string": "Quando ativados, os cartões-presente não enviáveis serão automaticamente marcados como entregues e enviados ao cliente."
+    "string": "Quando ativados, os vale-presentes não enviáveis serão automaticamente marcados como entregues e enviados ao cliente."
   },
   "Egyh2T": {
     "context": "section header",
@@ -3869,7 +3869,7 @@
   },
   "Eq3GFh": {
     "context": "",
-    "string": "É um cartão-presente"
+    "string": "É um vale-presente"
   },
   "ErNH3D": {
     "context": "",
@@ -4041,7 +4041,7 @@
   },
   "FWaL+x": {
     "context": "gift card history message",
-    "string": "O saldo do cartão-presente foi zerado."
+    "string": "O saldo do vale-presente foi zerado."
   },
   "FWbv/u": {
     "context": "page header",
@@ -4121,7 +4121,7 @@
   },
   "Fn3bE0": {
     "context": "",
-    "string": "Linha de pedido atualizada"
+    "string": "Item do pedido atualizada"
   },
   "FopBSj": {
     "context": "error message",
@@ -4545,7 +4545,7 @@
   },
   "HFo3Qe": {
     "context": "successfully created gift card alert title",
-    "string": "Cartão-presente criado"
+    "string": "Vale-presente criado"
   },
   "HLqWXA": {
     "context": "voucher value requirement",
@@ -4561,7 +4561,7 @@
   },
   "HN1Gvw": {
     "context": "option description",
-    "string": "Aloque a linha de pedido ao armazém com maior estoque. Se não houver estoque suficiente em um único armazém, a quantidade restante será alocada ao próximo armazém com maior estoque, e o processo se repetirá se necessário."
+    "string": "Aloque o item do pedido ao armazém com maior estoque. Se não houver estoque suficiente em um único armazém, a quantidade restante será alocada ao próximo armazém com maior estoque, e o processo se repetirá se necessário."
   },
   "HP6m+q": {
     "context": "",
@@ -4585,7 +4585,7 @@
   },
   "HSmg1/": {
     "context": "gift cards section name",
-    "string": "Gift Cards"
+    "string": "Vale-presentes"
   },
   "HTiAMm": {
     "context": "",
@@ -4665,7 +4665,7 @@
   },
   "HlCkMT": {
     "context": "",
-    "string": "Linha do pedido adicionada"
+    "string": "Item do pedido adicionado"
   },
   "HlEpii": {
     "context": "",
@@ -4689,7 +4689,7 @@
   },
   "HqeqEV": {
     "context": "create gift card product alert message",
-    "string": "Crie um produto de cartão-presente"
+    "string": "Crie um produto de vale-presente"
   },
   "HtQGEH": {
     "context": "",
@@ -4953,7 +4953,7 @@
   },
   "IzECoP": {
     "context": "",
-    "string": "Pesquisar rascunhos de ordens..."
+    "string": "Pesquisar rascunhos de pedidos..."
   },
   "IzEVek": {
     "context": "bulk disable label",
@@ -4997,7 +4997,7 @@
   },
   "JDvxO6": {
     "context": "search gift card placeholder",
-    "string": "Pesquise cartões-presente (por exemplo, por código, e-mail, nome de usuário)"
+    "string": "Pesquise vale-presentes (por exemplo, por código, e-mail, nome de usuário)"
   },
   "JDz5h8": {
     "context": "number of subcategories in category",
@@ -5085,7 +5085,7 @@
   },
   "JUQwne": {
     "context": "order",
-    "string": "Gift Card"
+    "string": "Vale-presente"
   },
   "JV+EiM": {
     "context": "voucher value",
@@ -5381,7 +5381,7 @@
   },
   "KqbfFa": {
     "context": "expiry date selection info message",
-    "string": "Você pode definir que os cartões-presente expirem após um determinado período após a compra. Lembre-se de que em alguns países a expiração dos cartões-presente é proibida por lei."
+    "string": "Você pode definir que os vale-presentes expirem após um determinado período após a compra. Lembre-se de que em alguns países a expiração dos vale-presentes é proibida por lei."
   },
   "Krzyo+": {
     "context": "shipment refund title",
@@ -5397,7 +5397,7 @@
   },
   "Kv58Rx": {
     "context": "default gift card delete description",
-    "string": "{selectedItemsCount,plural,one{Tem certeza de que deseja excluir este cartão-presente?} other{Tem certeza de que deseja excluir {selectedItemsCount} cartões-presente?}}"
+    "string": "{selectedItemsCount,plural,one{Tem certeza de que deseja excluir este vale-presente?} other{Tem certeza de que deseja excluir {selectedItemsCount} vale-presentes?}}"
   },
   "KvK69l": {
     "context": "limit reached warning",
@@ -5893,7 +5893,7 @@
   },
   "N6s/fl": {
     "context": "",
-    "string": "Editar metadados da linha de pedido"
+    "string": "Editar metadados do item do pedido"
   },
   "N76zUg": {
     "context": "page header",
@@ -5965,7 +5965,7 @@
   },
   "NOwJdG": {
     "context": "success deactivate alert message",
-    "string": "{count,plural,one{Cartão-presente} outros{{count} cartões-presente}} desativados"
+    "string": "{count,plural,one{Vale-presente} outros{{count} vale-presentes}} desativados"
   },
   "NPT+At": {
     "context": "order returned success message",
@@ -6005,7 +6005,7 @@
   },
   "NZtcLb": {
     "context": "gift card bulk create success dialog content",
-    "string": "Emitimos todos os cartões-presente solicitados. Você pode baixar a lista de novos cartões-presente usando o botão abaixo."
+    "string": "Emitimos todos os vale-presentes solicitados. Você pode baixar a lista de novos vale-presentes usando o botão abaixo."
   },
   "NcY4ph": {
     "context": "",
@@ -6017,7 +6017,7 @@
   },
   "Nfh9QM": {
     "context": "checkbox gift cards label description",
-    "string": "quando ativados, os cartões-presente não entregáveis serão automaticamente definidos como cumpridos e enviados ao cliente"
+    "string": "quando ativados, os vale-presentes não entregáveis serão automaticamente definidos como cumpridos e enviados ao cliente"
   },
   "NhQboB": {
     "context": "dialog header",
@@ -6285,7 +6285,7 @@
   },
   "OqYCQ4": {
     "context": "allow legacy gift card use description",
-    "string": "Quando ativado, o cartão-presente pode ser aplicado a uma finalização de compra usando a mutação addPromoCode."
+    "string": "Quando ativado, o vale-presente pode ser aplicado a uma finalização de compra usando a mutação addPromoCode."
   },
   "OrEUr6": {
     "context": "Message when search returns no results",
@@ -6961,7 +6961,7 @@
   },
   "RfPJ1E": {
     "context": "issue card button label",
-    "string": "Cartão de emissão"
+    "string": "Emitir cartão"
   },
   "Rfk+8B": {
     "context": "tax classes menu label when there are no tax classes",
@@ -7545,7 +7545,7 @@
   },
   "U9o2bV": {
     "context": "no gift card products and types alert message",
-    "string": "{createGiftCardProductType} e {giftCardProduct} para começar a vender cartões-presente em sua loja."
+    "string": "{createGiftCardProductType} e {giftCardProduct} para começar a vender vale-presentes em sua loja."
   },
   "UBuKZ9": {
     "context": "searchbar placeholder",
@@ -7717,7 +7717,7 @@
   },
   "Utq1fE": {
     "context": "customer gift cards card title",
-    "string": "Gift Cards"
+    "string": "Vale-presentes"
   },
   "Uu2B2G": {
     "context": "gift card history message",
@@ -7833,7 +7833,7 @@
   },
   "VI+X8H": {
     "context": "no gift card product types alert message",
-    "string": "{createGiftCardProductType} para começar a vender cartões-presente em sua loja."
+    "string": "{createGiftCardProductType} para começar a vender vale-presentes em sua loja."
   },
   "VIABHy": {
     "context": "error message",
@@ -7953,7 +7953,7 @@
   },
   "VvhNCi": {
     "context": "command menu shortcut",
-    "string": "Menu de comandos"
+    "string": "Comandos"
   },
   "Vwqh4L": {
     "context": "dialog subtitle explaining what user should do",
@@ -8221,7 +8221,7 @@
   },
   "WyPitj": {
     "context": "gift card bulk create success dialog title",
-    "string": "Cartões-presente de emissão em massa"
+    "string": "Vale-presentes de emissão em massa"
   },
   "Wyl25+": {
     "context": "product inventory, checkbox description",
@@ -8233,7 +8233,7 @@
   },
   "WzHfj8": {
     "context": "successfully created gift card alert title",
-    "string": "Successfully created gift card"
+    "string": "Successfully created vale-presente"
   },
   "X/K4LI": {
     "context": "label",
@@ -8597,7 +8597,7 @@
   },
   "YKyNm9": {
     "context": "label",
-    "string": "Gift Card"
+    "string": "Vale-presente"
   },
   "YL8K/3": {
     "context": "automatic completion delay input label",
@@ -8817,7 +8817,7 @@
   },
   "ZJJ2vA": {
     "context": "customer gift cards card title",
-    "string": "Cartões-presente usados por este cliente"
+    "string": "Vale-presentes usados por este cliente"
   },
   "ZJOX8n": {
     "context": "alert message",
@@ -8929,11 +8929,11 @@
   },
   "ZrdoSS": {
     "context": "customer gift cards card no cards subtitle",
-    "string": "Este cliente não utilizou nenhum cartão-presente."
+    "string": "Este cliente não utilizou nenhum vale-presente."
   },
   "ZuqkSp": {
     "context": "note input subtitle",
-    "string": "Por que este cartão-presente foi emitido? Esta nota não será mostrada ao cliente. A nota será armazenada no histórico do cartão-presente"
+    "string": "Por que este vale-presente foi emitido? Esta nota não será mostrada ao cliente. A nota será armazenada no histórico do vale-presente"
   },
   "Zvo5iu": {
     "context": "",
@@ -8973,7 +8973,7 @@
   },
   "a/x3DZ": {
     "context": "bulk issue gift cards success alert description",
-    "string": "{cardsAmount} cartões-presente emitidos"
+    "string": "{cardsAmount} vale-presentes emitidos"
   },
   "a0TDWs": {
     "context": "search section name",
@@ -9021,7 +9021,7 @@
   },
   "aBpkVh": {
     "context": "gift cards docs link",
-    "string": "cartões-presente"
+    "string": "vale-presentes"
   },
   "aC7AjR": {
     "context": "deactivate named app",
@@ -9265,7 +9265,7 @@
   },
   "bDHiYK": {
     "context": "gift card export success alert description",
-    "string": "No momento, estamos exportando os códigos do seu cartão-presente. Assim que seu arquivo estiver disponível, ele será enviado para seu endereço de e-mail"
+    "string": "No momento, estamos exportando os códigos do seu vale-presente. Assim que seu arquivo estiver disponível, ele será enviado para seu endereço de e-mail"
   },
   "bDO9DN": {
     "context": "success gift card enable message",
@@ -9749,7 +9749,7 @@
   },
   "d68yq7": {
     "context": "",
-    "string": "Excluir cartões-presente"
+    "string": "Excluir vale-presentes"
   },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
@@ -9869,7 +9869,7 @@
   },
   "dsJ+Wv": {
     "context": "note on export gift cards",
-    "string": "Observação: somente cartões-presente ativos e não utilizados serão exportados"
+    "string": "Observação: somente vale-presentes ativos e não utilizados serão exportados"
   },
   "dxCVWI": {
     "context": "error message",
@@ -9897,7 +9897,7 @@
   },
   "e5Mlfh": {
     "context": "Transaction title",
-    "string": "Cartão-presente (**** {código})"
+    "string": "Vale-presente (**** {código})"
   },
   "e61nVn": {
     "context": "",
@@ -9957,7 +9957,7 @@
   },
   "eLJQSh": {
     "context": "column title gift card",
-    "string": "Gift Card"
+    "string": "Vale-presente"
   },
   "eOrLzG": {
     "context": "button",
@@ -10569,7 +10569,7 @@
   },
   "hJZwTS": {
     "context": "",
-    "string": "Email address"
+    "string": "E-mail"
   },
   "hLOEeb": {
     "context": "button",
@@ -11093,7 +11093,7 @@
   },
   "jmh0rV": {
     "context": "no gift card products alert message",
-    "string": "{createGiftCardProduct} para começar a vender cartões-presente em sua loja."
+    "string": "{createGiftCardProduct} para começar a vender vale-presentes em sua loja."
   },
   "joN8sy": {
     "context": "",
@@ -11273,7 +11273,7 @@
   },
   "kIcyUo": {
     "context": "column header",
-    "string": "Lesma"
+    "string": "Slug"
   },
   "kIvvax": {
     "context": "",
@@ -11597,7 +11597,7 @@
   },
   "labkPK": {
     "context": "search gift card placeholder",
-    "string": "Pesquisar cartões-presente, e.g {exampleGiftCardCode}"
+    "string": "Pesquisar vale-presentes, e.g {exampleGiftCardCode}"
   },
   "lb5uDM": {
     "context": "metadata edit form, error message",
@@ -12497,7 +12497,7 @@
   },
   "pr/aHj": {
     "context": "success gift card disable message",
-    "string": "Cartão-presente desativado"
+    "string": "Vale-presente desativado"
   },
   "pr513b": {
     "context": "ordered products",
@@ -12505,7 +12505,7 @@
   },
   "ps+h1G": {
     "context": "checkbox label description",
-    "string": "A data de validade será definida automaticamente assim que o cartão-presente for emitido"
+    "string": "A data de validade será definida automaticamente assim que o vale-presente for emitido"
   },
   "ps0WUQ": {
     "context": "",
@@ -13093,7 +13093,7 @@
   },
   "sE7fI/": {
     "context": "allow legacy gift card use label",
-    "string": "Permitir o uso de cartões-presente antigos"
+    "string": "Permitir o uso de vale-presentes antigos"
   },
   "sEjRyz": {
     "context": "voucher type order discount",
@@ -13557,7 +13557,7 @@
   },
   "uQk8gB": {
     "context": "export all items to csv file",
-    "string": "Todos os cartões-presente ({number})"
+    "string": "Todos os vale-presentes ({number})"
   },
   "uRTj1Q": {
     "context": "error message",
@@ -13829,7 +13829,7 @@
   },
   "vM9quW": {
     "context": "order payment",
-    "string": "Paid with Gift Card"
+    "string": "Pago com Vale-presente"
   },
   "vMo6/3": {
     "context": "",
@@ -13889,7 +13889,7 @@
   },
   "vWTM6Y": {
     "context": "customer gift cards card no cards subtitle",
-    "string": "Não há cartões-presente atribuídos a este cliente"
+    "string": "Não há vale-presentes atribuídos a este cliente"
   },
   "vWapBZ": {
     "context": "card title",
@@ -13993,7 +13993,7 @@
   },
   "vof5TR": {
     "context": "button",
-    "string": "Criar categoria."
+    "string": "Criar categoria"
   },
   "vpTyL1": {
     "context": "error message",
@@ -14037,7 +14037,7 @@
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
-    "string": "Apenas cinco cartões-presente mais recentes são mostrados aqui"
+    "string": "Apenas cinco vale-presentes mais recentes são mostrados aqui"
   },
   "vzgZ3U": {
     "context": "card header",
@@ -14189,7 +14189,7 @@
   },
   "wWTUrM": {
     "context": "",
-    "string": "Atividades não encontrada."
+    "string": "Atividade não encontrada."
   },
   "wWYYBR": {
     "context": "product variant inventory",
@@ -14345,7 +14345,7 @@
   },
   "xHj9Qe": {
     "context": "gift card settings header",
-    "string": "Gift Cards Configurações"
+    "string": "Vale-presentes Configurações"
   },
   "xJEaxW": {
     "context": "",
@@ -14473,7 +14473,7 @@
   },
   "xrPv2K": {
     "context": "by preposition",
-    "string": "by"
+    "string": "por"
   },
   "xtUXnK": {
     "context": "export all items to csv file",
@@ -14649,7 +14649,7 @@
   },
   "yivxZJ": {
     "context": "order payment",
-    "string": "Pago com cartão-presente: ({link})"
+    "string": "Pago com vale-presente: ({link})"
   },
   "ylobu9": {
     "context": "assign reference to product, button",
@@ -14929,7 +14929,7 @@
   },
   "ztsvOP": {
     "context": "tooltip for gift card amount",
-    "string": "Valor do cartão-presente utilizado"
+    "string": "Valor do vale-presente utilizado"
   },
   "ztvvcm": {
     "context": "swatch attribute type",
