@@ -1,6 +1,6 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { globalSearchUrl } from "@dashboard/search/urls";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { useActionItems } from "./useActionItems";

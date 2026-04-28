@@ -88,6 +88,7 @@ export enum AccountErrorCode {
   DELETE_SUPERUSER_ACCOUNT = 'DELETE_SUPERUSER_ACCOUNT',
   DISABLED_AUTHENTICATION_METHOD = 'DISABLED_AUTHENTICATION_METHOD',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INACTIVE = 'INACTIVE',
   INVALID = 'INVALID',
@@ -1506,8 +1507,10 @@ export type CollectionCreateInput = {
 };
 
 export enum CollectionErrorCode {
+  /** @deprecated Products without variants can now be assigned to collections. This error will never be returned. */
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
@@ -6576,6 +6579,7 @@ export enum ProductBulkCreateErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   BLANK = 'BLANK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_PRICE = 'INVALID_PRICE',
@@ -6769,6 +6773,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
@@ -8011,6 +8016,12 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']>;
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
@@ -9389,14 +9400,39 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9721,14 +9757,39 @@ export enum WebhookEventTypeEnum {
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9966,10 +10027,15 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   PROMOTION_CREATED = 'PROMOTION_CREATED',

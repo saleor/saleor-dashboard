@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
-import GiftCardCreateDialogForm, { type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import { GiftCardCreateDialogForm, type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
 import { type GiftCardCreateFormCustomer } from "./types";
 import { getGiftCardCreateOnCompletedMessage, getGiftCardExpiryInputData } from "./utils";
@@ -18,7 +18,7 @@ interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> 
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent = ({
+export const GiftCardCreateDialogContent = ({
   onClose,
   refetchQueries,
   initialCustomer,
@@ -93,5 +93,3 @@ const GiftCardCreateDialogContent = ({
     </DashboardModal.Content>
   );
 };
-
-export default GiftCardCreateDialogContent;

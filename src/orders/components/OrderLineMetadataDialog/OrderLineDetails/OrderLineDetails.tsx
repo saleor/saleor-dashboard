@@ -1,9 +1,8 @@
+import styles from "@dashboard/components/Modal/DashboardModal.module.css";
 import { type OrderLineMetadataDetailsFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { OrderLineSubheaderData } from "./OrderLineSubheaderData";
 import { VariantThumbnail } from "./VariantThumbnail";
 
 export const OrderLineDetails = ({
@@ -11,28 +10,38 @@ export const OrderLineDetails = ({
   data,
 }: {
   loading: boolean;
-  data: OrderLineMetadataDetailsFragment;
-}) => {
-  return (
-    <Box display="flex" gap={5} alignItems="center" paddingX={6} width="100%">
-      <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
-      <Box display="flex" flexDirection="column" flexGrow="1" gap={2}>
-        <Text size={7} flexGrow="1" fontWeight="bold">
-          {loading ? (
-            <Skeleton height={7} />
-          ) : (
-            <>
-              <FormattedMessage {...commonMessages.orderLine} />: {data?.productName ?? ""}
-            </>
-          )}
-        </Text>
-        <OrderLineSubheaderData
-          productSku={data?.productSku}
-          quantity={data?.quantity}
-          variantName={data?.variant?.name}
-          loading={loading}
+  data: OrderLineMetadataDetailsFragment | null | undefined;
+}) => (
+  <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
+    <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
+    <Box display="flex" flexDirection="column" gap={0.5} overflow="hidden" __minWidth={0}>
+      <Text size={5} fontWeight="bold">
+        <FormattedMessage
+          defaultMessage="Order line metadata"
+          id="QSTD5z"
+          description="dialog title for order line metadata"
         />
-      </Box>
+      </Text>
+      {loading ? (
+        <Skeleton width={52} height={5} />
+      ) : (
+        <>
+          <Text size={2} color="default2" className={styles.truncatedText}>
+            {data?.productName}
+            {data?.variant?.name && ` · ${data.variant.name}`}
+          </Text>
+          <Text size={2} color="default2" className={styles.truncatedText}>
+            {data?.productSku && (
+              <>
+                <FormattedMessage defaultMessage="SKU" id="k4brJy" />
+                {`: ${data.productSku} · `}
+              </>
+            )}
+            <FormattedMessage defaultMessage="Qty" id="7gXPhB" />
+            {`: ${data?.quantity ?? "-"}`}
+          </Text>
+        </>
+      )}
     </Box>
-  );
-};
+  </Box>
+);

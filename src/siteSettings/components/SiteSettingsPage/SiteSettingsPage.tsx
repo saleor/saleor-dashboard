@@ -6,13 +6,16 @@ import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { Link } from "@dashboard/components/Link";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   type PasswordLoginModeEnum,
   type ShopErrorFragment,
   type SiteSettingsQuery,
+  WebhookEventTypeAsyncEnum,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -22,11 +25,21 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
+
+const stockAvailabilityWebhooks = [
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT,
+  WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT,
+];
+
+const stockAvailabilityDocsUrl =
+  "https://docs.saleor.io/developer/stock/overview#legacy-stock-availability";
 
 interface SiteSettingsPageAddressFormData {
   city: string;
@@ -46,6 +59,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
+  useLegacyShippingZoneStockAvailability: boolean;
   preserveAllAddressFields: boolean;
   passwordLoginMode: PasswordLoginModeEnum;
 }
@@ -101,6 +115,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
+    useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
     passwordLoginMode: shop?.passwordLoginMode,
   };
@@ -132,6 +147,9 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
         };
         const handlePreserveAddressFieldsChange = isEnabled => {
           change({ target: { name: "preserveAllAddressFields", value: isEnabled } });
+        };
+        const handleLegacyStockAvailabilityChange = isEnabled => {
+          change({ target: { name: "useLegacyShippingZoneStockAvailability", value: isEnabled } });
         };
 
         return (
@@ -247,6 +265,62 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                       >
                         <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
                       </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
+                <Divider />
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <Box paddingTop={6}>
+                    <Text size={3} fontWeight="bold" lineHeight={2}>
+                      {intl.formatMessage(messages.sectionStockAvailabilityTitle)}
+                    </Text>
+                    <VerticalSpacer />
+                    <Text size={3} fontWeight="regular">
+                      <FormattedMessage
+                        {...messages.sectionStockAvailabilityDescription}
+                        values={{
+                          a: chunks => (
+                            <Link href={stockAvailabilityDocsUrl} target="_blank">
+                              {chunks}
+                            </Link>
+                          ),
+                        }}
+                      />
+                    </Text>
+                  </Box>
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage(messages.sectionStockAvailabilityHeader)}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Box display="flex" flexDirection="column" gap={3}>
+                        <Checkbox
+                          data-test-id="legacy-shipping-zone-stock-availability-checkbox"
+                          checked={data.useLegacyShippingZoneStockAvailability}
+                          onCheckedChange={handleLegacyStockAvailabilityChange}
+                        >
+                          <Text>{intl.formatMessage(messages.sectionStockAvailabilityHeader)}</Text>
+                        </Checkbox>
+                        <Box display="flex" flexDirection="column" gap={1}>
+                          <Text size={2} color="default2">
+                            {intl.formatMessage(messages.sectionStockAvailabilityWebhooksIntro)}
+                          </Text>
+                          <Box as="ul" margin={0} paddingLeft={5}>
+                            {stockAvailabilityWebhooks.map(name => (
+                              <Box as="li" key={name}>
+                                <Text size={2}>{name}</Text>
+                              </Box>
+                            ))}
+                          </Box>
+                        </Box>
+                      </Box>
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>

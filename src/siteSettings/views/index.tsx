@@ -72,6 +72,7 @@ const SiteSettings = () => {
       enableAccountConfirmationByEmail: data.emailConfirmation,
       limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
       useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
+      useLegacyShippingZoneStockAvailability: data.useLegacyShippingZoneStockAvailability,
       preserveAllAddressFields: data.preserveAllAddressFields,
       passwordLoginMode: data.passwordLoginMode,
     };

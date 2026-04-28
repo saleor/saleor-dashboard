@@ -1,5 +1,5 @@
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useProductInitialAPIState } from "./useProductInitialAPIState";
 

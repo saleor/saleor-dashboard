@@ -88,4 +88,25 @@ export const messages = defineMessages({
       "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely.",
     description: "section description",
   },
+  sectionStockAvailabilityTitle: {
+    id: "v5yLSE",
+    defaultMessage: "Stock availability",
+    description: "section title",
+  },
+  sectionStockAvailabilityDescription: {
+    id: "qeAmFa",
+    defaultMessage:
+      "When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, it is determined only by the direct warehouse-channel link. <a>Learn more</a>.",
+    description: "section description",
+  },
+  sectionStockAvailabilityHeader: {
+    id: "6ZnMfQ",
+    defaultMessage: "Use legacy shipping zone stock availability",
+    description: "card header and checkbox label",
+  },
+  sectionStockAvailabilityWebhooksIntro: {
+    id: "wmybDi",
+    defaultMessage: "When disabled, the following channel-scoped stock webhooks become available:",
+    description: "intro to webhook list",
+  },
 });

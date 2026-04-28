@@ -9,7 +9,7 @@ import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { type VoucherCode } from "../VoucherCodesDatagrid/types";
+import { VOUCHER_CODE_DRAFT_STATUS, type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { VoucherCodes, type VoucherCodesProps } from "./VoucherCodes";
 
 jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
@@ -36,7 +36,8 @@ const renderVoucherCodes = (props: Partial<VoucherCodesProps>) => {
       codes={[]}
       loading={false}
       onCustomCodeGenerate={jest.fn()}
-      onDeleteCodes={jest.fn()}
+      onDeleteCodes={jest.fn().mockResolvedValue(undefined)}
+      deleteCodesTransitionState="default"
       onMultiCodesGenerate={jest.fn()}
       onSelectVoucherCodesIds={jest.fn()}
       onSettingsChange={jest.fn()}
@@ -99,8 +100,8 @@ describe("VoucherCodes", () => {
     // Assert
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
-  it("should not allow to delete selected codes when contains saved codes", async () => {
-    // Arrange & Act
+  it("should allow to delete selected saved codes", async () => {
+    // Arrange
     const onDeleteCodes = jest.fn();
 
     renderVoucherCodes({
@@ -111,10 +112,23 @@ describe("VoucherCodes", () => {
 
     const deleteButton = screen.getByTestId("bulk-delete-button");
 
+    // Act
+    await act(async () => {
+      await userEvent.click(deleteButton);
+    });
     // Assert
-    expect(deleteButton).toBeDisabled();
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+    expect(
+      await screen.findByText(/are you sure you want to delete these voucher codes?/i),
+    ).toBeInTheDocument();
+    // Act
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: /delete/i }));
+    });
+    // Assert
+    expect(onDeleteCodes).toBeCalled();
   });
-  it("should  allow to delete selected codes when selected only draft codes", async () => {
+  it("should allow to delete selected draft codes", async () => {
     // Arrange
     const onDeleteCodes = jest.fn();
 
@@ -122,11 +136,11 @@ describe("VoucherCodes", () => {
       onDeleteCodes,
       codes: [
         ...codes,
-        { code: "Manual code 1", status: "Draft" },
-        { code: "Manual code 2", status: "Draft" },
-        { code: "Manual code 3", status: "Draft" },
+        { code: "Manual code 1", status: VOUCHER_CODE_DRAFT_STATUS },
+        { code: "Manual code 2", status: VOUCHER_CODE_DRAFT_STATUS },
+        { code: "Manual code 3", status: VOUCHER_CODE_DRAFT_STATUS },
       ],
-      selectedCodesIds: ["Manual code 1", "Manual code 1"],
+      selectedCodesIds: ["Manual code 1", "Manual code 2"],
     });
 
     const deleteButton = screen.getByTestId("bulk-delete-button");

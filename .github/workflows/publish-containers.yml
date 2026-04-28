@@ -28,7 +28,9 @@ jobs:
 
       # Required by docker/metadata-action
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Check if tag should be tagged as "latest"
         id: check-latest
@@ -59,7 +61,7 @@ jobs:
 
       - name: Docker metadata
         id: metadata
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
         with:
           images: |
             ghcr.io/${{ steps.get-image-name.outputs.image_name }}
@@ -74,7 +76,7 @@ jobs:
 
   build-push:
     needs: prepare-variables
-    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
+    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@49a069ae9731cfccf3a1033fe1da4e3da84f4f2a # v1.11.0
     permissions:
       contents: read
       id-token: write # needed for AWS/ECR login (not used, but required permission)
@@ -117,7 +119,7 @@ jobs:
       slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
     steps:
       - name: Load secrets
-        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
         id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}

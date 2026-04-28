@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { PermissionEnum, useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useOrderDetails } from "./useOrderDetails";
 

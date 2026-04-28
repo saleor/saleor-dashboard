@@ -1,6 +1,6 @@
 import { useAppFailedPendingWebhooksLazyQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useAppsFailedDeliveries } from "./useAppsFailedDeliveries";
 

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { useFilterHandlers } from "./useFilterHandlers";
 

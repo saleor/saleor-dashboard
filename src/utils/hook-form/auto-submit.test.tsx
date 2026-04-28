@@ -132,12 +132,18 @@ describe("useAutoSubmit", () => {
     const input = screen.getByRole("textbox");
     const form = screen.getByRole("form", { name: "test form" });
 
-    // Act
+    // Act - type to start debounce
     await act(async () => {
       await user.type(input, "hello");
-      // Submit form manually before debounce time passes
+    });
+
+    // Submit form manually before debounce time passes
+    await act(async () => {
       fireEvent.submit(form);
-      // Advance timers to when debounced submit would have happened
+    });
+
+    // Advance timers to when debounced submit would have happened
+    act(() => {
       jest.advanceTimersByTime(DEBOUNCE_TIME);
     });
 

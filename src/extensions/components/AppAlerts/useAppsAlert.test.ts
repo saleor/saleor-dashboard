@@ -1,7 +1,7 @@
 import { useAppHasProblemsLazyQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useIntervalActionWithState } from "@dashboard/hooks/useIntervalActionWithState";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import moment from "moment-timezone";
 
 import { useAppsAlert } from "./useAppsAlert";

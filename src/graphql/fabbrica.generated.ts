@@ -801,6 +801,8 @@ import type {
   ProductUpdated,
   ProductVariant,
   ProductVariantBackInStock,
+  ProductVariantBackInStockForClickAndCollect,
+  ProductVariantBackInStockInChannel,
   ProductVariantBulkCreate,
   ProductVariantBulkCreateInput,
   ProductVariantBulkDelete,
@@ -823,10 +825,13 @@ import type {
   ProductVariantCreated,
   ProductVariantDelete,
   ProductVariantDeleted,
+  ProductVariantDiscountedPriceUpdated,
   ProductVariantFilterInput,
   ProductVariantInput,
   ProductVariantMetadataUpdated,
   ProductVariantOutOfStock,
+  ProductVariantOutOfStockForClickAndCollect,
+  ProductVariantOutOfStockInChannel,
   ProductVariantPreorderDeactivate,
   ProductVariantReorder,
   ProductVariantReorderAttributeValues,
@@ -10902,7 +10907,7 @@ export const defineDraftOrderWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
+export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantBackInStockForClickAndCollect | OptionalProductVariantBackInStockInChannel | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantOutOfStockForClickAndCollect | OptionalProductVariantOutOfStockInChannel | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
 
 /** Event delivery. */
 export type OptionalEventDelivery = {
@@ -15874,6 +15879,16 @@ export type OptionalMutation = {
  * Deletes selected warehouse.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - WAREHOUSE_DELETED (async): A warehouse is deleted.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   deleteWarehouse?: Maybe<OptionalWarehouseDelete> | undefined;
   /**
@@ -16809,18 +16824,53 @@ export type OptionalMutation = {
  * Creates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksCreate?: Maybe<OptionalProductVariantStocksCreate> | undefined;
   /**
  * Deletes stocks from product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksDelete?: Maybe<OptionalProductVariantStocksDelete> | undefined;
   /**
  * Updates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
   productVariantStocksUpdate?: Maybe<OptionalProductVariantStocksUpdate> | undefined;
   /**
@@ -25716,6 +25766,74 @@ export const defineProductVariantBackInStockFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /**
+ * Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantBackInStockForClickAndCollect = {
+  __typename?: 'ProductVariantBackInStockForClickAndCollect';
+  /** The channel the stock availability changed in. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantBackInStockForClickAndCollect['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantBackInStockForClickAndCollect['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantBackInStockForClickAndCollect} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantBackInStockForClickAndCollectFactoryInterface}
+ */
+export const defineProductVariantBackInStockForClickAndCollectFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantBackInStockForClickAndCollect,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantBackInStockInChannel = {
+  __typename?: 'ProductVariantBackInStockInChannel';
+  /** The channel the stock availability changed in. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantBackInStockInChannel['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantBackInStockInChannel['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantBackInStockInChannel} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantBackInStockInChannelFactoryInterface}
+ */
+export const defineProductVariantBackInStockInChannelFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantBackInStockInChannel,
+  {}
+> = defineTypeFactory;
+
+/**
  * Creates product variants for a given product.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
@@ -26333,6 +26451,42 @@ export const defineProductVariantDeletedFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ */
+export type OptionalProductVariantDiscountedPriceUpdated = {
+  __typename?: 'ProductVariantDiscountedPriceUpdated';
+  /** The channel where the price changed. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantDiscountedPriceUpdated['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The new discounted price. */
+  newPrice?: OptionalMoney | undefined;
+  /** The previous discounted price. */
+  previousPrice?: OptionalMoney | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantDiscountedPriceUpdated['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantDiscountedPriceUpdated} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantDiscountedPriceUpdatedFactoryInterface}
+ */
+export const defineProductVariantDiscountedPriceUpdatedFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantDiscountedPriceUpdated,
+  {}
+> = defineTypeFactory;
+
 export type OptionalProductVariantFilterInput = {
   __typename?: 'ProductVariantFilterInput';
   isPreorder?: ProductVariantFilterInput['isPreorder'] | undefined;
@@ -26447,6 +26601,74 @@ export type OptionalProductVariantOutOfStock = {
  */
 export const defineProductVariantOutOfStockFactory: DefineTypeFactoryInterface<
   OptionalProductVariantOutOfStock,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantOutOfStockForClickAndCollect = {
+  __typename?: 'ProductVariantOutOfStockForClickAndCollect';
+  /** The channel the stock availability changed in. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantOutOfStockForClickAndCollect['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantOutOfStockForClickAndCollect['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantOutOfStockForClickAndCollect} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantOutOfStockForClickAndCollectFactoryInterface}
+ */
+export const defineProductVariantOutOfStockForClickAndCollectFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantOutOfStockForClickAndCollect,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalProductVariantOutOfStockInChannel = {
+  __typename?: 'ProductVariantOutOfStockInChannel';
+  /** The channel the stock availability changed in. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantOutOfStockInChannel['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantOutOfStockInChannel['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantOutOfStockInChannel} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantOutOfStockInChannelFactoryInterface}
+ */
+export const defineProductVariantOutOfStockInChannelFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantOutOfStockInChannel,
   {}
 > = defineTypeFactory;
 
@@ -26594,6 +26816,15 @@ export const defineProductVariantStockUpdatedFactory: DefineTypeFactoryInterface
  * Creates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksCreate = {
   __typename?: 'ProductVariantStocksCreate';
@@ -26618,6 +26849,15 @@ export const defineProductVariantStocksCreateFactory: DefineTypeFactoryInterface
  * Deletes stocks from product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksDelete = {
   __typename?: 'ProductVariantStocksDelete';
@@ -26642,6 +26882,23 @@ export const defineProductVariantStocksDeleteFactory: DefineTypeFactoryInterface
  * Updates stocks for product variant.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalProductVariantStocksUpdate = {
   __typename?: 'ProductVariantStocksUpdate';
@@ -31042,6 +31299,12 @@ export type OptionalShop = {
   /** Returns translated shop fields for the given language code. */
   translation?: Maybe<OptionalShopTranslation> | undefined;
   /**
+ * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+ *
+ * Added in Saleor 3.23.
+ */
+  useLegacyShippingZoneStockAvailability?: Shop['useLegacyShippingZoneStockAvailability'] | undefined;
+  /**
  * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
  *
  * Added in Saleor 3.22.
@@ -31245,6 +31508,12 @@ export type OptionalShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: ShopSettingsInput['reserveStockDurationAuthenticatedUser'] | undefined;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: ShopSettingsInput['trackInventoryByDefault'] | undefined;
+  /**
+ * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+ *
+ * Added in Saleor 3.23.
+ */
+  useLegacyShippingZoneStockAvailability?: ShopSettingsInput['useLegacyShippingZoneStockAvailability'] | undefined;
   /**
  * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
  *
@@ -32393,6 +32662,54 @@ export type OptionalSubscription = {
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
   orderUpdated?: Maybe<OptionalOrderUpdated> | undefined;
+  /**
+ * Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantBackInStockForClickAndCollect?: Maybe<OptionalProductVariantBackInStockForClickAndCollect> | undefined;
+  /**
+ * Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantBackInStockInChannel?: Maybe<OptionalProductVariantBackInStockInChannel> | undefined;
+  /**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantDiscountedPriceUpdated?: Maybe<OptionalProductVariantDiscountedPriceUpdated> | undefined;
+  /**
+ * Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantOutOfStockForClickAndCollect?: Maybe<OptionalProductVariantOutOfStockForClickAndCollect> | undefined;
+  /**
+ * Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantOutOfStockInChannel?: Maybe<OptionalProductVariantOutOfStockInChannel> | undefined;
 };
 
 /**
@@ -36210,6 +36527,16 @@ export const defineWarehouseCreatedFactory: DefineTypeFactoryInterface<
  * Deletes selected warehouse.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
+ *
+ * Triggers the following webhook events:
+ * - WAREHOUSE_DELETED (async): A warehouse is deleted.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ * - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+ *
+ * Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
  */
 export type OptionalWarehouseDelete = {
   __typename?: 'WarehouseDelete';

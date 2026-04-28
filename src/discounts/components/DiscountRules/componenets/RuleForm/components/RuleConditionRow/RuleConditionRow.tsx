@@ -1,7 +1,7 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type Condition } from "@dashboard/discounts/models";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { Minus } from "lucide-react";
+import { X } from "lucide-react";
 
 import { RuleConditionName } from "../RuleConditionName/";
 import { RuleConditionType } from "../RuleConditionType/";
@@ -25,8 +25,7 @@ export const RuleConditionRow = ({
     <Box
       display="grid"
       gap={2}
-      __gridTemplateColumns="200px 106px 1fr 35px"
-      placeItems="center"
+      __gridTemplateColumns="160px 88px 1fr auto"
       alignItems="start"
       data-test-id="rule-condition-row"
     >
@@ -46,12 +45,15 @@ export const RuleConditionRow = ({
         <RuleConditionValues conditionIndex={conditionIndex} />
       </RuleInputWrapper>
 
-      <Button
-        data-test-id={`condition-remove-${conditionIndex}`}
-        variant="tertiary"
-        icon={<Minus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-        onClick={onRemove}
-      />
+      <Box display="flex" alignItems="flex-start" paddingTop={1}>
+        <Button
+          data-test-id={`condition-remove-${conditionIndex}`}
+          variant="tertiary"
+          size="small"
+          icon={<X size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          onClick={onRemove}
+        />
+      </Box>
     </Box>
   );
 };

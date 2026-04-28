@@ -6,6 +6,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   initialize-cloud:
     runs-on: ubuntu-22.04
@@ -21,15 +23,21 @@ jobs:
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
 
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
-          cache: "pnpm"
+          package-manager-cache: false
 
       - name: Install deps
         run: pnpm install
@@ -39,16 +47,14 @@ jobs:
         shell: bash
         run: |
           if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-            echo "MODE=main" >> $GITHUB_OUTPUT
+            echo "MODE=main" >> "$GITHUB_OUTPUT"
           else
-            echo "MODE=release" >> $GITHUB_OUTPUT
+            echo "MODE=release" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Load secrets for initialize-cloud
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets-init
-        with:
-          export-env: true
+        uses: 1password/load-secrets-action@92467eb28f72e8255933372f1e0707c567ce2259 # v4.0.0
+        id: load-secrets
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
@@ -57,7 +63,7 @@ jobs:
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           MODE: ${{ steps.set_variables_mode.outputs.MODE }}
 
       - name: Prepare instances
@@ -65,7 +71,7 @@ jobs:
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ steps.load-secrets.outputs.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -87,12 +93,22 @@ jobs:
   run-tests:
     runs-on: ubuntu-22.04
     needs: ["initialize-cloud"]
+
+    permissions:
+      contents: read
+
     strategy:
       fail-fast: false
       matrix:
         shard: [1/2, 2/2]
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install deps
+        run: pnpm install
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
@@ -121,18 +137,14 @@ jobs:
     if: "!cancelled()"
     needs: ["initialize-cloud", "run-tests"]
     runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v6
 
-      - name: Load secrets
-        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
-        id: load-secrets
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          # Export loaded secrets as environment variables
-          export-env: true
-        env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
+          persist-credentials: false
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports

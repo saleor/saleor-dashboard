@@ -4,6 +4,8 @@ on:
   issues:
     types: [labeled]
 
+permissions: {}
+
 jobs:
   notify:
     if: github.event.label.name == 'help wanted'

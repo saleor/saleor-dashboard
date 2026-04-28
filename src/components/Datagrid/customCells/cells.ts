@@ -157,6 +157,7 @@ export function moneyDiscountedCell(
 ): MoneyDiscuntedCell {
   return {
     ...common,
+    cursor: "pointer",
     ...opts,
     kind: GridCellKind.Custom,
     data: {

@@ -5,7 +5,7 @@ import {
   webhookErrorFixture,
 } from "@dashboard/extensions/fixtures";
 import { type AppProblem } from "@dashboard/extensions/types";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useExtensionProblems } from "./useExtensionProblems";
 

@@ -1,5 +1,5 @@
 import type * as dndKit from "@dnd-kit/core";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { type ProductVariantItem } from "../types";
 import { useVariantDrag } from "./useVariantDrag";

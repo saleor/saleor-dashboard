@@ -1,6 +1,5 @@
 import { Locale } from "@dashboard/components/Locale";
-import { render, screen } from "@testing-library/react";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, render, renderHook, screen } from "@testing-library/react";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
 
@@ -219,7 +218,9 @@ describe("ExternalAppContext", () => {
       // Act
       const button = screen.getByTestId("open-app-button");
 
-      button.click();
+      act(() => {
+        button.click();
+      });
 
       // Assert
       const dialog = screen.getByTestId("app-dialog");
@@ -281,7 +282,9 @@ describe("ExternalAppContext", () => {
 
       const button = screen.getByTestId("open-version-app-button");
 
-      button.click();
+      act(() => {
+        button.click();
+      });
 
       // Assert
       const frame = screen.getByTestId("app-frame");

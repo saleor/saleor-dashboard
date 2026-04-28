@@ -4,8 +4,7 @@ import {
   useUserAccountUpdateMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react";
 
 import { SidebarAppAlert } from "./SidebarAppAlert";
 import { useAppsAlert } from "./useAppsAlert";
