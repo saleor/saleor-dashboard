@@ -585,14 +585,26 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
 
         <Box display="flex" flexDirection="column" gap={3}>
           {(orderData.items || []).map((item: any, i: number) => {
-            const canExchange = item.isFulfilled && !item.orderStatus;
+            const canExchange = item.isFulfilled && !item.orderStatus && !item.cxReturnRequestId;
             const eligible = canExchange && !item.requiresOverride;
             const needsOverride = canExchange && item.requiresOverride;
 
+            // Disabled-row hint precedence: an existing CX return request is
+            // the most actionable signal (points the agent at the linked
+            // REQ-id), then an in-flight delivery status, then the generic
+            // "not yet delivered" placeholder.
             let ctaText = "Cannot Exchange";
-            let ctaHelper = item.orderStatus
-              ? `Status: ${String(item.orderStatus).replace(/_/g, " ")}`
-              : "Item not yet delivered";
+            let ctaHelper: string;
+
+            if (item.cxReturnRequestId) {
+              ctaHelper = `Return: ${item.cxReturnRequestId}${
+                item.cxReturnStatus ? ` · ${String(item.cxReturnStatus).replace(/_/g, " ")}` : ""
+              }`;
+            } else if (item.orderStatus) {
+              ctaHelper = `Status: ${String(item.orderStatus).replace(/_/g, " ")}`;
+            } else {
+              ctaHelper = "Item not yet delivered";
+            }
 
             if (eligible) {
               ctaText = "Exchange → Select Size";
@@ -662,9 +674,15 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
                   )}
                   {!item.isFulfilled && (
                     <Text size={2} color="default2" display="block">
-                      {item.orderStatus
-                        ? `Status: ${String(item.orderStatus).replace(/_/g, " ")}`
-                        : "Not yet delivered"}
+                      {item.cxReturnRequestId
+                        ? `Return: ${item.cxReturnRequestId}${
+                            item.cxReturnStatus
+                              ? ` · ${String(item.cxReturnStatus).replace(/_/g, " ")}`
+                              : ""
+                          }`
+                        : item.orderStatus
+                          ? `Status: ${String(item.orderStatus).replace(/_/g, " ")}`
+                          : "Not yet delivered"}
                     </Text>
                   )}
                 </Box>
