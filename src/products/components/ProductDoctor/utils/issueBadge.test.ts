@@ -1,4 +1,4 @@
-import { getBlockingIssueBadgeProps } from "./issueBadge";
+import { getHeaderIssueBadgeProps } from "./issueBadge";
 import { type AvailabilityIssue } from "./types";
 
 const issue = (overrides: Partial<AvailabilityIssue> = {}): AvailabilityIssue => ({
@@ -11,14 +11,14 @@ const issue = (overrides: Partial<AvailabilityIssue> = {}): AvailabilityIssue =>
   ...overrides,
 });
 
-describe("getBlockingIssueBadgeProps", () => {
+describe("getHeaderIssueBadgeProps", () => {
   it("returns null when there are no issues at all", () => {
-    expect(getBlockingIssueBadgeProps([])).toBeNull();
+    expect(getHeaderIssueBadgeProps([])).toBeNull();
   });
 
-  it("returns null when issues are info-only (info is advisory, not blocking)", () => {
+  it("returns null when issues are info-only (info is advisory, not header-worthy)", () => {
     expect(
-      getBlockingIssueBadgeProps([
+      getHeaderIssueBadgeProps([
         issue({ id: "no-shipping-zones", severity: "info" }),
         issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
       ]),
@@ -26,22 +26,22 @@ describe("getBlockingIssueBadgeProps", () => {
   });
 
   it("counts a single warning and reports type=warning", () => {
-    expect(getBlockingIssueBadgeProps([issue({ severity: "warning" })])).toEqual({
+    expect(getHeaderIssueBadgeProps([issue({ severity: "warning" })])).toEqual({
       count: 1,
       type: "warning",
     });
   });
 
   it("counts a single error and reports type=error", () => {
-    expect(getBlockingIssueBadgeProps([issue({ severity: "error" })])).toEqual({
+    expect(getHeaderIssueBadgeProps([issue({ severity: "error" })])).toEqual({
       count: 1,
       type: "error",
     });
   });
 
-  it("ignores info issues when summing the count alongside blocking issues", () => {
+  it("ignores info issues when summing the count alongside header issues", () => {
     expect(
-      getBlockingIssueBadgeProps([
+      getHeaderIssueBadgeProps([
         issue({ id: "no-stock", severity: "warning" }),
         issue({ id: "no-shipping-zones", severity: "info" }),
         issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
@@ -49,9 +49,9 @@ describe("getBlockingIssueBadgeProps", () => {
     ).toEqual({ count: 1, type: "warning" });
   });
 
-  it("escalates type to error when at least one blocking issue is an error", () => {
+  it("escalates type to error when at least one header issue is an error", () => {
     expect(
-      getBlockingIssueBadgeProps([
+      getHeaderIssueBadgeProps([
         issue({ id: "no-variants", severity: "error" }),
         issue({ id: "no-stock", severity: "warning" }),
         issue({ id: "no-shipping-zones", severity: "info" }),
@@ -59,9 +59,9 @@ describe("getBlockingIssueBadgeProps", () => {
     ).toEqual({ count: 2, type: "error" });
   });
 
-  it("counts only blocking issues, even when several errors and warnings co-exist", () => {
+  it("counts only header-worthy issues, even when several errors and warnings co-exist", () => {
     expect(
-      getBlockingIssueBadgeProps([
+      getHeaderIssueBadgeProps([
         issue({ severity: "error" }),
         issue({ severity: "error" }),
         issue({ severity: "warning" }),

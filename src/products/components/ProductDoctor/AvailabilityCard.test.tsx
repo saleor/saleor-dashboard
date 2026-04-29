@@ -164,7 +164,7 @@ describe("AvailabilityCard channel header severity gating", () => {
     expect(within(badge).queryByTestId("product-doctor-issue-badge-count")).toBeNull();
   });
 
-  it("renders a visible count and the warning icon when multiple blocking issues exist alongside info advisories", () => {
+  it("renders a visible count and the warning icon when multiple header-worthy issues exist alongside info advisories", () => {
     // Arrange — two warnings + two info advisories on the same channel.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
@@ -187,7 +187,7 @@ describe("AvailabilityCard channel header severity gating", () => {
       wrapper: Wrapper,
     });
 
-    // Assert — visible count reflects the two blocking issues only.
+    // Assert — visible count reflects the two header-worthy issues only.
     const badge = screen.getByTestId("channel-issue-badge");
 
     expect(within(badge).getByTestId("product-doctor-issue-badge-count")).toHaveTextContent("2");
@@ -196,7 +196,7 @@ describe("AvailabilityCard channel header severity gating", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the error icon when at least one blocking issue is an error", () => {
+  it("renders the error icon when at least one header issue is an error", () => {
     // Arrange — error + warning + info.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: true,
@@ -219,7 +219,7 @@ describe("AvailabilityCard channel header severity gating", () => {
 
     expect(within(badge).getByTestId("product-doctor-issue-badge-icon-error")).toBeInTheDocument();
     expect(within(badge).queryByTestId("product-doctor-issue-badge-icon-warning")).toBeNull();
-    // Visible count covers the two blocking issues (the info advisory is excluded).
+    // Visible count covers the two header-worthy issues (the info advisory is excluded).
     expect(within(badge).getByTestId("product-doctor-issue-badge-count")).toHaveTextContent("2");
   });
 });

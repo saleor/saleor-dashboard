@@ -26,7 +26,7 @@ import {
 import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSection";
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
-import { getBlockingIssueBadgeProps } from "./utils/issueBadge";
+import { getHeaderIssueBadgeProps } from "./utils/issueBadge";
 import { type AvailabilityIssue, type ChannelSummary, type IssueSeverity } from "./utils/types";
 
 interface AvailabilityChannelItemProps {
@@ -65,15 +65,17 @@ export const AvailabilityChannelItem = ({
   const intl = useIntl();
   const dateNow = useCurrentDate();
   const status = getAvailabilityStatus(originalSummary ?? summary, dateNow);
-  // "Blocking" issues (errors/warnings) drive the channel header state — they
-  // change the status label, dot color, and surface the issue badge. Info
-  // severity issues are advisories: they are still rendered in the body so
-  // users see the recommendation, but they should not promote the channel
-  // into a "has issues" visual state. The selection rules and severity
-  // escalation live in `getBlockingIssueBadgeProps` so they can be tested in
-  // isolation from React.
-  const issueBadgeProps = React.useMemo(() => getBlockingIssueBadgeProps(issues), [issues]);
-  const hasBlockingIssues = issueBadgeProps !== null;
+  // Errors and warnings get promoted into the channel header — they change
+  // the status label, dot color, and surface the issue badge. Info severity
+  // issues are advisories: they are still rendered in the body so users see
+  // the recommendation, but they do not promote the channel into a "has
+  // issues" visual state. (Note: a "warning" is not blocking in plain
+  // English; it shares the header treatment with errors only because both
+  // are non-advisory and worth flagging up front.) The selection rules and
+  // severity escalation live in `getHeaderIssueBadgeProps` so they can be
+  // tested in isolation from React.
+  const issueBadgeProps = React.useMemo(() => getHeaderIssueBadgeProps(issues), [issues]);
+  const hasHeaderIssues = issueBadgeProps !== null;
   // Channel is effectively disabled if marked for removal or explicitly disabled
   const isEffectivelyDisabled = disabled || isMarkedForRemoval;
 
@@ -118,9 +120,10 @@ export const AvailabilityChannelItem = ({
   );
 
   const getStatusLabel = () => {
-    // Only blocking issues (errors/warnings) flip the channel into "Issues"
-    // status. Info-severity advisories don't change the headline state.
-    if (hasBlockingIssues) {
+    // Only header-worthy issues (errors and warnings) flip the channel into
+    // "Issues" status. Info-severity advisories don't change the headline
+    // state.
+    if (hasHeaderIssues) {
       return intl.formatMessage(messages.status_issues);
     }
 
@@ -135,8 +138,8 @@ export const AvailabilityChannelItem = ({
   };
 
   const getStatusDescription = () => {
-    // Only blocking issues drive the description override (see getStatusLabel).
-    if (hasBlockingIssues) {
+    // Only header-worthy issues drive the description override (see getStatusLabel).
+    if (hasHeaderIssues) {
       return intl.formatMessage(messages.statusDescription_issues);
     }
 
@@ -183,7 +186,7 @@ export const AvailabilityChannelItem = ({
                 <Box>
                   <StatusDot
                     status={status}
-                    hasIssues={hasBlockingIssues}
+                    hasIssues={hasHeaderIssues}
                     issueType={issueBadgeProps?.type ?? "warning"}
                   />
                 </Box>
