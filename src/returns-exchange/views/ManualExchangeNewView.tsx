@@ -511,7 +511,7 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
       new Intl.NumberFormat("en-IN", {
         style: "currency",
         currency,
-        maximumFractionDigits: 0,
+        maximumFractionDigits: 2,
       }).format(amount);
 
     return (
