@@ -96,13 +96,21 @@ describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
   });
 });
 
-const makeIssue = (overrides: Partial<AvailabilityIssue> = {}): AvailabilityIssue => ({
-  id: "no-shipping-zones",
+/**
+ * Test factory for `AvailabilityIssue`. `category` must be passed explicitly
+ * — we deliberately avoid inferring it from `id` in the test layer because
+ * that duplicates the production category mapping (which lives in
+ * `runAvailabilityChecks`) and would silently miscategorize new issue types.
+ */
+const makeIssue = (
+  overrides: Partial<AvailabilityIssue> & Pick<AvailabilityIssue, "category">,
+): AvailabilityIssue => ({
+  id: "test-issue",
   severity: "info",
   channelId: "channel-1",
   channelName: "Default Channel",
-  message: "No shipping zones",
-  description: "Customers can browse and add this product to cart, but...",
+  message: "Issue message",
+  description: "Issue description",
   ...overrides,
 });
 
@@ -111,7 +119,7 @@ describe("AvailabilityCard channel header severity gating", () => {
     // Arrange - direct mode, single info advisory (e.g. no shipping zones)
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
-      issues: [makeIssue({ severity: "info" })],
+      issues: [makeIssue({ category: "shipping", severity: "info" })],
       hasErrors: false,
       hasWarnings: false,
     });
@@ -136,7 +144,14 @@ describe("AvailabilityCard channel header severity gating", () => {
     // Arrange - legacy mode, warning-level issue
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: true,
-      issues: [makeIssue({ id: "no-stock", severity: "warning", message: "No stock" })],
+      issues: [
+        makeIssue({
+          category: "purchasability",
+          id: "no-stock",
+          severity: "warning",
+          message: "No stock",
+        }),
+      ],
       hasErrors: false,
       hasWarnings: true,
     });
@@ -158,9 +173,20 @@ describe("AvailabilityCard channel header severity gating", () => {
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
       issues: [
-        makeIssue({ id: "no-stock", severity: "warning", message: "No stock" }),
-        makeIssue({ id: "no-shipping-zones", severity: "info", message: "No shipping zones" }),
         makeIssue({
+          category: "purchasability",
+          id: "no-stock",
+          severity: "warning",
+          message: "No stock",
+        }),
+        makeIssue({
+          category: "shipping",
+          id: "no-shipping-zones",
+          severity: "info",
+          message: "No shipping zones",
+        }),
+        makeIssue({
+          category: "purchasability",
           id: "stock-outside-channel-warehouses",
           severity: "info",
           message: "Stranded stock",
@@ -187,9 +213,24 @@ describe("AvailabilityCard channel header severity gating", () => {
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: true,
       issues: [
-        makeIssue({ id: "no-variants", severity: "error", message: "No variants" }),
-        makeIssue({ id: "no-stock", severity: "warning", message: "No stock" }),
-        makeIssue({ id: "no-shipping-zones", severity: "info", message: "Info only" }),
+        makeIssue({
+          category: "purchasability",
+          id: "no-variants",
+          severity: "error",
+          message: "No variants",
+        }),
+        makeIssue({
+          category: "purchasability",
+          id: "no-stock",
+          severity: "warning",
+          message: "No stock",
+        }),
+        makeIssue({
+          category: "shipping",
+          id: "no-shipping-zones",
+          severity: "info",
+          message: "Info only",
+        }),
       ],
       hasErrors: true,
       hasWarnings: true,
@@ -318,5 +359,114 @@ describe("PublicApiVerificationBadge reassurance", () => {
     rerender(<PublicApiVerificationBadge result={makeVerification({ status: "error" })} />);
 
     expect(screen.queryByTestId("verification-reassurance")).toBeNull();
+  });
+});
+
+describe("AvailabilityChannelItem issue category sections", () => {
+  const renderExpandedChannel = (issues: AvailabilityIssue[]) => {
+    const diagnostics = baseDiagnostics({
+      issues,
+      hasErrors: issues.some(i => i.severity === "error"),
+      hasWarnings: issues.some(i => i.severity === "warning"),
+    });
+
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={1} />, {
+      wrapper: Wrapper,
+    });
+
+    fireEvent.click(screen.getByText("Default Channel"));
+  };
+
+  it("renders both category sections when issues span both purchasability and shipping", () => {
+    renderExpandedChannel([
+      makeIssue({
+        category: "purchasability",
+        id: "no-stock",
+        severity: "warning",
+        message: "No stock",
+      }),
+      makeIssue({
+        category: "shipping",
+        id: "no-shipping-zones",
+        severity: "info",
+        message: "No shipping zones",
+      }),
+    ]);
+
+    const sections = screen.getAllByTestId("issue-category-section");
+
+    expect(sections).toHaveLength(2);
+    expect(sections.map(s => s.getAttribute("data-test-category"))).toEqual([
+      "purchasability",
+      "shipping",
+    ]);
+  });
+
+  it("renders only the purchasability section when no shipping issues exist", () => {
+    renderExpandedChannel([
+      makeIssue({
+        category: "purchasability",
+        id: "no-variants",
+        severity: "error",
+        message: "No variants",
+      }),
+      makeIssue({
+        category: "purchasability",
+        id: "no-stock",
+        severity: "warning",
+        message: "No stock",
+      }),
+    ]);
+
+    const sections = screen.getAllByTestId("issue-category-section");
+
+    expect(sections).toHaveLength(1);
+    expect(sections[0]).toHaveAttribute("data-test-category", "purchasability");
+  });
+
+  it("renders only the shipping section when no purchasability issues exist", () => {
+    renderExpandedChannel([
+      makeIssue({
+        category: "shipping",
+        id: "no-shipping-zones",
+        severity: "info",
+        message: "No shipping zones",
+      }),
+    ]);
+
+    const sections = screen.getAllByTestId("issue-category-section");
+
+    expect(sections).toHaveLength(1);
+    expect(sections[0]).toHaveAttribute("data-test-category", "shipping");
+  });
+
+  it("groups multiple issues of the same category under one section", () => {
+    renderExpandedChannel([
+      makeIssue({
+        category: "purchasability",
+        id: "no-stock",
+        severity: "warning",
+        message: "No stock",
+      }),
+      makeIssue({
+        category: "purchasability",
+        id: "stock-outside-channel-warehouses",
+        severity: "info",
+        message: "Stranded stock",
+      }),
+      makeIssue({
+        category: "purchasability",
+        id: "no-warehouses",
+        severity: "warning",
+        message: "No warehouses",
+      }),
+    ]);
+
+    const sections = screen.getAllByTestId("issue-category-section");
+
+    expect(sections).toHaveLength(1);
+    expect(sections[0]).toHaveAttribute("data-test-category", "purchasability");
+    // All three callouts should be inside the single purchasability section.
+    expect(screen.getAllByTestId("availability-issue-callout")).toHaveLength(3);
   });
 });

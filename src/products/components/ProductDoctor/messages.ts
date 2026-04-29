@@ -616,10 +616,19 @@ export const messages = defineMessages({
     defaultMessage: "{count, plural, one {# issue} other {# issues}}",
     description: "Badge showing number of issues in a channel",
   },
-  configurationTitle: {
-    id: "f71A+Y",
-    defaultMessage: "Delivery configuration",
-    description: "Title for delivery configuration section in channel",
+  // Issue category headings — group diagnostic issues by which surface area
+  // they affect (Saleor 3.23+ direct mode treats these as orthogonal).
+  categoryPurchasabilityTitle: {
+    id: "WZ2kxO",
+    defaultMessage: "Purchasability",
+    description:
+      "Section heading for issues that affect whether a customer can purchase (warehouses, stock, channel listing, pricing)",
+  },
+  categoryShippingTitle: {
+    id: "LYKO9m",
+    defaultMessage: "Shipping",
+    description:
+      "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
   },
   warehousesConfigured: {
     id: "MFC20a",

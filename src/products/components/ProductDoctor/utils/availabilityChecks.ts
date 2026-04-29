@@ -4,9 +4,19 @@ import { type IntlShape } from "react-intl";
 import { messages } from "../messages";
 import {
   type AvailabilityIssue,
+  type AvailabilityIssueCategory,
   type ChannelDiagnosticData,
   type ProductDiagnosticData,
 } from "./types";
+
+/**
+ * Each individual check returns the issue *without* its category — categories
+ * are attached uniformly at the dispatch site (`runAvailabilityChecks`) based
+ * on which group the check belongs to. This keeps each check function focused
+ * on its detection logic and makes the category mapping a single source of
+ * truth (no risk of a new check being miscategorized).
+ */
+type RawAvailabilityIssue = Omit<AvailabilityIssue, "category">;
 
 interface CheckContext {
   product: ProductDiagnosticData;
@@ -23,7 +33,7 @@ interface CheckContext {
   useLegacyShippingZoneStockAvailability: boolean;
 }
 
-type CheckFunction = (context: CheckContext) => AvailabilityIssue | null;
+type CheckFunction = (context: CheckContext) => RawAvailabilityIssue | null;
 
 /**
  * Check if channel is inactive
@@ -443,27 +453,28 @@ export function runAvailabilityChecks(
 
   const issues: AvailabilityIssue[] = [];
 
-  // Always run core checks (variants, pricing, channel status)
-  for (const check of coreChecks) {
-    const issue = check(context);
+  const runGroup = (groupChecks: CheckFunction[], category: AvailabilityIssueCategory): void => {
+    for (const check of groupChecks) {
+      const raw = check(context);
 
-    if (issue) {
-      issues.push(issue);
+      if (raw) {
+        issues.push({ ...raw, category });
+      }
     }
-  }
+  };
+
+  // Always run core checks (variants, pricing, channel status). They affect
+  // whether a customer can add the product to cart, so they belong to the
+  // purchasability category.
+  runGroup(coreChecks, "purchasability");
 
   // Run warehouse checks only if we have permission.
   // Note: Warehouse checks run for ALL products (including non-shippable) because:
   // - Non-shippable products may still track inventory (e.g., activation codes, digital license keys)
   // - If a product doesn't track inventory, variant.stocks will be empty and checks will pass
+  // Warehouses + stock are part of the purchasability surface.
   if (!options?.skipWarehouseChecks) {
-    for (const check of warehouseChecks) {
-      const issue = check(context);
-
-      if (issue) {
-        issues.push(issue);
-      }
-    }
+    runGroup(warehouseChecks, "purchasability");
   }
 
   // Run shipping checks only if:
@@ -472,13 +483,7 @@ export function runAvailabilityChecks(
   const shouldRunShippingChecks = !options?.skipShippingChecks && product.isShippingRequired;
 
   if (shouldRunShippingChecks) {
-    for (const check of shippingChecks) {
-      const issue = check(context);
-
-      if (issue) {
-        issues.push(issue);
-      }
-    }
+    runGroup(shippingChecks, "shipping");
   }
 
   return issues;
