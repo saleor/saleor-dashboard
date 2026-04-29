@@ -78,8 +78,9 @@ export const messages = defineMessages({
     description: "Warning when channel has no warehouses",
   },
   noWarehousesDescription: {
-    id: "T7r26L",
-    defaultMessage: "Products in this channel cannot be fulfilled without warehouses.",
+    id: "icyljC",
+    defaultMessage:
+      "Without an assigned warehouse, this product will appear unavailable to customers in this channel and orders cannot be fulfilled.",
     description: "Description for no warehouses warning",
   },
 
@@ -129,9 +130,11 @@ export const messages = defineMessages({
     description: "Warning when warehouse with stock not in shipping zone",
   },
   warehouseNotInZoneDescription: {
-    id: "QfK+5Q",
-    defaultMessage: "Warehouses with stock are not assigned to any shipping zone in this channel.",
-    description: "Description for warehouse not in zone warning",
+    id: "ksIgHn",
+    defaultMessage:
+      "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability.",
+    description:
+      "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
   },
 
   // Stock exists but in warehouses not assigned to the channel
@@ -306,6 +309,34 @@ export const messages = defineMessages({
     id: "vLc9Td",
     defaultMessage: "Public API verification",
     description: "Title for public API verification section",
+  },
+
+  // Mode-aware reassurance shown beneath the verification badge after a run.
+  // Tells the user what the storefront-API result means for the shop's active
+  // stock-availability mode (Saleor 3.23+).
+  verificationReassurance_purchasableLegacy: {
+    id: "VNXfqA",
+    defaultMessage:
+      "Storefront API confirms the product is purchasable for customers covered by the channel's shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in legacy mode",
+  },
+  verificationReassurance_purchasableDirect: {
+    id: "EURyYW",
+    defaultMessage:
+      "Storefront API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in direct mode",
+  },
+  verificationReassurance_notPurchasable: {
+    id: "wPODVm",
+    defaultMessage:
+      "The storefront API does not return this product as purchasable. Review the issues listed above to resolve.",
+    description: "Reassurance under verification badge when product is not purchasable",
+  },
+  verificationReassurance_notVisible: {
+    id: "ZemrGW",
+    defaultMessage:
+      "The storefront API cannot find this product. Confirm it is published and listed in this channel.",
+    description: "Reassurance under verification badge when product is not visible to public API",
   },
   testButton: {
     defaultMessage: "Test",

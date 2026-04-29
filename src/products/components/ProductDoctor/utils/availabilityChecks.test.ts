@@ -117,6 +117,10 @@ describe("runAvailabilityChecks", () => {
 
       expect(zoneIssue).toBeDefined();
       expect(zoneIssue?.severity).toBe("warning");
+      // Description must explicitly call out legacy mode so users understand
+      // the issue won't fire after switching to direct stock availability.
+      expect(zoneIssue?.description).toMatch(/legacy stock availability mode/i);
+      expect(zoneIssue?.description).toMatch(/hides the product from customers/i);
     });
 
     it("should NOT return shipping warnings when properly configured", () => {
@@ -202,6 +206,11 @@ describe("runAvailabilityChecks", () => {
 
       expect(warehouseIssue).toBeDefined();
       expect(warehouseIssue?.severity).toBe("warning");
+      // Description must spell out the consequence (appears unavailable +
+      // can't fulfill) so users understand why this is a warning rather than
+      // a vague "needs warehouses" instruction.
+      expect(warehouseIssue?.description).toMatch(/appear unavailable/i);
+      expect(warehouseIssue?.description).toMatch(/cannot be fulfilled/i);
     });
 
     it("should still run core checks for non-shippable products", () => {

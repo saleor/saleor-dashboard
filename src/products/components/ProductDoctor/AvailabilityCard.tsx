@@ -267,6 +267,9 @@ export const AvailabilityCard = ({
                               ? () => verification.verifyChannel(summary.id, summary.slug)
                               : undefined
                           }
+                          useLegacyShippingZoneStockAvailability={
+                            useLegacyShippingZoneStockAvailability
+                          }
                         />
                       );
                     })}
@@ -474,9 +477,15 @@ const StockAvailabilityModeIndicator = ({
 
 interface PublicApiVerificationBadgeProps {
   result: ChannelVerificationResult;
+  /** Active stock-availability mode. Drives the reassurance line so users know
+   *  what was just verified given the shop's mode. Defaults to legacy. */
+  useLegacyShippingZoneStockAvailability?: boolean;
 }
 
-export const PublicApiVerificationBadge = ({ result }: PublicApiVerificationBadgeProps) => {
+export const PublicApiVerificationBadge = ({
+  result,
+  useLegacyShippingZoneStockAvailability = true,
+}: PublicApiVerificationBadgeProps) => {
   const intl = useIntl();
 
   if (result.status === "loading") {
@@ -511,43 +520,95 @@ export const PublicApiVerificationBadge = ({ result }: PublicApiVerificationBadg
 
   if (!productFound) {
     return (
-      <Box display="flex" alignItems="center" gap={1}>
-        <XCircle size={14} color="var(--mu-colors-text-default2)" />
-        <Text size={1} color="default2">
-          {intl.formatMessage(messages.publicApiNotVisible)}
-        </Text>
-      </Box>
+      <PublicApiVerificationBadgeShell
+        icon={<XCircle size={14} color="var(--mu-colors-text-default2)" />}
+        statusColor="default2"
+        status={intl.formatMessage(messages.publicApiNotVisible)}
+        reassurance={intl.formatMessage(messages.verificationReassurance_notVisible)}
+        reassuranceTestId="not-visible"
+      />
     );
   }
 
   if (isAvailable && variantsWithStock > 0) {
     return (
-      <Box display="flex" alignItems="center" gap={1}>
-        <CheckCircle size={14} color="var(--mu-colors-text-success1)" />
-        <Text size={1} color="success1">
-          {intl.formatMessage(messages.publicApiPurchasable)}
-        </Text>
-        <Text size={1} color="default2">
-          · {intl.formatMessage(messages.publicApiVariantsInStock, { count: variantsWithStock })}
-        </Text>
-      </Box>
+      <PublicApiVerificationBadgeShell
+        icon={<CheckCircle size={14} color="var(--mu-colors-text-success1)" />}
+        statusColor="success1"
+        status={intl.formatMessage(messages.publicApiPurchasable)}
+        statusSuffix={intl.formatMessage(messages.publicApiVariantsInStock, {
+          count: variantsWithStock,
+        })}
+        reassurance={intl.formatMessage(
+          useLegacyShippingZoneStockAvailability
+            ? messages.verificationReassurance_purchasableLegacy
+            : messages.verificationReassurance_purchasableDirect,
+        )}
+        reassuranceTestId={
+          useLegacyShippingZoneStockAvailability ? "purchasable-legacy" : "purchasable-direct"
+        }
+      />
     );
   }
 
   return (
+    <PublicApiVerificationBadgeShell
+      icon={<XCircle size={14} color="var(--mu-colors-text-warning1)" />}
+      statusColor="warning1"
+      status={intl.formatMessage(messages.publicApiNotPurchasable)}
+      statusSuffix={
+        variantsWithStock === 0
+          ? intl.formatMessage(messages.publicApiNoVariantsInStock)
+          : undefined
+      }
+      reassurance={intl.formatMessage(messages.verificationReassurance_notPurchasable)}
+      reassuranceTestId="not-purchasable"
+    />
+  );
+};
+
+interface PublicApiVerificationBadgeShellProps {
+  icon: React.ReactNode;
+  statusColor: "success1" | "warning1" | "default2";
+  status: string;
+  /** Optional secondary status fragment (e.g. variants-in-stock count). */
+  statusSuffix?: string;
+  /** Mode-aware explanatory line that reassures the user about what was just
+   *  verified given the active stock-availability mode. */
+  reassurance: string;
+  reassuranceTestId: string;
+}
+
+const PublicApiVerificationBadgeShell = ({
+  icon,
+  statusColor,
+  status,
+  statusSuffix,
+  reassurance,
+  reassuranceTestId,
+}: PublicApiVerificationBadgeShellProps) => (
+  <Box display="flex" flexDirection="column" gap={0.5}>
     <Box display="flex" alignItems="center" gap={1}>
-      <XCircle size={14} color="var(--mu-colors-text-warning1)" />
-      <Text size={1} color="warning1">
-        {intl.formatMessage(messages.publicApiNotPurchasable)}
+      {icon}
+      <Text size={1} color={statusColor}>
+        {status}
       </Text>
-      {variantsWithStock === 0 && (
+      {statusSuffix && (
         <Text size={1} color="default2">
-          · {intl.formatMessage(messages.publicApiNoVariantsInStock)}
+          · {statusSuffix}
         </Text>
       )}
     </Box>
-  );
-};
+    <Text
+      size={1}
+      color="default2"
+      data-test-id="verification-reassurance"
+      data-test-reassurance={reassuranceTestId}
+    >
+      {reassurance}
+    </Text>
+  </Box>
+);
 
 interface ChannelSearchInputProps {
   value: string;

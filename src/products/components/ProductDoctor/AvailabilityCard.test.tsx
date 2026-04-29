@@ -1,7 +1,8 @@
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import { AvailabilityCard } from "./AvailabilityCard";
+import { AvailabilityCard, PublicApiVerificationBadge } from "./AvailabilityCard";
+import { type ChannelVerificationResult } from "./hooks/usePublicApiVerification";
 import { type AvailabilityIssue, type DiagnosticsResult } from "./utils/types";
 
 // usePublicApiVerification hits the live API; stub it for isolated UI tests.
@@ -204,5 +205,118 @@ describe("AvailabilityCard channel header severity gating", () => {
 
     expect(badge).toHaveAttribute("data-test-type", "error");
     expect(badge).toHaveAttribute("data-test-count", "2");
+  });
+});
+
+const makeVerification = (
+  overrides: Partial<ChannelVerificationResult["result"]> & {
+    status?: ChannelVerificationResult["status"];
+  } = {},
+): ChannelVerificationResult => {
+  const { status = "success", ...resultOverrides } = overrides;
+
+  return {
+    channelId: "channel-1",
+    channelSlug: "default-channel",
+    status,
+    error: null,
+    result:
+      status === "success"
+        ? {
+            productFound: true,
+            isAvailable: true,
+            isAvailableForPurchase: true,
+            availableForPurchaseAt: "2024-01-01T00:00:00Z",
+            variantsWithStock: 2,
+            totalVariants: 2,
+            variants: [],
+            ...resultOverrides,
+          }
+        : null,
+  };
+};
+
+describe("PublicApiVerificationBadge reassurance", () => {
+  it("shows the legacy-mode reassurance when product is purchasable in legacy mode", () => {
+    // Arrange
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge result={result} useLegacyShippingZoneStockAvailability={true} />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-legacy");
+    // Legacy reassurance must reference shipping zones explicitly so the user
+    // understands what was verified.
+    expect(reassurance).toHaveTextContent(/shipping zones/i);
+    expect(reassurance).toHaveTextContent(/purchasable/i);
+  });
+
+  it("shows the direct-mode reassurance when product is purchasable in direct mode", () => {
+    // Arrange
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge result={result} useLegacyShippingZoneStockAvailability={false} />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-direct");
+    // Direct-mode reassurance must call out the direct warehouse-channel link
+    // so the user knows shipping zones don't gate availability in this mode.
+    expect(reassurance).toHaveTextContent(/warehouse-channel link/i);
+    expect(reassurance).toHaveTextContent(/regardless of shipping zones/i);
+  });
+
+  it("points to the issue list when verification reports not purchasable", () => {
+    // Arrange
+    const result = makeVerification({ isAvailable: false, variantsWithStock: 0 });
+
+    // Act
+    render(<PublicApiVerificationBadge result={result} />, { wrapper: Wrapper });
+
+    // Assert
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "not-purchasable");
+    expect(reassurance).toHaveTextContent(/review the issues listed above/i);
+  });
+
+  it("points to publish/listing config when product is not visible to the API", () => {
+    // Arrange
+    const result = makeVerification({ productFound: false });
+
+    // Act
+    render(<PublicApiVerificationBadge result={result} />, { wrapper: Wrapper });
+
+    // Assert
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "not-visible");
+    expect(reassurance).toHaveTextContent(/published and listed/i);
+  });
+
+  it("does not render reassurance during loading or after errors", () => {
+    // Arrange / Act / Assert - loading state
+    const { rerender } = render(
+      <PublicApiVerificationBadge result={makeVerification({ status: "loading" })} />,
+      { wrapper: Wrapper },
+    );
+
+    expect(screen.queryByTestId("verification-reassurance")).toBeNull();
+
+    // Error state
+    rerender(<PublicApiVerificationBadge result={makeVerification({ status: "error" })} />);
+
+    expect(screen.queryByTestId("verification-reassurance")).toBeNull();
   });
 });

@@ -2841,6 +2841,10 @@
     "context": "Warning when warehouse with stock not in shipping zone",
     "string": "Stock unreachable in \"{channelName}\""
   },
+  "EURyYW": {
+    "context": "Reassurance under verification badge when product is purchasable in direct mode",
+    "string": "Storefront API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
+  },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
   },
@@ -5141,10 +5145,6 @@
     "context": "years after label",
     "string": "years after issue"
   },
-  "QfK+5Q": {
-    "context": "Description for warehouse not in zone warning",
-    "string": "Warehouses with stock are not assigned to any shipping zone in this channel."
-  },
   "Qhb89u": {
     "context": "Warning when no countries covered",
     "string": "No countries covered"
@@ -5544,10 +5544,6 @@
   "T6dXGG": {
     "context": "header",
     "string": "Create Variant"
-  },
-  "T7r26L": {
-    "context": "Description for no warehouses warning",
-    "string": "Products in this channel cannot be fulfilled without warehouses."
   },
   "T83iU7": {
     "string": "Search categories..."
@@ -5951,6 +5947,10 @@
   },
   "VNX4fn": {
     "string": "Proceed"
+  },
+  "VNXfqA": {
+    "context": "Reassurance under verification badge when product is purchasable in legacy mode",
+    "string": "Storefront API confirms the product is purchasable for customers covered by the channel's shipping zones."
   },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
@@ -6732,6 +6732,10 @@
   },
   "ZdCdo5": {
     "string": "Last updated: {date}"
+  },
+  "ZemrGW": {
+    "context": "Reassurance under verification badge when product is not visible to public API",
+    "string": "The storefront API cannot find this product. Confirm it is published and listed in this channel."
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -8264,6 +8268,10 @@
     "context": "tooltip",
     "string": "Stock allocations occur when:"
   },
+  "icyljC": {
+    "context": "Description for no warehouses warning",
+    "string": "Without an assigned warehouse, this product will appear unavailable to customers in this channel and orders cannot be fulfilled."
+  },
   "icz/jb": {
     "context": "customer",
     "string": "Join Date"
@@ -8707,6 +8715,10 @@
   },
   "krer6Z": {
     "string": "Features preview"
+  },
+  "ksIgHn": {
+    "context": "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
+    "string": "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability."
   },
   "kuo4fW": {
     "context": "dialog title",
@@ -10846,6 +10858,10 @@
   "wOaLvi": {
     "context": "relative time",
     "string": "just now"
+  },
+  "wPODVm": {
+    "context": "Reassurance under verification badge when product is not purchasable",
+    "string": "The storefront API does not return this product as purchasable. Review the issues listed above to resolve."
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"

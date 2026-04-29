@@ -44,6 +44,9 @@ interface AvailabilityChannelItemProps {
   /** Public API verification result for this channel */
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  /** Active stock-availability mode for the shop. Used to tailor the reassurance
+   *  text under the public-API verification badge. Defaults to legacy. */
+  useLegacyShippingZoneStockAvailability?: boolean;
 }
 
 export const AvailabilityChannelItem = ({
@@ -60,6 +63,7 @@ export const AvailabilityChannelItem = ({
   isExpanded = false,
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability = true,
 }: AvailabilityChannelItemProps) => {
   const intl = useIntl();
   const dateNow = useCurrentDate();
@@ -308,6 +312,7 @@ export const AvailabilityChannelItem = ({
           <PublicApiVerificationSection
             verificationResult={verificationResult}
             onVerify={onVerify}
+            useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
           />
         </Box>
       </Accordion.Content>
@@ -354,6 +359,7 @@ const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionPr
 interface PublicApiVerificationSectionProps {
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  useLegacyShippingZoneStockAvailability: boolean;
 }
 
 const VERIFICATION_COOLDOWN_MS = 1500;
@@ -361,6 +367,7 @@ const VERIFICATION_COOLDOWN_MS = 1500;
 const PublicApiVerificationSection = ({
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
@@ -419,7 +426,12 @@ const PublicApiVerificationSection = ({
         )}
       </Box>
 
-      {verificationResult && <PublicApiVerificationBadge result={verificationResult} />}
+      {verificationResult && (
+        <PublicApiVerificationBadge
+          result={verificationResult}
+          useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+        />
+      )}
     </Box>
   );
 };
