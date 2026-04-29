@@ -454,7 +454,6 @@ const StockAvailabilityModeIndicator = ({
           gap={2}
           __cursor="help"
           data-test-id="stock-availability-mode-indicator"
-          data-test-mode={useLegacyShippingZoneStockAvailability ? "legacy" : "direct"}
         >
           <Layers size={14} color="var(--mu-colors-text-default2)" />
           <Text size={2} color="default2">

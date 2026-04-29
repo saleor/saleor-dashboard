@@ -26,7 +26,8 @@ import {
 import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSection";
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
-import { type AvailabilityIssue, type ChannelSummary } from "./utils/types";
+import { getBlockingIssueBadgeProps } from "./utils/issueBadge";
+import { type AvailabilityIssue, type ChannelSummary, type IssueSeverity } from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
@@ -68,14 +69,11 @@ export const AvailabilityChannelItem = ({
   // change the status label, dot color, and surface the issue badge. Info
   // severity issues are advisories: they are still rendered in the body so
   // users see the recommendation, but they should not promote the channel
-  // into a "has issues" visual state. This matches the top-level summary
-  // banner which counts only errors and warnings.
-  const blockingIssues = React.useMemo(
-    () => issues.filter(i => i.severity === "error" || i.severity === "warning"),
-    [issues],
-  );
-  const hasBlockingIssues = blockingIssues.length > 0;
-  const issueErrorCount = blockingIssues.filter(i => i.severity === "error").length;
+  // into a "has issues" visual state. The selection rules and severity
+  // escalation live in `getBlockingIssueBadgeProps` so they can be tested in
+  // isolation from React.
+  const issueBadgeProps = React.useMemo(() => getBlockingIssueBadgeProps(issues), [issues]);
+  const hasBlockingIssues = issueBadgeProps !== null;
   // Channel is effectively disabled if marked for removal or explicitly disabled
   const isEffectivelyDisabled = disabled || isMarkedForRemoval;
 
@@ -186,7 +184,7 @@ export const AvailabilityChannelItem = ({
                   <StatusDot
                     status={status}
                     hasIssues={hasBlockingIssues}
-                    issueType={issueErrorCount > 0 ? "error" : "warning"}
+                    issueType={issueBadgeProps?.type ?? "warning"}
                   />
                 </Box>
               </Tooltip.Trigger>
@@ -199,10 +197,13 @@ export const AvailabilityChannelItem = ({
                   <Text size={1} color="default2">
                     {getStatusDescription()}
                   </Text>
-                  {hasBlockingIssues && (
-                    <Text size={1} color={issueErrorCount > 0 ? "critical1" : "warning1"}>
+                  {issueBadgeProps && (
+                    <Text
+                      size={1}
+                      color={issueBadgeProps.type === "error" ? "critical1" : "warning1"}
+                    >
                       {intl.formatMessage(messages.channelHasIssues, {
-                        count: blockingIssues.length,
+                        count: issueBadgeProps.count,
                       })}
                     </Text>
                   )}
@@ -219,11 +220,8 @@ export const AvailabilityChannelItem = ({
             >
               {summary.name}
             </Text>
-            {hasBlockingIssues && (
-              <IssueBadge
-                count={blockingIssues.length}
-                type={issueErrorCount > 0 ? "error" : "warning"}
-              />
+            {issueBadgeProps && (
+              <IssueBadge count={issueBadgeProps.count} type={issueBadgeProps.type} />
             )}
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -428,8 +426,6 @@ interface IssueCalloutProps {
   issue: AvailabilityIssue;
 }
 
-type IssueSeverity = AvailabilityIssue["severity"];
-
 interface IssueVisuals {
   Icon: typeof AlertTriangle;
   /** macaw-ui color token applied to the icon. */
@@ -437,34 +433,55 @@ interface IssueVisuals {
   /** macaw-ui color token applied to the issue title. Info issues render the
    *  title in default text color so they don't look like an actionable warning. */
   titleColor: "critical1" | "warning1" | "default1";
+  /** Key into the messages catalog used as the icon's accessible name. */
+  iconLabelKey: "issueCalloutIconError" | "issueCalloutIconWarning" | "issueCalloutIconInfo";
+  /** Stable test-id for the icon node, used by component tests instead of a
+   *  data-test-severity attribute leaking onto the wrapper. */
+  iconTestId:
+    | "product-doctor-issue-callout-icon-error"
+    | "product-doctor-issue-callout-icon-warning"
+    | "product-doctor-issue-callout-icon-info";
 }
 
 const getIssueVisuals = (severity: IssueSeverity): IssueVisuals => {
   switch (severity) {
     case "error":
-      return { Icon: AlertTriangle, iconColor: "critical1", titleColor: "critical1" };
+      return {
+        Icon: AlertTriangle,
+        iconColor: "critical1",
+        titleColor: "critical1",
+        iconLabelKey: "issueCalloutIconError",
+        iconTestId: "product-doctor-issue-callout-icon-error",
+      };
     case "warning":
-      return { Icon: CircleAlert, iconColor: "warning1", titleColor: "warning1" };
+      return {
+        Icon: CircleAlert,
+        iconColor: "warning1",
+        titleColor: "warning1",
+        iconLabelKey: "issueCalloutIconWarning",
+        iconTestId: "product-doctor-issue-callout-icon-warning",
+      };
     case "info":
-      return { Icon: Info, iconColor: "default2", titleColor: "default1" };
+      return {
+        Icon: Info,
+        iconColor: "default2",
+        titleColor: "default1",
+        iconLabelKey: "issueCalloutIconInfo",
+        iconTestId: "product-doctor-issue-callout-icon-info",
+      };
   }
 };
 
 const IssueCallout = ({ issue }: IssueCalloutProps) => {
+  const intl = useIntl();
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const { Icon, iconColor, titleColor } = getIssueVisuals(issue.severity);
+  const { Icon, iconColor, titleColor, iconLabelKey, iconTestId } = getIssueVisuals(issue.severity);
+  const iconLabel = intl.formatMessage(messages[iconLabelKey]);
 
   return (
-    <Box
-      display="flex"
-      gap={2}
-      alignItems="flex-start"
-      data-test-id="availability-issue-callout"
-      data-test-issue-id={issue.id}
-      data-test-severity={issue.severity}
-    >
+    <Box display="flex" gap={2} alignItems="flex-start" data-test-id="availability-issue-callout">
       <Box color={iconColor} flexShrink="0" paddingTop={0.5}>
-        <Icon size={14} />
+        <Icon size={14} role="img" aria-label={iconLabel} data-test-id={iconTestId} />
       </Box>
       <Box display="flex" flexDirection="column" gap={1} __flex="1">
         <Box
