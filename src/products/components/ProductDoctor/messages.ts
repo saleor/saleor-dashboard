@@ -83,17 +83,31 @@ export const messages = defineMessages({
     description: "Description for no warehouses warning",
   },
 
-  // No shipping zones
+  // No shipping zones (legacy mode: blocks purchase)
   noShippingZones: {
     id: "8W1v0N",
     defaultMessage: 'No shipping zones for "{channelName}"',
     description: "Warning when channel has no shipping zones",
   },
   noShippingZonesDescription: {
-    id: "EAKKtg",
+    id: "vuOZYs",
     defaultMessage:
-      "Customers cannot checkout without shipping methods. Add shipping zones to this channel.",
+      "Without shipping zones, this product will appear unavailable to customers and orders cannot be shipped. Add at least one shipping zone to this channel.",
     description: "Description for no shipping zones warning",
+  },
+
+  // No shipping zones (direct warehouse-channel mode: shipping-only impact)
+  noShippingZonesShippingOnly: {
+    id: "Rt95cf",
+    defaultMessage: 'No shipping zones for "{channelName}"',
+    description: "Info when channel has no shipping zones in direct stock-availability mode",
+  },
+  noShippingZonesShippingOnlyDescription: {
+    id: "7CZ8Tp",
+    defaultMessage:
+      "Customers can browse and add this product to cart, but no shipping methods will be available at checkout. Add at least one shipping zone to this channel to enable shipping.",
+    description:
+      "Description for no shipping zones info when shop uses direct warehouse-channel stock availability",
   },
 
   // No stock
@@ -118,6 +132,19 @@ export const messages = defineMessages({
     id: "QfK+5Q",
     defaultMessage: "Warehouses with stock are not assigned to any shipping zone in this channel.",
     description: "Description for warehouse not in zone warning",
+  },
+
+  // Stock exists but in warehouses not assigned to the channel
+  stockOutsideChannelWarehouses: {
+    id: "uaZNZS",
+    defaultMessage: 'Stock is in warehouses not assigned to "{channelName}"',
+    description: "Info when product has stock only in warehouses not linked to the channel",
+  },
+  stockOutsideChannelWarehousesDescription: {
+    id: "/8a4cU",
+    defaultMessage:
+      "This product has stock in warehouses that are not linked to this channel. Assign the warehouse to the channel for the stock to count toward availability.",
+    description: "Description for stock-outside-channel-warehouses info",
   },
 
   // Actions
@@ -520,6 +547,32 @@ export const messages = defineMessages({
     id: "azych5",
     defaultMessage: "All channels configured correctly",
     description: "Message when no diagnostic issues found",
+  },
+
+  // Stock availability mode indicator (Saleor 3.23+)
+  stockAvailabilityModeLegacy: {
+    id: "7sSOgb",
+    defaultMessage: "Stock availability uses shipping zones (legacy)",
+    description:
+      "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=true",
+  },
+  stockAvailabilityModeLegacyTooltip: {
+    id: "GYBoVb",
+    defaultMessage:
+      "Stock is considered available only when the warehouse is both assigned to this channel and covered by an active shipping zone for the destination address.",
+    description: "Tooltip explanation for legacy stock-availability mode",
+  },
+  stockAvailabilityModeDirect: {
+    id: "BfhUcl",
+    defaultMessage: "Stock availability uses direct warehouse-channel link",
+    description:
+      "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=false",
+  },
+  stockAvailabilityModeDirectTooltip: {
+    id: "tSmJPv",
+    defaultMessage:
+      "Stock is considered available whenever the warehouse is assigned to this channel. Shipping zones only affect order fulfillment, not availability.",
+    description: "Tooltip explanation for direct stock-availability mode",
   },
   issuesSummary: {
     id: "v/tz3W",

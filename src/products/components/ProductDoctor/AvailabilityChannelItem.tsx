@@ -2,7 +2,7 @@ import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard
 import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { AlertTriangle, ChevronDown, CircleAlert, Search } from "lucide-react";
+import { AlertTriangle, ChevronDown, CircleAlert, Info, Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -64,8 +64,18 @@ export const AvailabilityChannelItem = ({
   const intl = useIntl();
   const dateNow = useCurrentDate();
   const status = getAvailabilityStatus(originalSummary ?? summary, dateNow);
-  const hasIssues = issues.length > 0;
-  const issueErrorCount = issues.filter(i => i.severity === "error").length;
+  // "Blocking" issues (errors/warnings) drive the channel header state — they
+  // change the status label, dot color, and surface the issue badge. Info
+  // severity issues are advisories: they are still rendered in the body so
+  // users see the recommendation, but they should not promote the channel
+  // into a "has issues" visual state. This matches the top-level summary
+  // banner which counts only errors and warnings.
+  const blockingIssues = React.useMemo(
+    () => issues.filter(i => i.severity === "error" || i.severity === "warning"),
+    [issues],
+  );
+  const hasBlockingIssues = blockingIssues.length > 0;
+  const issueErrorCount = blockingIssues.filter(i => i.severity === "error").length;
   // Channel is effectively disabled if marked for removal or explicitly disabled
   const isEffectivelyDisabled = disabled || isMarkedForRemoval;
 
@@ -110,8 +120,9 @@ export const AvailabilityChannelItem = ({
   );
 
   const getStatusLabel = () => {
-    // When there are issues, show "Issues" status regardless of publication status
-    if (hasIssues) {
+    // Only blocking issues (errors/warnings) flip the channel into "Issues"
+    // status. Info-severity advisories don't change the headline state.
+    if (hasBlockingIssues) {
       return intl.formatMessage(messages.status_issues);
     }
 
@@ -126,8 +137,8 @@ export const AvailabilityChannelItem = ({
   };
 
   const getStatusDescription = () => {
-    // When there are issues, show issues description regardless of publication status
-    if (hasIssues) {
+    // Only blocking issues drive the description override (see getStatusLabel).
+    if (hasBlockingIssues) {
       return intl.formatMessage(messages.statusDescription_issues);
     }
 
@@ -174,7 +185,7 @@ export const AvailabilityChannelItem = ({
                 <Box>
                   <StatusDot
                     status={status}
-                    hasIssues={hasIssues}
+                    hasIssues={hasBlockingIssues}
                     issueType={issueErrorCount > 0 ? "error" : "warning"}
                   />
                 </Box>
@@ -188,9 +199,11 @@ export const AvailabilityChannelItem = ({
                   <Text size={1} color="default2">
                     {getStatusDescription()}
                   </Text>
-                  {hasIssues && (
+                  {hasBlockingIssues && (
                     <Text size={1} color={issueErrorCount > 0 ? "critical1" : "warning1"}>
-                      {intl.formatMessage(messages.channelHasIssues, { count: issues.length })}
+                      {intl.formatMessage(messages.channelHasIssues, {
+                        count: blockingIssues.length,
+                      })}
                     </Text>
                   )}
                 </Box>
@@ -206,8 +219,11 @@ export const AvailabilityChannelItem = ({
             >
               {summary.name}
             </Text>
-            {hasIssues && (
-              <IssueBadge count={issues.length} type={issueErrorCount > 0 ? "error" : "warning"} />
+            {hasBlockingIssues && (
+              <IssueBadge
+                count={blockingIssues.length}
+                type={issueErrorCount > 0 ? "error" : "warning"}
+              />
             )}
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -412,14 +428,41 @@ interface IssueCalloutProps {
   issue: AvailabilityIssue;
 }
 
+type IssueSeverity = AvailabilityIssue["severity"];
+
+interface IssueVisuals {
+  Icon: typeof AlertTriangle;
+  /** macaw-ui color token applied to the icon. */
+  iconColor: "critical1" | "warning1" | "default2";
+  /** macaw-ui color token applied to the issue title. Info issues render the
+   *  title in default text color so they don't look like an actionable warning. */
+  titleColor: "critical1" | "warning1" | "default1";
+}
+
+const getIssueVisuals = (severity: IssueSeverity): IssueVisuals => {
+  switch (severity) {
+    case "error":
+      return { Icon: AlertTriangle, iconColor: "critical1", titleColor: "critical1" };
+    case "warning":
+      return { Icon: CircleAlert, iconColor: "warning1", titleColor: "warning1" };
+    case "info":
+      return { Icon: Info, iconColor: "default2", titleColor: "default1" };
+  }
+};
+
 const IssueCallout = ({ issue }: IssueCalloutProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const isError = issue.severity === "error";
-  const Icon = isError ? AlertTriangle : CircleAlert;
-  const iconColor = isError ? "critical1" : "warning1";
+  const { Icon, iconColor, titleColor } = getIssueVisuals(issue.severity);
 
   return (
-    <Box display="flex" gap={2} alignItems="flex-start">
+    <Box
+      display="flex"
+      gap={2}
+      alignItems="flex-start"
+      data-test-id="availability-issue-callout"
+      data-test-issue-id={issue.id}
+      data-test-severity={issue.severity}
+    >
       <Box color={iconColor} flexShrink="0" paddingTop={0.5}>
         <Icon size={14} />
       </Box>
@@ -437,7 +480,7 @@ const IssueCallout = ({ issue }: IssueCalloutProps) => {
           __textAlign="left"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <Text size={2} fontWeight="medium" color={iconColor}>
+          <Text size={2} fontWeight="medium" color={titleColor}>
             {issue.message}
           </Text>
           <ChevronDown

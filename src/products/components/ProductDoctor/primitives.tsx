@@ -160,7 +160,15 @@ export const IssueBadge = ({ count, type }: IssueBadgeProps) => {
   const title = intl.formatMessage(messages.channelHasIssues, { count });
 
   return (
-    <Box display="flex" alignItems="center" title={title} position="relative">
+    <Box
+      display="flex"
+      alignItems="center"
+      title={title}
+      position="relative"
+      data-test-id="channel-issue-badge"
+      data-test-count={count}
+      data-test-type={type}
+    >
       {type === "error" ? (
         <AlertTriangle size={16} color={iconColor} />
       ) : (

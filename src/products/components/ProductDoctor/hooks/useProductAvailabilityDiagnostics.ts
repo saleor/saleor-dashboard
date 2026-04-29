@@ -13,6 +13,14 @@ import {
   type ProductDiagnosticData,
 } from "../utils/types";
 
+/**
+ * Defaults to `true` (legacy mode) when the shop fragment in the diagnostics
+ * query hasn't loaded yet so we don't downgrade legacy behaviors prematurely
+ * on a fresh page load. Once the query resolves, the real value takes over
+ * and re-renders the diagnostics.
+ */
+const LEGACY_MODE_FALLBACK = true;
+
 interface UseProductAvailabilityDiagnosticsProps {
   product: ProductDiagnosticData | null | undefined;
   enabled?: boolean;
@@ -108,6 +116,13 @@ export function useProductAvailabilityDiagnostics({
       missingPermissions: [] as string[],
     };
 
+    // `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+) is fetched
+    // alongside the channel data in `channelDiagnosticsQuery`. Default to
+    // legacy until the query resolves so we don't transiently downgrade
+    // existing severity levels on first render.
+    const useLegacyShippingZoneStockAvailability =
+      channelData?.shop?.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK;
+
     if (!product || !enabled) {
       return {
         issues: [],
@@ -116,6 +131,7 @@ export function useProductAvailabilityDiagnostics({
         hasWarnings: false,
         isLoading: false,
         permissions: defaultPermissions,
+        useLegacyShippingZoneStockAvailability,
       };
     }
 
@@ -129,6 +145,7 @@ export function useProductAvailabilityDiagnostics({
         hasWarnings: false,
         isLoading: true,
         permissions: defaultPermissions,
+        useLegacyShippingZoneStockAvailability,
       };
     }
 
@@ -218,6 +235,7 @@ export function useProductAvailabilityDiagnostics({
           {
             skipWarehouseChecks: !hasFullChannelData || !basePermissions.canViewChannelWarehouses,
             skipShippingChecks: !hasFullChannelData || !basePermissions.canViewShippingZones,
+            useLegacyShippingZoneStockAvailability,
           },
         );
 
@@ -294,6 +312,7 @@ export function useProductAvailabilityDiagnostics({
       hasWarnings: issues.some(issue => issue.severity === "warning"),
       isLoading: false,
       permissions,
+      useLegacyShippingZoneStockAvailability,
     };
   }, [product, channelData, loading, enabled, intl, basePermissions]);
 
