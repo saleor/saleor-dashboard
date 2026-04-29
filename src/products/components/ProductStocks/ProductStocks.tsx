@@ -18,6 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
 import { messages } from "./messages";
+import { StockVisibilityHint } from "./StockVisibilityHint";
 import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
 
 export interface ProductStockFormsetData {
@@ -239,6 +240,9 @@ export const ProductStocks = ({
                 })}
               </TableBody>
             </ResponsiveTable>
+            <Box paddingTop={3}>
+              <StockVisibilityHint />
+            </Box>
           </Box>
         )}
 

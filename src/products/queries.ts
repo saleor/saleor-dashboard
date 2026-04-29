@@ -265,6 +265,26 @@ export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
 }`;
 
 /**
+ * Tiny per-page query for the active stock-availability mode flag.
+ *
+ * Used by surfaces that need to render mode-aware copy near stock UI
+ * (e.g. `StockVisibilityHint` on the product/variant detail pages).
+ *
+ * Why this isn't on `useShop`/`ShopInfoQuery`: the global `ShopInfo` fragment
+ * is widely consumed and we don't want to bloat it for a flag only a couple
+ * of surfaces care about. Apollo dedupes identical queries, so concurrent
+ * usages of this query collapse to a single request.
+ */
+export const stockVisibilityModeQuery = gql`
+  query StockVisibilityMode {
+    shop {
+      id
+      useLegacyShippingZoneStockAvailability
+    }
+  }
+`;
+
+/**
  * Query for product availability diagnostics.
  * Fetches channel and shipping zone data needed to determine
  * if a product can be purchased in each channel.
