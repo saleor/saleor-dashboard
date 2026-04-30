@@ -630,6 +630,36 @@ export const messages = defineMessages({
     description:
       "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
   },
+  // Accessible (aria-label) names for the issue badge variants. They are the
+  // textual equivalent of the rendered icon for assistive technology, and
+  // also serve as a stable query handle in tests.
+  issueBadgeIconError: {
+    id: "kyOwDW",
+    defaultMessage: "Error",
+    description: "aria-label for the error icon inside a channel issue badge",
+  },
+  issueBadgeIconWarning: {
+    id: "/0QqzO",
+    defaultMessage: "Warning",
+    description: "aria-label for the warning icon inside a channel issue badge",
+  },
+  // Accessible names for the per-issue callout icons rendered inside the
+  // expanded channel body. Same idea as `issueBadgeIcon*`.
+  issueCalloutIconError: {
+    id: "eXcTEd",
+    defaultMessage: "Error",
+    description: "aria-label for the error icon inside an availability issue callout",
+  },
+  issueCalloutIconWarning: {
+    id: "iBY7aI",
+    defaultMessage: "Warning",
+    description: "aria-label for the warning icon inside an availability issue callout",
+  },
+  issueCalloutIconInfo: {
+    id: "cYjzDx",
+    defaultMessage: "Information",
+    description: "aria-label for the info icon inside an availability issue callout",
+  },
   warehousesConfigured: {
     id: "MFC20a",
     defaultMessage: "{count, plural, one {# warehouse} other {# warehouses}}",

@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
+import { LEGACY_MODE_FALLBACK } from "../utils/constants";
 import { type ProductDiagnosticData } from "../utils/types";
 import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagnostics";
 
@@ -71,7 +72,7 @@ const createMockChannelData = (
 ) => ({
   shop: {
     useLegacyShippingZoneStockAvailability:
-      overrides.useLegacyShippingZoneStockAvailability ?? true,
+      overrides.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK,
   },
   channels: [
     {

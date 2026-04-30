@@ -192,6 +192,10 @@
     "context": "expired on label",
     "string": "Expired on {date}"
   },
+  "/0QqzO": {
+    "context": "aria-label for the warning icon inside a channel issue badge",
+    "string": "Warning"
+  },
   "/0gMCW": {
     "string": "Try to refresh the page or go navigate to a different page and back."
   },
@@ -7338,6 +7342,10 @@
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
   },
+  "cYjzDx": {
+    "context": "aria-label for the info icon inside an availability issue callout",
+    "string": "Information"
+  },
   "cZN5Jd": {
     "context": "Webhook details events",
     "string": "Events"
@@ -7629,6 +7637,10 @@
   "eWcvOc": {
     "context": "button",
     "string": "Choose file"
+  },
+  "eXcTEd": {
+    "context": "aria-label for the error icon inside an availability issue callout",
+    "string": "Error"
   },
   "eY+BKQ": {
     "string": "The extension manifest was not found. ({errorCode})"
@@ -8220,6 +8232,10 @@
     "context": "button",
     "string": "Apply"
   },
+  "iBY7aI": {
+    "context": "aria-label for the warning icon inside an availability issue callout",
+    "string": "Warning"
+  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
@@ -8731,6 +8747,10 @@
   "kv3FWU": {
     "context": "btn label",
     "string": "Go to orders"
+  },
+  "kyOwDW": {
+    "context": "aria-label for the error icon inside a channel issue badge",
+    "string": "Error"
   },
   "l0a2tU": {
     "context": "onboarding step description",

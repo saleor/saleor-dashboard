@@ -1,4 +1,4 @@
-type IssueSeverity = "error" | "warning" | "info";
+export type IssueSeverity = "error" | "warning" | "info";
 
 /**
  * Diagnostic categories mirror the two orthogonal concerns that Saleor 3.23
