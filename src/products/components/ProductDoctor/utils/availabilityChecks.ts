@@ -2,6 +2,7 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { type IntlShape } from "react-intl";
 
 import { messages } from "../messages";
+import { LEGACY_MODE_FALLBACK } from "./constants";
 import {
   type AvailabilityIssue,
   type ChannelDiagnosticData,
@@ -431,7 +432,7 @@ export function runAvailabilityChecks(
   options?: CheckOptions,
 ): AvailabilityIssue[] {
   const useLegacyShippingZoneStockAvailability =
-    options?.useLegacyShippingZoneStockAvailability ?? true;
+    options?.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK;
 
   const context: CheckContext = {
     product,
