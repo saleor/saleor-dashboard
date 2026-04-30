@@ -17,11 +17,25 @@ const DEFAULT_SETTINGS: NotificationSettings = {
   WEBHOOK_FAIL_EMAILS: [],
 };
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const EMAIL_KEYS: Array<keyof NotificationSettings> = [
+  "AT_RISK_EMAILS",
+  "CRITICAL_EMAILS",
+  "ERP_SYNC_EMAILS",
+  "AUTO_APPROVAL_EMAILS",
+  "EXCHANGE_ORDER_EMAILS",
+  "WEBHOOK_FAIL_EMAILS",
+];
+
 export const NotificationSettingsView = () => {
   const { user } = useUser();
-  const agentId = user?.id || "unknown";
+  const agentId = user?.id ?? null;
 
   const [settings, setSettings] = useState<NotificationSettings>(DEFAULT_SETTINGS);
+  const [emailErrors, setEmailErrors] = useState<
+    Partial<Record<keyof NotificationSettings, string[]>>
+  >({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,6 +60,32 @@ export const NotificationSettingsView = () => {
   }, []);
 
   const handleSave = async () => {
+    if (!agentId) {
+      setError("Your user session is still loading. Please wait a moment.");
+
+      return;
+    }
+
+    // Validate every email list before sending. Bail out if any entry is invalid.
+    const errs: Partial<Record<keyof NotificationSettings, string[]>> = {};
+
+    for (const key of EMAIL_KEYS) {
+      const list = (settings[key] as string[]) || [];
+      const bad = list.filter(e => !EMAIL_REGEX.test(e));
+
+      if (bad.length > 0) errs[key] = bad;
+    }
+
+    if (Object.keys(errs).length > 0) {
+      setEmailErrors(errs);
+      setError(
+        "One or more recipient lists contain invalid email addresses. Fix them and try again.",
+      );
+
+      return;
+    }
+
+    setEmailErrors({});
     setSaving(true);
     setError(null);
     setSaved(false);
@@ -62,13 +102,27 @@ export const NotificationSettingsView = () => {
   };
 
   const setEmails = (key: keyof NotificationSettings, value: string) => {
+    const list = value
+      .split(",")
+      .map(e => e.trim())
+      .filter(Boolean);
+
     setSettings(prev => ({
       ...prev,
-      [key]: value
-        .split(",")
-        .map(e => e.trim())
-        .filter(Boolean),
+      [key]: list,
     }));
+
+    // Live-validate so the agent sees bad entries before clicking Save
+    const bad = list.filter(e => !EMAIL_REGEX.test(e));
+
+    setEmailErrors(prev => {
+      const next = { ...prev };
+
+      if (bad.length > 0) next[key] = bad;
+      else delete next[key];
+
+      return next;
+    });
   };
 
   const setThreshold = (key: keyof NotificationSettings, value: string) => {
@@ -138,6 +192,11 @@ export const NotificationSettingsView = () => {
                 }
                 placeholder="cx@example.com, manager@example.com"
               />
+              {emailErrors.AT_RISK_EMAILS && (
+                <Text size={2} color="critical1" display="block" marginTop={1}>
+                  Invalid: {emailErrors.AT_RISK_EMAILS.join(", ")}
+                </Text>
+              )}
             </Box>
 
             <Box>
@@ -170,6 +229,11 @@ export const NotificationSettingsView = () => {
                 }
                 placeholder="cx@example.com, manager@example.com"
               />
+              {emailErrors.CRITICAL_EMAILS && (
+                <Text size={2} color="critical1" display="block" marginTop={1}>
+                  Invalid: {emailErrors.CRITICAL_EMAILS.join(", ")}
+                </Text>
+              )}
             </Box>
 
             <Box>
@@ -241,6 +305,11 @@ export const NotificationSettingsView = () => {
                   }
                   placeholder="eng@example.com, oncall@example.com"
                 />
+                {emailErrors[key] ? (
+                  <Text size={2} color="critical1" display="block" marginTop={1}>
+                    Invalid: {(emailErrors[key] ?? []).join(", ")}
+                  </Text>
+                ) : null}
               </Box>
             ))}
           </Box>

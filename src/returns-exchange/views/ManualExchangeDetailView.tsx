@@ -18,21 +18,30 @@ export const ManualExchangeDetailView = ({ mxId }: ManualExchangeDetailViewProps
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     const load = async () => {
       setLoading(true);
+      setError(null);
 
       try {
         const data = await fetchManualExchange(mxId);
 
+        if (cancelled) return;
+
         setMx(data);
       } catch (err: any) {
-        setError(err.message);
+        if (!cancelled) setError(err.message);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     load();
+
+    return () => {
+      cancelled = true;
+    };
   }, [mxId]);
 
   if (loading) {

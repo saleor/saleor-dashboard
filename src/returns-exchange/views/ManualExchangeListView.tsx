@@ -63,18 +63,30 @@ export const ManualExchangeListView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  // Debounced copy of `search` — keystrokes shouldn't fire a request per character.
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
   const LIMIT = 20;
 
+  // Debounce search input by 300ms before triggering a backend fetch.
+  useEffect(() => {
+    const handle = setTimeout(() => setDebouncedSearch(search.trim()), 300);
+
+    return () => clearTimeout(handle);
+  }, [search]);
+
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const result = await fetchManualExchanges(page, LIMIT);
+      const result = await fetchManualExchanges(page, LIMIT, {
+        search: debouncedSearch || undefined,
+        status: statusFilter || undefined,
+      });
 
       setRecords(result.data);
       setTotal(result.pagination.total);
@@ -83,25 +95,11 @@ export const ManualExchangeListView = () => {
     } finally {
       setLoading(false);
     }
-  }, [page]);
+  }, [page, debouncedSearch, statusFilter]);
 
   useEffect(() => {
     load();
   }, [load]);
-
-  // Client-side filter by search and status (simple, since list is usually small)
-  const filtered = records.filter(mx => {
-    const matchStatus = !statusFilter || mx.erp_sync_status === statusFilter;
-    const q = search.toLowerCase();
-    const matchSearch =
-      !q ||
-      mx.mx_id.toLowerCase().includes(q) ||
-      (mx.customer_name || "").toLowerCase().includes(q) ||
-      (mx.customer_email || "").toLowerCase().includes(q) ||
-      mx.original_order_number.toLowerCase().includes(q);
-
-    return matchStatus && matchSearch;
-  });
 
   const totalPages = Math.ceil(total / LIMIT) || 1;
 
@@ -164,7 +162,7 @@ export const ManualExchangeListView = () => {
         <Box padding={8} textAlign="center">
           <Text color="critical1">{error}</Text>
         </Box>
-      ) : filtered.length === 0 ? (
+      ) : records.length === 0 ? (
         <Box padding={8} textAlign="center">
           <Text color="default2">No manual exchanges found</Text>
         </Box>
@@ -192,7 +190,7 @@ export const ManualExchangeListView = () => {
               </Box>
             </Box>
             <Box as="tbody">
-              {filtered.map(mx => (
+              {records.map(mx => (
                 <Box
                   key={mx.mx_id}
                   as="tr"
@@ -306,7 +304,7 @@ export const ManualExchangeListView = () => {
 
           <Box display="flex" justifyContent="space-between" alignItems="center" marginTop={4}>
             <Text size={3} color="default2">
-              {filtered.length} manual exchange{filtered.length !== 1 ? "s" : ""} · Showing all
+              {total} manual exchange{total !== 1 ? "s" : ""} · Showing page {page} of {totalPages}
             </Text>
             <Box display="flex" alignItems="center" gap={3}>
               <Text size={3} color="default2">

@@ -1,5 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
+import ActionDialog from "@dashboard/components/ActionDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getUserName } from "@dashboard/misc";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ArrowLeft, CheckCircle, ChevronDown, Phone, RotateCcw, UserX } from "lucide-react";
@@ -23,40 +25,21 @@ interface RequestDetailViewProps {
 
 export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
   const { user } = useUser();
   const [detail, setDetail] = useState<CXReturnDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [approving, setApproving] = useState(false);
+  const [approveDialogOpen, setApproveDialogOpen] = useState(false);
   const [callLogs, setCallLogs] = useState<CXCallLog[]>([]);
   const [variants, setVariants] = useState<ProductVariant[]>([]);
   const [cxActionsOpen, setCxActionsOpen] = useState(false);
   const cxActionsRef = useRef<HTMLDivElement>(null);
 
-  const agentId = user?.id || "unknown";
+  const agentId = user?.id ?? null;
   const agentName = getUserName(user, true) || "CX Agent";
-
-  const load = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchReturn(requestId, agentId, agentName);
-
-      setDetail(data);
-      setCallLogs(data.call_logs || []);
-
-      if (data.product_variant_id && data.product_id) {
-        fetchProductVariants(requestId)
-          .then(setVariants)
-          .catch(() => {});
-      }
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isUserReady = agentId !== null;
 
   const refreshCallLogs = async () => {
     try {
@@ -68,9 +51,62 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
     }
   };
 
+  const reload = async () => {
+    setError(null);
+
+    try {
+      const data = await fetchReturn(requestId, agentId ?? undefined, agentName);
+
+      setDetail(data);
+      setCallLogs(data.call_logs || []);
+
+      if (data.product_variant_id && data.product_id) {
+        fetchProductVariants(requestId)
+          .then(setVariants)
+          .catch(() => {});
+      }
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   useEffect(() => {
+    if (!isUserReady) return undefined;
+
+    let cancelled = false;
+
+    const load = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const data = await fetchReturn(requestId, agentId ?? undefined, agentName);
+
+        if (cancelled) return;
+
+        setDetail(data);
+        setCallLogs(data.call_logs || []);
+
+        if (data.product_variant_id && data.product_id) {
+          fetchProductVariants(requestId)
+            .then(v => {
+              if (!cancelled) setVariants(v);
+            })
+            .catch(() => {});
+        }
+      } catch (err: any) {
+        if (!cancelled) setError(err.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
     load();
-  }, [requestId]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [requestId, agentId, agentName, isUserReady]);
 
   // Close CX Actions dropdown on outside click
   useEffect(() => {
@@ -86,15 +122,24 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
   }, []);
 
   const handleApprove = async () => {
-    if (!confirm("Approve this return request?")) return;
+    if (!agentId) {
+      notify({
+        status: "error",
+        text: "Your user session is still loading. Please wait a moment.",
+      });
+
+      return;
+    }
 
     setApproving(true);
 
     try {
       await submitApproveReturn(requestId, { cx_agent_id: agentId, cx_agent_name: agentName });
-      await load();
+      setApproveDialogOpen(false);
+      await reload();
+      notify({ status: "success", text: "Return approved" });
     } catch (err: any) {
-      alert(err.message);
+      notify({ status: "error", text: err.message ?? "Failed to approve return" });
     } finally {
       setApproving(false);
     }
@@ -103,21 +148,35 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
   const handleMarkUnreachable = async () => {
     setCxActionsOpen(false);
 
+    if (!agentId) {
+      notify({
+        status: "error",
+        text: "Your user session is still loading. Please wait a moment.",
+      });
+
+      return;
+    }
+
     try {
       await submitMarkUnreachable(requestId, { cx_agent_id: agentId, cx_agent_name: agentName });
-      await load();
+      await reload();
+      notify({ status: "success", text: "Marked as unreachable" });
     } catch (err: any) {
-      alert(err.message);
+      notify({ status: "error", text: err.message ?? "Failed to mark unreachable" });
     }
   };
 
   const isTerminal =
     detail && ["EXCHANGED", "APPROVED", "AUTO_APPROVED"].includes(detail.cx_status);
-  const hasCallLogged = callLogs.length > 0;
   const lastUserAction = detail?.last_user_action;
+  // Approval gate: per LogCallView guidance, agents must log ≥2 call attempts before
+  // approving — unless the customer has explicitly disagreed to exchange (terminal user
+  // action that doesn't require further attempts).
+  const hasDisagreed = callLogs.some(c => c.user_action === "Disagreed to exchange");
+  const hasEnoughCalls = callLogs.length >= 2 || hasDisagreed;
   const canExchange =
     !isTerminal && lastUserAction === "Agreed to exchange" && detail?.eligibility != null;
-  const canApprove = !isTerminal && hasCallLogged;
+  const canApprove = !isTerminal && hasEnoughCalls && isUserReady;
 
   if (loading) {
     return (
@@ -894,15 +953,32 @@ export const RequestDetailView = ({ requestId }: RequestDetailViewProps) => {
           <Button
             variant="primary"
             size="medium"
-            onClick={handleApprove}
+            onClick={() => setApproveDialogOpen(true)}
             disabled={approving || !canApprove}
-            title={!canApprove ? "Log a call first to enable Approve Return" : undefined}
+            title={
+              !canApprove
+                ? hasDisagreed || callLogs.length >= 2
+                  ? "Sign in is still loading"
+                  : "Log at least 2 call attempts before approving"
+                : undefined
+            }
           >
             <CheckCircle size={14} />
             {approving ? "Approving..." : "Approve Return"}
           </Button>
         </Box>
       )}
+
+      <ActionDialog
+        open={approveDialogOpen}
+        onClose={() => setApproveDialogOpen(false)}
+        onConfirm={handleApprove}
+        confirmButtonState={approving ? "loading" : "default"}
+        title="Approve return request"
+        confirmButtonLabel="Approve"
+      >
+        <Text>Approve this return request? This action cannot be undone.</Text>
+      </ActionDialog>
     </Box>
   );
 };

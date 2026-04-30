@@ -1,6 +1,12 @@
 import { type CXManualExchange } from "../types";
 
-const BASE_URL = import.meta.env.VITE_TENEXU_API_URL || "https://api.tenxyou.infinitelocus.com";
+const BASE_URL = import.meta.env.VITE_TENEXU_API_URL;
+
+if (!BASE_URL) {
+  throw new Error(
+    "VITE_TENEXU_API_URL is not set. The CX manual-exchange module cannot reach the backend without it.",
+  );
+}
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("_saleor_auth_token") || "";
@@ -24,7 +30,9 @@ async function apiRequest<T>(method: string, path: string, body?: any): Promise<
   });
   const json = await res.json();
 
-  if (!json.ok && !res.ok) throw new Error(json.message || `Request failed: ${res.status}`);
+  if (!res.ok || json?.ok === false) {
+    throw new Error(json?.message || `Request failed: ${res.status}`);
+  }
 
   return json;
 }
@@ -32,11 +40,21 @@ async function apiRequest<T>(method: string, path: string, body?: any): Promise<
 export async function fetchManualExchanges(
   page = 1,
   limit = 20,
+  filters: { search?: string; status?: string } = {},
 ): Promise<{
   data: CXManualExchange[];
   pagination: { total: number; page: number; limit: number };
 }> {
-  const result = await apiRequest<any>("GET", `/cx/manual-exchanges?page=${page}&limit=${limit}`);
+  const qs = new URLSearchParams();
+
+  qs.set("page", String(page));
+  qs.set("limit", String(limit));
+
+  if (filters.search) qs.set("search", filters.search);
+
+  if (filters.status) qs.set("status", filters.status);
+
+  const result = await apiRequest<any>("GET", `/cx/manual-exchanges?${qs.toString()}`);
 
   return { data: result.data, pagination: result.pagination };
 }

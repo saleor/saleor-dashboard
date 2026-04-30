@@ -278,6 +278,7 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
   const [selectedOverrideReason, setSelectedOverrideReason] = useState<string | undefined>();
   const [allVariants, setAllVariants] = useState<any[]>([]);
   const [variantsLoading, setVariantsLoading] = useState(false);
+  const [variantsError, setVariantsError] = useState<string | null>(null);
   const [selectedColour, setSelectedColour] = useState<string>("");
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -285,7 +286,9 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
 
   // Load order when orderId in URL
   useEffect(() => {
-    if (!orderId) return;
+    if (!orderId) return undefined;
+
+    let cancelled = false;
 
     const load = async () => {
       setLookupLoading(true);
@@ -293,6 +296,8 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
 
       try {
         const data = await lookupOrderForMX(orderId, agentId);
+
+        if (cancelled) return;
 
         setOrderData(data);
 
@@ -305,24 +310,33 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
           if (item) setSelectedItem(item);
         }
       } catch (err: any) {
-        setLookupError(err.message);
+        if (!cancelled) setLookupError(err.message);
       } finally {
-        setLookupLoading(false);
+        if (!cancelled) setLookupLoading(false);
       }
     };
 
     load();
+
+    return () => {
+      cancelled = true;
+    };
   }, [orderId, variantSku, agentId]);
 
   // Load variants when item selected (step 3)
   useEffect(() => {
-    if (!selectedItem?.productId) return;
+    if (!selectedItem?.productId) return undefined;
+
+    let cancelled = false;
 
     setVariantsLoading(true);
+    setVariantsError(null);
     setAllVariants([]);
     setSelectedVariantId(null);
     fetchProductVariantsForMX(selectedItem.productId)
       .then(variants => {
+        if (cancelled) return;
+
         setAllVariants(variants);
 
         // Default colour to item's colour
@@ -330,8 +344,18 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
 
         setSelectedColour(itemColour);
       })
-      .catch(() => {})
-      .finally(() => setVariantsLoading(false));
+      .catch((err: any) => {
+        if (!cancelled) {
+          setVariantsError(err?.message || "Failed to load replacement sizes");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setVariantsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [selectedItem]);
 
   // Variants are locked to the original item's colour — only same-colour
@@ -837,7 +861,11 @@ export const ManualExchangeNewView = ({ orderId, variantSku }: ManualExchangeNew
                 </Text>
               </Text>
               <Box display="flex" flexWrap="wrap" gap={3}>
-                {sizeVariants.length === 0 ? (
+                {variantsError ? (
+                  <Text color="critical1" size={3}>
+                    {variantsError}
+                  </Text>
+                ) : sizeVariants.length === 0 ? (
                   <Text color="default2" size={3}>
                     No sizes available for this colour
                   </Text>

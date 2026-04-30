@@ -5,7 +5,13 @@ import {
   type NotificationSettings,
 } from "../types";
 
-const BASE_URL = import.meta.env.VITE_TENEXU_API_URL || "https://api.tenxyou.infinitelocus.com";
+const BASE_URL = import.meta.env.VITE_TENEXU_API_URL;
+
+if (!BASE_URL) {
+  throw new Error(
+    "VITE_TENEXU_API_URL is not set. The CX returns module cannot reach the backend without it.",
+  );
+}
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("_saleor_auth_token") || "";
@@ -29,8 +35,8 @@ async function apiRequest<T>(method: string, path: string, body?: any): Promise<
   });
   const json = await res.json();
 
-  if (!json.ok && !res.ok) {
-    throw new Error(json.message || `Request failed: ${res.status}`);
+  if (!res.ok || json?.ok === false) {
+    throw new Error(json?.message || `Request failed: ${res.status}`);
   }
 
   return json;

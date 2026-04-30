@@ -7,10 +7,14 @@ interface SLABadgeProps {
   hoursRemaining: number | null;
 }
 
-const tierConfig = {
-  SAFE: { color: "#22c55e", label: "Safe" },
-  AT_RISK: { color: "#f59e0b", label: "At Risk" },
-  CRITICAL: { color: "#ef4444", label: "Critical" },
+// Use macaw-ui semantic background tokens so theme overrides (and dark mode) apply.
+const tierConfig: Record<
+  SLATier,
+  { background: "success1" | "warning1" | "critical1"; label: string }
+> = {
+  SAFE: { background: "success1", label: "Safe" },
+  AT_RISK: { background: "warning1", label: "At Risk" },
+  CRITICAL: { background: "critical1", label: "Critical" },
 };
 
 export const SLABadge = ({ tier, hoursRemaining }: SLABadgeProps) => {
@@ -28,7 +32,7 @@ export const SLABadge = ({ tier, hoursRemaining }: SLABadgeProps) => {
         __width={8}
         __height={8}
         borderRadius="50%"
-        __backgroundColor={config.color}
+        backgroundColor={config.background}
         flexShrink="0"
       />
       <Text size={2} color="default2">

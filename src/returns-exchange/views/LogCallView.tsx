@@ -46,10 +46,14 @@ export const LogCallView = ({ requestId }: LogCallViewProps) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const agentId = user?.id || "unknown";
+  const agentId = user?.id ?? null;
   const agentName = getUserName(user, true) || "CX Agent";
 
   useEffect(() => {
+    if (!agentId) return undefined;
+
+    let cancelled = false;
+
     const load = async () => {
       setLoadingDetail(true);
 
@@ -59,25 +63,49 @@ export const LogCallView = ({ requestId }: LogCallViewProps) => {
           fetchCallLogs(requestId),
         ]);
 
+        if (cancelled) return;
+
         setDetail(det);
         setCallLogs(logs);
       } catch {
         // silently continue — form still works without context
       } finally {
-        setLoadingDetail(false);
+        if (!cancelled) setLoadingDetail(false);
       }
     };
 
     load();
-  }, [requestId]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [requestId, agentId, agentName]);
 
   const nextCallNumber = callLogs.length + 1;
   const showUserAction = outcome === "Answered";
   const showCallback = outcome === "Callback Requested";
 
   const handleSubmit = async () => {
+    if (!agentId) {
+      setError("Your user session is still loading. Please wait a moment.");
+
+      return;
+    }
+
     if (!outcome) {
       setError("Please select an outcome");
+
+      return;
+    }
+
+    if (outcome === "Answered" && !userAction) {
+      setError("Please select a User Action when the call was answered");
+
+      return;
+    }
+
+    if (outcome === "Callback Requested" && (!callbackDate || !callbackTime)) {
+      setError("Please provide both a callback date and time");
 
       return;
     }
