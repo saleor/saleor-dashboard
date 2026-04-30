@@ -33,6 +33,13 @@ export const NotificationSettingsView = () => {
   const agentId = user?.id ?? null;
 
   const [settings, setSettings] = useState<NotificationSettings>(DEFAULT_SETTINGS);
+  // Raw text for each comma-separated email field, keyed by setting name.
+  // We track this separately from `settings` because the canonical array form
+  // (used at save time) drops trailing commas and whitespace — round-tripping
+  // through it on every keystroke would eat the comma the user just typed.
+  const [emailInputs, setEmailInputs] = useState<
+    Partial<Record<keyof NotificationSettings, string>>
+  >({});
   const [emailErrors, setEmailErrors] = useState<
     Partial<Record<keyof NotificationSettings, string[]>>
   >({});
@@ -47,8 +54,18 @@ export const NotificationSettingsView = () => {
 
       try {
         const data = await fetchNotificationSettings();
+        const merged = { ...DEFAULT_SETTINGS, ...data };
 
-        setSettings({ ...DEFAULT_SETTINGS, ...data });
+        setSettings(merged);
+
+        // Seed the raw-text inputs from the loaded settings.
+        const seeded: Partial<Record<keyof NotificationSettings, string>> = {};
+
+        for (const key of EMAIL_KEYS) {
+          seeded[key] = ((merged[key] as string[]) || []).join(", ");
+        }
+
+        setEmailInputs(seeded);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -59,6 +76,12 @@ export const NotificationSettingsView = () => {
     load();
   }, []);
 
+  const parseEmails = (raw: string): string[] =>
+    raw
+      .split(",")
+      .map(e => e.trim())
+      .filter(Boolean);
+
   const handleSave = async () => {
     if (!agentId) {
       setError("Your user session is still loading. Please wait a moment.");
@@ -66,14 +89,19 @@ export const NotificationSettingsView = () => {
       return;
     }
 
-    // Validate every email list before sending. Bail out if any entry is invalid.
+    // Build the final settings payload from the raw inputs (single source of
+    // truth at save time) and validate each list.
     const errs: Partial<Record<keyof NotificationSettings, string[]>> = {};
+    const finalSettings: NotificationSettings = { ...settings };
 
     for (const key of EMAIL_KEYS) {
-      const list = (settings[key] as string[]) || [];
+      const raw = emailInputs[key] ?? "";
+      const list = parseEmails(raw);
       const bad = list.filter(e => !EMAIL_REGEX.test(e));
 
       if (bad.length > 0) errs[key] = bad;
+
+      (finalSettings[key] as string[]) = list;
     }
 
     if (Object.keys(errs).length > 0) {
@@ -91,7 +119,8 @@ export const NotificationSettingsView = () => {
     setSaved(false);
 
     try {
-      await saveNotificationSettings(settings, agentId);
+      await saveNotificationSettings(finalSettings, agentId);
+      setSettings(finalSettings);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (err: any) {
@@ -102,18 +131,13 @@ export const NotificationSettingsView = () => {
   };
 
   const setEmails = (key: keyof NotificationSettings, value: string) => {
-    const list = value
-      .split(",")
-      .map(e => e.trim())
-      .filter(Boolean);
+    // Preserve the raw text exactly as the user typed it (commas, whitespace,
+    // partial entries) so the input doesn't fight with their keystrokes.
+    setEmailInputs(prev => ({ ...prev, [key]: value }));
 
-    setSettings(prev => ({
-      ...prev,
-      [key]: list,
-    }));
-
-    // Live-validate so the agent sees bad entries before clicking Save
-    const bad = list.filter(e => !EMAIL_REGEX.test(e));
+    // Live-validate against a normalized snapshot, but don't write that
+    // snapshot back to the input.
+    const bad = parseEmails(value).filter(e => !EMAIL_REGEX.test(e));
 
     setEmailErrors(prev => {
       const next = { ...prev };
@@ -186,7 +210,7 @@ export const NotificationSettingsView = () => {
                 Notified when requests are 3–6 hours from auto-approval (comma separated)
               </Text>
               <Input
-                value={settings.AT_RISK_EMAILS.join(", ")}
+                value={emailInputs.AT_RISK_EMAILS ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setEmails("AT_RISK_EMAILS", e.target.value)
                 }
@@ -223,7 +247,7 @@ export const NotificationSettingsView = () => {
                 Notified when requests are under 3 hours from auto-approval (comma separated)
               </Text>
               <Input
-                value={settings.CRITICAL_EMAILS.join(", ")}
+                value={emailInputs.CRITICAL_EMAILS ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setEmails("CRITICAL_EMAILS", e.target.value)
                 }
@@ -299,7 +323,7 @@ export const NotificationSettingsView = () => {
                   {desc}
                 </Text>
                 <Input
-                  value={(settings[key] as string[]).join(", ")}
+                  value={emailInputs[key] ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setEmails(key, e.target.value)
                   }
