@@ -43,6 +43,7 @@ const mockUser: UserFragment = {
       __typename: "UserPermission",
     },
   ],
+  permissionGroups: null,
   avatar: null,
   accessibleChannels: null,
 };

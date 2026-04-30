@@ -8,7 +8,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { type OrderTransactionProps } from "../../OrderTransaction";
 import { type ExtendedOrderTransaction } from "../../types";
 import { mapActionToMessage } from "../../utils";
-import { PaymentMethodDetails } from "../PaymentMethodDetails";
 import { EventTime } from "../TransactionEvents/components/EventTime";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
@@ -149,17 +148,6 @@ export const OrderTransactionCardTitle = ({
       <TransactionTitle transaction={transaction} index={index} chevron={chevron} />
 
       <Box display="flex" gap={4} alignItems="center">
-        {transaction.paymentMethodDetails && (
-          <Box
-            borderRightStyle="solid"
-            borderColor="default1"
-            borderRightWidth={1}
-            paddingRight={4}
-          >
-            <PaymentMethodDetails paymentMethodDetails={transaction.paymentMethodDetails} />
-          </Box>
-        )}
-
         {amounts.map(({ label, money }) => (
           <MoneyDisplay key={label.id} label={intl.formatMessage(label)} money={money} />
         ))}

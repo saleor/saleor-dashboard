@@ -42,26 +42,14 @@ export const attributeFragment = gql`
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
-    availableInGrid
     entityType
-    storefrontSearchPosition
     valueRequired
-    referenceTypes {
-      ... on ProductType {
-        id
-        name
-      }
-      ... on PageType {
-        id
-        name
-      }
-    }
     choices(
       first: $firstValues
       after: $afterValues
       last: $lastValues
       before: $beforeValues
-      search: $searchValues
+      filter: { search: $searchValues }
     ) {
       ...AttributeValueList
     }

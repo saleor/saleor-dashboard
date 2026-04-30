@@ -150,7 +150,7 @@ const AttributePage = ({
         referenceTypes: [],
       }
     : {
-        availableInGrid: attribute.availableInGrid,
+        availableInGrid: true,
         entityType: attribute.entityType,
         filterableInDashboard: attribute.filterableInDashboard,
         filterableInStorefront: attribute.filterableInStorefront,
@@ -159,13 +159,12 @@ const AttributePage = ({
         name: attribute?.name ?? "",
         privateMetadata: attribute.privateMetadata.map(mapMetadataItemToInput),
         slug: attribute?.slug ?? "",
-        storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
+        storefrontSearchPosition: "0",
         type: attribute?.type ?? AttributeTypeEnum.PRODUCT_TYPE,
         valueRequired: !!attribute.valueRequired,
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
-        referenceTypes:
-          attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
+        referenceTypes: [],
       };
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;

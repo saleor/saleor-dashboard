@@ -1,5 +1,13 @@
 import { getStaticUrl } from "@dashboard/config";
-import { type CardPaymentMethodDetailsFragment } from "@dashboard/graphql";
+
+// CardPaymentMethodDetailsFragment was removed from the GraphQL schema
+interface CardPaymentMethodDetailsFragment {
+  brand: string | null;
+  firstDigits: string | null;
+  lastDigits: string | null;
+  expMonth: number | null;
+  expYear: number | null;
+}
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 

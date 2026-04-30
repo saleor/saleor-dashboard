@@ -33,13 +33,19 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { useCXPermission } from "@dashboard/returns-exchange/hooks/useCXPermission";
+import {
+  manualExchangeListPath,
+  notificationSettingsPath,
+  returnsQueuePath,
+} from "@dashboard/returns-exchange/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
-import { Search } from "lucide-react";
+import { RotateCcw, Search } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { type SidebarMenuItem } from "../types";
@@ -51,6 +57,52 @@ export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
+  const isCXAgent = useCXPermission();
+
+  if (isCXAgent) {
+    const cxMenu: SidebarMenuItem[] = [
+      {
+        icon: renderIcon(<HomeIcon />),
+        label: intl.formatMessage(sectionNames.home),
+        id: "home",
+        url: "/",
+        type: "item",
+      },
+      {
+        children: [
+          {
+            label: "Returns Queue",
+            id: "returns-queue",
+            url: returnsQueuePath,
+            permissions: [],
+            type: "item" as const,
+          },
+          {
+            label: "Manual Exchanges",
+            id: "manual-exchanges",
+            url: manualExchangeListPath,
+            permissions: [],
+            type: "item" as const,
+          },
+          {
+            label: "Notification Settings",
+            id: "cx-notification-settings",
+            url: notificationSettingsPath,
+            permissions: [],
+            type: "item" as const,
+          },
+        ],
+        icon: renderIcon(<RotateCcw size={iconSize.small} strokeWidth={2.2} />),
+        label: "Returns & Exchange",
+        permissions: [],
+        id: "returns-exchange",
+        url: returnsQueuePath,
+        type: "itemGroup" as const,
+      } satisfies SidebarMenuItem,
+    ];
+
+    return cxMenu;
+  }
 
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
@@ -165,7 +217,7 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(sectionNames.orders),
+          label: `${intl.formatMessage(sectionNames.orders)} 😊`,
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "orders",
           url: orderListUrl(),

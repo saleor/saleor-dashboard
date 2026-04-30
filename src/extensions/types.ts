@@ -1,18 +1,23 @@
 import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
-import {
-  type AppTypeEnum,
-  type ExtensionListQuery,
-  type InstalledAppDetailsFragment,
-  type PermissionEnum,
-} from "@dashboard/graphql";
+import { type AppTypeEnum, type ExtensionListQuery, type PermissionEnum } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 import { type ReactNode } from "react";
 
 import { type AppDetailsUrlMountQueryParams } from "./urls";
 
-export type GraphQLAppProblem = NonNullable<InstalledAppDetailsFragment["problems"]>[number];
+export interface GraphQLAppProblem {
+  __typename: "AppProblem";
+  key: string;
+  message: string;
+  createdAt: string;
+  count: number;
+  isCritical: boolean;
+  dismissed: { __typename?: string; by: string; userEmail: string | null } | null;
+  updatedAt: string;
+  id: string;
+}
 
 export interface WebhookDeliveryProblem {
   __typename: "WebhookDeliveryError";
@@ -81,7 +86,7 @@ export interface Extension {
   url: string;
   open: () => void;
   targetName: AppExtensionManifestTarget;
-  settings: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["settings"];
+  settings: unknown;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {

@@ -10,6 +10,7 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { returnsExchangeSection } from "@dashboard/returns-exchange/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
@@ -88,6 +89,7 @@ const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.W
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
 );
+const ReturnsExchangeSection = lazy(() => import("./returns-exchange"));
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -323,6 +325,11 @@ const Routes = () => {
                   <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
                   <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
                   <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_ORDERS]}
+                    path={returnsExchangeSection}
+                    component={ReturnsExchangeSection}
+                  />
                   <Route component={NotFound} />
                 </Switch>
               </Suspense>

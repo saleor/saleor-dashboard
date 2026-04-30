@@ -9,13 +9,11 @@ import {
 
 export const attribute: AttributeDetailsQuery["attribute"] = {
   __typename: "Attribute" as const,
-  availableInGrid: true,
   entityType: null,
   filterableInDashboard: false,
   filterableInStorefront: true,
   id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
   inputType: AttributeInputTypeEnum.DROPDOWN,
-  referenceTypes: [],
   metadata: [
     {
       __typename: "MetadataItem",
@@ -26,7 +24,6 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   name: "Author",
   privateMetadata: [],
   slug: "author",
-  storefrontSearchPosition: 2,
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   unit: null,
@@ -99,9 +96,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -168,9 +162,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -275,9 +266,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -325,9 +313,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -413,9 +398,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -482,9 +464,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -570,9 +549,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -639,7 +615,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -782,7 +757,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -849,7 +823,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -916,7 +889,6 @@ export const attributes: Array<
     unit: null,
     metadata: [],
     privateMetadata: [],
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -983,9 +955,6 @@ export const attributes: Array<
     valueRequired: false,
     metadata: [],
     privateMetadata: [],
-    availableInGrid: false,
-    storefrontSearchPosition: 0,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -1116,6 +1085,4 @@ export const attributes: Array<
   },
 ].map(a => ({
   ...a,
-  availableInGrid: a.availableInGrid ?? false,
-  storefrontSearchPosition: a.storefrontSearchPosition ?? 0,
 }));

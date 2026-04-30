@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth/useUser";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
@@ -24,6 +25,7 @@ export interface Shortcut {
 
 export const useShortcuts = (): Shortcut[] => {
   const intl = useIntl();
+  const { user } = useUser();
   const { setNavigatorVisibility } = useNavigatorSearchContext();
   const devContext = useDevModeContext();
   const controlKey = getShortcutLeadingKey();
@@ -81,6 +83,10 @@ export const useShortcuts = (): Shortcut[] => {
     ],
     [intl],
   );
+
+  if (user?.permissionGroups?.some(g => g.name === "CX Returns Management")) {
+    return [];
+  }
 
   return shortcuts;
 };

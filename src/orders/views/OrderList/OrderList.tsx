@@ -109,13 +109,14 @@ const OrderList = ({ params }: OrderListProps) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const filterVariables = createOrderQueryVariables(valueProvider.value);
+  const _filterVariables = createOrderQueryVariables(valueProvider.value);
 
   const queryVariables = useMemo(
     () => ({
       ...paginationState,
-      where: filterVariables,
-      search: params.query,
+      filter: {
+        search: params.query || undefined,
+      },
       sort: getSortQueryVariables(params),
     }),
     // This is intentional - if we change deps array, we will make query

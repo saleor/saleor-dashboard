@@ -223,7 +223,7 @@ export const fragmentOrderLineMetadata = gql`
     metadata {
       ...MetadataItem
     }
-    privateMetadata {
+    privateMetadata @include(if: $hasManageProducts) {
       ...MetadataItem
     }
     variant {
@@ -595,10 +595,6 @@ export const transactionBaseEvent = gql`
     type
     message
     createdAt
-    reasonReference {
-      id
-      title
-    }
   }
 `;
 
@@ -629,19 +625,6 @@ export const transactionBaseItemFragment = gql`
 `;
 
 export const transactionItemFragment = gql`
-  fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
-    name
-  }
-
-  fragment CardPaymentMethodDetails on CardPaymentMethodDetails {
-    name
-    brand
-    expMonth
-    expYear
-    firstDigits
-    lastDigits
-  }
-
   fragment TransactionItem on TransactionItem {
     ...TransactionBaseItem
     pspReference
@@ -655,16 +638,6 @@ export const transactionItemFragment = gql`
             default(size: 64)
           }
         }
-      }
-    }
-    paymentMethodDetails {
-      name
-      __typename
-      ... on CardPaymentMethodDetails {
-        ...CardPaymentMethodDetails
-      }
-      ... on OtherPaymentMethodDetails {
-        ...OtherPaymentMethodDetails
       }
     }
     events {
@@ -774,10 +747,6 @@ export const fragmentOrderGrantedRefunds = gql`
       id
     }
     reason
-    reasonReference {
-      id
-      title
-    }
     user {
       ...UserBaseAvatar
     }
@@ -822,10 +791,6 @@ export const orderDetailsGrantedRefund = gql`
   fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
     id
     reason
-    reasonReference {
-      id
-      title
-    }
     amount {
       ...Money
     }

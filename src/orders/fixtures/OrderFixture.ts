@@ -718,7 +718,6 @@ export class OrderFixture {
               },
               externalUrl: "https://example.com/transaction",
               createdAt: "2025-09-12T08:57:38.515000+00:00",
-              reasonReference: null,
               createdBy: {
                 id: "created-by-app",
                 name: "Dummy Payment App",
@@ -739,7 +738,6 @@ export class OrderFixture {
               },
               externalUrl: "https://example.com/transaction",
               createdAt: "2025-09-12T08:26:37.572285+00:00",
-              reasonReference: null,
               createdBy: {
                 id: "VXNlcjox",
                 email: "test@saleor.io",
@@ -785,7 +783,6 @@ export class OrderFixture {
           },
           reason: "Customer requested a refund.",
           createdAt: "2023-10-02T12:00:00Z",
-          reasonReference: null,
           user: {
             __typename: "User",
             email: "customer@example.com",
@@ -885,7 +882,6 @@ export class OrderFixture {
                 "https://dashboard.example.com/payments/MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
               createdAt: "2024-12-04T16:00:00Z",
               message: "Manual payment recorded by staff",
-              reasonReference: null,
               createdBy: {
                 __typename: "User",
                 id: "user-staff-2",
@@ -921,7 +917,6 @@ export class OrderFixture {
           amount: { __typename: "Money", amount: 25.0, currency: "USD" },
           reason: "Damaged item received",
           createdAt: "2024-12-02T14:00:00Z",
-          reasonReference: null,
           shippingCostsIncluded: false,
           transactionEvents: [],
           lines: [],
@@ -942,7 +937,6 @@ export class OrderFixture {
           amount: { __typename: "Money", amount: 15.0, currency: "USD" },
           reason: "Wrong size shipped",
           createdAt: "2024-12-05T11:00:00Z",
-          reasonReference: null,
           shippingCostsIncluded: true,
           transactionEvents: [],
           lines: [],

@@ -24,7 +24,6 @@ const getRefundCreateDefaultValues = (
   includeShipping: false,
   amount: 0,
   reason: "",
-  reasonReference: "",
 });
 
 const getRefundEditDefaultValues = (
@@ -37,7 +36,6 @@ const getRefundEditDefaultValues = (
     includeShipping: draftRefund.shippingCostsIncluded,
     amount: draftRefund.amount.amount,
     reason: draftRefund.reason ?? "",
-    reasonReference: draftRefund.reasonReference?.id ?? "",
   };
 };
 

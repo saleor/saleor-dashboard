@@ -22,7 +22,6 @@ export const singleRefundableTransaction = [
         type: TransactionEventTypeEnum.CHARGE_SUCCESS,
         message: "",
         createdAt: "2024-01-04T13:15:22.750209+00:00",
-        reasonReference: null,
         createdBy: {
           __typename: "App" as const,
           id: "QXBwOjY1",
@@ -42,7 +41,6 @@ export const singleRefundableTransaction = [
         },
         type: TransactionEventTypeEnum.CHARGE_REQUEST,
         message: "",
-        reasonReference: null,
         createdAt: "2024-01-04T13:15:22.279318+00:00",
         createdBy: null,
         externalUrl: "",
@@ -89,6 +87,5 @@ export const singleRefundableTransaction = [
       currency: "EUR",
     },
     createdBy: null,
-    paymentMethodDetails: null,
   },
 ];

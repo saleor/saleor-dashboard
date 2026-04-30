@@ -43,7 +43,6 @@ export const product: (
         slug: "Borders",
         valueRequired: false,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -129,7 +128,6 @@ export const product: (
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -348,7 +346,6 @@ export const product: (
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -395,7 +392,6 @@ export const product: (
         slug: "color",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -456,7 +452,6 @@ export const product: (
         unit: null,
         slug: "attachment",
         entityType: AttributeEntityTypeEnum.PRODUCT,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -501,7 +496,6 @@ export const product: (
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -3693,7 +3687,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -3951,7 +3944,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         slug: "Borders",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -4029,7 +4021,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -4354,7 +4345,6 @@ export const variantAttributes: VariantAttributeFragment[] = [
     entityType: null,
     valueRequired: false,
     unit: null,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection",
       pageInfo: {
@@ -4376,7 +4366,6 @@ export const variantAttributes: VariantAttributeFragment[] = [
     entityType: null,
     valueRequired: false,
     unit: null,
-    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection",
       pageInfo: {

@@ -48,8 +48,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
       allowLegacyGiftCardUse: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
     },
   },
@@ -94,8 +92,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
@@ -142,8 +138,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
       allowLegacyGiftCardUse: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
     },
   },
@@ -188,8 +182,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
@@ -236,8 +228,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
       allowLegacyGiftCardUse: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
     },
   },
@@ -282,8 +272,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
@@ -329,8 +317,6 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
-      automaticCompletionDelay: 30,
-      automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
@@ -378,8 +364,6 @@ export const channel: ChannelDetailsFragment = {
   },
   checkoutSettings: {
     automaticallyCompleteFullyPaidCheckouts: true,
-    automaticCompletionDelay: 30,
-    automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
     allowLegacyGiftCardUse: true,
     __typename: "CheckoutSettings",
   },

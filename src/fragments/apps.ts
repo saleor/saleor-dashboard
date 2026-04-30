@@ -14,12 +14,12 @@ export const appManifestFragment = gql`
     homepageUrl
     supportUrl
     extensions {
-      targetName
+      targetName: target
       permissions {
         code
         name
       }
-      mountName
+      mountName: mount
       url
       label
     }
@@ -202,20 +202,6 @@ export const InstalledAppDetails = gql`
     isActive
     name
     type
-    problems {
-      __typename
-      key
-      message
-      createdAt
-      count
-      isCritical
-      dismissed {
-        by
-        userEmail
-      }
-      updatedAt
-      id
-    }
     brand {
       logo {
         default(format: WEBP, size: 64)

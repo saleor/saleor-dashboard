@@ -37,7 +37,6 @@ const createTransactionEvent = (
     },
     message: "",
     externalUrl: "",
-    reasonReference: null,
     ...overrides,
   };
 };
@@ -73,7 +72,6 @@ const createGrantedRefund = (
     lines: [],
     transactionEvents: null,
     type: "standard" as const,
-    reasonReference: null,
     ...overrides,
   };
 };
@@ -328,32 +326,24 @@ describe("OrderRefundsViewModel", () => {
       expect(result.find(r => r.id === "unsupported")).toBeUndefined();
     });
 
-    it("Should properly map reasonReference to reasonType in OrderRefundDisplay", () => {
-      // Only requests have reasons
+    it("Should map reasonType to null since reasonReference was removed", () => {
       const manualEvents = [
         createTransactionEvent({
           id: "request-1",
           pspReference: "psp-request-1",
           type: TransactionEventTypeEnum.REFUND_REQUEST,
-          reasonReference: null,
           message: "Reason manual note without type",
         }),
         createTransactionEvent({
           id: "request-2",
           pspReference: "psp-request-2",
           type: TransactionEventTypeEnum.REFUND_REQUEST,
-          reasonReference: { __typename: "Page", id: "ref-1", title: "Broken in shipping" },
           message: "Reason manual note with type",
         }),
         createTransactionEvent({
           id: "request-3",
           pspReference: "psp-request-3",
           type: TransactionEventTypeEnum.REFUND_REQUEST,
-          reasonReference: {
-            __typename: "Page",
-            id: "ref-1",
-            title: "Broken in shipping (no message)",
-          },
           message: "",
         }),
       ];
@@ -363,19 +353,9 @@ describe("OrderRefundsViewModel", () => {
         }),
         createGrantedRefund({
           reason: "Reason with type [grant]",
-          reasonReference: {
-            __typename: "Page",
-            id: "ref-1",
-            title: "Broken in shipping",
-          },
         }),
         createGrantedRefund({
           reason: null,
-          reasonReference: {
-            __typename: "Page",
-            id: "ref-1",
-            title: "Broken in shipping (no note) [grant]",
-          },
         }),
       ];
 
@@ -398,11 +378,11 @@ Array [
   },
   Object {
     "reasonNote": "Reason with type [grant]",
-    "reasonType": "Broken in shipping",
+    "reasonType": null,
   },
   Object {
     "reasonNote": null,
-    "reasonType": "Broken in shipping (no note) [grant]",
+    "reasonType": null,
   },
   Object {
     "reasonNote": "Reason manual note without type",
@@ -410,11 +390,11 @@ Array [
   },
   Object {
     "reasonNote": "Reason manual note with type",
-    "reasonType": "Broken in shipping",
+    "reasonType": null,
   },
   Object {
     "reasonNote": "",
-    "reasonType": "Broken in shipping (no message)",
+    "reasonType": null,
   },
 ]
 `);

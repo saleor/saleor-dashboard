@@ -1,7 +1,6 @@
 import { useAppHasProblemsLazyQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { useIntervalActionWithState } from "@dashboard/hooks/useIntervalActionWithState";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import moment from "moment-timezone";
 import { useCallback, useEffect, useMemo } from "react";
 
@@ -25,9 +24,8 @@ export const useAppsAlert = () => {
   });
 
   const hasAppProblems = useMemo(() => {
-    const apps = mapEdgesToItems(appProblemsData?.apps) ?? [];
-
-    return apps.some(app => (app.problems?.length ?? 0) > 0);
+    // problems field not supported by current API version
+    return false;
   }, [appProblemsData?.apps]);
 
   const fetchAll = useCallback(() => {

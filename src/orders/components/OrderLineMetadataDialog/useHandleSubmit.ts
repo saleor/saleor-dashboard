@@ -38,7 +38,7 @@ export const useHandleOrderLineMetadataSubmit = ({
     }
 
     return createMetadataUpdateHandler(
-      initialData,
+      { ...initialData, privateMetadata: initialData.privateMetadata ?? [] },
       // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
       () => Promise.resolve([]),
       variables => updateMetadata({ variables }),

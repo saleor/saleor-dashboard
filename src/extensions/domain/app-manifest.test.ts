@@ -1,9 +1,9 @@
-import { type AppManifestFragment, PermissionEnum } from "@dashboard/graphql";
+import { PermissionEnum } from "@dashboard/graphql";
 
 import { appManifestSchema } from "./app-manifest";
 
-const getValidManifestBase = (overrides: Partial<AppManifestFragment> = {}) => {
-  const validData: AppManifestFragment = {
+const getValidManifestBase = (overrides: Record<string, any> = {}) => {
+  const validData: any = {
     appUrl: "https://example.com",
     permissions: [],
     extensions: [],

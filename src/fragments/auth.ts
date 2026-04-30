@@ -32,6 +32,10 @@ export const fragmentUser = gql`
     userPermissions {
       ...UserPermission
     }
+    permissionGroups {
+      id
+      name
+    }
     avatar(size: 128) {
       url
     }

@@ -1,7 +1,6 @@
 import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { type IntlShape } from "react-intl";
 
@@ -30,6 +29,11 @@ export const OrderDetailsRowActions = ({
       className={classes.rowAction}
       style={{
         boxShadow: rightColumnBoxShadow,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
       }}
     >
       <IconButton
@@ -43,19 +47,16 @@ export const OrderDetailsRowActions = ({
         <Code size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </IconButton>
       {firstMenuItem?.Icon && (
-        <>
-          <Box height="100%" __width={1} backgroundColor={"default3"} />
-          <IconButton
-            data-test-id="row-action-button"
-            disabled={disabled || firstMenuItem.disabled}
-            onClick={() => firstMenuItem.onSelect()}
-            className={classes.ghostIcon}
-            variant="ghost"
-            title={intl.formatMessage(messages.openProductDetail)}
-          >
-            {firstMenuItem.Icon}
-          </IconButton>
-        </>
+        <IconButton
+          data-test-id="row-action-button"
+          disabled={disabled || firstMenuItem.disabled}
+          onClick={() => firstMenuItem.onSelect()}
+          className={classes.ghostIcon}
+          variant="ghost"
+          title={intl.formatMessage(messages.openProductDetail)}
+        >
+          {firstMenuItem.Icon}
+        </IconButton>
       )}
     </div>
   );

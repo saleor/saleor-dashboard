@@ -139,13 +139,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           entityType: AttributeEntityTypeEnum.PRODUCT,
           valueRequired: true,
           unit: null,
-          referenceTypes: [
-            {
-              id: "UHJvZHVjdFR5cGU6MTM=",
-              name: "Shoe",
-              __typename: "ProductType" as const,
-            },
-          ],
           choices: {
             __typename: "AttributeValueCountableConnection" as const,
             pageInfo: {

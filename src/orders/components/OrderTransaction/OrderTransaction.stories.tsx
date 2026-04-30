@@ -159,10 +159,6 @@ export const WithOtherPaymentMethod: Story = {
       transaction={{
         ...transactions.chargeSuccess[0],
         index: 0,
-        paymentMethodDetails: {
-          __typename: "OtherPaymentMethodDetails",
-          name: args.paymentBrand as string,
-        },
       }}
     />
   ),
