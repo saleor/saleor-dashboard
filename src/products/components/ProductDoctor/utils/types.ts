@@ -1,4 +1,4 @@
-type IssueSeverity = "error" | "warning" | "info";
+export type IssueSeverity = "error" | "warning" | "info";
 
 export interface AvailabilityIssue {
   id: string;

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
+import { LEGACY_MODE_FALLBACK } from "../utils/constants";
 import {
   type AvailabilityIssue,
   type ChannelDiagnosticData,
@@ -12,14 +13,6 @@ import {
   type DiagnosticsResult,
   type ProductDiagnosticData,
 } from "../utils/types";
-
-/**
- * Defaults to `true` (legacy mode) when the shop fragment in the diagnostics
- * query hasn't loaded yet so we don't downgrade legacy behaviors prematurely
- * on a fresh page load. Once the query resolves, the real value takes over
- * and re-renders the diagnostics.
- */
-const LEGACY_MODE_FALLBACK = true;
 
 interface UseProductAvailabilityDiagnosticsProps {
   product: ProductDiagnosticData | null | undefined;

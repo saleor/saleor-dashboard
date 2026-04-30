@@ -1,5 +1,5 @@
 import Wrapper from "@test/wrapper";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 
 import { AvailabilityCard, PublicApiVerificationBadge } from "./AvailabilityCard";
 import { type ChannelVerificationResult } from "./hooks/usePublicApiVerification";
@@ -50,7 +50,7 @@ const baseDiagnostics = (overrides: Partial<DiagnosticsResult> = {}): Diagnostic
 });
 
 describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
-  it("renders the legacy mode indicator when shop uses shipping-zone stock availability", () => {
+  it("renders the legacy mode label when shop uses shipping-zone stock availability", () => {
     // Arrange
     const diagnostics = baseDiagnostics({ useLegacyShippingZoneStockAvailability: true });
 
@@ -59,14 +59,12 @@ describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
       wrapper: Wrapper,
     });
 
-    // Assert
-    const indicator = screen.getByTestId("stock-availability-mode-indicator");
-
-    expect(indicator).toHaveAttribute("data-test-mode", "legacy");
-    expect(indicator).toHaveTextContent(/legacy/i);
+    // Assert — mode is communicated to the user via visible copy.
+    expect(screen.getByText(/uses shipping zones \(legacy\)/i)).toBeInTheDocument();
+    expect(screen.queryByText(/direct warehouse-channel/i)).toBeNull();
   });
 
-  it("renders the direct mode indicator when shop uses direct warehouse-channel link", () => {
+  it("renders the direct mode label when shop uses the direct warehouse-channel link", () => {
     // Arrange
     const diagnostics = baseDiagnostics({ useLegacyShippingZoneStockAvailability: false });
 
@@ -76,10 +74,8 @@ describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
     });
 
     // Assert
-    const indicator = screen.getByTestId("stock-availability-mode-indicator");
-
-    expect(indicator).toHaveAttribute("data-test-mode", "direct");
-    expect(indicator).toHaveTextContent(/direct warehouse-channel/i);
+    expect(screen.getByText(/direct warehouse-channel/i)).toBeInTheDocument();
+    expect(screen.queryByText(/uses shipping zones \(legacy\)/i)).toBeNull();
   });
 
   it("does not render the indicator while diagnostics are loading", () => {
@@ -91,8 +87,9 @@ describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
       wrapper: Wrapper,
     });
 
-    // Assert - indicator only renders when channels list is shown
-    expect(screen.queryByTestId("stock-availability-mode-indicator")).toBeNull();
+    // Assert — neither label is rendered (indicator shows only with the channels list).
+    expect(screen.queryByText(/uses shipping zones \(legacy\)/i)).toBeNull();
+    expect(screen.queryByText(/direct warehouse-channel/i)).toBeNull();
   });
 });
 
@@ -106,9 +103,18 @@ const makeIssue = (overrides: Partial<AvailabilityIssue> = {}): AvailabilityIssu
   ...overrides,
 });
 
+/**
+ * Channel header severity gating — these tests assert what the user actually
+ * sees: which icon is rendered (queried by accessible name), whether a count
+ * number is visible, and whether the badge appears at all.
+ *
+ * The pure selection/escalation logic that drives the props is unit-tested
+ * separately in `utils/issueBadge.test.ts`; here we only verify the
+ * UI consequences.
+ */
 describe("AvailabilityCard channel header severity gating", () => {
-  it("does not promote info-only issues into the channel issue badge", () => {
-    // Arrange - direct mode, single info advisory (e.g. no shipping zones)
+  it("does not render the issue badge for info-only advisories", () => {
+    // Arrange — direct mode, single info advisory.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
       issues: [makeIssue({ severity: "info" })],
@@ -121,19 +127,20 @@ describe("AvailabilityCard channel header severity gating", () => {
       wrapper: Wrapper,
     });
 
-    // Assert - no IssueBadge in the header
+    // Assert — no IssueBadge in the header.
     expect(screen.queryByTestId("channel-issue-badge")).toBeNull();
 
-    // Expand the channel accordion to inspect the issue callout in the body
+    // Expand the channel accordion and verify the info-style icon is rendered
+    // for the issue callout (this is what the user perceives — Info icon
+    // rather than warning/error iconography).
     fireEvent.click(screen.getByText("Default Channel"));
 
-    const callout = screen.getByTestId("availability-issue-callout");
-
-    expect(callout).toHaveAttribute("data-test-severity", "info");
+    expect(screen.getByTestId("product-doctor-issue-callout-icon-info")).toBeInTheDocument();
+    expect(screen.getByLabelText("Information")).toBeInTheDocument();
   });
 
-  it("still surfaces warnings via the channel issue badge", () => {
-    // Arrange - legacy mode, warning-level issue
+  it("surfaces a single warning via the channel issue badge with no visible count", () => {
+    // Arrange — legacy mode, one warning-level issue.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: true,
       issues: [makeIssue({ id: "no-stock", severity: "warning", message: "No stock" })],
@@ -146,19 +153,25 @@ describe("AvailabilityCard channel header severity gating", () => {
       wrapper: Wrapper,
     });
 
-    // Assert
+    // Assert — the warning icon is shown inside the badge…
     const badge = screen.getByTestId("channel-issue-badge");
 
-    expect(badge).toHaveAttribute("data-test-type", "warning");
-    expect(badge).toHaveAttribute("data-test-count", "1");
+    expect(
+      within(badge).getByTestId("product-doctor-issue-badge-icon-warning"),
+    ).toBeInTheDocument();
+    // …no error icon is shown…
+    expect(within(badge).queryByTestId("product-doctor-issue-badge-icon-error")).toBeNull();
+    // …and there is no visible count number (count text only renders for >1).
+    expect(within(badge).queryByTestId("product-doctor-issue-badge-count")).toBeNull();
   });
 
-  it("counts only blocking issues in the channel issue badge when info issues co-exist", () => {
-    // Arrange - one warning, two info advisories on the same channel
+  it("renders a visible count and the warning icon when multiple header-worthy issues exist alongside info advisories", () => {
+    // Arrange — two warnings + two info advisories on the same channel.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
       issues: [
         makeIssue({ id: "no-stock", severity: "warning", message: "No stock" }),
+        makeIssue({ id: "no-warehouses", severity: "warning", message: "No warehouses" }),
         makeIssue({ id: "no-shipping-zones", severity: "info", message: "No shipping zones" }),
         makeIssue({
           id: "stock-outside-channel-warehouses",
@@ -175,15 +188,17 @@ describe("AvailabilityCard channel header severity gating", () => {
       wrapper: Wrapper,
     });
 
-    // Assert - badge count reflects the single blocking issue only
+    // Assert — visible count reflects the two header-worthy issues only.
     const badge = screen.getByTestId("channel-issue-badge");
 
-    expect(badge).toHaveAttribute("data-test-count", "1");
-    expect(badge).toHaveAttribute("data-test-type", "warning");
+    expect(within(badge).getByTestId("product-doctor-issue-badge-count")).toHaveTextContent("2");
+    expect(
+      within(badge).getByTestId("product-doctor-issue-badge-icon-warning"),
+    ).toBeInTheDocument();
   });
 
-  it("escalates to error styling when at least one issue is an error", () => {
-    // Arrange - mix of error and warning, plus info
+  it("renders the error icon when at least one header issue is an error", () => {
+    // Arrange — error + warning + info.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: true,
       issues: [
@@ -200,11 +215,13 @@ describe("AvailabilityCard channel header severity gating", () => {
       wrapper: Wrapper,
     });
 
-    // Assert - badge type prefers error severity, count is the blocking total
+    // Assert — error icon appears, warning icon does not.
     const badge = screen.getByTestId("channel-issue-badge");
 
-    expect(badge).toHaveAttribute("data-test-type", "error");
-    expect(badge).toHaveAttribute("data-test-count", "2");
+    expect(within(badge).getByTestId("product-doctor-issue-badge-icon-error")).toBeInTheDocument();
+    expect(within(badge).queryByTestId("product-doctor-issue-badge-icon-warning")).toBeNull();
+    // Visible count covers the two header-worthy issues (the info advisory is excluded).
+    expect(within(badge).getByTestId("product-doctor-issue-badge-count")).toHaveTextContent("2");
   });
 });
 
