@@ -1,0 +1,9 @@
+services:
+  dashboard:
+    image: 565386896838.dkr.ecr.ap-south-1.amazonaws.com/prod/saleor-backend:300420262144
+    container_name: saleor_dashboard
+    ports:
+      - "9004:80"
+    restart: unless-stopped
+    environment:
+      - API_URL=https://api-saleor.tenxyou.com/graphql/
