@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.23.3
+
+### Patch Changes
+
+- [#6536](https://github.com/saleor/saleor-dashboard/pull/6536) [`15eced3`](https://github.com/saleor/saleor-dashboard/commit/15eced3c88dd8aebfcf1dc5988b6c9a8dfae00f4) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Added a "Stock availability" toggle in Site Settings to control `useLegacyShippingZoneStockAvailability`.
+
+- [#6490](https://github.com/saleor/saleor-dashboard/pull/6490) [`a963af0`](https://github.com/saleor/saleor-dashboard/commit/a963af04519a25bd8b0f53bc942622f139d6e24a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Set strict-typed Scalars: JSON and JSONString. Previously Codegen generated `any` types, making them insecure in the codebase. Now they are `unknown` and `string`. Now it's explicit that JSON must be narrowed (e.g. with Zod schema) and JSONString must be first parsed.
+
+- [#6434](https://github.com/saleor/saleor-dashboard/pull/6434) [`71222e4`](https://github.com/saleor/saleor-dashboard/commit/71222e4cff7148b0ff8439a0af23b8cd123917fc) Thanks [@mirekm](https://github.com/mirekm)! - Order-level and order-line discount flows now share the same UX in Draft and Unconfirmed orders. Access Add/Edit order line discount now also from the order row menu.
+
 ## 3.23.2
 
 ### Patch Changes
