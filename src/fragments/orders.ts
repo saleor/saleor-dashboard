@@ -915,16 +915,3 @@ export const fragmentOrderDetailsGrantRefund = gql`
     }
   }
 `;
-
-export const fragmentActivities = gql`
-  fragment Activities on OrderEvent {
-    date
-    email
-    message
-    orderNumber
-    type
-    user {
-      email
-    }
-  }
-`;

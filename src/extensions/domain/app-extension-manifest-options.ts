@@ -12,10 +12,16 @@ const widgetTargetOptionsSchema = z.object({
   method: httpMethodSchema.optional().nullable(),
 });
 
+const homeWidgetOptionsSchema = z.object({
+  method: z.enum(["GET", "POST"], { message: "Method must be either GET or POST" }).default("POST"),
+  fullscreen: z.boolean().default(true),
+});
+
 export const appExtensionManifestOptionsSchema = z
   .object({
     newTabTarget: newTabTargetOptionsSchema.optional().nullable(),
     widgetTarget: widgetTargetOptionsSchema.optional().nullable(),
+    homeWidget: homeWidgetOptionsSchema.optional().nullable(),
   })
   .refine(
     data => {

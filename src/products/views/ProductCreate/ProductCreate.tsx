@@ -48,7 +48,6 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -64,7 +63,6 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
-  const { markOnboardingStepAsCompleted } = useOnboarding();
   const intl = useIntl();
   const [productCreateComplete, setProductCreateComplete] = useState(false);
   const selectedProductTypeId = params["product-type-id"];
@@ -205,7 +203,6 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     )(data);
 
     if (!errors?.length) {
-      markOnboardingStepAsCompleted("create-product");
       setProductCreateComplete(true);
     }
 

@@ -15,9 +15,8 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { AddExtensionDropdown } from "./components/AddExtensionDropdown/AddExtensionDropdown";
@@ -35,12 +34,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { markOnboardingStepAsCompleted } = useOnboarding();
   const subtitle = useContextualLink("extensions");
-
-  useEffect(() => {
-    markOnboardingStepAsCompleted("view-extensions");
-  }, [markOnboardingStepAsCompleted]);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ExtensionsListUrlDialog,

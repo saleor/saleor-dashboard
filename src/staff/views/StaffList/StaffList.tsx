@@ -23,7 +23,6 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -50,7 +49,6 @@ const StaffList = ({ params }: StaffListProps) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
-  const { markOnboardingStepAsCompleted } = useOnboarding();
   const { valueProvider } = useConditionalFilterContext();
   const filters = createStaffMembersQueryVariables(valueProvider.value);
 
@@ -81,7 +79,6 @@ const StaffList = ({ params }: StaffListProps) => {
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
-        markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
           text: intl.formatMessage({ id: "8a7vg2", defaultMessage: "Staff member invited" }),

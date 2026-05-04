@@ -73,6 +73,19 @@ export const appExtensionManifest = z
     {
       message: `APP_PAGE type of extension must start with "/"`,
     },
+  )
+  .refine(
+    data => {
+      // homeWidget options can only be set when mount is HOMEPAGE_WIDGETS
+      if (data.options?.homeWidget && data.mountName !== "HOMEPAGE_WIDGETS") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "homeWidget options can only be set on HOMEPAGE_WIDGETS mount",
+    },
   );
 
 export type AppExtensionManifest = z.infer<typeof appExtensionManifest>;

@@ -5,7 +5,6 @@ import { useInstalledExtensionsFilter } from "./hooks/useInstalledExtensionsFilt
 import { usePendingInstallation } from "./hooks/usePendingInstallation";
 import { InstalledExtensions, type InstalledExtensionsProps } from "./InstalledExtensions";
 
-const mockMarkOnboardingStepAsCompleted = jest.fn();
 const mockHandleRemoveInProgress = jest.fn();
 const mockCloseModal = jest.fn();
 const mockOpenModal = jest.fn();
@@ -19,13 +18,6 @@ const mockInstalledExtensions = [
 const mockPendingInstallations = [
   { id: "pending1", name: "Pending App 1", manifestUrl: "pendingUrl1" },
 ];
-
-jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
-  useOnboarding: () => ({
-    markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
-    onboardingState: { stepsCompleted: [] },
-  }),
-}));
 
 jest.mock("@dashboard/utils/handlers/dialogActionHandlers", () => ({
   __esModule: true,
@@ -83,14 +75,6 @@ describe("InstalledExtensions", () => {
       handleQueryChange: jest.fn(),
       filteredInstalledExtensions: installedExtensions,
     }));
-  });
-
-  it("marks onboarding step as completed on mount", () => {
-    // Arrange & Act
-    render(<InstalledExtensions {...defaultProps} />);
-
-    // Assert
-    expect(mockMarkOnboardingStepAsCompleted).toHaveBeenCalledWith("view-extensions");
   });
 
   it("displays installed and pending extensions in the list initially", () => {

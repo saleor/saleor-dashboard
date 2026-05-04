@@ -240,6 +240,90 @@ describe("App Extension Manifest Options Schema", () => {
     });
   });
 
+  describe("homeWidget", () => {
+    it("should accept valid homeWidget with explicit fields", () => {
+      // Arrange
+      const validData = {
+        homeWidget: {
+          method: "GET",
+          fullscreen: true,
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchema.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
+    });
+
+    it("should apply defaults (method=POST, fullscreen=true) when fields omitted", () => {
+      // Arrange
+      const validData = {
+        homeWidget: {},
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchema.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data.homeWidget).toEqual({
+          method: "POST",
+          fullscreen: true,
+        });
+      }
+    });
+
+    it("should reject homeWidget with invalid method", () => {
+      // Arrange
+      const invalidData = {
+        homeWidget: {
+          method: "PATCH",
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchema.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe("Method must be either GET or POST");
+      }
+    });
+
+    it("should allow homeWidget to coexist with widgetTarget", () => {
+      // Arrange
+      const validData = {
+        widgetTarget: {
+          method: "POST",
+        },
+        homeWidget: {
+          method: "GET",
+          fullscreen: false,
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchema.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
+    });
+  });
+
   describe("Edge cases", () => {
     it("should reject null values", () => {
       // Arrange
