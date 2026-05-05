@@ -16247,6 +16247,10 @@ export type StockVisibilityModeLazyQueryHookResult = ReturnType<typeof useStockV
 export type StockVisibilityModeQueryResult = Apollo.QueryResult<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
+  shop {
+    id
+    useLegacyShippingZoneStockAvailability
+  }
   channels {
     id
     name
