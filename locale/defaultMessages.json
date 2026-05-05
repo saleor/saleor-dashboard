@@ -677,6 +677,9 @@
     "context": "Transaction card title",
     "string": "Transaction"
   },
+  "1wcKdb": {
+    "string": "This app contributes only background functionality (webhooks) or UI extensions. There is no configuration page to open from the dashboard."
+  },
   "1wyZpQ": {
     "string": "These passwords are too similar"
   },
@@ -6729,9 +6732,6 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
-  },
-  "ZcoqVF": {
-    "string": "This app contributes only background functionality (extensions, webhooks). There is no UI to open from the dashboard."
   },
   "Zd3Eew": {
     "context": "subsection header",
