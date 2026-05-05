@@ -46,7 +46,130 @@ const baseDiagnostics = (overrides: Partial<DiagnosticsResult> = {}): Diagnostic
     missingPermissions: [],
   },
   useLegacyShippingZoneStockAvailability: true,
+  isShippingRequired: true,
   ...overrides,
+});
+
+describe("AvailabilityCard / DiagnosticSummaryBanner", () => {
+  it("shows the plain 'all configured correctly' message when no issues exist", () => {
+    // Arrange
+    const diagnostics = baseDiagnostics({ issues: [], hasErrors: false, hasWarnings: false });
+
+    // Act
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={1} />, {
+      wrapper: Wrapper,
+    });
+
+    // Assert — exact "all healthy" copy, no advisory suffix.
+    const banner = screen.getByTestId("diagnostic-summary-banner");
+
+    expect(banner).toHaveTextContent(/^All channels configured correctly$/);
+  });
+
+  it("appends an advisory count to the success banner when only info-level issues exist", () => {
+    // Arrange — one genuinely info-level advisory (stranded stock: stock
+    // exists but in a warehouse not assigned to the channel; doesn't break
+    // checkout, just a configuration recommendation).
+    const diagnostics = baseDiagnostics({
+      useLegacyShippingZoneStockAvailability: false,
+      issues: [
+        makeIssue({
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
+          severity: "info",
+          message: "Stranded stock",
+        }),
+      ],
+      hasErrors: false,
+      hasWarnings: false,
+    });
+
+    // Act
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={1} />, {
+      wrapper: Wrapper,
+    });
+
+    // Assert — success banner is suffixed with the advisory count so users
+    // notice unresolved info-level issues even though the channel header
+    // doesn't promote them.
+    const banner = screen.getByTestId("diagnostic-summary-banner");
+
+    expect(banner).toHaveTextContent(/All channels configured correctly · 1 advisory/);
+  });
+
+  it("uses the plural advisory wording when more than one info issue exists", () => {
+    // Arrange — two info advisories on the same channel. Both are genuine
+    // info-level issues that don't break checkout but recommend cleanup.
+    const diagnostics = baseDiagnostics({
+      issues: [
+        makeIssue({
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
+          severity: "info",
+          message: "Stranded stock — warehouse A",
+        }),
+        makeIssue({
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
+          severity: "info",
+          message: "Stranded stock — warehouse B",
+        }),
+      ],
+      hasErrors: false,
+      hasWarnings: false,
+    });
+
+    // Act
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={1} />, {
+      wrapper: Wrapper,
+    });
+
+    // Assert — the plural-template message is selected. The repo-wide
+    // react-intl mock returns defaultMessage verbatim without substituting
+    // placeholders, so we assert on the raw "{count} advisories" template
+    // — matching the convention already used for other interpolated
+    // messages in this suite (e.g. publicApiVariantsInStock).
+    const banner = screen.getByTestId("diagnostic-summary-banner");
+
+    expect(banner).toHaveTextContent(/All channels configured correctly · \{count\} advisories/);
+    // The singular-only copy must NOT be selected for count > 1.
+    expect(banner).not.toHaveTextContent(/1 advisory$/);
+  });
+
+  it("does not append the advisory suffix when warnings are present (warnings own the banner)", () => {
+    // Arrange — one warning + one info advisory. The warning takes over the
+    // banner with the standard issuesSummary, so the advisory suffix path
+    // must not run.
+    const diagnostics = baseDiagnostics({
+      useLegacyShippingZoneStockAvailability: true,
+      issues: [
+        makeIssue({
+          category: "purchasability",
+          id: "no-stock",
+          severity: "warning",
+          message: "No stock",
+        }),
+        makeIssue({
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
+          severity: "info",
+          message: "Stranded stock",
+        }),
+      ],
+      hasErrors: false,
+      hasWarnings: true,
+    });
+
+    // Act
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={1} />, {
+      wrapper: Wrapper,
+    });
+
+    // Assert — the success banner is not rendered; advisory suffix copy
+    // must not appear anywhere on the screen.
+    expect(screen.queryByTestId("diagnostic-summary-banner")).toBeNull();
+    expect(screen.queryByText(/advisory|advisories/i)).toBeNull();
+  });
 });
 
 describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
@@ -94,20 +217,26 @@ describe("AvailabilityCard / StockAvailabilityModeIndicator", () => {
 });
 
 /**
- * Test factory for `AvailabilityIssue`. `category` must be passed explicitly
+ * Synthetic issue factory for UI tests. `category` must be passed explicitly
  * — we deliberately avoid inferring it from `id` in the test layer because
- * that duplicates the production category mapping (which lives in
- * `runAvailabilityChecks`) and would silently miscategorize new issue types.
+ * that would duplicate the production category mapping (which lives in
+ * `runAvailabilityChecks`) and silently miscategorize new issue types.
+ *
+ * Defaults to a genuine info-level advisory (stranded stock — the only check
+ * that emits `info` severity in production) so callers using
+ * `makeIssue({ category: "purchasability", severity: "info" })` get an
+ * unambiguously realistic fixture. Tests that need warnings/errors override
+ * the id + severity + message explicitly.
  */
 const makeIssue = (
   overrides: Partial<AvailabilityIssue> & Pick<AvailabilityIssue, "category">,
 ): AvailabilityIssue => ({
-  id: "test-issue",
+  id: "stock-outside-channel-warehouses",
   severity: "info",
   channelId: "channel-1",
   channelName: "Default Channel",
-  message: "Issue message",
-  description: "Issue description",
+  message: "Stranded stock",
+  description: "Stock is in warehouses not assigned to this channel.",
   ...overrides,
 });
 
@@ -125,7 +254,10 @@ describe("AvailabilityCard channel header severity gating", () => {
     // Arrange — direct mode, single info advisory.
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
-      issues: [makeIssue({ category: "shipping", severity: "info" })],
+      // Default fixture id (`stock-outside-channel-warehouses`) is a
+      // purchasability-category check; pair the override accordingly so the
+      // fixture stays internally consistent with production grouping.
+      issues: [makeIssue({ category: "purchasability", severity: "info" })],
       hasErrors: false,
       hasWarnings: false,
     });
@@ -182,6 +314,9 @@ describe("AvailabilityCard channel header severity gating", () => {
 
   it("renders a visible count and the warning icon when multiple header-worthy issues exist alongside info advisories", () => {
     // Arrange — two warnings + two info advisories on the same channel.
+    // Both info advisories are stranded-stock fixtures since that's the only
+    // check that genuinely emits info severity after Option A (no-shipping-
+    // zones is now a warning in both modes).
     const diagnostics = baseDiagnostics({
       useLegacyShippingZoneStockAvailability: false,
       issues: [
@@ -198,16 +333,16 @@ describe("AvailabilityCard channel header severity gating", () => {
           message: "No warehouses",
         }),
         makeIssue({
-          category: "shipping",
-          id: "no-shipping-zones",
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
           severity: "info",
-          message: "No shipping zones",
+          message: "Stranded stock A",
         }),
         makeIssue({
           category: "purchasability",
           id: "stock-outside-channel-warehouses",
           severity: "info",
-          message: "Stranded stock",
+          message: "Stranded stock B",
         }),
       ],
       hasErrors: false,
@@ -246,8 +381,8 @@ describe("AvailabilityCard channel header severity gating", () => {
           message: "No stock",
         }),
         makeIssue({
-          category: "shipping",
-          id: "no-shipping-zones",
+          category: "purchasability",
+          id: "stock-outside-channel-warehouses",
           severity: "info",
           message: "Info only",
         }),
@@ -388,9 +523,10 @@ describe("PublicApiVerificationBadge reassurance", () => {
     expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-legacy");
   });
 
-  it("does not downgrade the badge in direct mode even when there are no shipping zones", () => {
-    // Arrange — direct mode does not gate on shipping zones, so a missing
-    // shipping zone is only an info advisory, not a blocker.
+  it("downgrades the badge in direct mode when the channel has no shipping zones", () => {
+    // Arrange — direct mode decouples stock visibility from shipping zones,
+    // so the API correctly reports stock — but with zero shipping zones no
+    // customer can complete checkout. The badge must say so explicitly.
     const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
 
     // Act
@@ -403,10 +539,87 @@ describe("PublicApiVerificationBadge reassurance", () => {
       { wrapper: Wrapper },
     );
 
-    // Assert — direct-mode reassurance is preserved.
+    // Assert — coverage-aware "browseable, can't ship" override is shown.
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "not-deliverable-direct");
+    // Copy must reference the underlying cause (no shipping zones) and the
+    // observable consequence (cannot complete checkout) so the user
+    // understands the gap between "in stock" and "buyable".
+    expect(reassurance).toHaveTextContent(/no shipping zones/i);
+    expect(reassurance).toHaveTextContent(/cannot complete checkout/i);
+    expect(screen.queryByText(/^Purchasable$/i)).toBeNull();
+    expect(screen.getByText(/browseable, can't ship/i)).toBeInTheDocument();
+  });
+
+  it("keeps the standard purchasable badge when the channel has shipping zones in direct mode", () => {
+    // Arrange — same API result, but channel has at least one shipping zone.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={false}
+        shippingZoneCount={1}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — standard direct-mode reassurance is shown.
     const reassurance = screen.getByTestId("verification-reassurance");
 
     expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-direct");
+  });
+
+  it("does not downgrade the badge for non-shippable products in legacy mode (digital goods don't need shipping zones)", () => {
+    // Arrange — non-shippable product (e.g. a digital license key) in a
+    // channel with zero shipping zones. The customer can complete checkout
+    // because no shipping is needed, so the API's "Purchasable" verdict is
+    // genuinely correct and must not be overridden.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 1 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={true}
+        shippingZoneCount={0}
+        isShippingRequired={false}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — standard legacy purchasable reassurance is shown, NOT the
+    // "no coverage" override.
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-legacy");
+    expect(screen.queryByText(/reports stock, but no coverage/i)).toBeNull();
+  });
+
+  it("does not downgrade the badge for non-shippable products in direct mode either", () => {
+    // Arrange — same as above but in direct mode.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 1 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={false}
+        shippingZoneCount={0}
+        isShippingRequired={false}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — standard direct-mode purchasable reassurance is shown, NOT
+    // the "browseable, can't ship" override (the product doesn't need to
+    // ship at all).
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-direct");
+    expect(screen.queryByText(/browseable, can't ship/i)).toBeNull();
   });
 
   it("points to the issue list when verification reports not purchasable", () => {

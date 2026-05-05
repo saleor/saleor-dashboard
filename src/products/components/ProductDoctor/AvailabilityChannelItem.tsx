@@ -53,6 +53,12 @@ interface AvailabilityChannelItemProps {
   /** Active stock-availability mode for the shop. Used to tailor the reassurance
    *  text under the public-API verification badge. Defaults to legacy. */
   useLegacyShippingZoneStockAvailability?: boolean;
+  /** Whether the product type requires shipping. Drives whether the public-API
+   *  badge's coverage-aware override applies — non-shippable products (digital
+   *  goods, license keys) can be purchased without any shipping zones, so the
+   *  override must not fire for them. Defaults to true (the conservative legacy
+   *  assumption). */
+  isShippingRequired?: boolean;
 }
 
 export const AvailabilityChannelItem = ({
@@ -70,6 +76,7 @@ export const AvailabilityChannelItem = ({
   verificationResult,
   onVerify,
   useLegacyShippingZoneStockAvailability = true,
+  isShippingRequired = true,
 }: AvailabilityChannelItemProps) => {
   const intl = useIntl();
   const dateNow = useCurrentDate();
@@ -320,6 +327,7 @@ export const AvailabilityChannelItem = ({
             onVerify={onVerify}
             useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
             shippingZoneCount={summary.shippingZoneCount}
+            isShippingRequired={isShippingRequired}
           />
         </Box>
       </Accordion.Content>
@@ -414,6 +422,10 @@ interface PublicApiVerificationSectionProps {
    *  when the dashboard user lacks the permission to read shipping zones,
    *  in which case we do not downgrade the verdict. */
   shippingZoneCount: number | "unknown";
+  /** Whether the product requires shipping. The badge override only applies
+   *  to shippable products — digital goods can be purchased without any
+   *  shipping configuration. */
+  isShippingRequired: boolean;
 }
 
 const VERIFICATION_COOLDOWN_MS = 1500;
@@ -423,6 +435,7 @@ const PublicApiVerificationSection = ({
   onVerify,
   useLegacyShippingZoneStockAvailability,
   shippingZoneCount,
+  isShippingRequired,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
@@ -491,6 +504,7 @@ const PublicApiVerificationSection = ({
             // intact rather than misleading users with limited permissions.
             shippingZoneCount === "unknown" ? undefined : shippingZoneCount
           }
+          isShippingRequired={isShippingRequired}
         />
       )}
     </Box>

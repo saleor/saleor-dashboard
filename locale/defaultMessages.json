@@ -2116,6 +2116,10 @@
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
   },
+  "A6mmoM": {
+    "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
+    "string": "The public API reports the product as in stock — direct mode resolves stock from the warehouse-channel link without requiring a shipping zone. However, no shipping zones are configured for this channel, so customers cannot complete checkout."
+  },
   "A7W4KO": {
     "string": "Catalog rule"
   },
@@ -8607,6 +8611,10 @@
     "context": "dialog header",
     "string": "Unpublish models"
   },
+  "kGBmBz": {
+    "context": "Message when no errors or warnings, but exactly one info-level advisory exists",
+    "string": "All channels configured correctly · 1 advisory"
+  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -9919,6 +9927,10 @@
     "context": "option label prefix for using a typed email address",
     "string": "Use email:"
   },
+  "reogdY": {
+    "context": "Message when no errors or warnings, but more than one info-level advisory exists",
+    "string": "All channels configured correctly · {count} advisories"
+  },
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
@@ -11176,6 +11188,10 @@
   },
   "yAgKyi": {
     "string": "Webhook created"
+  },
+  "yD1Ylr": {
+    "context": "Public API verification: customer can browse the product but no shipping method is available at checkout (direct mode, no shipping zones)",
+    "string": "Browseable, can't ship"
   },
   "yDkmX7": {
     "context": "dialog content",

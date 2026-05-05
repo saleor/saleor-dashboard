@@ -291,6 +291,12 @@ export const messages = defineMessages({
     description:
       "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
   },
+  publicApiBrowseableNoShipping: {
+    id: "yD1Ylr",
+    defaultMessage: "Browseable, can't ship",
+    description:
+      "Public API verification: customer can browse the product but no shipping method is available at checkout (direct mode, no shipping zones)",
+  },
   publicApiVariantsInStock: {
     id: "7G7tg3",
     defaultMessage: "{count, plural, one {# variant in stock} other {# variants in stock}}",
@@ -350,6 +356,13 @@ export const messages = defineMessages({
       "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete.",
     description:
       "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+  },
+  verificationReassurance_notDeliverableDirect: {
+    id: "A6mmoM",
+    defaultMessage:
+      "The public API reports the product as in stock — direct mode resolves stock from the warehouse-channel link without requiring a shipping zone. However, no shipping zones are configured for this channel, so customers cannot complete checkout.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
   },
   testButton: {
     defaultMessage: "Test",
@@ -591,6 +604,16 @@ export const messages = defineMessages({
     id: "azych5",
     defaultMessage: "All channels configured correctly",
     description: "Message when no diagnostic issues found",
+  },
+  allChannelsHealthyWithAdvisory: {
+    id: "kGBmBz",
+    defaultMessage: "All channels configured correctly · 1 advisory",
+    description: "Message when no errors or warnings, but exactly one info-level advisory exists",
+  },
+  allChannelsHealthyWithAdvisories: {
+    id: "reogdY",
+    defaultMessage: "All channels configured correctly · {count} advisories",
+    description: "Message when no errors or warnings, but more than one info-level advisory exists",
   },
 
   // Stock availability mode indicator (Saleor 3.23+)

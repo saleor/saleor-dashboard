@@ -264,7 +264,7 @@ describe("countIssuesBySeverity", () => {
     const result = countIssuesBySeverity([]);
 
     // Assert
-    expect(result).toEqual({ errorCount: 0, warningCount: 0 });
+    expect(result).toEqual({ errorCount: 0, warningCount: 0, infoCount: 0 });
   });
 
   it("should count errors and warnings correctly", () => {
@@ -280,6 +280,6 @@ describe("countIssuesBySeverity", () => {
     const result = countIssuesBySeverity(issues);
 
     // Assert
-    expect(result).toEqual({ errorCount: 2, warningCount: 1 });
+    expect(result).toEqual({ errorCount: 2, warningCount: 1, infoCount: 1 });
   });
 });
