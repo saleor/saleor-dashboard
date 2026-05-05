@@ -2131,6 +2131,10 @@
     "context": "Product can be purchased by customers",
     "string": "Purchasable"
   },
+  "AFZfCS": {
+    "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+    "string": "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete."
+  },
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
@@ -2844,10 +2848,6 @@
   "ESft7g": {
     "context": "Warning when warehouse with stock not in shipping zone",
     "string": "Stock unreachable in \"{channelName}\""
-  },
-  "EURyYW": {
-    "context": "Reassurance under verification badge when product is purchasable in direct mode",
-    "string": "Storefront API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
   },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
@@ -5075,6 +5075,10 @@
     "context": "is filter range or value",
     "string": "between"
   },
+  "QEXGYB": {
+    "context": "Reassurance under verification badge when product is purchasable in legacy mode",
+    "string": "The public API confirms the product is purchasable for customers covered by the channel's shipping zones."
+  },
   "QFCUEt": {
     "string": "Slug must be unique"
   },
@@ -5868,6 +5872,10 @@
     "context": "no categories",
     "string": "No categories found"
   },
+  "UuX9YV": {
+    "context": "Reassurance under verification badge when product is not purchasable",
+    "string": "The public API does not return this product as purchasable. Review the issues listed above to resolve."
+  },
   "UvD+xp": {
     "context": "attribute values",
     "string": "Value {number}"
@@ -5955,10 +5963,6 @@
   },
   "VNX4fn": {
     "string": "Proceed"
-  },
-  "VNXfqA": {
-    "context": "Reassurance under verification badge when product is purchasable in legacy mode",
-    "string": "Storefront API confirms the product is purchasable for customers covered by the channel's shipping zones."
   },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
@@ -6744,10 +6748,6 @@
   },
   "ZdCdo5": {
     "string": "Last updated: {date}"
-  },
-  "ZemrGW": {
-    "context": "Reassurance under verification badge when product is not visible to public API",
-    "string": "The storefront API cannot find this product. Confirm it is published and listed in this channel."
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -10189,6 +10189,10 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tFx7UX": {
+    "context": "Reassurance under verification badge when product is not visible to public API",
+    "string": "The public API cannot find this product. Confirm it is published and listed in this channel."
+  },
   "tI7/Ib": {
     "string": "Extension requested permissions that are not available in Saleor."
   },
@@ -10392,6 +10396,10 @@
   "uKlrEk": {
     "context": "all selected items message",
     "string": "All available {itemsName} have been selected"
+  },
+  "uL33aH": {
+    "context": "Reassurance under verification badge when product is purchasable in direct mode",
+    "string": "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
   },
   "uN88fb": {
     "context": "button, submit form",
@@ -10694,6 +10702,10 @@
     "context": "default product variant indicator",
     "string": "Default"
   },
+  "vZN+nE": {
+    "context": "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+    "string": "Reports stock, but no coverage"
+  },
   "vaFjs6": {
     "string": "No warehouses available to add"
   },
@@ -10882,10 +10894,6 @@
   "wOaLvi": {
     "context": "relative time",
     "string": "just now"
-  },
-  "wPODVm": {
-    "context": "Reassurance under verification badge when product is not purchasable",
-    "string": "The storefront API does not return this product as purchasable. Review the issues listed above to resolve."
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"

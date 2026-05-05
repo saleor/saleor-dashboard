@@ -285,6 +285,12 @@ export const messages = defineMessages({
     defaultMessage: "Not visible",
     description: "Product is not visible via public API",
   },
+  publicApiReportsStockNoCoverage: {
+    id: "vZN+nE",
+    defaultMessage: "Reports stock, but no coverage",
+    description:
+      "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+  },
   publicApiVariantsInStock: {
     id: "7G7tg3",
     defaultMessage: "{count, plural, one {# variant in stock} other {# variants in stock}}",
@@ -312,31 +318,38 @@ export const messages = defineMessages({
   },
 
   // Mode-aware reassurance shown beneath the verification badge after a run.
-  // Tells the user what the storefront-API result means for the shop's active
+  // Tells the user what the public-API result means for the shop's active
   // stock-availability mode (Saleor 3.23+).
   verificationReassurance_purchasableLegacy: {
-    id: "VNXfqA",
+    id: "QEXGYB",
     defaultMessage:
-      "Storefront API confirms the product is purchasable for customers covered by the channel's shipping zones.",
+      "The public API confirms the product is purchasable for customers covered by the channel's shipping zones.",
     description: "Reassurance under verification badge when product is purchasable in legacy mode",
   },
   verificationReassurance_purchasableDirect: {
-    id: "EURyYW",
+    id: "uL33aH",
     defaultMessage:
-      "Storefront API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones.",
+      "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones.",
     description: "Reassurance under verification badge when product is purchasable in direct mode",
   },
   verificationReassurance_notPurchasable: {
-    id: "wPODVm",
+    id: "UuX9YV",
     defaultMessage:
-      "The storefront API does not return this product as purchasable. Review the issues listed above to resolve.",
+      "The public API does not return this product as purchasable. Review the issues listed above to resolve.",
     description: "Reassurance under verification badge when product is not purchasable",
   },
   verificationReassurance_notVisible: {
-    id: "ZemrGW",
+    id: "tFx7UX",
     defaultMessage:
-      "The storefront API cannot find this product. Confirm it is published and listed in this channel.",
+      "The public API cannot find this product. Confirm it is published and listed in this channel.",
     description: "Reassurance under verification badge when product is not visible to public API",
+  },
+  verificationReassurance_notReachableLegacy: {
+    id: "AFZfCS",
+    defaultMessage:
+      "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
   },
   testButton: {
     defaultMessage: "Test",

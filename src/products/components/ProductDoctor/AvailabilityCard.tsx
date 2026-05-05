@@ -479,11 +479,18 @@ interface PublicApiVerificationBadgeProps {
   /** Active stock-availability mode. Drives the reassurance line so users know
    *  what was just verified given the shop's mode. Defaults to legacy. */
   useLegacyShippingZoneStockAvailability?: boolean;
+  /** Number of shipping zones configured for the channel. In legacy mode, a
+   *  channel with zero shipping zones cannot deliver to any customer, so a
+   *  "purchasable" verdict from the public API is misleading — we override it
+   *  with a coverage-aware warning. Optional for backwards compatibility; when
+   *  undefined we fall back to the API-reported verdict. */
+  shippingZoneCount?: number;
 }
 
 export const PublicApiVerificationBadge = ({
   result,
   useLegacyShippingZoneStockAvailability = true,
+  shippingZoneCount,
 }: PublicApiVerificationBadgeProps) => {
   const intl = useIntl();
 
@@ -530,6 +537,26 @@ export const PublicApiVerificationBadge = ({
   }
 
   if (isAvailable && variantsWithStock > 0) {
+    // In legacy mode, "isAvailable" is computed from raw warehouse stock and
+    // does not gate on shipping zones — so the public API can report stock
+    // even when no shipping zone covers the channel and no customer can
+    // actually complete checkout. Surface that gap explicitly instead of
+    // showing a misleading green "Purchasable" badge.
+    if (useLegacyShippingZoneStockAvailability && shippingZoneCount === 0) {
+      return (
+        <PublicApiVerificationBadgeShell
+          icon={<XCircle size={14} color="var(--mu-colors-text-warning1)" />}
+          statusColor="warning1"
+          status={intl.formatMessage(messages.publicApiReportsStockNoCoverage)}
+          statusSuffix={intl.formatMessage(messages.publicApiVariantsInStock, {
+            count: variantsWithStock,
+          })}
+          reassurance={intl.formatMessage(messages.verificationReassurance_notReachableLegacy)}
+          reassuranceTestId="not-reachable-legacy"
+        />
+      );
+    }
+
     return (
       <PublicApiVerificationBadgeShell
         icon={<CheckCircle size={14} color="var(--mu-colors-text-success1)" />}
