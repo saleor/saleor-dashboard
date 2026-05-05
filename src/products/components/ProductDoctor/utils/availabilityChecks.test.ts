@@ -323,8 +323,13 @@ describe("runAvailabilityChecks", () => {
       expect(zoneIssue?.severity).toBe("warning");
     });
 
-    it("should downgrade no-shipping-zones to info severity in direct mode", () => {
-      // Arrange
+    it("keeps no-shipping-zones at warning severity in direct mode (same customer impact as legacy)", () => {
+      // Arrange — direct mode decouples stock visibility from shipping zones,
+      // but the customer-facing outcome of "zero shipping zones" is identical
+      // to legacy: the product is browseable yet no checkout can complete.
+      // That makes it a hard configuration gap, not an advisory — so the
+      // doctor must surface it as a warning in both modes for consistent
+      // banner / channel-header treatment.
       const product = createProduct({ isShippingRequired: true });
       const channelData = createChannelData({ shippingZones: [] });
       const channelListing = product.channelListings[0];
@@ -338,10 +343,11 @@ describe("runAvailabilityChecks", () => {
       const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
 
       expect(shippingIssue).toBeDefined();
-      expect(shippingIssue?.severity).toBe("info");
-      // Direct-mode copy reflects that browsing/cart works but no shipping
-      // methods are available at checkout — it does NOT claim the product is
-      // unavailable, since direct mode reports it as available.
+      expect(shippingIssue?.severity).toBe("warning");
+      // The mode-specific copy is preserved: direct-mode wording reflects that
+      // browsing/cart works but no shipping methods are available at checkout
+      // — it does NOT claim the product is unavailable, since direct mode
+      // reports it as available via the public API.
       expect(shippingIssue?.description).toMatch(/no shipping methods will be available/i);
       expect(shippingIssue?.description).not.toMatch(/appear unavailable/i);
     });
