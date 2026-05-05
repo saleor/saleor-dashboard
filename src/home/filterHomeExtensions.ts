@@ -1,5 +1,6 @@
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
@@ -13,6 +14,11 @@ export const filterHomeExtensions = (
     }
 
     if (!hasPermissions(userPermissions, extension.permissions)) {
+      return false;
+    }
+
+    // Relative extension URLs require an appUrl to resolve against - skip when absent
+    if (!extension.url || (!isUrlAbsolute(extension.url) && !extension.app.appUrl)) {
       return false;
     }
 

@@ -1,6 +1,8 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { getUserName } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
+import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router";
 import { Redirect } from "react-router-dom";
 
@@ -46,12 +48,23 @@ export const HomePage = () => {
     return <Redirect to={homeWidgetUrl(visibleExtensions[0].id)} />;
   }
 
+  const userName = getUserName(user, true);
+
   return (
     <Box display="flex" flexDirection="column" height="100%">
+      <Box paddingX={6} paddingTop={6}>
+        <Text size={6} fontWeight="bold" as="h1" data-test-id="welcome-header">
+          <FormattedMessage
+            id="0+zatS"
+            defaultMessage="Hello {userName}, welcome to your Store Dashboard"
+            values={{ userName }}
+          />
+        </Text>
+      </Box>
       <Box paddingX={6} paddingTop={4}>
         <HomeWidgetTabs extensions={visibleExtensions} activeExtensionId={activeExtension.id} />
       </Box>
-      <Box __flex="1" __minHeight={0}>
+      <Box padding={6} width="100%" __flex="1" __minHeight={0}>
         <HomeWidgetView extension={activeExtension} />
       </Box>
     </Box>
