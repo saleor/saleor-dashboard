@@ -12157,6 +12157,14 @@ export type ModelsOfTypeQueryVariables = Exact<{
 
 export type ModelsOfTypeQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }> } | null };
 
+export type SaveOnBoardingStateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+}>;
+
+
+export type SaveOnBoardingStateMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
+
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;

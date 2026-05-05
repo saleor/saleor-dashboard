@@ -50,6 +50,7 @@ import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import { NotFound } from "./NotFound";
+import { OnboardingProvider } from "./onboarding/OnboardingContext";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
@@ -132,7 +133,9 @@ const App = (): JSX.Element => (
                                 <NavigatorSearchProvider>
                                   <SavebarRefProvider>
                                     <FeatureFlagsProviderWithUser>
-                                      <Routes />
+                                      <OnboardingProvider>
+                                        <Routes />
+                                      </OnboardingProvider>
                                     </FeatureFlagsProviderWithUser>
                                   </SavebarRefProvider>
                                 </NavigatorSearchProvider>

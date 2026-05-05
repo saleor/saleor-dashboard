@@ -15,6 +15,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useOnboarding } from "@dashboard/onboarding/OnboardingContext";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -49,6 +50,7 @@ const StaffList = ({ params }: StaffListProps) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
   const { valueProvider } = useConditionalFilterContext();
   const filters = createStaffMembersQueryVariables(valueProvider.value);
 
@@ -79,6 +81,7 @@ const StaffList = ({ params }: StaffListProps) => {
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
+        markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
           text: intl.formatMessage({ id: "8a7vg2", defaultMessage: "Staff member invited" }),

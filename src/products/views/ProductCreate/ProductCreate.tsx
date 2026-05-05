@@ -24,6 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { getMutationErrors } from "@dashboard/misc";
+import { useOnboarding } from "@dashboard/onboarding/OnboardingContext";
 import ProductCreatePage, {
   type ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -63,6 +64,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const { markOnboardingStepAsCompleted } = useOnboarding();
   const intl = useIntl();
   const [productCreateComplete, setProductCreateComplete] = useState(false);
   const selectedProductTypeId = params["product-type-id"];
@@ -203,6 +205,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     )(data);
 
     if (!errors?.length) {
+      markOnboardingStepAsCompleted("create-product");
       setProductCreateComplete(true);
     }
 

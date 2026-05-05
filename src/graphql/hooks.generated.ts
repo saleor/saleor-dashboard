@@ -11574,6 +11574,42 @@ export function useModelsOfTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type ModelsOfTypeQueryHookResult = ReturnType<typeof useModelsOfTypeQuery>;
 export type ModelsOfTypeLazyQueryHookResult = ReturnType<typeof useModelsOfTypeLazyQuery>;
 export type ModelsOfTypeQueryResult = Apollo.QueryResult<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>;
+export const SaveOnBoardingStateDocument = gql`
+    mutation SaveOnBoardingState($id: ID!, $input: [MetadataInput!]!) {
+  updateMetadata(id: $id, input: $input) {
+    errors {
+      ...MetadataError
+    }
+  }
+}
+    ${MetadataErrorFragmentDoc}`;
+export type SaveOnBoardingStateMutationFn = Apollo.MutationFunction<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>;
+
+/**
+ * __useSaveOnBoardingStateMutation__
+ *
+ * To run a mutation, you first call `useSaveOnBoardingStateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveOnBoardingStateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveOnBoardingStateMutation, { data, loading, error }] = useSaveOnBoardingStateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSaveOnBoardingStateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>(SaveOnBoardingStateDocument, options);
+      }
+export type SaveOnBoardingStateMutationHookResult = ReturnType<typeof useSaveOnBoardingStateMutation>;
+export type SaveOnBoardingStateMutationResult = Apollo.MutationResult<Types.SaveOnBoardingStateMutation>;
+export type SaveOnBoardingStateMutationOptions = Apollo.BaseMutationOptions<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
