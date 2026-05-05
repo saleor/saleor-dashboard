@@ -69,6 +69,10 @@ describe("mapToExtensionsItems", () => {
     );
   });
 
+  // Absolute extension URLs point to a different origin, so they can't be expressed as a
+  // dashboard route like `/extensions/app/{id}/...`. The menu item still renders and is
+  // launched via `onClick: open` (which opens the iframe / new tab) — `url` only feeds
+  // route matching, which doesn't apply here.
   it("returns undefined url for extensions with absolute URL", () => {
     const absoluteExtension: Extension = {
       ...mockExtension,

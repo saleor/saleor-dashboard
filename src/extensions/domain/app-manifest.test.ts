@@ -210,9 +210,6 @@ describe("App Manifest Schema", () => {
     it.each(["APP_PAGE", "POPUP", "NEW_TAB"] as const)(
       "should reject relative URL without appUrl (%s target)",
       targetName => {
-        // The previous behavior accepted relative URLs for non-NEW_TAB targets without
-        // appUrl, which broke downstream URL resolution. All targets that resolve
-        // a relative URL require appUrl.
         // Arrange
         const invalidData = getValidManifestBase({ appUrl: null });
 
@@ -238,6 +235,37 @@ describe("App Manifest Schema", () => {
             "To use relative URL, you must specify appUrl.",
           );
         }
+      },
+    );
+
+    // APP_PAGE intentionally omitted: a separate rule requires APP_PAGE to use a relative URL,
+    // so the "absolute URL without appUrl" combination is unreachable for APP_PAGE.
+    it.each([
+      ["POPUP", "PRODUCT_OVERVIEW_CREATE"],
+      ["NEW_TAB", "PRODUCT_OVERVIEW_CREATE"],
+      ["WIDGET", "ORDER_DETAILS_WIDGETS"],
+    ] as const)(
+      "should accept absolute URL without appUrl (%s target)",
+      (targetName, mountName) => {
+        // Arrange
+        const validData = getValidManifestBase({ appUrl: undefined });
+
+        validData.extensions = [
+          {
+            label: "Extension",
+            url: "https://example.com/ext",
+            mountName,
+            targetName,
+            permissions: [],
+            __typename: "AppManifestExtension",
+          },
+        ];
+
+        // Act
+        const result = appManifestSchema.safeParse(validData);
+
+        // Assert
+        expect(result.success).toBe(true);
       },
     );
 
