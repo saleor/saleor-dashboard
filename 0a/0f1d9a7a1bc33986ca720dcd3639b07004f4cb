@@ -1,0 +1,54 @@
+types.d.ts
+  bf4811f47f8810f4 26
+src/home/ripples/homeWidgets.tsx
+  bf4811f47f8810f4 1-7,10-14
+  h_463c3d2f499c35 8-9
+src/ripples/allRipples.ts
+  bf4811f47f8810f4 5,48-50
+src/extensions/components/IframePost/IframePost.tsx
+  bf4811f47f8810f4 1,16,30,71-83
+src/home/HomePage.tsx
+  bf4811f47f8810f4 4,13,65
+  h_463c3d2f499c35 57
+src/config.ts
+  bf4811f47f8810f4 35-37
+src/index.html
+  bf4811f47f8810f4 21
+src/home/isExternalAppUrl.ts
+  bf4811f47f8810f4 1-17
+.env.template
+  bf4811f47f8810f4 5-6
+src/home/isExternalAppUrl.test.ts
+  bf4811f47f8810f4 1-90
+vite.config.js
+  bf4811f47f8810f4 47,87
+src/home/HomeWidgetTabs.tsx
+  bf4811f47f8810f4 2,8,18-20,26-42,44-47
+src/home/HomeWidgetView.tsx
+  bf4811f47f8810f4 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "0a0f1d9a7a1bc33986ca720dcd3639b07004f4cb",
+  "prompts": {
+    "bf4811f47f8810f4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d19911a2-439c-4433-bb59-6e76a181661b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 216,
+      "total_deletions": 26,
+      "accepted_lines": 208,
+      "overriden_lines": 6
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
