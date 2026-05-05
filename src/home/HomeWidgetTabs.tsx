@@ -72,8 +72,18 @@ export const HomeWidgetTabs = ({
           testId="home-widgets-tab"
         >
           <Box display="inline-flex" alignItems="center" gap={2}>
-            <Blocks size={16} />
-            <span>{intl.formatMessage(messages.widgetsTab)}</span>
+            <Box
+              __width={20}
+              __height={20}
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Blocks size={16} />
+            </Box>
+            <Box display="inline-flex" flexDirection="column">
+              <span>{intl.formatMessage(messages.widgetsTab)}</span>
+            </Box>
           </Box>
         </HomeTab>
       )}
