@@ -1,0 +1,52 @@
+src/home/HomeWidgetCell.tsx
+  f8906ade9b1cfe41 1-58
+src/extensions/domain/app-extension-manifest-options.test.ts
+  f8906ade9b1cfe41 264,279
+src/home/filterHomeExtensions.test.ts
+  f8906ade9b1cfe41 33,41-42,45,57-58,61,73-90,101-102,117-118,126,134,137,140-182,189-190
+src/home/HomePage.tsx
+  f8906ade9b1cfe41 7,11-12,15,19-33,37,43,45,58-67,70,72-82,86,101-105,108-114
+src/home/filterHomeExtensions.ts
+  f8906ade9b1cfe41 7-11,15-18,20,24,28,32-39,41-42
+src/home/HomeWidgetView.tsx
+  f8906ade9b1cfe41 3,9-11
+src/extensions/domain/app-extension-manifest-options.ts
+  f8906ade9b1cfe41 17
+src/home/HomeWidgetsGrid.tsx
+  f8906ade9b1cfe41 1-22
+src/home/HomeWidgetTabs.tsx
+  f8906ade9b1cfe41 6-7,9,13-14,16-22,24-26,29-33,35,39,42,68-79
+src/home/ExtensionIframe.tsx
+  f8906ade9b1cfe41 1-52
+src/home/HomeWidgetTabs.stories.tsx
+  f8906ade9b1cfe41 59-61,71-85,88,109-110,131-139
+src/index.tsx
+  f8906ade9b1cfe41 190
+src/home/urls.ts
+  f8906ade9b1cfe41 3-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "8705b6643c180696f646d2cfd2dafe443f90ef2b",
+  "prompts": {
+    "f8906ade9b1cfe41": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8d10235d-66b7-4e65-92cb-520f766e3014",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 460,
+      "total_deletions": 116,
+      "accepted_lines": 486,
+      "overriden_lines": 2
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
