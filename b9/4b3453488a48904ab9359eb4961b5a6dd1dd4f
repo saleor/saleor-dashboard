@@ -1,0 +1,39 @@
+src/extensions/isSaleorOfficialAppUrl.ts
+  bf4811f47f8810f4 1-23
+src/home/HomeWidgetTabs.stories.tsx
+  bf4811f47f8810f4 1-117
+src/home/HomeWidgetTabs.tsx
+  bf4811f47f8810f4 21-38,40-45,47-49
+src/extensions/getExtensionsItems.test.ts
+  bf4811f47f8810f4 55
+src/extensions/isSaleorOfficialAppUrl.test.ts
+  bf4811f47f8810f4 1-90
+src/home/filterHomeExtensions.test.ts
+  bf4811f47f8810f4 28
+src/extensions/types.ts
+  bf4811f47f8810f4 86-91
+src/components/Sidebar/menu/utils.test.ts
+  bf4811f47f8810f4 44,218
+src/extensions/hooks/useExtensions.ts
+  bf4811f47f8810f4 9,39-40,51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "b94b3453488a48904ab9359eb4961b5a6dd1dd4f",
+  "prompts": {
+    "bf4811f47f8810f4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d19911a2-439c-4433-bb59-6e76a181661b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 323,
+      "total_deletions": 66,
+      "accepted_lines": 312,
+      "overriden_lines": 1
+    }
+  }
+}
