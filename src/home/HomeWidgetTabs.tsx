@@ -26,18 +26,18 @@ export const HomeWidgetTabs = ({ extensions, activeExtensionId }: HomeWidgetTabs
           testId={`home-widget-tab-${extension.id}`}
         >
           <Box display="inline-flex" alignItems="center" gap={2}>
-            {extension.isSaleorOfficial && (
-              <Box
-                __width={20}
-                __height={20}
-                display="inline-flex"
-                alignItems="center"
-                justifyContent="center"
-                data-test-id={`saleor-app-badge-${extension.id}`}
-              >
-                <SaleorLogo />
-              </Box>
-            )}
+            <Box
+              __width={extension.isSaleorOfficial ? 20 : 0}
+              __height={20}
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              data-test-id={
+                extension.isSaleorOfficial ? `saleor-app-badge-${extension.id}` : undefined
+              }
+            >
+              {extension.isSaleorOfficial && <SaleorLogo />}
+            </Box>
             <Box display="inline-flex" flexDirection="column">
               <span>{extension.label}</span>
               <Text size={1} color="default2">
