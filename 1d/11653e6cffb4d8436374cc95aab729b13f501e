@@ -1,0 +1,55 @@
+src/extensions/domain/app-manifest.test.ts
+  525ab391761aac90 188,190,209-270
+src/extensions/views/ViewManifestExtension/ViewManifestExtensionIframe.tsx
+  525ab391761aac90 10,44-51,54
+src/components/Sidebar/menu/utils.test.ts
+  525ab391761aac90 72-93
+src/extensions/urls.ts
+  525ab391761aac90 217-218,230
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.test.tsx
+  525ab391761aac90 220-282
+src/fragments/apps.ts
+  525ab391761aac90 205
+.changeset/safe-app-url-handling.md
+  525ab391761aac90 1-4
+  h_463c3d2f499c35 5
+src/extensions/hooks/useExtensions.test.ts
+  525ab391761aac90 540-646
+src/components/Sidebar/menu/utils.ts
+  525ab391761aac90 1,9-20,22-27,40
+src/extensions/hooks/useExtensions.ts
+  525ab391761aac90 25-38,116
+src/extensions/views/InstalledExtensions/hooks/useInstalledExtensions.tsx
+  525ab391761aac90 80,85,95,154,180
+src/extensions/domain/app-manifest.ts
+  525ab391761aac90 3,17
+  h_463c3d2f499c35 10
+src/extensions/views/EditManifestExtension/components/AppDetailsPage/AppDetailsPage.tsx
+  525ab391761aac90 4,6,14-16,18-20,23-25,60-69,71-84
+  h_463c3d2f499c35 17,21,70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "1d11653e6cffb4d8436374cc95aab729b13f501e",
+  "prompts": {
+    "525ab391761aac90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dc9092d8-9fdf-4639-ac5b-5054e98397e0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 11976,
+      "total_deletions": 44,
+      "accepted_lines": 11963,
+      "overriden_lines": 10
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
