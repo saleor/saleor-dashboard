@@ -1,3 +1,4 @@
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { getAbsoluteApiUrl } from "@dashboard/config";
 import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
@@ -12,6 +13,7 @@ interface IframePostProps {
   accessToken: string;
   params?: AppDetailsUrlMountQueryParams;
   height?: number | string;
+  loaderType?: "skeleton" | "throbber";
 }
 
 /**
@@ -25,6 +27,7 @@ export const IframePost = ({
   accessToken,
   params,
   height = 200,
+  loaderType = "skeleton",
 }: IframePostProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -65,8 +68,19 @@ export const IframePost = ({
             <input type="hidden" key={key} name={key} value={value} />
           ))}
       </form>
-      <Box ref={loadingRef} width="100%" __height={height as number | string}>
-        <Skeleton __height={height as number | string} />
+      <Box
+        ref={loadingRef}
+        width="100%"
+        __height={height as number | string}
+        display={loaderType === "throbber" ? "flex" : "block"}
+        alignItems={loaderType === "throbber" ? "center" : undefined}
+        justifyContent={loaderType === "throbber" ? "center" : undefined}
+      >
+        {loaderType === "throbber" ? (
+          <SaleorThrobber />
+        ) : (
+          <Skeleton __height={height as number | string} />
+        )}
       </Box>
       <Box
         style={hiddenStyle}

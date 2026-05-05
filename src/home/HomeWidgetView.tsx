@@ -26,6 +26,7 @@ export const HomeWidgetView = ({ extension }: HomeWidgetViewProps) => {
           extensionId={extension.id}
           extensionUrl={extensionUrl}
           height="100%"
+          loaderType="throbber"
         />
       </Box>
     );
