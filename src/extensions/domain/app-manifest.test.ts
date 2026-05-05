@@ -214,7 +214,7 @@ describe("App Manifest Schema", () => {
         // appUrl, which broke downstream URL resolution. All targets that resolve
         // a relative URL require appUrl.
         // Arrange
-        const invalidData = getValidManifestBase({ appUrl: undefined });
+        const invalidData = getValidManifestBase({ appUrl: null });
 
         invalidData.extensions = [
           {
