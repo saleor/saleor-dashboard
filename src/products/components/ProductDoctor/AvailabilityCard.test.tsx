@@ -294,6 +294,75 @@ describe("PublicApiVerificationBadge reassurance", () => {
     expect(reassurance).toHaveTextContent(/regardless of shipping zones/i);
   });
 
+  it("overrides the purchasable verdict when in legacy mode and the channel has no shipping zones", () => {
+    // Arrange — API reports stock + isAvailable, but the channel's
+    // shippingZoneCount is 0. In legacy mode this means no customer is
+    // reachable, so the green "Purchasable" badge would be misleading.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={true}
+        shippingZoneCount={0}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — the badge is downgraded to a coverage-aware warning.
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "not-reachable-legacy");
+    expect(reassurance).toHaveTextContent(/no shipping zones/i);
+    expect(reassurance).toHaveTextContent(/checkout cannot complete/i);
+    // The "Purchasable" headline must NOT be shown — that's the whole point
+    // of the override.
+    expect(screen.queryByText(/^Purchasable$/i)).toBeNull();
+    expect(screen.getByText(/reports stock, but no coverage/i)).toBeInTheDocument();
+  });
+
+  it("keeps the standard purchasable badge when the channel has shipping zones in legacy mode", () => {
+    // Arrange — same API result, but channel has at least one shipping zone.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={true}
+        shippingZoneCount={1}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — standard "Purchasable" reassurance is shown.
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-legacy");
+  });
+
+  it("does not downgrade the badge in direct mode even when there are no shipping zones", () => {
+    // Arrange — direct mode does not gate on shipping zones, so a missing
+    // shipping zone is only an info advisory, not a blocker.
+    const result = makeVerification({ isAvailable: true, variantsWithStock: 2 });
+
+    // Act
+    render(
+      <PublicApiVerificationBadge
+        result={result}
+        useLegacyShippingZoneStockAvailability={false}
+        shippingZoneCount={0}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert — direct-mode reassurance is preserved.
+    const reassurance = screen.getByTestId("verification-reassurance");
+
+    expect(reassurance).toHaveAttribute("data-test-reassurance", "purchasable-direct");
+  });
+
   it("points to the issue list when verification reports not purchasable", () => {
     // Arrange
     const result = makeVerification({ isAvailable: false, variantsWithStock: 0 });

@@ -314,6 +314,7 @@ export const AvailabilityChannelItem = ({
             verificationResult={verificationResult}
             onVerify={onVerify}
             useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+            shippingZoneCount={summary.shippingZoneCount}
           />
         </Box>
       </Accordion.Content>
@@ -361,6 +362,11 @@ interface PublicApiVerificationSectionProps {
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
   useLegacyShippingZoneStockAvailability: boolean;
+  /** Number of shipping zones for the channel — drives the coverage-aware
+   *  override of the "Purchasable" badge in legacy mode. May be "unknown"
+   *  when the dashboard user lacks the permission to read shipping zones,
+   *  in which case we do not downgrade the verdict. */
+  shippingZoneCount: number | "unknown";
 }
 
 const VERIFICATION_COOLDOWN_MS = 1500;
@@ -369,6 +375,7 @@ const PublicApiVerificationSection = ({
   verificationResult,
   onVerify,
   useLegacyShippingZoneStockAvailability,
+  shippingZoneCount,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
@@ -431,6 +438,12 @@ const PublicApiVerificationSection = ({
         <PublicApiVerificationBadge
           result={verificationResult}
           useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+          shippingZoneCount={
+            // Forward the count only when we actually know it. Passing
+            // undefined for "unknown" keeps the API-reported verdict
+            // intact rather than misleading users with limited permissions.
+            shippingZoneCount === "unknown" ? undefined : shippingZoneCount
+          }
         />
       )}
     </Box>

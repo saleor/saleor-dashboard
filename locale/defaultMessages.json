@@ -2847,7 +2847,7 @@
   },
   "EURyYW": {
     "context": "Reassurance under verification badge when product is purchasable in direct mode",
-    "string": "Storefront API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
+    "string": "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
   },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
@@ -5954,7 +5954,7 @@
   },
   "VNXfqA": {
     "context": "Reassurance under verification badge when product is purchasable in legacy mode",
-    "string": "Storefront API confirms the product is purchasable for customers covered by the channel's shipping zones."
+    "string": "The public API confirms the product is purchasable for customers covered by the channel's shipping zones."
   },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
@@ -6739,7 +6739,7 @@
   },
   "ZemrGW": {
     "context": "Reassurance under verification badge when product is not visible to public API",
-    "string": "The storefront API cannot find this product. Confirm it is published and listed in this channel."
+    "string": "The public API cannot find this product. Confirm it is published and listed in this channel."
   },
   "ZepEWY": {
     "context": "Dry run item",
@@ -10690,6 +10690,10 @@
     "context": "default product variant indicator",
     "string": "Default"
   },
+  "vZN+nE": {
+    "context": "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+    "string": "Reports stock, but no coverage"
+  },
   "vaFjs6": {
     "string": "No warehouses available to add"
   },
@@ -10881,7 +10885,7 @@
   },
   "wPODVm": {
     "context": "Reassurance under verification badge when product is not purchasable",
-    "string": "The storefront API does not return this product as purchasable. Review the issues listed above to resolve."
+    "string": "The public API does not return this product as purchasable. Review the issues listed above to resolve."
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
@@ -10913,6 +10917,10 @@
   "wabGCe": {
     "context": "Tooltip line showing local timestamp of a problem event",
     "string": "Local: {time}"
+  },
+  "wawnP4": {
+    "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+    "string": "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete."
   },
   "wbsq7O": {
     "string": "Usage"
