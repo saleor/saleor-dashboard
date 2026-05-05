@@ -187,6 +187,7 @@ const Routes = () => {
                   {legacyRedirects}
                   <SectionRoute exact path="/" component={HomePage} />
                   <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
+                  <SectionRoute exact path="/home/widgets" component={HomePage} />
                   <SectionRoute
                     permissions={[
                       PermissionEnum.MANAGE_PRODUCTS,

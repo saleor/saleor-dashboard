@@ -56,8 +56,9 @@ const meta: Meta<typeof HomeWidgetTabs> = {
   title: "Home/HomeWidgetTabs",
   component: HomeWidgetTabs,
   args: {
-    activeExtensionId: officialExtension.id,
-    extensions: [officialExtension, externalExtension],
+    activeTab: { kind: "extension", id: officialExtension.id },
+    fullscreenExtensions: [officialExtension, externalExtension],
+    showWidgetsTab: false,
   },
 };
 
@@ -67,9 +68,24 @@ type Story = StoryObj<typeof HomeWidgetTabs>;
 
 export const Default: Story = {};
 
+export const WithWidgetsTab: Story = {
+  args: {
+    fullscreenExtensions: [officialExtension, externalExtension],
+    showWidgetsTab: true,
+  },
+};
+
+export const WidgetsTabActive: Story = {
+  args: {
+    fullscreenExtensions: [officialExtension, externalExtension],
+    showWidgetsTab: true,
+    activeTab: { kind: "widgets" },
+  },
+};
+
 export const OnlyOfficialApps: Story = {
   args: {
-    extensions: [
+    fullscreenExtensions: [
       officialExtension,
       buildExtension({
         id: "official-2",
@@ -90,8 +106,8 @@ export const OnlyOfficialApps: Story = {
 
 export const OnlyExternalApps: Story = {
   args: {
-    activeExtensionId: externalExtension.id,
-    extensions: [
+    activeTab: { kind: "extension", id: externalExtension.id },
+    fullscreenExtensions: [
       externalExtension,
       buildExtension({
         id: "external-2",
@@ -112,6 +128,14 @@ export const OnlyExternalApps: Story = {
 
 export const SingleTab: Story = {
   args: {
-    extensions: [officialExtension],
+    fullscreenExtensions: [officialExtension],
+  },
+};
+
+export const OnlyWidgetsTab: Story = {
+  args: {
+    fullscreenExtensions: [],
+    showWidgetsTab: true,
+    activeTab: { kind: "widgets" },
   },
 };

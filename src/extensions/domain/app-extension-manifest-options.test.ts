@@ -261,7 +261,7 @@ describe("App Extension Manifest Options Schema", () => {
       }
     });
 
-    it("should apply defaults (method=POST, fullscreen=true) when fields omitted", () => {
+    it("should apply defaults (method=POST, fullscreen=false) when fields omitted", () => {
       // Arrange
       const validData = {
         homeWidget: {},
@@ -276,7 +276,7 @@ describe("App Extension Manifest Options Schema", () => {
       if (result.success) {
         expect(result.data.homeWidget).toEqual({
           method: "POST",
-          fullscreen: true,
+          fullscreen: false,
         });
       }
     });

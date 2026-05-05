@@ -14,7 +14,7 @@ const widgetTargetOptionsSchema = z.object({
 
 const homeWidgetOptionsSchema = z.object({
   method: z.enum(["GET", "POST"], { message: "Method must be either GET or POST" }).default("POST"),
-  fullscreen: z.boolean().default(true),
+  fullscreen: z.boolean().default(false),
 });
 
 export const appExtensionManifestOptionsSchema = z

@@ -4,28 +4,45 @@ import { getUserName } from "@dashboard/misc";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
-import { useParams } from "react-router";
+import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
 
 import { filterHomeExtensions } from "./filterHomeExtensions";
-import { HomeWidgetTabs } from "./HomeWidgetTabs";
+import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
+import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
 import { HomeWidgetView } from "./HomeWidgetView";
 import { rippleHomeWidgets } from "./ripples/homeWidgets";
-import { homeWidgetUrl } from "./urls";
+import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 
 const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
+
+const resolveLeftmostTabUrl = (
+  fullscreen: ReturnType<typeof filterHomeExtensions>["fullscreen"],
+  widgets: ReturnType<typeof filterHomeExtensions>["widgets"],
+): string | null => {
+  if (fullscreen.length > 0) {
+    return homeWidgetUrl(fullscreen[0].id);
+  }
+
+  if (widgets.length > 0) {
+    return homeWidgetsUrl();
+  }
+
+  return null;
+};
 
 export const HomePage = () => {
   const { extensionId: rawExtensionId } = useParams<{ extensionId?: string }>();
   const extensionId = rawExtensionId ? decodeURIComponent(rawExtensionId) : undefined;
+  const widgetsRouteMatch = useRouteMatch({ path: "/home/widgets", exact: true });
 
   const { user } = useUser();
   const userPermissions = user?.userPermissions ?? [];
 
   const { HOMEPAGE_WIDGETS: extensions } = useExtensions(HOMEPAGE_MOUNT);
-  const visibleExtensions = filterHomeExtensions(extensions, userPermissions);
+  const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
 
-  if (visibleExtensions.length === 0) {
+  if (fullscreen.length === 0 && widgets.length === 0) {
     return (
       <Box paddingX={8} paddingY={9}>
         <Text size={6} fontWeight="bold">
@@ -38,19 +55,35 @@ export const HomePage = () => {
     );
   }
 
-  // No extension selected - redirect to first available
-  if (!extensionId) {
-    return <Redirect to={homeWidgetUrl(visibleExtensions[0].id)} />;
+  const leftmostUrl = resolveLeftmostTabUrl(fullscreen, widgets);
+
+  // Root path - redirect to leftmost tab
+  if (!extensionId && !widgetsRouteMatch) {
+    return <Redirect to={leftmostUrl!} />;
   }
 
-  const activeExtension = visibleExtensions.find(extension => extension.id === extensionId);
+  // /home/widgets but no widget extensions - redirect away
+  if (widgetsRouteMatch && widgets.length === 0) {
+    return <Redirect to={leftmostUrl!} />;
+  }
 
-  // URL points to a missing or unauthorized extension - redirect to first available
-  if (!activeExtension) {
-    return <Redirect to={homeWidgetUrl(visibleExtensions[0].id)} />;
+  let activeTab: HomeActiveTab;
+
+  if (widgetsRouteMatch) {
+    activeTab = { kind: "widgets" };
+  } else {
+    const activeExtension = fullscreen.find(extension => extension.id === extensionId);
+
+    // URL points to a missing or unauthorized fullscreen extension - redirect to leftmost tab
+    if (!activeExtension) {
+      return <Redirect to={leftmostUrl!} />;
+    }
+
+    activeTab = { kind: "extension", id: activeExtension.id };
   }
 
   const userName = getUserName(user, true);
+  const showWidgetsTab = widgets.length > 0;
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
@@ -65,10 +98,20 @@ export const HomePage = () => {
         <Ripple model={rippleHomeWidgets} />
       </Box>
       <Box paddingX={6} paddingTop={4}>
-        <HomeWidgetTabs extensions={visibleExtensions} activeExtensionId={activeExtension.id} />
+        <HomeWidgetTabs
+          fullscreenExtensions={fullscreen}
+          showWidgetsTab={showWidgetsTab}
+          activeTab={activeTab}
+        />
       </Box>
       <Box padding={6} width="100%" __flex="1" __minHeight={0}>
-        <HomeWidgetView extension={activeExtension} />
+        {activeTab.kind === "widgets" ? (
+          <HomeWidgetsGrid extensions={widgets} />
+        ) : (
+          <HomeWidgetView
+            extension={fullscreen.find(extension => extension.id === activeTab.id)!}
+          />
+        )}
       </Box>
     </Box>
   );

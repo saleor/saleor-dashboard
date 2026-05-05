@@ -30,7 +30,7 @@ const buildExtension = (overrides: Partial<Extension>): Extension => ({
 });
 
 describe("filterHomeExtensions", () => {
-  it("keeps HOMEPAGE_WIDGETS extensions with no settings (fullscreen default true)", () => {
+  it("treats HOMEPAGE_WIDGETS extensions with no settings as widget (fullscreen default false)", () => {
     // Arrange
     const extensions = [buildExtension({})];
 
@@ -38,10 +38,11 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(1);
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(1);
   });
 
-  it("keeps HOMEPAGE_WIDGETS extensions with homeWidget.fullscreen=true", () => {
+  it("treats explicit homeWidget.fullscreen=true as fullscreen", () => {
     // Arrange
     const extensions = [
       buildExtension({
@@ -53,10 +54,11 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(1);
+    expect(result.fullscreen).toHaveLength(1);
+    expect(result.widgets).toHaveLength(0);
   });
 
-  it("drops extensions with homeWidget.fullscreen=false", () => {
+  it("treats explicit homeWidget.fullscreen=false as widget", () => {
     // Arrange
     const extensions = [
       buildExtension({
@@ -68,7 +70,24 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(0);
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(1);
+  });
+
+  it("treats homeWidget without explicit fullscreen as widget (default false)", () => {
+    // Arrange
+    const extensions = [
+      buildExtension({
+        settings: { homeWidget: { method: "POST" } },
+      }),
+    ];
+
+    // Act
+    const result = filterHomeExtensions(extensions, userPermissions);
+
+    // Assert
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(1);
   });
 
   it("drops extensions with non-HOMEPAGE_WIDGETS mount", () => {
@@ -79,7 +98,8 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(0);
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(0);
   });
 
   it("drops extensions whose required permissions the user lacks", () => {
@@ -94,7 +114,8 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(0);
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(0);
   });
 
   it("keeps extensions whose required permissions the user has", () => {
@@ -102,6 +123,7 @@ describe("filterHomeExtensions", () => {
     const extensions = [
       buildExtension({
         permissions: [PermissionEnum.MANAGE_PRODUCTS],
+        settings: { homeWidget: { fullscreen: true, method: "GET" } },
       }),
     ];
 
@@ -109,21 +131,62 @@ describe("filterHomeExtensions", () => {
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result).toHaveLength(1);
+    expect(result.fullscreen).toHaveLength(1);
   });
 
-  it("preserves input order", () => {
+  it("preserves input order within each split", () => {
     // Arrange
     const extensions = [
-      buildExtension({ id: "a", label: "A" }),
-      buildExtension({ id: "b", label: "B" }),
-      buildExtension({ id: "c", label: "C" }),
+      buildExtension({
+        id: "a",
+        label: "A",
+        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+      }),
+      buildExtension({
+        id: "b",
+        label: "B",
+        settings: { homeWidget: { fullscreen: false, method: "GET" } },
+      }),
+      buildExtension({
+        id: "c",
+        label: "C",
+        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+      }),
+      buildExtension({
+        id: "d",
+        label: "D",
+        settings: { homeWidget: { fullscreen: false, method: "GET" } },
+      }),
     ];
 
     // Act
     const result = filterHomeExtensions(extensions, userPermissions);
 
     // Assert
-    expect(result.map(e => e.id)).toEqual(["a", "b", "c"]);
+    expect(result.fullscreen.map(e => e.id)).toEqual(["a", "c"]);
+    expect(result.widgets.map(e => e.id)).toEqual(["b", "d"]);
+  });
+
+  it("drops extensions with relative url and missing app appUrl", () => {
+    // Arrange
+    const extensions = [
+      buildExtension({
+        url: "/widget",
+        app: {
+          __typename: "App",
+          id: "app-1",
+          appUrl: null,
+          name: "App 1",
+          brand: null,
+        },
+      }),
+    ];
+
+    // Act
+    const result = filterHomeExtensions(extensions, userPermissions);
+
+    // Assert
+    expect(result.fullscreen).toHaveLength(0);
+    expect(result.widgets).toHaveLength(0);
   });
 });

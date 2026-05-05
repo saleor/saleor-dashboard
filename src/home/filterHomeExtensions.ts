@@ -4,28 +4,39 @@ import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
+export interface HomeExtensionsSplit {
+  fullscreen: Extension[];
+  widgets: Extension[];
+}
+
 export const filterHomeExtensions = (
   extensions: Extension[],
   userPermissions: UserPermissionFragment[],
-): Extension[] =>
-  extensions.filter(extension => {
+): HomeExtensionsSplit => {
+  const result: HomeExtensionsSplit = { fullscreen: [], widgets: [] };
+
+  for (const extension of extensions) {
     if (extension.mountName !== "HOMEPAGE_WIDGETS") {
-      return false;
+      continue;
     }
 
     if (!hasPermissions(userPermissions, extension.permissions)) {
-      return false;
+      continue;
     }
 
-    // Relative extension URLs require an appUrl to resolve against - skip when absent
     if (!extension.url || (!isUrlAbsolute(extension.url) && !extension.app.appUrl)) {
-      return false;
+      continue;
     }
 
-    // fullscreen defaults to true when homeWidget is omitted or settings can't be parsed -
-    // extensions without explicit homeWidget config are still considered fullscreen home widgets
     const settings = appExtensionManifestOptionsSchema.safeParse(extension.settings);
-    const fullscreen = settings.success ? (settings.data.homeWidget?.fullscreen ?? true) : true;
+    const fullscreen = settings.success ? (settings.data.homeWidget?.fullscreen ?? false) : false;
 
-    return fullscreen;
-  });
+    if (fullscreen) {
+      result.fullscreen.push(extension);
+    } else {
+      result.widgets.push(extension);
+    }
+  }
+
+  return result;
+};
