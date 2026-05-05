@@ -41,6 +41,7 @@ describe("mapToExtensionsItems", () => {
     mountName: "NAVIGATION_CATALOG",
     targetName: "APP_PAGE",
     settings: {},
+    isSaleorOfficial: false,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -214,6 +215,7 @@ describe("getMenuItemExtension", () => {
     mountName: "NAVIGATION_CATALOG",
     settings: {},
     targetName: "POPUP",
+    isSaleorOfficial: false,
   };
 
   const mockExtension: Extension = {

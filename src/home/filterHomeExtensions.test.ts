@@ -25,6 +25,7 @@ const buildExtension = (overrides: Partial<Extension>): Extension => ({
   open: () => undefined,
   targetName: "WIDGET",
   settings: null,
+  isSaleorOfficial: false,
   ...overrides,
 });
 
