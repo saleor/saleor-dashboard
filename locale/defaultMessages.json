@@ -6730,6 +6730,9 @@
     "context": "metric unit system",
     "string": "Metric"
   },
+  "ZcoqVF": {
+    "string": "This app contributes only background functionality (extensions, webhooks). There is no UI to open from the dashboard."
+  },
   "Zd3Eew": {
     "context": "subsection header",
     "string": "Shipping Address"
@@ -8649,6 +8652,9 @@
   "kVTWtR": {
     "context": "product updated at",
     "string": "Last updated"
+  },
+  "kVZfHj": {
+    "string": "App does not include a configuration screen"
   },
   "kWuOqa": {
     "context": "badge for variant that already exists",

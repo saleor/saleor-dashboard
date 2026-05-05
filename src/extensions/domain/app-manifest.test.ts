@@ -185,9 +185,9 @@ describe("App Manifest Schema", () => {
       expect(result.success).toBe(true);
     });
 
-    it("should accept relative URL with APP_PAGE target without appUrl", () => {
+    it("should accept relative URL when appUrl is provided (APP_PAGE)", () => {
       // Arrange
-      const validData = getValidManifestBase();
+      const validData = getValidManifestBase({ appUrl: "https://example.com" });
 
       validData.extensions = [
         {
@@ -205,6 +205,68 @@ describe("App Manifest Schema", () => {
 
       // Assert
       expect(result.success).toBe(true);
+    });
+
+    it.each(["APP_PAGE", "POPUP", "NEW_TAB"] as const)(
+      "should reject relative URL without appUrl (%s target)",
+      targetName => {
+        // The previous behavior accepted relative URLs for non-NEW_TAB targets without
+        // appUrl, which broke downstream URL resolution. All targets that resolve
+        // a relative URL require appUrl.
+        // Arrange
+        const invalidData = getValidManifestBase({ appUrl: undefined });
+
+        invalidData.extensions = [
+          {
+            label: "Extension",
+            url: "/app/page",
+            mountName: "NAVIGATION_CATALOG",
+            targetName,
+            permissions: [],
+            __typename: "AppManifestExtension",
+          },
+        ];
+
+        // Act
+        const result = appManifestSchema.safeParse(invalidData);
+
+        // Assert
+        expect(result.success).toBe(false);
+
+        if (!result.success) {
+          expect(result.error.issues[0].message).toBe(
+            "To use relative URL, you must specify appUrl.",
+          );
+        }
+      },
+    );
+
+    it("should reject relative URL without appUrl (WIDGET target)", () => {
+      // Arrange
+      const invalidData = getValidManifestBase({ appUrl: undefined });
+
+      invalidData.extensions = [
+        {
+          label: "Extension",
+          url: "/widget",
+          mountName: "ORDER_DETAILS_WIDGETS",
+          targetName: "WIDGET",
+          permissions: [],
+          __typename: "AppManifestExtension",
+        },
+      ];
+
+      // Act
+      const result = appManifestSchema.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "To use relative URL, you must specify appUrl.",
+        );
+      }
     });
   });
 

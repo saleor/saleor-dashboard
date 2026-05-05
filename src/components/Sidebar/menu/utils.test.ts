@@ -69,6 +69,28 @@ describe("mapToExtensionsItems", () => {
     );
   });
 
+  it("returns undefined url for extensions with absolute URL", () => {
+    const absoluteExtension: Extension = {
+      ...mockExtension,
+      url: "https://other.example.com/page",
+    };
+    const result = mapToExtensionsItems([absoluteExtension], mockHeader);
+
+    expect(result[1].url).toBeUndefined();
+    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
+  });
+
+  it("returns undefined url when app.appUrl is missing", () => {
+    const extensionWithoutAppUrl: Extension = {
+      ...mockExtension,
+      app: { ...mockApp, appUrl: null },
+    };
+    const result = mapToExtensionsItems([extensionWithoutAppUrl], mockHeader);
+
+    expect(result[1].url).toBeUndefined();
+    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
+  });
+
   it("should return no menu items ", () => {
     const result = mapToExtensionsItems([], mockHeader);
 

@@ -1,20 +1,20 @@
 import { appExtensionManifest } from "@dashboard/extensions/domain/app-extension-manifest";
 import { permissionSchema } from "@dashboard/extensions/domain/permission";
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { z } from "zod";
 
 // For now contains only partial fields, because Saleor is validating manifest anyway.
 // Subset here serves only fields needed for dashboard extensions.
 export const appManifestSchema = z
   .object({
-    appUrl: z.string().optional(),
+    appUrl: z.string().optional().nullable(),
     permissions: z.array(permissionSchema).optional().default([]),
     extensions: z.array(appExtensionManifest).optional().default([]),
   })
   .refine(
     data => {
-      // Validate extension URLs require appUrl for certain cases
       return data.extensions.every(ext => {
-        if (ext.url.startsWith("/") && ext.targetName === "NEW_TAB") {
+        if (!isUrlAbsolute(ext.url)) {
           return !!data.appUrl;
         }
 

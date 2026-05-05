@@ -214,13 +214,9 @@ export const ExtensionsUrls = {
   // (these are navigation items app can install in dashboard)
   resolveDashboardUrlFromAppCompleteUrl: (
     appCompleteUrl: string,
-    appUrl?: string,
-    appId?: string,
+    appUrl: string,
+    appId: string,
   ) => {
-    if (!appUrl || !appId) {
-      return appUrl;
-    }
-
     const deepSubPath = appCompleteUrl.replace(appUrl, "");
     const dashboardUrl = urlJoin(
       ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(appId)),
@@ -231,15 +227,7 @@ export const ExtensionsUrls = {
   },
 
   // Used to resolve app url in iframe
-  resolveAppCompleteUrlFromDashboardUrl: (
-    dashboardUrl: string,
-    appUrl?: string,
-    appId?: string,
-  ) => {
-    if (!appUrl || !appId) {
-      return appUrl;
-    }
-
+  resolveAppCompleteUrlFromDashboardUrl: (dashboardUrl: string, appUrl: string, appId: string) => {
     const deepSubPath = dashboardUrl.replace(
       ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(appId)),
       "",
