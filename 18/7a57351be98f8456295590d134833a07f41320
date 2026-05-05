@@ -1,0 +1,29 @@
+src/home/HomeWidgetTabs.tsx
+  bf4811f47f8810f4 29,31-40
+  h_463c3d2f499c35 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "187a57351be98f8456295590d134833a07f41320",
+  "prompts": {
+    "bf4811f47f8810f4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d19911a2-439c-4433-bb59-6e76a181661b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 12,
+      "accepted_lines": 141,
+      "overriden_lines": 4
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
