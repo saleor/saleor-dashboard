@@ -1,0 +1,34 @@
+src/components/Sidebar/menu/utils.test.ts
+  525ab391761aac90 72-75
+src/extensions/views/EditManifestExtension/components/AppDetailsPage/AppDetailsPage.test.tsx
+  525ab391761aac90 2-4,99-159
+src/extensions/views/ViewManifestExtension/ViewManifestExtensionIframe.test.tsx
+  525ab391761aac90 1-83
+src/extensions/domain/app-manifest.test.ts
+  525ab391761aac90 241-271
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "b65c13a2c14ff12465b45103a4a25a919b25f2e9",
+  "prompts": {
+    "525ab391761aac90": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dc9092d8-9fdf-4639-ac5b-5054e98397e0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski",
+      "messages": [],
+      "total_additions": 208,
+      "total_deletions": 27,
+      "accepted_lines": 11795,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
