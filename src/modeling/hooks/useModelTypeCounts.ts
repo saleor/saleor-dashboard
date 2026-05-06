@@ -1,8 +1,13 @@
 import { gql, useQuery } from "@apollo/client";
 import { usePageTypeListQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
+// Hard cap. Going above ~100 would also balloon the batched counts query body
+// (one aliased `pages.totalCount` field per type), so this is intentionally
+// kept as a single page rather than introducing pagination. If a real-world
+// instance approaches this, switch to a dedicated counts endpoint instead of
+// raising the cap — fan-out batching is the wrong strategy at that scale.
 const PAGE_TYPES_PAGE_SIZE = 100;
 
 interface ModelTypeInfo {
@@ -76,6 +81,21 @@ export const useModelTypeCounts = (): UseModelTypeCountsResult => {
 
     return items.map(t => ({ id: t.id, name: t.name }));
   }, [typesQuery.data?.pageTypes]);
+
+  const hasNextPage = typesQuery.data?.pageTypes?.pageInfo?.hasNextPage ?? false;
+
+  useEffect(
+    function warnWhenTypesAreTruncated() {
+      if (process.env.NODE_ENV !== "production" && hasNextPage) {
+        console.warn(
+          "[useModelTypeCounts] Reached the model-type cap of " +
+            PAGE_TYPES_PAGE_SIZE +
+            ". Additional Model Types exist on the backend but won't appear as tabs.",
+        );
+      }
+    },
+    [hasNextPage],
+  );
 
   const countsDocument = useMemo(() => buildCountsDocument(types), [types]);
 

@@ -1,5 +1,5 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { pageListUrl, type PageListUrlQueryParams } from "../urls";
 
@@ -7,6 +7,10 @@ const STORAGE_KEY = "modeling.lastActiveType";
 const ALL_SENTINEL = "__ALL__";
 
 const readStoredActiveType = (): { value: string | null; hasValue: boolean } => {
+  if (typeof window === "undefined") {
+    return { value: null, hasValue: false };
+  }
+
   try {
     const value = localStorage.getItem(STORAGE_KEY);
 
@@ -25,6 +29,10 @@ const readStoredActiveType = (): { value: string | null; hasValue: boolean } => 
 };
 
 const writeStoredActiveType = (typeId: string | null) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   try {
     localStorage.setItem(STORAGE_KEY, typeId ?? ALL_SENTINEL);
   } catch {
@@ -78,6 +86,20 @@ export const useActiveModelType = ({
     [urlActiveType],
   );
 
+  // Latest-params ref keeps `setActive` referentially stable across URL changes.
+  // Without this, every URL update re-creates the callback, which would re-fire any
+  // dependent effects (e.g. the first-visit-default effect in PageList) on every
+  // navigation tick — wasted work and a footgun for callers who treat `setActive`
+  // as a stable identity.
+  const paramsRef = useRef(params);
+
+  useEffect(
+    function trackLatestParams() {
+      paramsRef.current = params;
+    },
+    [params],
+  );
+
   const setActive = useCallback(
     (typeId: string | null) => {
       writeStoredActiveType(typeId);
@@ -85,7 +107,7 @@ export const useActiveModelType = ({
 
       // Reset pagination + bulk selection when changing tabs.
       const next: PageListUrlQueryParams = {
-        ...params,
+        ...paramsRef.current,
         activeType: typeId ?? undefined,
         after: undefined,
         before: undefined,
@@ -95,7 +117,7 @@ export const useActiveModelType = ({
 
       navigate(pageListUrl(next));
     },
-    [navigate, params],
+    [navigate],
   );
 
   return useMemo(

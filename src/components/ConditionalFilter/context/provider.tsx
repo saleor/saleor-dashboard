@@ -4,7 +4,6 @@ import { useInitialAttributesState } from "../API/initialState/attributes/useIni
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
 import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
-import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
 import { useProductInitialAPIState } from "../API/initialState/product/useProductInitialAPIState";
 import { useInitialProductTypesState } from "../API/initialState/productTypes/useInitialProdutTypesState";
 import { useInitialStaffMembersState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
@@ -16,7 +15,6 @@ import { useDiscountFilterAPIProvider } from "../API/providers/DiscountFiltersAP
 import { useDraftOrderFilterAPIProvider } from "../API/providers/DraftOrderFilterAPIProvider";
 import { useGiftCardsFiltersAPIProvider } from "../API/providers/GiftCardsFilterAPIProvider";
 import { useOrderFilterAPIProvider } from "../API/providers/OrderFilterAPIProvider";
-import { usePageAPIProvider } from "../API/providers/PageFilterAPIProvider";
 import { useProductFilterAPIProvider } from "../API/providers/ProductFilterAPIProvider";
 import { useProductTypesFilterAPIProvider } from "../API/providers/ProductTypesFilterAPIProvider";
 import { useStaffMembersFilterAPIProvider } from "../API/providers/StaffMembersFilterAPIProvider";
@@ -30,7 +28,6 @@ import {
   STATIC_DRAFT_ORDER_OPTIONS,
   STATIC_GIFT_CARDS_OPTIONS,
   STATIC_ORDER_OPTIONS,
-  STATIC_PAGE_OPTIONS,
   STATIC_PRODUCT_OPTIONS,
   STATIC_PRODUCT_TYPES_OPTIONS,
   STATIC_VOUCHER_OPTIONS,
@@ -144,34 +141,6 @@ export const ConditionalVoucherFilterProvider: FC<{
         containerState,
         filterWindow,
         queryApiType: QUERY_API_TYPES.VOUCHER,
-      }}
-    >
-      {children}
-    </ConditionalFilterContext.Provider>
-  );
-};
-
-export const ConditionalPageFilterProvider: FC<{
-  locationSearch: string;
-  children: ReactNode;
-}> = ({ children, locationSearch }) => {
-  const apiProvider = usePageAPIProvider();
-
-  const initialState = useInitialPageState();
-  const valueProvider = useUrlValueProvider(locationSearch, "page", initialState);
-  const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_PAGE_OPTIONS);
-  const containerState = useContainerState(valueProvider);
-  const filterWindow = useFilterWindow();
-
-  return (
-    <ConditionalFilterContext.Provider
-      value={{
-        apiProvider,
-        valueProvider,
-        leftOperandsProvider,
-        containerState,
-        filterWindow,
-        queryApiType: QUERY_API_TYPES.PAGE,
       }}
     >
       {children}

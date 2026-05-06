@@ -26,7 +26,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
@@ -97,12 +97,23 @@ const PageList = ({ params }: PageListProps) => {
       setActive,
     ],
   );
+
+  // Latest-callback ref so the bulk-selection-clearing effect below stays
+  // pinned to `activeType` changes only. `clearRowSelection` is rebuilt on
+  // every render of `useRowSelection`, so depending on it directly would
+  // wipe the selection on every keystroke / pagination tick.
+  const clearRowSelectionRef = useRef(clearRowSelection);
+
+  useEffect(
+    function trackLatestClearRowSelection() {
+      clearRowSelectionRef.current = clearRowSelection;
+    },
+    [clearRowSelection],
+  );
   useEffect(
     function clearBulkSelectionOnActiveTypeChange() {
-      clearRowSelection();
-      // Only react to activeType; clearRowSelection is recreated each render.
+      clearRowSelectionRef.current();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [activeType],
   );
   useEffect(

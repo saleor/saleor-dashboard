@@ -25,6 +25,11 @@ import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 import { type ModelType, ModelTypeTabs } from "./ModelTypeTabs/ModelTypeTabs";
 
+// Bounded width keeps the input from stretching across the full row and visually
+// disconnecting from the bulk-action buttons that appear to its right when rows
+// are selected. ~360px is wide enough to comfortably fit typical search queries.
+const SEARCH_INPUT_WIDTH = "360px";
+
 interface PageListPageProps extends PageListProps, SearchPageProps, SortPage<PageListUrlSortField> {
   pages: Pages | undefined;
   selectedPageIds: string[];
@@ -107,7 +112,7 @@ const PageListPage = ({
           paddingY={2}
           alignItems="center"
         >
-          <Box __width="360px">
+          <Box __width={SEARCH_INPUT_WIDTH}>
             <SearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage(messages.searchPlaceholder)}
@@ -133,6 +138,9 @@ const PageListPage = ({
         </Box>
         <PageListDatagrid
           {...listProps}
+          // Row hover used to be gated on `!isFilterPresetOpen` — there's no
+          // preset overlay anymore, so hover is always on.
+          hasRowHover
           rowAnchor={pageUrl}
           onRowClick={id =>
             navigate(pageUrl(id), {
