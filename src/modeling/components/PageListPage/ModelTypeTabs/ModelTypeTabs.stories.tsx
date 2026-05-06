@@ -3,7 +3,8 @@ import type { ComponentType } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { fn } from "storybook/test";
 
-import { type ModelType, ModelTypeTabs } from "./ModelTypeTabs";
+import { type ModelType } from "./computeVisibleTypes";
+import { ModelTypeTabs } from "./ModelTypeTabs";
 
 const fewTypes: ModelType[] = [
   { id: "pt-1", name: "Brand" },
@@ -59,7 +60,10 @@ const meta: Meta<typeof ModelTypeTabs> = {
   ],
   args: {
     onChange: fn(),
+    onTogglePin: fn(),
+    onOverflowOpen: fn(),
     activeType: null,
+    pinnedTypeIds: [],
     loading: false,
   },
 };
@@ -125,5 +129,27 @@ export const CountsStillLoading: Story = {
     types: fewTypes,
     counts: {},
     totalCount: undefined,
+  },
+};
+
+export const WithPinnedTypes: Story = {
+  args: {
+    types: manyTypes,
+    counts: manyCounts,
+    totalCount: 41,
+    // "Refund Reason" + "Career" pinned (in pin order). They appear right
+    // after the "All" tab, before the alphabetical fillers.
+    pinnedTypeIds: ["pt-1", "pt-9"],
+  },
+};
+
+export const PinnedExceedsSlotBudget: Story = {
+  args: {
+    types: manyTypes,
+    counts: manyCounts,
+    totalCount: 41,
+    // 7 pinned types — pinned always wins, so they all stay visible even though
+    // visibleSlots defaults to 6.
+    pinnedTypeIds: ["pt-1", "pt-2", "pt-3", "pt-4", "pt-5", "pt-6", "pt-7"],
   },
 };

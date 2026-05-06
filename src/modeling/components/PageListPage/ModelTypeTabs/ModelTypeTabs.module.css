@@ -1,0 +1,56 @@
+/*
+ * Pin affordance lives inline at the right of each overflow item. Unpinned
+ * items only reveal it on hover/focus (keeps the dropdown clean and avoids
+ * implying every type is "managed"). Pinned items show the pin always,
+ * filled-in, so it reads as state — not just a control.
+ */
+
+.overflowItem {
+  /* Establish hover scope so children can react via :hover on this row. */
+  position: relative;
+}
+
+.pinButton,
+.pinButtonActive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    opacity 120ms ease;
+}
+
+.pinButton {
+  /* Hidden by default; revealed when the row is hovered or the button itself
+     is focused. The focus rule keeps the control reachable for keyboard-only
+     navigation even though it's visually dormant. */
+  color: var(--mu-colors-text-default2);
+  opacity: 0;
+}
+
+.overflowItem:hover .pinButton,
+.pinButton:focus-visible {
+  opacity: 1;
+}
+
+.pinButton:hover,
+.pinButton:focus-visible {
+  background-color: var(--mu-colors-background-default1-hovered);
+  color: var(--mu-colors-text-default1);
+}
+
+.pinButtonActive {
+  /* Pinned state is always visible — this is information, not just an action. */
+  color: var(--mu-colors-text-accent1);
+}
+
+.pinButtonActive:hover,
+.pinButtonActive:focus-visible {
+  background-color: var(--mu-colors-background-default1-hovered);
+}

@@ -1354,6 +1354,10 @@
     "context": "product field",
     "string": "Export Variant SKU"
   },
+  "5nUlWb": {
+    "context": "Section header in the Model Type More dropdown listing pinned types",
+    "string": "Pinned"
+  },
   "5nrCxC": {
     "string": "Go to model types"
   },
@@ -3380,6 +3384,10 @@
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
   },
+  "H0+SNu": {
+    "context": "Accessible label for the pin button next to a Model Type in the More dropdown",
+    "string": "Pin {name} to keep it visible at the start of the tab strip"
+  },
   "H1L1cc": {
     "context": "url",
     "string": "URL"
@@ -3612,6 +3620,10 @@
   "IFWHn0": {
     "context": "error message",
     "string": "Billing address is not set"
+  },
+  "IGOsZG": {
+    "context": "Accessible label for the unpin button next to a pinned Model Type",
+    "string": "Unpin {name}"
   },
   "IGvQ8k": {
     "context": "button",
@@ -5821,10 +5833,6 @@
     "context": "Description for scheduled status when publication date is in the future",
     "string": "Publication scheduled"
   },
-  "UgCuqX": {
-    "context": "tab name",
-    "string": "All models"
-  },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
     "string": "Are you sure you want to delete {name} failed installation?"
@@ -7829,6 +7837,10 @@
   },
   "ftcHpD": {
     "string": "Customer created"
+  },
+  "ftio46": {
+    "context": "Section header in the Model Type More dropdown listing remaining (unpinned) types",
+    "string": "All types"
   },
   "fuFCpI": {
     "context": "allow unpaid orders checkbox label",

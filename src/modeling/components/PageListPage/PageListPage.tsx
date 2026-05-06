@@ -39,7 +39,10 @@ interface PageListPageProps extends PageListProps, SearchPageProps, SortPage<Pag
   modelTypesTotalCount: number | undefined;
   modelTypesLoading: boolean;
   activeModelType: string | null;
+  pinnedModelTypeIds: string[];
   onActiveModelTypeChange: (typeId: string | null) => void;
+  onTogglePinnedModelType: (typeId: string) => void;
+  onModelTypeOverflowOpen: () => void;
   onSelectPageIds: (rows: number[], clearSelection: () => void) => void;
   onPagesDelete: () => void;
   onPagesPublish: () => void;
@@ -60,7 +63,10 @@ const PageListPage = ({
   modelTypesTotalCount,
   modelTypesLoading,
   activeModelType,
+  pinnedModelTypeIds,
   onActiveModelTypeChange,
+  onTogglePinnedModelType,
+  onModelTypeOverflowOpen,
   ...listProps
 }: PageListPageProps) => {
   const intl = useIntl();
@@ -100,9 +106,12 @@ const PageListPage = ({
           counts={modelTypeCounts}
           totalCount={modelTypesTotalCount}
           activeType={activeModelType}
+          pinnedTypeIds={pinnedModelTypeIds}
           loading={modelTypesLoading}
           emptyTypesUrl={pageTypeAddUrl}
           onChange={onActiveModelTypeChange}
+          onTogglePin={onTogglePinnedModelType}
+          onOverflowOpen={onModelTypeOverflowOpen}
         />
         <Box
           display="grid"

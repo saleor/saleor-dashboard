@@ -15,10 +15,13 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import { computeVisibleTypes } from "@dashboard/modeling/components/PageListPage/ModelTypeTabs/computeVisibleTypes";
 import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog";
 import { useActiveModelType } from "@dashboard/modeling/hooks/useActiveModelType";
 import { useLastUsedModelType } from "@dashboard/modeling/hooks/useLastUsedModelType";
-import { useModelTypeCounts } from "@dashboard/modeling/hooks/useModelTypeCounts";
+import { useModelTypeCountsFor } from "@dashboard/modeling/hooks/useModelTypeCountsFor";
+import { useModelTypes } from "@dashboard/modeling/hooks/useModelTypes";
+import { usePinnedModelTypes } from "@dashboard/modeling/hooks/usePinnedModelTypes";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -27,6 +30,9 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+const TAB_VISIBLE_SLOTS = 6;
+
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
@@ -58,45 +64,38 @@ const PageList = ({ params }: PageListProps) => {
   } = useRowSelection(params);
   const {
     types: modelTypes,
-    counts: modelTypeCounts,
     totalCount: modelTypesTotalCount,
     loading: modelTypesLoading,
-  } = useModelTypeCounts();
-  const { activeType, hasUserChoice, setActive } = useActiveModelType({ params });
+  } = useModelTypes();
+  const { activeType, setActive } = useActiveModelType({ params });
   const { lastUsedTypeId, rememberLastUsed } = useLastUsedModelType();
-  // First-visit default: pick the most-populated type once counts arrive.
-  // Skipped when the user has explicitly chosen a type (URL or localStorage).
-  const [didApplyFirstVisitDefault, setDidApplyFirstVisitDefault] = useState(false);
-
-  useEffect(
-    function applyFirstVisitDefaultActiveType() {
-      if (didApplyFirstVisitDefault) {
-        return;
-      }
-
-      if (hasUserChoice || modelTypesLoading || modelTypes.length === 0) {
-        return;
-      }
-
-      const ranked = [...modelTypes].sort(
-        (a, b) => (modelTypeCounts[b.id] ?? 0) - (modelTypeCounts[a.id] ?? 0),
-      );
-      const top = ranked[0];
-
-      if (top && (modelTypeCounts[top.id] ?? 0) > 0) {
-        setDidApplyFirstVisitDefault(true);
-        setActive(top.id);
-      }
-    },
-    [
-      didApplyFirstVisitDefault,
-      hasUserChoice,
-      modelTypesLoading,
-      modelTypes,
-      modelTypeCounts,
-      setActive,
-    ],
+  const { pinnedTypeIds, togglePin } = usePinnedModelTypes();
+  // Lazy counts: only fetch numbers for types the user can see right now.
+  // Visible row = pinned ∪ alphabetical-fillers ∪ promoted-active. Once the
+  // user opens the More dropdown we also fetch the overflow set; Apollo's
+  // normalized cache means we never re-fetch ids we've already counted.
+  const [includeOverflowCounts, setIncludeOverflowCounts] = useState(false);
+  const { allVisibleTypes, overflowTypes } = useMemo(
+    () =>
+      computeVisibleTypes({
+        types: modelTypes,
+        pinnedTypeIds,
+        activeTypeId: activeType,
+        visibleSlots: TAB_VISIBLE_SLOTS,
+      }),
+    [modelTypes, pinnedTypeIds, activeType],
   );
+  const countsRequestIds = useMemo(() => {
+    const visible = allVisibleTypes.map(t => t.id);
+
+    return includeOverflowCounts ? [...visible, ...overflowTypes.map(t => t.id)] : visible;
+  }, [allVisibleTypes, overflowTypes, includeOverflowCounts]);
+  const { counts: modelTypeCounts } = useModelTypeCountsFor(countsRequestIds);
+  const handleOverflowOpen = useCallback(() => {
+    // One-way switch: once the user explored the long tail we keep counting it
+    // so subsequent opens are instant. Apollo cache prevents network re-fetches.
+    setIncludeOverflowCounts(true);
+  }, []);
 
   // Latest-callback ref so the bulk-selection-clearing effect below stays
   // pinned to `activeType` changes only. `clearRowSelection` is rebuilt on
@@ -270,9 +269,10 @@ const PageList = ({ params }: PageListProps) => {
     [searchDialogPageTypesOpts?.data?.search],
   );
   // Default selection in the "Create model" picker:
-  //   1. The active tab's Model Type, if any (most contextual signal)
-  //   2. Otherwise the user's most-recently-used type (if it still exists)
-  //   3. Otherwise the most-populated type (matches the tab strip's first-visit default)
+  //   1. The active tab's Model Type, if any (most contextual signal).
+  //   2. Otherwise the user's most-recently-used type (if it still exists).
+  //   3. Otherwise the alphabetically first type (deterministic; we no longer
+  //      have all per-type counts available — see useModelTypeCountsFor).
   const defaultCreateTypeId = useMemo(() => {
     if (activeType) {
       return activeType;
@@ -286,12 +286,10 @@ const PageList = ({ params }: PageListProps) => {
       return undefined;
     }
 
-    const sortedByCount = [...modelTypes].sort(
-      (a, b) => (modelTypeCounts[b.id] ?? 0) - (modelTypeCounts[a.id] ?? 0),
-    );
+    const alphabetical = [...modelTypes].sort((a, b) => a.name.localeCompare(b.name));
 
-    return sortedByCount[0]?.id;
-  }, [activeType, lastUsedTypeId, modelTypes, modelTypeCounts]);
+    return alphabetical[0]?.id;
+  }, [activeType, lastUsedTypeId, modelTypes]);
   const handleSetSelectedPageIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!pages) {
@@ -322,7 +320,10 @@ const PageList = ({ params }: PageListProps) => {
         modelTypesTotalCount={modelTypesTotalCount}
         modelTypesLoading={modelTypesLoading}
         activeModelType={activeType}
+        pinnedModelTypeIds={pinnedTypeIds}
         onActiveModelTypeChange={handleActiveTypeChange}
+        onTogglePinnedModelType={togglePin}
+        onModelTypeOverflowOpen={handleOverflowOpen}
         onUpdateListSettings={updateListSettings}
         onPageCreate={() => openModal("create-page")}
         onSort={handleSort}

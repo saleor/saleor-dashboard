@@ -21,4 +21,25 @@ export const modelTypeTabsMessages = defineMessages({
     defaultMessage: "Create your first model type",
     description: "Inline link in the type tabs row when no Model Types exist",
   },
+  pinnedSection: {
+    id: "5nUlWb",
+    defaultMessage: "Pinned",
+    description: "Section header in the Model Type More dropdown listing pinned types",
+  },
+  allTypesSection: {
+    id: "ftio46",
+    defaultMessage: "All types",
+    description:
+      "Section header in the Model Type More dropdown listing remaining (unpinned) types",
+  },
+  pinTypeAction: {
+    id: "H0+SNu",
+    defaultMessage: "Pin {name} to keep it visible at the start of the tab strip",
+    description: "Accessible label for the pin button next to a Model Type in the More dropdown",
+  },
+  unpinTypeAction: {
+    id: "IGOsZG",
+    defaultMessage: "Unpin {name}",
+    description: "Accessible label for the unpin button next to a pinned Model Type",
+  },
 });

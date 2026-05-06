@@ -9,91 +9,85 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui-next";
+import { Pin } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
+import { computeVisibleTypes, type ModelType } from "./computeVisibleTypes";
 import { modelTypeTabsMessages as messages } from "./messages";
+import styles from "./ModelTypeTabs.module.css";
 
 const linkClass = sprinkles({ textDecoration: "none" });
-
-export interface ModelType {
-  id: string;
-  name: string;
-}
 
 interface ModelTypeTabsProps {
   types: ModelType[];
   counts: Record<string, number | undefined>;
   totalCount: number | undefined;
   activeType: string | null;
+  pinnedTypeIds: string[];
+  onTogglePin: (typeId: string) => void;
   loading?: boolean;
   visibleSlots?: number;
   emptyTypesUrl?: string;
   onChange: (typeId: string | null) => void;
+  /**
+   * Fired when the "More" overflow dropdown is opened. Caller can use this to
+   * lazy-fetch counts for the overflow types (the visible row's counts are
+   * already requested up front).
+   */
+  onOverflowOpen?: () => void;
 }
 
 const DEFAULT_VISIBLE_SLOTS = 6;
+
+export { type ModelType };
 
 export const ModelTypeTabs = ({
   types,
   counts,
   totalCount,
   activeType,
+  pinnedTypeIds,
+  onTogglePin,
   loading,
   visibleSlots = DEFAULT_VISIBLE_SLOTS,
   emptyTypesUrl,
   onChange,
+  onOverflowOpen,
 }: ModelTypeTabsProps) => {
   const intl = useIntl();
   const [moreOpen, setMoreOpen] = useState(false);
 
-  // Sort types alphabetically by name. Predictable order that doesn't shuffle as
-  // counts change, and matches how users typically scan a list of named entities.
-  const sortedTypes = useMemo(
-    () => [...types].sort((a, b) => a.name.localeCompare(b.name)),
-    [types],
+  const { pinnedVisibleTypes, overflowTypes, allVisibleTypes } = useMemo(
+    () =>
+      computeVisibleTypes({
+        types,
+        pinnedTypeIds,
+        activeTypeId: activeType,
+        visibleSlots,
+      }),
+    [types, pinnedTypeIds, activeType, visibleSlots],
+  );
+  // Set, not array.includes, so the per-tab lookup below stays O(1) even if a
+  // user pins many types.
+  const pinnedVisibleIds = useMemo(
+    () => new Set(pinnedVisibleTypes.map(t => t.id)),
+    [pinnedVisibleTypes],
   );
 
-  // Split into "visible" and "overflow" buckets, then promote the active type
-  // into the visible row if it lives in overflow so the user always sees what's selected.
-  // Both lists stay strictly alphabetical: when a swap happens, the overflow is re-sorted
-  // so the displaced item lands in its proper alphabetical position rather than at the head.
-  const { visibleTypes, overflowTypes } = useMemo(() => {
-    if (sortedTypes.length <= visibleSlots) {
-      return { visibleTypes: sortedTypes, overflowTypes: [] as ModelType[] };
-    }
-
-    const initialVisible = sortedTypes.slice(0, visibleSlots);
-    const initialOverflow = sortedTypes.slice(visibleSlots);
-
-    if (!activeType || initialVisible.some(t => t.id === activeType)) {
-      return { visibleTypes: initialVisible, overflowTypes: initialOverflow };
-    }
-
-    const promoted = initialOverflow.find(t => t.id === activeType);
-
-    if (!promoted) {
-      return { visibleTypes: initialVisible, overflowTypes: initialOverflow };
-    }
-
-    // Swap: promote active into the last visible slot, demote the displaced type into overflow.
-    const displaced = initialVisible[initialVisible.length - 1];
-    const overflowAfterSwap = [displaced, ...initialOverflow.filter(t => t.id !== activeType)].sort(
-      (a, b) => a.name.localeCompare(b.name),
-    );
-
-    return {
-      visibleTypes: [...initialVisible.slice(0, -1), promoted],
-      overflowTypes: overflowAfterSwap,
-    };
-  }, [sortedTypes, visibleSlots, activeType]);
-
   const isAllActive = activeType === null;
-  const activeIndex = isAllActive ? 0 : visibleTypes.findIndex(t => t.id === activeType) + 1;
-  // material-ui uses `false` to indicate "no tab selected" (e.g., dropdown is the active one,
-  // but never happens here because we promote). Always pass a numeric index.
-  const currentTab = activeIndex >= 0 ? activeIndex : 0;
+  // Tabs render in order: All (index 0), pinned, alphabetical.
+  const visibleIndex = isAllActive ? 0 : allVisibleTypes.findIndex(t => t.id === activeType) + 1;
+  const currentTab = visibleIndex >= 0 ? visibleIndex : 0;
+
+  const handleMoreOpenChange = (next: boolean) => {
+    setMoreOpen(next);
+
+    if (next) {
+      onOverflowOpen?.();
+    }
+  };
 
   if (loading && types.length === 0) {
     return (
@@ -157,18 +151,25 @@ export const ModelTypeTabs = ({
             onClick={() => onChange(null)}
             selected={isAllActive}
           />
-          {visibleTypes.map(type => (
+          {allVisibleTypes.map(type => (
             <FilterTab
               key={type.id}
               label={type.name}
               count={counts[type.id]}
+              // Subtle marker on the tab itself (Chrome-style pinned tab affordance):
+              // tells users at a glance which tabs are user-promoted vs alphabetical.
+              leadingIcon={pinnedVisibleIds.has(type.id) ? <Pin size={11} /> : undefined}
               onClick={() => onChange(type.id)}
               selected={activeType === type.id}
             />
           ))}
         </FilterTabs>
       </Box>
-      {overflowTypes.length > 0 && (
+      {/* The "More" trigger renders even when the overflow row is empty IF
+          there's at least one type that could be pinned/unpinned from it.
+          Today that's "any time we have types" — keeps the pin management
+          surface consistently reachable. */}
+      {types.length > 0 && (overflowTypes.length > 0 || pinnedVisibleTypes.length > 0) && (
         <Box
           display="flex"
           alignItems="center"
@@ -180,7 +181,7 @@ export const ModelTypeTabs = ({
           borderColor="default1"
           __alignSelf="stretch"
         >
-          <Dropdown open={moreOpen} onOpenChange={setMoreOpen}>
+          <Dropdown open={moreOpen} onOpenChange={handleMoreOpenChange}>
             <Dropdown.Trigger>
               <DropdownButton
                 variant="text"
@@ -195,8 +196,8 @@ export const ModelTypeTabs = ({
             </Dropdown.Trigger>
             <Dropdown.Content align="end">
               <List
-                __minWidth={200}
-                __maxWidth={280}
+                __minWidth={240}
+                __maxWidth={320}
                 __maxHeight={400}
                 overflowY="auto"
                 padding={1}
@@ -208,35 +209,49 @@ export const ModelTypeTabs = ({
                 marginTop={0.5}
                 backgroundColor="default1"
               >
-                {overflowTypes.map(type => (
-                  <Dropdown.Item key={type.id}>
-                    <List.Item
-                      paddingX={1.5}
-                      paddingY={2}
-                      borderRadius={3}
-                      onClick={() => {
-                        setMoreOpen(false);
-                        onChange(type.id);
-                      }}
-                      data-test-id={`model-type-tabs-more-${type.id}`}
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        gap={4}
-                        width="100%"
-                      >
-                        <Text>{type.name}</Text>
-                        {typeof counts[type.id] === "number" && (
-                          <Text color="default2" size={2}>
-                            {counts[type.id]}
-                          </Text>
-                        )}
-                      </Box>
-                    </List.Item>
-                  </Dropdown.Item>
-                ))}
+                {pinnedVisibleTypes.length > 0 && (
+                  <>
+                    <SectionHeader
+                      label={intl.formatMessage(messages.pinnedSection)}
+                      data-test-id="model-type-tabs-more-section-pinned"
+                    />
+                    {pinnedVisibleTypes.map(type => (
+                      <OverflowItem
+                        key={type.id}
+                        type={type}
+                        count={counts[type.id]}
+                        isPinned
+                        onSelect={() => {
+                          setMoreOpen(false);
+                          onChange(type.id);
+                        }}
+                        onTogglePin={() => onTogglePin(type.id)}
+                        intl={intl}
+                      />
+                    ))}
+                  </>
+                )}
+                {overflowTypes.length > 0 && (
+                  <>
+                    {pinnedVisibleTypes.length > 0 && (
+                      <SectionHeader label={intl.formatMessage(messages.allTypesSection)} />
+                    )}
+                    {overflowTypes.map(type => (
+                      <OverflowItem
+                        key={type.id}
+                        type={type}
+                        count={counts[type.id]}
+                        isPinned={false}
+                        onSelect={() => {
+                          setMoreOpen(false);
+                          onChange(type.id);
+                        }}
+                        onTogglePin={() => onTogglePin(type.id)}
+                        intl={intl}
+                      />
+                    ))}
+                  </>
+                )}
               </List>
             </Dropdown.Content>
           </Dropdown>
@@ -247,3 +262,87 @@ export const ModelTypeTabs = ({
 };
 
 ModelTypeTabs.displayName = "ModelTypeTabs";
+
+interface SectionHeaderProps {
+  label: string;
+  "data-test-id"?: string;
+}
+
+const SectionHeader = ({ label, "data-test-id": dataTestId }: SectionHeaderProps) => (
+  <Box paddingX={1.5} paddingTop={2} paddingBottom={1} data-test-id={dataTestId}>
+    <Text
+      size={1}
+      color="default2"
+      textTransform="uppercase"
+      __letterSpacing="0.04em"
+      fontWeight="medium"
+    >
+      {label}
+    </Text>
+  </Box>
+);
+
+interface OverflowItemProps {
+  type: ModelType;
+  count: number | undefined;
+  isPinned: boolean;
+  onSelect: () => void;
+  onTogglePin: () => void;
+  intl: ReturnType<typeof useIntl>;
+}
+
+const OverflowItem = ({
+  type,
+  count,
+  isPinned,
+  onSelect,
+  onTogglePin,
+  intl,
+}: OverflowItemProps) => {
+  const pinLabel = intl.formatMessage(
+    isPinned ? messages.unpinTypeAction : messages.pinTypeAction,
+    {
+      name: type.name,
+    },
+  );
+
+  return (
+    <Dropdown.Item>
+      <List.Item
+        paddingX={1.5}
+        paddingY={2}
+        borderRadius={3}
+        onClick={onSelect}
+        data-test-id={`model-type-tabs-more-${type.id}`}
+        className={styles.overflowItem}
+      >
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap={4} width="100%">
+          <Text>{type.name}</Text>
+          <Box display="flex" alignItems="center" gap={2}>
+            {typeof count === "number" && (
+              <Text color="default2" size={2}>
+                {count}
+              </Text>
+            )}
+            {/* Native button: keeps keyboard focus + Enter/Space handling for free
+                and lets us stop propagation cleanly so clicking the pin doesn't
+                also fire the row's onSelect. */}
+            <button
+              type="button"
+              onClick={event => {
+                event.stopPropagation();
+                onTogglePin();
+              }}
+              aria-label={pinLabel}
+              title={pinLabel}
+              data-test-id={`model-type-tabs-more-pin-${type.id}`}
+              className={isPinned ? styles.pinButtonActive : styles.pinButton}
+            >
+              <Pin size={14} />
+            </button>
+          </Box>
+        </Box>
+      </List.Item>
+    </Dropdown.Item>
+  );
+};
