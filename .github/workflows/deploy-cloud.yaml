@@ -134,7 +134,10 @@ jobs:
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_EU_DEPLOYMENT_BUCKET }}
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_EU_CDN_DISTRIBUTIONS }}
+          ENVIRONMENT: ${{ needs.build.outputs.ENVIRONMENT }}
         run: |
+          set -eu
+
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
@@ -149,7 +152,10 @@ jobs:
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_US_DEPLOYMENT_BUCKET }}
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_US_CDN_DISTRIBUTIONS }}
+          ENVIRONMENT: ${{ needs.build.outputs.ENVIRONMENT }}
         run: |
+          set -eu
+
           aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
