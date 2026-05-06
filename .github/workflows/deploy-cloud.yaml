@@ -42,7 +42,6 @@ jobs:
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
       ENVIRONMENT: ${{ github.event.client_payload.deployment_name }}
-      REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
@@ -53,9 +52,6 @@ jobs:
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.CLOUD_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
-      - name: Check region
-        if: ${{ !contains(fromJSON('["eu", "us"]'), env.REGION) }}
-        run: echo 'Unknown region provided' >&2; exit 1
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -97,6 +93,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-24.04
+    needs: [build]
+    
     environment:
       deployment: false
       name: deploy-cloud
@@ -104,7 +102,14 @@ jobs:
     permissions:
       id-token: write
 
+    env:
+      REGION: ${{ github.event.client_payload.region }}
+
     steps:
+      - name: Check region
+        if: ${{ !contains(fromJSON('["eu", "us"]'), env.REGION) }}
+        run: echo 'Unknown region provided' >&2; exit 1
+
       - uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
           name: build
@@ -155,7 +160,7 @@ jobs:
           done
 
   notify-slack:
-    needs: build
+    needs: [build, deploy]
     if: always()
     permissions: {}
     uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
