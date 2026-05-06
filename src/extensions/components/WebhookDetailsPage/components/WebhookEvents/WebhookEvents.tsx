@@ -190,7 +190,7 @@ export const WebhookEvents = ({
                                     borderColor="warning1"
                                     color="warning1"
                                     size="small"
-                                    style={{ cursor: "help" }}
+                                    __cursor="help"
                                   >
                                     {intl.formatMessage(messages.directStockModeBadge)}
                                   </Chip>
