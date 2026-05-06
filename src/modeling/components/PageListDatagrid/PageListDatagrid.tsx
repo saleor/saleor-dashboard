@@ -109,6 +109,10 @@ export const PageListDatagrid = ({
         readonly
         loading={loading}
         rowMarkers="checkbox-visible"
+        // Push the checkbox right so the row marker column aligns with the page's
+        // inset content area (title, tabs, search) above. Default is 48; +24px = 72
+        // matches the surrounding `paddingX={6}` content gutter.
+        rowMarkerWidth={72}
         columnSelect="single"
         hasRowHover={hasRowHover}
         onColumnMoved={handlers.onMove}

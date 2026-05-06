@@ -7,6 +7,7 @@ import {
 } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
+import styles from "./SearchInput.module.css";
 import { SearchTooltip } from "./SearchTooltip/SearchTooltip";
 
 interface SearchInputProps extends SearchPageProps {
@@ -32,8 +33,25 @@ const SearchInput = (props: SearchInputProps) => {
         };
 
         return (
-          <Box display="flex" alignItems="center" gap={1.5} width="100%">
-            <Box as="label" display="flex" alignItems="center" width="100%">
+          <Box
+            as="label"
+            display="flex"
+            alignItems="center"
+            width="100%"
+            // Inactive: matches the page surface (default1 = pure white in light
+            // theme / page bg in dark theme), so only the gentle border outlines
+            // the input. On focus the wrapper shifts to a visible tint via
+            // :focus-within in the CSS module. The module also forces every
+            // nested background transparent so the magnifier, input field and
+            // trailing tooltip icon all share this exact same color.
+            backgroundColor="default1"
+            borderWidth={1}
+            borderStyle="solid"
+            borderColor="default1"
+            borderRadius={3}
+            className={styles.wrapper}
+          >
+            <Box __flex={1} __minWidth={0} display="flex" alignItems="center">
               <MacawSearchInput
                 size={size}
                 value={search}
@@ -42,7 +60,11 @@ const SearchInput = (props: SearchInputProps) => {
                 data-test-id="search-input"
               />
             </Box>
-            {showSearchTooltip && <SearchTooltip />}
+            {showSearchTooltip && (
+              <Box display="flex" alignItems="center" paddingRight={2}>
+                <SearchTooltip />
+              </Box>
+            )}
           </Box>
         );
       }}

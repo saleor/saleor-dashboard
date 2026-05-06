@@ -34,9 +34,12 @@ function usePageTypeDelete({
       variables: pagesAssignedToSelectedTypesQueryVars,
       skip: shouldSkipPageListQuery,
     });
-  const selectedPagesAssignedToDeleteUrl = pageListUrl({
-    pageTypes,
-  });
+  // The Modeling list groups entries by Model Type tabs. When a single type is being deleted,
+  // jump straight into its tab so the user sees only the assigned entries; for multi-delete we
+  // fall back to the unfiltered "All" tab.
+  const selectedPagesAssignedToDeleteUrl = pageListUrl(
+    pageTypes.length === 1 ? { activeType: pageTypes[0] } : {},
+  );
   const assignedItemsCount = pagesAssignedToSelectedTypesData?.pages?.totalCount;
 
   return {

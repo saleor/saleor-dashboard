@@ -100,6 +100,12 @@ interface DatagridProps {
   readonly?: boolean;
   hasRowHover?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
+  /**
+   * Width (in px) of the row marker (checkbox) column. Increase to add visual breathing
+   * room on the left of the grid — useful when the page above the grid is laid out with
+   * inset content and you want the first data column to align with that inset.
+   */
+  rowMarkerWidth?: number;
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
   columnSelect?: DataEditorProps["columnSelect"];
@@ -132,6 +138,7 @@ export const Datagrid = ({
   getColumnTooltipContent,
   readonly = false,
   rowMarkers = "checkbox",
+  rowMarkerWidth = 48,
   freezeColumns = 1,
   verticalBorder,
   columnSelect = "none",
@@ -585,7 +592,7 @@ export const Datagrid = ({
                             )}
                       </div>
                     }
-                    rowMarkerWidth={48}
+                    rowMarkerWidth={rowMarkerWidth}
                   />
                   {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                   {hasColumnGroups && <div className={classes.columnGroupFixer} />}

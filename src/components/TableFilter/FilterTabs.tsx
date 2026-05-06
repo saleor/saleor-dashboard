@@ -5,7 +5,10 @@ import type * as React from "react";
 const useStyles = makeStyles(
   theme => ({
     tabsRoot: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      // Use the macaw-ui-next border token instead of MUI's palette.divider —
+      // the latter falls back to rgba(255,255,255,0.12) in dark mode, which is
+      // virtually invisible against the navy app surface.
+      borderBottom: "1px solid var(--mu-colors-border-default1)",
       paddingLeft: theme.spacing(4),
     },
   }),

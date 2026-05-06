@@ -1,0 +1,24 @@
+/*
+ * SearchInput owns one continuous bordered surface.
+ *
+ * macaw-ui-next's SearchInput applies its own internal background on the
+ * `inputContainer` recipe (via vanilla-extract recipe variants with higher
+ * specificity than sprinkle props). We neutralize every nested background
+ * so the wrapper's color is the only visible fill — both in idle and focus
+ * states — and the trailing tooltip icon shares the exact same surface as
+ * the magnifier and the input field.
+ */
+.wrapper > *,
+.wrapper > * > * {
+  background-color: transparent !important;
+}
+
+.wrapper:focus-within {
+  /*
+   * Matches the idle background of macaw-ui-next's DropdownButton (e.g. the
+   * "More" button) — verified to be `--mu-colors-background-default2`. This
+   * is the design-system's "barely tinted near-white" surface (98% lightness
+   * in light theme) and the exact reference the user pointed to.
+   */
+  background-color: var(--mu-colors-background-default2);
+}

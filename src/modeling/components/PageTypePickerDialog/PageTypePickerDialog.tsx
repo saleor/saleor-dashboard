@@ -8,7 +8,7 @@ import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
 import { Button, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -17,6 +17,11 @@ interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   pageTypes: Option[];
+  /**
+   * If set, the picker will pre-select the option matching this id when it opens.
+   * Falls back to no selection if the id can't be found in `pageTypes`.
+   */
+  defaultPageTypeId?: string;
   fetchPageTypes: (data: string) => void;
   fetchMorePageTypes: FetchMoreProps;
   onClose: () => void;
@@ -27,6 +32,7 @@ const PageTypePickerDialog = ({
   confirmButtonState,
   open,
   pageTypes,
+  defaultPageTypeId,
   fetchPageTypes,
   fetchMorePageTypes,
   onClose,
@@ -34,15 +40,38 @@ const PageTypePickerDialog = ({
 }: PageTypePickerDialogProps) => {
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  // Tracks whether we've already applied the preselection in the current open session,
+  // so we don't fight the user if they explicitly clear the combobox afterwards.
+  const didApplyPreselection = useRef(false);
 
   const debouncedFetchPageTypes = useDebounce(fetchPageTypes, 500);
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      didApplyPreselection.current = false;
+    },
     onClose: () => {
       setSelectedOption(null);
+      didApplyPreselection.current = false;
       fetchPageTypes("");
     },
   });
+  // Apply the preselected option as soon as it shows up in the async-loaded `pageTypes` list.
+  useEffect(
+    function applyDefaultPageTypeOnce() {
+      if (!open || !defaultPageTypeId || didApplyPreselection.current) {
+        return;
+      }
+
+      const match = pageTypes.find(option => option.value === defaultPageTypeId);
+
+      if (match) {
+        didApplyPreselection.current = true;
+        setSelectedOption(match);
+      }
+    },
+    [open, defaultPageTypeId, pageTypes],
+  );
 
   const handleScrollEnd = () => {
     if (fetchMorePageTypes?.hasMore) {

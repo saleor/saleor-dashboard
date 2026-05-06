@@ -3914,6 +3914,10 @@
     "context": "product availability publish date",
     "string": "Publish on"
   },
+  "Jnlk2Y": {
+    "context": "Model Type tab showing all entries across types",
+    "string": "All"
+  },
   "Jo01VZ": {
     "context": "bought by label",
     "string": "Bought by"
@@ -5675,6 +5679,10 @@
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
   },
+  "TktK7L": {
+    "context": "Inline message in the type tabs row when no Model Types exist",
+    "string": "No model types yet."
+  },
   "Tl+7X4": {
     "context": "tabel column header",
     "string": "Refunded Qty"
@@ -6619,6 +6627,10 @@
   },
   "YzLUXA": {
     "string": "Ensure this value is greater than 0."
+  },
+  "Z+b2u3": {
+    "context": "Overflow dropdown trigger holding additional Model Types",
+    "string": "More"
   },
   "Z/7hyu": {
     "context": "card balance label",
@@ -10581,6 +10593,10 @@
   "vDnheO": {
     "context": "gift card bulk create success dialog accept button",
     "string": "Ok"
+  },
+  "vDoAcW": {
+    "context": "Inline link in the type tabs row when no Model Types exist",
+    "string": "Create your first model type"
   },
   "vDp2tH": {
     "context": "all structures",

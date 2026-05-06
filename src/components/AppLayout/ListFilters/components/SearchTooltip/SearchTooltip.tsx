@@ -49,7 +49,10 @@ export const SearchTooltip = () => {
           type="button"
           display="flex"
           alignItems="center"
-          cursor="pointer"
+          // Macaw sprinkles only accept a small enum of cursor values
+          // (pointer, text, auto, etc.). `help` is the standard convention for
+          // tooltip-triggering, info-only elements, so escape via __cursor.
+          __cursor="help"
           padding={0}
           borderWidth={0}
           backgroundColor="transparent"
