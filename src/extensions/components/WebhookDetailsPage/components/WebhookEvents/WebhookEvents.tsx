@@ -1,9 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
+import { Link } from "@dashboard/components/Link";
 import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
+import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import {
   List,
   ListBody,
@@ -12,13 +14,13 @@ import {
   ListItemCell,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { Box, Checkbox, Chip, Switch, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Chip, Switch, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { EventTypes, getEventName } from "./utils";
+import { EventTypes, getEventName, isDirectStockModeOnlyEvent } from "./utils";
 
 interface WebhookEventsProps {
   data: {
@@ -147,36 +149,75 @@ export const WebhookEvents = ({
               <ListBody className={classes.listBody}>
                 {object &&
                   EventTypes[tab][object] &&
-                  EventTypes[tab][object].map((event, idx) => (
-                    <ListItem className={classes.eventListItem} key={event}>
-                      <ListItemCell className={classes.eventListItemCell}>
-                        <Checkbox
-                          data-test-id="events-checkbox"
-                          name={`${tab}Events`}
-                          checked={(data[`${tab}Events`] as WebhookEventTypeSyncEnum[]).includes(
-                            getEventName(object, event),
-                          )}
-                          value={getEventName(object, event)}
-                          onCheckedChange={checked =>
-                            handleEventChange({
-                              target: {
-                                name: `${tab}Events`,
-                                value: getEventName(object, event),
-                                // @ts-expect-error incorrect useForm types - cannot set required checked property
-                                checked,
-                              },
-                            })
-                          }
-                          id={`event-checkbox-${idx}`}
-                          paddingX={1.5}
-                          paddingY={3.5}
-                          fontWeight="bold"
-                        >
-                          {capitalize(event.toLowerCase().replaceAll("_", " "))}
-                        </Checkbox>
-                      </ListItemCell>
-                    </ListItem>
-                  ))}
+                  EventTypes[tab][object].map((event, idx) => {
+                    const eventName = getEventName(object, event);
+                    const showDirectStockModeBadge = isDirectStockModeOnlyEvent(eventName);
+
+                    return (
+                      <ListItem className={classes.eventListItem} key={event}>
+                        <ListItemCell className={classes.eventListItemCell}>
+                          <Box display="flex" alignItems="center" gap={2}>
+                            <Checkbox
+                              data-test-id="events-checkbox"
+                              name={`${tab}Events`}
+                              checked={(
+                                data[`${tab}Events`] as WebhookEventTypeSyncEnum[]
+                              ).includes(eventName)}
+                              value={eventName}
+                              onCheckedChange={checked =>
+                                handleEventChange({
+                                  target: {
+                                    name: `${tab}Events`,
+                                    value: eventName,
+                                    // @ts-expect-error incorrect useForm types - cannot set required checked property
+                                    checked,
+                                  },
+                                })
+                              }
+                              id={`event-checkbox-${idx}`}
+                              paddingX={1.5}
+                              paddingY={3.5}
+                              fontWeight="bold"
+                            >
+                              {capitalize(event.toLowerCase().replaceAll("_", " "))}
+                            </Checkbox>
+                            {showDirectStockModeBadge && (
+                              <Tooltip>
+                                <Tooltip.Trigger>
+                                  <Chip
+                                    data-test-id="direct-stock-mode-badge"
+                                    backgroundColor="warning1"
+                                    borderColor="warning1"
+                                    color="warning1"
+                                    size="small"
+                                    __cursor="help"
+                                  >
+                                    {intl.formatMessage(messages.directStockModeBadge)}
+                                  </Chip>
+                                </Tooltip.Trigger>
+                                <Tooltip.Content side="top">
+                                  <Tooltip.Arrow />
+                                  <Box
+                                    __maxWidth="320px"
+                                    display="flex"
+                                    flexDirection="column"
+                                    gap={2}
+                                  >
+                                    <Text size={2}>
+                                      <FormattedMessage {...messages.directStockModeTooltipBody} />
+                                    </Text>
+                                    <Link href={siteSettingsUrl()} underline>
+                                      <FormattedMessage {...messages.directStockModeTooltipLink} />
+                                    </Link>
+                                  </Box>
+                                </Tooltip.Content>
+                              </Tooltip>
+                            )}
+                          </Box>
+                        </ListItemCell>
+                      </ListItem>
+                    );
+                  })}
               </ListBody>
             </List>
           </div>

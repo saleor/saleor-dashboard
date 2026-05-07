@@ -78,8 +78,9 @@ export const messages = defineMessages({
     description: "Warning when channel has no warehouses",
   },
   noWarehousesDescription: {
-    id: "T7r26L",
-    defaultMessage: "Products in this channel cannot be fulfilled without warehouses.",
+    id: "icyljC",
+    defaultMessage:
+      "Without an assigned warehouse, this product will appear unavailable to customers in this channel and orders cannot be fulfilled.",
     description: "Description for no warehouses warning",
   },
 
@@ -129,9 +130,11 @@ export const messages = defineMessages({
     description: "Warning when warehouse with stock not in shipping zone",
   },
   warehouseNotInZoneDescription: {
-    id: "QfK+5Q",
-    defaultMessage: "Warehouses with stock are not assigned to any shipping zone in this channel.",
-    description: "Description for warehouse not in zone warning",
+    id: "ksIgHn",
+    defaultMessage:
+      "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability.",
+    description:
+      "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
   },
 
   // Stock exists but in warehouses not assigned to the channel
@@ -282,6 +285,18 @@ export const messages = defineMessages({
     defaultMessage: "Not visible",
     description: "Product is not visible via public API",
   },
+  publicApiReportsStockNoCoverage: {
+    id: "vZN+nE",
+    defaultMessage: "Reports stock, but no coverage",
+    description:
+      "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+  },
+  publicApiBrowseableNoShipping: {
+    id: "yD1Ylr",
+    defaultMessage: "Browseable, can't ship",
+    description:
+      "Public API verification: customer can browse the product but no shipping method is available at checkout (direct mode, no shipping zones)",
+  },
   publicApiVariantsInStock: {
     id: "7G7tg3",
     defaultMessage: "{count, plural, one {# variant in stock} other {# variants in stock}}",
@@ -306,6 +321,48 @@ export const messages = defineMessages({
     id: "vLc9Td",
     defaultMessage: "Public API verification",
     description: "Title for public API verification section",
+  },
+
+  // Mode-aware reassurance shown beneath the verification badge after a run.
+  // Tells the user what the public-API result means for the shop's active
+  // stock-availability mode (Saleor 3.23+).
+  verificationReassurance_purchasableLegacy: {
+    id: "QEXGYB",
+    defaultMessage:
+      "The public API confirms the product is purchasable for customers covered by the channel's shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in legacy mode",
+  },
+  verificationReassurance_purchasableDirect: {
+    id: "uL33aH",
+    defaultMessage:
+      "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in direct mode",
+  },
+  verificationReassurance_notPurchasable: {
+    id: "UuX9YV",
+    defaultMessage:
+      "The public API does not return this product as purchasable. Review the issues listed above to resolve.",
+    description: "Reassurance under verification badge when product is not purchasable",
+  },
+  verificationReassurance_notVisible: {
+    id: "tFx7UX",
+    defaultMessage:
+      "The public API cannot find this product. Confirm it is published and listed in this channel.",
+    description: "Reassurance under verification badge when product is not visible to public API",
+  },
+  verificationReassurance_notReachableLegacy: {
+    id: "AFZfCS",
+    defaultMessage:
+      "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+  },
+  verificationReassurance_notDeliverableDirect: {
+    id: "A6mmoM",
+    defaultMessage:
+      "The public API reports the product as in stock — direct mode resolves stock from the warehouse-channel link without requiring a shipping zone. However, no shipping zones are configured for this channel, so customers cannot complete checkout.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
   },
   testButton: {
     defaultMessage: "Test",
@@ -547,6 +604,16 @@ export const messages = defineMessages({
     id: "azych5",
     defaultMessage: "All channels configured correctly",
     description: "Message when no diagnostic issues found",
+  },
+  allChannelsHealthyWithAdvisory: {
+    id: "kGBmBz",
+    defaultMessage: "All channels configured correctly · 1 advisory",
+    description: "Message when no errors or warnings, but exactly one info-level advisory exists",
+  },
+  allChannelsHealthyWithAdvisories: {
+    id: "reogdY",
+    defaultMessage: "All channels configured correctly · {count} advisories",
+    description: "Message when no errors or warnings, but more than one info-level advisory exists",
   },
 
   // Stock availability mode indicator (Saleor 3.23+)
