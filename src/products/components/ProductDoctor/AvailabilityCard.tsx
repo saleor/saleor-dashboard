@@ -81,6 +81,7 @@ export const AvailabilityCard = ({
     isLoading,
     permissions,
     useLegacyShippingZoneStockAvailability,
+    isShippingRequired,
   } = diagnostics;
 
   const verification = usePublicApiVerification(productId || "");
@@ -114,7 +115,10 @@ export const AvailabilityCard = ({
     return () => clearTimeout(timeoutId);
   }, [expandedChannelSummary, productId, verifyChannel, expandedChannelAvailabilityKey]);
 
-  const { errorCount, warningCount } = useMemo(() => countIssuesBySeverity(issues), [issues]);
+  const { errorCount, warningCount, infoCount } = useMemo(
+    () => countIssuesBySeverity(issues),
+    [issues],
+  );
 
   const issuesByChannel = useMemo(() => groupIssuesByChannel(issues), [issues]);
 
@@ -201,6 +205,7 @@ export const AvailabilityCard = ({
               hasWarnings={hasWarnings}
               errorCount={errorCount}
               warningCount={warningCount}
+              infoCount={infoCount}
               permissions={permissions}
             />
 
@@ -267,6 +272,10 @@ export const AvailabilityCard = ({
                               ? () => verification.verifyChannel(summary.id, summary.slug)
                               : undefined
                           }
+                          useLegacyShippingZoneStockAvailability={
+                            useLegacyShippingZoneStockAvailability
+                          }
+                          isShippingRequired={isShippingRequired}
                         />
                       );
                     })}
@@ -300,6 +309,10 @@ interface DiagnosticSummaryBannerProps {
   hasWarnings: boolean;
   errorCount: number;
   warningCount: number;
+  /** Number of info-level advisories. Used to suffix the "all healthy" banner
+   *  so users notice unresolved advisories that don't promote the channel
+   *  into a header-issue state but still merit attention. */
+  infoCount: number;
   permissions: DiagnosticsPermissions;
 }
 
@@ -308,6 +321,7 @@ const DiagnosticSummaryBanner = ({
   hasWarnings,
   errorCount,
   warningCount,
+  infoCount,
   permissions,
 }: DiagnosticSummaryBannerProps) => {
   const intl = useIntl();
@@ -365,7 +379,10 @@ const DiagnosticSummaryBanner = ({
     );
   }
 
-  // When no issues and full permissions, show success
+  // When no errors/warnings and full permissions, show success — but suffix
+  // the message with an advisory count when info-level issues are present so
+  // we don't claim "all configured correctly" while an unresolved advisory
+  // (e.g. missing shipping zones in direct mode) sits below.
   if (!hasIssues) {
     return (
       <Box display="flex" alignItems="center" gap={2}>
@@ -376,8 +393,11 @@ const DiagnosticSummaryBanner = ({
           __backgroundColor={getStatusColor()}
           flexShrink="0"
         />
-        <Text size={2} color={getTextColor()}>
-          {intl.formatMessage(messages.allChannelsHealthy)}
+        <Text size={2} color={getTextColor()} data-test-id="diagnostic-summary-banner">
+          {infoCount === 0 && intl.formatMessage(messages.allChannelsHealthy)}
+          {infoCount === 1 && intl.formatMessage(messages.allChannelsHealthyWithAdvisory)}
+          {infoCount > 1 &&
+            intl.formatMessage(messages.allChannelsHealthyWithAdvisories, { count: infoCount })}
         </Text>
       </Box>
     );
@@ -473,9 +493,29 @@ const StockAvailabilityModeIndicator = ({
 
 interface PublicApiVerificationBadgeProps {
   result: ChannelVerificationResult;
+  /** Active stock-availability mode. Drives the reassurance line so users know
+   *  what was just verified given the shop's mode. Defaults to legacy. */
+  useLegacyShippingZoneStockAvailability?: boolean;
+  /** Number of shipping zones configured for the channel. A channel with zero
+   *  shipping zones cannot deliver any order, so a "purchasable" verdict from
+   *  the public API is misleading for shippable products — we override it with
+   *  a coverage-aware warning. Optional for backwards compatibility; when
+   *  undefined we fall back to the API-reported verdict. */
+  shippingZoneCount?: number;
+  /** Whether the product requires shipping. The coverage-aware override only
+   *  applies to shippable products — non-shippable products (digital goods,
+   *  activation codes, license keys) can be purchased without any shipping
+   *  zones, so their "Purchasable" verdict is genuinely correct. Defaults to
+   *  true (the conservative legacy assumption). */
+  isShippingRequired?: boolean;
 }
 
-export const PublicApiVerificationBadge = ({ result }: PublicApiVerificationBadgeProps) => {
+export const PublicApiVerificationBadge = ({
+  result,
+  useLegacyShippingZoneStockAvailability = true,
+  shippingZoneCount,
+  isShippingRequired = true,
+}: PublicApiVerificationBadgeProps) => {
   const intl = useIntl();
 
   if (result.status === "loading") {
@@ -510,43 +550,134 @@ export const PublicApiVerificationBadge = ({ result }: PublicApiVerificationBadg
 
   if (!productFound) {
     return (
-      <Box display="flex" alignItems="center" gap={1}>
-        <XCircle size={14} color="var(--mu-colors-text-default2)" />
-        <Text size={1} color="default2">
-          {intl.formatMessage(messages.publicApiNotVisible)}
-        </Text>
-      </Box>
+      <PublicApiVerificationBadgeShell
+        icon={<XCircle size={14} color="var(--mu-colors-text-default2)" />}
+        statusColor="default2"
+        status={intl.formatMessage(messages.publicApiNotVisible)}
+        reassurance={intl.formatMessage(messages.verificationReassurance_notVisible)}
+        reassuranceTestId="not-visible"
+      />
     );
   }
 
   if (isAvailable && variantsWithStock > 0) {
+    // The public API verifies what the storefront resolver returns, not what
+    // an end-to-end checkout requires. For shippable products in both
+    // stock-availability modes, a channel without shipping zones cannot
+    // deliver any order, so the green "Purchasable" badge would be
+    // misleading in isolation — override it with a coverage-aware variant.
+    // The two modes get distinct copy:
+    //   - Legacy: API result is unexpected (stock should have been gated by
+    //     shipping zones; surface as "no coverage").
+    //   - Direct: API result is expected (stock is decoupled from shipping
+    //     zones by design), but checkout still fails — surface as
+    //     "browseable, can't ship".
+    // Non-shippable products (digital goods, activation codes, license keys)
+    // are excluded from the override because they can be purchased without
+    // any shipping configuration — for them, "Purchasable" is correct.
+    if (shippingZoneCount === 0 && isShippingRequired) {
+      const isLegacy = useLegacyShippingZoneStockAvailability;
+
+      return (
+        <PublicApiVerificationBadgeShell
+          icon={<XCircle size={14} color="var(--mu-colors-text-warning1)" />}
+          statusColor="warning1"
+          status={intl.formatMessage(
+            isLegacy
+              ? messages.publicApiReportsStockNoCoverage
+              : messages.publicApiBrowseableNoShipping,
+          )}
+          statusSuffix={intl.formatMessage(messages.publicApiVariantsInStock, {
+            count: variantsWithStock,
+          })}
+          reassurance={intl.formatMessage(
+            isLegacy
+              ? messages.verificationReassurance_notReachableLegacy
+              : messages.verificationReassurance_notDeliverableDirect,
+          )}
+          reassuranceTestId={isLegacy ? "not-reachable-legacy" : "not-deliverable-direct"}
+        />
+      );
+    }
+
     return (
-      <Box display="flex" alignItems="center" gap={1}>
-        <CheckCircle size={14} color="var(--mu-colors-text-success1)" />
-        <Text size={1} color="success1">
-          {intl.formatMessage(messages.publicApiPurchasable)}
-        </Text>
-        <Text size={1} color="default2">
-          · {intl.formatMessage(messages.publicApiVariantsInStock, { count: variantsWithStock })}
-        </Text>
-      </Box>
+      <PublicApiVerificationBadgeShell
+        icon={<CheckCircle size={14} color="var(--mu-colors-text-success1)" />}
+        statusColor="success1"
+        status={intl.formatMessage(messages.publicApiPurchasable)}
+        statusSuffix={intl.formatMessage(messages.publicApiVariantsInStock, {
+          count: variantsWithStock,
+        })}
+        reassurance={intl.formatMessage(
+          useLegacyShippingZoneStockAvailability
+            ? messages.verificationReassurance_purchasableLegacy
+            : messages.verificationReassurance_purchasableDirect,
+        )}
+        reassuranceTestId={
+          useLegacyShippingZoneStockAvailability ? "purchasable-legacy" : "purchasable-direct"
+        }
+      />
     );
   }
 
   return (
+    <PublicApiVerificationBadgeShell
+      icon={<XCircle size={14} color="var(--mu-colors-text-warning1)" />}
+      statusColor="warning1"
+      status={intl.formatMessage(messages.publicApiNotPurchasable)}
+      statusSuffix={
+        variantsWithStock === 0
+          ? intl.formatMessage(messages.publicApiNoVariantsInStock)
+          : undefined
+      }
+      reassurance={intl.formatMessage(messages.verificationReassurance_notPurchasable)}
+      reassuranceTestId="not-purchasable"
+    />
+  );
+};
+
+interface PublicApiVerificationBadgeShellProps {
+  icon: React.ReactNode;
+  statusColor: "success1" | "warning1" | "default2";
+  status: string;
+  /** Optional secondary status fragment (e.g. variants-in-stock count). */
+  statusSuffix?: string;
+  /** Mode-aware explanatory line that reassures the user about what was just
+   *  verified given the active stock-availability mode. */
+  reassurance: string;
+  reassuranceTestId: string;
+}
+
+const PublicApiVerificationBadgeShell = ({
+  icon,
+  statusColor,
+  status,
+  statusSuffix,
+  reassurance,
+  reassuranceTestId,
+}: PublicApiVerificationBadgeShellProps) => (
+  <Box display="flex" flexDirection="column" gap={0.5}>
     <Box display="flex" alignItems="center" gap={1}>
-      <XCircle size={14} color="var(--mu-colors-text-warning1)" />
-      <Text size={1} color="warning1">
-        {intl.formatMessage(messages.publicApiNotPurchasable)}
+      {icon}
+      <Text size={1} color={statusColor}>
+        {status}
       </Text>
-      {variantsWithStock === 0 && (
+      {statusSuffix && (
         <Text size={1} color="default2">
-          · {intl.formatMessage(messages.publicApiNoVariantsInStock)}
+          · {statusSuffix}
         </Text>
       )}
     </Box>
-  );
-};
+    <Text
+      size={1}
+      color="default2"
+      data-test-id="verification-reassurance"
+      data-test-reassurance={reassuranceTestId}
+    >
+      {reassurance}
+    </Text>
+  </Box>
+);
 
 interface ChannelSearchInputProps {
   value: string;

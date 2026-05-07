@@ -2116,6 +2116,10 @@
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
   },
+  "A6mmoM": {
+    "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
+    "string": "The public API reports the product as in stock — direct mode resolves stock from the warehouse-channel link without requiring a shipping zone. However, no shipping zones are configured for this channel, so customers cannot complete checkout."
+  },
   "A7W4KO": {
     "string": "Catalog rule"
   },
@@ -2130,6 +2134,10 @@
   "ADvpV/": {
     "context": "Product can be purchased by customers",
     "string": "Purchasable"
+  },
+  "AFZfCS": {
+    "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+    "string": "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete."
   },
   "AHK0K9": {
     "context": "dialog content",
@@ -5075,6 +5083,10 @@
     "context": "is filter range or value",
     "string": "between"
   },
+  "QEXGYB": {
+    "context": "Reassurance under verification badge when product is purchasable in legacy mode",
+    "string": "The public API confirms the product is purchasable for customers covered by the channel's shipping zones."
+  },
   "QFCUEt": {
     "string": "Slug must be unique"
   },
@@ -5152,10 +5164,6 @@
   "Qe4XHv": {
     "context": "years after label",
     "string": "years after issue"
-  },
-  "QfK+5Q": {
-    "context": "Description for warehouse not in zone warning",
-    "string": "Warehouses with stock are not assigned to any shipping zone in this channel."
   },
   "Qhb89u": {
     "context": "Warning when no countries covered",
@@ -5557,10 +5565,6 @@
     "context": "header",
     "string": "Create Variant"
   },
-  "T7r26L": {
-    "context": "Description for no warehouses warning",
-    "string": "Products in this channel cannot be fulfilled without warehouses."
-  },
   "T83iU7": {
     "string": "Search categories..."
   },
@@ -5875,6 +5879,10 @@
   "Uu76vj": {
     "context": "no categories",
     "string": "No categories found"
+  },
+  "UuX9YV": {
+    "context": "Reassurance under verification badge when product is not purchasable",
+    "string": "The public API does not return this product as purchasable. Review the issues listed above to resolve."
   },
   "UvD+xp": {
     "context": "attribute values",
@@ -8288,6 +8296,10 @@
     "context": "tooltip",
     "string": "Stock allocations occur when:"
   },
+  "icyljC": {
+    "context": "Description for no warehouses warning",
+    "string": "Without an assigned warehouse, this product will appear unavailable to customers in this channel and orders cannot be fulfilled."
+  },
   "icz/jb": {
     "context": "customer",
     "string": "Join Date"
@@ -8603,6 +8615,10 @@
     "context": "dialog header",
     "string": "Unpublish models"
   },
+  "kGBmBz": {
+    "context": "Message when no errors or warnings, but exactly one info-level advisory exists",
+    "string": "All channels configured correctly · 1 advisory"
+  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -8731,6 +8747,10 @@
   },
   "krer6Z": {
     "string": "Features preview"
+  },
+  "ksIgHn": {
+    "context": "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
+    "string": "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability."
   },
   "kuo4fW": {
     "context": "dialog title",
@@ -9911,6 +9931,10 @@
     "context": "option label prefix for using a typed email address",
     "string": "Use email:"
   },
+  "reogdY": {
+    "context": "Message when no errors or warnings, but more than one info-level advisory exists",
+    "string": "All channels configured correctly · {count} advisories"
+  },
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
@@ -10181,6 +10205,10 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tFx7UX": {
+    "context": "Reassurance under verification badge when product is not visible to public API",
+    "string": "The public API cannot find this product. Confirm it is published and listed in this channel."
+  },
   "tI7/Ib": {
     "string": "Extension requested permissions that are not available in Saleor."
   },
@@ -10384,6 +10412,10 @@
   "uKlrEk": {
     "context": "all selected items message",
     "string": "All available {itemsName} have been selected"
+  },
+  "uL33aH": {
+    "context": "Reassurance under verification badge when product is purchasable in direct mode",
+    "string": "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
   },
   "uN88fb": {
     "context": "button, submit form",
@@ -10685,6 +10717,10 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "vZN+nE": {
+    "context": "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+    "string": "Reports stock, but no coverage"
   },
   "vaFjs6": {
     "string": "No warehouses available to add"
@@ -11160,6 +11196,10 @@
   },
   "yAgKyi": {
     "string": "Webhook created"
+  },
+  "yD1Ylr": {
+    "context": "Public API verification: customer can browse the product but no shipping method is available at checkout (direct mode, no shipping zones)",
+    "string": "Browseable, can't ship"
   },
   "yDkmX7": {
     "context": "dialog content",
