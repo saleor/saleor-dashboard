@@ -762,6 +762,36 @@ describe("App Extension Manifest Schema", () => {
       expect(result.success).toBe(true);
     });
 
+    it("should reject homeWidget options with non-WIDGET target", () => {
+      // Arrange
+      const invalidData = {
+        label: "Home Widget",
+        url: "https://example.com/home",
+        mountName: "HOMEPAGE_WIDGETS",
+        targetName: "POPUP" as const,
+        options: {
+          homeWidget: {
+            method: "POST" as const,
+            fullscreen: true,
+          },
+        },
+      };
+
+      // Act
+      const result = appExtensionManifest.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(
+          result.error.issues.some(issue =>
+            issue.message.includes("homeWidget options can only be set on WIDGET target"),
+          ),
+        ).toBe(true);
+      }
+    });
+
     it("should reject homeWidget options with non-HOMEPAGE_WIDGETS mount", () => {
       // Arrange
       const invalidData = {

@@ -86,6 +86,19 @@ export const appExtensionManifest = z
     {
       message: "homeWidget options can only be set on HOMEPAGE_WIDGETS mount",
     },
+  )
+  .refine(
+    data => {
+      // homeWidget options can only be set when target is WIDGET
+      if (data.options?.homeWidget && data.targetName !== "WIDGET") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "homeWidget options can only be set on WIDGET target",
+    },
   );
 
 export type AppExtensionManifest = z.infer<typeof appExtensionManifest>;
