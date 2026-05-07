@@ -117,6 +117,10 @@ describe("runAvailabilityChecks", () => {
 
       expect(zoneIssue).toBeDefined();
       expect(zoneIssue?.severity).toBe("warning");
+      // Description must explicitly call out legacy mode so users understand
+      // the issue won't fire after switching to direct stock availability.
+      expect(zoneIssue?.description).toMatch(/legacy stock availability mode/i);
+      expect(zoneIssue?.description).toMatch(/hides the product from customers/i);
     });
 
     it("should NOT return shipping warnings when properly configured", () => {
@@ -202,6 +206,11 @@ describe("runAvailabilityChecks", () => {
 
       expect(warehouseIssue).toBeDefined();
       expect(warehouseIssue?.severity).toBe("warning");
+      // Description must spell out the consequence (appears unavailable +
+      // can't fulfill) so users understand why this is a warning rather than
+      // a vague "needs warehouses" instruction.
+      expect(warehouseIssue?.description).toMatch(/appear unavailable/i);
+      expect(warehouseIssue?.description).toMatch(/cannot be fulfilled/i);
     });
 
     it("should still run core checks for non-shippable products", () => {
@@ -314,8 +323,13 @@ describe("runAvailabilityChecks", () => {
       expect(zoneIssue?.severity).toBe("warning");
     });
 
-    it("should downgrade no-shipping-zones to info severity in direct mode", () => {
-      // Arrange
+    it("keeps no-shipping-zones at warning severity in direct mode (same customer impact as legacy)", () => {
+      // Arrange — direct mode decouples stock visibility from shipping zones,
+      // but the customer-facing outcome of "zero shipping zones" is identical
+      // to legacy: the product is browseable yet no checkout can complete.
+      // That makes it a hard configuration gap, not an advisory — so the
+      // doctor must surface it as a warning in both modes for consistent
+      // banner / channel-header treatment.
       const product = createProduct({ isShippingRequired: true });
       const channelData = createChannelData({ shippingZones: [] });
       const channelListing = product.channelListings[0];
@@ -329,10 +343,11 @@ describe("runAvailabilityChecks", () => {
       const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
 
       expect(shippingIssue).toBeDefined();
-      expect(shippingIssue?.severity).toBe("info");
-      // Direct-mode copy reflects that browsing/cart works but no shipping
-      // methods are available at checkout — it does NOT claim the product is
-      // unavailable, since direct mode reports it as available.
+      expect(shippingIssue?.severity).toBe("warning");
+      // The mode-specific copy is preserved: direct-mode wording reflects that
+      // browsing/cart works but no shipping methods are available at checkout
+      // — it does NOT claim the product is unavailable, since direct mode
+      // reports it as available via the public API.
       expect(shippingIssue?.description).toMatch(/no shipping methods will be available/i);
       expect(shippingIssue?.description).not.toMatch(/appear unavailable/i);
     });

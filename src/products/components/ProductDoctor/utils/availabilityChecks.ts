@@ -149,15 +149,18 @@ const checkNoWarehouses: CheckFunction = ({ channelData, intl }) => {
 /**
  * Check if channel has no shipping zones assigned.
  *
- * In legacy mode (`useLegacyShippingZoneStockAvailability=true`), the absence
- * of shipping zones blocks customers from purchasing because the legacy stock
- * availability resolver intersects channel warehouses with shipping-zone
- * warehouses. Severity = warning.
+ * Severity is `warning` in BOTH stock-availability modes because the
+ * customer-facing outcome is identical: the product is browseable but no
+ * checkout can complete (no shipping method covers any address). The two
+ * modes only differ in WHY: in legacy mode the public API is *supposed* to
+ * also report the product as unavailable (because stock is gated by
+ * shipping zones); in direct mode the API correctly reports stock — by
+ * design — but checkout still fails. Either way it's a hard, blocking
+ * configuration gap, not an advisory.
  *
- * In direct mode (`useLegacyShippingZoneStockAvailability=false`), the product
- * appears as available via the public API regardless of shipping zones — but
- * the order still cannot be fulfilled without a shipping method. Severity =
- * info, with shipping-only copy.
+ * The mode-specific copy stays distinct so the user can tell whether they
+ * also need to worry about the storefront falsely showing stock (legacy)
+ * or just the missing shipping (direct).
  */
 const checkNoShippingZones: CheckFunction = ({
   channelData,
@@ -185,7 +188,7 @@ const checkNoShippingZones: CheckFunction = ({
 
   return {
     id: "no-shipping-zones",
-    severity: "info",
+    severity: "warning",
     channelId: channelData.id,
     channelName: channelData.name,
     message: intl.formatMessage(messages.noShippingZonesShippingOnly, {

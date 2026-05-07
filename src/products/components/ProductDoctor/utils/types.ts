@@ -122,4 +122,13 @@ export interface DiagnosticsResult {
    * Surfaced here so consuming UI can adapt copy without re-querying the shop.
    */
   useLegacyShippingZoneStockAvailability: boolean;
+  /**
+   * Mirrors `productType.isShippingRequired`. Surfaced here so UI layers
+   * (notably the public-API verification badge) can suppress
+   * shipping-related warnings for non-shippable products like digital goods,
+   * activation codes, or license keys — which can be purchased without any
+   * shipping configuration. Defaults to `true` (the conservative legacy
+   * assumption) when the product is not yet known.
+   */
+  isShippingRequired: boolean;
 }
