@@ -1,0 +1,24 @@
+src/index.tsx
+  s_f07dea0eea2e57::t_2995b8abe55d21 195
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "b97921c69813df54fef910cb6cc98027b2cd25dd",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_f07dea0eea2e57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b217e1b-56de-4617-9103-eac783eb788d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
