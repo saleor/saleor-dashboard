@@ -219,6 +219,14 @@ export const DocumentMap: Record<string, Document> = {
 
 // Documents which require parent object or can't be handled ATM
 //
+// Note: matching is done via `event.startsWith(object)` in
+// `src/components/DryRun/utils.ts`, so prefix entries also cover their
+// channel-scoped descendants — e.g. `PRODUCT_VARIANT_BACK_IN_STOCK` covers the
+// Saleor 3.23+ events `PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT`
+// and `PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL`, and `PRODUCT_VARIANT_OUT_OF_STOCK`
+// covers the corresponding `_FOR_CLICK_AND_COLLECT` / `_IN_CHANNEL` variants.
+// If you ever switch the matcher to exact-equality, expand these prefixes to
+// list the concrete event names individually.
 export const ExcludedDocumentKeys = [
   // USER ID REQUIRED
   "ADDRESS",
