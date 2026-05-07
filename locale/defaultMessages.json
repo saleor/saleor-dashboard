@@ -2333,6 +2333,10 @@
     "context": "delete channel",
     "string": "Select channel that you wish to move existing orders to."
   },
+  "BSGid2": {
+    "context": "Advisory badge shown next to a webhook event in the picker when the event only fires while the shop has the direct (non-legacy) warehouse-channel stock-availability mode enabled.",
+    "string": "Direct stock mode only"
+  },
   "BUKMzM": {
     "string": "Variant removed"
   },
@@ -2391,6 +2395,10 @@
   "Bphmwe": {
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
+  },
+  "BrRGIJ": {
+    "context": "Tooltip body for the direct-stock-mode-only badge in the webhook event picker. Quotes the exact label of the toggle on the site-settings page so the admin recognizes it when they click through.",
+    "string": "Fires only while \"Use legacy shipping zone stock availability\" is disabled in site settings. Otherwise the subscription produces no deliveries."
   },
   "BtsJ+e": {
     "context": "empty state message when no login method is available",
@@ -10709,6 +10717,10 @@
   },
   "vfG+nh": {
     "string": "Confirm Password"
+  },
+  "vh9a5S": {
+    "context": "Tooltip CTA on the direct-stock-mode-only badge in the webhook event picker. Links to the page where the legacy stock-availability flag can be toggled.",
+    "string": "Open shop settings"
   },
   "viFkCw": {
     "context": "site settings section name",
