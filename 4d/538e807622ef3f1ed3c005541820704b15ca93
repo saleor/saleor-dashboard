@@ -1,0 +1,26 @@
+src/extensions/domain/app-extension-manifest.test.ts
+  s_82e146790edd31::t_7b682b1870e500 765-794
+src/extensions/domain/app-extension-manifest.ts
+  s_82e146790edd31::t_49a2284a0461ce 89-101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "4d538e807622ef3f1ed3c005541820704b15ca93",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_82e146790edd31": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc24836c-7520-4bc8-9449-d66b60567e00",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
