@@ -1,0 +1,27 @@
+locale/defaultMessages.json
+  s_82e146790edd31::t_ed19fe1c27a696 7387-7389,7715-7718,9742-9744
+src/home/HomePage.tsx
+  s_82e146790edd31::t_4fe3365b3ebe07 50,58
+  s_82e146790edd31::t_59c26fc7b18a10 49,51-53,56-57,59-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "92c61deec843c06f7fa0fabbf4679e577442427a",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_82e146790edd31": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc24836c-7520-4bc8-9449-d66b60567e00",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
