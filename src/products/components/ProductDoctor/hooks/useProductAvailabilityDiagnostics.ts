@@ -125,6 +125,10 @@ export function useProductAvailabilityDiagnostics({
         isLoading: false,
         permissions: defaultPermissions,
         useLegacyShippingZoneStockAvailability,
+        // Default to true (conservative legacy assumption) when no product
+        // data is available — matches LEGACY_MODE_FALLBACK's spirit of not
+        // silently downgrading prior behavior.
+        isShippingRequired: product?.isShippingRequired ?? true,
       };
     }
 
@@ -139,6 +143,7 @@ export function useProductAvailabilityDiagnostics({
         isLoading: true,
         permissions: defaultPermissions,
         useLegacyShippingZoneStockAvailability,
+        isShippingRequired: product.isShippingRequired,
       };
     }
 
@@ -306,6 +311,7 @@ export function useProductAvailabilityDiagnostics({
       isLoading: false,
       permissions,
       useLegacyShippingZoneStockAvailability,
+      isShippingRequired: product.isShippingRequired,
     };
   }, [product, channelData, loading, enabled, intl, basePermissions]);
 

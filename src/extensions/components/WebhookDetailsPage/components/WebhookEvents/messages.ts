@@ -37,4 +37,23 @@ export const messages = defineMessages({
     defaultMessage: "Webhook events",
     description: "Webhook events header",
   },
+  directStockModeBadge: {
+    id: "BSGid2",
+    defaultMessage: "Direct stock mode only",
+    description:
+      "Advisory badge shown next to a webhook event in the picker when the event only fires while the shop has the direct (non-legacy) warehouse-channel stock-availability mode enabled.",
+  },
+  directStockModeTooltipBody: {
+    id: "BrRGIJ",
+    defaultMessage:
+      'Fires only while "Use legacy shipping zone stock availability" is disabled in site settings. Otherwise the subscription produces no deliveries.',
+    description:
+      "Tooltip body for the direct-stock-mode-only badge in the webhook event picker. Quotes the exact label of the toggle on the site-settings page so the admin recognizes it when they click through.",
+  },
+  directStockModeTooltipLink: {
+    id: "vh9a5S",
+    defaultMessage: "Open shop settings",
+    description:
+      "Tooltip CTA on the direct-stock-mode-only badge in the webhook event picker. Links to the page where the legacy stock-availability flag can be toggled.",
+  },
 });

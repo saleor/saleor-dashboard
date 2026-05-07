@@ -19,7 +19,7 @@ describe("getHeaderIssueBadgeProps", () => {
   it("returns null when issues are info-only (info is advisory, not header-worthy)", () => {
     expect(
       getHeaderIssueBadgeProps([
-        issue({ id: "no-shipping-zones", severity: "info" }),
+        issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
         issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
       ]),
     ).toBeNull();
@@ -43,7 +43,7 @@ describe("getHeaderIssueBadgeProps", () => {
     expect(
       getHeaderIssueBadgeProps([
         issue({ id: "no-stock", severity: "warning" }),
-        issue({ id: "no-shipping-zones", severity: "info" }),
+        issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
         issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
       ]),
     ).toEqual({ count: 1, type: "warning" });
@@ -54,7 +54,7 @@ describe("getHeaderIssueBadgeProps", () => {
       getHeaderIssueBadgeProps([
         issue({ id: "no-variants", severity: "error" }),
         issue({ id: "no-stock", severity: "warning" }),
-        issue({ id: "no-shipping-zones", severity: "info" }),
+        issue({ id: "stock-outside-channel-warehouses", severity: "info" }),
       ]),
     ).toEqual({ count: 2, type: "error" });
   });
