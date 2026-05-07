@@ -1,0 +1,31 @@
+src/home/HomePage.test.tsx
+  s_82e146790edd31::t_3a0b7ed9690bac 29,48-52,61-64,71,74-77,84-85
+  s_82e146790edd31::t_d1aa9f218bde81 1,3-28,30-47,53-58,65-70,72-73,78-83,86-87
+  s_82e146790edd31::t_b8078694d2d558 59-60
+src/home/HomePage.tsx
+  s_82e146790edd31::t_fa95816028545d 20-25
+  s_82e146790edd31::t_82ffa102d4ed7a 19,26-33
+  s_82e146790edd31::t_3351f5506588b8 50
+  s_82e146790edd31::t_2f1c1f5a417855 84,89,95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "2b16d28e8eb3b5dde7c92619fa84016a40d80837",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_82e146790edd31": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc24836c-7520-4bc8-9449-d66b60567e00",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
