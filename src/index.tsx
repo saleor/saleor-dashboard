@@ -192,6 +192,7 @@ const Routes = () => {
                 <Switch>
                   {legacyRedirects}
                   <SectionRoute exact path="/" component={WelcomePage} />
+                  <SectionRoute exact path="/home" component={HomePage} />
                   <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
                   <SectionRoute exact path="/home/widgets" component={HomePage} />
                   <SectionRoute
