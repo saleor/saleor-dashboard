@@ -1,0 +1,146 @@
+src/welcomePage/WelcomePageSidebar/components/WelcomePageActivities/activityMessages.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-51
+src/welcomePage/WelcomePageOnboarding/onboardingContext/utils.test.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-377
+src/extensions/views/InstalledExtensions/InstalledExtensions.test.tsx
+  s_f07dea0eea2e57::t_9f393ba95b04ca 55
+src/welcomePage/WelcomePageSidebar/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/welcomePage/WelcomePageOnboarding/onboardingContext/utils.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-137
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageCreateProductButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-49
+src/welcomePage/WelcomePageOnboarding/hooks/useNewUserCheck.test.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-95
+src/welcomePage/WelcomePageSidebar/components/WelcomePageStocksAnalytics/useWelcomePageStocksAnalytics.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-24
+src/welcomePage/WelcomePageSidebar/components/WelcomePageActivities/WelcomePageActivities.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-106
+src/welcomePage/WelcomePageOnboarding/onboardingContext/initialOnboardingState.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-56
+src/welcomePage/WelcomePageTilesContainer/WelcomePageInfoTile.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-44
+src/welcomePage/WelcomePageOnboarding/onboardingContext/useExpandedOnboardingId.test.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-186
+src/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-140
+src/welcomePage/WelcomePageOnboarding/onboardingContext/useOnboardingStorage.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-60
+src/welcomePage/WelcomePageSidebar/WelcmePageSidebar.test.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-127
+src/fragments/orders.ts
+  s_f07dea0eea2e57::t_029ed60fc8173d 918-930
+src/products/views/ProductCreate/ProductCreate.tsx
+  s_f07dea0eea2e57::t_be64e431429b21 51
+src/welcomePage/WelcomePageOnboarding/components/type.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-3
+src/welcomePage/WelcomePageTitle.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-21
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageCheckGraphQLButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-25
+src/welcomePage/WelcomePageSidebar/components/WelcomePageStocksAnalytics/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/welcomePage/WelcomePageOnboarding/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageOrdersButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-45
+src/welcomePage/WelcomePageOnboarding/hooks/useOnboardingData.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-231
+src/welcomePage/WelcomePageOnboarding/mocks.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-14
+src/welcomePage/WelcomePageOnboarding/onboardingContext/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-2
+src/welcomePage/mutations.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-11
+src/welcomePage/WelcomePageOnboarding/hooks/useNewUserCheck.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-36
+src/welcomePage/WelcomePageOnboarding/onboardingContext/types.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-43
+src/welcomePage/WelcomePageOnboarding/onboardingContext/useOnboardingStorage.test.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-126
+src/welcomePage/WelcomePageSidebar/components/WelcomePageStocksAnalytics/WelcomePageStocksAnalytics.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-28
+src/welcomePage/WelcomePageSidebar/context/welcomePageSidebarContext.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-24
+src/welcomePage/WelcomePageTilesContainer/tileData.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-231
+src/welcomePage/WelcomePageOnboarding/WelcomePageOnboarding.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-128
+src/welcomePage/WelcomePageSidebar/components/WelcomePageActivities/useWelcomePageActivities.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-25
+src/welcomePage/WelcomePage.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-58
+src/welcomePage/fixtures.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-22
+src/welcomePage/WelcomePageTilesContainer/WelcomePageTilesContainer.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-32
+src/welcomePage/WelcomePageSidebar/WelcomePageSidebar.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-53
+src/welcomePage/queries.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-33
+src/welcomePage/WelcomePageSidebar/components/WelcomePageSalesAnalytics/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/orders/views/OrderList/OrderList.tsx
+  s_f07dea0eea2e57::t_be64e431429b21 26
+src/welcomePage/WelcomePageSidebar/context/WelcomePageSidebarContextProvider.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-36
+src/welcomePage/WelcomePageSidebar/messages.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-12
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageFakeDisabledButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-33
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageOnboardingAccordion.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-97
+src/components/DevModePanel/DevModePanel.tsx
+  s_f07dea0eea2e57::t_a7d52da6019ba1 4
+src/welcomePage/WelcomePageSidebar/components/WelcomePageSalesAnalytics/WelcomePageSalesAnalytics.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-30
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageWebhooksButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-16
+src/welcomePage/WelcomePageOnboarding/components/WelcomePageInviteStaffButton.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-44
+src/welcomePage/WelcomePageSidebar/components/WelcomePageSalesAnalytics/useWelcomePageSalesAnalytics.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-28
+src/welcomePage/WelcomePageOnboarding/onboardingContext/useExpandedOnboardingId.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-53
+src/welcomePage/WelcomePageSidebar/components/WelcomePageAnalyticsCard.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-37
+src/welcomePage/WelcomePageOnboarding/WelcomePageOnboarding.test.tsx
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1-297
+src/staff/views/StaffList/StaffList.tsx
+  s_f07dea0eea2e57::t_be64e431429b21 26
+src/welcomePage/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/extensions/views/InstalledExtensions/InstalledExtensions.tsx
+  s_f07dea0eea2e57::t_be64e431429b21 18
+src/welcomePage/WelcomePageTilesContainer/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/welcomePage/WelcomePageSidebar/components/WelcomePageActivities/index.ts
+  s_f07dea0eea2e57::t_711bb74e23ca7a 1
+src/index.tsx
+  s_f07dea0eea2e57::t_e3899de77a1111 194
+  s_f07dea0eea2e57::t_8b93662a3dc3cd 31
+  s_f07dea0eea2e57::t_4f36338514667f 163-166
+  s_f07dea0eea2e57::t_31c697f8eabf95 56
+  s_f07dea0eea2e57::t_e0be23208f40eb 87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "61a669ca9a978c410baa719335e997cd35153e55",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_f07dea0eea2e57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b217e1b-56de-4617-9103-eac783eb788d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
