@@ -60,7 +60,7 @@ const RichTextEditor = ({
       return (editorRef.current = editor);
     }
   }, []);
-  // We need to render FormControl first to get id from useId
+  // Wait until after the initial render before running rerender-dependent editor updates.
   const hasRendered = useHasRendered();
 
   // EditorJS does not rerender when default value changes,
