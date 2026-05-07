@@ -67,3 +67,7 @@ export const Loading: Story = {
 export const Empty: Story = {
   args: { pages: [] },
 };
+
+export const EmptyWithSearch: Story = {
+  args: { pages: [], searchQuery: "nonexistent" },
+};

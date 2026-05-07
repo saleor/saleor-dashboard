@@ -6483,6 +6483,10 @@
     "context": "app extensions subsection",
     "string": "Apps"
   },
+  "Y8A4NO": {
+    "context": "empty model list when search returns no results",
+    "string": "No models matching \"{query}\""
+  },
   "Y8XVvH": {
     "string": "Failed to delete voucher codes"
   },

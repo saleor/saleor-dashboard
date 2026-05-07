@@ -147,6 +147,7 @@ const PageListPage = ({
         </Box>
         <PageListDatagrid
           {...listProps}
+          searchQuery={initialSearch}
           // Row hover used to be gated on `!isFilterPresetOpen` — there's no
           // preset overlay anymore, so hover is always on.
           hasRowHover

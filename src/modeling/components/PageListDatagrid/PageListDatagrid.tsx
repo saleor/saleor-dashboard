@@ -19,6 +19,8 @@ import { messages } from "./messages";
 
 interface PageListDatagridProps extends ListProps, SortPage<PageListUrlSortField> {
   pages: Pages | undefined;
+  /** Search string applied to the list (URL param), used for a clearer empty state */
+  searchQuery?: string;
   loading: boolean;
   hasRowHover?: boolean;
   onSelectPageIds: (rowsIndex: number[], clearSelection: () => void) => void;
@@ -28,6 +30,7 @@ interface PageListDatagridProps extends ListProps, SortPage<PageListUrlSortField
 
 export const PageListDatagrid = ({
   pages,
+  searchQuery = "",
   sort,
   loading,
   settings,
@@ -103,6 +106,12 @@ export const PageListDatagrid = ({
     [visibleColumns, onSort],
   );
 
+  const trimmedSearch = searchQuery.trim();
+  const emptyText =
+    trimmedSearch !== ""
+      ? intl.formatMessage(messages.emptyWithSearch, { query: trimmedSearch })
+      : intl.formatMessage(messages.empty);
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
@@ -120,7 +129,7 @@ export const PageListDatagrid = ({
         verticalBorder={false}
         rows={pages?.length ?? 0}
         availableColumns={visibleColumns}
-        emptyText={intl.formatMessage(messages.empty)}
+        emptyText={emptyText}
         onRowSelectionChange={onSelectPageIds}
         getCellContent={getCellContent}
         getCellError={() => false}
