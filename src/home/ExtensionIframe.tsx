@@ -18,7 +18,7 @@ export const ExtensionIframe = ({
   loaderType = "skeleton",
 }: ExtensionIframeProps) => {
   const settings = appExtensionManifestOptionsSchema.safeParse(extension.settings);
-  const method = settings.success ? (settings.data.homeWidget?.method ?? "POST") : "POST";
+  const method = settings.success ? (settings.data.homeWidgetTarget?.method ?? "POST") : "POST";
   const extensionUrl = isUrlAbsolute(extension.url)
     ? extension.url
     : `${extension.app.appUrl}${extension.url}`;

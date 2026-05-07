@@ -244,7 +244,7 @@ describe("App Extension Manifest Options Schema", () => {
     it("should accept valid homeWidget with explicit fields", () => {
       // Arrange
       const validData = {
-        homeWidget: {
+        homeWidgetTarget: {
           method: "GET",
           fullscreen: true,
         },
@@ -264,7 +264,7 @@ describe("App Extension Manifest Options Schema", () => {
     it("should apply defaults (method=POST, fullscreen=false) when fields omitted", () => {
       // Arrange
       const validData = {
-        homeWidget: {},
+        homeWidgetTarget: {},
       };
 
       // Act
@@ -274,7 +274,7 @@ describe("App Extension Manifest Options Schema", () => {
       expect(result.success).toBe(true);
 
       if (result.success) {
-        expect(result.data.homeWidget).toEqual({
+        expect(result.data.homeWidgetTarget).toEqual({
           method: "POST",
           fullscreen: false,
         });
@@ -284,7 +284,7 @@ describe("App Extension Manifest Options Schema", () => {
     it("should reject homeWidget with invalid method", () => {
       // Arrange
       const invalidData = {
-        homeWidget: {
+        homeWidgetTarget: {
           method: "PATCH",
         },
       };
@@ -306,7 +306,7 @@ describe("App Extension Manifest Options Schema", () => {
         widgetTarget: {
           method: "POST",
         },
-        homeWidget: {
+        homeWidgetTarget: {
           method: "GET",
           fullscreen: false,
         },
@@ -320,7 +320,7 @@ describe("App Extension Manifest Options Schema", () => {
 
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "When 'homeWidget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
+          "When 'homeWidgetTarget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
         );
       }
     });
@@ -331,7 +331,7 @@ describe("App Extension Manifest Options Schema", () => {
         newTabTarget: {
           method: "GET",
         },
-        homeWidget: {
+        homeWidgetTarget: {
           method: "GET",
           fullscreen: false,
         },
@@ -345,7 +345,7 @@ describe("App Extension Manifest Options Schema", () => {
 
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "When 'homeWidget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
+          "When 'homeWidgetTarget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
         );
       }
     });

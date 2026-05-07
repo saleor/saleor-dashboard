@@ -76,28 +76,28 @@ export const appExtensionManifest = z
   )
   .refine(
     data => {
-      // homeWidget options can only be set when mount is HOMEPAGE_WIDGETS
-      if (data.options?.homeWidget && data.mountName !== "HOMEPAGE_WIDGETS") {
+      // homeWidgetTarget options can only be set when mount is HOMEPAGE_WIDGETS
+      if (data.options?.homeWidgetTarget && data.mountName !== "HOMEPAGE_WIDGETS") {
         return false;
       }
 
       return true;
     },
     {
-      message: "homeWidget options can only be set on HOMEPAGE_WIDGETS mount",
+      message: "homeWidgetTarget options can only be set on HOMEPAGE_WIDGETS mount",
     },
   )
   .refine(
     data => {
-      // homeWidget options can only be set when target is WIDGET
-      if (data.options?.homeWidget && data.targetName !== "WIDGET") {
+      // homeWidgetTarget options can only be set when target is WIDGET
+      if (data.options?.homeWidgetTarget && data.targetName !== "WIDGET") {
         return false;
       }
 
       return true;
     },
     {
-      message: "homeWidget options can only be set on WIDGET target",
+      message: "homeWidgetTarget options can only be set on WIDGET target",
     },
   );
 

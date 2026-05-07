@@ -42,11 +42,11 @@ describe("filterHomeExtensions", () => {
     expect(result.widgets).toHaveLength(1);
   });
 
-  it("treats explicit homeWidget.fullscreen=true as fullscreen", () => {
+  it("treats explicit homeWidgetTarget.fullscreen=true as fullscreen", () => {
     // Arrange
     const extensions = [
       buildExtension({
-        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: true, method: "GET" } },
       }),
     ];
 
@@ -58,11 +58,11 @@ describe("filterHomeExtensions", () => {
     expect(result.widgets).toHaveLength(0);
   });
 
-  it("treats explicit homeWidget.fullscreen=false as widget", () => {
+  it("treats explicit homeWidgetTarget.fullscreen=false as widget", () => {
     // Arrange
     const extensions = [
       buildExtension({
-        settings: { homeWidget: { fullscreen: false, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: false, method: "GET" } },
       }),
     ];
 
@@ -74,11 +74,11 @@ describe("filterHomeExtensions", () => {
     expect(result.widgets).toHaveLength(1);
   });
 
-  it("treats homeWidget without explicit fullscreen as widget (default false)", () => {
+  it("treats homeWidgetTarget without explicit fullscreen as widget (default false)", () => {
     // Arrange
     const extensions = [
       buildExtension({
-        settings: { homeWidget: { method: "POST" } },
+        settings: { homeWidgetTarget: { method: "POST" } },
       }),
     ];
 
@@ -123,7 +123,7 @@ describe("filterHomeExtensions", () => {
     const extensions = [
       buildExtension({
         permissions: [PermissionEnum.MANAGE_PRODUCTS],
-        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: true, method: "GET" } },
       }),
     ];
 
@@ -140,22 +140,22 @@ describe("filterHomeExtensions", () => {
       buildExtension({
         id: "a",
         label: "A",
-        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: true, method: "GET" } },
       }),
       buildExtension({
         id: "b",
         label: "B",
-        settings: { homeWidget: { fullscreen: false, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: false, method: "GET" } },
       }),
       buildExtension({
         id: "c",
         label: "C",
-        settings: { homeWidget: { fullscreen: true, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: true, method: "GET" } },
       }),
       buildExtension({
         id: "d",
         label: "D",
-        settings: { homeWidget: { fullscreen: false, method: "GET" } },
+        settings: { homeWidgetTarget: { fullscreen: false, method: "GET" } },
       }),
     ];
 

@@ -748,7 +748,7 @@ describe("App Extension Manifest Schema", () => {
         targetName: "WIDGET" as const,
         permissions: [],
         options: {
-          homeWidget: {
+          homeWidgetTarget: {
             method: "POST" as const,
             fullscreen: true,
           },
@@ -770,7 +770,7 @@ describe("App Extension Manifest Schema", () => {
         mountName: "HOMEPAGE_WIDGETS",
         targetName: "POPUP" as const,
         options: {
-          homeWidget: {
+          homeWidgetTarget: {
             method: "POST" as const,
             fullscreen: true,
           },
@@ -786,7 +786,7 @@ describe("App Extension Manifest Schema", () => {
       if (!result.success) {
         expect(
           result.error.issues.some(issue =>
-            issue.message.includes("homeWidget options can only be set on WIDGET target"),
+            issue.message.includes("homeWidgetTarget options can only be set on WIDGET target"),
           ),
         ).toBe(true);
       }
@@ -800,7 +800,7 @@ describe("App Extension Manifest Schema", () => {
         mountName: "PRODUCT_DETAILS_WIDGETS",
         targetName: "WIDGET" as const,
         options: {
-          homeWidget: {
+          homeWidgetTarget: {
             method: "POST" as const,
             fullscreen: true,
           },
@@ -816,7 +816,9 @@ describe("App Extension Manifest Schema", () => {
       if (!result.success) {
         expect(
           result.error.issues.some(issue =>
-            issue.message.includes("homeWidget options can only be set on HOMEPAGE_WIDGETS mount"),
+            issue.message.includes(
+              "homeWidgetTarget options can only be set on HOMEPAGE_WIDGETS mount",
+            ),
           ),
         ).toBe(true);
       }

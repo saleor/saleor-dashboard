@@ -29,7 +29,9 @@ export const filterHomeExtensions = (
     }
 
     const settings = appExtensionManifestOptionsSchema.safeParse(extension.settings);
-    const fullscreen = settings.success ? (settings.data.homeWidget?.fullscreen ?? false) : false;
+    const fullscreen = settings.success
+      ? (settings.data.homeWidgetTarget?.fullscreen ?? false)
+      : false;
 
     if (fullscreen) {
       result.fullscreen.push(extension);
