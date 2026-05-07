@@ -1,0 +1,27 @@
+.github/workflows/deploy-dev.yaml
+  s_f07dea0eea2e57::t_673beb50a22e95 27
+.github/workflows/deploy-master-staging.yaml
+  s_f07dea0eea2e57::t_b06c218de97027 27
+.github/workflows/deploy-cloud.yaml
+  s_f07dea0eea2e57::t_a5e956e313cdf1 48
+.github/workflows/deploy-staging-and-prepare-release.yaml
+  s_f07dea0eea2e57::t_8283567266aee5 149
+.github/workflows/pr-automation.yml
+  s_f07dea0eea2e57::t_374f67ac5f2308 138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "dcb331c9b786ccd3642b0cd1333f5ac9be193444",
+  "prompts": {},
+  "sessions": {
+    "s_f07dea0eea2e57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8b217e1b-56de-4617-9103-eac783eb788d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
