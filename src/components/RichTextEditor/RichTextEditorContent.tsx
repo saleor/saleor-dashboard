@@ -23,7 +23,7 @@ const RichTextEditorContent = ({
   const classes = useStyles({});
   const generatedId = useId();
   const id = defaultId ?? generatedId;
-  // We need to render FormControl first to get id from useId
+  // Delay EditorJS rendering until after mount to avoid client-only rendering issues.
   const hasRendered = useHasRendered();
 
   if (!hasRendered) {
