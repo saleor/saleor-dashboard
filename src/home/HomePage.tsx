@@ -46,10 +46,20 @@ export const HomePage = () => {
     return (
       <Box paddingX={8} paddingY={9}>
         <Text size={6} fontWeight="bold">
-          Welcome
+          <FormattedMessage
+            id="fTLvHX"
+            defaultMessage="Welcome"
+            description="empty home page title"
+          />
         </Text>
         <Box marginTop={4}>
-          <Text>Install an app that registers a HOMEPAGE_WIDGETS extension to see it here.</Text>
+          <Text>
+            <FormattedMessage
+              id="cxUBO1"
+              defaultMessage="Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
+              description="empty home page description"
+            />
+          </Text>
         </Box>
       </Box>
     );
