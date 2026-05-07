@@ -17,10 +17,6 @@ import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
 
 export const useHomeRouteParams = () => {
-  // The URL is built with encodeURIComponent (see homeWidgetUrl). The history library
-  // applies decodeURI to the pathname, which leaves URI-reserved chars (+ / = etc.)
-  // still percent-encoded — those are exactly what Saleor base64 global IDs contain.
-  // We finish the decode here. Assumes IDs never contain a literal '%'.
   const { extensionId: rawExtensionId } = useParams<{ extensionId?: string }>();
   const extensionId = rawExtensionId ? decodeURIComponent(rawExtensionId) : undefined;
   const widgetsRouteMatch = useRouteMatch({ path: "/home/widgets", exact: true });
