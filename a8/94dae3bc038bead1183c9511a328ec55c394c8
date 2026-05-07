@@ -1,0 +1,29 @@
+src/components/RichTextEditor/RichTextEditor.tsx
+  s_3af3ffc167d3c8::t_6d547a51f717c7 63
+  s_3af3ffc167d3c8::t_eade51aa68193b 42-43
+src/orders/components/OrderSendRefundPage/components/TransactionCard.tsx
+  s_3af3ffc167d3c8::t_702019765cef75 12
+src/orders/components/OrderGrantRefundPage/components/ShippingInluded.tsx
+  s_3af3ffc167d3c8::t_2cdf25e17b920d 5
+src/components/RichTextEditor/RichTextEditorContent.tsx
+  s_3af3ffc167d3c8::t_db4f5c3bdb617d 3
+  s_3af3ffc167d3c8::t_57497e519fa16a 24-26
+.github/workflows/deploy-cloud.yaml
+  s_3af3ffc167d3c8::t_49096b90107163 96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "a894dae3bc038bead1183c9511a328ec55c394c8",
+  "prompts": {},
+  "sessions": {
+    "s_3af3ffc167d3c8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9efc566-3326-4e9e-85f9-2ed423a6debb",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
