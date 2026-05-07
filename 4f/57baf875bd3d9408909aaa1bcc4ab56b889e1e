@@ -1,0 +1,43 @@
+src/extensions/domain/app-extension-manifest-options.ts
+  s_82e146790edd31::t_611c78973970a0 15,24,37,44
+src/home/filterHomeExtensions.ts
+  s_82e146790edd31::t_21235caca12d4c 32-34
+src/extensions/domain/app-extension-manifest-options.test.ts
+  s_82e146790edd31::t_2fb968c7352188 277
+  s_82e146790edd31::t_6cd355dff266e4 323,348
+  s_82e146790edd31::t_88ce68125e7fb4 247,267,287,309,334
+src/extensions/domain/app-extension-manifest.test.ts
+  s_82e146790edd31::t_645464a64a0b76 789
+  s_82e146790edd31::t_32dda21ec4ff7b 819,821
+  s_82e146790edd31::t_63faa29cd8f41b 751,773,803
+src/extensions/domain/app-extension-manifest.ts
+  s_82e146790edd31::t_ef91795a6f9cd5 79-80,87,92-93,100
+src/home/ExtensionIframe.tsx
+  s_82e146790edd31::t_52f5fd609c3bca 21
+src/home/filterHomeExtensions.test.ts
+  s_82e146790edd31::t_96874d62e33b4b 45
+  s_82e146790edd31::t_076426b1065810 49,65,81,126,143,148,153,158
+  s_82e146790edd31::t_98995d06762414 77
+  s_82e146790edd31::t_06f97f662cb297 61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "4f57baf875bd3d9408909aaa1bcc4ab56b889e1e",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  },
+  "sessions": {
+    "s_82e146790edd31": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc24836c-7520-4bc8-9449-d66b60567e00",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
