@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "a7ceda420cf5ef9b7d58f3dc1fafcf9109c451f8",
+  "prompts": {},
+  "humans": {
+    "h_463c3d2f499c35": {
+      "author": "Lukasz Ostrowski"
+    }
+  }
+}
