@@ -52,7 +52,7 @@ jest.mock("@dashboard/featureFlags", () => ({
   useFlags: () => ({}),
 }));
 
-jest.mock("@dashboard/onboarding/OnboardingContext", () => ({
+jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
   useOnboarding: () => ({
     markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
   }),

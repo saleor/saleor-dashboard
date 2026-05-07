@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useOnboarding } from "@dashboard/onboarding/OnboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { type FetcherOpts, type FetcherParams } from "@graphiql/toolkit";
 import { useIntl } from "react-intl";
 

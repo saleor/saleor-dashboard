@@ -14,8 +14,8 @@ import { useAppAllProblemsLazyQuery, useAppProblemDismissMutation } from "@dashb
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { useOnboarding } from "@dashboard/onboarding/OnboardingContext";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";

@@ -28,7 +28,7 @@ import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import { channelsSection } from "./channels/urls";
 import AppLayout from "./components/AppLayout";
-import { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
+import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
@@ -50,10 +50,10 @@ import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import { NotFound } from "./NotFound";
-import { OnboardingProvider } from "./onboarding/OnboardingContext";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
+import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext";
 
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));
@@ -84,6 +84,7 @@ const TaxesSection = lazy(() => import("./taxes"));
 const TranslationsSection = lazy(() => import("./translations"));
 const WarehouseSection = lazy(() => import("./warehouses"));
 const ConfigurationSection = lazy(() => import("./configuration"));
+const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
 const HomePage = lazy(() => import("./home/HomePage").then(m => ({ default: m.HomePage })));
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
@@ -159,8 +160,10 @@ const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
-  const homePageLoaded = authenticated;
-  const homePageLoading = authenticating;
+  const { channel } = useAppChannel(false);
+  const channelLoaded = typeof channel !== "undefined";
+  const homePageLoaded = channelLoaded && authenticated;
+  const homePageLoading = (authenticated && !channelLoaded) || authenticating;
   const { isAppPath } = useLocationState();
 
   return (
@@ -188,7 +191,7 @@ const Routes = () => {
               <Suspense fallback={<LoginLoading />}>
                 <Switch>
                   {legacyRedirects}
-                  <SectionRoute exact path="/" component={HomePage} />
+                  <SectionRoute exact path="/" component={WelcomePage} />
                   <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
                   <SectionRoute exact path="/home/widgets" component={HomePage} />
                   <SectionRoute
