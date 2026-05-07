@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
+import { LEGACY_MODE_FALLBACK } from "../utils/constants";
 import { type ProductDiagnosticData } from "../utils/types";
 import { useProductAvailabilityDiagnostics } from "./useProductAvailabilityDiagnostics";
 
@@ -66,7 +67,13 @@ const createMockProduct = (overrides?: Partial<ProductDiagnosticData>): ProductD
   ...overrides,
 });
 
-const createMockChannelData = () => ({
+const createMockChannelData = (
+  overrides: { useLegacyShippingZoneStockAvailability?: boolean } = {},
+) => ({
+  shop: {
+    useLegacyShippingZoneStockAvailability:
+      overrides.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK,
+  },
   channels: [
     {
       id: "channel-1",
@@ -410,5 +417,124 @@ describe("useProductAvailabilityDiagnostics", () => {
       expect.anything(),
       expect.objectContaining({ skip: true }),
     );
+  });
+
+  describe("useLegacyShippingZoneStockAvailability flag plumbing (Saleor 3.23+)", () => {
+    it("should forward legacy=true from the diagnostics query to runAvailabilityChecks", () => {
+      // Arrange
+      const product = createMockProduct();
+      const channelData = createMockChannelData({ useLegacyShippingZoneStockAvailability: true });
+
+      mockUseQuery.mockReturnValue({ data: channelData, loading: false, error: null });
+
+      // Act
+      renderHook(() => useProductAvailabilityDiagnostics({ product }), { wrapper });
+
+      // Assert
+      expect(mockRunAvailabilityChecks).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ useLegacyShippingZoneStockAvailability: true }),
+      );
+    });
+
+    it("should forward legacy=false when shop has direct mode enabled", () => {
+      // Arrange
+      const product = createMockProduct();
+      const channelData = createMockChannelData({ useLegacyShippingZoneStockAvailability: false });
+
+      mockUseQuery.mockReturnValue({ data: channelData, loading: false, error: null });
+
+      // Act
+      renderHook(() => useProductAvailabilityDiagnostics({ product }), { wrapper });
+
+      // Assert
+      expect(mockRunAvailabilityChecks).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ useLegacyShippingZoneStockAvailability: false }),
+      );
+    });
+
+    it("should default to legacy=true when the diagnostics query hasn't returned shop yet", () => {
+      // Arrange - shop missing from response (e.g. permission stripped or partial data)
+      const product = createMockProduct();
+      const channelData = {
+        ...createMockChannelData(),
+        shop: null,
+      };
+
+      mockUseQuery.mockReturnValue({ data: channelData, loading: false, error: null });
+
+      // Act
+      const { result } = renderHook(() => useProductAvailabilityDiagnostics({ product }), {
+        wrapper,
+      });
+
+      // Assert - the doctor should not silently switch to direct mode before
+      // the shop fragment resolves; legacy is the safer default.
+      expect(result.current.useLegacyShippingZoneStockAvailability).toBe(true);
+      expect(mockRunAvailabilityChecks).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.anything(),
+        expect.objectContaining({ useLegacyShippingZoneStockAvailability: true }),
+      );
+    });
+
+    it("should expose useLegacyShippingZoneStockAvailability on the result for UI consumers", () => {
+      // Arrange
+      const product = createMockProduct();
+      const channelData = createMockChannelData({ useLegacyShippingZoneStockAvailability: false });
+
+      mockUseQuery.mockReturnValue({ data: channelData, loading: false, error: null });
+
+      // Act
+      const { result } = renderHook(() => useProductAvailabilityDiagnostics({ product }), {
+        wrapper,
+      });
+
+      // Assert
+      expect(result.current.useLegacyShippingZoneStockAvailability).toBe(false);
+    });
+
+    it("should expose the flag on early-return states (disabled / no product / loading)", () => {
+      // Arrange
+      const channelData = createMockChannelData({ useLegacyShippingZoneStockAvailability: false });
+
+      mockUseQuery.mockReturnValue({ data: channelData, loading: false, error: null });
+
+      // Act + Assert - null product
+      const { result: nullResult } = renderHook(
+        () => useProductAvailabilityDiagnostics({ product: null }),
+        { wrapper },
+      );
+
+      expect(nullResult.current.useLegacyShippingZoneStockAvailability).toBe(false);
+
+      // Act + Assert - disabled
+      const product = createMockProduct();
+      const { result: disabledResult } = renderHook(
+        () => useProductAvailabilityDiagnostics({ product, enabled: false }),
+        { wrapper },
+      );
+
+      expect(disabledResult.current.useLegacyShippingZoneStockAvailability).toBe(false);
+
+      // Act + Assert - loading (no data yet -> falls back to legacy)
+      mockUseQuery.mockReturnValue({ data: null, loading: true, error: null });
+
+      const { result: loadingResult } = renderHook(
+        () => useProductAvailabilityDiagnostics({ product }),
+        { wrapper },
+      );
+
+      expect(loadingResult.current.useLegacyShippingZoneStockAvailability).toBe(true);
+    });
   });
 });

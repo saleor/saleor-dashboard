@@ -157,14 +157,36 @@ export const IssueBadge = ({ count, type }: IssueBadgeProps) => {
   const intl = useIntl();
   const iconColor =
     type === "error" ? "var(--mu-colors-text-critical1)" : "var(--mu-colors-text-warning1)";
-  const title = intl.formatMessage(messages.channelHasIssues, { count });
+  const accessibleName = intl.formatMessage(messages.channelHasIssues, { count });
+  const iconLabel = intl.formatMessage(
+    type === "error" ? messages.issueBadgeIconError : messages.issueBadgeIconWarning,
+  );
 
   return (
-    <Box display="flex" alignItems="center" title={title} position="relative">
+    <Box
+      display="flex"
+      alignItems="center"
+      title={accessibleName}
+      aria-label={accessibleName}
+      position="relative"
+      data-test-id="channel-issue-badge"
+    >
       {type === "error" ? (
-        <AlertTriangle size={16} color={iconColor} />
+        <AlertTriangle
+          size={16}
+          color={iconColor}
+          role="img"
+          aria-label={iconLabel}
+          data-test-id="product-doctor-issue-badge-icon-error"
+        />
       ) : (
-        <CircleAlert size={16} color={iconColor} />
+        <CircleAlert
+          size={16}
+          color={iconColor}
+          role="img"
+          aria-label={iconLabel}
+          data-test-id="product-doctor-issue-badge-icon-warning"
+        />
       )}
       {count > 1 && (
         <Text
@@ -175,6 +197,7 @@ export const IssueBadge = ({ count, type }: IssueBadgeProps) => {
           __top="-4px"
           __right="-6px"
           __fontSize="10px"
+          data-test-id="product-doctor-issue-badge-count"
         >
           {count}
         </Text>

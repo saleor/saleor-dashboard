@@ -268,9 +268,19 @@ export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
  * Query for product availability diagnostics.
  * Fetches channel and shipping zone data needed to determine
  * if a product can be purchased in each channel.
+ *
+ * Also reads `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+) so
+ * the doctor can adapt severity/copy based on whether the shop uses legacy
+ * shipping-zone-based stock filtering or the direct warehouse-channel link.
+ * The field is scoped to this query (rather than the global ShopInfo) to
+ * avoid loading it on every authenticated session.
  */
 export const channelDiagnosticsQuery = gql`
   query ChannelDiagnostics {
+    shop {
+      id
+      useLegacyShippingZoneStockAvailability
+    }
     channels {
       id
       name

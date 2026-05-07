@@ -1,4 +1,4 @@
-type IssueSeverity = "error" | "warning" | "info";
+export type IssueSeverity = "error" | "warning" | "info";
 
 export interface AvailabilityIssue {
   id: string;
@@ -117,4 +117,9 @@ export interface DiagnosticsResult {
   hasWarnings: boolean;
   isLoading: boolean;
   permissions: DiagnosticsPermissions;
+  /**
+   * Mirrors `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+).
+   * Surfaced here so consuming UI can adapt copy without re-querying the shop.
+   */
+  useLegacyShippingZoneStockAvailability: boolean;
 }
