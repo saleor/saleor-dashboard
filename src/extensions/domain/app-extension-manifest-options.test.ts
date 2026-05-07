@@ -300,9 +300,9 @@ describe("App Extension Manifest Options Schema", () => {
       }
     });
 
-    it("should allow homeWidget to coexist with widgetTarget", () => {
+    it("should reject homeWidget when set together with widgetTarget", () => {
       // Arrange
-      const validData = {
+      const invalidData = {
         widgetTarget: {
           method: "POST",
         },
@@ -313,13 +313,40 @@ describe("App Extension Manifest Options Schema", () => {
       };
 
       // Act
-      const result = appExtensionManifestOptionsSchema.safeParse(validData);
+      const result = appExtensionManifestOptionsSchema.safeParse(invalidData);
 
       // Assert
-      expect(result.success).toBe(true);
+      expect(result.success).toBe(false);
 
-      if (result.success) {
-        expect(result.data).toEqual(validData);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "When 'homeWidget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
+        );
+      }
+    });
+
+    it("should reject homeWidget when set together with newTabTarget", () => {
+      // Arrange
+      const invalidData = {
+        newTabTarget: {
+          method: "GET",
+        },
+        homeWidget: {
+          method: "GET",
+          fullscreen: false,
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchema.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "When 'homeWidget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
+        );
       }
     });
   });

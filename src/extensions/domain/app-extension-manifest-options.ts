@@ -31,6 +31,18 @@ export const appExtensionManifestOptionsSchema = z
     {
       message: "Only one of 'newTabTarget' or 'widgetTarget' can be set.",
     },
+  )
+  .refine(
+    data => {
+      if (data.homeWidget && (data.newTabTarget || data.widgetTarget)) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "When 'homeWidget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
+    },
   );
 
 export const appExtensionManifestOptionsSchemaWithDefault =
