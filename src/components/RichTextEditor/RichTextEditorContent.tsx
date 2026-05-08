@@ -1,6 +1,6 @@
 import { type LogLevels } from "@editorjs/editorjs";
-import { useId } from "@reach/auto-id";
 import clsx from "clsx";
+import { useId } from "react";
 import { createReactEditorJS } from "react-editor-js";
 
 import { tools } from "./consts";
@@ -21,8 +21,9 @@ const RichTextEditorContent = ({
   ...props
 }: RichTextEditorContentProps) => {
   const classes = useStyles({});
-  const id = useId(defaultId);
-  // We need to render FormControl first to get id from @reach/auto-id
+  const generatedId = useId();
+  const id = defaultId ?? generatedId;
+  // Delay EditorJS rendering until after mount to avoid client-only rendering issues.
   const hasRendered = useHasRendered();
 
   if (!hasRendered) {
