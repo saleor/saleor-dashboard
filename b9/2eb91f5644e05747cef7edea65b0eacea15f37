@@ -1,0 +1,26 @@
+.storybook/preview.tsx
+  s_2dbf5f437977e1::t_5d4523841918d2 7
+  s_2dbf5f437977e1::t_e859cfdcebce27 3-6,8,11,23-32,34-48,50-70,80-89
+  s_2dbf5f437977e1::t_409d43e22d466a 71-79
+src/components/RichTextEditor/RichTextEditor.stories.tsx
+  s_2dbf5f437977e1::t_384ca3bd822cc2 1-84
+src/components/RichTextEditor/styles.ts
+  s_2dbf5f437977e1::t_8bd6a474b95448 160-161,164-165,167-168,170-171
+  s_2dbf5f437977e1::t_b0bdc798129ce5 162-163,166,169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "b92eb91f5644e05747cef7edea65b0eacea15f37",
+  "prompts": {},
+  "sessions": {
+    "s_2dbf5f437977e1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1402102d-e091-456e-9898-bc9f43dc85fa",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
