@@ -117,6 +117,10 @@ describe("runAvailabilityChecks", () => {
 
       expect(zoneIssue).toBeDefined();
       expect(zoneIssue?.severity).toBe("warning");
+      // Description must explicitly call out legacy mode so users understand
+      // the issue won't fire after switching to direct stock availability.
+      expect(zoneIssue?.description).toMatch(/legacy stock availability mode/i);
+      expect(zoneIssue?.description).toMatch(/hides the product from customers/i);
     });
 
     it("should NOT return shipping warnings when properly configured", () => {
@@ -202,6 +206,11 @@ describe("runAvailabilityChecks", () => {
 
       expect(warehouseIssue).toBeDefined();
       expect(warehouseIssue?.severity).toBe("warning");
+      // Description must spell out the consequence (appears unavailable +
+      // can't fulfill) so users understand why this is a warning rather than
+      // a vague "needs warehouses" instruction.
+      expect(warehouseIssue?.description).toMatch(/appear unavailable/i);
+      expect(warehouseIssue?.description).toMatch(/cannot be fulfilled/i);
     });
 
     it("should still run core checks for non-shippable products", () => {
@@ -314,8 +323,13 @@ describe("runAvailabilityChecks", () => {
       expect(zoneIssue?.severity).toBe("warning");
     });
 
-    it("should downgrade no-shipping-zones to info severity in direct mode", () => {
-      // Arrange
+    it("keeps no-shipping-zones at warning severity in direct mode (same customer impact as legacy)", () => {
+      // Arrange — direct mode decouples stock visibility from shipping zones,
+      // but the customer-facing outcome of "zero shipping zones" is identical
+      // to legacy: the product is browseable yet no checkout can complete.
+      // That makes it a hard configuration gap, not an advisory — so the
+      // doctor must surface it as a warning in both modes for consistent
+      // banner / channel-header treatment.
       const product = createProduct({ isShippingRequired: true });
       const channelData = createChannelData({ shippingZones: [] });
       const channelListing = product.channelListings[0];
@@ -329,10 +343,11 @@ describe("runAvailabilityChecks", () => {
       const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
 
       expect(shippingIssue).toBeDefined();
-      expect(shippingIssue?.severity).toBe("info");
-      // Direct-mode copy reflects that browsing/cart works but no shipping
-      // methods are available at checkout — it does NOT claim the product is
-      // unavailable, since direct mode reports it as available.
+      expect(shippingIssue?.severity).toBe("warning");
+      // The mode-specific copy is preserved: direct-mode wording reflects that
+      // browsing/cart works but no shipping methods are available at checkout
+      // — it does NOT claim the product is unavailable, since direct mode
+      // reports it as available via the public API.
       expect(shippingIssue?.description).toMatch(/no shipping methods will be available/i);
       expect(shippingIssue?.description).not.toMatch(/appear unavailable/i);
     });
@@ -484,6 +499,116 @@ describe("runAvailabilityChecks", () => {
       const issue = issues.find(i => i.id === "stock-outside-channel-warehouses");
 
       expect(issue).toBeUndefined();
+    });
+  });
+
+  describe("issue category assignment", () => {
+    // Setup: product missing in every dimension so we get one of each kind of
+    // issue. Direct mode is used so the "no shipping zones" issue is emitted
+    // (info severity) instead of being entangled with availability.
+    const buildEverythingMissing = (): {
+      product: ProductDiagnosticData;
+      channelData: ChannelDiagnosticData;
+    } => {
+      const product = createProduct({
+        isShippingRequired: true,
+        variants: [
+          {
+            id: "variant-1",
+            name: "Variant A",
+            channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10 } }],
+            stocks: [{ warehouse: { id: "warehouse-stranded" }, quantity: 5 }],
+          },
+        ],
+      });
+      const channelData = createChannelData({
+        warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
+        shippingZones: [],
+      });
+
+      return { product, channelData };
+    };
+
+    it("should categorize purchasability and shipping issues per the structural mapping", () => {
+      // Arrange
+      const { product, channelData } = buildEverythingMissing();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert
+      const byId = (id: string) => issues.find(i => i.id === id);
+
+      // Purchasability checks: warehouses, stock, stranded stock
+      expect(byId("no-stock")?.category).toBe("purchasability");
+      expect(byId("stock-outside-channel-warehouses")?.category).toBe("purchasability");
+
+      // Shipping checks: shipping zones
+      expect(byId("no-shipping-zones")?.category).toBe("shipping");
+    });
+
+    it("should categorize core checks (channel inactive, no variants, etc.) as purchasability", () => {
+      // Arrange - inactive channel + no variants in catalog triggers two core errors
+      const product = createProduct({ variants: [] });
+      const channelData = createChannelData({ isActive: false });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      const channelInactive = issues.find(i => i.id === "channel-inactive");
+      const noVariants = issues.find(i => i.id === "no-variants");
+
+      expect(channelInactive?.category).toBe("purchasability");
+      expect(noVariants?.category).toBe("purchasability");
+    });
+
+    it("should categorize warehouse-not-in-zone (legacy mode) as shipping", () => {
+      // Arrange - legacy mode, stock in warehouse not covered by any shipping zone
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({
+        shippingZones: [
+          {
+            id: "zone-1",
+            name: "Zone 1",
+            countries: [{ code: "US", country: "United States" }],
+            warehouses: [{ id: "warehouse-other", name: "Other Warehouse" }],
+          },
+        ],
+      });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: true,
+      });
+
+      // Assert
+      const issue = issues.find(i => i.id === "warehouse-not-in-zone");
+
+      expect(issue?.category).toBe("shipping");
+    });
+
+    it("should ensure every emitted issue carries a category", () => {
+      // Arrange - same multi-issue setup
+      const { product, channelData } = buildEverythingMissing();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert - every issue must have a non-undefined category, since the
+      // grouping UI assumes total coverage.
+      expect(issues.length).toBeGreaterThan(0);
+      issues.forEach(issue => {
+        expect(issue.category).toMatch(/^(purchasability|shipping)$/);
+      });
     });
   });
 });

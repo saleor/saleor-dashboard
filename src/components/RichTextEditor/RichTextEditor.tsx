@@ -1,6 +1,5 @@
 import { type LogLevels, type OutputData } from "@editorjs/editorjs";
 import { FormControl, FormHelperText } from "@material-ui/core";
-import { useId } from "@reach/auto-id";
 import { type EditorCore, type Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -40,7 +39,8 @@ const RichTextEditor = ({
   ...props
 }: RichTextEditorProps) => {
   const classes = useStyles({});
-  const id = useId(defaultId);
+  const generatedId = React.useId();
+  const id = defaultId ?? generatedId;
   const ref = React.useRef<EditorCore | null>(null);
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
@@ -60,7 +60,7 @@ const RichTextEditor = ({
       return (editorRef.current = editor);
     }
   }, []);
-  // We need to render FormControl first to get id from @reach/auto-id
+  // Wait until after the initial render before running rerender-dependent editor updates.
   const hasRendered = useHasRendered();
 
   // EditorJS does not rerender when default value changes,
