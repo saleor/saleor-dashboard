@@ -2,4 +2,5 @@
 "saleor-dashboard": patch
 ---
 
-`MANAGE_APPS` permission can no longer be granted to apps via the UI
+Dashboard now validates manifest and prevent `MANAGE_APPS` to be granted for apps (both app creation and installation from a manifest)
+
