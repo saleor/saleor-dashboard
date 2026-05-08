@@ -1,0 +1,23 @@
+src/components/RichTextEditor/styles.ts
+  s_2dbf5f437977e1::t_6e7b8ae2db32e6 182-188
+  s_2dbf5f437977e1::t_05095316d97e99 189-190
+  s_2dbf5f437977e1::t_2d382f107b2b85 77
+  s_2dbf5f437977e1::t_b8826658092b41 81-89
+  s_2dbf5f437977e1::t_54ae9a14a45551 38-39,47,55,57-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "608e2e68ae36130c2edac26f9c9c2bdf99f23c1b",
+  "prompts": {},
+  "sessions": {
+    "s_2dbf5f437977e1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1402102d-e091-456e-9898-bc9f43dc85fa",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
