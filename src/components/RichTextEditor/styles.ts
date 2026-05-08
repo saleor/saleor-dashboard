@@ -157,6 +157,18 @@ const useStyles = makeStyles(
         padding: `${vars.spacing[6]} ${vars.spacing[2]}`,
         paddingBottom: vars.spacing[1.5],
       },
+      // EditorJS renders tooltips into document.body, so we need to style them globally.
+      // Default colors are hardcoded in the library and lack contrast in dark mode.
+      // buttonDefaultPrimary auto-inverts across themes, so the tooltip always pops:
+      // light mode → dark tooltip + light text, dark mode → light tooltip + dark text.
+      "@global": {
+        ".ct:before, .ct:after": {
+          backgroundColor: `${vars.colors.background.buttonDefaultPrimary} !important`,
+        },
+        ".ct__content": {
+          color: `${vars.colors.text.buttonDefaultPrimary} !important`,
+        },
+      },
     };
   },
   { name: "RichTextEditor" },
