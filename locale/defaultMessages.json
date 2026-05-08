@@ -4196,6 +4196,10 @@
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
   },
+  "LYKO9m": {
+    "context": "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
+    "string": "Shipping"
+  },
   "La3xKC": {
     "context": "Description of public API verification feature",
     "string": "Check if customers can actually purchase this product"
@@ -6180,6 +6184,10 @@
   "WY3IXU": {
     "string": "This code already exists"
   },
+  "WZ2kxO": {
+    "context": "Section heading for issues that affect whether a customer can purchase (warehouses, stock, channel listing, pricing)",
+    "string": "Purchasability"
+  },
   "WasHjQ": {
     "context": "voucher discount",
     "string": "Shipment"
@@ -7708,10 +7716,6 @@
   "f4oJRg": {
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
-  },
-  "f71A+Y": {
-    "context": "Title for delivery configuration section in channel",
-    "string": "Delivery configuration"
   },
   "fDc5ys": {
     "context": "order transaction refund summary label",
