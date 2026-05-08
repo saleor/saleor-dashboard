@@ -192,6 +192,10 @@
     "context": "expired on label",
     "string": "Expired on {date}"
   },
+  "/0QqzO": {
+    "context": "aria-label for the warning icon inside a channel issue badge",
+    "string": "Warning"
+  },
   "/0gMCW": {
     "string": "Try to refresh the page or go navigate to a different page and back."
   },
@@ -225,6 +229,10 @@
   "/8/Ffn": {
     "context": "button",
     "string": "Show"
+  },
+  "/8a4cU": {
+    "context": "Description for stock-outside-channel-warehouses info",
+    "string": "This product has stock in warehouses that are not linked to this channel. Assign the warehouse to the channel for the stock to count toward availability."
   },
   "/AbHy4": {
     "context": "creation label",
@@ -1583,6 +1591,10 @@
     "context": "link",
     "string": "View profile"
   },
+  "7CZ8Tp": {
+    "context": "Description for no shipping zones info when shop uses direct warehouse-channel stock availability",
+    "string": "Customers can browse and add this product to cart, but no shipping methods will be available at checkout. Add at least one shipping zone to this channel to enable shipping."
+  },
   "7Chrsf": {
     "string": "Passwords do not match"
   },
@@ -1694,6 +1706,10 @@
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
+  },
+  "7sSOgb": {
+    "context": "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=true",
+    "string": "Stock availability uses shipping zones (legacy)"
   },
   "7scATx": {
     "context": "select title",
@@ -2361,6 +2377,10 @@
     "context": "header",
     "string": "Address Information"
   },
+  "BfhUcl": {
+    "context": "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=false",
+    "string": "Stock availability uses direct warehouse-channel link"
+  },
   "Bkxrhw": {
     "context": "no webhooks message",
     "string": "No webhooks found"
@@ -2777,10 +2797,6 @@
   },
   "EAGfdH": {
     "string": "Page updated"
-  },
-  "EAKKtg": {
-    "context": "Description for no shipping zones warning",
-    "string": "Customers cannot checkout without shipping methods. Add shipping zones to this channel."
   },
   "EDihQs": {
     "string": "Staff member updated"
@@ -3246,6 +3262,10 @@
   "GVinbz": {
     "context": "column title",
     "string": "Value"
+  },
+  "GYBoVb": {
+    "context": "Tooltip explanation for legacy stock-availability mode",
+    "string": "Stock is considered available only when the warehouse is both assigned to this channel and covered by an active shipping zone for the destination address."
   },
   "GbBCmr": {
     "context": "window title",
@@ -5331,6 +5351,10 @@
   "RrCui3": {
     "string": "Summary"
   },
+  "Rt95cf": {
+    "context": "Info when channel has no shipping zones in direct stock-availability mode",
+    "string": "No shipping zones for \"{channelName}\""
+  },
   "RyZd9J": {
     "context": "error message",
     "string": "Please wait a moment before trying again."
@@ -7306,6 +7330,10 @@
   "cY42ht": {
     "string": "Password cannot be entirely numeric"
   },
+  "cYjzDx": {
+    "context": "aria-label for the info icon inside an availability issue callout",
+    "string": "Information"
+  },
   "cZN5Jd": {
     "context": "Webhook details events",
     "string": "Events"
@@ -7597,6 +7625,10 @@
   "eWcvOc": {
     "context": "button",
     "string": "Choose file"
+  },
+  "eXcTEd": {
+    "context": "aria-label for the error icon inside an availability issue callout",
+    "string": "Error"
   },
   "eY+BKQ": {
     "string": "The extension manifest was not found. ({errorCode})"
@@ -8192,6 +8224,10 @@
     "context": "button",
     "string": "Apply"
   },
+  "iBY7aI": {
+    "context": "aria-label for the warning icon inside an availability issue callout",
+    "string": "Warning"
+  },
   "iEeIhY": {
     "context": "draft order",
     "string": "Customer"
@@ -8695,6 +8731,10 @@
   "kv3FWU": {
     "context": "btn label",
     "string": "Go to orders"
+  },
+  "kyOwDW": {
+    "context": "aria-label for the error icon inside a channel issue badge",
+    "string": "Error"
   },
   "l0a2tU": {
     "context": "onboarding step description",
@@ -10161,6 +10201,10 @@
     "context": "radio option for capturing order total",
     "string": "Order total"
   },
+  "tSmJPv": {
+    "context": "Tooltip explanation for direct stock-availability mode",
+    "string": "Stock is considered available whenever the warehouse is assigned to this channel. Shipping zones only affect order fulfillment, not availability."
+  },
   "tTuCYj": {
     "context": "all gift cards label",
     "string": "All Gift Cards"
@@ -10378,6 +10422,10 @@
   "uY8rPp": {
     "context": "button label to cancel product removal",
     "string": "Keep product"
+  },
+  "uaZNZS": {
+    "context": "Info when product has stock only in warehouses not linked to the channel",
+    "string": "Stock is in warehouses not assigned to \"{channelName}\""
   },
   "ubasgL": {
     "context": "order history message",
@@ -10707,6 +10755,10 @@
   },
   "vuKrlW": {
     "string": "Stock"
+  },
+  "vuOZYs": {
+    "context": "Description for no shipping zones warning",
+    "string": "Without shipping zones, this product will appear unavailable to customers and orders cannot be shipped. Add at least one shipping zone to this channel."
   },
   "vwA9Fq": {
     "context": "notification",

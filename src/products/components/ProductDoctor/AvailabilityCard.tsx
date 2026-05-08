@@ -7,7 +7,16 @@ import {
   type ProductChannelListingErrorFragment,
 } from "@dashboard/graphql";
 import { Accordion, Box, Button, Skeleton, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { CheckCircle, ChevronLeft, ChevronRight, Info, Search, X, XCircle } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Info,
+  Layers,
+  Search,
+  X,
+  XCircle,
+} from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -64,7 +73,15 @@ export const AvailabilityCard = ({
 
   const PAGE_SIZE = 10;
 
-  const { channelSummaries, issues, hasErrors, hasWarnings, isLoading, permissions } = diagnostics;
+  const {
+    channelSummaries,
+    issues,
+    hasErrors,
+    hasWarnings,
+    isLoading,
+    permissions,
+    useLegacyShippingZoneStockAvailability,
+  } = diagnostics;
 
   const verification = usePublicApiVerification(productId || "");
 
@@ -185,6 +202,10 @@ export const AvailabilityCard = ({
               errorCount={errorCount}
               warningCount={warningCount}
               permissions={permissions}
+            />
+
+            <StockAvailabilityModeIndicator
+              useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
             />
 
             {/* Search input - always visible when there are channels */}
@@ -400,6 +421,53 @@ const DiagnosticSummaryBanner = ({
         </Tooltip>
       )}
     </Box>
+  );
+};
+
+interface StockAvailabilityModeIndicatorProps {
+  useLegacyShippingZoneStockAvailability: boolean;
+}
+
+/**
+ * Renders a small one-line indicator informing the user which Saleor 3.23+
+ * stock-availability mode is currently active. The mode determines how the
+ * doctor and the public API resolve product availability, so surfacing it
+ * upfront prevents confusion when warnings differ between the two modes.
+ */
+const StockAvailabilityModeIndicator = ({
+  useLegacyShippingZoneStockAvailability,
+}: StockAvailabilityModeIndicatorProps) => {
+  const intl = useIntl();
+  const labelMessage = useLegacyShippingZoneStockAvailability
+    ? messages.stockAvailabilityModeLegacy
+    : messages.stockAvailabilityModeDirect;
+  const tooltipMessage = useLegacyShippingZoneStockAvailability
+    ? messages.stockAvailabilityModeLegacyTooltip
+    : messages.stockAvailabilityModeDirectTooltip;
+
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={2}
+          __cursor="help"
+          data-test-id="stock-availability-mode-indicator"
+        >
+          <Layers size={14} color="var(--mu-colors-text-default2)" />
+          <Text size={2} color="default2">
+            {intl.formatMessage(labelMessage)}
+          </Text>
+        </Box>
+      </Tooltip.Trigger>
+      <Tooltip.Content>
+        <Tooltip.Arrow />
+        <Box padding={2} __maxWidth="350px">
+          <Text size={2}>{intl.formatMessage(tooltipMessage)}</Text>
+        </Box>
+      </Tooltip.Content>
+    </Tooltip>
   );
 };
 

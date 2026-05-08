@@ -16212,6 +16212,10 @@ export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehou
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
+  shop {
+    id
+    useLegacyShippingZoneStockAvailability
+  }
   channels {
     id
     name

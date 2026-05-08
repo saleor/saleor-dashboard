@@ -259,4 +259,231 @@ describe("runAvailabilityChecks", () => {
       expect(shippingIssue).toBeUndefined();
     });
   });
+
+  describe("direct warehouse-channel stock availability mode (Saleor 3.23+)", () => {
+    it("should NOT emit warehouse-not-in-zone in direct mode (would be a false positive)", () => {
+      // Arrange - stock is in a warehouse linked to the channel but missing from shipping zones
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({
+        shippingZones: [
+          {
+            id: "zone-1",
+            name: "Zone 1",
+            countries: [{ code: "US", country: "United States" }],
+            warehouses: [{ id: "warehouse-other", name: "Other Warehouse" }],
+          },
+        ],
+      });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert
+      const zoneIssue = issues.find(i => i.id === "warehouse-not-in-zone");
+
+      expect(zoneIssue).toBeUndefined();
+    });
+
+    it("should still emit warehouse-not-in-zone in legacy mode for the same data", () => {
+      // Arrange - identical to the previous test, but legacy mode active
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({
+        shippingZones: [
+          {
+            id: "zone-1",
+            name: "Zone 1",
+            countries: [{ code: "US", country: "United States" }],
+            warehouses: [{ id: "warehouse-other", name: "Other Warehouse" }],
+          },
+        ],
+      });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: true,
+      });
+
+      // Assert
+      const zoneIssue = issues.find(i => i.id === "warehouse-not-in-zone");
+
+      expect(zoneIssue).toBeDefined();
+      expect(zoneIssue?.severity).toBe("warning");
+    });
+
+    it("should downgrade no-shipping-zones to info severity in direct mode", () => {
+      // Arrange
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({ shippingZones: [] });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert
+      const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
+
+      expect(shippingIssue).toBeDefined();
+      expect(shippingIssue?.severity).toBe("info");
+      // Direct-mode copy reflects that browsing/cart works but no shipping
+      // methods are available at checkout — it does NOT claim the product is
+      // unavailable, since direct mode reports it as available.
+      expect(shippingIssue?.description).toMatch(/no shipping methods will be available/i);
+      expect(shippingIssue?.description).not.toMatch(/appear unavailable/i);
+    });
+
+    it("should keep no-shipping-zones at warning severity in legacy mode", () => {
+      // Arrange
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({ shippingZones: [] });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: true,
+      });
+
+      // Assert
+      const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
+
+      expect(shippingIssue).toBeDefined();
+      expect(shippingIssue?.severity).toBe("warning");
+      // Legacy-mode copy emphasizes the primary blocker: the product appears
+      // unavailable to customers (the resolver intersects shipping zones with
+      // warehouses), and orders also cannot be shipped.
+      expect(shippingIssue?.description).toMatch(/appear unavailable/i);
+      expect(shippingIssue?.description).toMatch(/cannot be shipped/i);
+    });
+
+    it("should NOT emit no-shipping-zones at all when product is non-shippable, even in direct mode", () => {
+      // Arrange - digital product, shouldn't surface shipping advice in any mode
+      const product = createProduct({ isShippingRequired: false });
+      const channelData = createChannelData({ shippingZones: [] });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert
+      const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
+
+      expect(shippingIssue).toBeUndefined();
+    });
+
+    it("should default to legacy behavior when no options are provided", () => {
+      // Arrange
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({ shippingZones: [] });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert - legacy severity preserved for unconfigured callers
+      const shippingIssue = issues.find(i => i.id === "no-shipping-zones");
+
+      expect(shippingIssue?.severity).toBe("warning");
+    });
+  });
+
+  describe("checkStockOutsideChannelWarehouses (info)", () => {
+    it("should emit info when stock is in a warehouse not assigned to the channel", () => {
+      // Arrange - stock in warehouse-2, but channel is wired to warehouse-1
+      const product = createProduct({
+        variants: [
+          {
+            id: "variant-1",
+            name: "Variant A",
+            channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10 } }],
+            stocks: [{ warehouse: { id: "warehouse-2" }, quantity: 5 }],
+          },
+        ],
+      });
+      const channelData = createChannelData({
+        warehouses: [{ id: "warehouse-1", name: "Channel Warehouse" }],
+      });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      const issue = issues.find(i => i.id === "stock-outside-channel-warehouses");
+
+      expect(issue).toBeDefined();
+      expect(issue?.severity).toBe("info");
+    });
+
+    it("should NOT emit when stock exists in a channel warehouse", () => {
+      // Arrange - stock in the channel-linked warehouse, all good
+      const product = createProduct(); // variant-1 -> warehouse-1, qty 100
+      const channelData = createChannelData(); // channel -> warehouse-1
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      const issue = issues.find(i => i.id === "stock-outside-channel-warehouses");
+
+      expect(issue).toBeUndefined();
+    });
+
+    it("should NOT emit when there is no positive stock anywhere", () => {
+      // Arrange
+      const product = createProduct({
+        variants: [
+          {
+            id: "variant-1",
+            name: "Variant A",
+            channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10 } }],
+            stocks: [{ warehouse: { id: "warehouse-2" }, quantity: 0 }],
+          },
+        ],
+      });
+      const channelData = createChannelData();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      const issue = issues.find(i => i.id === "stock-outside-channel-warehouses");
+
+      expect(issue).toBeUndefined();
+    });
+
+    it("should be skipped together with other warehouse checks when skipWarehouseChecks is true", () => {
+      // Arrange
+      const product = createProduct({
+        variants: [
+          {
+            id: "variant-1",
+            name: "Variant A",
+            channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10 } }],
+            stocks: [{ warehouse: { id: "warehouse-2" }, quantity: 5 }],
+          },
+        ],
+      });
+      const channelData = createChannelData();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        skipWarehouseChecks: true,
+      });
+
+      // Assert
+      const issue = issues.find(i => i.id === "stock-outside-channel-warehouses");
+
+      expect(issue).toBeUndefined();
+    });
+  });
 });
