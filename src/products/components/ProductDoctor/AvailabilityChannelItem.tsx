@@ -27,7 +27,12 @@ import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSect
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
 import { getHeaderIssueBadgeProps } from "./utils/issueBadge";
-import { type AvailabilityIssue, type ChannelSummary, type IssueSeverity } from "./utils/types";
+import {
+  type AvailabilityIssue,
+  type AvailabilityIssueCategory,
+  type ChannelSummary,
+  type IssueSeverity,
+} from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
@@ -334,11 +339,23 @@ interface DeliveryConfigurationSectionProps {
   issues: AvailabilityIssue[];
 }
 
+/**
+ * Issues are grouped into two orthogonal categories — purchasability (cart
+ * add-ability) and shipping (order fulfillment) — to mirror the mental model
+ * Saleor 3.23+ direct stock-availability mode introduces. Each subsection is
+ * rendered only when it has issues; if neither category has any, the whole
+ * section is omitted (the empty state is handled by the channel header).
+ *
+ * The empty-state guard intentionally checks the *renderable* slices rather
+ * than `issues.length` so that issues with an unrecognized future category
+ * cannot collapse the component to an empty bordered box.
+ */
 const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionProps) => {
   const intl = useIntl();
+  const purchasabilityIssues = issues.filter(i => i.category === "purchasability");
+  const shippingIssues = issues.filter(i => i.category === "shipping");
 
-  // Only show when there are issues to display
-  if (issues.length === 0) {
+  if (purchasabilityIssues.length === 0 && shippingIssues.length === 0) {
     return null;
   }
 
@@ -346,25 +363,55 @@ const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionPr
     <Box
       display="flex"
       flexDirection="column"
-      gap={3}
+      gap={5}
       paddingTop={4}
       marginTop={4}
       borderTopWidth={1}
       borderTopStyle="solid"
       borderColor="default1"
     >
-      <Text size={2} fontWeight="medium" color="default2">
-        {intl.formatMessage(messages.configurationTitle)}
-      </Text>
-
-      <Box display="flex" flexDirection="column" gap={2}>
-        {issues.map(issue => (
-          <IssueCallout key={issue.id} issue={issue} />
-        ))}
-      </Box>
+      {purchasabilityIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryPurchasabilityTitle)}
+          issues={purchasabilityIssues}
+          category="purchasability"
+        />
+      )}
+      {shippingIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryShippingTitle)}
+          issues={shippingIssues}
+          category="shipping"
+        />
+      )}
     </Box>
   );
 };
+
+interface IssueCategorySectionProps {
+  title: string;
+  issues: AvailabilityIssue[];
+  category: AvailabilityIssueCategory;
+}
+
+const IssueCategorySection = ({ title, issues, category }: IssueCategorySectionProps) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    gap={3}
+    data-test-id="issue-category-section"
+    data-test-category={category}
+  >
+    <Text size={2} fontWeight="medium" color="default2">
+      {title}
+    </Text>
+    <Box display="flex" flexDirection="column" gap={2}>
+      {issues.map(issue => (
+        <IssueCallout key={issue.id} issue={issue} />
+      ))}
+    </Box>
+  </Box>
+);
 
 interface PublicApiVerificationSectionProps {
   verificationResult?: ChannelVerificationResult;

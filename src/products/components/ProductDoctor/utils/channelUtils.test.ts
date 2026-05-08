@@ -31,6 +31,7 @@ const createMockSummary = (overrides?: Partial<ChannelSummary>): ChannelSummary 
 const createMockIssue = (overrides?: Partial<AvailabilityIssue>): AvailabilityIssue => ({
   id: "issue-1",
   severity: "error",
+  category: "purchasability",
   channelId: "channel-1",
   channelName: "Default Channel",
   message: "Test issue",
