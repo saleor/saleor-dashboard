@@ -27,7 +27,12 @@ import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSect
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
 import { getHeaderIssueBadgeProps } from "./utils/issueBadge";
-import { type AvailabilityIssue, type ChannelSummary, type IssueSeverity } from "./utils/types";
+import {
+  type AvailabilityIssue,
+  type AvailabilityIssueCategory,
+  type ChannelSummary,
+  type IssueSeverity,
+} from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
@@ -45,6 +50,15 @@ interface AvailabilityChannelItemProps {
   /** Public API verification result for this channel */
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  /** Active stock-availability mode for the shop. Used to tailor the reassurance
+   *  text under the public-API verification badge. Defaults to legacy. */
+  useLegacyShippingZoneStockAvailability?: boolean;
+  /** Whether the product type requires shipping. Drives whether the public-API
+   *  badge's coverage-aware override applies — non-shippable products (digital
+   *  goods, license keys) can be purchased without any shipping zones, so the
+   *  override must not fire for them. Defaults to true (the conservative legacy
+   *  assumption). */
+  isShippingRequired?: boolean;
 }
 
 export const AvailabilityChannelItem = ({
@@ -61,6 +75,8 @@ export const AvailabilityChannelItem = ({
   isExpanded = false,
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability = true,
+  isShippingRequired = true,
 }: AvailabilityChannelItemProps) => {
   const intl = useIntl();
   const dateNow = useCurrentDate();
@@ -309,6 +325,9 @@ export const AvailabilityChannelItem = ({
           <PublicApiVerificationSection
             verificationResult={verificationResult}
             onVerify={onVerify}
+            useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+            shippingZoneCount={summary.shippingZoneCount}
+            isShippingRequired={isShippingRequired}
           />
         </Box>
       </Accordion.Content>
@@ -320,11 +339,23 @@ interface DeliveryConfigurationSectionProps {
   issues: AvailabilityIssue[];
 }
 
+/**
+ * Issues are grouped into two orthogonal categories — purchasability (cart
+ * add-ability) and shipping (order fulfillment) — to mirror the mental model
+ * Saleor 3.23+ direct stock-availability mode introduces. Each subsection is
+ * rendered only when it has issues; if neither category has any, the whole
+ * section is omitted (the empty state is handled by the channel header).
+ *
+ * The empty-state guard intentionally checks the *renderable* slices rather
+ * than `issues.length` so that issues with an unrecognized future category
+ * cannot collapse the component to an empty bordered box.
+ */
 const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionProps) => {
   const intl = useIntl();
+  const purchasabilityIssues = issues.filter(i => i.category === "purchasability");
+  const shippingIssues = issues.filter(i => i.category === "shipping");
 
-  // Only show when there are issues to display
-  if (issues.length === 0) {
+  if (purchasabilityIssues.length === 0 && shippingIssues.length === 0) {
     return null;
   }
 
@@ -332,29 +363,69 @@ const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionPr
     <Box
       display="flex"
       flexDirection="column"
-      gap={3}
+      gap={5}
       paddingTop={4}
       marginTop={4}
       borderTopWidth={1}
       borderTopStyle="solid"
       borderColor="default1"
     >
-      <Text size={2} fontWeight="medium" color="default2">
-        {intl.formatMessage(messages.configurationTitle)}
-      </Text>
-
-      <Box display="flex" flexDirection="column" gap={2}>
-        {issues.map(issue => (
-          <IssueCallout key={issue.id} issue={issue} />
-        ))}
-      </Box>
+      {purchasabilityIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryPurchasabilityTitle)}
+          issues={purchasabilityIssues}
+          category="purchasability"
+        />
+      )}
+      {shippingIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryShippingTitle)}
+          issues={shippingIssues}
+          category="shipping"
+        />
+      )}
     </Box>
   );
 };
 
+interface IssueCategorySectionProps {
+  title: string;
+  issues: AvailabilityIssue[];
+  category: AvailabilityIssueCategory;
+}
+
+const IssueCategorySection = ({ title, issues, category }: IssueCategorySectionProps) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    gap={3}
+    data-test-id="issue-category-section"
+    data-test-category={category}
+  >
+    <Text size={2} fontWeight="medium" color="default2">
+      {title}
+    </Text>
+    <Box display="flex" flexDirection="column" gap={2}>
+      {issues.map(issue => (
+        <IssueCallout key={issue.id} issue={issue} />
+      ))}
+    </Box>
+  </Box>
+);
+
 interface PublicApiVerificationSectionProps {
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  useLegacyShippingZoneStockAvailability: boolean;
+  /** Number of shipping zones for the channel — drives the coverage-aware
+   *  override of the "Purchasable" badge in legacy mode. May be "unknown"
+   *  when the dashboard user lacks the permission to read shipping zones,
+   *  in which case we do not downgrade the verdict. */
+  shippingZoneCount: number | "unknown";
+  /** Whether the product requires shipping. The badge override only applies
+   *  to shippable products — digital goods can be purchased without any
+   *  shipping configuration. */
+  isShippingRequired: boolean;
 }
 
 const VERIFICATION_COOLDOWN_MS = 1500;
@@ -362,6 +433,9 @@ const VERIFICATION_COOLDOWN_MS = 1500;
 const PublicApiVerificationSection = ({
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability,
+  shippingZoneCount,
+  isShippingRequired,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
@@ -420,7 +494,19 @@ const PublicApiVerificationSection = ({
         )}
       </Box>
 
-      {verificationResult && <PublicApiVerificationBadge result={verificationResult} />}
+      {verificationResult && (
+        <PublicApiVerificationBadge
+          result={verificationResult}
+          useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+          shippingZoneCount={
+            // Forward the count only when we actually know it. Passing
+            // undefined for "unknown" keeps the API-reported verdict
+            // intact rather than misleading users with limited permissions.
+            shippingZoneCount === "unknown" ? undefined : shippingZoneCount
+          }
+          isShippingRequired={isShippingRequired}
+        />
+      )}
     </Box>
   );
 };

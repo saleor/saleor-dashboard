@@ -1779,6 +1779,14 @@ export type CustomerDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CustomerDeletedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'recipient' | 'user' | 'version' | CustomerDeletedKeySpecifier)[];
+export type CustomerDeletedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CustomerEventKeySpecifier = ('app' | 'count' | 'date' | 'id' | 'message' | 'order' | 'type' | 'user' | CustomerEventKeySpecifier)[];
 export type CustomerEventFieldPolicy = {
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -8209,6 +8217,10 @@ export type StrictTypedTypePolicies = {
 	CustomerDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CustomerDeleteKeySpecifier | (() => undefined | CustomerDeleteKeySpecifier),
 		fields?: CustomerDeleteFieldPolicy,
+	},
+	CustomerDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CustomerDeletedKeySpecifier | (() => undefined | CustomerDeletedKeySpecifier),
+		fields?: CustomerDeletedFieldPolicy,
 	},
 	CustomerEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CustomerEventKeySpecifier | (() => undefined | CustomerEventKeySpecifier),

@@ -97,9 +97,11 @@ export function paginateItems<T>(items: T[], currentPage: number, pageSize: numb
 export function countIssuesBySeverity(issues: AvailabilityIssue[]): {
   errorCount: number;
   warningCount: number;
+  infoCount: number;
 } {
   return {
     errorCount: issues.filter(i => i.severity === "error").length,
     warningCount: issues.filter(i => i.severity === "warning").length,
+    infoCount: issues.filter(i => i.severity === "info").length,
   };
 }
