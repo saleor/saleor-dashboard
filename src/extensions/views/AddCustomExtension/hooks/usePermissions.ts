@@ -9,6 +9,6 @@ export const usePermissions = () => {
   return useMemo(() => {
     const permissionsArray = filterCustomExtensionPermissions(shop?.permissions ?? []);
 
-    return [...permissionsArray].sort((a, b) => a.name.localeCompare(b.name));
+    return permissionsArray.sort((a, b) => a.name.localeCompare(b.name));
   }, [shop?.permissions]);
 };
