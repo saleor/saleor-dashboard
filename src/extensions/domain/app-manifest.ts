@@ -1,8 +1,7 @@
 import { appExtensionManifest } from "@dashboard/extensions/domain/app-extension-manifest";
 import { permissionSchema } from "@dashboard/extensions/domain/permission";
-import { PermissionEnum } from "@dashboard/graphql";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
-
+import { PermissionEnum } from "@dashboard/graphql";
 import { z } from "zod";
 
 // For now contains only partial fields, because Saleor is validating manifest anyway.
