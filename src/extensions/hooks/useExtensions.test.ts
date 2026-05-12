@@ -537,6 +537,113 @@ describe("Extensions / hooks / useExtensions", () => {
     );
   });
 
+  describe("filtering invalid extensions", () => {
+    let warnSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      warnSpy = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+    });
+
+    afterEach(() => {
+      warnSpy.mockRestore();
+    });
+
+    it("drops extensions with relative URL when app.appUrl is missing", () => {
+      // Arrange
+      useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+      useExtensionListQueryMock.mockReturnValue({
+        data: {
+          appExtensions: {
+            edges: [
+              {
+                __typename: "AppExtensionCountableEdge",
+                node: {
+                  id: "ext-relative-no-appurl",
+                  accessToken: "token",
+                  permissions: [],
+                  url: "/relative",
+                  label: "Broken",
+                  mountName: "PRODUCT_OVERVIEW_CREATE",
+                  targetName: "POPUP",
+                  app: {
+                    id: "appX",
+                    name: "App X",
+                    __typename: "App",
+                    appUrl: null,
+                    brand: null,
+                  },
+                  __typename: "AppExtension",
+                  settings: {},
+                },
+              },
+            ],
+            __typename: "AppExtensionCountableConnection",
+          },
+          __typename: "Query",
+        },
+      });
+
+      // Act
+      const { result } = renderHook(() => useExtensions(["PRODUCT_OVERVIEW_CREATE"] as const));
+
+      // Assert
+      expect(result.current["PRODUCT_OVERVIEW_CREATE"]).toEqual([]);
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining("relative URL"),
+        expect.objectContaining({
+          appId: "appX",
+          extensionId: "ext-relative-no-appurl",
+          label: "Broken",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
+        }),
+      );
+    });
+
+    it("keeps extensions with absolute URL even when app.appUrl is missing", () => {
+      // Arrange
+      useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+      useExtensionListQueryMock.mockReturnValue({
+        data: {
+          appExtensions: {
+            edges: [
+              {
+                __typename: "AppExtensionCountableEdge",
+                node: {
+                  id: "ext-absolute-no-appurl",
+                  accessToken: "token",
+                  permissions: [],
+                  url: "https://example.com/path",
+                  label: "Absolute",
+                  mountName: "PRODUCT_OVERVIEW_CREATE",
+                  targetName: "POPUP",
+                  app: {
+                    id: "appY",
+                    name: "App Y",
+                    __typename: "App",
+                    appUrl: null,
+                    brand: null,
+                  },
+                  __typename: "AppExtension",
+                  settings: {},
+                },
+              },
+            ],
+            __typename: "AppExtensionCountableConnection",
+          },
+          __typename: "Query",
+        },
+      });
+
+      // Act
+      const { result } = renderHook(() => useExtensions(["PRODUCT_OVERVIEW_CREATE"] as const));
+
+      // Assert
+      expect(result.current["PRODUCT_OVERVIEW_CREATE"]).toHaveLength(1);
+      expect(result.current["PRODUCT_OVERVIEW_CREATE"][0].id).toBe("ext-absolute-no-appurl");
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+  });
+
   it("should call newTabActions.openPOSTinNewTab for NEW_TAB POST extension with relative url", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
