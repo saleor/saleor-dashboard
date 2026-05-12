@@ -231,6 +231,8 @@ import type {
   CheckoutCustomerAttach,
   CheckoutCustomerDetach,
   CheckoutCustomerNoteUpdate,
+  CheckoutDelete,
+  CheckoutDeleteError,
   CheckoutDeliveryMethodUpdate,
   CheckoutEmailUpdate,
   CheckoutError,
@@ -7758,6 +7760,50 @@ export type OptionalCheckoutCustomerNoteUpdate = {
  */
 export const defineCheckoutCustomerNoteUpdateFactory: DefineTypeFactoryInterface<
   OptionalCheckoutCustomerNoteUpdate,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Deletes a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CHECKOUTS.
+ */
+export type OptionalCheckoutDelete = {
+  __typename?: 'CheckoutDelete';
+  errors?: OptionalCheckoutDeleteError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutDelete} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutDeleteFactoryInterface}
+ */
+export const defineCheckoutDeleteFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutDelete,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCheckoutDeleteError = {
+  __typename?: 'CheckoutDeleteError';
+  /** The error code. */
+  code?: CheckoutDeleteError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CheckoutDeleteError['field'] | undefined;
+  /** The error message. */
+  message?: CheckoutDeleteError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutDeleteError} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutDeleteErrorFactoryInterface}
+ */
+export const defineCheckoutDeleteErrorFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutDeleteError,
   {}
 > = defineTypeFactory;
 
@@ -15698,6 +15744,14 @@ export type OptionalMutation = {
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutCustomerNoteUpdate?: Maybe<OptionalCheckoutCustomerNoteUpdate> | undefined;
+  /**
+ * Deletes a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CHECKOUTS.
+ */
+  checkoutDelete?: Maybe<OptionalCheckoutDelete> | undefined;
   /**
  * Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address.
  *
