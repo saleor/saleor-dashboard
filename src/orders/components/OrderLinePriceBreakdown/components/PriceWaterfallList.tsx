@@ -132,6 +132,10 @@ function getFactorLabel(factor: PriceFactor, intl: IntlShape): string {
  * subtle anchor; otherwise render the plain string. Today the only kind of
  * link is `voucher`; the discriminator pattern leaves room for future
  * variants without restructuring callers.
+ *
+ * The link uses `color: inherit` so it picks up the colour of whichever
+ * `<Text>` it ends up inside (primary `default1` in the row's detail line,
+ * muted `default2` in the contributor list).
  */
 function renderName(
   name: string | null | undefined,
@@ -148,9 +152,7 @@ function renderName(
       title={intl.formatMessage(messages.linkVoucherTitle)}
       className={styles.subtleLink}
     >
-      <Text as="span" color="default2">
-        {name}
-      </Text>
+      {name}
     </Link>
   );
 }
