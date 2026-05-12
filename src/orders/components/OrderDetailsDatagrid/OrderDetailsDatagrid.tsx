@@ -11,16 +11,24 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocale from "@dashboard/hooks/useLocale";
+import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { productPath } from "@dashboard/products/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { ListViews } from "@dashboard/types";
-import { type Theme } from "@glideapps/glide-data-grid";
+import { type Item, type Theme } from "@glideapps/glide-data-grid";
+import { Box } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
-import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
+import {
+  createGetCellContent,
+  isLineDiscounted,
+  orderDetailsStaticColumnsAdapter,
+} from "./datagrid";
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
@@ -28,6 +36,10 @@ interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
+  /** Optional callback to open the per-line price-waterfall modal. When set,
+   *  the `price` and `total` cells of discounted lines become clickable;
+   *  the strikethrough on the original price is the only visual affordance. */
+  onShowLinePricing?: (lineId: string) => void;
   datagridCustomTheme?: Partial<Theme>;
 }
 
@@ -35,9 +47,11 @@ export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
+  onShowLinePricing,
   datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
@@ -68,8 +82,9 @@ export const OrderDetailsDatagrid = ({
       loading,
       onOrderLineShowMetadata,
       intl,
+      locale,
     }),
-    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata],
+    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata, locale],
   );
   const getMenuItems = useCallback(
     index => [
@@ -106,37 +121,68 @@ export const OrderDetailsDatagrid = ({
     [getMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
 
+  const handleRowClick = useCallback(
+    ([col, row]: Item) => {
+      if (!onShowLinePricing) return;
+
+      const columnId = visibleColumns[col]?.id;
+
+      if (columnId !== "price" && columnId !== "total") return;
+
+      const line = lines[row];
+
+      if (!line || !isLineDiscounted(line)) return;
+
+      onShowLinePricing(line.id);
+    },
+    [onShowLinePricing, visibleColumns, lines],
+  );
+
+  // Ripple cannot be anchored to a Glide canvas cell directly; place it at the
+  // top-right of the datagrid wrapper, roughly above the price/total columns.
+  // The strikethrough on a discounted price is the only persistent affordance;
+  // the ripple is a one-time discovery hint for the click-to-explain behavior.
+  const showPricingRipple = Boolean(onShowLinePricing) && lines.some(isLineDiscounted);
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
-      <Datagrid
-        showEmptyDatagrid
-        themeOverride={datagridCustomTheme}
-        rowMarkers="none"
-        columnSelect="single"
-        freezeColumns={2}
-        availableColumns={visibleColumns}
-        verticalBorder={false}
-        showTopBorder={false}
-        emptyText={intl.formatMessage(orderMessages.emptyText)}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        menuItems={getMenuItems}
-        rows={loading ? 1 : lines.length}
-        selectionActions={() => null}
-        onColumnResize={handlers.onResize}
-        onColumnMoved={handlers.onMove}
-        recentlyAddedColumn={recentlyAddedColumn}
-        renderColumnPicker={() => (
-          <ColumnPicker
-            staticColumns={staticColumns}
-            selectedColumns={selectedColumns}
-            onToggle={handlers.onToggle}
-            align="end"
-          />
+      <Box position="relative">
+        {showPricingRipple && (
+          <Box position="absolute" __top="-4px" __right="64px" __zIndex="1">
+            <Ripple model={rippleOrderLinePriceBreakdown} />
+          </Box>
         )}
-        renderRowActions={renderRowActions}
-        rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
-      />
+        <Datagrid
+          showEmptyDatagrid
+          themeOverride={datagridCustomTheme}
+          rowMarkers="none"
+          columnSelect="single"
+          freezeColumns={2}
+          availableColumns={visibleColumns}
+          verticalBorder={false}
+          showTopBorder={false}
+          emptyText={intl.formatMessage(orderMessages.emptyText)}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          menuItems={getMenuItems}
+          rows={loading ? 1 : lines.length}
+          selectionActions={() => null}
+          onColumnResize={handlers.onResize}
+          onColumnMoved={handlers.onMove}
+          recentlyAddedColumn={recentlyAddedColumn}
+          renderColumnPicker={() => (
+            <ColumnPicker
+              staticColumns={staticColumns}
+              selectedColumns={selectedColumns}
+              onToggle={handlers.onToggle}
+              align="end"
+            />
+          )}
+          renderRowActions={renderRowActions}
+          rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
+          onRowClick={onShowLinePricing ? handleRowClick : undefined}
+        />
+      </Box>
     </DatagridChangeStateContext.Provider>
   );
 };

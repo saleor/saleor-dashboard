@@ -4,11 +4,13 @@ import {
   buttonCell,
   loadingCell,
   moneyCell,
+  moneyDiscountedCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Locale } from "@dashboard/components/Locale";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
@@ -64,11 +66,16 @@ interface GetCellContentProps {
   data: OrderLineFragment[];
   loading: boolean;
   intl: IntlShape;
+  locale: Locale;
   onOrderLineShowMetadata: (id: string) => void;
 }
 
+const isLineDiscounted = (line: OrderLineFragment): boolean =>
+  line.unitPrice.gross.amount < line.undiscountedUnitPrice.gross.amount ||
+  (line.discounts?.length ?? 0) > 0;
+
 export const createGetCellContent =
-  ({ columns, data, loading, onOrderLineShowMetadata, intl }: GetCellContentProps) =>
+  ({ columns, data, loading, onOrderLineShowMetadata, intl, locale }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -99,6 +106,19 @@ export const createGetCellContent =
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "price":
+        if (isLineDiscounted(rowData)) {
+          return moneyDiscountedCell(
+            {
+              value: rowData.unitPrice.gross.amount,
+              currency: rowData.unitPrice.gross.currency,
+              undiscounted: rowData.undiscountedUnitPrice.gross.amount,
+              lineItemId: rowData.id,
+              locale,
+            },
+            readonyOptions,
+          );
+        }
+
         return moneyCell(
           rowData.unitPrice.gross.amount,
           rowData.unitPrice.gross.currency,
@@ -106,6 +126,19 @@ export const createGetCellContent =
         );
 
       case "total":
+        if (isLineDiscounted(rowData)) {
+          return moneyDiscountedCell(
+            {
+              value: rowData.totalPrice.gross.amount,
+              currency: rowData.totalPrice.gross.currency,
+              undiscounted: rowData.undiscountedTotalPrice.gross.amount,
+              lineItemId: rowData.id,
+              locale,
+            },
+            readonyOptions,
+          );
+        }
+
         return moneyCell(
           rowData.totalPrice.gross.amount,
           rowData.totalPrice.gross.currency,
@@ -125,6 +158,8 @@ export const createGetCellContent =
         return readonlyTextCell("", false);
     }
   };
+
+export { isLineDiscounted };
 
 const readonyOptions: Partial<GridCell> = {
   allowOverlay: false,

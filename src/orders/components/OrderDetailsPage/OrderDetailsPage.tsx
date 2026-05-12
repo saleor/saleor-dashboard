@@ -30,7 +30,7 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -42,6 +42,8 @@ import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraf
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
 import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
+import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/LinePriceWaterfallModal";
+import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
@@ -137,6 +139,9 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const orderDiscountContext = useContext(OrderDiscountContext);
+  const [pricingLineId, setPricingLineId] = useState<string | null>(null);
+  const pricingWaterfall = useOrderLinePriceWaterfall({ order, lineId: pricingLineId });
+  const pricingLine = order?.lines.find(l => l.id === pricingLineId) ?? null;
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -235,6 +240,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onFulfill={onOrderFulfill}
                   loading={loading}
                   onOrderLineShowMetadata={onOrderLineShowMetadata}
+                  onShowLinePricing={setPricingLineId}
                 />
               ) : (
                 <>
@@ -258,6 +264,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
                   onOrderLineShowMetadata={onOrderLineShowMetadata}
+                  onShowLinePricing={setPricingLineId}
                   onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
                   onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
                   onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
@@ -379,6 +386,13 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 {saveLabel?.confirm}
               </Savebar.ConfirmButton>
             </Savebar>
+            <LinePriceWaterfallModal
+              open={Boolean(pricingLineId && pricingWaterfall)}
+              waterfall={pricingWaterfall}
+              thumbnailUrl={pricingLine?.thumbnail?.url}
+              productSku={pricingLine?.productSku}
+              onClose={() => setPricingLineId(null)}
+            />
           </DetailPageLayout>
         );
       }}

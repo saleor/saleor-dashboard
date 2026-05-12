@@ -163,6 +163,8 @@ describe("OrderValue", () => {
             calculationMode: DiscountValueTypeEnum.FIXED,
             value: 15,
             reason: null,
+            translatedName: null,
+            total: { __typename: "Money" as const, amount: 0, currency: "USD" },
           },
         ],
       };
@@ -512,6 +514,8 @@ describe("OrderValue", () => {
             calculationMode: DiscountValueTypeEnum.FIXED,
             value: 20,
             reason: null,
+            translatedName: null,
+            total: { __typename: "Money" as const, amount: 0, currency: "USD" },
           },
         ],
         lineDiscountsSummary: [{ type: OrderDiscountType.PROMOTION, lineCount: 1, totalAmount: 5 }],

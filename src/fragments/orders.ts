@@ -117,9 +117,15 @@ export const fragmentOrderLine = gql`
     quantityToFulfill
     totalPrice {
       ...TaxedMoney
+      tax {
+        ...Money
+      }
     }
     undiscountedTotalPrice {
       ...TaxedMoney
+      tax {
+        ...Money
+      }
     }
     unitDiscount {
       amount
@@ -138,6 +144,10 @@ export const fragmentOrderLine = gql`
         amount
         currency
       }
+      tax {
+        amount
+        currency
+      }
     }
     unitPrice {
       gross {
@@ -148,7 +158,17 @@ export const fragmentOrderLine = gql`
         amount
         currency
       }
+      tax {
+        amount
+        currency
+      }
     }
+    taxRate
+    taxClass {
+      id
+      name
+    }
+    voucherCode
     thumbnail {
       url
     }
@@ -167,6 +187,12 @@ export const fragmentOrderLineDiscount = gql`
     valueType
     value
     reason
+    total {
+      ...Money
+    }
+    unit {
+      ...Money
+    }
   }
 `;
 
@@ -343,10 +369,14 @@ export const orderDiscount = gql`
     id
     type
     name
+    translatedName
     calculationMode: valueType
     value
     reason
     amount {
+      ...Money
+    }
+    total {
       ...Money
     }
   }
@@ -489,7 +519,11 @@ export const fragmentOrderDetails = gql`
     userEmail
     voucher {
       id
+      name
+      code
+      type
     }
+    voucherCode
     shippingMethods {
       id
       name

@@ -31,10 +31,11 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
       locale,
     );
     const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
+    const isDiscounted = undiscounted !== undefined && undiscounted !== value;
 
     drawPrice(ctx, theme, rect, formattedWithDiscount);
 
-    if (undiscounted !== undefined && undiscounted !== value) {
+    if (isDiscounted) {
       drawLineCrossedPrice(ctx, rect, formattedWithDiscount, formattedUndiscounted);
     }
 

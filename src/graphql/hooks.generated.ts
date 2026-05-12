@@ -1586,8 +1586,14 @@ export const OrderLineDiscountFragmentDoc = gql`
   valueType
   value
   reason
+  total {
+    ...Money
+  }
+  unit {
+    ...Money
+  }
 }
-    `;
+    ${MoneyFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1623,9 +1629,15 @@ export const OrderLineFragmentDoc = gql`
   quantityToFulfill
   totalPrice {
     ...TaxedMoney
+    tax {
+      ...Money
+    }
   }
   undiscountedTotalPrice {
     ...TaxedMoney
+    tax {
+      ...Money
+    }
   }
   unitDiscount {
     amount
@@ -1644,6 +1656,10 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
   unitPrice {
     gross {
@@ -1654,7 +1670,17 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
+  taxRate
+  taxClass {
+    id
+    name
+  }
+  voucherCode
   thumbnail {
     url
   }
@@ -1664,16 +1690,21 @@ export const OrderLineFragmentDoc = gql`
 }
     ${StockFragmentDoc}
 ${TaxedMoneyFragmentDoc}
+${MoneyFragmentDoc}
 ${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
     fragment OrderDiscount on OrderDiscount {
   id
   type
   name
+  translatedName
   calculationMode: valueType
   value
   reason
   amount {
+    ...Money
+  }
+  total {
     ...Money
   }
 }
@@ -2305,7 +2336,11 @@ export const OrderDetailsFragmentDoc = gql`
   userEmail
   voucher {
     id
+    name
+    code
+    type
   }
+  voucherCode
   shippingMethods {
     id
     name
