@@ -6896,6 +6896,25 @@ export type CustomerDelete = {
   user: Maybe<User>;
 };
 
+/**
+ * Event sent when customer user is deleted.
+ *
+ * Added in Saleor 3.23.
+ */
+export type CustomerDeleted = Event & {
+  __typename: 'CustomerDeleted';
+  /** Time of the event. */
+  issuedAt: Maybe<Scalars['DateTime']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal: Maybe<IssuingPrincipal>;
+  /** The application receiving the webhook. */
+  recipient: Maybe<App>;
+  /** The user the event relates to. */
+  user: Maybe<User>;
+  /** Saleor version that triggered the event. */
+  version: Maybe<Scalars['String']>;
+};
+
 /** History log of the customer. */
 export type CustomerEvent = Node & {
   __typename: 'CustomerEvent';
