@@ -677,6 +677,9 @@
     "context": "Transaction card title",
     "string": "Transaction"
   },
+  "1wcKdb": {
+    "string": "This app contributes only background functionality (webhooks) or UI extensions. There is no configuration page to open from the dashboard."
+  },
   "1wyZpQ": {
     "string": "These passwords are too similar"
   },
@@ -8677,6 +8680,9 @@
   "kVTWtR": {
     "context": "product updated at",
     "string": "Last updated"
+  },
+  "kVZfHj": {
+    "string": "App does not include a configuration screen"
   },
   "kWuOqa": {
     "context": "badge for variant that already exists",

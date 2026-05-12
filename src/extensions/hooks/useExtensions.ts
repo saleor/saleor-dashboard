@@ -22,8 +22,20 @@ const prepareExtensionsWithActions = ({
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
 }): ExtensionWithParams[] =>
-  extensions.map(
-    ({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
+  extensions
+    .filter(({ id, url, label, mountName, app }) => {
+      if (!isUrlAbsolute(url) && !app.appUrl) {
+        console.warn(
+          "Extension uses a relative URL but its app has no appUrl — dropping from list.",
+          { appId: app.id, extensionId: id, label, mountName },
+        );
+
+        return false;
+      }
+
+      return true;
+    })
+    .map(({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
       const isNewTab = targetName === "NEW_TAB";
       const isWidget = targetName === "WIDGET";
       const appUrl = app.appUrl;
@@ -101,8 +113,7 @@ const prepareExtensionsWithActions = ({
           });
         },
       };
-    },
-  );
+    });
 
 export const useExtensions = <T extends AllAppExtensionMounts>(
   mountList: readonly T[],
