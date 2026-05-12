@@ -88,7 +88,7 @@ export const IframePost = ({
         as="iframe"
         borderWidth={0}
         __height={height as number | string}
-        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
+        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups"
         name={`ext-frame-${extensionId}`}
         width="100%"
       />
