@@ -46,7 +46,7 @@ import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/L
 import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
-import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
+import { OrderUnfulfilledProductsCard } from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
 import {
@@ -141,7 +141,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const orderDiscountContext = useContext(OrderDiscountContext);
   const [pricingLineId, setPricingLineId] = useState<string | null>(null);
   const pricingWaterfall = useOrderLinePriceWaterfall({ order, lineId: pricingLineId });
-  const pricingLine = order?.lines.find(l => l.id === pricingLineId) ?? null;
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -389,8 +388,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             <LinePriceWaterfallModal
               open={Boolean(pricingLineId && pricingWaterfall)}
               waterfall={pricingWaterfall}
-              thumbnailUrl={pricingLine?.thumbnail?.url}
-              productSku={pricingLine?.productSku}
               onClose={() => setPricingLineId(null)}
             />
           </DetailPageLayout>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
@@ -27,6 +26,7 @@ import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import {
   createGetCellContent,
   isLineDiscounted,
+  isPriceBreakdownColumn,
   orderDetailsStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
@@ -61,7 +61,7 @@ export const OrderDetailsDatagrid = ({
     [intl, emptyColumn],
   );
   const handleColumnChange = useCallback(
-    picked => {
+    (picked: string[]) => {
       if (updateListSettings) {
         updateListSettings("columns", picked.filter(Boolean));
       }
@@ -83,29 +83,34 @@ export const OrderDetailsDatagrid = ({
       onOrderLineShowMetadata,
       intl,
       locale,
+      interactivePricing: Boolean(onShowLinePricing),
     }),
-    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata, locale],
+    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata, locale, onShowLinePricing],
   );
   const getMenuItems = useCallback(
-    index => [
-      {
-        disabled: !lines[index]?.variant?.product.id,
-        label: intl.formatMessage(messages.productDetails),
-        Icon: lines[index]?.variant?.product.id ? (
-          <Link to={productPath(lines[index].variant.product.id)} target="_blank">
+    (index: number) => {
+      const productId = lines[index]?.variant?.product.id;
+
+      return [
+        {
+          disabled: !productId,
+          label: intl.formatMessage(messages.productDetails),
+          Icon: productId ? (
+            <Link to={productPath(productId)} target="_blank">
+              <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+            </Link>
+          ) : (
             <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-          </Link>
-        ) : (
-          <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-        ),
-        onSelect: () => false,
-      },
-    ],
+          ),
+          onSelect: () => false,
+        },
+      ];
+    },
     [intl, lines],
   );
 
   const renderRowActions = useCallback(
-    index => (
+    (index: number) => (
       <OrderDetailsRowActions
         key={`row-actions-${index}`}
         menuItems={getMenuItems(index)}
@@ -123,17 +128,13 @@ export const OrderDetailsDatagrid = ({
 
   const handleRowClick = useCallback(
     ([col, row]: Item) => {
-      if (!onShowLinePricing) return;
-
-      const columnId = visibleColumns[col]?.id;
-
-      if (columnId !== "price" && columnId !== "total") return;
+      if (!isPriceBreakdownColumn(visibleColumns[col]?.id)) return;
 
       const line = lines[row];
 
       if (!line || !isLineDiscounted(line)) return;
 
-      onShowLinePricing(line.id);
+      onShowLinePricing?.(line.id);
     },
     [onShowLinePricing, visibleColumns, lines],
   );
@@ -181,6 +182,7 @@ export const OrderDetailsDatagrid = ({
           renderRowActions={renderRowActions}
           rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
           onRowClick={onShowLinePricing ? handleRowClick : undefined}
+          onCellActivated={onShowLinePricing ? handleRowClick : undefined}
         />
       </Box>
     </DatagridChangeStateContext.Provider>

@@ -1,3 +1,4 @@
+import { roundMoneyAmount } from "@dashboard/components/Money";
 import { voucherUrl } from "@dashboard/discounts/urls";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -6,7 +7,12 @@ import { type IntlShape, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages } from "../messages";
-import { type LinePriceWaterfall, type PriceFactor, type PriceFactorLink } from "../utils/types";
+import {
+  type LinePriceWaterfall,
+  type PriceFactor,
+  type PriceFactorContributor,
+  type PriceFactorLink,
+} from "../utils/types";
 import styles from "./PriceWaterfallList.module.css";
 import { PriceWaterfallStep } from "./PriceWaterfallStep";
 
@@ -16,14 +22,16 @@ interface PriceWaterfallListProps {
 
 export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
   const intl = useIntl();
+  const currency = waterfall.start.currency;
 
-  const startMoney: MoneyFragment = waterfall.start;
-  const running = { ...waterfall.start, __typename: "Money" as const };
+  let runningAmount = waterfall.start.amount;
 
   const steps = waterfall.factors.map((factor, idx) => {
     const stepAmount = getStepAmount(factor);
 
-    running.amount = round(running.amount + stepAmount.delta);
+    runningAmount = roundMoneyAmount(runningAmount + stepAmount.delta, currency);
+
+    const runningTotal: MoneyFragment = { ...waterfall.start, amount: runningAmount };
 
     return (
       <PriceWaterfallStep
@@ -32,7 +40,7 @@ export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
         detail={getFactorDetail(factor, intl)}
         amount={stepAmount.display}
         sign={stepAmount.sign}
-        runningTotal={{ ...startMoney, amount: round(running.amount) }}
+        runningTotal={runningTotal}
         testIdSuffix={factor.kind}
       />
     );
@@ -65,10 +73,6 @@ export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
   );
 };
 
-function round(n: number) {
-  return Math.round(n * 100) / 100;
-}
-
 interface StepAmount {
   /** Money to display in the middle column (always non-negative). */
   display: MoneyFragment;
@@ -84,10 +88,12 @@ function getStepAmount(factor: PriceFactor): StepAmount {
     case "catalogue_promotion":
     case "voucher_line":
     case "manual_line":
+    case "gift_line":
       return { display: factor.signedDelta, delta: -factor.signedDelta.amount, sign: "minus" };
     case "voucher_order_share":
     case "order_promotion_share":
     case "manual_order_share":
+    case "order_level_combined":
       return { display: factor.lineShare, delta: -factor.lineShare.amount, sign: "minus" };
     case "other_adjustment":
       return {
@@ -112,6 +118,10 @@ function getFactorLabel(factor: PriceFactor, intl: IntlShape): string {
       return intl.formatMessage(messages.factorManualLine);
     case "manual_order_share":
       return intl.formatMessage(messages.factorManualOrderShare);
+    case "gift_line":
+      return intl.formatMessage(messages.factorGiftLine);
+    case "order_level_combined":
+      return intl.formatMessage(messages.factorOrderLevelCombined);
     case "other_adjustment":
       return intl.formatMessage(messages.factorOtherAdjustment);
   }
@@ -171,7 +181,62 @@ function getFactorDetail(factor: PriceFactor, intl: IntlShape): ReactNode {
     case "manual_line":
     case "manual_order_share":
       return factor.reason;
+    case "gift_line":
+      return factor.promotionName;
+    case "order_level_combined":
+      return renderContributors(factor.contributors, intl);
     case "other_adjustment":
       return null;
+  }
+}
+
+/**
+ * Render the contributor list under a combined order-level factor. Each
+ * contributor is named (voucher names link to the voucher detail page when an
+ * id is available); deliberately no per-record amounts — Saleor does not
+ * surface a per-record-per-line decomposition and we will not invent one.
+ */
+function renderContributors(contributors: PriceFactorContributor[], intl: IntlShape): ReactNode {
+  if (contributors.length === 0) return null;
+
+  return (
+    <Box display="flex" flexDirection="column" gap={0.5}>
+      <Text size={1} color="default2">
+        {intl.formatMessage(messages.factorContributorsLabel)}
+      </Text>
+      <Box as="ul" margin={0} paddingLeft={4} display="flex" flexDirection="column" gap={0.5}>
+        {contributors.map((c, idx) => (
+          <Box as="li" key={idx}>
+            <Text size={1} color="default2">
+              {renderContributor(c, intl)}
+            </Text>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+function renderContributor(contributor: PriceFactorContributor, intl: IntlShape): ReactNode {
+  switch (contributor.kind) {
+    case "voucher": {
+      const nameNode =
+        renderName(contributor.name, contributor.link, intl) ??
+        intl.formatMessage(messages.factorVoucherOrderShare);
+      const codeNode =
+        contributor.code &&
+        intl.formatMessage(messages.voucherCodeLabel, { code: contributor.code });
+
+      return (
+        <>
+          {nameNode}
+          {codeNode && <> &middot; {codeNode}</>}
+        </>
+      );
+    }
+    case "order_promotion":
+      return contributor.name ?? intl.formatMessage(messages.factorOrderPromotionShare);
+    case "manual":
+      return contributor.reason ?? intl.formatMessage(messages.factorManualOrderShare);
   }
 }

@@ -1139,10 +1139,6 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
-  "4gV+ny": {
-    "context": "warning shown on a line waterfall when more than one order-level discount applies",
-    "string": "Multiple order-level discounts are spread across the lines. The split between records is approximate; the line total reconciles exactly."
-  },
   "4hl9rS": {
     "context": "variant price in channel",
     "string": "Price"
@@ -2710,6 +2706,10 @@
   "DNTxWr": {
     "context": "permission groups section name",
     "string": "Permission Groups"
+  },
+  "DNj7OQ": {
+    "context": "abbreviated quantity label inside the line price breakdown modal subtitle (compact context)",
+    "string": "Qty"
   },
   "DO8+uV": {
     "string": "Product created"
@@ -8300,6 +8300,10 @@
     "context": "activate app",
     "string": "Are you sure you want to activate this extension? Activating will start gathering events."
   },
+  "iKWz5z": {
+    "context": "SKU label inside the line price breakdown modal subtitle",
+    "string": "SKU"
+  },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
     "string": "Showing {start}-{end} of {total}"
@@ -8993,6 +8997,10 @@
   "lrq8O6": {
     "context": "order refund amount, input label",
     "string": "Amount"
+  },
+  "lsPIVu": {
+    "context": "factor label when multiple order-level discounts contributed to a line; the per-record split is not stored by Saleor so we show the combined slice with the contributing records named below",
+    "string": "Order-level discounts (combined)"
   },
   "ltSmln": {
     "string": "Shipping zone deleted"
@@ -9994,6 +10002,10 @@
     "context": "order placement date",
     "string": "Date"
   },
+  "rj9PBV": {
+    "context": "caption introducing the list of records that contributed to a combined order-level factor",
+    "string": "Includes:"
+  },
   "rjy9/k": {
     "context": "button",
     "string": "Add address"
@@ -10438,6 +10450,10 @@
   "u7ShY+": {
     "context": "pill status for overcaptured outcome",
     "string": "Overcaptured"
+  },
+  "u7eNv3": {
+    "context": "factor label for a free-gift order line granted by an ORDER_PROMOTION rule (line.isGift = true on the backend)",
+    "string": "Free gift"
   },
   "u9/vj9": {
     "context": "webhook input label",

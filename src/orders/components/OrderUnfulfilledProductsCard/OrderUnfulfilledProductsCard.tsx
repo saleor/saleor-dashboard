@@ -20,7 +20,7 @@ interface OrderUnfulfilledProductsCardProps {
   onShowLinePricing?: (lineId: string) => void;
 }
 
-const OrderUnfulfilledProductsCard = ({
+export const OrderUnfulfilledProductsCard = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
   onOrderLineShowMetadata,
@@ -83,5 +83,3 @@ const OrderUnfulfilledProductsCard = ({
     </>
   );
 };
-
-export default OrderUnfulfilledProductsCard;

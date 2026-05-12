@@ -1,3 +1,5 @@
+import { roundMoneyAmount } from "@dashboard/components/Money";
+import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   type MoneyFragment,
   type OrderDetailsFragment,
@@ -9,22 +11,18 @@ import {
 import {
   type LinePriceWaterfall,
   type PriceFactor,
+  type PriceFactorContributor,
   type PriceFactorLink,
   type PriceWarning,
 } from "./types";
 
-const roundMinor = (n: number) => Math.round(n * 100) / 100;
-
-/**
- * Sub-cent residuals are absorbed silently. We only emit shares / adjustments
- * for amounts that are at least 1 minor unit, since anything below is
- * floating-point noise from converting backend integer minor units to JS.
- */
-const ZERO_TOLERANCE = 0.005;
+/** Sub-minor-unit residuals are absorbed silently. Tolerance is half a minor
+ *  unit so anything below the currency's representable precision is ignored. */
+const zeroTolerance = (currency: string): number => 0.5 / 10 ** getCurrencyDecimalPoints(currency);
 
 const moneyOf = (amount: number, currency: string): MoneyFragment => ({
   __typename: "Money",
-  amount: roundMinor(amount),
+  amount: roundMoneyAmount(amount, currency),
   currency,
 });
 
@@ -52,15 +50,13 @@ const voucherLink = (order: OrderDetailsFragment): PriceFactorLink | undefined =
  *   remainingDiscount = start - sum(line.discounts[].total) - end
  *
  * That single number is the actual amount the backend allocated to this line
- * from order-level discounts. We then distribute it across the order's
- * `OrderDiscount` records proportionally to their `total` weights, with the
- * last record absorbing any rounding remainder. By construction
- * `start - sum(factors) = end` exactly.
- *
- * The split between order-level records is approximate when more than one
- * exists (the API stores one `OrderDiscount.total` per order, not per line),
- * but the running total in the waterfall always reconciles to the recorded
- * line total.
+ * from order-level discounts. When exactly one `OrderDiscount` record applies
+ * to the order, we emit it as a per-kind share (the slice equals the record's
+ * effect on this line). When two or more apply we cannot honestly attribute
+ * a per-record amount per line — Saleor stores one `OrderDiscount.total` per
+ * order, not per line. In that case we collapse them into a single
+ * `order_level_combined` factor: the slice (exact) plus the contributing
+ * records by name. By construction `start - sum(factors) = end` exactly.
  */
 export function buildLineWaterfall(
   line: OrderLineFragment,
@@ -112,7 +108,7 @@ export function buildLineWaterfall(
         factors.push({
           kind: "voucher_line",
           name: d.translatedName || d.name,
-          code: line.voucherCode ?? order.voucherCode ?? null,
+          code: line.voucherCode || order.voucherCode || null,
           signedDelta: d.total,
           link: voucherLink(order),
         });
@@ -126,8 +122,31 @@ export function buildLineWaterfall(
         });
         break;
 
-      // Order-level kinds shouldn't appear on `line.discounts`; ignore safely.
+      // Saleor records free-gift lines (gifts granted by an ORDER_PROMOTION
+      // rule) as a single OrderLineDiscount of type ORDER_PROMOTION on the
+      // gift line itself, with `total` equal to the catalog price.
       case OrderDiscountType.ORDER_PROMOTION:
+        if (line.isGift) {
+          factors.push({
+            kind: "gift_line",
+            promotionName: d.translatedName || d.name,
+            signedDelta: d.total,
+          });
+        } else {
+          // Defensive: ORDER_PROMOTION on a non-gift line shouldn't happen
+          // per backend contract, but if it does we still attribute the
+          // amount honestly instead of silently dropping it.
+          factors.push({
+            kind: "catalogue_promotion",
+            name: d.translatedName || d.name,
+            reason: d.reason,
+            signedDelta: d.total,
+            sourceType: OrderDiscountType.PROMOTION,
+          });
+        }
+
+        break;
+
       default:
         break;
     }
@@ -137,9 +156,10 @@ export function buildLineWaterfall(
   // Total amount the line absorbed from order-level discounts. Positive when
   // a discount was applied (the typical case); negative is rare and means the
   // backend re-priced the line upward (e.g. a plugin override).
-  const remainingDiscount = roundMinor(start.amount - lineLevelTotal - end.amount);
+  const remainingDiscount = roundMoneyAmount(start.amount - lineLevelTotal - end.amount, currency);
+  const tolerance = zeroTolerance(currency);
 
-  if (Math.abs(remainingDiscount) > ZERO_TOLERANCE) {
+  if (Math.abs(remainingDiscount) > tolerance) {
     const orderRecords = (order.discounts ?? []).filter(od => {
       if (od.type === OrderDiscountType.VOUCHER && isShippingVoucher(order)) return false;
 
@@ -155,83 +175,74 @@ export function buildLineWaterfall(
         value: moneyOf(Math.abs(remainingDiscount), currency),
         direction: remainingDiscount > 0 ? "minus" : "plus",
       });
-    } else {
-      const totalWeight = orderRecords.reduce(
-        (acc, od) => acc + Math.abs(((od.total ?? od.amount) as MoneyFragment).amount),
-        0,
-      );
+    } else if (orderRecords.length === 1) {
+      // Single record: the line slice equals the record's effect on this
+      // line, so per-kind attribution is exact. Emit the matching share.
+      const od = orderRecords[0];
+      const lineShare = moneyOf(remainingDiscount, currency);
 
-      let allocated = 0;
+      switch (od.type) {
+        case OrderDiscountType.VOUCHER:
+          factors.push({
+            kind: "voucher_order_share",
+            name: order.voucher?.name || od.translatedName || od.name,
+            code: order.voucherCode || order.voucher?.code || null,
+            lineShare,
+            link: voucherLink(order),
+          });
+          break;
 
-      orderRecords.forEach((od, idx) => {
-        const orderTotal = od.total ?? od.amount;
+        case OrderDiscountType.ORDER_PROMOTION:
+        case OrderDiscountType.PROMOTION:
+          factors.push({
+            kind: "order_promotion_share",
+            name: od.translatedName || od.name,
+            lineShare,
+            sourceType: od.type,
+          });
+          break;
 
-        if (!orderTotal) return;
+        case OrderDiscountType.MANUAL:
+          factors.push({
+            kind: "manual_order_share",
+            reason: od.reason,
+            lineShare,
+          });
+          break;
 
-        const isLast = idx === orderRecords.length - 1;
-        let share: number;
-
-        if (isLast) {
-          // Last record absorbs any rounding remainder so the sum reconciles.
-          share = roundMinor(remainingDiscount - allocated);
-        } else if (totalWeight > 0) {
-          const ratio = Math.abs(orderTotal.amount) / totalWeight;
-
-          share = roundMinor(remainingDiscount * ratio);
-          allocated += share;
-        } else {
-          share = roundMinor(remainingDiscount / orderRecords.length);
-          allocated += share;
-        }
-
-        if (Math.abs(share) < ZERO_TOLERANCE) return;
-
-        const lineShare = moneyOf(share, currency);
-
-        switch (od.type) {
-          case OrderDiscountType.VOUCHER:
-            factors.push({
-              kind: "voucher_order_share",
-              name: order.voucher?.name ?? od.translatedName ?? od.name,
-              code: order.voucherCode ?? order.voucher?.code ?? null,
-              lineShare,
-              link: voucherLink(order),
-            });
-            break;
-
-          case OrderDiscountType.ORDER_PROMOTION:
-          case OrderDiscountType.PROMOTION:
-            factors.push({
-              kind: "order_promotion_share",
-              name: od.translatedName || od.name,
-              lineShare,
-              sourceType: od.type,
-            });
-            break;
-
-          case OrderDiscountType.MANUAL:
-            factors.push({
-              kind: "manual_order_share",
-              reason: od.reason,
-              lineShare,
-            });
-            break;
-
-          default:
-            break;
-        }
-      });
-
-      // Only warn about approximation when the split is genuinely a guess —
-      // i.e. there is more than one order-level record contributing.
-      if (orderRecords.length > 1) {
-        warnings.push({
-          id: "order_discount_propagated_to_line",
-          message:
-            "This line absorbs a slice of multiple order-level discounts. " +
-            "The split between records is approximate; the line total reconciles exactly.",
-        });
+        default:
+          break;
       }
+    } else {
+      // Multiple records: collapse into one combined factor. We name the
+      // contributors but do not invent per-record amounts — Saleor does not
+      // expose a per-record-per-line decomposition.
+      const contributors: PriceFactorContributor[] = orderRecords
+        .map((od): PriceFactorContributor | null => {
+          switch (od.type) {
+            case OrderDiscountType.VOUCHER:
+              return {
+                kind: "voucher",
+                name: order.voucher?.name || od.translatedName || od.name,
+                code: order.voucherCode || order.voucher?.code || null,
+                link: voucherLink(order),
+              };
+            case OrderDiscountType.ORDER_PROMOTION:
+            case OrderDiscountType.PROMOTION:
+              return { kind: "order_promotion", name: od.translatedName || od.name };
+            case OrderDiscountType.MANUAL:
+              return { kind: "manual", reason: od.reason };
+            default:
+              return null;
+          }
+        })
+        .filter((c): c is PriceFactorContributor => c !== null);
+
+      factors.push({
+        kind: "order_level_combined",
+        lineShare: moneyOf(remainingDiscount, currency),
+        contributors,
+      });
     }
   }
 
@@ -239,6 +250,8 @@ export function buildLineWaterfall(
     lineId: line.id,
     variantName: line.variant?.name ?? "",
     productName: line.productName,
+    productSku: line.productSku ?? null,
+    thumbnailUrl: line.thumbnail?.url ?? null,
     quantity: line.quantity,
     start,
     factors,

@@ -1,3 +1,4 @@
+import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import { type IMoney } from "@dashboard/utils/intl";
 
 export { default } from "./Money";
@@ -8,6 +9,19 @@ export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
     currency: init.currency,
   };
 }
+
+/**
+ * Round a numerical amount to the minor-unit precision of its currency.
+ * USD/EUR → 2 decimals, JPY/KRW → 0 decimals, BHD/KWD → 3 decimals. Falls
+ * back to 2 decimals when the currency is unknown. Use this for any money
+ * arithmetic that needs to land on a representable amount; for display use
+ * `formatMoneyAmount` / `formatMoney` instead.
+ */
+export const roundMoneyAmount = (amount: number, currency: string): number => {
+  const factor = 10 ** getCurrencyDecimalPoints(currency);
+
+  return Math.round(amount * factor) / factor;
+};
 
 export const formatMoneyAmount = (money: IMoney, locale: string) => {
   try {

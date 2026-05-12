@@ -94,6 +94,10 @@ interface DatagridProps {
   renderRowActions?: (index: number) => ReactElement;
   rowActionBarWidth?: number;
   onRowClick?: (item: Item) => void;
+  /** Fired when a cell is activated via keyboard (Enter/Space) or double-click.
+   *  Glide's `onCellActivated` covers the keyboard equivalent of `onCellClicked`.
+   *  Use this together with `onRowClick` to give clickable cells keyboard parity. */
+  onCellActivated?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
@@ -129,6 +133,7 @@ export const Datagrid = ({
   renderRowActions,
   rowActionBarWidth = defaultRowActionBarWidth,
   onRowClick,
+  onCellActivated,
   getColumnTooltipContent,
   readonly = false,
   rowMarkers = "checkbox",
@@ -531,6 +536,7 @@ export const Datagrid = ({
                     onColumnResize={handleColumnResize}
                     onHeaderClicked={handleHeaderClicked}
                     onCellClicked={handleCellClick}
+                    onCellActivated={onCellActivated}
                     onGridSelectionChange={handleGridSelectionChange}
                     onItemHovered={handleRowHover}
                     getRowThemeOverride={handleGetThemeOverride}

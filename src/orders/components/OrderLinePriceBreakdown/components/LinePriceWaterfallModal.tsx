@@ -13,16 +13,12 @@ import { PriceWaterfallList } from "./PriceWaterfallList";
 interface LinePriceWaterfallModalProps {
   open: boolean;
   waterfall: LinePriceWaterfall | null;
-  thumbnailUrl?: string | null;
-  productSku?: string | null;
   onClose: () => void;
 }
 
 export const LinePriceWaterfallModal = ({
   open,
   waterfall,
-  thumbnailUrl,
-  productSku,
   onClose,
 }: LinePriceWaterfallModalProps) => {
   const intl = useIntl();
@@ -40,10 +36,10 @@ export const LinePriceWaterfallModal = ({
           overflow="hidden"
         >
           <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
-            {thumbnailUrl && (
+            {waterfall.thumbnailUrl && (
               <Box
                 as="img"
-                src={thumbnailUrl}
+                src={waterfall.thumbnailUrl}
                 alt=""
                 __width="48px"
                 __height="48px"
@@ -61,13 +57,13 @@ export const LinePriceWaterfallModal = ({
                 {waterfall.variantName && ` \u00b7 ${waterfall.variantName}`}
               </Text>
               <Text size={2} color="default2" className={modalStyles.truncatedText}>
-                {productSku && (
+                {waterfall.productSku && (
                   <>
-                    <FormattedMessage defaultMessage="SKU" id="k4brJy" />
-                    {`: ${productSku} \u00b7 `}
+                    <FormattedMessage {...messages.skuLabel} />
+                    {`: ${waterfall.productSku} \u00b7 `}
                   </>
                 )}
-                <FormattedMessage defaultMessage="Qty" id="7gXPhB" />
+                <FormattedMessage {...messages.quantityLabel} />
                 {`: ${waterfall.quantity}`}
               </Text>
             </Box>
@@ -114,8 +110,6 @@ const WarningCallout = ({ warning }: WarningCalloutProps) => {
     switch (warning.id) {
       case "manual_overrides_automatic":
         return intl.formatMessage(messages.warningManualOverridesAutomatic);
-      case "order_discount_propagated_to_line":
-        return intl.formatMessage(messages.warningOrderDiscountPropagated);
     }
   })();
 

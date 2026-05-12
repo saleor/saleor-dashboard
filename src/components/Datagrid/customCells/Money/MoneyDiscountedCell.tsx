@@ -8,7 +8,6 @@ interface MoneyDiscountedCellProps {
   readonly currency: string;
   readonly undiscounted?: string | number;
   readonly value: number | string | null;
-  readonly lineItemId?: string;
   readonly locale: Locale;
 }
 
