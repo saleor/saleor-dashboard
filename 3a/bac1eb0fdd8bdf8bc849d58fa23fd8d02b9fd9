@@ -1,0 +1,14 @@
+src/extensions/domain/app-manifest.ts
+  h_0b728ee11e7481 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "3abac1eb0fdd8bdf8bc849d58fa23fd8d02b9fd9",
+  "prompts": {},
+  "humans": {
+    "h_0b728ee11e7481": {
+      "author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
