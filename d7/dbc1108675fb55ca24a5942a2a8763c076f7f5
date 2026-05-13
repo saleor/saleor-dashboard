@@ -1,0 +1,21 @@
+src/extensions/views/ViewManifestExtension/components/AppFrame/appActionsHandler.test.ts
+  s_16a91ddffae818::t_2e484b4b435800 205-222
+  s_16a91ddffae818::t_034b978d9a006b 79
+  s_16a91ddffae818::t_c124a7227deb7a 278-292
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "d7dbc1108675fb55ca24a5942a2a8763c076f7f5",
+  "prompts": {},
+  "sessions": {
+    "s_16a91ddffae818": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d94322da-75e1-435a-a144-0e3b28a611db",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Lukasz Ostrowski <lukasz.ostrowski@saleor.io>"
+    }
+  }
+}
