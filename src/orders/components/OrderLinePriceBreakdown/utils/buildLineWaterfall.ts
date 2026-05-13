@@ -76,12 +76,7 @@ export function buildLineWaterfall(
   // Backend should have cleared non-manual discounts when a manual was added,
   // but guard against in-flight inconsistency.
   if (hasManualLine && hasAutomaticLine) {
-    warnings.push({
-      id: "manual_overrides_automatic",
-      message:
-        "Manual line discount coexists with an automatic discount. " +
-        "Manual takes precedence; the automatic record should be ignored.",
-    });
+    warnings.push({ id: "manual_overrides_automatic" });
   }
 
   // Emit catalogue + voucher line factors first, manual last (manual is

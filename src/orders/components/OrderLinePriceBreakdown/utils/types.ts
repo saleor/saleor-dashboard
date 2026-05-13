@@ -110,10 +110,13 @@ export type PriceWarningId =
    * case where the data is in an unexpected state. */
   "manual_overrides_automatic";
 
+/**
+ * Typed warning emitted by the builder. Carries only the discriminator (and
+ * any structured metadata future warnings need); user-facing copy lives in
+ * `messages.ts` and is resolved by the renderer via `react-intl`.
+ */
 export interface PriceWarning {
   id: PriceWarningId;
-  /** A short human-readable hint. Use `messages.ts` for translations. */
-  message: string;
 }
 
 export interface LinePriceWaterfall {
