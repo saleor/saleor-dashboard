@@ -41,7 +41,7 @@ export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
         amount={stepAmount.display}
         sign={stepAmount.sign}
         runningTotal={runningTotal}
-        testIdSuffix={factor.kind}
+        testIdSuffix={`${factor.kind}-${idx}`}
       />
     );
   });
