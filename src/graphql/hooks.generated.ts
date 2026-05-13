@@ -198,6 +198,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  appUrl
   problems {
     __typename
     key

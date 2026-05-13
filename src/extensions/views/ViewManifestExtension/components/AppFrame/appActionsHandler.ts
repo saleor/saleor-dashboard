@@ -29,7 +29,7 @@ const createResponseStatus = (actionId: string, ok: boolean): DispatchResponseEv
     ok,
   },
 });
-const isExternalHost = (host: string) => new URL(host).hostname !== window.location.hostname;
+const isExternalHost = (host: string) => new URL(host).host !== window.location.host;
 const isLocalPath = (path: string) => path.startsWith("/");
 const useHandleNotificationAction = () => {
   const notify = useNotifier();

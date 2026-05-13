@@ -4,6 +4,7 @@ import { type AvailabilityIssue } from "./types";
 const issue = (overrides: Partial<AvailabilityIssue> = {}): AvailabilityIssue => ({
   id: "no-stock",
   severity: "warning",
+  category: "purchasability",
   channelId: "channel-1",
   channelName: "Default Channel",
   message: "msg",

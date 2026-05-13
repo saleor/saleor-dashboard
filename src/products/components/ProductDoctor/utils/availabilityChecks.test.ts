@@ -501,4 +501,114 @@ describe("runAvailabilityChecks", () => {
       expect(issue).toBeUndefined();
     });
   });
+
+  describe("issue category assignment", () => {
+    // Setup: product missing in every dimension so we get one of each kind of
+    // issue. Direct mode is used so the "no shipping zones" issue is emitted
+    // (info severity) instead of being entangled with availability.
+    const buildEverythingMissing = (): {
+      product: ProductDiagnosticData;
+      channelData: ChannelDiagnosticData;
+    } => {
+      const product = createProduct({
+        isShippingRequired: true,
+        variants: [
+          {
+            id: "variant-1",
+            name: "Variant A",
+            channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10 } }],
+            stocks: [{ warehouse: { id: "warehouse-stranded" }, quantity: 5 }],
+          },
+        ],
+      });
+      const channelData = createChannelData({
+        warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
+        shippingZones: [],
+      });
+
+      return { product, channelData };
+    };
+
+    it("should categorize purchasability and shipping issues per the structural mapping", () => {
+      // Arrange
+      const { product, channelData } = buildEverythingMissing();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert
+      const byId = (id: string) => issues.find(i => i.id === id);
+
+      // Purchasability checks: warehouses, stock, stranded stock
+      expect(byId("no-stock")?.category).toBe("purchasability");
+      expect(byId("stock-outside-channel-warehouses")?.category).toBe("purchasability");
+
+      // Shipping checks: shipping zones
+      expect(byId("no-shipping-zones")?.category).toBe("shipping");
+    });
+
+    it("should categorize core checks (channel inactive, no variants, etc.) as purchasability", () => {
+      // Arrange - inactive channel + no variants in catalog triggers two core errors
+      const product = createProduct({ variants: [] });
+      const channelData = createChannelData({ isActive: false });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      const channelInactive = issues.find(i => i.id === "channel-inactive");
+      const noVariants = issues.find(i => i.id === "no-variants");
+
+      expect(channelInactive?.category).toBe("purchasability");
+      expect(noVariants?.category).toBe("purchasability");
+    });
+
+    it("should categorize warehouse-not-in-zone (legacy mode) as shipping", () => {
+      // Arrange - legacy mode, stock in warehouse not covered by any shipping zone
+      const product = createProduct({ isShippingRequired: true });
+      const channelData = createChannelData({
+        shippingZones: [
+          {
+            id: "zone-1",
+            name: "Zone 1",
+            countries: [{ code: "US", country: "United States" }],
+            warehouses: [{ id: "warehouse-other", name: "Other Warehouse" }],
+          },
+        ],
+      });
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: true,
+      });
+
+      // Assert
+      const issue = issues.find(i => i.id === "warehouse-not-in-zone");
+
+      expect(issue?.category).toBe("shipping");
+    });
+
+    it("should ensure every emitted issue carries a category", () => {
+      // Arrange - same multi-issue setup
+      const { product, channelData } = buildEverythingMissing();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl, {
+        useLegacyShippingZoneStockAvailability: false,
+      });
+
+      // Assert - every issue must have a non-undefined category, since the
+      // grouping UI assumes total coverage.
+      expect(issues.length).toBeGreaterThan(0);
+      issues.forEach(issue => {
+        expect(issue.category).toMatch(/^(purchasability|shipping)$/);
+      });
+    });
+  });
 });

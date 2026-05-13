@@ -350,6 +350,7 @@ describe("useProductAvailabilityDiagnostics", () => {
       {
         id: "test-error",
         severity: "error",
+        category: "purchasability",
         channelId: "channel-1",
         channelName: "Default Channel",
         message: "Test error",
@@ -382,6 +383,7 @@ describe("useProductAvailabilityDiagnostics", () => {
       {
         id: "test-warning",
         severity: "warning",
+        category: "purchasability",
         channelId: "channel-1",
         channelName: "Default Channel",
         message: "Test warning",
