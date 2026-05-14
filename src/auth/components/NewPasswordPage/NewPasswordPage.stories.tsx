@@ -58,10 +58,13 @@ export const SubmitsValidPasswords: Story = {
     await userEvent.click(canvas.getByTestId("button-bar-confirm"));
 
     await expect(args.onSubmit).toHaveBeenCalledOnce();
-    await expect(args.onSubmit).toHaveBeenCalledWith({
-      password: "super-secret-1",
-      confirmPassword: "super-secret-1",
-    });
+    await expect(args.onSubmit).toHaveBeenCalledWith(
+      {
+        password: "super-secret-1",
+        confirmPassword: "super-secret-1",
+      },
+      expect.anything(),
+    );
   },
 };
 
