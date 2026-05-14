@@ -1,5 +1,4 @@
 import { type AccountErrorFragment } from "@dashboard/graphql";
-import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
@@ -14,7 +13,7 @@ export { type NewPasswordPageFormData };
 interface NewPasswordPageProps {
   loading: boolean;
   errors: AccountErrorFragment[];
-  onSubmit: (data: NewPasswordPageFormData) => SubmitPromise;
+  onSubmit: (data: NewPasswordPageFormData) => Promise<void>;
 }
 
 const defaultValues: NewPasswordPageFormData = {
@@ -35,7 +34,7 @@ export const NewPasswordPage = ({ loading, errors, onSubmit }: NewPasswordPagePr
   });
 
   return (
-    <form onSubmit={handleSubmit(async data => void (await onSubmit(data)))}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={6}>
         <Text size={6} fontWeight="bold" lineHeight={3}>
           <FormattedMessage {...newPasswordPageMessages.title} />
