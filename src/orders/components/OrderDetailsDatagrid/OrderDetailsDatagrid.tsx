@@ -39,7 +39,7 @@ interface OrderDetailsDatagridProps {
   /** Optional callback to open the per-line price-waterfall modal. When set,
    *  the `price` and `total` cells of discounted lines become clickable;
    *  the strikethrough on the original price is the only visual affordance. */
-  onShowLinePricing?: (lineId: string) => void;
+  onShowLinePriceBreakdown?: (lineId: string) => void;
   datagridCustomTheme?: Partial<Theme>;
 }
 
@@ -47,7 +47,7 @@ export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
-  onShowLinePricing,
+  onShowLinePriceBreakdown,
   datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
@@ -83,9 +83,17 @@ export const OrderDetailsDatagrid = ({
       onOrderLineShowMetadata,
       intl,
       locale,
-      interactivePricing: Boolean(onShowLinePricing),
+      interactivePricing: Boolean(onShowLinePriceBreakdown),
     }),
-    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata, locale, onShowLinePricing],
+    [
+      visibleColumns,
+      loading,
+      lines,
+      intl,
+      onOrderLineShowMetadata,
+      locale,
+      onShowLinePriceBreakdown,
+    ],
   );
   const getMenuItems = useCallback(
     (index: number) => {
@@ -134,16 +142,16 @@ export const OrderDetailsDatagrid = ({
 
       if (!line || !isLineDiscounted(line)) return;
 
-      onShowLinePricing?.(line.id);
+      onShowLinePriceBreakdown?.(line.id);
     },
-    [onShowLinePricing, visibleColumns, lines],
+    [onShowLinePriceBreakdown, visibleColumns, lines],
   );
 
   // Ripple cannot be anchored to a Glide canvas cell directly; place it at the
   // top-right of the datagrid wrapper, roughly above the price/total columns.
   // The strikethrough on a discounted price is the only persistent affordance;
   // the ripple is a one-time discovery hint for the click-to-explain behavior.
-  const showPricingRipple = Boolean(onShowLinePricing) && lines.some(isLineDiscounted);
+  const showPricingRipple = Boolean(onShowLinePriceBreakdown) && lines.some(isLineDiscounted);
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
@@ -181,8 +189,8 @@ export const OrderDetailsDatagrid = ({
           )}
           renderRowActions={renderRowActions}
           rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
-          onRowClick={onShowLinePricing ? handleRowClick : undefined}
-          onCellActivated={onShowLinePricing ? handleRowClick : undefined}
+          onRowClick={onShowLinePriceBreakdown ? handleRowClick : undefined}
+          onCellActivated={onShowLinePriceBreakdown ? handleRowClick : undefined}
         />
       </Box>
     </DatagridChangeStateContext.Provider>

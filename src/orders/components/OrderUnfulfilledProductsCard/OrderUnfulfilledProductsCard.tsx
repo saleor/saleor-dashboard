@@ -17,14 +17,14 @@ interface OrderUnfulfilledProductsCardProps {
   onFulfill: () => void;
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
-  onShowLinePricing?: (lineId: string) => void;
+  onShowLinePriceBreakdown?: (lineId: string) => void;
 }
 
 export const OrderUnfulfilledProductsCard = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
   onOrderLineShowMetadata,
-  onShowLinePricing,
+  onShowLinePriceBreakdown,
   lines,
   onFulfill,
   loading,
@@ -68,7 +68,7 @@ export const OrderUnfulfilledProductsCard = ({
             lines={toLineWithUnfulfilledQuantity(lines)}
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
-            onShowLinePricing={onShowLinePricing}
+            onShowLinePriceBreakdown={onShowLinePriceBreakdown}
           />
           <Box
             backgroundColor={"default1"}

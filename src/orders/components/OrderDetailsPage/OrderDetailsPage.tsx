@@ -239,7 +239,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onFulfill={onOrderFulfill}
                   loading={loading}
                   onOrderLineShowMetadata={onOrderLineShowMetadata}
-                  onShowLinePricing={setPricingLineId}
+                  onShowLinePriceBreakdown={setPricingLineId}
                 />
               ) : (
                 <>
@@ -263,7 +263,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
                   onOrderLineShowMetadata={onOrderLineShowMetadata}
-                  onShowLinePricing={setPricingLineId}
+                  onShowLinePriceBreakdown={setPricingLineId}
                   onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
                   onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
                   onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}

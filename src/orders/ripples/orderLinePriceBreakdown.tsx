@@ -2,10 +2,7 @@ import { type Ripple } from "@dashboard/ripples/types";
 
 export const rippleOrderLinePriceBreakdown: Ripple = {
   type: "feature",
-  // Persisted in users' localStorage to track dismissal — keep as-is even if
-  // the surrounding feature is renamed, so previously dismissed notifications
-  // stay dismissed.
-  ID: "price-doctor-line-waterfall",
+  ID: "order-line-price-breakdown",
   TTL_seconds: 60 * 60 * 24 * 14,
   content: {
     oneLiner: "See how a line price was calculated",

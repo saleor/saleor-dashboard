@@ -20,7 +20,7 @@ interface OrderFulfillmentCardProps {
   onTrackingCodeAdd: () => void;
   dataTestId?: string;
   onOrderLineShowMetadata: (id: string) => void;
-  onShowLinePricing?: (lineId: string) => void;
+  onShowLinePriceBreakdown?: (lineId: string) => void;
   onFulfillmentShowMetadata?: () => void;
 }
 
@@ -50,7 +50,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
     onOrderLineShowMetadata,
-    onShowLinePricing,
+    onShowLinePriceBreakdown,
     onFulfillmentShowMetadata,
     dataTestId,
   } = props;
@@ -141,7 +141,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           lines={getLines()}
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
-          onShowLinePricing={onShowLinePricing}
+          onShowLinePriceBreakdown={onShowLinePriceBreakdown}
           datagridCustomTheme={{
             bgHeader: themeValues.colors.background.default2,
           }}
