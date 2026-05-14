@@ -11179,6 +11179,10 @@
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
   },
+  "y+XIPY": {
+    "context": "validation error",
+    "string": "Password is required"
+  },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
   },
