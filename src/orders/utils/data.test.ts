@@ -576,6 +576,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "Money",
             amount: 159.42,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -728,6 +729,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "Money",
             amount: 797.1,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -880,6 +882,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "Money",
             amount: 478.26,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -1037,6 +1040,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Money",
               amount: 1594.2,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -1194,6 +1198,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Money",
               amount: 1992.75,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -1351,6 +1356,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Money",
               amount: 797.1,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -1508,6 +1514,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Money",
               amount: 1594.2,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -1665,6 +1672,7 @@ describe("Get the total value of all replaced products", () => {
               __typename: "Money",
               amount: 1992.75,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -1951,6 +1959,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "Money",
             amount: 159.42,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -2103,6 +2112,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "Money",
             amount: 797.1,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -2255,6 +2265,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "Money",
             amount: 478.26,
             currency: "USD",
+            fractionDigits: 2,
           },
           net: {
             __typename: "Money",
@@ -2412,6 +2423,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Money",
               amount: 1594.2,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -2569,6 +2581,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Money",
               amount: 1992.75,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -2726,6 +2739,7 @@ describe("Get the total value of all selected products", () => {
               __typename: "Money",
               amount: 797.1,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -3005,6 +3019,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               __typename: "Money",
               amount: 159.42,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -3162,6 +3177,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               __typename: "Money",
               amount: 159.42,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",
@@ -3319,6 +3335,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               __typename: "Money",
               amount: 239.13,
               currency: "USD",
+              fractionDigits: 2,
             },
             net: {
               __typename: "Money",

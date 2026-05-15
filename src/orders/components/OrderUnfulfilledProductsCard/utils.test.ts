@@ -13,6 +13,7 @@ const taxedMoneyPln20 = {
     __typename: "Money" as const,
     amount: 20,
     currency: "PLN",
+    fractionDigits: 2,
   },
   tax: {
     __typename: "Money" as const,

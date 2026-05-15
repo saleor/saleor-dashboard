@@ -1,4 +1,4 @@
-import { roundMoneyAmount } from "@dashboard/components/Money";
+import { roundMoneyByDigits } from "@dashboard/components/Money";
 import { voucherUrl } from "@dashboard/discounts/urls";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -22,14 +22,14 @@ interface PriceWaterfallListProps {
 
 export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
   const intl = useIntl();
-  const currency = waterfall.start.currency;
+  const { fractionDigits } = waterfall;
 
   let runningAmount = waterfall.start.amount;
 
   const steps = waterfall.factors.map((factor, idx) => {
     const stepAmount = getStepAmount(factor);
 
-    runningAmount = roundMoneyAmount(runningAmount + stepAmount.delta, currency);
+    runningAmount = roundMoneyByDigits(runningAmount + stepAmount.delta, fractionDigits);
 
     const runningTotal: MoneyFragment = { ...waterfall.start, amount: runningAmount };
 

@@ -11,17 +11,32 @@ export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
 }
 
 /**
- * Round a numerical amount to the minor-unit precision of its currency.
- * USD/EUR → 2 decimals, JPY/KRW → 0 decimals, BHD/KWD → 3 decimals. Falls
- * back to 2 decimals when the currency is unknown. Use this for any money
- * arithmetic that needs to land on a representable amount; for display use
- * `formatMoneyAmount` / `formatMoney` instead.
+ * Round a numerical amount to the given number of fraction digits. Prefer this
+ * helper when the precision is available on the wire — Saleor returns
+ * `Money.fractionDigits` (spread `MoneyWithFractionDigits` in your query), and
+ * the backend's value is the source of truth for the currency's minor-unit
+ * precision.
+ *
+ * For display use `formatMoneyAmount` / `formatMoney` instead.
  */
-export const roundMoneyAmount = (amount: number, currency: string): number => {
-  const factor = 10 ** getCurrencyDecimalPoints(currency);
+export const roundMoneyByDigits = (amount: number, fractionDigits: number): number => {
+  const factor = 10 ** fractionDigits;
 
   return Math.round(amount * factor) / factor;
 };
+
+/**
+ * Round a numerical amount to the minor-unit precision of its currency,
+ * derived client-side via `Intl.NumberFormat`. USD/EUR → 2 decimals,
+ * JPY/KRW → 0 decimals, BHD/KWD → 3 decimals. Falls back to 2 decimals when
+ * the currency is unknown.
+ *
+ * Prefer `roundMoneyByDigits` when `Money.fractionDigits` is available on the
+ * wire — the backend value is the authoritative source for currency precision
+ * and avoids drift across browser CLDR versions.
+ */
+export const roundMoneyAmount = (amount: number, currency: string): number =>
+  roundMoneyByDigits(amount, getCurrencyDecimalPoints(currency));
 
 export const formatMoneyAmount = (money: IMoney, locale: string) => {
   try {

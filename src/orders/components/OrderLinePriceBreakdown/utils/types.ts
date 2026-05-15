@@ -126,6 +126,11 @@ export interface LinePriceWaterfall {
   productSku: string | null;
   thumbnailUrl: string | null;
   quantity: number;
+  /** Currency-minor-unit precision for arithmetic on this waterfall. Sourced
+   *  from the line's `Money.fractionDigits` (backend truth) when available,
+   *  with a client-side fallback derived from `currency` for fixtures/stories
+   *  that don't surface the field. */
+  fractionDigits: number;
   /** undiscountedUnitPrice.gross * quantity */
   start: MoneyFragment;
   /** Steps applied in order: line-level first (catalogue, voucher, manual),

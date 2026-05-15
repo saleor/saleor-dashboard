@@ -116,7 +116,12 @@ export const fragmentOrderLine = gql`
     quantityFulfilled
     quantityToFulfill
     totalPrice {
-      ...TaxedMoney
+      gross {
+        ...MoneyWithFractionDigits
+      }
+      net {
+        ...Money
+      }
       tax {
         ...Money
       }

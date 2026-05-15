@@ -1568,6 +1568,13 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const MoneyWithFractionDigitsFragmentDoc = gql`
+    fragment MoneyWithFractionDigits on Money {
+  amount
+  currency
+  fractionDigits
+}
+    `;
 export const TaxedMoneyFragmentDoc = gql`
     fragment TaxedMoney on TaxedMoney {
   net {
@@ -1629,7 +1636,12 @@ export const OrderLineFragmentDoc = gql`
   quantityFulfilled
   quantityToFulfill
   totalPrice {
-    ...TaxedMoney
+    gross {
+      ...MoneyWithFractionDigits
+    }
+    net {
+      ...Money
+    }
     tax {
       ...Money
     }
@@ -1690,8 +1702,9 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}
+${MoneyWithFractionDigitsFragmentDoc}
 ${MoneyFragmentDoc}
+${TaxedMoneyFragmentDoc}
 ${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
     fragment OrderDiscount on OrderDiscount {

@@ -329,6 +329,7 @@ export class OrderFixture {
           __typename: "Money",
           amount: 50,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
@@ -400,6 +401,7 @@ export class OrderFixture {
               __typename: "Money",
               amount: 0,
               currency: "",
+              fractionDigits: 2,
             },
             tax: {
               __typename: "Money",

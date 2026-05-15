@@ -1397,6 +1397,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 __typename: "Money",
                 amount: 159.42,
                 currency: "USD",
+                fractionDigits: 2,
               },
               net: {
                 __typename: "Money",
@@ -1567,6 +1568,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 __typename: "Money",
                 amount: 159.42,
                 currency: "USD",
+                fractionDigits: 2,
               },
               net: {
                 __typename: "Money",
@@ -1739,6 +1741,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           __typename: "Money",
           amount: 55.53,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
@@ -1887,6 +1890,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
@@ -2206,6 +2210,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
@@ -2354,6 +2359,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",

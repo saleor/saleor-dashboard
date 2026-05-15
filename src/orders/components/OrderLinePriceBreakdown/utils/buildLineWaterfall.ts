@@ -1,4 +1,4 @@
-import { roundMoneyAmount } from "@dashboard/components/Money";
+import { roundMoneyByDigits } from "@dashboard/components/Money";
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import {
   type MoneyFragment,
@@ -18,11 +18,11 @@ import {
 
 /** Sub-minor-unit residuals are absorbed silently. Tolerance is half a minor
  *  unit so anything below the currency's representable precision is ignored. */
-const zeroTolerance = (currency: string): number => 0.5 / 10 ** getCurrencyDecimalPoints(currency);
+const zeroTolerance = (fractionDigits: number): number => 0.5 / 10 ** fractionDigits;
 
-const moneyOf = (amount: number, currency: string): MoneyFragment => ({
+const moneyOf = (amount: number, currency: string, fractionDigits: number): MoneyFragment => ({
   __typename: "Money",
-  amount: roundMoneyAmount(amount, currency),
+  amount: roundMoneyByDigits(amount, fractionDigits),
   currency,
 });
 
@@ -63,8 +63,16 @@ export function buildLineWaterfall(
   order: OrderDetailsFragment,
 ): LinePriceWaterfall {
   const currency = line.totalPrice.gross.currency;
-  const start = moneyOf(line.undiscountedUnitPrice.gross.amount * line.quantity, currency);
-  const end = moneyOf(line.totalPrice.gross.amount, currency);
+  // Trust the API's `Money.fractionDigits` (spread `MoneyWithFractionDigits` in
+  // the OrderLine fragment); fall back to client-side derivation for fixtures
+  // and any consumer that doesn't surface the field on the wire.
+  const fractionDigits = line.totalPrice.gross.fractionDigits ?? getCurrencyDecimalPoints(currency);
+  const start = moneyOf(
+    line.undiscountedUnitPrice.gross.amount * line.quantity,
+    currency,
+    fractionDigits,
+  );
+  const end = moneyOf(line.totalPrice.gross.amount, currency, fractionDigits);
 
   const factors: PriceFactor[] = [];
   const warnings: PriceWarning[] = [];
@@ -151,8 +159,11 @@ export function buildLineWaterfall(
   // Total amount the line absorbed from order-level discounts. Positive when
   // a discount was applied (the typical case); negative is rare and means the
   // backend re-priced the line upward (e.g. a plugin override).
-  const remainingDiscount = roundMoneyAmount(start.amount - lineLevelTotal - end.amount, currency);
-  const tolerance = zeroTolerance(currency);
+  const remainingDiscount = roundMoneyByDigits(
+    start.amount - lineLevelTotal - end.amount,
+    fractionDigits,
+  );
+  const tolerance = zeroTolerance(fractionDigits);
 
   if (Math.abs(remainingDiscount) > tolerance) {
     const orderRecords = (order.discounts ?? []).filter(od => {
@@ -167,14 +178,14 @@ export function buildLineWaterfall(
       // Unexplained residual — surface honestly so the math still reconciles.
       factors.push({
         kind: "other_adjustment",
-        value: moneyOf(Math.abs(remainingDiscount), currency),
+        value: moneyOf(Math.abs(remainingDiscount), currency, fractionDigits),
         direction: remainingDiscount > 0 ? "minus" : "plus",
       });
     } else if (orderRecords.length === 1) {
       // Single record: the line slice equals the record's effect on this
       // line, so per-kind attribution is exact. Emit the matching share.
       const od = orderRecords[0];
-      const lineShare = moneyOf(remainingDiscount, currency);
+      const lineShare = moneyOf(remainingDiscount, currency, fractionDigits);
 
       switch (od.type) {
         case OrderDiscountType.VOUCHER:
@@ -235,7 +246,7 @@ export function buildLineWaterfall(
 
       factors.push({
         kind: "order_level_combined",
-        lineShare: moneyOf(remainingDiscount, currency),
+        lineShare: moneyOf(remainingDiscount, currency, fractionDigits),
         contributors,
       });
     }
@@ -248,6 +259,7 @@ export function buildLineWaterfall(
     productSku: line.productSku ?? null,
     thumbnailUrl: line.thumbnail?.url ?? null,
     quantity: line.quantity,
+    fractionDigits,
     start,
     factors,
     end,
