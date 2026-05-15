@@ -36,6 +36,7 @@ import {
   type CustomExtensionDetailsUrlQueryParams,
   ExtensionsUrls,
 } from "../../urls";
+import { filterCustomExtensionPermissions } from "../customExtensionHiddenPermissions";
 import {
   CustomExtensionDetailsPage,
   type CustomExtensionDetailsPageFormData,
@@ -214,7 +215,9 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
             name: data.name,
             permissions:
               data.hasFullAccess && shop?.permissions
-                ? shop.permissions.map(permission => permission.code)
+                ? filterCustomExtensionPermissions(shop.permissions).map(
+                    permission => permission.code,
+                  )
                 : data.permissions,
           },
         },
@@ -271,7 +274,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
         onAppDeleteOpen={() => openModal("app-delete")}
-        permissions={shop?.permissions || []}
+        permissions={filterCustomExtensionPermissions(shop?.permissions ?? [])}
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
         hasManagedAppsPermission={hasManagedAppsPermission}

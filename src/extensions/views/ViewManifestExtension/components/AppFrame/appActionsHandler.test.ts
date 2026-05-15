@@ -76,6 +76,7 @@ describe("AppActionsHandler", function () {
       value: {
         href: "http://localhost:3000",
         hostname: "localhost",
+        host: "localhost:3000",
         pathname: "/extensions/XYZ",
       },
       writable: true,
@@ -201,6 +202,24 @@ describe("AppActionsHandler", function () {
         expect(mockWindowOpen).toHaveBeenCalledTimes(1);
         expect(mockWindowOpen).toHaveBeenCalledWith("https://google.com");
       });
+      it("Treats same hostname with different port as external", () => {
+        // Arrange
+        // window.location.host is "localhost:3000"; target URL uses a different port
+        // so it must be classified as external even though the hostname matches
+        // Act
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "http://localhost:8000/foo",
+            newContext: true,
+          },
+        });
+
+        // Assert
+        expect(mockWindowOpen).toHaveBeenCalledTimes(1);
+        expect(mockWindowOpen).toHaveBeenCalledWith("http://localhost:8000/foo");
+      });
       it("Opens another dashboard url in new browser context", () => {
         // Arrange & Act
         hookRenderResult.result.current.handle({
@@ -255,6 +274,21 @@ describe("AppActionsHandler", function () {
 
         // Assert
         expect(window.location.href).toBe("https://google.com");
+      });
+      it("Redirects to same hostname with different port after confirmation", () => {
+        // Arrange
+        // Act
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "http://localhost:8000/foo",
+            newContext: false,
+          },
+        });
+
+        // Assert
+        expect(window.location.href).toBe("http://localhost:8000/foo");
       });
       it("Opens another dashboard url", () => {
         // Arrange & Act

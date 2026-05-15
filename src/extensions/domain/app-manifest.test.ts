@@ -435,6 +435,98 @@ describe("App Manifest Schema", () => {
     });
   });
 
+  describe("Invalid cases - MANAGE_APPS not permitted", () => {
+    it("should reject manifest with MANAGE_APPS in app permissions", () => {
+      // Arrange
+      const invalidData = getValidManifestBase({
+        permissions: [
+          { code: PermissionEnum.MANAGE_APPS, __typename: "Permission", name: "Manage Apps" },
+        ],
+      });
+
+      // Act
+      const result = appManifestSchema.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(
+          result.error.issues.some(
+            issue =>
+              issue.message === `Permission "MANAGE_APPS" is not permitted in app permissions.`,
+          ),
+        ).toBe(true);
+      }
+    });
+
+    it("should reject manifest with MANAGE_APPS in extension permissions", () => {
+      // Arrange
+      const invalidData = getValidManifestBase({
+        permissions: [
+          { code: PermissionEnum.MANAGE_APPS, __typename: "Permission", name: "Manage Apps" },
+        ],
+        extensions: [
+          {
+            label: "Extension",
+            url: "https://example.com/ext",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
+            permissions: [
+              { code: PermissionEnum.MANAGE_APPS, __typename: "Permission", name: "Manage Apps" },
+            ],
+            __typename: "AppManifestExtension",
+          },
+        ],
+      });
+
+      // Act
+      const result = appManifestSchema.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(
+          result.error.issues.some(
+            issue =>
+              issue.message ===
+              `Permission "MANAGE_APPS" is not permitted in extension permissions.`,
+          ),
+        ).toBe(true);
+      }
+    });
+
+    it("should accept manifest with no MANAGE_APPS in any permissions", () => {
+      // Arrange
+      const validData = getValidManifestBase({
+        permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission", name: "" }],
+        extensions: [
+          {
+            label: "Extension",
+            url: "https://example.com/ext",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_PRODUCTS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+            ],
+            __typename: "AppManifestExtension",
+          },
+        ],
+      });
+
+      // Act
+      const result = appManifestSchema.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+    });
+  });
+
   describe("Smoke tests - extensions field", () => {
     it("should accept manifest with one extension (basic smoke test)", () => {
       // Arrange

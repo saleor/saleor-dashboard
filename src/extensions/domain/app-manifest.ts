@@ -1,6 +1,7 @@
 import { appExtensionManifest } from "@dashboard/extensions/domain/app-extension-manifest";
 import { permissionSchema } from "@dashboard/extensions/domain/permission";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
+import { PermissionEnum } from "@dashboard/graphql";
 import { z } from "zod";
 
 // For now contains only partial fields, because Saleor is validating manifest anyway.
@@ -37,6 +38,25 @@ export const appManifestSchema = z
     {
       message: "Extension permission must be listed in App's permissions.",
     },
-  );
+  )
+  .superRefine((data, ctx) => {
+    if (data.permissions.some(p => p.code === PermissionEnum.MANAGE_APPS)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Permission "MANAGE_APPS" is not permitted in app permissions.`,
+        path: ["permissions"],
+      });
+    }
+
+    data.extensions.forEach((ext, index) => {
+      if (ext.permissions.some(p => p.code === PermissionEnum.MANAGE_APPS)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Permission "MANAGE_APPS" is not permitted in extension permissions.`,
+          path: ["extensions", index, "permissions"],
+        });
+      }
+    });
+  });
 
 export type AppManifest = z.infer<typeof appManifestSchema>;
