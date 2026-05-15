@@ -5,7 +5,10 @@ import { parseQs } from "@dashboard/url-utils";
 import { useState } from "react";
 import { type RouteComponentProps } from "react-router";
 
-import NewPasswordPage, { type NewPasswordPageFormData } from "../components/NewPasswordPage";
+import {
+  NewPasswordPage,
+  type NewPasswordPageFormData,
+} from "../components/NewPasswordPage/NewPasswordPage";
 import { type NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword = ({ location }: RouteComponentProps) => {

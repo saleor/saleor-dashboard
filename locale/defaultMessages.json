@@ -11251,6 +11251,10 @@
     "context": "factor label for whole-order voucher propagated to a line",
     "string": "Voucher (order, line share)"
   },
+  "y+XIPY": {
+    "context": "validation error",
+    "string": "Password is required"
+  },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
   },
