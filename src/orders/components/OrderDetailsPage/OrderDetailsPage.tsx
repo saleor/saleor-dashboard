@@ -385,11 +385,12 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 {saveLabel?.confirm}
               </Savebar.ConfirmButton>
             </Savebar>
-            <LinePriceWaterfallModal
-              open={Boolean(pricingLineId && pricingWaterfall)}
-              waterfall={pricingWaterfall}
-              onClose={() => setPricingLineId(null)}
-            />
+            {pricingWaterfall && (
+              <LinePriceWaterfallModal
+                waterfall={pricingWaterfall}
+                onClose={() => setPricingLineId(null)}
+              />
+            )}
           </DetailPageLayout>
         );
       }}

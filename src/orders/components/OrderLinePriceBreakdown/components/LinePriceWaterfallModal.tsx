@@ -11,22 +11,15 @@ import { type LinePriceWaterfall, type PriceWarning } from "../utils/types";
 import { PriceWaterfallList } from "./PriceWaterfallList";
 
 interface LinePriceWaterfallModalProps {
-  open: boolean;
-  waterfall: LinePriceWaterfall | null;
+  waterfall: LinePriceWaterfall;
   onClose: () => void;
 }
 
-export const LinePriceWaterfallModal = ({
-  open,
-  waterfall,
-  onClose,
-}: LinePriceWaterfallModalProps) => {
+export const LinePriceWaterfallModal = ({ waterfall, onClose }: LinePriceWaterfallModalProps) => {
   const intl = useIntl();
 
-  if (!waterfall) return null;
-
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal open onChange={onClose}>
       <DashboardModal.Content size="sm" className={modalStyles.modalContent}>
         <Box
           display="flex"
