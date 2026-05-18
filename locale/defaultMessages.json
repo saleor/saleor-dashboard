@@ -3867,6 +3867,10 @@
   "JRfJD9": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
+  "JTM4uK": {
+    "context": "empty state shown when search returns no results",
+    "string": "No models match \"{query}\""
+  },
   "JTcz2G": {
     "context": "csv file exporting has finished, header",
     "string": "Exporting CSV finished"

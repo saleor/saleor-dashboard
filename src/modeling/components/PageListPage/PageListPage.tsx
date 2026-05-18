@@ -141,6 +141,7 @@ const PageListPage = ({
           </Box>
           <PageListDatagrid
             {...listProps}
+            searchQuery={initialSearch}
             rowAnchor={pageUrl}
             onRowClick={id =>
               navigate(pageUrl(id), {
