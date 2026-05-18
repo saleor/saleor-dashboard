@@ -112,6 +112,33 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  margin-left: auto;
-  padding: 0 16px;
+  padding: 0 24px;
+}
+
+/*
+ * Flatten the macaw <Button> chrome so the "More" trigger reads as part of
+ * the tab strip rather than a CTA. Scoping through .moreSlot bumps specificity
+ * to 0,2,0 — enough to beat macaw's single-class rules without !important.
+ */
+.moreSlot .moreButton {
+  min-height: 0;
+  height: auto;
+  padding: 6px 10px;
+  gap: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--mu-colors-text-default2);
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.moreSlot .moreButton:hover {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.moreSlot .moreButton svg {
+  width: 14px;
+  height: 14px;
 }

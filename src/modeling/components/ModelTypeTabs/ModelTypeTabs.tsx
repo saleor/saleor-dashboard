@@ -271,18 +271,20 @@ export const ModelTypeTabs = ({
           );
         })}
       </div>
+      {rightSlot && <div className={styles.rightSlot}>{rightSlot}</div>}
       {showMore && (
         <div className={styles.moreSlot}>
           <ButtonWithDropdown
-            variant="secondary"
+            variant="tertiary"
+            size="small"
             options={overflowOptions}
             testId="model-type-tabs-more"
+            className={styles.moreButton}
           >
             {intl.formatMessage(modelTypeTabsMessages.moreTab)}
           </ButtonWithDropdown>
         </div>
       )}
-      {rightSlot && <div className={styles.rightSlot}>{rightSlot}</div>}
     </div>
   );
 };
