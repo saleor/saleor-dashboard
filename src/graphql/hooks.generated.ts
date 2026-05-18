@@ -1628,6 +1628,14 @@ export const OrderLineFragmentDoc = gql`
   unitDiscountValue
   unitDiscountReason
   unitDiscountType
+  discounts {
+    id
+    type
+    name
+    total {
+      ...Money
+    }
+  }
   undiscountedUnitPrice {
     currency
     gross {
@@ -1654,7 +1662,8 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
+${TaxedMoneyFragmentDoc}
+${MoneyFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
     fragment OrderDiscount on OrderDiscount {
   id

@@ -224,6 +224,7 @@ export class OrderFixture {
       quantityToFulfill: 0,
       unitDiscountReason: null,
       unitDiscountType: null,
+      discounts: null,
       allocations: [],
       unitDiscount: {
         __typename: "Money",
@@ -333,6 +334,7 @@ export class OrderFixture {
           unitDiscountValue: undefined,
           unitDiscountReason: "",
           unitDiscountType: DiscountValueTypeEnum.FIXED,
+          discounts: null,
           allocations: [],
           variant: {
             __typename: "ProductVariant",
