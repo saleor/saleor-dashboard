@@ -677,6 +677,9 @@
     "context": "Transaction card title",
     "string": "Transaction"
   },
+  "1wcKdb": {
+    "string": "This app contributes only background functionality (webhooks) or UI extensions. There is no configuration page to open from the dashboard."
+  },
   "1wyZpQ": {
     "string": "These passwords are too similar"
   },
@@ -8678,6 +8681,9 @@
     "context": "product updated at",
     "string": "Last updated"
   },
+  "kVZfHj": {
+    "string": "App does not include a configuration screen"
+  },
   "kWuOqa": {
     "context": "badge for variant that already exists",
     "string": "Exists"
@@ -11172,6 +11178,10 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
+  },
+  "y+XIPY": {
+    "context": "validation error",
+    "string": "Password is required"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"

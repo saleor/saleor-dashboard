@@ -1,13 +1,27 @@
-import { type AppQuery } from "@dashboard/graphql";
+import { type AppQuery, AppTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { Box, Text } from "@saleor/macaw-ui-next";
+import { Info } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
+import { defineMessages, FormattedMessage } from "react-intl";
 
 import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
 import { Header } from "./Header";
 import { PermissionsCard } from "./PermissionsCard";
+
+const noConfigurationScreenMessages = defineMessages({
+  title: {
+    defaultMessage: "App does not include a configuration screen",
+    id: "kVZfHj",
+  },
+  description: {
+    defaultMessage:
+      "This app contributes only background functionality (webhooks) or UI extensions. There is no configuration page to open from the dashboard.",
+    id: "1wcKdb",
+  },
+});
 
 interface AppDetailsPageProps {
   loading: boolean;
@@ -43,6 +57,31 @@ export const AppDetailsPage = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
+      {data.type === AppTypeEnum.THIRDPARTY && !data.appUrl && (
+        <Box
+          data-test-id="no-configuration-screen-info"
+          display="flex"
+          alignItems="flex-start"
+          backgroundColor="info1"
+          padding={4}
+          gap={2}
+          borderRadius={3}
+          marginX={6}
+          marginY={4}
+        >
+          <Box flexShrink="0" marginTop={1}>
+            <Info size={20} />
+          </Box>
+          <Box display="flex" flexDirection="column" gap={1}>
+            <Text size={3} fontWeight="medium">
+              <FormattedMessage {...noConfigurationScreenMessages.title} />
+            </Text>
+            <Text size={3}>
+              <FormattedMessage {...noConfigurationScreenMessages.description} />
+            </Text>
+          </Box>
+        </Box>
+      )}
       <Box
         data-test-id="app-details-section"
         display="grid"

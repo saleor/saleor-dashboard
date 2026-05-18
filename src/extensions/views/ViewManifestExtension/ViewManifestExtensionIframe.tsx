@@ -7,7 +7,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { useLocation } from "react-router";
+import { Redirect, useLocation } from "react-router";
 
 import { AppPage } from "./components/AppPage/AppPage";
 
@@ -41,18 +41,22 @@ export const ViewManifestExtensionIframe = ({ id }: AppProps) => {
     return <NotFoundPage onBack={() => navigate(ExtensionsUrls.resolveInstalledExtensionsUrl())} />;
   }
 
+  if (!data) {
+    return null;
+  }
+
+  if (!data.app?.appUrl) {
+    return <Redirect to={ExtensionsUrls.resolveEditManifestExtensionUrl(id)} />;
+  }
+
   let appCompleteUrl = ExtensionsUrls.resolveAppCompleteUrlFromDashboardUrl(
     location.pathname,
-    data?.app?.appUrl || "",
+    data.app.appUrl,
     id,
   );
 
   if (appPath) {
     appCompleteUrl = `${appCompleteUrl}/${appPath}`;
-  }
-
-  if (!data || !appCompleteUrl) {
-    return null;
   }
 
   return <AppPage data={data.app} url={appCompleteUrl} refetch={refetch} onError={handleError} />;
