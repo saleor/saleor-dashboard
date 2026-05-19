@@ -87,6 +87,8 @@ const PAGE_TYPE_MOUNTS = [
 
 const TRANSLATIONS_MOUNTS = ["TRANSLATIONS_MORE_ACTIONS"] as const;
 
+const HOMEPAGE_MOUNTS = ["HOMEPAGE_WIDGETS"] as const;
+
 // Create a const array with all mounts to preserve literal types
 const ALL_MOUNTS_ARRAY = [
   ...CATEGORY_MOUNTS,
@@ -94,6 +96,7 @@ const ALL_MOUNTS_ARRAY = [
   ...CUSTOMER_MOUNTS,
   ...DISCOUNT_MOUNTS,
   ...GIFT_CARD_MOUNTS,
+  ...HOMEPAGE_MOUNTS,
   ...MENU_MOUNTS,
   ...NAVIGATION_MOUNTS,
   ...ORDER_MOUNTS,
@@ -118,4 +121,5 @@ export const WIDGET_AVAILABLE_MOUNTS = [
   "GIFT_CARD_DETAILS_WIDGETS",
   "CUSTOMER_DETAILS_WIDGETS",
   "COLLECTION_DETAILS_WIDGETS",
+  "HOMEPAGE_WIDGETS",
 ] as const;

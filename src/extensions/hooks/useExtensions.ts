@@ -6,6 +6,7 @@ import {
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { isSaleorOfficialAppUrl } from "@dashboard/extensions/isSaleorOfficialAppUrl";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import { type ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
@@ -47,6 +48,8 @@ const prepareExtensionsWithActions = ({
        */
       const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
 
+      const resolvedUrl = isUrlAbsolute(url) ? url : `${appUrl ?? ""}${url}`;
+
       return {
         id,
         app,
@@ -57,6 +60,7 @@ const prepareExtensionsWithActions = ({
         mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
         targetName: AppExtensionManifestTarget.parse(targetName),
         settings,
+        isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
         /**
          * Only available for NEW_TAB, POPUP, APP_PAGE
          * TODO: Change interface to *not* contain this method if type is WIDGET

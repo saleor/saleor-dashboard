@@ -7438,6 +7438,10 @@
     "context": "fulfillment status refunded",
     "string": "Refunded"
   },
+  "cxUBO1": {
+    "context": "empty home page description",
+    "string": "Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
+  },
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
@@ -7762,6 +7766,10 @@
   "fS2rip": {
     "context": "tooltip for taxes amount",
     "string": "Tax amount"
+  },
+  "fTLvHX": {
+    "context": "empty home page title",
+    "string": "Welcome"
   },
   "fU+a9k": {
     "context": "date attribute type",
@@ -9808,6 +9816,10 @@
   },
   "qkUBLC": {
     "string": "See logs"
+  },
+  "qkaF5G": {
+    "context": "Label of the home page tab grouping non-fullscreen widget extensions",
+    "string": "Widgets"
   },
   "qkt/Km": {
     "context": "bulk delete label",

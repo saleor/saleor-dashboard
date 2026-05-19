@@ -12,10 +12,16 @@ const widgetTargetOptionsSchema = z.object({
   method: httpMethodSchema.optional().nullable(),
 });
 
+const homeWidgetTargetOptionsSchema = z.object({
+  method: z.enum(["GET", "POST"], { message: "Method must be either GET or POST" }).default("POST"),
+  fullscreen: z.boolean().default(false),
+});
+
 export const appExtensionManifestOptionsSchema = z
   .object({
     newTabTarget: newTabTargetOptionsSchema.optional().nullable(),
     widgetTarget: widgetTargetOptionsSchema.optional().nullable(),
+    homeWidgetTarget: homeWidgetTargetOptionsSchema.optional().nullable(),
   })
   .refine(
     data => {
@@ -24,6 +30,18 @@ export const appExtensionManifestOptionsSchema = z
     },
     {
       message: "Only one of 'newTabTarget' or 'widgetTarget' can be set.",
+    },
+  )
+  .refine(
+    data => {
+      if (data.homeWidgetTarget && (data.newTabTarget || data.widgetTarget)) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "When 'homeWidgetTarget' is set, 'newTabTarget' and 'widgetTarget' cannot be set.",
     },
   );
 
