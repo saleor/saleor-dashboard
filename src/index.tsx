@@ -13,7 +13,6 @@ import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
-import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
@@ -54,6 +53,7 @@ import { NotFound } from "./NotFound";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
+import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext";
 
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));
@@ -85,6 +85,7 @@ const TranslationsSection = lazy(() => import("./translations"));
 const WarehouseSection = lazy(() => import("./warehouses"));
 const ConfigurationSection = lazy(() => import("./configuration"));
 const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
+const HomePage = lazy(() => import("./home/HomePage").then(m => ({ default: m.HomePage })));
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
 );
@@ -191,6 +192,9 @@ const Routes = () => {
                 <Switch>
                   {legacyRedirects}
                   <SectionRoute exact path="/" component={WelcomePage} />
+                  <SectionRoute exact path="/home" component={HomePage} />
+                  <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
+                  <SectionRoute exact path="/home/widgets" component={HomePage} />
                   <SectionRoute
                     permissions={[
                       PermissionEnum.MANAGE_PRODUCTS,

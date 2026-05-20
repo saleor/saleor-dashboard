@@ -1,7 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
+import { APP_VERSION } from "@dashboard/config";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import { IframePost } from "@dashboard/extensions/components/IframePost/IframePost";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
@@ -10,9 +11,9 @@ import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/e
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useIntl } from "react-intl";
 
 type AppWidgetsProps = {
@@ -20,95 +21,8 @@ type AppWidgetsProps = {
   params: AppDetailsUrlMountQueryParams;
 };
 
-const hiddenStyle = { visibility: "hidden" } as const;
-
 // TODO We will add size negotiations after render
 const defaultIframeSize = 200;
-
-/**
- * Renders a form and iframe, the form is automatically submitted with POST action and <iframe> content is replaced
- */
-const IframePost = ({
-  extensionId,
-  extensionUrl,
-  appId,
-  accessToken,
-  params,
-}: {
-  extensionUrl: string;
-  extensionId: string;
-  accessToken: string;
-  appId: string;
-  params?: AppDetailsUrlMountQueryParams;
-}) => {
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const iframeRef = useRef<HTMLFormElement | null>(null);
-  const loadingRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (formRef.current) {
-      formRef.current.submit();
-    }
-
-    if (iframeRef.current && loadingRef.current) {
-      const iframe = iframeRef.current;
-      const loading = loadingRef.current;
-
-      const onload = () => {
-        if (loading) {
-          loading.style.display = "none";
-        }
-
-        if (iframe) {
-          iframe.style.visibility = "visible";
-        }
-      };
-
-      iframe.addEventListener("load", onload);
-
-      return () => {
-        if (iframe) {
-          iframe.removeEventListener("load", onload);
-        }
-      };
-    }
-  }, []);
-
-  /**
-   * This form is rendered locally, but somewhere above there is another form. Since this is hidden, it is not visible to the user,
-   * but under the hood browser is changing the DOM
-   *
-   * TODO: We should either render form in JS directly in <body> directly or change the tree
-   */
-  return (
-    <Box>
-      <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
-        <input type="hidden" name="saleorApiUrl" value={getAbsoluteApiUrl()} />
-        <input type="hidden" name="accessToken" value={accessToken} />
-        <input type="hidden" name="appId" value={appId} />
-        <>
-          {params &&
-            Object.entries(params).map(([key, value]) => (
-              <input type="hidden" key={key} name={key} value={value} />
-            ))}
-        </>
-      </form>
-      <Box ref={loadingRef} width={"100%"} __height={defaultIframeSize}>
-        <Skeleton __height={defaultIframeSize} />
-      </Box>
-      <Box
-        style={hiddenStyle}
-        ref={iframeRef}
-        as="iframe"
-        borderWidth={0}
-        __height={defaultIframeSize}
-        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
-        name={`ext-frame-${extensionId}`}
-        width={"100%"}
-      />
-    </Box>
-  );
-};
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const navigate = useNavigator();

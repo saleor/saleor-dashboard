@@ -45,6 +45,7 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
+      SALEOR_CLOUD_APP_DOMAIN: saleor.app
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}

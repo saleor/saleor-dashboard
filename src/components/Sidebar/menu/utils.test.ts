@@ -41,6 +41,7 @@ describe("mapToExtensionsItems", () => {
     mountName: "NAVIGATION_CATALOG",
     targetName: "APP_PAGE",
     settings: {},
+    isSaleorOfficial: false,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -240,6 +241,7 @@ describe("getMenuItemExtension", () => {
     mountName: "NAVIGATION_CATALOG",
     settings: {},
     targetName: "POPUP",
+    isSaleorOfficial: false,
   };
 
   const mockExtension: Extension = {
@@ -301,6 +303,7 @@ describe("getMenuItemExtension", () => {
     DRAFT_ORDER_DETAILS_WIDGETS: [],
     GIFT_CARD_DETAILS_WIDGETS: [],
     TRANSLATIONS_MORE_ACTIONS: [],
+    HOMEPAGE_WIDGETS: [],
   };
 
   const emptyExtensionsRecord: Record<AllAppExtensionMounts, Extension[]> = {
@@ -354,6 +357,7 @@ describe("getMenuItemExtension", () => {
     DRAFT_ORDER_DETAILS_WIDGETS: [],
     GIFT_CARD_DETAILS_WIDGETS: [],
     TRANSLATIONS_MORE_ACTIONS: [],
+    HOMEPAGE_WIDGETS: [],
   };
 
   it("should return the corresponding Extension object when a menu item ID represents a registered extension", () => {

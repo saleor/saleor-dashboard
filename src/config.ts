@@ -32,6 +32,9 @@ export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.orig
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
+export const getSaleorCloudAppDomain = (): string | null =>
+  window?.__SALEOR_CONFIG__?.SALEOR_CLOUD_APP_DOMAIN || null;
+
 export const getExtensionsConfig = () => ({
   extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,
 });

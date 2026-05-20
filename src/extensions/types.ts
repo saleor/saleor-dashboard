@@ -83,6 +83,12 @@ export interface Extension {
   open: () => void;
   targetName: AppExtensionManifestTarget;
   settings: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["settings"];
+  /**
+   * True when the extension's resolved URL is hosted under the configured Saleor
+   * Cloud app domain (SALEOR_CLOUD_APP_DOMAIN). Resolved at the time the
+   * extension is mapped from the GraphQL response.
+   */
+  isSaleorOfficial: boolean;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {

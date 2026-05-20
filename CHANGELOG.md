@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.5
+
+### Patch Changes
+
+- [#6542](https://github.com/saleor/saleor-dashboard/pull/6542) [`d4808cc`](https://github.com/saleor/saleor-dashboard/commit/d4808cc130c7a5d132e23a04c656fae222a38129) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dashboard now validates the manifest and prevents `MANAGE_APPS` from being granted for apps (both app creation and installation from a manifest)
+
+- [#6565](https://github.com/saleor/saleor-dashboard/pull/6565) [`845a104`](https://github.com/saleor/saleor-dashboard/commit/845a10414c17b84c35c69d5c7808587cc0031b03) Thanks [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123)! - Fixed `appBridge` redirects to treat different ports on the same domain as different origins (for example `localhost:3000` vs `localhost:8000`).
+
+- [#6552](https://github.com/saleor/saleor-dashboard/pull/6552) [`d0f499c`](https://github.com/saleor/saleor-dashboard/commit/d0f499c017ab4feb65964681de5b6c94d25bc96f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed crashes and blank screens when third-party apps are installed without an `appUrl`. Apps that contribute only background functionality (webhooks) or extensions now show a manage screen with a clear "no configuration screen" notice instead of failing.
+
+- [#6559](https://github.com/saleor/saleor-dashboard/pull/6559) [`69e04cb`](https://github.com/saleor/saleor-dashboard/commit/69e04cb5780bf768294182ca7721efbd0b433cdc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed Rich Text Editor in dark mode - now tex selection and toolbar is readable
+
+- [#6567](https://github.com/saleor/saleor-dashboard/pull/6567) [`d477db8`](https://github.com/saleor/saleor-dashboard/commit/d477db802c323e443f317ed826e1ad18b0a2d3fe) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Rewrite NewPasswordPage to new MacawUI and modern form solution.
+
 ## 3.23.4
 
 ### Patch Changes

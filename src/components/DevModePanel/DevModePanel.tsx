@@ -25,7 +25,7 @@ export const DevModePanel = () => {
 
     const baseFetcher = getFetcher(opts);
 
-    const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
+    const result = await baseFetcher(graphQLParams, opts);
 
     return result;
   };
