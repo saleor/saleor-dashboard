@@ -135,6 +135,7 @@ jobs:
         env:
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
           EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
+          SALEOR_CLOUD_APP_DOMAIN: saleor.app
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
