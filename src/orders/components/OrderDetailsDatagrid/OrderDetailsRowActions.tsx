@@ -25,14 +25,12 @@ export const OrderDetailsRowActions = ({
   const classes = useStyles({ showMetadataButton: true });
   const firstMenuItem = menuItems[0];
 
-  const hasSecondButton = Boolean(firstMenuItem?.Icon);
-
   return (
     <div
       className={classes.rowAction}
       style={{
         boxShadow: rightColumnBoxShadow,
-        gridTemplateColumns: hasSecondButton ? "1fr auto 1fr" : "1fr",
+        gridTemplateColumns: firstMenuItem?.Icon ? "1fr auto 1fr" : "1fr",
       }}
     >
       <IconButton

@@ -677,6 +677,9 @@
     "context": "Transaction card title",
     "string": "Transaction"
   },
+  "1wcKdb": {
+    "string": "This app contributes only background functionality (webhooks) or UI extensions. There is no configuration page to open from the dashboard."
+  },
   "1wyZpQ": {
     "string": "These passwords are too similar"
   },
@@ -1641,6 +1644,10 @@
     "context": "empty state message",
     "string": "No transactions made for this order."
   },
+  "7QbJek": {
+    "context": "title of the line price waterfall modal",
+    "string": "Price breakdown"
+  },
   "7QhDjU": {
     "context": "Health check subtitle when product cannot be purchased",
     "string": "Check the issues above to fix configuration"
@@ -2591,6 +2598,10 @@
   "Cm2/+V": {
     "string": "Read the docs"
   },
+  "Cm56Lp": {
+    "context": "ending row of the price waterfall",
+    "string": "Final line total"
+  },
   "Cmu1M8": {
     "context": "Product cannot be purchased by customers",
     "string": "Not purchasable"
@@ -2625,6 +2636,10 @@
   "D0KaT6": {
     "context": "webhook input label",
     "string": "Webhook Name"
+  },
+  "D1rO7x": {
+    "context": "tooltip for a clickable voucher name in the line price breakdown that opens the voucher detail page",
+    "string": "Open voucher"
   },
   "D2qihU": {
     "string": "Permission is invalid"
@@ -2694,6 +2709,10 @@
   "DNTxWr": {
     "context": "permission groups section name",
     "string": "Permission Groups"
+  },
+  "DNj7OQ": {
+    "context": "abbreviated quantity label inside the line price breakdown modal subtitle (compact context)",
+    "string": "Qty"
   },
   "DO8+uV": {
     "string": "Product created"
@@ -4446,10 +4465,6 @@
     "context": "customer details, header",
     "string": "{fullName} Details"
   },
-  "MtBjgE": {
-    "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
-    "string": "A manual discount below will replace the existing one."
-  },
   "MwfSVA": {
     "context": "input helper text",
     "string": "Customers can not add quantities to a single cart above the limit when value is provided."
@@ -4537,6 +4552,10 @@
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
+  },
+  "NLnLoj": {
+    "context": "voucher code label appended to a voucher factor",
+    "string": "Code: {code}"
   },
   "NLybdq": {
     "context": "voucher channel",
@@ -4771,6 +4790,10 @@
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
   },
+  "ObDPaz": {
+    "context": "starting row of the price waterfall",
+    "string": "Original price ({quantity, plural, one {# unit} other {# units}})"
+  },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
   },
@@ -4979,6 +5002,10 @@
   "PeMebc": {
     "context": "search section name",
     "string": "Search"
+  },
+  "PhXtJy": {
+    "context": "factor label for line-level voucher discount",
+    "string": "Voucher (line)"
   },
   "PiSXjb": {
     "context": "check to require numeric attribute unit",
@@ -5278,6 +5305,10 @@
   },
   "RKHBh0": {
     "string": "What's New"
+  },
+  "RKd8NI": {
+    "context": "warning shown on a line waterfall",
+    "string": "A manual line discount coexists with an automatic one. Manual takes precedence."
   },
   "RLTaAR": {
     "context": "order history message",
@@ -7443,6 +7474,10 @@
     "context": "fulfillment status refunded",
     "string": "Refunded"
   },
+  "cxUBO1": {
+    "context": "empty home page description",
+    "string": "Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
+  },
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
@@ -7546,6 +7581,10 @@
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
+  },
+  "drEC/t": {
+    "context": "factor label for order promotion propagated to a line",
+    "string": "Order promotion (line share)"
   },
   "dsJ+Wv": {
     "context": "note on export gift cards",
@@ -7767,6 +7806,10 @@
   "fS2rip": {
     "context": "tooltip for taxes amount",
     "string": "Tax amount"
+  },
+  "fTLvHX": {
+    "context": "empty home page title",
+    "string": "Welcome"
   },
   "fU+a9k": {
     "context": "date attribute type",
@@ -8177,6 +8220,10 @@
     "context": "money",
     "string": "to {money}"
   },
+  "hqSdxB": {
+    "context": "factor label for manual line discount",
+    "string": "Manual line discount"
+  },
   "hqVMLQ": {
     "context": "button",
     "string": "Send"
@@ -8275,6 +8322,10 @@
   "iK8hZU": {
     "context": "activate app",
     "string": "Are you sure you want to activate this extension? Activating will start gathering events."
+  },
+  "iKWz5z": {
+    "context": "SKU label inside the line price breakdown modal subtitle",
+    "string": "SKU"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -8686,6 +8737,9 @@
     "context": "product updated at",
     "string": "Last updated"
   },
+  "kVZfHj": {
+    "string": "App does not include a configuration screen"
+  },
   "kWuOqa": {
     "context": "badge for variant that already exists",
     "string": "Exists"
@@ -8920,6 +8974,10 @@
   "lfXze9": {
     "string": "Delete vouchers"
   },
+  "lff45n": {
+    "context": "factor label for an unattributed line-level adjustment that the dashboard could not match to any specific discount record",
+    "string": "Other adjustment"
+  },
   "lgateT": {
     "context": "Warning when no stock in channel warehouses",
     "string": "No stock in warehouses for \"{channelName}\""
@@ -8965,6 +9023,10 @@
   "lrq8O6": {
     "context": "order refund amount, input label",
     "string": "Amount"
+  },
+  "lsPIVu": {
+    "context": "factor label when multiple order-level discounts contributed to a line; the per-record split is not stored by Saleor so we show the combined slice with the contributing records named below",
+    "string": "Order-level discounts (combined)"
   },
   "ltSmln": {
     "string": "Shipping zone deleted"
@@ -9096,6 +9158,10 @@
   },
   "mr9jbO": {
     "string": "Preferred Language"
+  },
+  "mrPzXs": {
+    "context": "factor label for catalogue promotion / sale",
+    "string": "Catalogue promotion"
   },
   "msbMCT": {
     "context": "Error when no variant is in channel",
@@ -9663,6 +9729,10 @@
   "qACBaj": {
     "string": "An unexpected error occurred. ({errorCode})"
   },
+  "qBTz2h": {
+    "context": "factor label for manual order discount propagated to a line",
+    "string": "Manual order discount (line share)"
+  },
   "qC6HKe": {
     "string": "Discount created"
   },
@@ -9811,6 +9881,10 @@
   "qkUBLC": {
     "string": "See logs"
   },
+  "qkaF5G": {
+    "context": "Label of the home page tab grouping non-fullscreen widget extensions",
+    "string": "Widgets"
+  },
   "qkt/Km": {
     "context": "bulk delete label",
     "string": "Delete"
@@ -9957,6 +10031,10 @@
   "ri3kK9": {
     "context": "order placement date",
     "string": "Date"
+  },
+  "rj9PBV": {
+    "context": "caption introducing the list of records that contributed to a combined order-level factor",
+    "string": "Includes:"
   },
   "rjy9/k": {
     "context": "button",
@@ -10375,6 +10453,10 @@
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
   },
+  "u2zyiB": {
+    "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
+    "string": "A manual amount below replaces that automatic discount—the strikethrough price on the line will update to match."
+  },
   "u34css": {
     "context": "label for empty list in channels list",
     "string": "There are no exceptions for this channel"
@@ -10398,6 +10480,10 @@
   "u7ShY+": {
     "context": "pill status for overcaptured outcome",
     "string": "Overcaptured"
+  },
+  "u7eNv3": {
+    "context": "factor label for a free-gift order line granted by an ORDER_PROMOTION rule (line.isGift = true on the backend)",
+    "string": "Free gift"
   },
   "u9/vj9": {
     "context": "webhook input label",
@@ -11180,6 +11266,14 @@
   "xy66ru": {
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
+  },
+  "y+718D": {
+    "context": "factor label for whole-order voucher propagated to a line",
+    "string": "Voucher (order, line share)"
+  },
+  "y+XIPY": {
+    "context": "validation error",
+    "string": "Password is required"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"

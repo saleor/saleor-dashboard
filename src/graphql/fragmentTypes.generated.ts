@@ -83,6 +83,7 @@
       "CollectionMetadataUpdated",
       "CollectionUpdated",
       "CustomerCreated",
+      "CustomerDeleted",
       "CustomerMetadataUpdated",
       "CustomerUpdated",
       "DraftOrderCreated",

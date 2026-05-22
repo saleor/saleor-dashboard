@@ -217,6 +217,69 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
     expect(app?.criticalProblemCount).toBe(1); // 1 critical
   });
 
+  it("active third-party with appUrl resolves to view URL", () => {
+    // Arrange
+    (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "with-app-url",
+                name: "App with URL",
+                isActive: true,
+                type: "THIRDPARTY",
+                appUrl: "https://example.com",
+                problems: [],
+              },
+            },
+          ],
+        },
+      },
+      refetch: jest.fn(),
+    });
+
+    // Act
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    const app = result.current.installedExtensions.find(ext => ext.id === "with-app-url");
+
+    expect(app?.href).toContain("/extensions/app/with-app-url");
+    expect(app?.href).not.toContain("/edit");
+  });
+
+  it("active third-party without appUrl falls back to manage URL", () => {
+    // Arrange
+    (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({
+      data: {
+        apps: {
+          edges: [
+            {
+              node: {
+                id: "no-app-url",
+                name: "No URL App",
+                isActive: true,
+                type: "THIRDPARTY",
+                appUrl: null,
+                problems: [],
+              },
+            },
+          ],
+        },
+      },
+      refetch: jest.fn(),
+    });
+
+    // Act
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    const app = result.current.installedExtensions.find(ext => ext.id === "no-app-url");
+
+    expect(app?.href).toContain("/extensions/app/no-app-url/edit");
+  });
+
   it("should aggregate totalCount and criticalCount across all apps", () => {
     // Arrange
     (useInstalledAppsListQuery as jest.Mock).mockReturnValueOnce({

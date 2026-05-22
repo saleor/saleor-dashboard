@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.23.5
+
+### Patch Changes
+
+- [#6542](https://github.com/saleor/saleor-dashboard/pull/6542) [`d4808cc`](https://github.com/saleor/saleor-dashboard/commit/d4808cc130c7a5d132e23a04c656fae222a38129) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dashboard now validates the manifest and prevents `MANAGE_APPS` from being granted for apps (both app creation and installation from a manifest)
+
+- [#6565](https://github.com/saleor/saleor-dashboard/pull/6565) [`845a104`](https://github.com/saleor/saleor-dashboard/commit/845a10414c17b84c35c69d5c7808587cc0031b03) Thanks [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123)! - Fixed `appBridge` redirects to treat different ports on the same domain as different origins (for example `localhost:3000` vs `localhost:8000`).
+
+- [#6552](https://github.com/saleor/saleor-dashboard/pull/6552) [`d0f499c`](https://github.com/saleor/saleor-dashboard/commit/d0f499c017ab4feb65964681de5b6c94d25bc96f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed crashes and blank screens when third-party apps are installed without an `appUrl`. Apps that contribute only background functionality (webhooks) or extensions now show a manage screen with a clear "no configuration screen" notice instead of failing.
+
+- [#6559](https://github.com/saleor/saleor-dashboard/pull/6559) [`69e04cb`](https://github.com/saleor/saleor-dashboard/commit/69e04cb5780bf768294182ca7721efbd0b433cdc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed Rich Text Editor in dark mode - now tex selection and toolbar is readable
+
+- [#6567](https://github.com/saleor/saleor-dashboard/pull/6567) [`d477db8`](https://github.com/saleor/saleor-dashboard/commit/d477db802c323e443f317ed826e1ad18b0a2d3fe) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Rewrite NewPasswordPage to new MacawUI and modern form solution.
+
+## 3.23.4
+
+### Patch Changes
+
+- [#6549](https://github.com/saleor/saleor-dashboard/pull/6549) [`53474a0`](https://github.com/saleor/saleor-dashboard/commit/53474a00566363d6164023201a70fb32aa2f7b19) Thanks [@mirekm](https://github.com/mirekm)! - Webhook event picker: warn admins about Saleor 3.23 channel-scoped stock events.
+
+  The four `PRODUCT_VARIANT_BACK_IN_STOCK_*` / `PRODUCT_VARIANT_OUT_OF_STOCK_*` events introduced in Saleor 3.23 fire only when the shop has the legacy shipping-zone stock-availability setting disabled. They were already exposed in the picker (auto-derived from the schema), but admins on shops still in legacy mode could subscribe with no visual cue and silently never receive deliveries. Each of those four events now shows an advisory "Direct stock mode only" badge with a tooltip linking to the site-settings page where the flag is configured. Adds a regression test pinning the four events to the `PRODUCT_VARIANT` group, and a comment in `ExcludedDocumentKeys` documenting that the dry-run feature already covers them transitively via prefix matching.
+
+- [#6546](https://github.com/saleor/saleor-dashboard/pull/6546) [`c305dd4`](https://github.com/saleor/saleor-dashboard/commit/c305dd4b93494312b2c60cfc26091ffda22a2153) Thanks [@mirekm](https://github.com/mirekm)! - ProductDoctor: Add mode-aware reassurance under public-API verification badge and tighten ambiguous diagnostic copy
+
+- [#6557](https://github.com/saleor/saleor-dashboard/pull/6557) [`6589b54`](https://github.com/saleor/saleor-dashboard/commit/6589b54bc9a746d083da3185c9abe51ce0254122) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed deprecated @reach/auto-id dependency and replaced it with built-in React useId hook. This is purely technical change.
+
+- [#6547](https://github.com/saleor/saleor-dashboard/pull/6547) [`764b4f9`](https://github.com/saleor/saleor-dashboard/commit/764b4f9f11ba2d87d82b6c35a97e9ebfc8bf68ce) Thanks [@mirekm](https://github.com/mirekm)! - ProductDoctor: Group channel issues by purchasability vs shipping to mirror Saleor 3.23 stock-availability semantics
+
+- [#6545](https://github.com/saleor/saleor-dashboard/pull/6545) [`029f589`](https://github.com/saleor/saleor-dashboard/commit/029f589c0d10e3afd5e4879b862019e2868e3bad) Thanks [@mirekm](https://github.com/mirekm)! - ProductDoctor: Add support for new availability mode introduced in Saleor 3.23
+
 ## 3.23.3
 
 ### Patch Changes

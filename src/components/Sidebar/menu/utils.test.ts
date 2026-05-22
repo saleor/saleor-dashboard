@@ -41,6 +41,7 @@ describe("mapToExtensionsItems", () => {
     mountName: "NAVIGATION_CATALOG",
     targetName: "APP_PAGE",
     settings: {},
+    isSaleorOfficial: false,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -67,6 +68,32 @@ describe("mapToExtensionsItems", () => {
       mockExtension.app.appUrl,
       mockExtension.app.id,
     );
+  });
+
+  // Absolute extension URLs point to a different origin, so they can't be expressed as a
+  // dashboard route like `/extensions/app/{id}/...`. The menu item still renders and is
+  // launched via `onClick: open` (which opens the iframe / new tab) — `url` only feeds
+  // route matching, which doesn't apply here.
+  it("returns undefined url for extensions with absolute URL", () => {
+    const absoluteExtension: Extension = {
+      ...mockExtension,
+      url: "https://other.example.com/page",
+    };
+    const result = mapToExtensionsItems([absoluteExtension], mockHeader);
+
+    expect(result[1].url).toBeUndefined();
+    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
+  });
+
+  it("returns undefined url when app.appUrl is missing", () => {
+    const extensionWithoutAppUrl: Extension = {
+      ...mockExtension,
+      app: { ...mockApp, appUrl: null },
+    };
+    const result = mapToExtensionsItems([extensionWithoutAppUrl], mockHeader);
+
+    expect(result[1].url).toBeUndefined();
+    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
   });
 
   it("should return no menu items ", () => {
@@ -214,6 +241,7 @@ describe("getMenuItemExtension", () => {
     mountName: "NAVIGATION_CATALOG",
     settings: {},
     targetName: "POPUP",
+    isSaleorOfficial: false,
   };
 
   const mockExtension: Extension = {
@@ -275,6 +303,7 @@ describe("getMenuItemExtension", () => {
     DRAFT_ORDER_DETAILS_WIDGETS: [],
     GIFT_CARD_DETAILS_WIDGETS: [],
     TRANSLATIONS_MORE_ACTIONS: [],
+    HOMEPAGE_WIDGETS: [],
   };
 
   const emptyExtensionsRecord: Record<AllAppExtensionMounts, Extension[]> = {
@@ -328,6 +357,7 @@ describe("getMenuItemExtension", () => {
     DRAFT_ORDER_DETAILS_WIDGETS: [],
     GIFT_CARD_DETAILS_WIDGETS: [],
     TRANSLATIONS_MORE_ACTIONS: [],
+    HOMEPAGE_WIDGETS: [],
   };
 
   it("should return the corresponding Extension object when a menu item ID represents a registered extension", () => {

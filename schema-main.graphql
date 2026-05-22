@@ -20778,6 +20778,22 @@ type Mutation {
   ): CheckoutCustomerNoteUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [])
 
   """
+  Deletes a checkout.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_CHECKOUTS.
+  """
+  checkoutDelete(
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.23.
+    """
+    id: ID!
+  ): CheckoutDelete @doc(category: "Checkout")
+
+  """
   Updates email address in the existing checkout object.
   
   Triggers the following webhook events:
@@ -30792,6 +30808,30 @@ type CheckoutCustomerNoteUpdate @doc(category: "Checkout") @webhookEventsInfo(as
 }
 
 """
+Deletes a checkout.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_CHECKOUTS.
+"""
+type CheckoutDelete @doc(category: "Checkout") {
+  errors: [CheckoutDeleteError!]!
+}
+
+type CheckoutDeleteError @doc(category: "Checkout") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: CheckoutErrorCode!
+}
+
+"""
 Updates email address in the existing checkout object.
 
 Triggers the following webhook events:
@@ -36169,6 +36209,28 @@ type CustomerCreated implements Event @doc(category: "Users") {
 
 """Event sent when customer user is updated."""
 type CustomerUpdated implements Event @doc(category: "Users") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The user the event relates to."""
+  user: User
+}
+
+"""
+Event sent when customer user is deleted.
+
+Added in Saleor 3.23.
+"""
+type CustomerDeleted implements Event @doc(category: "Users") {
   """Time of the event."""
   issuedAt: DateTime
 

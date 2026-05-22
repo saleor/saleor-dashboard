@@ -23,6 +23,7 @@ declare interface Window {
     LOCALE_CODE?: string;
     EXTENSIONS_API_URL?: string;
     IS_CLOUD_INSTANCE?: string;
+    SALEOR_CLOUD_APP_DOMAIN?: string;
   };
 }
 

@@ -73,6 +73,32 @@ export const appExtensionManifest = z
     {
       message: `APP_PAGE type of extension must start with "/"`,
     },
+  )
+  .refine(
+    data => {
+      // homeWidgetTarget options can only be set when mount is HOMEPAGE_WIDGETS
+      if (data.options?.homeWidgetTarget && data.mountName !== "HOMEPAGE_WIDGETS") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "homeWidgetTarget options can only be set on HOMEPAGE_WIDGETS mount",
+    },
+  )
+  .refine(
+    data => {
+      // homeWidgetTarget options can only be set when target is WIDGET
+      if (data.options?.homeWidgetTarget && data.targetName !== "WIDGET") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "homeWidgetTarget options can only be set on WIDGET target",
+    },
   );
 
 export type AppExtensionManifest = z.infer<typeof appExtensionManifest>;

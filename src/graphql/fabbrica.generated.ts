@@ -231,6 +231,8 @@ import type {
   CheckoutCustomerAttach,
   CheckoutCustomerDetach,
   CheckoutCustomerNoteUpdate,
+  CheckoutDelete,
+  CheckoutDeleteError,
   CheckoutDeliveryMethodUpdate,
   CheckoutEmailUpdate,
   CheckoutError,
@@ -310,6 +312,7 @@ import type {
   CustomerCreate,
   CustomerCreated,
   CustomerDelete,
+  CustomerDeleted,
   CustomerEvent,
   CustomerFilterInput,
   CustomerInput,
@@ -7761,6 +7764,50 @@ export const defineCheckoutCustomerNoteUpdateFactory: DefineTypeFactoryInterface
 > = defineTypeFactory;
 
 /**
+ * Deletes a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CHECKOUTS.
+ */
+export type OptionalCheckoutDelete = {
+  __typename?: 'CheckoutDelete';
+  errors?: OptionalCheckoutDeleteError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutDelete} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutDeleteFactoryInterface}
+ */
+export const defineCheckoutDeleteFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutDelete,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCheckoutDeleteError = {
+  __typename?: 'CheckoutDeleteError';
+  /** The error code. */
+  code?: CheckoutDeleteError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CheckoutDeleteError['field'] | undefined;
+  /** The error message. */
+  message?: CheckoutDeleteError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CheckoutDeleteError} model.
+ *
+ * @param options
+ * @returns factory {@link CheckoutDeleteErrorFactoryInterface}
+ */
+export const defineCheckoutDeleteErrorFactory: DefineTypeFactoryInterface<
+  OptionalCheckoutDeleteError,
+  {}
+> = defineTypeFactory;
+
+/**
  * Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address.
  *
  * Triggers the following webhook events:
@@ -9871,6 +9918,36 @@ export const defineCustomerDeleteFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Event sent when customer user is deleted.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCustomerDeleted = {
+  __typename?: 'CustomerDeleted';
+  /** Time of the event. */
+  issuedAt?: CustomerDeleted['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** The user the event relates to. */
+  user?: Maybe<OptionalUser> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: CustomerDeleted['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerDeleted} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerDeletedFactoryInterface}
+ */
+export const defineCustomerDeletedFactory: DefineTypeFactoryInterface<
+  OptionalCustomerDeleted,
+  {}
+> = defineTypeFactory;
+
 /** History log of the customer. */
 export type OptionalCustomerEvent = {
   __typename?: 'CustomerEvent';
@@ -10907,7 +10984,7 @@ export const defineDraftOrderWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantBackInStockForClickAndCollect | OptionalProductVariantBackInStockInChannel | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantOutOfStockForClickAndCollect | OptionalProductVariantOutOfStockInChannel | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
+export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerDeleted | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantBackInStockForClickAndCollect | OptionalProductVariantBackInStockInChannel | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantOutOfStockForClickAndCollect | OptionalProductVariantOutOfStockInChannel | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
 
 /** Event delivery. */
 export type OptionalEventDelivery = {
@@ -15667,6 +15744,14 @@ export type OptionalMutation = {
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
   checkoutCustomerNoteUpdate?: Maybe<OptionalCheckoutCustomerNoteUpdate> | undefined;
+  /**
+ * Deletes a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CHECKOUTS.
+ */
+  checkoutDelete?: Maybe<OptionalCheckoutDelete> | undefined;
   /**
  * Updates the delivery method (shipping method or pick up point) of the checkout. Updates the checkout shipping_address for click and collect delivery for a warehouse address.
  *

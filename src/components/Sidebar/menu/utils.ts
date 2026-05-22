@@ -1,4 +1,4 @@
-// @ts-strict-ignore
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
@@ -6,13 +6,25 @@ import { matchPath } from "react-router";
 
 import { type SidebarMenuItem } from "./types";
 
+const resolveExtensionMenuUrl = (extension: Extension): string | undefined => {
+  if (isUrlAbsolute(extension.url) || !extension.app.appUrl) {
+    return undefined;
+  }
+
+  return ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(
+    extension.url,
+    extension.app.appUrl,
+    extension.app.id,
+  );
+};
+
 export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMenuItem) => {
-  const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({
-    id: `extension-${id}`,
-    label,
-    url: ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id),
-    permissions,
-    onClick: open,
+  const items: SidebarMenuItem[] = extensions.map(extension => ({
+    id: `extension-${extension.id}`,
+    label: extension.label,
+    url: resolveExtensionMenuUrl(extension),
+    permissions: extension.permissions,
+    onClick: extension.open,
     type: "item",
   }));
 
@@ -25,7 +37,7 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
 
 export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   const menuUrlsToCheck = [...(menuItem.matchUrls || []), menuItem.url]
-    .filter(Boolean)
+    .filter((item): item is string => Boolean(item))
     .map(item => item.split("?")[0]);
 
   if (menuUrlsToCheck.length === 0) {

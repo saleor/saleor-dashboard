@@ -20,13 +20,6 @@ const mockPendingInstallations = [
   { id: "pending1", name: "Pending App 1", manifestUrl: "pendingUrl1" },
 ];
 
-jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
-  useOnboarding: () => ({
-    markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
-    onboardingState: { stepsCompleted: [] },
-  }),
-}));
-
 jest.mock("@dashboard/utils/handlers/dialogActionHandlers", () => ({
   __esModule: true,
   default: () => [mockOpenModal, mockCloseModal],
@@ -57,6 +50,12 @@ jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", (
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: () => true,
   useFlags: () => ({}),
+}));
+
+jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () => ({
+  useOnboarding: () => ({
+    markOnboardingStepAsCompleted: mockMarkOnboardingStepAsCompleted,
+  }),
 }));
 
 const mockUsePendingInstallation = usePendingInstallation as jest.Mock;
