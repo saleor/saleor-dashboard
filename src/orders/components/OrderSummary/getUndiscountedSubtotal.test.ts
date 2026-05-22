@@ -17,6 +17,7 @@ const makeLine = ({
     __typename: "TaxedMoney",
     gross: { __typename: "Money", amount: grossTotal, currency },
     net: { __typename: "Money", amount: netTotal, currency },
+    tax: { __typename: "Money", amount: grossTotal - netTotal, currency },
   },
 });
 

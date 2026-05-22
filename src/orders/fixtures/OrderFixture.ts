@@ -175,6 +175,7 @@ export class OrderFixture {
     invoices: [],
     metadata: [],
     privateMetadata: [],
+    voucherCode: null,
   } satisfies Partial<OrderDetailsFragment>;
 
   private static address = {
@@ -248,6 +249,11 @@ export class OrderFixture {
           amount: 50,
           currency: "USD",
         },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
       },
       undiscountedUnitPrice: {
         __typename: "TaxedMoney",
@@ -262,6 +268,11 @@ export class OrderFixture {
           amount: 50,
           currency: "USD",
         },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
       },
       undiscountedTotalPrice: {
         __typename: "TaxedMoney",
@@ -273,6 +284,11 @@ export class OrderFixture {
         net: {
           __typename: "Money",
           amount: 100,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -313,13 +329,22 @@ export class OrderFixture {
           __typename: "Money",
           amount: 50,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
           amount: 50,
           currency: "USD",
         },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
       },
+      taxRate: 0,
+      voucherCode: null,
+      taxClass: null,
     },
   ] satisfies OrderDetailsFragment["lines"];
 
@@ -376,6 +401,12 @@ export class OrderFixture {
               __typename: "Money",
               amount: 0,
               currency: "",
+              fractionDigits: 2,
+            },
+            tax: {
+              __typename: "Money",
+              amount: 0,
+              currency: "USD",
             },
           },
           unitDiscount: {
@@ -396,6 +427,11 @@ export class OrderFixture {
               amount: 0,
               currency: "",
             },
+            tax: {
+              __typename: "Money",
+              amount: 0,
+              currency: "USD",
+            },
           },
           undiscountedTotalPrice: {
             __typename: "TaxedMoney",
@@ -408,6 +444,11 @@ export class OrderFixture {
               __typename: "Money",
               amount: 0,
               currency: "",
+            },
+            tax: {
+              __typename: "Money",
+              amount: 0,
+              currency: "USD",
             },
           },
           unitPrice: {
@@ -422,12 +463,20 @@ export class OrderFixture {
               amount: 0,
               currency: "",
             },
+            tax: {
+              __typename: "Money",
+              amount: 0,
+              currency: "USD",
+            },
           },
           thumbnail: {
             __typename: "Image",
             url: "",
           },
           discounts: [],
+          taxRate: 0,
+          voucherCode: null,
+          taxClass: null,
         },
       },
     ],

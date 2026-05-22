@@ -7,6 +7,7 @@ import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
+import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
@@ -26,6 +27,7 @@ export const allRipples: Ripple[] = [
   rippleOrderMetadata,
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
+  rippleOrderLinePriceBreakdown,
 
   // Warehouses
   rippleWarehouseMetadata,

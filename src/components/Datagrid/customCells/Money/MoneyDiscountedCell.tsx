@@ -8,7 +8,6 @@ interface MoneyDiscountedCellProps {
   readonly currency: string;
   readonly undiscounted?: string | number;
   readonly value: number | string | null;
-  readonly lineItemId?: string;
   readonly locale: Locale;
 }
 
@@ -31,10 +30,11 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
       locale,
     );
     const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
+    const isDiscounted = undiscounted !== undefined && undiscounted !== value;
 
     drawPrice(ctx, theme, rect, formattedWithDiscount);
 
-    if (undiscounted !== undefined && undiscounted !== value) {
+    if (isDiscounted) {
       drawLineCrossedPrice(ctx, rect, formattedWithDiscount, formattedUndiscounted);
     }
 
