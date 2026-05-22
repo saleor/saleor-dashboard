@@ -13040,6 +13040,11 @@ export type GridWarehousesQueryVariables = Exact<{
 
 export type GridWarehousesQuery = { __typename: 'Query', selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
 
+export type StockVisibilityModeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type StockVisibilityModeQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean } };
+
 export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
