@@ -4,11 +4,13 @@ import {
   buttonCell,
   loadingCell,
   moneyCell,
+  moneyDiscountedCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type Locale } from "@dashboard/components/Locale";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
@@ -64,12 +66,42 @@ interface GetCellContentProps {
   data: OrderLineFragment[];
   loading: boolean;
   intl: IntlShape;
+  locale: Locale;
   onOrderLineShowMetadata: (id: string) => void;
+  /** When true, discounted price/total cells render with a pointer cursor
+   *  to signal that clicking them opens the per-line price breakdown modal. */
+  interactivePricing?: boolean;
 }
 
+const isLineDiscounted = (line: OrderLineFragment): boolean =>
+  line.unitPrice.gross.amount < line.undiscountedUnitPrice.gross.amount ||
+  (line.discounts?.length ?? 0) > 0;
+
+/** Columns whose discounted cells open the per-line price breakdown modal. */
+const PRICE_BREAKDOWN_COLUMN_IDS = ["price", "total"] as const;
+
+type PriceBreakdownColumnId = (typeof PRICE_BREAKDOWN_COLUMN_IDS)[number];
+
+export const isPriceBreakdownColumn = (
+  columnId: string | undefined,
+): columnId is PriceBreakdownColumnId =>
+  PRICE_BREAKDOWN_COLUMN_IDS.includes(columnId as PriceBreakdownColumnId);
+
 export const createGetCellContent =
-  ({ columns, data, loading, onOrderLineShowMetadata, intl }: GetCellContentProps) =>
+  ({
+    columns,
+    data,
+    loading,
+    onOrderLineShowMetadata,
+    intl,
+    locale,
+    interactivePricing,
+  }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
+    const discountedOpts: Partial<GridCell> = interactivePricing
+      ? { ...readonlyOptions, cursor: "pointer" }
+      : readonlyOptions;
+
     if (loading) {
       return loadingCell();
     }
@@ -90,7 +122,7 @@ export const createGetCellContent =
         return thumbnailCell(
           rowData?.productName ?? "",
           rowData.thumbnail?.url ?? "",
-          readonyOptions,
+          readonlyOptions,
         );
       case "sku":
         return readonlyTextCell(rowData.productSku ?? "", false);
@@ -99,17 +131,41 @@ export const createGetCellContent =
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "price":
+        if (isLineDiscounted(rowData)) {
+          return moneyDiscountedCell(
+            {
+              value: rowData.unitPrice.gross.amount,
+              currency: rowData.unitPrice.gross.currency,
+              undiscounted: rowData.undiscountedUnitPrice.gross.amount,
+              locale,
+            },
+            discountedOpts,
+          );
+        }
+
         return moneyCell(
           rowData.unitPrice.gross.amount,
           rowData.unitPrice.gross.currency,
-          readonyOptions,
+          readonlyOptions,
         );
 
       case "total":
+        if (isLineDiscounted(rowData)) {
+          return moneyDiscountedCell(
+            {
+              value: rowData.totalPrice.gross.amount,
+              currency: rowData.totalPrice.gross.currency,
+              undiscounted: rowData.undiscountedTotalPrice.gross.amount,
+              locale,
+            },
+            discountedOpts,
+          );
+        }
+
         return moneyCell(
           rowData.totalPrice.gross.amount,
           rowData.totalPrice.gross.currency,
-          readonyOptions,
+          readonlyOptions,
         );
       case "isGift":
         return booleanCell(rowData?.isGift, {
@@ -126,7 +182,9 @@ export const createGetCellContent =
     }
   };
 
-const readonyOptions: Partial<GridCell> = {
+export { isLineDiscounted };
+
+const readonlyOptions: Partial<GridCell> = {
   allowOverlay: false,
   readonly: true,
 };

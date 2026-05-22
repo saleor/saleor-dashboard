@@ -153,7 +153,7 @@ export const WithAutomaticPromotion: Story = {
     await expect(promotionName.tagName.toLowerCase()).toBe("span");
     await expect(dialog.getByText(/already discounted by/i)).toBeInTheDocument();
     await expect(
-      dialog.getByText("A manual discount below will replace the existing one."),
+      dialog.getByText(/A manual amount below replaces that automatic discount/i),
     ).toBeInTheDocument();
   },
 };

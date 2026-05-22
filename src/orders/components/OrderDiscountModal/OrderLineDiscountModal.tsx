@@ -18,8 +18,9 @@ const discountMessages = defineMessages({
     description: "helper text shown in line discount modal when automatic discount is applied",
   },
   helperSubtext: {
-    id: "MtBjgE",
-    defaultMessage: "A manual discount below will replace the existing one.",
+    id: "u2zyiB",
+    defaultMessage:
+      "A manual amount below replaces that automatic discount—the strikethrough price on the line will update to match.",
     description:
       "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
   },

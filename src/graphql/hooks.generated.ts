@@ -1568,6 +1568,13 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const MoneyWithFractionDigitsFragmentDoc = gql`
+    fragment MoneyWithFractionDigits on Money {
+  amount
+  currency
+  fractionDigits
+}
+    `;
 export const TaxedMoneyFragmentDoc = gql`
     fragment TaxedMoney on TaxedMoney {
   net {
@@ -1587,8 +1594,14 @@ export const OrderLineDiscountFragmentDoc = gql`
   valueType
   value
   reason
+  total {
+    ...Money
+  }
+  unit {
+    ...Money
+  }
 }
-    `;
+    ${MoneyFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1623,10 +1636,21 @@ export const OrderLineFragmentDoc = gql`
   quantityFulfilled
   quantityToFulfill
   totalPrice {
-    ...TaxedMoney
+    gross {
+      ...MoneyWithFractionDigits
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
   }
   undiscountedTotalPrice {
     ...TaxedMoney
+    tax {
+      ...Money
+    }
   }
   unitDiscount {
     amount
@@ -1645,6 +1669,10 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
   unitPrice {
     gross {
@@ -1655,7 +1683,17 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
+  taxRate
+  taxClass {
+    id
+    name
+  }
+  voucherCode
   thumbnail {
     url
   }
@@ -1664,6 +1702,8 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
+${MoneyWithFractionDigitsFragmentDoc}
+${MoneyFragmentDoc}
 ${TaxedMoneyFragmentDoc}
 ${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
@@ -1671,10 +1711,14 @@ export const OrderDiscountFragmentDoc = gql`
   id
   type
   name
+  translatedName
   calculationMode: valueType
   value
   reason
   amount {
+    ...Money
+  }
+  total {
     ...Money
   }
 }
@@ -2306,7 +2350,11 @@ export const OrderDetailsFragmentDoc = gql`
   userEmail
   voucher {
     id
+    name
+    code
+    type
   }
+  voucherCode
   shippingMethods {
     id
     name

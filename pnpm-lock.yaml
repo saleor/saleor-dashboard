@@ -78,9 +78,6 @@ importers:
       "@material-ui/core":
         specifier: ^4.12.4
         version: 4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      "@material-ui/lab":
-        specifier: 4.0.0-alpha.61
-        version: 4.0.0-alpha.61(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@material-ui/styles":
         specifier: ^4.11.5
         version: 4.11.5(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
