@@ -15,8 +15,8 @@ import { PspReference } from "./PspReference";
 
 interface EventItemProps {
   event: TransactionEventFragment | TransactionFakeEvent;
-  onHover: (pspReference: string) => void;
-  hoveredPspReference: string;
+  onHover: (pspReference: string | null) => void;
+  hoveredPspReference: string | null;
 }
 
 const useStyles = makeStyles(
