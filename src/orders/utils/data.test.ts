@@ -604,6 +604,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -719,6 +720,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -834,6 +836,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -954,6 +957,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -1074,6 +1078,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -1194,6 +1199,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -1314,6 +1320,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -1434,6 +1441,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -1683,6 +1691,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -1798,6 +1807,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -1913,6 +1923,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         unitDiscountType: null,
+        discounts: null,
         unitDiscountValue: 0,
         unitPrice: {
           gross: {
@@ -2033,6 +2044,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -2153,6 +2165,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -2273,6 +2286,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -2515,6 +2529,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -2635,6 +2650,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {
@@ -2755,6 +2771,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           unitDiscountType: null,
+          discounts: null,
           unitDiscountValue: 0,
           unitPrice: {
             gross: {

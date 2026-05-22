@@ -18,6 +18,7 @@ type BaseOrderValueProps = {
   shippingPrice: OrderLinesUpdateFragment["shippingPrice"];
   orderTotal: OrderLinesUpdateFragment["total"];
   discounts: OrderLinesUpdateFragment["discounts"];
+  lines: OrderLinesUpdateFragment["lines"];
   isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
   shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
   shippingMethod: OrderLinesUpdateFragment["shippingMethod"];
@@ -44,6 +45,7 @@ const baseProps: BaseOrderValueProps = {
     tax: { __typename: "Money", amount: 0, currency: "USD" },
   },
   discounts: [],
+  lines: [],
   isShippingRequired: true,
   shippingMethods: [],
   shippingMethod: null,
@@ -587,6 +589,292 @@ describe("OrderValue", () => {
       // Assert
       expect(screen.getByText("Taxes")).toBeInTheDocument();
       expect(screen.queryByText("(included)")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Specific-product voucher line", () => {
+    const buildLine = (
+      id: string,
+      lineDiscounts: NonNullable<OrderLinesUpdateFragment["lines"][number]["discounts"]>,
+    ): OrderLinesUpdateFragment["lines"][number] => ({
+      __typename: "OrderLine",
+      id,
+      isShippingRequired: false,
+      productName: `Product ${id}`,
+      productSku: null,
+      isGift: false,
+      quantity: 1,
+      quantityFulfilled: 0,
+      quantityToFulfill: 1,
+      unitDiscountValue: 0,
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      allocations: [],
+      variant: null,
+      totalPrice: {
+        __typename: "TaxedMoney",
+        net: { __typename: "Money", amount: 100, currency: "USD" },
+        gross: { __typename: "Money", amount: 100, currency: "USD" },
+      },
+      unitDiscount: { __typename: "Money", amount: 0, currency: "USD" },
+      discounts: lineDiscounts,
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: { __typename: "Money", amount: 100, currency: "USD" },
+        net: { __typename: "Money", amount: 100, currency: "USD" },
+      },
+      unitPrice: {
+        __typename: "TaxedMoney",
+        gross: { __typename: "Money", amount: 100, currency: "USD" },
+        net: { __typename: "Money", amount: 100, currency: "USD" },
+      },
+      thumbnail: null,
+    });
+
+    it("should render a voucher line when a line has a VOUCHER-type discount", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.VOUCHER,
+              name: "SAVE10",
+              total: { __typename: "Money" as const, amount: 10, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      const rows = screen.getAllByTestId("order-specific-product-voucher-line");
+
+      expect(rows).toHaveLength(1);
+      expect(screen.getByText("SAVE10")).toBeInTheDocument();
+      expect(screen.getByTitle("Voucher applied to specific products")).toBeInTheDocument();
+    });
+
+    it("should NOT render a voucher line when no line-level voucher discounts exist", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [buildLine("line-1", [])],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.queryByTestId("order-specific-product-voucher-line")).not.toBeInTheDocument();
+    });
+
+    it("should render both the ENTIRE_ORDER voucher row and a specific-product voucher row", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        discounts: [
+          {
+            __typename: "OrderDiscount" as const,
+            id: "discount-1",
+            name: "FREESHIP",
+            amount: { __typename: "Money" as const, amount: 15, currency: "USD" },
+            type: OrderDiscountType.VOUCHER,
+            calculationMode: DiscountValueTypeEnum.FIXED,
+            value: 15,
+            reason: null,
+          },
+        ],
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.VOUCHER,
+              name: "PRODUCT5",
+              total: { __typename: "Money" as const, amount: 5, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("FREESHIP")).toBeInTheDocument();
+      expect(screen.getByText("PRODUCT5")).toBeInTheDocument();
+      expect(screen.getAllByTestId("order-specific-product-voucher-line")).toHaveLength(1);
+    });
+
+    it("should aggregate amounts across lines that share the same voucher name", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.VOUCHER,
+              name: "SAVE10",
+              total: { __typename: "Money" as const, amount: 7, currency: "USD" },
+            },
+          ]),
+          buildLine("line-2", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-2",
+              type: OrderDiscountType.VOUCHER,
+              name: "SAVE10",
+              total: { __typename: "Money" as const, amount: 3, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      const rows = screen.getAllByTestId("order-specific-product-voucher-line");
+
+      expect(rows).toHaveLength(1);
+      expect(screen.getAllByText("SAVE10")).toHaveLength(1);
+
+      const amount = rows[0].querySelector('[data-test-id="amount"]');
+
+      expect(amount).toHaveTextContent("10");
+    });
+
+    it("should render distinct rows when lines use different voucher names", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.VOUCHER,
+              name: "SAVE10",
+              total: { __typename: "Money" as const, amount: 10, currency: "USD" },
+            },
+          ]),
+          buildLine("line-2", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-2",
+              type: OrderDiscountType.VOUCHER,
+              name: "WELCOME5",
+              total: { __typename: "Money" as const, amount: 5, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getAllByTestId("order-specific-product-voucher-line")).toHaveLength(2);
+      expect(screen.getByText("SAVE10")).toBeInTheDocument();
+      expect(screen.getByText("WELCOME5")).toBeInTheDocument();
+    });
+
+    it("should ignore non-VOUCHER line discounts (SALE, PROMOTION, MANUAL)", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.SALE,
+              name: "Summer Sale",
+              total: { __typename: "Money" as const, amount: 10, currency: "USD" },
+            },
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-2",
+              type: OrderDiscountType.PROMOTION,
+              name: "Buy 1 Get 1",
+              total: { __typename: "Money" as const, amount: 5, currency: "USD" },
+            },
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-3",
+              type: OrderDiscountType.MANUAL,
+              name: "Manual fix",
+              total: { __typename: "Money" as const, amount: 2, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.queryByTestId("order-specific-product-voucher-line")).not.toBeInTheDocument();
+    });
+
+    it("should fall back to a localized label when the voucher name is null", () => {
+      // Arrange
+      const props = {
+        ...baseProps,
+        lines: [
+          buildLine("line-1", [
+            {
+              __typename: "OrderLineDiscount" as const,
+              id: "ld-1",
+              type: OrderDiscountType.VOUCHER,
+              name: null,
+              total: { __typename: "Money" as const, amount: 4, currency: "USD" },
+            },
+          ]),
+        ],
+      };
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderValue {...props} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("Specific products")).toBeInTheDocument();
     });
   });
 });

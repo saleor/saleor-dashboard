@@ -1406,6 +1406,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             },
             unitDiscountReason: null,
             unitDiscountType: null,
+            discounts: null,
             unitDiscountValue: 0,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -1539,6 +1540,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             },
             unitDiscountReason: null,
             unitDiscountType: null,
+            discounts: null,
             unitDiscountValue: 0,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -1674,6 +1676,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       },
       unitDiscountReason: null,
       unitDiscountType: null,
+      discounts: null,
       unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -1785,6 +1788,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       },
       unitDiscountReason: null,
       unitDiscountType: null,
+      discounts: null,
       unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -2065,6 +2069,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       },
       unitDiscountReason: null,
       unitDiscountType: null,
+      discounts: null,
       unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney" as const,
@@ -2176,6 +2181,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       },
       unitDiscountReason: null,
       unitDiscountType: null,
+      discounts: null,
       unitDiscountValue: 0,
       unitPrice: {
         __typename: "TaxedMoney" as const,

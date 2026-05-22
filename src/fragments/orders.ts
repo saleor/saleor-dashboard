@@ -125,6 +125,14 @@ export const fragmentOrderLine = gql`
     unitDiscountValue
     unitDiscountReason
     unitDiscountType
+    discounts {
+      id
+      type
+      name
+      total {
+        ...Money
+      }
+    }
     undiscountedUnitPrice {
       currency
       gross {

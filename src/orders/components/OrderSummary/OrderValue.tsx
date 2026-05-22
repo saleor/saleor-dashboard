@@ -2,6 +2,7 @@ import { ButtonLink } from "@dashboard/components/ButtonLink";
 import {
   DiscountValueTypeEnum,
   type OrderDetailsFragment,
+  OrderDiscountType,
   type OrderErrorFragment,
   type OrderLinesUpdateFragment,
 } from "@dashboard/graphql";
@@ -96,6 +97,21 @@ const messages = defineMessages({
     defaultMessage: "Discount amount",
     description: "tooltip for discount amount",
   },
+  specificProductVoucher: {
+    id: "6I3ybj",
+    defaultMessage: "Product Specific Voucher",
+    description: "label for specific-product voucher discount line in order summary",
+  },
+  specificProductVoucherTitle: {
+    id: "z8pCrE",
+    defaultMessage: "Voucher applied to specific products",
+    description: "tooltip for specific-product voucher discount line",
+  },
+  specificProductVoucherFallbackName: {
+    id: "o3usYM",
+    defaultMessage: "Specific products",
+    description: "fallback name when a specific-product voucher has no name",
+  },
   giftCardTitle: {
     id: "ztsvOP",
     defaultMessage: "Gift card amount used",
@@ -115,6 +131,7 @@ type LineUpdateFields = {
   shippingPrice: OrderLinesUpdateFragment["shippingPrice"];
   orderTotal: OrderLinesUpdateFragment["total"];
   discounts: OrderLinesUpdateFragment["discounts"];
+  lines: OrderLinesUpdateFragment["lines"];
   isShippingRequired: OrderLinesUpdateFragment["isShippingRequired"];
   shippingMethods: OrderLinesUpdateFragment["shippingMethods"];
   // shippingMethod is reset to null when isShippingRequired becomes false
@@ -152,6 +169,47 @@ type ReadOnlyProps = {
 
 type Props = PropsWithBox<BaseProps & (EditableProps | ReadOnlyProps)>;
 
+type LineLevelVoucherSummary = {
+  name: string | null;
+  amount: number;
+};
+
+// Specific-product (and shipping) vouchers do NOT appear in order.discounts —
+// their effect lives on individual order lines (line.discounts of type VOUCHER).
+// Aggregate them per voucher name so the breakdown can show each one.
+const getLineLevelVoucherDiscounts = (
+  lines: OrderLinesUpdateFragment["lines"] | undefined | null,
+): LineLevelVoucherSummary[] => {
+  if (!lines?.length) {
+    return [];
+  }
+
+  const totals = new Map<string, LineLevelVoucherSummary>();
+
+  for (const line of lines) {
+    if (!line.discounts?.length) {
+      continue;
+    }
+
+    for (const discount of line.discounts) {
+      if (discount.type !== OrderDiscountType.VOUCHER) {
+        continue;
+      }
+
+      const key = discount.name ?? "";
+      const existing = totals.get(key);
+
+      if (existing) {
+        existing.amount += discount.total.amount;
+      } else {
+        totals.set(key, { name: discount.name, amount: discount.total.amount });
+      }
+    }
+  }
+
+  return Array.from(totals.values()).filter(entry => entry.amount > 0);
+};
+
 const getOrderDiscountLabel = (
   orderDiscount: OrderDiscountData | undefined,
   _currency: string,
@@ -179,6 +237,7 @@ export const OrderValue = (props: Props): ReactNode => {
     shippingPrice,
     orderTotal,
     discounts,
+    lines,
     giftCardsAmount,
     usedGiftCards,
     displayGrossPrices,
@@ -186,6 +245,7 @@ export const OrderValue = (props: Props): ReactNode => {
     ...restProps
   } = props;
   const intl = useIntl();
+  const specificProductVouchers = getLineLevelVoucherDiscounts(lines);
 
   const editableProps = isEditable ? (props as BaseProps & EditableProps) : null;
 
@@ -382,6 +442,32 @@ export const OrderValue = (props: Props): ReactNode => {
     );
   };
 
+  const renderSpecificProductVoucherRows = (): ReactNode => {
+    if (!specificProductVouchers.length) {
+      return null;
+    }
+
+    const amountTitle = intl.formatMessage(messages.specificProductVoucherTitle);
+    const fallbackName = intl.formatMessage(messages.specificProductVoucherFallbackName);
+
+    return specificProductVouchers.map((voucher, index) => (
+      <OrderSummaryListItem
+        key={`order-value-specific-product-voucher-${voucher.name ?? "unnamed"}-${index}`}
+        amount={voucher.amount}
+        amountTitle={amountTitle}
+        data-test-id="order-specific-product-voucher-line"
+      >
+        {intl.formatMessage(messages.specificProductVoucher)}{" "}
+        <Text as="span" color="default2">
+          {voucher.name ?? fallbackName}
+        </Text>{" "}
+        <Text color="default2" fontWeight="medium" size={3}>
+          (applied)
+        </Text>
+      </OrderSummaryListItem>
+    ));
+  };
+
   const { isEditable: _, ...boxProps } = restProps as any;
 
   return (
@@ -467,6 +553,8 @@ export const OrderValue = (props: Props): ReactNode => {
         </Box>
 
         {renderDiscountRow()}
+
+        {renderSpecificProductVoucherRows()}
 
         {displayGrossPrices && (
           <OrderSummaryListItem

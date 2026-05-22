@@ -47,6 +47,7 @@ const line = {
   unitDiscountValue: 0,
   unitDiscountReason: null,
   unitDiscountType: null,
+  discounts: null,
   undiscountedUnitPrice: {
     __typename: "TaxedMoney",
     currency: "PLN",
