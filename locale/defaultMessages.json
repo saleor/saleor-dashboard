@@ -851,10 +851,6 @@
     "context": "button",
     "string": "View all orders"
   },
-  "3+KwtP": {
-    "context": "VariantDetailsChannelsAvailabilityCard subtitle",
-    "string": "Available in {publishedInChannelsCount} out of {availableChannelsCount}"
-  },
   "3/IQO9": {
     "context": "extension install page, permissions section",
     "string": "Installing this extension will give it following permissions"
@@ -1505,6 +1501,10 @@
   "6cq+c+": {
     "context": "header",
     "string": "Discount Type"
+  },
+  "6cqHxE": {
+    "context": "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
+    "string": "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination."
   },
   "6fAGSm": {
     "context": "Product is not visible via public API",
@@ -2770,6 +2770,10 @@
     "context": "checkbox label",
     "string": "Restrict order value"
   },
+  "Dh6A6J": {
+    "context": "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop has the new (direct) warehouse-channel stock-availability mode enabled.",
+    "string": "Customers in a channel see this stock when the warehouse is assigned to that channel."
+  },
   "DhFqJF": {
     "string": "Edit discount"
   },
@@ -3601,6 +3605,10 @@
   "I+UwqI": {
     "context": "is filter range or value",
     "string": "equal to"
+  },
+  "I+czjk": {
+    "context": "VariantDetailsChannelsAvailabilityCard subtitle. Counts channel listings, not customer-facing availability or stock. Phrasing must not imply purchasability.",
+    "string": "Listed in {publishedInChannelsCount} of {availableChannelsCount} channels"
   },
   "I/y4IU": {
     "context": "alert message",

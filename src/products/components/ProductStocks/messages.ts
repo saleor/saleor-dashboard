@@ -131,4 +131,18 @@ export const messages = defineMessages({
     defaultMessage: "Assigning the stocks will be possible after the product is saved.",
     description: "variant stocks section subtitle",
   },
+  stockVisibilityHintDirect: {
+    id: "Dh6A6J",
+    defaultMessage:
+      "Customers in a channel see this stock when the warehouse is assigned to that channel.",
+    description:
+      "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop has the new (direct) warehouse-channel stock-availability mode enabled.",
+  },
+  stockVisibilityHintLegacy: {
+    id: "6cqHxE",
+    defaultMessage:
+      "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination.",
+    description:
+      "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
+  },
 });

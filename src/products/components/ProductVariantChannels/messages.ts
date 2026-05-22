@@ -7,9 +7,10 @@ export const variantDetailsChannelsAvailabilityCardMessages = defineMessages({
     description: "VariantDetailsChannelsAvailabilityCard title",
   },
   subtitle: {
-    id: "3+KwtP",
-    defaultMessage: "Available in {publishedInChannelsCount} out of {availableChannelsCount}",
-    description: "VariantDetailsChannelsAvailabilityCard subtitle",
+    id: "I+czjk",
+    defaultMessage: "Listed in {publishedInChannelsCount} of {availableChannelsCount} channels",
+    description:
+      "VariantDetailsChannelsAvailabilityCard subtitle. Counts channel listings, not customer-facing availability or stock. Phrasing must not imply purchasability.",
   },
   itemSubtitlePublished: {
     id: "0ReyKr",
