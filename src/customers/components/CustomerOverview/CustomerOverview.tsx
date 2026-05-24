@@ -141,9 +141,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                   icon={<Banknote size={ICON_SIZE} />}
                   title={
                     <FormattedMessage
-                      defaultMessage="Spent in recent orders"
+                      defaultMessage="Recent spend"
                       description="customer overview stat label: sum of recent orders"
-                      id="xrUNmL"
+                      id="ey2Sft"
                     />
                   }
                   value={renderMoneyValue(bucket.spent)}

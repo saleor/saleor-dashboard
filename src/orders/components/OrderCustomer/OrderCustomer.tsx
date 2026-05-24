@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import { type AddressType } from "@dashboard/customers/types";
 import { customerUrl } from "@dashboard/customers/urls";
 import {
   type OrderDetailsFragment,
@@ -46,21 +46,6 @@ interface OrderCustomerProps extends Partial<FetchMoreProps> {
   onBillingAddressEdit?: () => void;
   onShippingAddressEdit?: () => void;
 }
-
-const formatAddressForClipboard = (address: AddressType): string => {
-  const lines = [
-    [address.firstName, address.lastName].filter(Boolean).join(" "),
-    address.companyName,
-    address.streetAddress1,
-    address.streetAddress2,
-    [address.postalCode, address.city].filter(Boolean).join(" "),
-    address.countryArea,
-    address.country?.country,
-    address.phone,
-  ].filter(Boolean);
-
-  return lines.join("\n");
-};
 
 interface CopyButtonProps {
   show: boolean;

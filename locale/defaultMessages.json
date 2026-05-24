@@ -50,10 +50,6 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
-  "+NUzaQ": {
-    "context": "check to mark this account as active",
-    "string": "User account active"
-  },
   "+PclgM": {
     "context": "tabel column header",
     "string": "Total"
@@ -795,6 +791,10 @@
   "2eHzVW": {
     "string": "Manual refunds cannot be edited"
   },
+  "2eZn56": {
+    "context": "customer gift cards empty state placeholder",
+    "string": "This customer hasn't redeemed any gift cards yet. Newly issued cards appear here once they're used at checkout."
+  },
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
@@ -894,6 +894,10 @@
   "3CMUKE": {
     "context": "password login mode option description",
     "string": "Only customer users can log in with a password. Staff users logging in with a password will be treated as customers."
+  },
+  "3DDUnc": {
+    "context": "customer account is inactive (deactivated)",
+    "string": "Inactive"
   },
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
@@ -1179,10 +1183,6 @@
     "context": "error message when bulk variant creation fails completely",
     "string": "All variants failed to create"
   },
-  "4v5gfh": {
-    "context": "account information, header",
-    "string": "Account Information"
-  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
@@ -1389,6 +1389,10 @@
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
   },
+  "62Rs/K": {
+    "context": "customer detail cogs menu, activates a deactivated customer account",
+    "string": "Activate user"
+  },
   "62nsdy": {
     "string": "Retry"
   },
@@ -1486,6 +1490,10 @@
   "6ZubLQ": {
     "string": "Manage available refunds reasons"
   },
+  "6a075o": {
+    "context": "activate customer dialog, content",
+    "string": "Are you sure you want to activate {email}? They will be able to sign in and place new orders."
+  },
   "6aBkJm": {
     "context": "section header",
     "string": "Authorization"
@@ -1524,6 +1532,10 @@
   },
   "6j4TUi": {
     "string": "Product type updated"
+  },
+  "6jt3RB": {
+    "context": "success toast after activating a customer",
+    "string": "Customer activated"
   },
   "6jyoEd": {
     "context": "section header",
@@ -1738,6 +1750,10 @@
     "context": "No variants have stock available",
     "string": "No variants in stock"
   },
+  "7zCxeu": {
+    "context": "customer detail sidebar, section header",
+    "string": "Account status"
+  },
   "8/PQ07": {
     "context": "delete custom app",
     "string": "By deleting this extension, you will delete all the data and webhooks regarding this extension."
@@ -1780,6 +1796,10 @@
   "8FDx9i": {
     "context": "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
     "string": "To use the Generator, this product type needs:{newline}{newline}• 'Product type uses Variant Attributes' enabled{newline}• Selection variant attributes defined"
+  },
+  "8FgYfb": {
+    "context": "customer detail page header, when this customer's account was created",
+    "string": "Member since {date}"
   },
   "8GC/ah": {
     "context": "variants section name",
@@ -1864,8 +1884,16 @@
     "context": "automatic completion disabled info message",
     "string": "Disabling automatic completion will not stop checkouts that are already scheduled for completion."
   },
+  "8maISA": {
+    "context": "deactivate customer dialog, header",
+    "string": "Deactivate customer"
+  },
   "8oIbMI": {
     "string": "Reached limit for this plan"
+  },
+  "8p8zxN": {
+    "context": "customer account is active",
+    "string": "Active"
   },
   "8pVWve": {
     "string": "This field cannot be blank"
@@ -2016,6 +2044,10 @@
   },
   "9UHfux": {
     "string": "Voucher Specific Information"
+  },
+  "9UYpUB": {
+    "context": "customer gift cards card header",
+    "string": "Gift cards"
   },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
@@ -2480,6 +2512,10 @@
   "C7eDb9": {
     "string": "Permission groups"
   },
+  "C7n+ew": {
+    "context": "address removed from a customer's address book, success toast",
+    "string": "Address deleted"
+  },
   "C90nKP": {
     "context": "error with deactivatation alert message",
     "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
@@ -2595,6 +2631,10 @@
     "context": "tooltip for subtotal amount",
     "string": "Sum of all line items"
   },
+  "ClXTQ8": {
+    "context": "customer account status row label",
+    "string": "Status"
+  },
   "Cm2/+V": {
     "string": "Read the docs"
   },
@@ -2632,6 +2672,10 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
+  },
+  "D+Nw8P": {
+    "context": "customer email verification status",
+    "string": "Unverified"
   },
   "D0KaT6": {
     "context": "webhook input label",
@@ -3029,10 +3073,6 @@
   "FOehC/": {
     "context": "label",
     "string": "Manual Amount"
-  },
-  "FQc5z6": {
-    "context": "customer gift cards card view all button",
-    "string": "View All"
   },
   "FRJRmi": {
     "context": "selected customer gift card is sent to subtitle",
@@ -3951,6 +3991,10 @@
     "context": "section header",
     "string": "Organize Product"
   },
+  "Jk8bsM": {
+    "context": "badge next to customer name marking this user as staff",
+    "string": "Staff"
+  },
   "JkO0jp": {
     "context": "input description",
     "string": "{unitsLeft} units left"
@@ -4201,6 +4245,10 @@
     "context": "dialog header",
     "string": "Unassign Categories From Voucher"
   },
+  "LQg8/p": {
+    "context": "customer detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete user"
+  },
   "LR3HlT": {
     "string": "This password is too short"
   },
@@ -4239,6 +4287,10 @@
   },
   "LdzrxA": {
     "string": "Custom build"
+  },
+  "Le6/M7": {
+    "context": "activate customer dialog, header",
+    "string": "Activate customer"
   },
   "LeJClL": {
     "context": "Popover title",
@@ -4436,10 +4488,6 @@
   "MhlYkx": {
     "context": "label for available authorization amount",
     "string": "Available to capture (authorized)"
-  },
-  "MjUyhA": {
-    "context": "section subheader",
-    "string": "Active member since {date}"
   },
   "Ml19/F": {
     "context": "description for unsupported required attributes error",
@@ -5416,6 +5464,10 @@
     "context": "Info when channel has no shipping zones in direct stock-availability mode",
     "string": "No shipping zones for \"{channelName}\""
   },
+  "Ruw3iJ": {
+    "context": "activate customer dialog, confirm button label",
+    "string": "Activate"
+  },
   "RyZd9J": {
     "context": "error message",
     "string": "Please wait a moment before trying again."
@@ -5501,10 +5553,6 @@
     "context": "input label",
     "string": "SKU (Stock Keeping Unit)"
   },
-  "SMakqb": {
-    "context": "customer contact section, header",
-    "string": "Contact Information"
-  },
   "SNiyXb": {
     "context": "numeric attribute type",
     "string": "Numeric"
@@ -5520,6 +5568,10 @@
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
+  },
+  "SPzIC5": {
+    "context": "success toast after deactivating a customer",
+    "string": "Customer deactivated"
   },
   "SRMNCS": {
     "string": "Pending & failed deliveries (last 10)"
@@ -5754,6 +5806,10 @@
   "U+79k0": {
     "context": "order expiration card description",
     "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
+  },
+  "U+Fl4Z": {
+    "context": "customer detail, label above the address when default billing and default shipping are the same",
+    "string": "Default address"
   },
   "U0IK0G": {
     "context": "label for authorized amount",
@@ -6748,10 +6804,6 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
-  "ZJJ2vA": {
-    "context": "customer gift cards card title",
-    "string": "Gift Cards used by this customer"
-  },
   "ZJOX8n": {
     "context": "alert message",
     "string": "Product no longer exists"
@@ -6827,10 +6879,6 @@
   },
   "ZrIt1W": {
     "string": "Delete discount"
-  },
-  "ZrdoSS": {
-    "context": "customer gift cards card no cards subtitle",
-    "string": "There are no gift cards used by this customer"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
@@ -7124,10 +7172,6 @@
     "context": "promotions section name",
     "string": "Promotions"
   },
-  "bHdFph": {
-    "context": "subsection header",
-    "string": "Address"
-  },
   "bIAY+o": {
     "string": "Address updated"
   },
@@ -7274,6 +7318,10 @@
   "bwJc6V": {
     "context": "column title product",
     "string": "Product"
+  },
+  "bxZ9Nx": {
+    "context": "customer detail page, section header grouping name and contact fields",
+    "string": "Customer details"
   },
   "byP6IC": {
     "string": "Selected"
@@ -7747,6 +7795,10 @@
     "context": "dialog header",
     "string": "Delete Customer"
   },
+  "ey2Sft": {
+    "context": "customer overview stat label: sum of recent orders",
+    "string": "Recent spend"
+  },
   "f/Drvo": {
     "context": "order history message",
     "string": "Transaction cancel requested"
@@ -7974,6 +8026,10 @@
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created models."
   },
+  "gFfJmZ": {
+    "context": "customer email verification status",
+    "string": "Verified"
+  },
   "gG4YAW": {
     "context": "Number of shipping zones",
     "string": "{count, plural, =0 {No shipping zones} one {# shipping zone} other {# shipping zones}}"
@@ -8027,6 +8083,10 @@
   },
   "gelco+": {
     "string": "Metadata updated"
+  },
+  "genRi+": {
+    "context": "deactivate customer dialog, content",
+    "string": "Are you sure you want to deactivate {email}? They will no longer be able to sign in or place new orders."
   },
   "gfRbEV": {
     "string": "Note updated"
@@ -8729,6 +8789,10 @@
     "context": "used by label",
     "string": "Used by"
   },
+  "kS9cpK": {
+    "context": "customer account email-verification row label",
+    "string": "Email"
+  },
   "kTr2o8": {
     "string": "Attribute name"
   },
@@ -9231,6 +9295,10 @@
   },
   "nABmvC": {
     "string": "No. of rows"
+  },
+  "nAm4XY": {
+    "context": "customer detail sidebar, section header",
+    "string": "External reference"
   },
   "nBzIBG": {
     "string": "Delete permission group"
@@ -10935,10 +11003,6 @@
   "vz3yxp": {
     "string": "Channels permissions"
   },
-  "vzce9B": {
-    "context": "customer gift cards card subtitle",
-    "string": "Only five newest gift cards are shown here"
-  },
   "vzgZ3U": {
     "context": "card header",
     "string": "Sign In"
@@ -11063,6 +11127,10 @@
   },
   "we4Lby": {
     "string": "Info"
+  },
+  "weguIe": {
+    "context": "deactivate customer dialog, confirm button label",
+    "string": "Deactivate"
   },
   "werrDz": {
     "context": "refunded event title",
@@ -11265,10 +11333,6 @@
   },
   "xrKHS6": {
     "string": "Success"
-  },
-  "xrUNmL": {
-    "context": "customer overview stat label: sum of recent orders",
-    "string": "Spent in recent orders"
   },
   "xtUXnK": {
     "context": "export all items to csv file",
@@ -11521,6 +11585,10 @@
   "zN0Eub": {
     "context": "info message when hasVariants is false but variant attributes exist",
     "string": "This product type has {count, plural, one {# variant attribute} other {# variant attributes}} defined, but 'Product type uses Variant Attributes' is disabled. Edit {productTypeLink} product type to enable variant attributes."
+  },
+  "zP3Rb6": {
+    "context": "customer detail cogs menu, deactivates the customer account",
+    "string": "Deactivate user"
   },
   "zQvVDJ": {
     "string": "All"

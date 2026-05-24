@@ -7,6 +7,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { Pill } from "@dashboard/components/Pill";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
@@ -14,7 +15,7 @@ import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidge
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCustomerDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
+import { CustomerGiftCardsCard } from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import {
   type AccountErrorFragment,
   type CustomerDetailsQuery,
@@ -26,21 +27,21 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Divider } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
+import { AccountStatusCard } from "../AccountStatusCard/AccountStatusCard";
 import CustomerAddresses from "../CustomerAddresses";
-import CustomerDetails from "../CustomerDetails";
 import CustomerInfo from "../CustomerInfo";
 import CustomerOrders from "../CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
+import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
 
 export interface CustomerDetailsPageFormData extends MetadataFormData {
   firstName: string;
   lastName: string;
   email: string;
-  isActive: boolean;
   note: string;
 }
 
@@ -52,6 +53,7 @@ interface CustomerDetailsPageProps {
   saveButtonBar: ConfirmButtonTransitionState;
   onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
+  onActivateToggle: () => void;
 }
 
 const CustomerDetailsPage = ({
@@ -62,13 +64,13 @@ const CustomerDetailsPage = ({
   saveButtonBar,
   onSubmit,
   onDelete,
+  onActivateToggle,
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
     firstName: customer?.firstName || "",
-    isActive: customer?.isActive || false,
     lastName: customer?.lastName || "",
     metadata: customer?.metadata.map(mapMetadataItemToInput),
     note: customer?.note || "",
@@ -88,15 +90,82 @@ const CustomerDetailsPage = ({
     path: customerListPath,
   });
 
+  // Account-level actions live in the cogs "More actions" menu so destructive
+  // toggles (activate / deactivate) and Delete are not bundled with the form
+  // save. Delete is also kept in the savebar for discoverability.
+  const builtInMenuItems = customer
+    ? [
+        {
+          label: customer.isActive
+            ? intl.formatMessage({
+                defaultMessage: "Deactivate user",
+                description: "customer detail cogs menu, deactivates the customer account",
+                id: "zP3Rb6",
+              })
+            : intl.formatMessage({
+                defaultMessage: "Activate user",
+                description: "customer detail cogs menu, activates a deactivated customer account",
+                id: "62Rs/K",
+              }),
+          onSelect: onActivateToggle,
+          testId: customer.isActive ? "deactivate-user" : "activate-user",
+        },
+        {
+          label: intl.formatMessage({
+            defaultMessage: "Delete user",
+            description: "customer detail cogs menu, opens the delete-confirmation dialog",
+            id: "LQg8/p",
+          }),
+          onSelect: onDelete,
+          testId: "delete-user",
+          color: "critical1" as const,
+        },
+      ]
+    : [];
+  const menuItems = [...builtInMenuItems, ...extensionMenuItems];
+
+  const customerName = getUserName(customer, true);
+  // Mirrors OrderDetailsPage's title layout: name (+ optional Staff pill) on
+  // the left, "Member since" date as a lower-emphasis sibling on the right,
+  // both on the same line. Keeps the page's TopNav consistent with Orders.
+  const titleNode = (
+    <Box display="flex" alignItems="center" gap={2}>
+      <Box display="flex" alignItems="center" gap={2}>
+        <span>{customerName}</span>
+        {customer?.isStaff && customerName && (
+          <Pill
+            color="info"
+            label={intl.formatMessage({
+              defaultMessage: "Staff",
+              description: "badge next to customer name marking this user as staff",
+              id: "Jk8bsM",
+            })}
+            data-test-id="customer-staff-badge"
+          />
+        )}
+      </Box>
+      {customer?.dateJoined && (
+        <Text size={3} fontWeight="regular">
+          <FormattedMessage
+            defaultMessage="Member since {date}"
+            description="customer detail page header, when this customer's account was created"
+            id="8FgYfb"
+            values={{
+              date: <FormattedDate value={customer.dateJoined} month="short" year="numeric" />,
+            }}
+          />
+        </Text>
+      )}
+    </Box>
+  );
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={customerBackLink} title={getUserName(customer, true)}>
-              {extensionMenuItems.length > 0 && (
-                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-              )}
+            <TopNav href={customerBackLink} title={titleNode}>
+              {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
             </TopNav>
             <DetailPageLayout.Content>
               <Backlink href={customerBackLink}>
@@ -104,15 +173,13 @@ const CustomerDetailsPage = ({
               </Backlink>
               <CustomerOverview customer={customer} />
               <CardSpacer />
-              <CustomerDetails
-                customer={customer}
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
               <CustomerInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+              <CardSpacer />
+              <CustomerAddresses
+                customer={customer}
+                disabled={disabled}
+                manageAddressHref={customerAddressesUrl(customerId)}
+              />
               <CardSpacer />
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
@@ -124,11 +191,9 @@ const CustomerDetailsPage = ({
               <Metadata data={data} onChange={change} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              <CustomerAddresses
-                customer={customer}
-                disabled={disabled}
-                manageAddressHref={customerAddressesUrl(customerId)}
-              />
+              <AccountStatusCard customer={customer} />
+              <CardSpacer />
+              <ExternalReferenceCard customer={customer} />
               <CardSpacer />
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />

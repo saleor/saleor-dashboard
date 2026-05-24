@@ -11,8 +11,11 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
+
+import styles from "./CustomerOrders.module.css";
 
 const textRightStyle = sprinkles({
   textAlign: "right",
@@ -30,7 +33,7 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title>
+        <DashboardCard.Title size={6} fontWeight="medium">
           {intl.formatMessage({
             id: "1LiVhv",
             defaultMessage: "Recent Orders",
@@ -77,7 +80,7 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
                     description="order status"
                   />
                 </TableCell>
-                <TableCell className={textRightStyle}>
+                <TableCell className={clsx(textRightStyle, styles.totalCell)}>
                   <FormattedMessage
                     id="taX/V3"
                     defaultMessage="Total"
@@ -107,7 +110,7 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
                   <TableCell>
                     {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
                   </TableCell>
-                  <TableCell className={textRightStyle} align="right">
+                  <TableCell className={clsx(textRightStyle, styles.totalCell)} align="right">
                     {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
                   </TableCell>
                 </TableRowLink>
