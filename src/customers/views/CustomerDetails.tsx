@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CustomerDetailsPage, {
   type CustomerDetailsPageFormData,
 } from "../components/CustomerDetailsPage";
+import { CustomerMetadataDialog } from "../components/CustomerMetadataDialog/CustomerMetadataDialog";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
 import { customerListUrl, customerUrl, type CustomerUrlQueryParams } from "../urls";
@@ -67,8 +68,6 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
           firstName: data.firstName,
           lastName: data.lastName,
           note: data.note,
-          metadata: data.metadata,
-          privateMetadata: data.privateMetadata,
         },
       },
     });
@@ -155,6 +154,13 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
         saveButtonBar={updateCustomerOpts.status}
         onSubmit={handleSubmit}
         onActivateToggle={handleActivateToggle}
+        onShowMetadata={() =>
+          navigate(
+            customerUrl(id, {
+              action: "view-metadata",
+            }),
+          )
+        }
         onDelete={() =>
           navigate(
             customerUrl(id, {
@@ -162,6 +168,11 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             }),
           )
         }
+      />
+      <CustomerMetadataDialog
+        open={params.action === "view-metadata"}
+        onClose={closeDialog}
+        customer={user}
       />
       <ActionDialog
         confirmButtonState={removeCustomerOpts.status}

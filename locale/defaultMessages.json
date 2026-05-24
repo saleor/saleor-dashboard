@@ -2780,6 +2780,10 @@
     "context": "gift card export dialog title",
     "string": "Export Gift Card Codes"
   },
+  "DR3EBs": {
+    "context": "customer detail page, top-bar metadata button tooltip",
+    "string": "Edit customer metadata"
+  },
   "DRMMDs": {
     "string": "Attribute Name"
   },
@@ -11035,6 +11039,10 @@
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
+  },
+  "w4TUT+": {
+    "context": "customer metadata dialog header",
+    "string": "Customer Metadata"
   },
   "w4ZVcj": {
     "context": "Status when product is not visible",
