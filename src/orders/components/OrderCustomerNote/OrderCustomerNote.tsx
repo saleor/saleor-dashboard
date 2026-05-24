@@ -12,7 +12,7 @@ const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title size={6} fontWeight="medium">
+        <DashboardCard.Title>
           {intl.formatMessage({
             id: "puALFo",
             defaultMessage: "Notes",

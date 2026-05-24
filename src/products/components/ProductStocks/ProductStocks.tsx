@@ -141,7 +141,7 @@ export const ProductStocks = ({
           <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex" flexDirection="column">
-                <Text size={4} fontWeight="bold">
+                <Text size={4} fontWeight="medium">
                   <FormattedMessage {...messages.stock} />
                 </Text>
                 {!productVariantChannelListings?.length && (

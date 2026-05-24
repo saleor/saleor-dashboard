@@ -10,7 +10,7 @@ export const MetadataLoadingCard = ({ isPrivate = false }: { isPrivate?: boolean
   return (
     <DashboardCard paddingTop={6}>
       <DashboardCard.Content display="flex" flexDirection="column" gap={4}>
-        <Text size={5} fontWeight="bold">
+        <Text size={6} fontWeight="medium">
           {intl.formatMessage(getMetadataTitle(isPrivate))}
         </Text>
 
