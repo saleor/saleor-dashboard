@@ -109,10 +109,10 @@ describe("CustomerMetadataDialog", () => {
     // `privateMetadata` is `@include(if: $PERMISSION_MANAGE_STAFF)` on the
     // customer query, so it can be absent. The dialog should still render
     // a (empty) private metadata section without crashing.
-    const customerWithoutPrivateMetadata = {
-      ...mockCustomer,
-      privateMetadata: undefined,
-    } as unknown as NonNullable<CustomerDetailsQuery["user"]>;
+    // Strip the field rather than setting it to `undefined`: the fragment
+    // types `privateMetadata` as optional, so omission is the realistic shape
+    // the Apollo cache hands us when MANAGE_STAFF is denied.
+    const { privateMetadata: _omitted, ...customerWithoutPrivateMetadata } = mockCustomer;
 
     // Act
     render(
