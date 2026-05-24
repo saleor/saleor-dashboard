@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Date } from "@dashboard/components/Date/Date";
+import { Date as DateLabel } from "@dashboard/components/Date/Date";
 import { KpiCard } from "@dashboard/components/KpiCard/KpiCard";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -10,7 +10,7 @@ import { type IMoney } from "@dashboard/utils/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Text } from "@saleor/macaw-ui-next";
 import { Banknote, LogIn, Receipt, ShoppingCart } from "lucide-react";
-import { Fragment, useMemo } from "react";
+import { Fragment, type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./CustomerOverview.module.css";
@@ -65,16 +65,24 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
       />
     );
 
-  const renderTimeWithZone = (isoDate: string): JSX.Element => (
-    <TimezoneConsumer>
-      {tz =>
-        intl.formatTime(isoDate, {
-          timeZone: tz,
-          timeZoneName: "short",
-        })
-      }
-    </TimezoneConsumer>
-  );
+  const renderTimeWithZone = (isoDate: string): ReactNode => {
+    const date = new Date(isoDate);
+
+    if (isNaN(date.getTime())) {
+      return null;
+    }
+
+    return (
+      <TimezoneConsumer>
+        {tz =>
+          intl.formatTime(date, {
+            timeZone: tz,
+            timeZoneName: "shortOffset",
+          })
+        }
+      </TimezoneConsumer>
+    );
+  };
 
   return (
     <DashboardCard data-test-id="customer-overview">
@@ -99,7 +107,7 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                     description="customer overview, subtitle on total orders showing the most recent order date"
                     id="sigzdd"
                     values={{
-                      date: <Date date={recentOrders[0].created} plain />,
+                      date: <DateLabel date={recentOrders[0].created} plain />,
                     }}
                   />
                 ) : undefined
@@ -124,7 +132,7 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
               ) : customer.lastLogin === null ? (
                 EMPTY_VALUE
               ) : (
-                <Date date={customer.lastLogin} plain />
+                <DateLabel date={customer.lastLogin} plain />
               )
             }
             subtitle={
