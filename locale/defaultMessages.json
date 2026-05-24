@@ -3014,9 +3014,6 @@
   "FN+iLO": {
     "string": "Suggest a change"
   },
-  "FNAZoh": {
-    "string": "Last login"
-  },
   "FNT4b+": {
     "context": "tabel column header",
     "string": "Product"
@@ -3472,15 +3469,16 @@
     "context": "plain text attribute type",
     "string": "Plain Text"
   },
-  "HMD+ib": {
-    "string": "Last order"
-  },
   "HN1Gvw": {
     "context": "option description",
     "string": "Allocate order-line to a warehouse with the most stock. If not enough stock is available in a single warehouse, the remaining quantity is allocated in the next warehouse with the most stock and repeated if necessary."
   },
   "HP6m+q": {
     "string": "Attributes and Product Types"
+  },
+  "HPb2tq": {
+    "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
+    "string": "across last {count, plural, one {# order} other {# orders}} in {currency}"
   },
   "HQR2y0": {
     "context": "attribute value is required",
@@ -3493,6 +3491,10 @@
   "HRXLYk": {
     "context": "cta button label",
     "string": "Get in touch"
+  },
+  "HRy5qF": {
+    "context": "customer overview stat label",
+    "string": "Total orders"
   },
   "HSYM17": {
     "context": "outcome prediction showing resulting order status after capture",
@@ -6965,6 +6967,10 @@
     "context": "ProductTypeDeleteWarningDialog multiple assigned items description",
     "string": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
   },
+  "aTe9zV": {
+    "context": "customer overview stat label: average order value of recent orders",
+    "string": "Avg order value"
+  },
   "aUUgUV": {
     "context": "Button with  app settings label",
     "string": "Extension settings"
@@ -6986,6 +6992,10 @@
   "aYhcie": {
     "context": "shipping method weight range",
     "string": "Weight Range"
+  },
+  "aYnI0N": {
+    "context": "customer overview stat label",
+    "string": "Last login"
   },
   "aZDHYr": {
     "context": "price rates info",
@@ -7622,10 +7632,6 @@
   "e71euF": {
     "string": "Refunds Model Type"
   },
-  "e7Nyu7": {
-    "context": "section header",
-    "string": "Customer History"
-  },
   "e7yOai": {
     "context": "shipping address is not set in draft order",
     "string": "Not set"
@@ -7647,6 +7653,10 @@
   "eAFU/E": {
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
+  },
+  "eAvs2Y": {
+    "context": "customer overview, subtitle scoping a money stat when only part of the fetched recent orders belong to this currency",
+    "string": "{count} of last {total, plural, one {# order} other {# orders}} in {currency}"
   },
   "eB6oHa": {
     "context": "Message when product is not in any channel",
@@ -10221,6 +10231,10 @@
     "context": "no products placeholder",
     "string": "No products are available in the channel assigned to this order."
   },
+  "sigzdd": {
+    "context": "customer overview, subtitle on total orders showing the most recent order date",
+    "string": "last order on {date}"
+  },
   "sjRXXz": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
   },
@@ -11252,6 +11266,10 @@
   "xrKHS6": {
     "string": "Success"
   },
+  "xrUNmL": {
+    "context": "customer overview stat label: sum of recent orders",
+    "string": "Spent in recent orders"
+  },
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"
@@ -11480,6 +11498,10 @@
   "zJpP1T": {
     "context": "create new structure, header",
     "string": "Add Item"
+  },
+  "zJuyv/": {
+    "context": "customer overview, AOV tooltip clarifying that the average is computed only over the fetched recent orders, not the customer's lifetime",
+    "string": "Sum of the recent orders shown divided by their count."
   },
   "zKEVOg": {
     "context": "error message when required attributes are not filled",

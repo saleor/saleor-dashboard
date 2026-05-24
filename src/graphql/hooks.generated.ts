@@ -7459,7 +7459,8 @@ export const CustomerDetailsDocument = gql`
     privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
       ...MetadataItem
     }
-    orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    orders(first: 10) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      totalCount
       edges {
         node {
           id
@@ -7473,14 +7474,6 @@ export const CustomerDetailsDocument = gql`
             }
           }
           chargeStatus
-        }
-      }
-    }
-    lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
-      edges {
-        node {
-          id
-          created
         }
       }
     }
