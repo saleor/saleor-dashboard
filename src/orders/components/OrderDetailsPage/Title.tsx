@@ -1,7 +1,9 @@
+import { Channel } from "@dashboard/components/Channel/Channel";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { Pill } from "@dashboard/components/Pill";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
+import { orderListUrlWithChannel } from "@dashboard/orders/urls";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -51,15 +53,19 @@ const Title = (props: TitleProps) => {
         </div>
       </Box>
 
-      <div>
+      <Box display="flex" alignItems="center" gap={1.5}>
         {order && order.created ? (
-          <Text size={3} fontWeight="regular">
+          <Text size={3} fontWeight="regular" color="default2">
             <DateTime date={order.created} plain />
+            {order.channel && ","}
           </Text>
         ) : (
           <Skeleton __width="10em" />
         )}
-      </div>
+        {order?.channel && (
+          <Channel channel={order.channel} href={orderListUrlWithChannel(order.channel)} size={3} />
+        )}
+      </Box>
     </div>
   );
 };

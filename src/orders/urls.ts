@@ -1,10 +1,13 @@
-import { type TransactionActionEnum } from "@dashboard/graphql";
+import { type ChannelFragment, type TransactionActionEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { stringify } from "qs";
 import urlJoin from "url-join";
 
 import { Condition } from "../components/ConditionalFilter/FilterElement/Condition";
-import { ConditionOptions } from "../components/ConditionalFilter/FilterElement/ConditionOptions";
+import {
+  type ConditionItem,
+  ConditionOptions,
+} from "../components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../components/ConditionalFilter/FilterElement/ConditionSelected";
 import {
   ExpressionValue,
@@ -152,6 +155,42 @@ export const orderListUrlWithCustomerId = (userId?: string) => {
 
   const customerFilter = createCustomerIdFilterElement(userId);
   const filterContainer = [customerFilter];
+  const queryParams = prepareStructure(filterContainer);
+
+  return urlJoin(orderListPath, "?" + stringify(queryParams));
+};
+
+/**
+ * Creates a channels filter element using the conditional filter system.
+ * The orders list exposes a `channels` multiselect (filter element "channels", input-1, "in" operator)
+ * that serializes channel slugs into the URL.
+ */
+const createChannelsFilterElement = (
+  channel: Pick<ChannelFragment, "id" | "name" | "slug">,
+): FilterElement => {
+  const expressionValue = new ExpressionValue("channels", "Channels", "channels");
+  const conditionOptions = ConditionOptions.fromName("channels");
+  const conditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-1" };
+  const conditionSelected = ConditionSelected.fromConditionItemAndValue(conditionItem, [
+    { label: channel.name, value: channel.id, slug: channel.slug },
+  ]);
+  const condition = new Condition(conditionOptions, conditionSelected, false);
+
+  return new FilterElement(expressionValue, condition, false);
+};
+
+/**
+ * Builds the order list URL pre-filtered by a single channel.
+ */
+export const orderListUrlWithChannel = (
+  channel?: Pick<ChannelFragment, "id" | "name" | "slug">,
+) => {
+  if (!channel) {
+    return orderListPath;
+  }
+
+  const channelFilter = createChannelsFilterElement(channel);
+  const filterContainer = [channelFilter];
   const queryParams = prepareStructure(filterContainer);
 
   return urlJoin(orderListPath, "?" + stringify(queryParams));
