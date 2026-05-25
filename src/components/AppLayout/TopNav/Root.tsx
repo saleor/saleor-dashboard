@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Text, vars } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 
 import useAppChannel from "../AppChannelContext";
@@ -47,7 +47,7 @@ export const Root = ({
         <ContextualLine
           gridColumn="8"
           // The subtitle should be aligned with the title, not back button
-          marginLeft={href ? 12 : 0}
+          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
           paddingBottom={0}
           __marginBottom="-10px"
         >
@@ -86,7 +86,7 @@ export const Root = ({
         <ContextualLine
           gridColumn="8"
           // The subtitle should be aligned with the title, not back button
-          marginLeft={href ? 12 : 0}
+          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
           __marginTop={href ? "-0.6rem" : 0}
         >
           {subtitle}
