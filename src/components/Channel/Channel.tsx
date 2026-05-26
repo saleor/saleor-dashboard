@@ -1,4 +1,4 @@
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { Radio } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
@@ -6,8 +6,7 @@ import { Link as RouterLink } from "react-router-dom";
 import styles from "./Channel.module.css";
 import { messages } from "./messages";
 
-type TextSize = 1 | 2 | 3 | 4 | 5 | 6 | 7;
-type TextColor = "default1" | "default2" | "critical1";
+type ChannelTextSize = NonNullable<TextProps["size"]>;
 
 interface ChannelLike {
   id?: string;
@@ -44,12 +43,12 @@ interface ChannelProps {
    * Macaw text size token used for the label.
    * @default 2
    */
-  size?: TextSize;
+  size?: ChannelTextSize;
   /**
    * Macaw text color token used for the label.
    * @default "default2"
    */
-  color?: TextColor;
+  color?: TextProps["color"];
   /**
    * Optional override for the `data-test-id` attribute.
    * @default "channel-display"
@@ -57,7 +56,7 @@ interface ChannelProps {
   "data-test-id"?: string;
 }
 
-const ICON_SIZE_BY_TEXT_SIZE: Record<TextSize, number> = {
+const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
   1: 12,
   2: 14,
   3: 14,
@@ -65,6 +64,10 @@ const ICON_SIZE_BY_TEXT_SIZE: Record<TextSize, number> = {
   5: 18,
   6: 20,
   7: 24,
+  8: 28,
+  9: 32,
+  10: 36,
+  11: 40,
 };
 
 export const Channel = ({
@@ -75,7 +78,7 @@ export const Channel = ({
   size = 2,
   color = "default2",
   "data-test-id": dataTestId = "channel-display",
-}: ChannelProps) => {
+}: ChannelProps): JSX.Element => {
   const intl = useIntl();
 
   if (!channel) {
