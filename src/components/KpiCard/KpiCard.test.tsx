@@ -69,6 +69,31 @@ describe("KpiCard", () => {
     expect(onSelect).toHaveBeenCalledTimes(1);
   });
 
+  it("does not invoke onSelect when tooltip trigger is used", () => {
+    // Arrange
+    const onSelect = jest.fn();
+
+    renderCard(
+      <KpiCard
+        title="Orders"
+        value="28"
+        tooltip="Orders placed in the selected period"
+        onSelect={onSelect}
+        dataTestId="kpi-clickable"
+      />,
+    );
+
+    // Act
+    const tooltipTrigger = screen.getByTestId("kpi-tooltip-trigger");
+
+    fireEvent.pointerDown(tooltipTrigger);
+    fireEvent.click(tooltipTrigger);
+    fireEvent.keyDown(tooltipTrigger, { key: "Enter" });
+
+    // Assert
+    expect(onSelect).not.toHaveBeenCalled();
+  });
+
   it("exposes button semantics and is keyboard activatable when onSelect is provided", () => {
     // Arrange
     const onSelect = jest.fn();

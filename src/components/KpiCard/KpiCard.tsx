@@ -1,7 +1,7 @@
 import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Info, Minus, TrendingDown, TrendingUp } from "lucide-react";
-import { type KeyboardEvent, type ReactNode } from "react";
+import { type KeyboardEvent, type ReactNode, type SyntheticEvent } from "react";
 
 import styles from "./KpiCard.module.css";
 
@@ -39,6 +39,10 @@ const DeltaIcon = ({ trend }: { trend: KpiDelta["trend"] }): JSX.Element => {
   }
 
   return <Minus size={12} />;
+};
+
+const stopEventPropagation = (event: SyntheticEvent): void => {
+  event.stopPropagation();
 };
 
 export const KpiCard = ({
@@ -114,17 +118,25 @@ export const KpiCard = ({
           {title}
         </Text>
         {tooltip && (
-          <Tooltip>
-            <Tooltip.Trigger>
-              <Box display="flex" color="default2" alignItems="center">
-                <Info size={13} />
-              </Box>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="top">
-              <Tooltip.Arrow />
-              {tooltip}
-            </Tooltip.Content>
-          </Tooltip>
+          <Box
+            display="flex"
+            onClick={stopEventPropagation}
+            onKeyDown={stopEventPropagation}
+            onPointerDown={stopEventPropagation}
+            data-test-id="kpi-tooltip-trigger"
+          >
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Box display="flex" color="default2" alignItems="center">
+                  <Info size={13} />
+                </Box>
+              </Tooltip.Trigger>
+              <Tooltip.Content side="top">
+                <Tooltip.Arrow />
+                {tooltip}
+              </Tooltip.Content>
+            </Tooltip>
+          </Box>
         )}
       </Box>
 

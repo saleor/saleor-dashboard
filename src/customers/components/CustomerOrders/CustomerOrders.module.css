@@ -1,0 +1,9 @@
+/*
+ * Beat ResponsiveTable.module.css's `.table td:last-child` /
+ * `.table th:last-child` !important padding rules (specificity 0,2,1)
+ * by adding `:last-child` AND chaining the class (specificity 0,3,1).
+ */
+td.totalCell.totalCell:last-child,
+th.totalCell.totalCell:last-child {
+  padding-right: var(--mu-spacing-6) !important;
+}

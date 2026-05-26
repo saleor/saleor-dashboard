@@ -4,11 +4,13 @@ import { KpiCard } from "@dashboard/components/KpiCard/KpiCard";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
+import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { type CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type IMoney } from "@dashboard/utils/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { Banknote, LogIn, Receipt, ShoppingCart } from "lucide-react";
 import { Fragment, type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -89,31 +91,38 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
       <DashboardCard.Content paddingY={6}>
         <div className={styles.grid}>
           <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-            <KpiCard
-              dataTestId="kpi-total-orders"
-              icon={<ShoppingCart size={ICON_SIZE} />}
-              title={
-                <FormattedMessage
-                  defaultMessage="Total orders"
-                  description="customer overview stat label"
-                  id="HRy5qF"
-                />
-              }
-              value={loading ? EMPTY_VALUE : (customer.orders?.totalCount ?? 0)}
-              subtitle={
-                !loading && recentOrders.length > 0 ? (
+            <Box position="relative">
+              {!loading && (
+                <Box position="absolute" __top="-4px" __right="-4px" __zIndex="1">
+                  <Ripple model={rippleCustomerOverview} />
+                </Box>
+              )}
+              <KpiCard
+                dataTestId="kpi-total-orders"
+                icon={<ShoppingCart size={ICON_SIZE} />}
+                title={
                   <FormattedMessage
-                    defaultMessage="last order on {date}"
-                    description="customer overview, subtitle on total orders showing the most recent order date"
-                    id="sigzdd"
-                    values={{
-                      date: <DateLabel date={recentOrders[0].created} plain />,
-                    }}
+                    defaultMessage="Total orders"
+                    description="customer overview stat label"
+                    id="HRy5qF"
                   />
-                ) : undefined
-              }
-              loading={loading}
-            />
+                }
+                value={loading ? EMPTY_VALUE : (customer.orders?.totalCount ?? 0)}
+                subtitle={
+                  !loading && recentOrders.length > 0 ? (
+                    <FormattedMessage
+                      defaultMessage="last order on {date}"
+                      description="customer overview, subtitle on total orders showing the most recent order date"
+                      id="sigzdd"
+                      values={{
+                        date: <DateLabel date={recentOrders[0].created} plain />,
+                      }}
+                    />
+                  ) : undefined
+                }
+                loading={loading}
+              />
+            </Box>
           </RequirePermissions>
 
           <KpiCard
