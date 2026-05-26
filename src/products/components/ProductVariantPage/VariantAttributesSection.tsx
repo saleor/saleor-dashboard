@@ -71,7 +71,7 @@ export const VariantAttributesSection = ({
 
   const emptyStateTitle = (
     <Box display="flex" flexDirection="column" alignItems="flex-start" gap={2}>
-      <Text size={5} fontWeight="bold">
+      <Text size={6} fontWeight="medium">
         {title}
       </Text>
       <DashboardCard.Subtitle fontSize={3} color="default2">
@@ -82,7 +82,7 @@ export const VariantAttributesSection = ({
 
   const titleWithTooltip = (
     <Box display="flex" alignItems="center" gap={2}>
-      <Text size={5} fontWeight="bold">
+      <Text size={6} fontWeight="medium">
         {title}
       </Text>
       <Tooltip>

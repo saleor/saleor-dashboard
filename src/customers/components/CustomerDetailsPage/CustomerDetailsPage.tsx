@@ -34,7 +34,7 @@ import CustomerAddresses from "../CustomerAddresses";
 import CustomerDetails from "../CustomerDetails";
 import CustomerInfo from "../CustomerInfo";
 import CustomerOrders from "../CustomerOrders";
-import CustomerStats from "../CustomerStats";
+import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 
 export interface CustomerDetailsPageFormData extends MetadataFormData {
   firstName: string;
@@ -102,6 +102,8 @@ const CustomerDetailsPage = ({
               <Backlink href={customerBackLink}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>
+              <CustomerOverview customer={customer} />
+              <CardSpacer />
               <CustomerDetails
                 customer={customer}
                 data={data}
@@ -127,8 +129,6 @@ const CustomerDetailsPage = ({
                 disabled={disabled}
                 manageAddressHref={customerAddressesUrl(customerId)}
               />
-              <CardSpacer />
-              <CustomerStats customer={customer} />
               <CardSpacer />
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />

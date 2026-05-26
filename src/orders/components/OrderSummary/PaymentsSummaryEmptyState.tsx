@@ -1,3 +1,4 @@
+import { Title2 } from "@dashboard/components/Title2/Title2";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { CreditCard } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -27,12 +28,12 @@ export const PaymentsSummaryEmptyState = () => {
         <CreditCard size={24} stroke="currentColor" />
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" gap={1} textAlign="center">
-        <Text fontWeight="medium" size={4}>
+        <Title2>
           {intl.formatMessage({
             defaultMessage: "No payment received",
             id: "6Jgwpc",
           })}
-        </Text>
+        </Title2>
         <Text color="default2" size={2}>
           {intl.formatMessage({
             defaultMessage: "Mark as paid manually if the payment is confirmed",

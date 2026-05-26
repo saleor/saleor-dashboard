@@ -5,6 +5,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -91,9 +92,9 @@ export const TokenCreateDialog = (props: TokenCreateDialogProps) => {
                   </Text>
 
                   <Box {...tokenPaperStyles}>
-                    <Text size={4} fontWeight="medium">
+                    <Title2>
                       <FormattedMessage id="5ZxAiY" defaultMessage="Token" />
-                    </Text>
+                    </Title2>
 
                     <Text data-test-id="generated-token" display="block">
                       <Mono>{token}</Mono>
@@ -115,9 +116,9 @@ export const TokenCreateDialog = (props: TokenCreateDialogProps) => {
                   </Box>
 
                   <Box {...tokenPaperStyles}>
-                    <Text size={4} fontWeight="medium">
+                    <Title2>
                       <FormattedMessage id="Wm+KUd" defaultMessage="Headers" />
-                    </Text>
+                    </Title2>
 
                     <Text data-test-id="generated-headers" display="block">
                       <Mono>{headers}</Mono>

@@ -351,7 +351,7 @@ export const ProductVariantPage = ({
                         <Attributes
                           title={
                             <Box display="flex" alignItems="center" gap={2}>
-                              <Text size={5} fontWeight="bold">
+                              <Text size={6} fontWeight="medium">
                                 {intl.formatMessage(messages.selectionAttributesHeader)}
                               </Text>
                               <Tooltip>
