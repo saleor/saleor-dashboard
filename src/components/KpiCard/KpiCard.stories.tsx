@@ -64,9 +64,9 @@ export const WithTooltip: Story = {
 
 export const SubtitleOnly: Story = {
   args: {
-    title: "Spent in recent orders",
+    title: "Recent orders total",
     value: "USD 355.40",
-    subtitle: "across last 5 orders",
+    subtitle: "Across last 5 orders",
   },
 };
 
