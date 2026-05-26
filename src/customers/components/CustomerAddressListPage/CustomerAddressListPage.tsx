@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { customerUrl } from "@dashboard/customers/urls";
 import { type AddressTypeEnum, type CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
@@ -82,6 +83,10 @@ const useStyles = makeStyles(
 const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
+  // Address mutations all require MANAGE_USERS, so MANAGE_ORDERS- /
+  // MANAGE_STAFF-only viewers see the address list without per-card or
+  // toolbar actions.
+  const canEditCustomers = useCanEditCustomers();
 
   const intl = useIntl();
 
@@ -100,7 +105,7 @@ const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
             : intl.formatMessage(messages.noNameToShow)
         }
       >
-        {!isEmpty && (
+        {!isEmpty && canEditCustomers && (
           <Button variant="primary" onClick={onAdd} data-test-id="add-address">
             {intl.formatMessage(messages.addAddress)}
           </Button>
@@ -120,9 +125,11 @@ const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
           <Text className={classes.description}>
             {intl.formatMessage(messages.doesntHaveAddresses)}
           </Text>
-          <Button className={classes.addButton} variant="primary" onClick={onAdd}>
-            {intl.formatMessage(messages.addAddress)}
-          </Button>
+          {canEditCustomers && (
+            <Button className={classes.addButton} variant="primary" onClick={onAdd}>
+              {intl.formatMessage(messages.addAddress)}
+            </Button>
+          )}
         </Box>
       ) : (
         <div className={classes.root}>
@@ -131,6 +138,7 @@ const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
               address={address}
               addressNumber={addressNumber + 1}
               disabled={disabled}
+              canEdit={canEditCustomers}
               isDefaultBillingAddress={customer?.defaultBillingAddress?.id === address?.id}
               isDefaultShippingAddress={customer?.defaultShippingAddress?.id === address?.id}
               onEdit={() => onEdit(address.id)}

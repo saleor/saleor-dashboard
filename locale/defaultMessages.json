@@ -9988,6 +9988,10 @@
   "qgQeVW": {
     "string": "Generate Voucher Codes"
   },
+  "qjT9IB": {
+    "context": "savebar label shown on detail pages where the current user lacks permission to edit",
+    "string": "Read-only"
+  },
   "qkRuT0": {
     "context": "attribute type",
     "string": "Product Attribute"
@@ -11307,6 +11311,9 @@
   "xOEZjV": {
     "context": "attribute's label",
     "string": "Default Label"
+  },
+  "xRMVTn": {
+    "string": "Read-only — editing requires Manage users"
   },
   "xRbqcg": {
     "context": "option",
