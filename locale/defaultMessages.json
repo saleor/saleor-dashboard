@@ -7799,10 +7799,6 @@
     "context": "dialog header",
     "string": "Delete Customer"
   },
-  "ey2Sft": {
-    "context": "customer overview stat label: sum of recent orders",
-    "string": "Recent spend"
-  },
   "f/Drvo": {
     "context": "order history message",
     "string": "Transaction cancel requested"
