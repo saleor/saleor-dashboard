@@ -43,6 +43,7 @@ interface StaffDetailsPageProps extends SearchPageProps {
   canEditPreferences: boolean;
   canEditStatus: boolean;
   canRemove: boolean;
+  canViewCustomerProfile: boolean;
   disabled: boolean;
   fetchMorePermissionGroups: FetchMoreProps;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -51,6 +52,7 @@ interface StaffDetailsPageProps extends SearchPageProps {
   onResetPassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
+  onViewCustomerProfile: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
   onImageUpload: (file: File) => any;
 }
@@ -61,6 +63,7 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   canEditPreferences,
   canEditStatus,
   canRemove,
+  canViewCustomerProfile,
   disabled,
   errors,
   fetchMorePermissionGroups,
@@ -71,6 +74,7 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   onImageUpload,
   onSearchChange,
   onSubmit,
+  onViewCustomerProfile,
   saveButtonBarState,
   staffMember,
 }: StaffDetailsPageProps) => {
@@ -98,6 +102,20 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={staffListBackLink} title={getUserName(staffMember)}>
+              {canViewCustomerProfile && staffMember?.id && (
+                <Button
+                  onClick={onViewCustomerProfile}
+                  data-test-id="viewCustomerProfileBtn"
+                  variant="secondary"
+                  alignSelf="center"
+                  disabled={disabled}
+                >
+                  {intl.formatMessage({
+                    defaultMessage: "View customer profile",
+                    id: "6Wr3aF",
+                  })}
+                </Button>
+              )}
               {canEditPreferences && (
                 <Button
                   onClick={onResetPassword}

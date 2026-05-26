@@ -1480,6 +1480,9 @@
   "6WqHWi": {
     "string": "Applies to"
   },
+  "6Wr3aF": {
+    "string": "View customer profile"
+  },
   "6Y1YDn": {
     "string": "Updated extension permissions"
   },
@@ -4132,6 +4135,10 @@
   },
   "KkufwD": {
     "string": "No voucher codes found"
+  },
+  "Kn37JQ": {
+    "context": "staff list column showing whether staff user has placed orders",
+    "string": "Customer"
   },
   "KpP/aW": {
     "string": "Order was marked as"

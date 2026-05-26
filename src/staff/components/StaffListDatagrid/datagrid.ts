@@ -35,6 +35,11 @@ export const staffMembersListStaticColumnsAdapter = (
       width: 150,
     },
     {
+      id: "customer",
+      title: intl.formatMessage(columnsMessages.customer),
+      width: 160,
+    },
+    {
       id: "email",
       title: intl.formatMessage(columnsMessages.email),
       width: 400,
@@ -87,6 +92,34 @@ export const createGetCellContent =
             },
           ],
           [status],
+          {
+            readonly: true,
+            allowOverlay: false,
+            cursor: "pointer",
+          },
+        );
+      }
+      case "customer": {
+        const isCustomer = (rowData.orders?.edges.length ?? 0) > 0;
+
+        if (!isCustomer) {
+          return readonlyTextCell(PLACEHOLDER);
+        }
+
+        const label = intl.formatMessage(columnsMessages.customer);
+        const color = getStatusColor({
+          status: "info",
+          currentTheme,
+        });
+
+        return tagsCell(
+          [
+            {
+              tag: label,
+              color: color.base,
+            },
+          ],
+          [label],
           {
             readonly: true,
             allowOverlay: false,

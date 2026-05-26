@@ -13,7 +13,7 @@ const meta: Meta<typeof StaffListDatagrid> = {
     disabled: false,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
-    settings: { columns: ["name", "status", "email"], rowsPerPage: 20 },
+    settings: { columns: ["name", "status", "customer", "email"], rowsPerPage: 20 },
     onUpdateListSettings: fn(),
   },
   parameters: {
