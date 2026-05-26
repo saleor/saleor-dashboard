@@ -1,6 +1,7 @@
 import {
   orderListPath,
   orderListUrl,
+  orderListUrlWithChannel,
   orderListUrlWithCustomerEmail,
   orderListUrlWithCustomerId,
 } from "./urls";
@@ -63,6 +64,34 @@ describe("Order URLs", () => {
       expect(result).toContain("/orders?");
       expect(result).toContain("customer");
       expect(result).toContain(encodeURIComponent(userId));
+    });
+  });
+
+  describe("orderListUrlWithChannel", () => {
+    it("should return orderListPath when channel is undefined", () => {
+      // Arrange
+      // Act
+      const result = orderListUrlWithChannel(undefined);
+
+      // Assert
+      expect(result).toBe(orderListPath);
+    });
+
+    it("should build URL with channel filter using channel slug", () => {
+      // Arrange
+      const channel = {
+        id: "Q2hhbm5lbDox",
+        name: "Channel-USD",
+        slug: "channel-usd",
+      };
+
+      // Act
+      const result = orderListUrlWithChannel(channel);
+
+      // Assert
+      expect(result).toContain("/orders?");
+      expect(result).toContain("channel");
+      expect(result).toContain("channel-usd");
     });
   });
 });

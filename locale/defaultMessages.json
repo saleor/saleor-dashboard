@@ -7037,10 +7037,6 @@
   "aXytBR": {
     "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
   },
-  "aY0HAT": {
-    "context": "section header",
-    "string": "Sales channel"
-  },
   "aYhcie": {
     "context": "shipping method weight range",
     "string": "Weight Range"
@@ -7643,6 +7639,10 @@
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
+  },
+  "dpXfQL": {
+    "context": "channel link title and a11y label",
+    "string": "View orders from {channelName}"
   },
   "drEC/t": {
     "context": "factor label for order promotion propagated to a line",
@@ -9430,6 +9430,14 @@
   },
   "no3Ygn": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
+  },
+  "nplO5w": {
+    "context": "channel availability badge",
+    "string": "Inactive"
+  },
+  "nqWHPw": {
+    "context": "sales channel a11y label prefix",
+    "string": "Channel"
   },
   "nudPsY": {
     "context": "metadata field name, header",
