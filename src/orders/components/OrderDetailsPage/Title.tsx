@@ -3,7 +3,9 @@ import { DateTime } from "@dashboard/components/Date/DateTime";
 import { Pill } from "@dashboard/components/Pill";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
+import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { orderListUrlWithChannel } from "@dashboard/orders/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -63,7 +65,31 @@ const Title = (props: TitleProps) => {
           <Skeleton __width="10em" />
         )}
         {order?.channel && (
-          <Channel channel={order.channel} href={orderListUrlWithChannel(order.channel)} size={3} />
+          <Box
+            position="relative"
+            display="inline-flex"
+            alignItems="center"
+            __height="30px"
+            paddingRight={5}
+          >
+            <Channel
+              channel={order.channel}
+              href={orderListUrlWithChannel(order.channel)}
+              size={3}
+            />
+            <Box
+              position="absolute"
+              __top="0"
+              __right="0"
+              __width="30px"
+              __height="30px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Ripple model={rippleOrderChannelInHeader} />
+            </Box>
+          </Box>
         )}
       </Box>
     </div>
