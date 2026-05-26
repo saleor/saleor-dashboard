@@ -84,7 +84,7 @@ export const Attributes = ({
                 alignItems="flex-start"
               >
                 <Box display="flex" flexDirection="column" gap={2}>
-                  <Text size={5} fontWeight="bold">
+                  <Text size={6} fontWeight="medium">
                     {title || intl.formatMessage(messages.header)}
                   </Text>
                   <Text size={2} color="default2">
