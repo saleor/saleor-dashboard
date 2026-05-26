@@ -143,7 +143,7 @@ const CustomerDetailsPage = ({
         )}
       </Box>
       {customer?.dateJoined && (
-        <Text size={3} fontWeight="regular">
+        <Text size={3} fontWeight="regular" color="default2">
           <FormattedMessage
             defaultMessage="Member since {date}"
             description="customer detail page header, when this customer's account was created"
