@@ -1,0 +1,25 @@
+.grid {
+  display: grid;
+  gap: var(--mu-spacing-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .gridSplit {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.addressBlock {
+  position: relative;
+}
+
+.copyButton {
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.addressBlock:hover .copyButton,
+.addressBlock:focus-within .copyButton {
+  opacity: 1;
+}

@@ -26,9 +26,12 @@ export class CustomersPage extends BasePage {
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
     readonly emailPageTitleText = page.getByTestId("user-email-title"),
-    readonly customerActiveCheckbox = page
-      .getByTestId("customer-active-checkbox")
-      .locator("button"),
+    readonly cogsMenuButton = page.getByTestId("menu").getByTestId("show-more-button"),
+    readonly activateUserMenuItem = page.getByTestId("activate-user"),
+    readonly deactivateUserMenuItem = page.getByTestId("deactivate-user"),
+    readonly accountStatusActivePill = page.getByTestId("account-status-active"),
+    readonly accountStatusInactivePill = page.getByTestId("account-status-inactive"),
+    readonly accountStatusDialogConfirmButton = page.getByTestId("submit"),
     readonly amountDropdown = page.locator('div[name="balanceCurrency"]'),
     readonly customerList = page.locator('div[data-test-id="list"]'),
   ) {
@@ -83,7 +86,24 @@ export class CustomersPage extends BasePage {
     await this.issueNewGiftCardButton.click();
   }
 
-  async clickCustomerActiveCheckbox() {
-    await this.customerActiveCheckbox.click();
+  async openCogsMenu() {
+    await this.cogsMenuButton.click();
+  }
+
+  async clickActivateUser() {
+    await this.openCogsMenu();
+    await this.activateUserMenuItem.click();
+    await this.confirmAccountStatusChange();
+  }
+
+  async clickDeactivateUser() {
+    await this.openCogsMenu();
+    await this.deactivateUserMenuItem.click();
+    await this.confirmAccountStatusChange();
+  }
+
+  async confirmAccountStatusChange() {
+    await this.accountStatusDialogConfirmButton.click();
+    await this.accountStatusDialogConfirmButton.waitFor({ state: "hidden" });
   }
 }

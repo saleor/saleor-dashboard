@@ -1032,26 +1032,17 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
   email: "elizabeth.vaughn@example.com",
   firstName: "Tom",
   id: "VXNlcjoy",
+  externalReference: null,
   isActive: true,
+  isConfirmed: true,
+  isStaff: false,
   lastLogin: "2018-05-07T09:37:30.124154+00:00",
   lastName: "Cooper",
-  lastPlacedOrder: {
-    __typename: "OrderCountableConnection",
-    edges: [
-      {
-        __typename: "OrderCountableEdge",
-        node: {
-          __typename: "Order",
-          created: "2018-05-07T09:37:30.124154+00:00",
-          id: "T3JkZXI6MTk=",
-        },
-      },
-    ],
-  },
   metadata: [],
   note: null,
   orders: {
     __typename: "OrderCountableConnection",
+    totalCount: 1,
     edges: [
       {
         __typename: "OrderCountableEdge",

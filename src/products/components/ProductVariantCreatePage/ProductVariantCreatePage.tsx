@@ -297,7 +297,7 @@ export const ProductVariantCreatePage = ({
                     <DashboardCard paddingTop={6}>
                       <DashboardCard.Content>
                         <Box display="flex" flexDirection="column" gap={4} paddingBottom={4}>
-                          <Text size={5} fontWeight="bold">
+                          <Text size={6} fontWeight="medium">
                             {intl.formatMessage(messages.attributesHeader)}
                           </Text>
                           <Text size={2} color="default2">

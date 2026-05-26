@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 type Variant = "secondary" | "tertiary";
 
 export const TopNavLink = ({ to, variant = "secondary" }: { to: string; variant?: Variant }) => (
-  <Link to={to} className={sprinkles({ marginRight: 2 })}>
+  <Link to={to} className={sprinkles({ marginRight: 3 })}>
     <Button
       icon={<ArrowLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
       variant={variant}

@@ -4,6 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type ProductErrorFragment, type WarehouseFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type FormsetAtomicData, type FormsetChange } from "@dashboard/hooks/useFormset";
@@ -141,9 +142,9 @@ export const ProductStocks = ({
           <Box display="grid" gap={2} marginTop={5}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex" flexDirection="column">
-                <Text size={4} fontWeight="bold">
+                <Title2>
                   <FormattedMessage {...messages.stock} />
-                </Text>
+                </Title2>
                 {!productVariantChannelListings?.length && (
                   <Text size={2} color="default2">
                     <FormattedMessage {...messages.noChannelWarehousesAllocation} />
