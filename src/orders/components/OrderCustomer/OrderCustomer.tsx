@@ -4,6 +4,7 @@ import { formatAddressForClipboard } from "@dashboard/components/AddressFormatte
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerUrl } from "@dashboard/customers/urls";
 import {
   type OrderDetailsFragment,
@@ -15,6 +16,7 @@ import {
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
@@ -218,13 +220,18 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                 )}
                 {user && (
                   <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_USERS]}>
-                    <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
-                      <FormattedMessage
-                        id="7A+FJl"
-                        defaultMessage="View profile"
-                        description="link"
-                      />
-                    </Link>
+                    <Box position="relative" display="inline-flex" alignItems="center">
+                      <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
+                        <FormattedMessage
+                          id="7A+FJl"
+                          defaultMessage="View profile"
+                          description="link"
+                        />
+                      </Link>
+                      <Box position="absolute" __top="-8px" __right="-12px" __zIndex="1">
+                        <Ripple model={rippleNewCustomersView} />
+                      </Box>
+                    </Box>
                   </RequirePermissions>
                 )}
               </Box>

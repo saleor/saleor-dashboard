@@ -1,6 +1,8 @@
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
+import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
+import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
@@ -52,6 +54,10 @@ export const allRipples: Ripple[] = [
 
   // Channels
   checkoutAutocompleteSettings,
+
+  // Customers
+  rippleNewCustomersView,
+  rippleCustomerOverview,
 
   // Sidebar
   rippleCloudEnvLink,
