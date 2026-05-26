@@ -1,3 +1,7 @@
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { PermissionEnum } from "@dashboard/graphql";
+import { orderListUrlWithChannel } from "@dashboard/orders/urls";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { Radio } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -11,6 +15,7 @@ type ChannelTextSize = NonNullable<TextProps["size"]>;
 interface ChannelLike {
   id?: string;
   name: string;
+  slug?: string;
   isActive?: boolean;
 }
 
@@ -19,16 +24,6 @@ interface ChannelProps {
    * The channel to display. Pass `undefined` to render a skeleton placeholder while loading.
    */
   channel: ChannelLike | undefined;
-  /**
-   * Make the channel clickable by passing a target URL. The whole pill becomes
-   * a router link styled to inherit the secondary color (no underline, no blue).
-   * When omitted, the component renders as plain (non-interactive) text.
-   *
-   * Pick the destination per use-case:
-   * - `orderListUrlWithChannel(order.channel)` to scope the orders list
-   * - `channelUrl(channel.id)` to jump to channel settings (admin only)
-   */
-  href?: string;
   /**
    * Hide the leading channel icon.
    * @default false
@@ -54,6 +49,11 @@ interface ChannelProps {
    * @default "channel-display"
    */
   "data-test-id"?: string;
+  /**
+   * Native hover tooltip for the channel name.
+   * @default channel.name
+   */
+  title?: string;
 }
 
 const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
@@ -72,12 +72,12 @@ const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
 
 export const Channel = ({
   channel,
-  href,
   hideIcon = false,
   hideInactiveStatus = false,
   size = 2,
   color = "default2",
   "data-test-id": dataTestId = "channel-display",
+  title,
 }: ChannelProps): JSX.Element => {
   const intl = useIntl();
 
@@ -92,6 +92,7 @@ export const Channel = ({
   const isInactive = channel.isActive === false;
   const iconSize = ICON_SIZE_BY_TEXT_SIZE[size];
   const ariaLabel = `${intl.formatMessage(messages.channelLabel)}: ${channel.name}`;
+  const nameTitle = title ?? channel.name;
 
   const content = (
     <Text
@@ -105,7 +106,7 @@ export const Channel = ({
       aria-label={ariaLabel}
     >
       {!hideIcon && <Radio size={iconSize} aria-hidden="true" />}
-      <span className={styles.name} title={channel.name}>
+      <span className={styles.name} title={nameTitle}>
         {channel.name}
       </span>
       {isInactive && !hideInactiveStatus && (
@@ -116,13 +117,38 @@ export const Channel = ({
     </Text>
   );
 
-  if (href) {
-    return (
-      <RouterLink to={href} className={styles.link}>
-        {content}
-      </RouterLink>
-    );
+  return content;
+};
+
+export const ClickableChannel = (props: ChannelProps): JSX.Element => {
+  const { channel } = props;
+  const intl = useIntl();
+  const userPermissions = useUserPermissions();
+  const canViewChannelOrders = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.MANAGE_ORDERS,
+  ]);
+
+  if (!channel?.id || !channel.slug || !canViewChannelOrders) {
+    return <Channel {...props} />;
   }
 
-  return content;
+  const orderListChannel = {
+    id: channel.id,
+    name: channel.name,
+    slug: channel.slug,
+  };
+  const linkLabel = intl.formatMessage(messages.viewOrdersFromChannel, {
+    channelName: channel.name,
+  });
+
+  return (
+    <RouterLink
+      to={orderListUrlWithChannel(orderListChannel)}
+      className={styles.link}
+      title={linkLabel}
+      aria-label={linkLabel}
+    >
+      <Channel {...props} title={linkLabel} />
+    </RouterLink>
+  );
 };

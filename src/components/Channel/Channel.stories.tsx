@@ -1,12 +1,50 @@
+import type { UserContext as UserContextType } from "@dashboard/auth/types";
+import { UserContext } from "@dashboard/auth/useUser";
+import { PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { ComponentProps } from "react";
 
-import { Channel } from "./Channel";
+import { Channel, ClickableChannel } from "./Channel";
+
+const mockUser: UserFragment = {
+  __typename: "User",
+  id: "user-1",
+  email: "admin@example.com",
+  firstName: "Admin",
+  lastName: "User",
+  isStaff: true,
+  dateJoined: "2024-01-01T00:00:00Z",
+  metadata: [],
+  userPermissions: [
+    {
+      __typename: "UserPermission",
+      code: PermissionEnum.MANAGE_ORDERS,
+      name: "Manage orders",
+    },
+  ],
+  avatar: null,
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
+};
+
+const mockUserContext: UserContextType = {
+  login: undefined,
+  loginByExternalPlugin: undefined,
+  logout: undefined,
+  requestLoginByExternalPlugin: undefined,
+  authenticating: false,
+  isCredentialsLogin: false,
+  authenticated: true,
+  errors: [],
+  refetchUser: undefined,
+  user: mockUser,
+};
 
 const meta: Meta<typeof Channel> = {
   title: "Components/Channel",
   component: Channel,
   args: {
-    channel: { id: "Q2hhbm5lbDox", name: "Channel-USD", isActive: true },
+    channel: { id: "Q2hhbm5lbDox", name: "Channel-USD", slug: "channel-usd", isActive: true },
   },
 };
 
@@ -17,7 +55,7 @@ export const Default: Story = {};
 
 export const Inactive: Story = {
   args: {
-    channel: { id: "Q2hhbm5lbDox", name: "Channel-USD", isActive: false },
+    channel: { id: "Q2hhbm5lbDox", name: "Channel-USD", slug: "channel-usd", isActive: false },
   },
 };
 
@@ -27,10 +65,12 @@ export const WithoutIcon: Story = {
   },
 };
 
-export const AsLink: Story = {
-  args: {
-    href: "/orders?asGridString0=channel.is.input-5.Q2hhbm5lbDox.channel-usd",
-  },
+export const Clickable: Story = {
+  render: (args: ComponentProps<typeof Channel>) => (
+    <UserContext.Provider value={mockUserContext}>
+      <ClickableChannel {...args} />
+    </UserContext.Provider>
+  ),
 };
 
 export const LargerSize: Story = {
@@ -51,6 +91,7 @@ export const LongName: Story = {
     channel: {
       id: "Q2hhbm5lbDox",
       name: "European Union Storefront Channel (EUR)",
+      slug: "eu-storefront",
       isActive: true,
     },
   },

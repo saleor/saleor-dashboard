@@ -1,10 +1,9 @@
-import { Channel } from "@dashboard/components/Channel/Channel";
+import { ClickableChannel } from "@dashboard/components/Channel/Channel";
 import { DateTime } from "@dashboard/components/Date/DateTime";
 import { Pill } from "@dashboard/components/Pill";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
-import { orderListUrlWithChannel } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -72,11 +71,7 @@ const Title = (props: TitleProps) => {
             __height="30px"
             paddingRight={5}
           >
-            <Channel
-              channel={order.channel}
-              href={orderListUrlWithChannel(order.channel)}
-              size={3}
-            />
+            <ClickableChannel channel={order.channel} size={3} />
             <Box
               position="absolute"
               __top="0"

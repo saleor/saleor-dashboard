@@ -11,4 +11,9 @@ export const messages = defineMessages({
     defaultMessage: "Channel",
     description: "sales channel a11y label prefix",
   },
+  viewOrdersFromChannel: {
+    id: "dpXfQL",
+    defaultMessage: "View orders from {channelName}",
+    description: "channel link title and a11y label",
+  },
 });

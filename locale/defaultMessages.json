@@ -7578,6 +7578,10 @@
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
+  "dpXfQL": {
+    "context": "channel link title and a11y label",
+    "string": "View orders from {channelName}"
+  },
   "drEC/t": {
     "context": "factor label for order promotion propagated to a line",
     "string": "Order promotion (line share)"
