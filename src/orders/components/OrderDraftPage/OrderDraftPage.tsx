@@ -20,7 +20,6 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
@@ -173,9 +172,6 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
-        <CardSpacer />
-        <Divider />
-        <OrderChannelSectionCard channel={order?.channel} />
         {DRAFT_ORDER_DETAILS_WIDGETS.length > 0 && order.id && (
           <>
             <CardSpacer />

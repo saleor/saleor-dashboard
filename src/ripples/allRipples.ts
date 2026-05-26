@@ -8,6 +8,7 @@ import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
+import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
@@ -30,6 +31,7 @@ export const allRipples: Ripple[] = [
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
   rippleOrderLinePriceBreakdown,
+  rippleOrderChannelInHeader,
 
   // Warehouses
   rippleWarehouseMetadata,
