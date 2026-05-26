@@ -4,9 +4,8 @@ import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
-import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Pill } from "@dashboard/components/Pill";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -26,8 +25,9 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
@@ -38,7 +38,7 @@ import CustomerOrders from "../CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
 
-export interface CustomerDetailsPageFormData extends MetadataFormData {
+export interface CustomerDetailsPageFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -54,6 +54,7 @@ interface CustomerDetailsPageProps {
   onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
   onActivateToggle: () => void;
+  onShowMetadata: () => void;
 }
 
 const CustomerDetailsPage = ({
@@ -65,6 +66,7 @@ const CustomerDetailsPage = ({
   onSubmit,
   onDelete,
   onActivateToggle,
+  onShowMetadata,
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -72,11 +74,7 @@ const CustomerDetailsPage = ({
     email: customer?.email || "",
     firstName: customer?.firstName || "",
     lastName: customer?.lastName || "",
-    metadata: customer?.metadata.map(mapMetadataItemToInput),
     note: customer?.note || "",
-    privateMetadata: customer?.privateMetadata
-      ? customer?.privateMetadata.map(mapMetadataItemToInput)
-      : [],
   };
   const { CUSTOMER_DETAILS_MORE_ACTIONS, CUSTOMER_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
@@ -165,9 +163,21 @@ const CustomerDetailsPage = ({
         return (
           <DetailPageLayout>
             <TopNav href={customerBackLink} title={titleNode}>
+              <Button
+                variant="secondary"
+                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                onClick={onShowMetadata}
+                disabled={!customer}
+                data-test-id="show-customer-metadata"
+                title={intl.formatMessage({
+                  defaultMessage: "Edit customer metadata",
+                  description: "customer detail page, top-bar metadata button tooltip",
+                  id: "DR3EBs",
+                })}
+              />
               {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
             </TopNav>
-            <DetailPageLayout.Content>
+            <DetailPageLayout.Content paddingBottom={10}>
               <Backlink href={customerBackLink}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>
@@ -186,9 +196,7 @@ const CustomerDetailsPage = ({
                   orders={mapEdgesToItems(customer?.orders)}
                   viewAllHref={orderListUrlWithCustomerEmail(customer?.email)}
                 />
-                <CardSpacer />
               </RequirePermissions>
-              <Metadata data={data} onChange={change} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <AccountStatusCard customer={customer} />
