@@ -41,7 +41,7 @@ export const MetadataCard = ({
           <Accordion.Item data-test-id="metadata-item" value={ACCORDION_VALUE}>
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
-                <Text size={5} fontWeight="bold">
+                <Text size={6} fontWeight="medium">
                   {intl.formatMessage(getMetadataTitle(isPrivate))}
                 </Text>
 

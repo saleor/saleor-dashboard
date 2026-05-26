@@ -11342,6 +11342,10 @@
   "xrKHS6": {
     "string": "Success"
   },
+  "xrUNmL": {
+    "context": "customer overview stat label: sum of recent orders",
+    "string": "Spent in recent orders"
+  },
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"

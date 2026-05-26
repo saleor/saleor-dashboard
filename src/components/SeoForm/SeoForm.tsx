@@ -83,7 +83,7 @@ export const SeoForm = (props: SeoFormProps) => {
           <Accordion.Item value="seo-accordion">
             <Accordion.Trigger>
               <Box display="grid" gap={2}>
-                <Text size={5} fontWeight="bold">
+                <Text size={6} fontWeight="medium">
                   <FormattedMessage defaultMessage="Search Engine Preview" id="TGX4T1" />
                 </Text>
                 <Text size={2} color="default2">
