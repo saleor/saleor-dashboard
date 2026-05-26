@@ -4,7 +4,7 @@ import { PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentProps } from "react";
 
-import { Channel, ClickableChannel } from "./Channel";
+import { ChannelDisplay, ClickableChannel } from "./Channel";
 
 const mockUser: UserFragment = {
   __typename: "User",
@@ -40,16 +40,16 @@ const mockUserContext: UserContextType = {
   user: mockUser,
 };
 
-const meta: Meta<typeof Channel> = {
-  title: "Components/Channel",
-  component: Channel,
+const meta: Meta<typeof ChannelDisplay> = {
+  title: "Components/ChannelDisplay",
+  component: ChannelDisplay,
   args: {
     channel: { id: "Q2hhbm5lbDox", name: "Channel-USD", slug: "channel-usd", isActive: true },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Channel>;
+type Story = StoryObj<typeof ChannelDisplay>;
 
 export const Default: Story = {};
 
@@ -66,7 +66,7 @@ export const WithoutIcon: Story = {
 };
 
 export const Clickable: Story = {
-  render: (args: ComponentProps<typeof Channel>) => (
+  render: (args: ComponentProps<typeof ChannelDisplay>) => (
     <UserContext.Provider value={mockUserContext}>
       <ClickableChannel {...args} />
     </UserContext.Provider>

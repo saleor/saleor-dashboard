@@ -70,7 +70,7 @@ const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
   11: 40,
 };
 
-export const Channel = ({
+export const ChannelDisplay = ({
   channel,
   hideIcon = false,
   hideInactiveStatus = false,
@@ -129,7 +129,7 @@ export const ClickableChannel = (props: ChannelProps): JSX.Element => {
   ]);
 
   if (!channel?.id || !channel.slug || !canViewChannelOrders) {
-    return <Channel {...props} />;
+    return <ChannelDisplay {...props} />;
   }
 
   const orderListChannel = {
@@ -148,7 +148,7 @@ export const ClickableChannel = (props: ChannelProps): JSX.Element => {
       title={linkLabel}
       aria-label={linkLabel}
     >
-      <Channel {...props} title={linkLabel} />
+      <ChannelDisplay {...props} title={linkLabel} />
     </RouterLink>
   );
 };

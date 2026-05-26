@@ -1,4 +1,4 @@
-import { Channel } from "@dashboard/components/Channel/Channel";
+import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { formatMoney } from "@dashboard/components/Money";
 import { formatPercantage } from "@dashboard/components/Percent/utils";
 import { type Rule } from "@dashboard/discounts/models";
@@ -61,7 +61,7 @@ export const RulesList = <ErrorCode,>({
                   <RuleLabel ruleName={rule.name} />
 
                   {rule.channel && (
-                    <Channel
+                    <ChannelDisplay
                       channel={{
                         id: rule.channel.value,
                         name: rule.channel.label,
