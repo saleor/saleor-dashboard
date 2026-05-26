@@ -1,9 +1,9 @@
-import { DateTime } from "@dashboard/components/Date/DateTime";
+import { MerchantDate } from "@dashboard/components/Date/MerchantDate";
 import { Pill } from "@dashboard/components/Pill";
-import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface TitleProps {
@@ -38,6 +38,7 @@ const Title = (props: TitleProps) => {
   }
 
   const { localized, status } = transformOrderStatus(order.status, intl);
+  const dateKind = order.status === OrderStatus.UNCONFIRMED ? "created" : "placed";
 
   return (
     <div className={classes.container}>
@@ -53,9 +54,7 @@ const Title = (props: TitleProps) => {
 
       <div>
         {order && order.created ? (
-          <Text size={3} fontWeight="regular">
-            <DateTime date={order.created} plain />
-          </Text>
+          <MerchantDate kind={dateKind} date={order.created} />
         ) : (
           <Skeleton __width="10em" />
         )}

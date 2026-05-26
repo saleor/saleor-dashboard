@@ -1510,6 +1510,10 @@
     "context": "Product is not visible via public API",
     "string": "Not visible"
   },
+  "6fIHWa": {
+    "context": "order header date, less than a minute ago",
+    "string": "Placed just now"
+  },
   "6fxdUO": {
     "context": "section header",
     "string": "Create New Shipping Zone"
@@ -1863,6 +1867,10 @@
   "8jgfPX": {
     "context": "automatic completion disabled info message",
     "string": "Disabling automatic completion will not stop checkouts that are already scheduled for completion."
+  },
+  "8jirr+": {
+    "context": "order header date, same year and older than yesterday",
+    "string": "Created {date} at {time}"
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -3197,6 +3205,10 @@
     "context": "shipping section header",
     "string": "Shipping"
   },
+  "G2WJ1J": {
+    "context": "order header date, less than an hour ago",
+    "string": "Placed {minutes, plural, one {# minute} other {# minutes}} ago"
+  },
   "G3ay2p": {
     "context": "section header",
     "string": "Fulfillment settings"
@@ -3246,6 +3258,10 @@
   "GFkb2t": {
     "context": "automatically complete checkouts checkbox label",
     "string": "Automatically complete checkouts when fully paid"
+  },
+  "GGhg9z": {
+    "context": "order header date, earlier today",
+    "string": "Created today at {time}"
   },
   "GIuS7b": {
     "string": "creating custom extensions"
@@ -5159,6 +5175,10 @@
   "QOm7+P": {
     "string": "Create new order"
   },
+  "QQdTUC": {
+    "context": "order header date, less than a minute ago",
+    "string": "Created just now"
+  },
   "QSTD5z": {
     "context": "dialog title for order line metadata",
     "string": "Order line metadata"
@@ -5830,6 +5850,10 @@
   "UKgP89": {
     "context": "note input label",
     "string": "Note"
+  },
+  "ULBvyx": {
+    "context": "order header date, yesterday",
+    "string": "Placed yesterday at {time}"
   },
   "UN+yTt": {
     "string": "Staff Settings"
@@ -6882,6 +6906,10 @@
   "a2o5uc": {
     "context": "custom extension page create, tooltip",
     "string": "Permission cannot be chosen, because you don't have it yourself"
+  },
+  "a4iag6": {
+    "context": "order header date, earlier today",
+    "string": "Placed today at {time}"
   },
   "a55zOn": {
     "context": "section header",
@@ -8637,6 +8665,10 @@
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
+  "k8k07f": {
+    "context": "order header date, less than an hour ago",
+    "string": "Created {minutes, plural, one {# minute} other {# minutes}} ago"
+  },
   "kAAlGL": {
     "string": "Rules"
   },
@@ -9453,6 +9485,10 @@
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
   },
+  "oWIL0E": {
+    "context": "order header date, older than yesterday",
+    "string": "Created {date}"
+  },
   "oX2TAb": {
     "string": "Select gifts"
   },
@@ -9959,6 +9995,10 @@
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
     "string": "Gift Card with past expiration date cannot be created"
+  },
+  "rGj6RR": {
+    "context": "order header date, older than yesterday",
+    "string": "Placed {date}"
   },
   "rH4pi3": {
     "context": "page header",
@@ -10730,6 +10770,10 @@
   "vEwjub": {
     "context": "button",
     "string": "Open in GraphiQL"
+  },
+  "vFaikw": {
+    "context": "order header date, yesterday",
+    "string": "Created yesterday at {time}"
   },
   "vG57x5": {
     "context": "card update success alert title",
@@ -11591,6 +11635,10 @@
   "zjkAMs": {
     "context": "header",
     "string": "Translation Sale \"{saleName}\" - {languageCode}"
+  },
+  "zmKgYS": {
+    "context": "order header date, same year and older than yesterday",
+    "string": "Placed {date} at {time}"
   },
   "znbVYT": {
     "context": "product available for purchase date",
