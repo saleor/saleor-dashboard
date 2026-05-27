@@ -9,6 +9,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
+import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -70,6 +71,21 @@ const CustomerDetailsPage = ({
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  // Customer mutations all require MANAGE_USERS. Users with only
+  // MANAGE_ORDERS / MANAGE_STAFF can read this page, but every editing
+  // affordance (form fields, savebar, account actions, metadata) is
+  // hidden or disabled below.
+  //
+  // Reading + writing customer metadata (public AND private) also requires
+  // MANAGE_USERS for non-staff `User`s — see Saleor's
+  // `meta/permissions.py::public_user_permissions` and `private_user_permissions`,
+  // which key off `user.is_staff`. The customers list (`User.objects.customers`)
+  // filters `is_staff=False`, so the resolver always returns `[MANAGE_USERS]`
+  // for users reachable through this page. We therefore gate the metadata
+  // button on the same `MANAGE_USERS` flag and don't expose a read-only
+  // metadata view, since the server would deny it anyway.
+  const canEditCustomers = useCanEditCustomers();
+  const isReadOnly = !canEditCustomers;
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
     firstName: customer?.firstName || "",
@@ -90,36 +106,40 @@ const CustomerDetailsPage = ({
 
   // Account-level actions live in the cogs "More actions" menu so destructive
   // toggles (activate / deactivate) and Delete are not bundled with the form
-  // save. Delete is also kept in the savebar for discoverability.
-  const builtInMenuItems = customer
-    ? [
-        {
-          label: customer.isActive
-            ? intl.formatMessage({
-                defaultMessage: "Deactivate user",
-                description: "customer detail cogs menu, deactivates the customer account",
-                id: "zP3Rb6",
-              })
-            : intl.formatMessage({
-                defaultMessage: "Activate user",
-                description: "customer detail cogs menu, activates a deactivated customer account",
-                id: "62Rs/K",
-              }),
-          onSelect: onActivateToggle,
-          testId: customer.isActive ? "deactivate-user" : "activate-user",
-        },
-        {
-          label: intl.formatMessage({
-            defaultMessage: "Delete user",
-            description: "customer detail cogs menu, opens the delete-confirmation dialog",
-            id: "LQg8/p",
-          }),
-          onSelect: onDelete,
-          testId: "delete-user",
-          color: "critical1" as const,
-        },
-      ]
-    : [];
+  // save. Delete is also kept in the savebar for discoverability. Hidden in
+  // read-only mode because they all hit the customerUpdate / customerDelete
+  // mutations.
+  const builtInMenuItems =
+    customer && canEditCustomers
+      ? [
+          {
+            label: customer.isActive
+              ? intl.formatMessage({
+                  defaultMessage: "Deactivate user",
+                  description: "customer detail cogs menu, deactivates the customer account",
+                  id: "zP3Rb6",
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Activate user",
+                  description:
+                    "customer detail cogs menu, activates a deactivated customer account",
+                  id: "62Rs/K",
+                }),
+            onSelect: onActivateToggle,
+            testId: customer.isActive ? "deactivate-user" : "activate-user",
+          },
+          {
+            label: intl.formatMessage({
+              defaultMessage: "Delete user",
+              description: "customer detail cogs menu, opens the delete-confirmation dialog",
+              id: "LQg8/p",
+            }),
+            onSelect: onDelete,
+            testId: "delete-user",
+            color: "critical1" as const,
+          },
+        ]
+      : [];
   const menuItems = [...builtInMenuItems, ...extensionMenuItems];
 
   const customerName = getUserName(customer, true);
@@ -163,18 +183,20 @@ const CustomerDetailsPage = ({
         return (
           <DetailPageLayout>
             <TopNav href={customerBackLink} title={titleNode}>
-              <Button
-                variant="secondary"
-                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                onClick={onShowMetadata}
-                disabled={!customer}
-                data-test-id="show-customer-metadata"
-                title={intl.formatMessage({
-                  defaultMessage: "Edit customer metadata",
-                  description: "customer detail page, top-bar metadata button tooltip",
-                  id: "DR3EBs",
-                })}
-              />
+              {canEditCustomers && (
+                <Button
+                  variant="secondary"
+                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                  onClick={onShowMetadata}
+                  disabled={!customer}
+                  data-test-id="show-customer-metadata"
+                  title={intl.formatMessage({
+                    defaultMessage: "Edit customer metadata",
+                    description: "customer detail page, top-bar metadata button tooltip",
+                    id: "DR3EBs",
+                  })}
+                />
+              )}
               {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
             </TopNav>
             <DetailPageLayout.Content paddingBottom={10}>
@@ -183,7 +205,12 @@ const CustomerDetailsPage = ({
               </Backlink>
               <CustomerOverview customer={customer} />
               <CardSpacer />
-              <CustomerInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+              <CustomerInfo
+                data={data}
+                disabled={disabled || isReadOnly}
+                errors={errors}
+                onChange={change}
+              />
               <CardSpacer />
               <CustomerAddresses
                 customer={customer}
@@ -218,14 +245,20 @@ const CustomerDetailsPage = ({
               )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBar}
-                onClick={submit}
-                disabled={isSaveDisabled}
-              />
+              {canEditCustomers ? (
+                <>
+                  <Savebar.DeleteButton onClick={onDelete} />
+                  <Savebar.Spacer />
+                  <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
+                  <Savebar.ConfirmButton
+                    transitionState={saveButtonBar}
+                    onClick={submit}
+                    disabled={isSaveDisabled}
+                  />
+                </>
+              ) : (
+                <Savebar.ReadOnlyLabel />
+              )}
             </Savebar>
           </DetailPageLayout>
         );

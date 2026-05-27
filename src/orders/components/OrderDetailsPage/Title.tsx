@@ -1,7 +1,10 @@
-import { DateTime } from "@dashboard/components/Date/DateTime";
+import { ClickableChannel } from "@dashboard/components/Channel/Channel";
+import { MerchantDate } from "@dashboard/components/Date/MerchantDate";
 import { Pill } from "@dashboard/components/Pill";
-import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
+import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -38,6 +41,7 @@ const Title = (props: TitleProps) => {
   }
 
   const { localized, status } = transformOrderStatus(order.status, intl);
+  const dateKind = order.status === OrderStatus.UNCONFIRMED ? "created" : "placed";
 
   return (
     <div className={classes.container}>
@@ -51,15 +55,43 @@ const Title = (props: TitleProps) => {
         </div>
       </Box>
 
-      <div>
+      <Box display="flex" alignItems="center" gap={1.5}>
         {order && order.created ? (
-          <Text size={3} fontWeight="regular">
-            <DateTime date={order.created} plain />
-          </Text>
+          <Box display="inline-flex" alignItems="center">
+            <MerchantDate kind={dateKind} date={order.created} />
+            {order.channel && (
+              <Text as="span" size={3} fontWeight="regular" color="default2">
+                ,
+              </Text>
+            )}
+          </Box>
         ) : (
           <Skeleton __width="10em" />
         )}
-      </div>
+        {order?.channel && (
+          <Box
+            position="relative"
+            display="inline-flex"
+            alignItems="center"
+            __height="30px"
+            paddingRight={5}
+          >
+            <ClickableChannel channel={order.channel} size={3} />
+            <Box
+              position="absolute"
+              __top="0"
+              __right="0"
+              __width="30px"
+              __height="30px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Ripple model={rippleOrderChannelInHeader} />
+            </Box>
+          </Box>
+        )}
+      </Box>
     </div>
   );
 };

@@ -219,7 +219,13 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                   </Link>
                 )}
                 {user && (
-                  <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_USERS]}>
+                  <RequirePermissions
+                    oneOfPermissions={[
+                      PermissionEnum.MANAGE_USERS,
+                      PermissionEnum.MANAGE_ORDERS,
+                      PermissionEnum.MANAGE_STAFF,
+                    ]}
+                  >
                     <Box position="relative" display="inline-flex" alignItems="center">
                       <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
                         <FormattedMessage
