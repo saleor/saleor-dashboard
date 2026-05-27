@@ -145,23 +145,21 @@ export const KpiCard = ({
           {value}
         </Text>
 
-        {(delta || subtitle) && (
-          <Box display="flex" alignItems="center" gap={1}>
-            {delta && (
-              <Box display="flex" alignItems="center" gap={0.5} color={deltaTextColor[delta.trend]}>
-                <DeltaIcon trend={delta.trend} />
-                <Text size={1} fontWeight="medium" color={deltaTextColor[delta.trend]}>
-                  {delta.value}
-                </Text>
-              </Box>
-            )}
-            {subtitle && (
-              <Text size={1} color="default2">
-                {subtitle}
+        <Box display="flex" alignItems="center" gap={1} className={styles.subtitleSlot}>
+          {delta && (
+            <Box display="flex" alignItems="center" gap={0.5} color={deltaTextColor[delta.trend]}>
+              <DeltaIcon trend={delta.trend} />
+              <Text size={1} fontWeight="medium" color={deltaTextColor[delta.trend]}>
+                {delta.value}
               </Text>
-            )}
-          </Box>
-        )}
+            </Box>
+          )}
+          {subtitle && (
+            <Text size={1} color="default2">
+              {subtitle}
+            </Text>
+          )}
+        </Box>
       </Box>
     </Box>
   );

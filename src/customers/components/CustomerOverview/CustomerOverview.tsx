@@ -49,9 +49,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
   const renderRecentSubtitle = (bucket: RecentCurrencyBucket): JSX.Element =>
     bucket.count === recentOrders.length ? (
       <FormattedMessage
-        defaultMessage="across last {count, plural, one {# order} other {# orders}} in {currency}"
+        defaultMessage="Across last {count, plural, one {# order} other {# orders}} in {currency}"
         description="customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency"
-        id="HPb2tq"
+        id="TZq1Tm"
         values={{ count: bucket.count, currency: bucket.currency }}
       />
     ) : (
@@ -111,9 +111,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                 subtitle={
                   !loading && recentOrders.length > 0 ? (
                     <FormattedMessage
-                      defaultMessage="last order on {date}"
+                      defaultMessage="Last order: {date}"
                       description="customer overview, subtitle on total orders showing the most recent order date"
-                      id="sigzdd"
+                      id="PyxGqS"
                       values={{
                         date: <DateLabel date={recentOrders[0].created} plain />,
                       }}
@@ -158,9 +158,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                   icon={<Banknote size={ICON_SIZE} />}
                   title={
                     <FormattedMessage
-                      defaultMessage="Spent in recent orders"
+                      defaultMessage="Recent orders total"
                       description="customer overview stat label: sum of recent orders"
-                      id="xrUNmL"
+                      id="AJMlmz"
                     />
                   }
                   value={renderMoneyValue(bucket.spent)}
