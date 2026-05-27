@@ -2182,6 +2182,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
+  "AJMlmz": {
+    "context": "customer overview stat label: sum of recent orders",
+    "string": "Recent orders total"
+  },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
   },
@@ -3519,10 +3523,6 @@
   },
   "HP6m+q": {
     "string": "Attributes and Product Types"
-  },
-  "HPb2tq": {
-    "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
-    "string": "across last {count, plural, one {# order} other {# orders}} in {currency}"
   },
   "HQR2y0": {
     "context": "attribute value is required",
@@ -5109,6 +5109,10 @@
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
   },
+  "PyxGqS": {
+    "context": "customer overview, subtitle on total orders showing the most recent order date",
+    "string": "Last order: {date}"
+  },
   "Q+oKl+": {
     "context": "confirmation dialog description",
     "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
@@ -5756,6 +5760,10 @@
   },
   "TWoYMj": {
     "string": "Redirect to the App Page"
+  },
+  "TZq1Tm": {
+    "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
+    "string": "Across last {count, plural, one {# order} other {# orders}} in {currency}"
   },
   "TZtvTG": {
     "context": "table header required stock label",
@@ -10307,10 +10315,6 @@
     "context": "no products placeholder",
     "string": "No products are available in the channel assigned to this order."
   },
-  "sigzdd": {
-    "context": "customer overview, subtitle on total orders showing the most recent order date",
-    "string": "last order on {date}"
-  },
   "sjRXXz": {
     "string": "Order #{orderId} was placed from draft by {userEmail}"
   },
@@ -11345,10 +11349,6 @@
   },
   "xrKHS6": {
     "string": "Success"
-  },
-  "xrUNmL": {
-    "context": "customer overview stat label: sum of recent orders",
-    "string": "Spent in recent orders"
   },
   "xtUXnK": {
     "context": "export all items to csv file",
