@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
 Redesign of customer details. Adds an Overview card at the top of the customer detail page showing Total orders (with the most recent order's date), Last login, and per-currency Recent orders total + Avg order value cards.
