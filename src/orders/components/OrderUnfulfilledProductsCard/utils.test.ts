@@ -13,6 +13,12 @@ const taxedMoneyPln20 = {
     __typename: "Money" as const,
     amount: 20,
     currency: "PLN",
+    fractionDigits: 2,
+  },
+  tax: {
+    __typename: "Money" as const,
+    amount: 0,
+    currency: "PLN",
   },
 };
 
@@ -63,6 +69,11 @@ const line: OrderLineFragment = {
       amount: 20,
       currency: "PLN",
     },
+    tax: {
+      __typename: "Money",
+      amount: 0,
+      currency: "PLN",
+    },
   },
   unitPrice: {
     __typename: "TaxedMoney",
@@ -76,7 +87,15 @@ const line: OrderLineFragment = {
       amount: 20,
       currency: "PLN",
     },
+    tax: {
+      __typename: "Money",
+      amount: 0,
+      currency: "PLN",
+    },
   },
+  taxRate: 0,
+  taxClass: null,
+  voucherCode: null,
   thumbnail: null,
   discounts: null,
 };

@@ -2,24 +2,22 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { DashboardModal } from "@dashboard/components/Modal";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
-import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 
-const CustomerGiftCardsCard = () => {
+export const CustomerGiftCardsCard = () => {
   const intl = useIntl();
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
   const customerDetails = useCustomerDetails();
@@ -28,71 +26,53 @@ const CustomerGiftCardsCard = () => {
 
   const { data, loading } = useCustomerGiftCardListQuery({
     variables: {
+      userId: id,
       first: 5,
-      filter: {
-        usedBy: [id],
-      },
     },
     skip: !id,
   });
 
+  const giftCards = mapEdgesToItems(data?.user?.giftCards);
+  const hasGiftCards = !!giftCards?.length;
+
   const closeCreateDialog = () => setOpenCreateDialog(false);
-
-  const giftCards = mapEdgesToItems(data?.giftCards);
-
-  const viewAllGiftCardsUrl = giftCardListUrl({
-    usedBy: [id],
-  });
-
-  const handleCreateNewCardButton = () => {
-    setOpenCreateDialog(true);
-  };
+  const handleCreateNewCardButton = () => setOpenCreateDialog(true);
 
   return (
     <>
       <DashboardCard>
         <DashboardCard.Header>
-          <DashboardCard.Title title={intl.formatMessage(messages.customerGiftCardsCardTitle)}>
-            <FormattedMessage
-              {...(giftCards?.length
-                ? messages.customerGiftCardsPresentSubtitle
-                : messages.customerGiftCardsAbsentSubtitle)}
-            />
-            <VerticalSpacer spacing={2} />
+          <DashboardCard.Title size={6} fontWeight="medium">
+            <FormattedMessage {...messages.customerGiftCardsCardTitle} />
           </DashboardCard.Title>
           <DashboardCard.Toolbar>
-            <>
-              {!!giftCards?.length && (
-                <Link to={viewAllGiftCardsUrl}>
-                  <Button variant="tertiary">
-                    <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
-                  </Button>
-                </Link>
-              )}
-            </>
+            <Button
+              variant="secondary"
+              onClick={handleCreateNewCardButton}
+              data-test-id="issue-new-gift-card"
+              disabled={!customer}
+            >
+              <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
+            </Button>
           </DashboardCard.Toolbar>
         </DashboardCard.Header>
-
-        {!loading && giftCards ? (
-          <CollectionWithDividers
-            collection={giftCards}
-            renderItem={giftCard => (
-              <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
-            )}
-            withOuterDividers
-          />
-        ) : (
-          <Skeleton height={2} marginX={6} />
-        )}
-        <DashboardCard.BottomActions paddingX={6} paddingY={0}>
-          <Button
-            variant="secondary"
-            onClick={handleCreateNewCardButton}
-            data-test-id="issue-new-gift-card"
-          >
-            <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
-          </Button>
-        </DashboardCard.BottomActions>
+        <DashboardCard.Content>
+          {loading || !giftCards ? (
+            <Skeleton height={2} />
+          ) : hasGiftCards ? (
+            <CollectionWithDividers
+              collection={giftCards}
+              renderItem={giftCard => (
+                <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
+              )}
+              withOuterDividers
+            />
+          ) : (
+            <Placeholder>
+              <FormattedMessage {...messages.customerGiftCardsAbsentSubtitle} />
+            </Placeholder>
+          )}
+        </DashboardCard.Content>
       </DashboardCard>
       <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
         <GiftCardCreateDialogContent
@@ -113,5 +93,3 @@ const CustomerGiftCardsCard = () => {
     </>
   );
 };
-
-export default CustomerGiftCardsCard;

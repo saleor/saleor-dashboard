@@ -113,12 +113,12 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
             value: unitDiscountedPrice.amount,
             currency: unitDiscountedPrice.currency,
             undiscounted: unitUndiscountedPrice.amount,
-            lineItemId: rowData.id,
             locale,
           },
           {
             allowOverlay: false,
             readonly: true,
+            cursor: "pointer",
           },
         );
       case "status": {

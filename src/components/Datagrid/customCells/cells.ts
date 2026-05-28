@@ -148,16 +148,14 @@ interface MoneyDiscountedCellData {
   undiscounted?: string | number;
   currency: string;
   locale: Locale;
-  lineItemId?: string;
 }
 
 export function moneyDiscountedCell(
-  { value, undiscounted, currency, locale, lineItemId }: MoneyDiscountedCellData,
+  { value, undiscounted, currency, locale }: MoneyDiscountedCellData,
   opts?: Partial<GridCell>,
 ): MoneyDiscuntedCell {
   return {
     ...common,
-    cursor: "pointer",
     ...opts,
     kind: GridCellKind.Custom,
     data: {
@@ -165,7 +163,6 @@ export function moneyDiscountedCell(
       value,
       currency,
       undiscounted,
-      lineItemId,
       locale,
     },
     copyData: value?.toString() ?? "",

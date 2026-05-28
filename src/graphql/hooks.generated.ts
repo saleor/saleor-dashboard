@@ -504,6 +504,9 @@ export const CustomerDetailsFragmentDoc = gql`
   }
   note
   isActive
+  isConfirmed
+  isStaff
+  externalReference
 }
     ${CustomerFragmentDoc}
 ${AddressFragmentDoc}`;
@@ -1568,6 +1571,13 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const MoneyWithFractionDigitsFragmentDoc = gql`
+    fragment MoneyWithFractionDigits on Money {
+  amount
+  currency
+  fractionDigits
+}
+    `;
 export const TaxedMoneyFragmentDoc = gql`
     fragment TaxedMoney on TaxedMoney {
   net {
@@ -1587,8 +1597,14 @@ export const OrderLineDiscountFragmentDoc = gql`
   valueType
   value
   reason
+  total {
+    ...Money
+  }
+  unit {
+    ...Money
+  }
 }
-    `;
+    ${MoneyFragmentDoc}`;
 export const OrderLineFragmentDoc = gql`
     fragment OrderLine on OrderLine {
   id
@@ -1623,10 +1639,21 @@ export const OrderLineFragmentDoc = gql`
   quantityFulfilled
   quantityToFulfill
   totalPrice {
-    ...TaxedMoney
+    gross {
+      ...MoneyWithFractionDigits
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
   }
   undiscountedTotalPrice {
     ...TaxedMoney
+    tax {
+      ...Money
+    }
   }
   unitDiscount {
     amount
@@ -1645,6 +1672,10 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
   unitPrice {
     gross {
@@ -1655,7 +1686,17 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
+  taxRate
+  taxClass {
+    id
+    name
+  }
+  voucherCode
   thumbnail {
     url
   }
@@ -1664,6 +1705,8 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
+${MoneyWithFractionDigitsFragmentDoc}
+${MoneyFragmentDoc}
 ${TaxedMoneyFragmentDoc}
 ${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
@@ -1671,10 +1714,14 @@ export const OrderDiscountFragmentDoc = gql`
   id
   type
   name
+  translatedName
   calculationMode: valueType
   value
   reason
   amount {
+    ...Money
+  }
+  total {
     ...Money
   }
 }
@@ -2306,7 +2353,11 @@ export const OrderDetailsFragmentDoc = gql`
   userEmail
   voucher {
     id
+    name
+    code
+    type
   }
+  voucherCode
   shippingMethods {
     id
     name
@@ -7411,7 +7462,8 @@ export const CustomerDetailsDocument = gql`
     privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
       ...MetadataItem
     }
-    orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    orders(first: 10) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      totalCount
       edges {
         node {
           id
@@ -7425,14 +7477,6 @@ export const CustomerDetailsDocument = gql`
             }
           }
           chargeStatus
-        }
-      }
-    }
-    lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
-      edges {
-        node {
-          id
-          created
         }
       }
     }
@@ -10781,11 +10825,14 @@ export type GiftCardProductsCountQueryHookResult = ReturnType<typeof useGiftCard
 export type GiftCardProductsCountLazyQueryHookResult = ReturnType<typeof useGiftCardProductsCountLazyQuery>;
 export type GiftCardProductsCountQueryResult = Apollo.QueryResult<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>;
 export const CustomerGiftCardListDocument = gql`
-    query CustomerGiftCardList($first: Int, $filter: GiftCardFilterInput) {
-  giftCards(first: $first, filter: $filter) {
-    edges {
-      node {
-        ...CustomerGiftCard
+    query CustomerGiftCardList($userId: ID!, $first: Int) {
+  user(id: $userId) {
+    id
+    giftCards(first: $first) {
+      edges {
+        node {
+          ...CustomerGiftCard
+        }
       }
     }
   }
@@ -10804,12 +10851,12 @@ export const CustomerGiftCardListDocument = gql`
  * @example
  * const { data, loading, error } = useCustomerGiftCardListQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *      first: // value for 'first'
- *      filter: // value for 'filter'
  *   },
  * });
  */
-export function useCustomerGiftCardListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
+export function useCustomerGiftCardListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListDocument, options);
       }
@@ -16211,6 +16258,41 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const StockVisibilityModeDocument = gql`
+    query StockVisibilityMode {
+  shop {
+    id
+    useLegacyShippingZoneStockAvailability
+  }
+}
+    `;
+
+/**
+ * __useStockVisibilityModeQuery__
+ *
+ * To run a query within a React component, call `useStockVisibilityModeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStockVisibilityModeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStockVisibilityModeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useStockVisibilityModeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>(StockVisibilityModeDocument, options);
+      }
+export function useStockVisibilityModeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>(StockVisibilityModeDocument, options);
+        }
+export type StockVisibilityModeQueryHookResult = ReturnType<typeof useStockVisibilityModeQuery>;
+export type StockVisibilityModeLazyQueryHookResult = ReturnType<typeof useStockVisibilityModeLazyQuery>;
+export type StockVisibilityModeQueryResult = Apollo.QueryResult<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
   shop {
@@ -18842,7 +18924,7 @@ export type ChangeUserPasswordMutationHookResult = ReturnType<typeof useChangeUs
 export type ChangeUserPasswordMutationResult = Apollo.MutationResult<Types.ChangeUserPasswordMutation>;
 export type ChangeUserPasswordMutationOptions = Apollo.BaseMutationOptions<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>;
 export const StaffListDocument = gql`
-    query StaffList($first: Int, $after: String, $last: Int, $before: String, $filter: StaffUserInput, $sort: UserSortingInput) {
+    query StaffList($first: Int, $after: String, $last: Int, $before: String, $filter: StaffUserInput, $sort: UserSortingInput, $includeCustomerData: Boolean = false) {
   staffUsers(
     before: $before
     after: $after
@@ -18857,6 +18939,13 @@ export const StaffListDocument = gql`
         ...StaffMember
         avatar(size: 128) {
           url
+        }
+        orders(first: 1) @include(if: $includeCustomerData) {
+          edges {
+            node {
+              id
+            }
+          }
         }
       }
     }
@@ -18888,6 +18977,7 @@ export const StaffListDocument = gql`
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      includeCustomerData: // value for 'includeCustomerData'
  *   },
  * });
  */
@@ -18906,6 +18996,13 @@ export const StaffMemberDetailsDocument = gql`
     query StaffMemberDetails($id: ID!) {
   user(id: $id) {
     ...StaffMemberDetails
+    orders(first: 1) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
   }
 }
     ${StaffMemberDetailsFragmentDoc}`;

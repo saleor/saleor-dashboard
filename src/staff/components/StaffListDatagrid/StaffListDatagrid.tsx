@@ -62,7 +62,7 @@ export const StaffListDatagrid = ({
       intl,
       currentTheme,
     }),
-    [staffMembers, intl, visibleColumns],
+    [staffMembers, intl, visibleColumns, currentTheme],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {

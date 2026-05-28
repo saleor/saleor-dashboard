@@ -8,6 +8,7 @@ export const staffList = gql`
     $before: String
     $filter: StaffUserInput
     $sort: UserSortingInput
+    $includeCustomerData: Boolean = false
   ) {
     staffUsers(
       before: $before
@@ -23,6 +24,13 @@ export const staffList = gql`
           ...StaffMember
           avatar(size: 128) {
             url
+          }
+          orders(first: 1) @include(if: $includeCustomerData) {
+            edges {
+              node {
+                id
+              }
+            }
           }
         }
       }
@@ -40,6 +48,13 @@ export const staffMemberDetails = gql`
   query StaffMemberDetails($id: ID!) {
     user(id: $id) {
       ...StaffMemberDetails
+      orders(first: 1) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
 `;

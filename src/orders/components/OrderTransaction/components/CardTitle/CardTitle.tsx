@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Title2 } from "@dashboard/components/Title2/Title2";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
@@ -88,9 +89,7 @@ const TransactionTitle = ({
     <Box display="flex" flexDirection="column" gap={0.5}>
       <Box display="flex" alignItems="center" gap={2}>
         {chevron}
-        <Text size={4} fontWeight="medium">
-          {transactionTitle}
-        </Text>
+        <Title2>{transactionTitle}</Title2>
         {transaction.externalUrl && (
           <Box
             as="a"

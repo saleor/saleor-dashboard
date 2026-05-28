@@ -1,0 +1,9 @@
+.subtleLink {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.subtleLink:hover {
+  text-decoration: underline;
+}

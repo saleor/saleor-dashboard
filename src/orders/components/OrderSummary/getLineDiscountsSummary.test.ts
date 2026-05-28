@@ -28,6 +28,16 @@ const makeLine = ({
           valueType: DiscountValueTypeEnum.FIXED,
           value: unitDiscountAmount,
           reason: "",
+          total: {
+            __typename: "Money" as const,
+            amount: unitDiscountAmount * quantity,
+            currency: "USD",
+          },
+          unit: {
+            __typename: "Money" as const,
+            amount: unitDiscountAmount,
+            currency: "USD",
+          },
         },
       ]
     : [],
@@ -167,6 +177,95 @@ describe("getLineDiscountsSummary", () => {
     // Assert
     expect(result).toHaveLength(1);
     expect(result[0].type).toBe(OrderDiscountType.VOUCHER);
+  });
+
+  it("uses discount.total.amount over unitDiscount * quantity when both are present", () => {
+    // The backend is the source of truth for each discount's total. The
+    // legacy unitDiscount can lag behind on cross-line voucher allocations.
+    // Arrange
+    const line: LineInput = {
+      unitDiscount: { __typename: "Money" as const, amount: 5, currency: "USD" },
+      quantity: 2,
+      discounts: [
+        {
+          __typename: "OrderLineDiscount" as const,
+          id: "d-1",
+          type: OrderDiscountType.PROMOTION,
+          name: "Summer",
+          translatedName: null,
+          valueType: DiscountValueTypeEnum.FIXED,
+          value: 5,
+          reason: null,
+          total: { __typename: "Money" as const, amount: 7, currency: "USD" },
+          unit: { __typename: "Money" as const, amount: 3.5, currency: "USD" },
+        },
+      ],
+    };
+
+    // Act
+    const result = getLineDiscountsSummary([line]);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        type: OrderDiscountType.PROMOTION,
+        lineCount: 1,
+        totalAmount: 7, // not 10 (5 * 2)
+      },
+    ]);
+  });
+
+  it("sums multiple discount entries on the same line by type", () => {
+    // A single line can carry several discount records (e.g. a catalogue
+    // promotion AND a separate manual line discount). They must be split
+    // into the right summary buckets.
+    // Arrange
+    const line: LineInput = {
+      unitDiscount: { __typename: "Money" as const, amount: 5, currency: "USD" },
+      quantity: 1,
+      discounts: [
+        {
+          __typename: "OrderLineDiscount" as const,
+          id: "d-1",
+          type: OrderDiscountType.PROMOTION,
+          name: "Summer",
+          translatedName: null,
+          valueType: DiscountValueTypeEnum.FIXED,
+          value: 3,
+          reason: null,
+          total: { __typename: "Money" as const, amount: 3, currency: "USD" },
+          unit: { __typename: "Money" as const, amount: 3, currency: "USD" },
+        },
+        {
+          __typename: "OrderLineDiscount" as const,
+          id: "d-2",
+          type: OrderDiscountType.MANUAL,
+          name: "Goodwill",
+          translatedName: null,
+          valueType: DiscountValueTypeEnum.FIXED,
+          value: 2,
+          reason: "support",
+          total: { __typename: "Money" as const, amount: 2, currency: "USD" },
+          unit: { __typename: "Money" as const, amount: 2, currency: "USD" },
+        },
+      ],
+    };
+
+    // Act
+    const result = getLineDiscountsSummary([line]);
+
+    // Assert
+    expect(result).toHaveLength(2);
+    expect(result).toContainEqual({
+      type: OrderDiscountType.PROMOTION,
+      lineCount: 1,
+      totalAmount: 3,
+    });
+    expect(result).toContainEqual({
+      type: OrderDiscountType.MANUAL,
+      lineCount: 1,
+      totalAmount: 2,
+    });
   });
 
   it("skips lines with empty discounts array", () => {

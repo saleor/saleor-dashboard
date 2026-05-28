@@ -1,46 +1,76 @@
-// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Hr } from "@dashboard/components/Hr";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { CheckIcon, CopyIcon } from "lucide-react";
+import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { maybe } from "../../../misc";
-
-const useStyles = makeStyles(
-  theme => ({
-    label: {
-      fontWeight: 600,
-      marginBottom: theme.spacing(1),
-    },
-  }),
-  { name: "CustomerAddresses" },
-);
+import styles from "./CustomerAddresses.module.css";
 
 interface CustomerAddressesProps {
-  customer: CustomerDetailsFragment;
+  customer: CustomerDetailsFragment | null | undefined;
   disabled: boolean;
   manageAddressHref: string;
 }
 
-const CustomerAddresses = (props: CustomerAddressesProps) => {
-  const { customer, disabled, manageAddressHref } = props;
-  const classes = useStyles(props);
+interface AddressBlockProps {
+  label: ReactNode;
+  address: NonNullable<CustomerDetailsFragment["defaultBillingAddress"]>;
+}
+
+const AddressBlock = ({ label, address }: AddressBlockProps): JSX.Element => {
   const intl = useIntl();
+  const [copied, copy] = useClipboard();
+  const copyAriaLabel = intl.formatMessage(buttonMessages.copyToClipboard);
 
   return (
-    <DashboardCard>
+    <Box className={styles.addressBlock} display="flex" flexDirection="column" gap={2}>
+      <Text color="default2" size={4}>
+        {label}
+      </Text>
+      <Box position="relative">
+        <AddressFormatter address={address} />
+        <Box
+          position="absolute"
+          __right={0}
+          __top={0}
+          className={styles.copyButton}
+          pointerEvents={copied ? "auto" : undefined}
+        >
+          <Button
+            variant="tertiary"
+            size="small"
+            icon={copied ? <CheckIcon size={14} /> : <CopyIcon size={14} />}
+            onClick={() => copy(formatAddressForClipboard(address))}
+            aria-label={copyAriaLabel}
+            title={copyAriaLabel}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+const CustomerAddresses = ({
+  customer,
+  disabled,
+  manageAddressHref,
+}: CustomerAddressesProps): JSX.Element => {
+  const billing = customer?.defaultBillingAddress ?? null;
+  const shipping = customer?.defaultShippingAddress ?? null;
+  const sameAddress = billing && shipping && billing.id === shipping.id;
+  const hasAnyAddress = billing !== null || shipping !== null;
+
+  return (
+    <DashboardCard data-test-id="customer-addresses">
       <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "BfJGij",
-            defaultMessage: "Address Information",
-            description: "header",
-          })}
+        <DashboardCard.Title size={6} fontWeight="medium">
+          <FormattedMessage id="BfJGij" defaultMessage="Address Information" description="header" />
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           <Link to={manageAddressHref}>
@@ -50,54 +80,53 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
           </Link>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      {maybe(() => customer.defaultBillingAddress.id) !==
-      maybe(() => customer.defaultShippingAddress.id) ? (
-        <>
-          {maybe(() => customer.defaultBillingAddress) !== null && (
-            <DashboardCard.Content>
-              <Text className={classes.label}>
-                <FormattedMessage
-                  id="biVFKU"
-                  defaultMessage="Billing Address"
-                  description="subsection header"
-                />
-              </Text>
-              <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
-            </DashboardCard.Content>
-          )}
-          {maybe(() => customer.defaultBillingAddress && customer.defaultShippingAddress) && <Hr />}
-          {maybe(() => customer.defaultShippingAddress) && (
-            <DashboardCard.Content>
-              <Text className={classes.label}>
-                <FormattedMessage
-                  id="Zd3Eew"
-                  defaultMessage="Shipping Address"
-                  description="subsection header"
-                />
-              </Text>
-              <AddressFormatter address={maybe(() => customer.defaultShippingAddress)} />
-            </DashboardCard.Content>
-          )}
-        </>
-      ) : maybe(() => customer.defaultBillingAddress) === null &&
-        maybe(() => customer.defaultShippingAddress) === null ? (
-        <DashboardCard.Content>
+      <DashboardCard.Content>
+        {!hasAnyAddress ? (
           <Text>
             <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
           </Text>
-        </DashboardCard.Content>
-      ) : (
-        <DashboardCard.Content>
-          <Text className={classes.label}>
-            <FormattedMessage
-              id="bHdFph"
-              defaultMessage="Address"
-              description="subsection header"
+        ) : sameAddress ? (
+          <Box className={`${styles.grid}`}>
+            <AddressBlock
+              label={
+                <FormattedMessage
+                  defaultMessage="Default address"
+                  description="customer detail, label above the address when default billing and default shipping are the same"
+                  id="U+Fl4Z"
+                />
+              }
+              address={billing}
             />
-          </Text>
-          <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
-        </DashboardCard.Content>
-      )}
+          </Box>
+        ) : (
+          <Box className={`${styles.grid} ${styles.gridSplit}`}>
+            {billing && (
+              <AddressBlock
+                label={
+                  <FormattedMessage
+                    id="biVFKU"
+                    defaultMessage="Billing Address"
+                    description="subsection header"
+                  />
+                }
+                address={billing}
+              />
+            )}
+            {shipping && (
+              <AddressBlock
+                label={
+                  <FormattedMessage
+                    id="Zd3Eew"
+                    defaultMessage="Shipping Address"
+                    description="subsection header"
+                  />
+                }
+                address={shipping}
+              />
+            )}
+          </Box>
+        )}
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

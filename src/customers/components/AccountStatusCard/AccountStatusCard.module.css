@@ -1,0 +1,12 @@
+.list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--mu-spacing-6);
+  row-gap: var(--mu-spacing-3);
+  align-items: center;
+  min-width: 0;
+}
+
+.list > :nth-child(even) {
+  justify-self: end;
+}

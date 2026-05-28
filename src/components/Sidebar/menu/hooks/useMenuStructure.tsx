@@ -4,6 +4,7 @@ import { collectionListUrl } from "@dashboard/collections/urls";
 import { iconSize } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
+import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/SidebarAppAlert";
@@ -32,6 +33,7 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
@@ -190,7 +192,11 @@ export function useMenuStructure() {
         ? [
             {
               label: intl.formatMessage(sectionNames.customers),
-              permissions: [PermissionEnum.MANAGE_USERS],
+              permissions: [
+                PermissionEnum.MANAGE_USERS,
+                PermissionEnum.MANAGE_ORDERS,
+                PermissionEnum.MANAGE_STAFF,
+              ],
               id: "customers",
               url: customerListUrl(),
               type: "item",
@@ -200,7 +206,15 @@ export function useMenuStructure() {
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
-      permissions: [PermissionEnum.MANAGE_USERS],
+      // Sidebar gating uses any-of matching, so users with only MANAGE_ORDERS
+      // or MANAGE_STAFF can navigate to customer pages in read-only mode while
+      // edit affordances remain hidden inside the section itself.
+      permissions: [
+        PermissionEnum.MANAGE_USERS,
+        PermissionEnum.MANAGE_ORDERS,
+        PermissionEnum.MANAGE_STAFF,
+      ],
+      endAdornment: <Ripple model={rippleNewCustomersView} />,
       id: "customers",
       url: customerListUrl(),
       type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",

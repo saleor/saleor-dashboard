@@ -14,6 +14,11 @@ export const columnsMessages = defineMessages({
     id: "tzMNF3",
     defaultMessage: "Status",
   },
+  customer: {
+    id: "Kn37JQ",
+    defaultMessage: "Customer",
+    description: "staff list column showing whether staff user has placed orders",
+  },
 });
 
 export const messages = defineMessages({

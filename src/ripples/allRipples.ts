@@ -1,18 +1,23 @@
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
+import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
+import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
+import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
+import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple } from "@dashboard/ripples/types";
+import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
@@ -28,6 +33,8 @@ export const allRipples: Ripple[] = [
   rippleOrderMetadata,
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
+  rippleOrderLinePriceBreakdown,
+  rippleOrderChannelInHeader,
 
   // Warehouses
   rippleWarehouseMetadata,
@@ -52,6 +59,13 @@ export const allRipples: Ripple[] = [
 
   // Channels
   checkoutAutocompleteSettings,
+
+  // Customers
+  rippleNewCustomersView,
+  rippleCustomerOverview,
+
+  // Staff
+  rippleStaffCustomerProfiles,
 
   // Sidebar
   rippleCloudEnvLink,

@@ -33,12 +33,14 @@ const lineBase = (
     __typename: "TaxedMoney" as const,
     gross: { __typename: "Money" as const, amount: unitGross, currency: "USD" },
     net: { __typename: "Money" as const, amount: unitGross, currency: "USD" },
+    tax: { __typename: "Money" as const, amount: 0, currency: "USD" },
   },
   undiscountedUnitPrice: {
     __typename: "TaxedMoney" as const,
     currency: "USD",
     gross: { __typename: "Money" as const, amount: undiscountedGross, currency: "USD" },
     net: { __typename: "Money" as const, amount: undiscountedGross, currency: "USD" },
+    tax: { __typename: "Money" as const, amount: 0, currency: "USD" },
   },
 });
 
@@ -61,6 +63,8 @@ const orderLineDiscount = ({
   valueType: DiscountValueTypeEnum.FIXED,
   value: 1,
   reason: null as string | null,
+  total: { __typename: "Money" as const, amount: 0, currency: "USD" },
+  unit: { __typename: "Money" as const, amount: 0, currency: "USD" },
 });
 
 const orderDiscount = (
@@ -72,10 +76,12 @@ const orderDiscount = (
   id,
   type,
   name,
+  translatedName: null,
   value: 0,
   reason: null as string | null,
   calculationMode: DiscountValueTypeEnum.FIXED,
   amount: { __typename: "Money" as const, amount: 0, currency: "USD" },
+  total: { __typename: "Money" as const, amount: 0, currency: "USD" },
 });
 
 type OrderLineManualDiscountStub = Pick<
@@ -102,6 +108,8 @@ const manualOrderLineDiscount = ({
   valueType,
   value,
   reason,
+  total: { __typename: "Money" as const, amount: 0, currency: "USD" },
+  unit: { __typename: "Money" as const, amount: 0, currency: "USD" },
 });
 
 const defaultUnitDiscount = {
@@ -115,6 +123,7 @@ const defaultUndiscountedUnitPrice = {
   currency: "USD",
   gross: { __typename: "Money" as const, amount: 50, currency: "USD" },
   net: { __typename: "Money" as const, amount: 40, currency: "USD" },
+  tax: { __typename: "Money" as const, amount: 10, currency: "USD" },
 };
 
 const orderLineWithManualContext = ({

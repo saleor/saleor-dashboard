@@ -1,3 +1,4 @@
+import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { formatMoney } from "@dashboard/components/Money";
 import { formatPercantage } from "@dashboard/components/Percent/utils";
 import { type Rule } from "@dashboard/discounts/models";
@@ -5,7 +6,6 @@ import { RewardTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { Radio } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context";
@@ -52,7 +52,6 @@ export const RulesList = <ErrorCode,>({
         const hasError = errors.some(error => error.index === index);
         const currencySymbol = getCurencySymbol(rule.channel, channels);
         const channelData = rule.channel ? channels.find(c => c.id === rule.channel?.value) : null;
-        const isChannelInactive = channelData ? !channelData.isActive : false;
 
         return (
           <RuleWrapper key={rule.id || index} hasError={hasError}>
@@ -62,22 +61,13 @@ export const RulesList = <ErrorCode,>({
                   <RuleLabel ruleName={rule.name} />
 
                   {rule.channel && (
-                    <Text
-                      size={2}
-                      color="default2"
-                      fontWeight="medium"
-                      display="flex"
-                      alignItems="center"
-                      gap={1}
-                    >
-                      <Radio size={14} />
-                      {rule.channel.label}
-                      {isChannelInactive && (
-                        <Text size={2} color="critical1">
-                          ({intl.formatMessage(messages.channelInactive)})
-                        </Text>
-                      )}
-                    </Text>
+                    <ChannelDisplay
+                      channel={{
+                        id: rule.channel.value,
+                        name: rule.channel.label,
+                        isActive: channelData?.isActive ?? true,
+                      }}
+                    />
                   )}
                 </Box>
 
