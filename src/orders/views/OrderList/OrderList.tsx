@@ -24,9 +24,10 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { BulkOrderImportDialog } from "../../components/BulkOrderImportDialog/BulkOrderImportDialog";
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
   orderListUrl,
@@ -135,6 +136,7 @@ const OrderList = ({ params }: OrderListProps) => {
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, orderListUrl, params);
+  const [bulkChannel, setBulkChannel] = useState<{ slug: string; name: string } | null>(null);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -194,8 +196,22 @@ const OrderList = ({ params }: OrderListProps) => {
               },
             })
           }
+          onBulkOrder={channelId => {
+            const picked = channels.find(c => c.id === channelId);
+
+            if (!picked) return;
+
+            closeModal();
+            setBulkChannel({ slug: picked.slug, name: picked.name });
+          }}
         />
       )}
+      <BulkOrderImportDialog
+        open={bulkChannel !== null}
+        channelSlug={bulkChannel?.slug ?? ""}
+        channelName={bulkChannel?.name ?? ""}
+        onClose={() => setBulkChannel(null)}
+      />
     </PaginatorContext.Provider>
   );
 };

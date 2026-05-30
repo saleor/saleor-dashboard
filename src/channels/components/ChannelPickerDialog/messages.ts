@@ -11,4 +11,9 @@ export const messages = defineMessages({
     defaultMessage: "Select a channel",
     description: "dialog header",
   },
+  bulkOrder: {
+    id: "NhNByJ",
+    defaultMessage: "Bulk order",
+    description: "secondary action button — open CSV bulk order import",
+  },
 });
