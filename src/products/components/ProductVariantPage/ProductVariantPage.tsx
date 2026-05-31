@@ -37,6 +37,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
+import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
@@ -255,6 +256,7 @@ export const ProductVariantPage = ({
           disabled={!variant}
           data-test-id="show-variant-metadata"
           title={intl.formatMessage(messages.editVariantMetadata)}
+          ripple={rippleProductVariantMetadata}
         />
         {canTranslate && (
           <TranslationsButton

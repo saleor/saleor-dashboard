@@ -20,6 +20,7 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
@@ -116,6 +117,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           disabled={!order}
           data-test-id="show-order-metadata"
           title={intl.formatMessage(orderDetailsPageMessages.editOrderMetadata)}
+          ripple={rippleDraftOrderMetadata}
         />
         <TopNav.Menu
           items={[

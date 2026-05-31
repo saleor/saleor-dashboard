@@ -24,6 +24,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -208,6 +209,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onClick={onOrderShowMetadata}
                 data-test-id="show-order-metadata"
                 title={intl.formatMessage(messages.editOrderMetadata)}
+                ripple={rippleOrderMetadata}
               />
 
               <TopNav.Menu

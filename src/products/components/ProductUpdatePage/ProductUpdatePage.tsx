@@ -51,6 +51,7 @@ import ProductExternalMediaDialog from "@dashboard/products/components/ProductEx
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
+import { rippleProductMetadata } from "@dashboard/products/ripples/productMetadata";
 import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
 import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
@@ -427,6 +428,7 @@ const ProductUpdatePage = ({
                   disabled={!product}
                   data-test-id="show-product-metadata"
                   title={intl.formatMessage(messages.editProductMetadata)}
+                  ripple={rippleProductMetadata}
                 />
                 {canTranslate && (
                   <TranslationsButton
