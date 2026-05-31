@@ -1,4 +1,6 @@
 import { ClickableProductType } from "@dashboard/components/ProductType/ProductType";
+import { rippleProductTypeInHeader } from "@dashboard/products/ripples/productTypeInHeader";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
@@ -57,14 +59,34 @@ export const ProductDetailsTitle = ({ product, loading }: ProductDetailsTitlePro
         {product.name}
       </Box>
       {product.productType?.name && (
-        <ClickableProductType
-          productType={{
-            id: product.productType.id,
-            name: product.productType.name,
-            slug: product.productType.slug,
-          }}
-          size={3}
-        />
+        <Box
+          position="relative"
+          display="flex"
+          alignItems="center"
+          __height="30px"
+          paddingRight={5}
+        >
+          <ClickableProductType
+            productType={{
+              id: product.productType.id,
+              name: product.productType.name,
+              slug: product.productType.slug,
+            }}
+            size={3}
+          />
+          <Box
+            position="absolute"
+            __top="0"
+            __right="0"
+            __width="30px"
+            __height="30px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Ripple model={rippleProductTypeInHeader} />
+          </Box>
+        </Box>
       )}
     </div>
   );
