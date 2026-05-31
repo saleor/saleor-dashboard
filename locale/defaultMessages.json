@@ -50,6 +50,10 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
+  "+LyCI8": {
+    "context": "detail page top bar, settings menu button tooltip",
+    "string": "More actions"
+  },
   "+PclgM": {
     "context": "tabel column header",
     "string": "Total"
@@ -3514,6 +3518,10 @@
     "context": "draft created from replace event title",
     "string": "Draft was reissued from order"
   },
+  "H6ad9p": {
+    "context": "product variant detail page, top-bar metadata button tooltip",
+    "string": "Edit variant metadata"
+  },
   "HA0fD3": {
     "string": "Channel created"
   },
@@ -5110,6 +5118,10 @@
     "context": "add attribute value",
     "string": "Add Value"
   },
+  "ProductUpdate.editProductMetadata": {
+    "context": "product detail page, top-bar metadata button tooltip",
+    "string": "Edit product metadata"
+  },
   "PrxZ/P": {
     "context": "onboarding step description",
     "string": "We'll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
@@ -6476,6 +6488,10 @@
   },
   "XOkUxQ": {
     "string": "Product unavailable in voucher channels"
+  },
+  "XP5btK": {
+    "context": "product variant metadata dialog header",
+    "string": "Variant Metadata"
   },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
@@ -9306,6 +9322,10 @@
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
+  "mykruj": {
+    "context": "detail page top bar, translations button tooltip",
+    "string": "Open translations"
+  },
   "mzASqs": {
     "context": "days after label",
     "string": "days after issue"
@@ -9711,6 +9731,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pLSGmd": {
+    "context": "product metadata dialog header",
+    "string": "Product Metadata"
+  },
   "pMAlSC": {
     "context": "Shown when a value cannot be determined due to permissions",
     "string": "Unknown"
@@ -10051,6 +10075,10 @@
   "quV5zH": {
     "context": "dialog title",
     "string": "Delete Token"
+  },
+  "qvaap2": {
+    "context": "order detail page, top-bar metadata button tooltip",
+    "string": "Edit order metadata"
   },
   "qwp4zK": {
     "context": "Health check subtitle when product can be purchased",

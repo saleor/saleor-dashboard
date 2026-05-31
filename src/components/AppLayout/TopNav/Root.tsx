@@ -69,7 +69,7 @@ export const Root = ({
           display="flex"
           flexWrap="nowrap"
           height="100%"
-          gap={2}
+          gap={3}
           __flex={isAlignToRight ? "initial" : 1}
         >
           {isPickerActive && channels.length > 0 && (

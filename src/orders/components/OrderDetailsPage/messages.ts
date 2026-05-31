@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Open this order in GraphiQL",
     description: "open new window button",
   },
+  editOrderMetadata: {
+    id: "qvaap2",
+    defaultMessage: "Edit order metadata",
+    description: "order detail page, top-bar metadata button tooltip",
+  },
 });

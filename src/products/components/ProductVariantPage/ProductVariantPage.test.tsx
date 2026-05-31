@@ -251,6 +251,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
     attributeValues: [],
     onSubmit: jest.fn(),
     onDelete: jest.fn(),
+    onShowMetadata: jest.fn(),
     onVariantPreorderDeactivate: jest.fn(),
     variantDeactivatePreoderButtonState: "default" as const,
     onVariantReorder: jest.fn(),

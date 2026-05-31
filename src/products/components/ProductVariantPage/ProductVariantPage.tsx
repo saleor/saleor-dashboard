@@ -22,7 +22,6 @@ import Grid from "@dashboard/components/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -77,6 +76,11 @@ import {
 import { VariantAttributesSection } from "./VariantAttributesSection";
 
 const messages = defineMessages({
+  editVariantMetadata: {
+    id: "H6ad9p",
+    defaultMessage: "Edit variant metadata",
+    description: "product variant detail page, top-bar metadata button tooltip",
+  },
   nonSelectionAttributes: {
     id: "f3B4tc",
     defaultMessage: "Variant Attributes",
@@ -131,6 +135,7 @@ interface ProductVariantPageProps {
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
+  onShowMetadata: () => void;
   onSubmit: (data: ProductVariantUpdateSubmitData) => any;
   onSetDefaultVariant: () => any;
   onWarehouseConfigure: () => any;
@@ -158,6 +163,7 @@ export const ProductVariantPage = ({
   referenceCollections = [],
   attributeValues,
   onDelete,
+  onShowMetadata,
   onSubmit,
   onVariantPreorderDeactivate,
   variantDeactivatePreoderButtonState,
@@ -241,10 +247,14 @@ export const ProductVariantPage = ({
         }
       >
         {variant?.product?.defaultVariant?.id !== variant?.id && (
-          <Box marginRight={3}>
-            <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
-          </Box>
+          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
         )}
+        <TopNav.MetadataButton
+          onClick={onShowMetadata}
+          disabled={!variant}
+          data-test-id="show-variant-metadata"
+          title={intl.formatMessage(messages.editVariantMetadata)}
+        />
         {canTranslate && (
           <TranslationsButton
             onClick={() =>
@@ -253,7 +263,7 @@ export const ProductVariantPage = ({
           />
         )}
       </TopNav>
-      <DetailPageLayout.Content>
+      <DetailPageLayout.Content paddingBottom={10}>
         <ProductVariantUpdateForm
           key={variant?.id}
           variant={variant}
@@ -458,8 +468,6 @@ export const ProductVariantPage = ({
                       isCreate={false}
                       searchWarehouses={searchWarehouses}
                     />
-                    <CardSpacer />
-                    <Metadata data={data} onChange={handlers.changeMetadata} />
                   </div>
                 </Grid>
                 <Savebar>
