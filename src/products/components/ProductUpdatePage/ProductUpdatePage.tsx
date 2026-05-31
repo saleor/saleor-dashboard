@@ -56,6 +56,7 @@ import { productImageUrl, productListPath, productListUrl } from "@dashboard/pro
 import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
@@ -79,6 +80,7 @@ import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import { ProductDetailsTitle } from "./Title";
 import {
   type ProductUpdateData,
   type ProductUpdateHandlers,
@@ -102,7 +104,7 @@ interface ProductUpdatePageProps {
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
   product?: ProductDetailsQuery["product"];
-  header: string;
+  loading?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
@@ -158,9 +160,9 @@ const ProductUpdatePage = ({
   fetchMoreCategories,
   fetchMoreCollections,
   media,
-  header,
   limits,
   product,
+  loading,
   saveButtonBarState,
   variants,
   taxClasses,
@@ -273,6 +275,27 @@ const ProductUpdatePage = ({
     context.setVariables(`{ "id": "${product?.id}" }`);
     context.setDevModeVisibility(true);
   };
+  const canManageProductTypes =
+    user && hasPermission(PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES, user);
+  const builtInMenuItems = useMemo(() => {
+    const items = [];
+
+    if (canManageProductTypes && product?.productType?.id) {
+      items.push({
+        label: intl.formatMessage(messages.openProductTypeSettings),
+        onSelect: () => navigate(productTypeUrl(product.productType.id)),
+        testId: "open-product-type-settings",
+      });
+    }
+
+    items.push({
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: openPlaygroundURL,
+      testId: "graphiql-redirect",
+    });
+
+    return items;
+  }, [canManageProductTypes, intl, navigate, product?.productType?.id]);
   const backLinkProductUrl = useBackLinkWithState({
     path: productListPath,
   });
@@ -420,7 +443,10 @@ const ProductUpdatePage = ({
         return (
           <>
             <DetailPageLayout>
-              <TopNav href={backLinkProductUrl} title={header}>
+              <TopNav
+                href={backLinkProductUrl}
+                title={<ProductDetailsTitle product={product} loading={loading} />}
+              >
                 {canTranslate && (
                   <TranslationsButton
                     marginRight={3}
@@ -430,14 +456,7 @@ const ProductUpdatePage = ({
                   />
                 )}
                 <TopNav.Menu
-                  items={[
-                    ...extensionMenuItems,
-                    {
-                      label: intl.formatMessage(messages.openGraphiQL),
-                      onSelect: openPlaygroundURL,
-                      testId: "graphiql-redirect",
-                    },
-                  ]}
+                  items={[...extensionMenuItems, ...builtInMenuItems]}
                   dataTestId="menu"
                 />
               </TopNav>
@@ -531,6 +550,7 @@ const ProductUpdatePage = ({
               <DetailPageLayout.RightSidebar>
                 <ProductOrganization
                   canChangeType={false}
+                  hideProductType
                   categories={categories}
                   categoryInputDisplayValue={selectedCategory}
                   collections={collections}

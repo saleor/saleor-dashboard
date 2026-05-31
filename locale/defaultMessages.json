@@ -703,6 +703,10 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "26U5ba": {
+    "context": "product type scope link in product header, opens filtered catalog list",
+    "string": "View products of {productTypeName}"
+  },
   "28vvyx": {
     "context": "deselect all values button",
     "string": "None"
@@ -6185,6 +6189,10 @@
     "context": "dialog subtitle explaining what user should do",
     "string": "Select attribute values to create all possible variant combinations"
   },
+  "VxK8p2": {
+    "context": "tooltip on product type label in header when slug is missing and catalog filter link is unavailable",
+    "string": "Cannot open a filtered product list for this type. Use the menu to open product type settings."
+  },
   "VxStyU": {
     "context": "order history message",
     "string": "Replacement order was created"
@@ -6760,6 +6768,10 @@
   "YpukUN": {
     "context": "label",
     "string": "Shipping zone name"
+  },
+  "YqH7mP": {
+    "context": "product detail page menu, opens product type configuration",
+    "string": "Product type settings"
   },
   "Ys86kI": {
     "string": "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order."
@@ -8439,6 +8451,10 @@
   "iKWz5z": {
     "context": "SKU label inside the line price breakdown modal subtitle",
     "string": "SKU"
+  },
+  "iLNRJL": {
+    "context": "product type a11y label prefix",
+    "string": "Product type"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
