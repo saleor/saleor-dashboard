@@ -1,15 +1,15 @@
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Link } from "react-router-dom";
 
+import { useIsMenuActive } from "./hooks/useIsMenuActive";
 import { type SidebarMenuItem } from "./types";
-import { isMenuActive } from "./utils";
 
 interface Props {
   menuItem: SidebarMenuItem;
 }
 
 export const SingleItem = ({ menuItem }: Props) => {
-  const active = isMenuActive(location.pathname, menuItem);
+  const active = useIsMenuActive(menuItem);
   const handleMenuItemClick = () => {
     if (menuItem.onClick) {
       menuItem.onClick();

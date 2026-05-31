@@ -153,6 +153,66 @@ describe("isMenuActive", () => {
     expect(result).toBe(false);
   });
 
+  it("should identify Order List item as inactive when viewing a draft order details page", () => {
+    const orderMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: orderListUrl(),
+    };
+    const result = isMenuActive("/orders/abc123", orderMenuItem, {
+      activeOrderSection: "drafts",
+    });
+
+    expect(result).toBe(false);
+  });
+
+  it("should identify Draft Orders item as active when viewing a draft order details page", () => {
+    const draftOrdersMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: orderDraftListUrl(),
+    };
+    const result = isMenuActive("/orders/abc123", draftOrdersMenuItem, {
+      activeOrderSection: "drafts",
+    });
+
+    expect(result).toBe(true);
+  });
+
+  it("should identify Order List item as active when viewing a regular order details page", () => {
+    const orderMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: orderListUrl(),
+    };
+    const result = isMenuActive("/orders/abc123", orderMenuItem, {
+      activeOrderSection: "orders",
+    });
+
+    expect(result).toBe(true);
+  });
+
+  it("should identify Order List item as inactive while order section is unresolved on a details page", () => {
+    const orderMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: orderListUrl(),
+    };
+    const result = isMenuActive("/orders/abc123", orderMenuItem);
+
+    expect(result).toBe(false);
+  });
+
+  it("should not treat reserved order paths as order detail pages", () => {
+    const orderMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: orderListUrl(),
+    };
+
+    expect(isMenuActive("/orders/drafts", orderMenuItem, { activeOrderSection: "drafts" })).toBe(
+      false,
+    );
+    expect(isMenuActive("/orders/settings", orderMenuItem, { activeOrderSection: "orders" })).toBe(
+      true,
+    );
+  });
+
   it("should correctly match paths regardless of '/dashboard' prefix in current location", () => {
     const result = isMenuActive("/dashboard/test", mockMenuItem);
 

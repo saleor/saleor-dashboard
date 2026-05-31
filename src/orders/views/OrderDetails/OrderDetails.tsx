@@ -18,10 +18,18 @@ import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderD
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
+import { useSetActiveOrdersNavSection } from "../../ActiveOrdersNavContext";
 import OrderOperations from "../../containers/OrderOperations";
-import { orderListUrl, orderUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../urls";
+import {
+  orderDraftListUrl,
+  orderListUrl,
+  orderUrl,
+  type OrderUrlDialog,
+  type OrderUrlQueryParams,
+} from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
@@ -35,6 +43,7 @@ interface OrderDetailsProps {
 
 const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const navigate = useNavigator();
+  const setActiveOrderSection = useSetActiveOrdersNavSection();
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
@@ -43,11 +52,12 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const apolloClient = useApolloClient();
   const [openModal, closeModal] = createDialogActionHandlers<OrderUrlDialog, OrderUrlQueryParams>(
     navigate,
-    params => orderUrl(id, params),
+    urlParams => orderUrl(id, urlParams),
     params,
     ["type"],
   );
-  const handleBack = () => navigate(orderListUrl());
+  const handleBack = () =>
+    navigate(order?.status === OrderStatus.DRAFT ? orderDraftListUrl() : orderListUrl());
   const [orderConfirm] = useOrderConfirmMutation({
     onCompleted: ({ orderConfirm: { errors } }) => {
       const isError = !!errors.length;
@@ -62,13 +72,23 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const { data, loading } = useOrderDetails(id);
 
   const order = data?.order;
+  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
+  const isOrderDraft = order?.status === OrderStatus.DRAFT;
+
+  useEffect(() => {
+    if (!order?.status) {
+      setActiveOrderSection(undefined);
+    } else {
+      setActiveOrderSection(order.status === OrderStatus.DRAFT ? "drafts" : "orders");
+    }
+
+    return () => setActiveOrderSection(undefined);
+  }, [id, order?.status, setActiveOrderSection]);
 
   if (order === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
 
-  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
-  const isOrderDraft = order?.status === OrderStatus.DRAFT;
   const handleSubmit = async (data: MetadataIdSchema) => {
     if (order?.status === OrderStatus.UNCONFIRMED) {
       await orderConfirm({ variables: { id: order?.id } });
