@@ -274,6 +274,43 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
     searchWarehouses: jest.fn(),
   };
 
+  it("renders the metadata button in the header", () => {
+    // Arrange & Act
+    render(
+      <MemoryRouter>
+        <SavebarRefProvider>
+          <Wrapper>
+            <ProductVariantPage {...defaultProps} />
+          </Wrapper>
+        </SavebarRefProvider>
+      </MemoryRouter>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("show-variant-metadata")).toBeInTheDocument();
+  });
+
+  it("calls onShowMetadata when the metadata button is clicked", () => {
+    // Arrange
+    const onShowMetadata = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <SavebarRefProvider>
+          <Wrapper>
+            <ProductVariantPage {...defaultProps} onShowMetadata={onShowMetadata} />
+          </Wrapper>
+        </SavebarRefProvider>
+      </MemoryRouter>,
+    );
+
+    // Act
+    screen.getByTestId("show-variant-metadata").click();
+
+    // Assert
+    expect(onShowMetadata).toHaveBeenCalled();
+  });
+
   it("should display reference attributes with correct labels from GraphQL data", async () => {
     // Arrange & Act
     render(

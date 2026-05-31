@@ -355,7 +355,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onFilterChange={onFilterChange}
       />
       <ProductVariantMetadataDialog
-        open={params.action === "view-metadata"}
+        open={params.action === "view-metadata" && !!variant}
         onClose={closeModal}
         variant={variant}
       />

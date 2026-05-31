@@ -224,6 +224,7 @@ export const ProductVariantPage = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={productUrl(productId)}
+        actionsGap={3}
         title={
           loading ? (
             <Skeleton __width="200px" />

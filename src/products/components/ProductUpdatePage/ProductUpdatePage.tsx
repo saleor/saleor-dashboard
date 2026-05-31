@@ -421,7 +421,7 @@ const ProductUpdatePage = ({
         return (
           <>
             <DetailPageLayout>
-              <TopNav href={backLinkProductUrl} title={header}>
+              <TopNav href={backLinkProductUrl} title={header} actionsGap={3}>
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}
                   disabled={!product}

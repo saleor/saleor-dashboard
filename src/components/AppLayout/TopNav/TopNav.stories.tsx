@@ -82,7 +82,7 @@ export const WithMenu: Story = {
 
 export const WithDetailPageActions: Story = {
   render: () => (
-    <TopNav title="Product Details" href="/products">
+    <TopNav title="Product Details" href="/products" actionsGap={3}>
       <TopNav.MetadataButton title="Edit product metadata" onClick={fn()} />
       <TopNav.Menu
         items={[

@@ -187,6 +187,7 @@ describe("useHandleMetadataSubmit", () => {
     });
 
     // Assert
+    expect(mockClient.refetchQueries).not.toHaveBeenCalled();
     expect(mockOnClose).not.toHaveBeenCalled();
     expect(mockNotify).not.toHaveBeenCalledWith(expect.objectContaining({ status: "success" }));
   });

@@ -203,7 +203,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
       {({ submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={backLinkUrl} title={<Title order={order} />}>
+            <TopNav href={backLinkUrl} title={<Title order={order} />} actionsGap={3}>
               <TopNav.MetadataButton
                 onClick={onOrderShowMetadata}
                 data-test-id="show-order-metadata"

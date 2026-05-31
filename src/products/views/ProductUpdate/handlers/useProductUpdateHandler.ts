@@ -64,7 +64,7 @@ interface UseProductUpdateHandlerOpts {
 }
 
 export function useProductUpdateHandler(
-  product: ProductFragment,
+  product: ProductFragment | undefined,
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -92,6 +92,10 @@ export function useProductUpdateHandler(
   const sendMutations = async (
     data: ProductUpdateSubmitData,
   ): Promise<UseProductUpdateHandlerError[]> => {
+    if (!product) {
+      return [];
+    }
+
     let errors: UseProductUpdateHandlerError[] = [];
     const variantErrors: ProductVariantListError[] = [];
     const uploadFilesResult = await handleUploadMultipleFiles(
@@ -184,6 +188,10 @@ export function useProductUpdateHandler(
     return errors;
   };
   const submit = async (data: ProductUpdateSubmitData) => {
+    if (!product) {
+      return [];
+    }
+
     setCalled(true);
     setLoading(true);
 

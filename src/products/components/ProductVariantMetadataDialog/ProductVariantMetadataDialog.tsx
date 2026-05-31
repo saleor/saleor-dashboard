@@ -20,8 +20,11 @@ export const ProductVariantMetadataDialog = ({
   variant,
 }: ProductVariantMetadataDialogProps) => {
   const intl = useIntl();
+  const normalizedVariant = variant
+    ? { ...variant, privateMetadata: variant.privateMetadata ?? [] }
+    : undefined;
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
-    initialData: variant ?? undefined,
+    initialData: normalizedVariant,
     onClose,
     refetchDocument: ProductVariantDetailsDocument,
   });
@@ -36,7 +39,7 @@ export const ProductVariantMetadataDialog = ({
     handleChange,
     formData,
   } = useMetadataForm({
-    graphqlData: variant ?? undefined,
+    graphqlData: normalizedVariant,
     submitInProgress,
     lastSubmittedData,
   });

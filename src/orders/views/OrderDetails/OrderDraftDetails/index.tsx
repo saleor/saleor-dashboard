@@ -27,6 +27,7 @@ import {
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -228,6 +229,7 @@ export const OrderDraftDetails = ({
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
+            onOrderShowMetadata={() => openModal("view-order-metadata")}
             order={order}
             channelUsabilityData={channelUsabilityData}
             onProductClick={id => () => navigate(productUrl(encodeURIComponent(id)))}
@@ -306,6 +308,11 @@ export const OrderDraftDetails = ({
         onClose={closeModal}
         lineId={params.id}
         orderId={id}
+      />
+      <OrderMetadataDialog
+        open={params.action === "view-order-metadata" && !!order}
+        onClose={closeModal}
+        order={order}
       />
       <OrderAddressFields
         action={params?.action}

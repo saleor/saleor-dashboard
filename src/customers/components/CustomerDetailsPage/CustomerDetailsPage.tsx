@@ -180,7 +180,7 @@ const CustomerDetailsPage = ({
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={customerBackLink} title={titleNode}>
+            <TopNav href={customerBackLink} title={titleNode} actionsGap={3}>
               {canEditCustomers && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}

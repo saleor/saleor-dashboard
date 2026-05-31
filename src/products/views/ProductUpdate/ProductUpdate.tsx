@@ -453,7 +453,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         initialConstraints={initialConstraints}
       />
       <ProductMetadataDialog
-        open={params.action === "view-metadata"}
+        open={params.action === "view-metadata" && !!product}
         onClose={closeModal}
         product={product}
       />

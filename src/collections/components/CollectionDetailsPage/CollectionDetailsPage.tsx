@@ -27,7 +27,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Box, Divider } from "@saleor/macaw-ui-next";
+import { Divider } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { type ChannelProps, type PageListProps } from "../../../types";
@@ -111,9 +111,7 @@ const CollectionDetailsPage = ({
               />
             )}
             {extensionMenuItems.length > 0 && (
-              <Box marginLeft={3}>
-                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-              </Box>
+              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
             )}
           </TopNav>
           <DetailPageLayout.Content>

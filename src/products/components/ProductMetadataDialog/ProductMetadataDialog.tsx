@@ -16,8 +16,11 @@ interface ProductMetadataDialogProps {
 
 export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadataDialogProps) => {
   const intl = useIntl();
+  const normalizedProduct = product
+    ? { ...product, privateMetadata: product.privateMetadata ?? [] }
+    : undefined;
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
-    initialData: product ?? undefined,
+    initialData: normalizedProduct,
     onClose,
     refetchDocument: ProductDetailsDocument,
   });
@@ -32,7 +35,7 @@ export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadat
     handleChange,
     formData,
   } = useMetadataForm({
-    graphqlData: product ?? undefined,
+    graphqlData: normalizedProduct,
     submitInProgress,
     lastSubmittedData,
   });
