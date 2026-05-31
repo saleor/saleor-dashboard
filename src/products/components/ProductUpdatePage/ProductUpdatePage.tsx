@@ -267,6 +267,7 @@ const ProductUpdatePage = ({
     productId: productId,
     productSlug: product?.slug,
   });
+  const showProductDetailsWidgets = PRODUCT_DETAILS_WIDGETS.length > 0 && !!productId;
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
@@ -417,6 +418,17 @@ const ProductUpdatePage = ({
           data.attributes,
         );
 
+        const productTaxes = (
+          <ProductTaxes
+            value={data.taxClassId}
+            disabled={disabled}
+            onChange={handlers.selectTaxClass}
+            taxClassDisplayName={selectedTaxClass}
+            taxClasses={taxClasses}
+            onFetchMore={fetchMoreTaxClasses}
+          />
+        );
+
         return (
           <>
             <DetailPageLayout>
@@ -559,27 +571,23 @@ const ProductUpdatePage = ({
                   errors={channelsErrors}
                   productId={product?.id}
                 />
-                <Box paddingBottom={52}>
-                  <ProductTaxes
-                    value={data.taxClassId}
-                    disabled={disabled}
-                    onChange={handlers.selectTaxClass}
-                    taxClassDisplayName={selectedTaxClass}
-                    taxClasses={taxClasses}
-                    onFetchMore={fetchMoreTaxClasses}
-                  />
-                </Box>
-                {PRODUCT_DETAILS_WIDGETS.length > 0 && productId && (
+                {showProductDetailsWidgets ? (
                   <>
+                    {productTaxes}
+                    <CardSpacer />
                     <Divider />
-                    <AppWidgets
-                      extensions={PRODUCT_DETAILS_WIDGETS}
-                      params={{
-                        productId: productId,
-                        productSlug: product?.slug,
-                      }}
-                    />
+                    <Box paddingBottom={52}>
+                      <AppWidgets
+                        extensions={PRODUCT_DETAILS_WIDGETS}
+                        params={{
+                          productId: productId,
+                          productSlug: product?.slug,
+                        }}
+                      />
+                    </Box>
                   </>
+                ) : (
+                  <Box paddingBottom={52}>{productTaxes}</Box>
                 )}
               </DetailPageLayout.RightSidebar>
 
