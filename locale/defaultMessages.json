@@ -5118,10 +5118,6 @@
     "context": "add attribute value",
     "string": "Add Value"
   },
-  "ProductUpdate.editProductMetadata": {
-    "context": "product detail page, top-bar metadata button tooltip",
-    "string": "Edit product metadata"
-  },
   "PrxZ/P": {
     "context": "onboarding step description",
     "string": "We'll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
@@ -6098,6 +6094,10 @@
   },
   "V2JtVu": {
     "string": "Same as implicit AND, using explicit keyword"
+  },
+  "V4Pdx+": {
+    "context": "product detail page, top-bar metadata button tooltip",
+    "string": "Edit product metadata"
   },
   "V8FhTt": {
     "context": "collection label",
