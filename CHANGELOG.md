@@ -1,5 +1,45 @@
 # Changelog
 
+## 3.23.6
+
+### Patch Changes
+
+- [#6579](https://github.com/saleor/saleor-dashboard/pull/6579) [`891afe0`](https://github.com/saleor/saleor-dashboard/commit/891afe0b4b015ff9ac67c6d9e7392caa8736d9ee) Thanks [@mirekm](https://github.com/mirekm)! - Redesign of customer details. Adds an Overview card at the top of the customer detail page showing Total orders (with the most recent order's date), Last login, and per-currency Recent orders total + Avg order value cards.
+
+  The Recent orders total / Avg order value cards are aggregated over the customer's last 10 orders, broken down by currency — so a customer with orders in USD and EUR sees one card pair per currency rather than having the metric hidden.
+
+- [#6583](https://github.com/saleor/saleor-dashboard/pull/6583) [`70bded2`](https://github.com/saleor/saleor-dashboard/commit/70bded2e9d149c2392347b9e70870c622304856b) Thanks [@mirekm](https://github.com/mirekm)! - Orders: the sales channel now appears next to the order date in the page header instead of a separate sidebar card. Click the channel name to see all orders for that channel.
+
+- [#6587](https://github.com/saleor/saleor-dashboard/pull/6587) [`70c253a`](https://github.com/saleor/saleor-dashboard/commit/70c253adf5c786152868a5814dc00f3aaf7e6d27) Thanks [@mirekm](https://github.com/mirekm)! - Open the Customers section to read-only viewers with `MANAGE_ORDERS` or `MANAGE_STAFF`, matching the API's `Query.user` permission set (`MANAGE_USERS | MANAGE_ORDERS | MANAGE_STAFF`). Read-only viewers see customer details, addresses, and order history but have no editing affordances: the savebar swaps to a "Read-only" label, and the create button, bulk delete, address actions, account actions menu (activate/deactivate/delete), and metadata editor are hidden. The "View profile" link in Order details now follows the same broader gate. All write paths still require `MANAGE_USERS`, mirroring the server-side mutation permissions.
+
+- [#6576](https://github.com/saleor/saleor-dashboard/pull/6576) [`821188c`](https://github.com/saleor/saleor-dashboard/commit/821188c47d1c761a05dee9011e38e1a04d727c5d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Refactored TransactionEvents component. Made Typescript strict and removed legacy MaterialUI. Added storybook. No functional changes, slight visual changes may happen.
+
+- [#6585](https://github.com/saleor/saleor-dashboard/pull/6585) [`60e81cc`](https://github.com/saleor/saleor-dashboard/commit/60e81cc0dc5fd41d0c5dc9dbd91396f28cad803d) Thanks [@mirekm](https://github.com/mirekm)! - Staff members who have placed orders are now marked on the staff list and their staff profile links directly to the matching customer profile.
+
+- [#6564](https://github.com/saleor/saleor-dashboard/pull/6564) [`5579eeb`](https://github.com/saleor/saleor-dashboard/commit/5579eebb310a9dfc7213b15ce15651a94e643081) Thanks [@mirekm](https://github.com/mirekm)! - Adds a read-only price breakdown for order lines on confirmed orders. Click a discounted unit price or line total to see how it was calculated — promotions, vouchers, and manual or order-wide discounts. Voucher rows deep-link to the voucher detail page.
+
+- [#6587](https://github.com/saleor/saleor-dashboard/pull/6587) [`70c253a`](https://github.com/saleor/saleor-dashboard/commit/70c253adf5c786152868a5814dc00f3aaf7e6d27) Thanks [@mirekm](https://github.com/mirekm)! - Order details now show clearer, merchant-friendly dates in the header. Instead of an unlabeled timestamp, merchants will see labels like “Placed today at 10:30 AM” or “Created Jan 15 at 10:30 AM” for draft orders, with the exact timezone-aware timestamp available on hover.
+
+- [#6574](https://github.com/saleor/saleor-dashboard/pull/6574) [`9681b59`](https://github.com/saleor/saleor-dashboard/commit/9681b59e56a758baf3e73c235854266783c1976d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update dependencies to address known security advisories. The dependency bump removes 12 CVEs that were reported by `pnpm audit` on latest `main` branch:
+  - `lodash` — Code Injection via `_.template` ([GHSA-r5fr-rjxr-66jc](https://github.com/advisories/GHSA-r5fr-rjxr-66jc))
+  - `lodash` — Prototype Pollution via array ([GHSA-f23m-r3pf-42rh](https://github.com/advisories/GHSA-f23m-r3pf-42rh))
+  - `vite` — `server.fs.deny` bypassed with queries ([GHSA-v2wj-q39q-566r](https://github.com/advisories/GHSA-v2wj-q39q-566r))
+  - `vite` — Arbitrary File Read via Vite Dev Server ([GHSA-p9ff-h696-f583](https://github.com/advisories/GHSA-p9ff-h696-f583))
+  - `vite` — Path Traversal in Optimized Deps ([GHSA-4w7w-66w2-5vf9](https://github.com/advisories/GHSA-4w7w-66w2-5vf9))
+  - `protobufjs` — Code injection through bytes field ([GHSA-66ff-xgx4-vchm](https://github.com/advisories/GHSA-66ff-xgx4-vchm))
+  - `protobufjs` — Code generation gadget after prototype ([GHSA-75px-5xx7-5xc7](https://github.com/advisories/GHSA-75px-5xx7-5xc7))
+  - `protobufjs` — Process-wide denial of service ([GHSA-jvwf-75h9-cwgg](https://github.com/advisories/GHSA-jvwf-75h9-cwgg))
+  - `protobufjs` — Denial of service through unbounded input ([GHSA-685m-2w69-288q](https://github.com/advisories/GHSA-685m-2w69-288q))
+  - `protobufjs` — Denial of service from crafted field ([GHSA-2pr8-phx7-x9h3](https://github.com/advisories/GHSA-2pr8-phx7-x9h3))
+  - `protobufjs` — Prototype injection in generated message ([GHSA-fx83-v9x8-x52w](https://github.com/advisories/GHSA-fx83-v9x8-x52w))
+  - `@protobufjs/utf8` / `protobufjs` — Overlong UTF-8 decoding ([GHSA-q6x5-8v7m-xcrf](https://github.com/advisories/GHSA-q6x5-8v7m-xcrf))
+
+- [#6548](https://github.com/saleor/saleor-dashboard/pull/6548) [`94487d7`](https://github.com/saleor/saleor-dashboard/commit/94487d7b73e7e8e9323155603ce0b2017071919b) Thanks [@mirekm](https://github.com/mirekm)! - Variant page: align channel-availability and stock copy with the Saleor 3.23 stock-availability modes.
+  - The "Availability" card subtitle on the variant detail page now reads "Listed in N of M channels", so it isn't misread as a statement about whether customers can buy the variant. It counts channel listings, not stock availability.
+  - The inventory section now shows a short footnote beneath the per-warehouse stock table explaining how the active stock-availability mode (legacy shipping-zone filtering vs. the new direct warehouse-channel link) determines whether a customer in a given channel actually sees this stock.
+
+- [#6582](https://github.com/saleor/saleor-dashboard/pull/6582) [`345fe75`](https://github.com/saleor/saleor-dashboard/commit/345fe7556b60b0eaff1c2470c73edabbb790f4cb) Thanks [@mirekm](https://github.com/mirekm)! - Card and section headers across the dashboard now share a single, consistent typography style — eliminating the subtle weight/size differences that varied between pages like Orders, Products, and Variants.
+
 ## 3.23.5
 
 ### Patch Changes

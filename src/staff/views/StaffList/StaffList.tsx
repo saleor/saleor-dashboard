@@ -24,7 +24,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -38,6 +38,11 @@ import {
   type StaffListUrlQueryParams,
   staffMemberDetailsUrl,
 } from "../../urls";
+import {
+  getStaffListColumns,
+  shouldMigrateStaffListColumns,
+  staffListColumnsWithCustomer,
+} from "./columns";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
@@ -53,8 +58,21 @@ const StaffList = ({ params }: StaffListProps) => {
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { valueProvider } = useConditionalFilterContext();
   const filters = createStaffMembersQueryVariables(valueProvider.value);
+  const effectiveColumns = getStaffListColumns(settings.columns);
+  const staffListSettings = useMemo(
+    () => ({
+      ...settings,
+      columns: effectiveColumns,
+    }),
+    [effectiveColumns, settings],
+  );
 
   usePaginationReset(staffListUrl, params, settings.rowNumber);
+  useEffect(() => {
+    if (shouldMigrateStaffListColumns(settings.columns)) {
+      updateListSettings("columns", staffListColumnsWithCustomer);
+    }
+  }, [settings.columns, updateListSettings]);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -65,9 +83,10 @@ const StaffList = ({ params }: StaffListProps) => {
         ...filters,
         search: params.query,
       },
+      includeCustomerData: effectiveColumns?.includes("customer") ?? false,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [effectiveColumns, params, settings.rowNumber, valueProvider.value],
   );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,
@@ -166,7 +185,7 @@ const StaffList = ({ params }: StaffListProps) => {
         filterPresets={presets.map(preset => preset.name)}
         disabled={loading || addStaffMemberData.loading || limitOpts.loading}
         limits={limitOpts.data?.shop?.limits}
-        settings={settings}
+        settings={staffListSettings}
         sort={getSortParams(params)}
         staffMembers={mapEdgesToItems(staffQueryData?.staffUsers) ?? []}
         onAdd={() => openModal("add")}

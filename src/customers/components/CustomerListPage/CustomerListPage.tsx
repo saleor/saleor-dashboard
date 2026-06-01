@@ -4,6 +4,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { type Customers } from "@dashboard/customers/types";
 import {
   customerAddUrl,
@@ -58,6 +59,7 @@ const CustomerListPage = ({
 }: CustomerListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const canEditCustomers = useCanEditCustomers();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
@@ -97,27 +99,28 @@ const CustomerListPage = ({
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
-            {extensionCreateButtonItems.length > 0 ? (
-              <ButtonGroupWithDropdown
-                options={extensionCreateButtonItems}
-                data-test-id="create-customer"
-                onClick={() => navigate(customerAddUrl)}
-              >
-                <FormattedMessage
-                  id="QLVddq"
-                  defaultMessage="Create customer"
-                  description="button"
-                />
-              </ButtonGroupWithDropdown>
-            ) : (
-              <Button data-test-id="create-customer" onClick={() => navigate(customerAddUrl)}>
-                <FormattedMessage
-                  id="QLVddq"
-                  defaultMessage="Create customer"
-                  description="button"
-                />
-              </Button>
-            )}
+            {canEditCustomers &&
+              (extensionCreateButtonItems.length > 0 ? (
+                <ButtonGroupWithDropdown
+                  options={extensionCreateButtonItems}
+                  data-test-id="create-customer"
+                  onClick={() => navigate(customerAddUrl)}
+                >
+                  <FormattedMessage
+                    id="QLVddq"
+                    defaultMessage="Create customer"
+                    description="button"
+                  />
+                </ButtonGroupWithDropdown>
+              ) : (
+                <Button data-test-id="create-customer" onClick={() => navigate(customerAddUrl)}>
+                  <FormattedMessage
+                    id="QLVddq"
+                    defaultMessage="Create customer"
+                    description="button"
+                  />
+                </Button>
+              ))}
           </Box>
         </Box>
       </TopNav>
@@ -133,7 +136,7 @@ const CustomerListPage = ({
           onSearchChange={onSearchChange}
           actions={
             <Box display="flex" gap={4}>
-              {selectedCustomerIds.length > 0 && (
+              {canEditCustomers && selectedCustomerIds.length > 0 && (
                 <BulkDeleteButton onClick={onCustomersDelete}>
                   <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
                 </BulkDeleteButton>

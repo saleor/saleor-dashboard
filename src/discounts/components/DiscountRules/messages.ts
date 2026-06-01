@@ -114,10 +114,6 @@ export const messages = defineMessages({
     id: "mSS92b",
     defaultMessage: "Untitled rule",
   },
-  channelInactive: {
-    id: "6Tps09",
-    defaultMessage: "Inactive",
-  },
   giftCount: {
     id: "B8MRsI",
     defaultMessage: "{count, plural, one {# item} other {# items}}",

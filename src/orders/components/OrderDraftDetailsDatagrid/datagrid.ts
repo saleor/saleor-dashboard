@@ -118,6 +118,7 @@ export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProp
           {
             allowOverlay: false,
             readonly: true,
+            cursor: "pointer",
           },
         );
       case "status": {

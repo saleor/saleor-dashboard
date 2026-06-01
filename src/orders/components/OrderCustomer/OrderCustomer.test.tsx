@@ -210,7 +210,7 @@ describe("OrderCustomer", () => {
       expect(screen.getByText("View profile")).toBeInTheDocument();
     });
 
-    it("shows View orders link but hides View profile link when user has only MANAGE_ORDERS permission", () => {
+    it("shows View orders and View profile links when user has only MANAGE_ORDERS permission", () => {
       // Arrange
       (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_ORDERS }]);
 
@@ -225,10 +225,27 @@ describe("OrderCustomer", () => {
 
       // Assert
       expect(screen.getByText("View orders")).toBeInTheDocument();
-      expect(screen.queryByText("View profile")).not.toBeInTheDocument();
+      expect(screen.getByText("View profile")).toBeInTheDocument();
     });
 
-    it("hides View profile link when user has no MANAGE_USERS permission", () => {
+    it("shows View profile link when user has only MANAGE_STAFF permission", () => {
+      // Arrange
+      (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_STAFF }]);
+
+      // Act
+      render(
+        <Wrapper>
+          <MemoryRouter>
+            <OrderCustomer {...defaultProps} />
+          </MemoryRouter>
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("View profile")).toBeInTheDocument();
+    });
+
+    it("hides View profile link when user has none of MANAGE_USERS / MANAGE_ORDERS / MANAGE_STAFF", () => {
       // Arrange
       (useUserPermissions as jest.Mock).mockReturnValue([]);
 

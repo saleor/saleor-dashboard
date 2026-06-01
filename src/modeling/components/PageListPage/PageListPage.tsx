@@ -1,9 +1,7 @@
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
@@ -16,56 +14,54 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
-import {
-  type FilterPagePropsWithPresets,
-  type PageListProps,
-  type SortPage,
-} from "@dashboard/types";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { type PageListProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { type PageListFilterKeys, type PageListFilterOpts } from "../../views/PageList/filters";
+import { rippleModelTypeTabs } from "../../ripples/modelTypeTabs";
+import { ModelSearchInput } from "../ModelSearchInput/ModelSearchInput";
+import { type ModelTypeTabCount, ModelTypeTabs } from "../ModelTypeTabs/ModelTypeTabs";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
-interface PageListPageProps
-  extends PageListProps,
-    FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
-    SortPage<PageListUrlSortField> {
+interface PageListPageProps extends PageListProps, SortPage<PageListUrlSortField> {
   pages: Pages | undefined;
   selectedPageIds: string[];
   loading: boolean;
+  initialSearch: string;
+  onSearchChange: (query: string) => void;
   onSelectPageIds: (rows: number[], clearSelection: () => void) => void;
   onPagesDelete: () => void;
   onPagesPublish: () => void;
   onPagesUnpublish: () => void;
   onPageCreate: () => void;
+  pageTypes: Array<{ id: string; name: string }> | undefined;
+  activeTabId: string;
+  activePageTypeName: string | undefined;
+  tabCounts: Record<string, ModelTypeTabCount | undefined>;
+  onTabChange: (id: string) => void;
 }
 
 const PageListPage = ({
-  selectedFilterPreset,
   initialSearch,
-  onFilterPresetsAll,
-  onFilterPresetDelete,
-  onFilterPresetUpdate,
   onSearchChange,
-  onFilterPresetChange,
-  onFilterPresetPresetSave,
-  filterPresets,
   selectedPageIds,
-  hasPresetsChanged,
   onPagesDelete,
   onPagesPublish,
   onPagesUnpublish,
   onPageCreate,
+  pageTypes,
+  activeTabId,
+  activePageTypeName,
+  tabCounts,
+  onTabChange,
   ...listProps
 }: PageListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
-  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const { PAGE_OVERVIEW_CREATE, PAGE_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PAGE_LIST,
@@ -76,81 +72,85 @@ const PageListPage = ({
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_OVERVIEW_CREATE);
 
+  const createLabel = activePageTypeName ? (
+    <FormattedMessage
+      id="ML+YsS"
+      defaultMessage="Create {typeName}"
+      description="button"
+      values={{ typeName: activePageTypeName }}
+    />
+  ) : (
+    <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
+  );
+
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.models)} isAlignToRight={false} withoutBorder>
-        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex">
-            <FilterPresetsSelect
-              presetsChanged={hasPresetsChanged()}
-              onSelect={onFilterPresetChange}
-              onRemove={onFilterPresetDelete}
-              onUpdate={onFilterPresetUpdate}
-              savedPresets={filterPresets}
-              activePreset={selectedFilterPreset}
-              onSelectAll={onFilterPresetsAll}
-              onSave={onFilterPresetPresetSave}
-              isOpen={isFilterPresetOpen}
-              onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "UgCuqX",
-                defaultMessage: "All models",
-                description: "tab name",
-              })}
-            />
-          </Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
-            {extensionCreateButtonItems.length > 0 ? (
-              <ButtonGroupWithDropdown
-                options={extensionCreateButtonItems}
-                onClick={onPageCreate}
-                data-test-id="create-page"
-              >
-                <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
-              </ButtonGroupWithDropdown>
-            ) : (
-              <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-                <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
-              </Button>
-            )}
-          </Box>
-        </Box>
+      <TopNav title={intl.formatMessage(sectionNames.models)} withoutBorder>
+        {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+        {extensionCreateButtonItems.length > 0 ? (
+          <ButtonGroupWithDropdown
+            options={extensionCreateButtonItems}
+            onClick={onPageCreate}
+            data-test-id="create-page"
+          >
+            {createLabel}
+          </ButtonGroupWithDropdown>
+        ) : (
+          <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
+            {createLabel}
+          </Button>
+        )}
       </TopNav>
-      <DashboardCard>
-        <ListFilters
-          type="expression-filter"
-          initialSearch={initialSearch}
-          showSearchTooltip
-          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-          onSearchChange={onSearchChange}
-          actions={
-            selectedPageIds.length > 0 && (
-              <Box display="flex" gap={4}>
-                <Button variant="secondary" onClick={onPagesUnpublish}>
-                  <FormattedMessage {...messages.unpublish} />
-                </Button>
-                <Button variant="secondary" onClick={onPagesPublish}>
-                  <FormattedMessage {...messages.publish} />
-                </Button>
-                <BulkDeleteButton onClick={onPagesDelete}>
-                  <FormattedMessage {...messages.delete} />
-                </BulkDeleteButton>
-              </Box>
-            )
-          }
+      <Box display="flex" flexDirection="column" __minWidth={0} __minHeight={0}>
+        <ModelTypeTabs
+          pageTypes={pageTypes}
+          activeId={activeTabId}
+          counts={tabCounts}
+          onTabChange={onTabChange}
+          rightSlot={<Ripple model={rippleModelTypeTabs} />}
         />
-        <PageListDatagrid
-          {...listProps}
-          hasRowHover={!isFilterPresetOpen}
-          rowAnchor={pageUrl}
-          onRowClick={id =>
-            navigate(pageUrl(id), {
-              state: getPrevLocationState(location),
-            })
-          }
-        />
-      </DashboardCard>
+        <DashboardCard>
+          <Box
+            display="grid"
+            __gridTemplateColumns="auto 1fr"
+            gap={4}
+            paddingBottom={2}
+            paddingX={6}
+            paddingTop={4}
+          >
+            <ModelSearchInput
+              initialSearch={initialSearch}
+              placeholder={intl.formatMessage(messages.searchPlaceholder)}
+              onSearchChange={onSearchChange}
+            />
+            <Box display="flex" justifyContent="flex-end">
+              {selectedPageIds.length > 0 && (
+                <Box display="flex" gap={4}>
+                  <Button variant="secondary" onClick={onPagesUnpublish}>
+                    <FormattedMessage {...messages.unpublish} />
+                  </Button>
+                  <Button variant="secondary" onClick={onPagesPublish}>
+                    <FormattedMessage {...messages.publish} />
+                  </Button>
+                  <BulkDeleteButton onClick={onPagesDelete}>
+                    <FormattedMessage {...messages.delete} />
+                  </BulkDeleteButton>
+                </Box>
+              )}
+            </Box>
+          </Box>
+          <PageListDatagrid
+            {...listProps}
+            searchQuery={initialSearch}
+            rowAnchor={pageUrl}
+            onRowClick={id =>
+              navigate(pageUrl(id), {
+                state: getPrevLocationState(location),
+              })
+            }
+          />
+        </DashboardCard>
+      </Box>
     </ListPageLayout>
   );
 };

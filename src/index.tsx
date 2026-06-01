@@ -217,7 +217,12 @@ const Routes = () => {
                     component={CollectionSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_USERS]}
+                    permissions={[
+                      PermissionEnum.MANAGE_USERS,
+                      PermissionEnum.MANAGE_ORDERS,
+                      PermissionEnum.MANAGE_STAFF,
+                    ]}
+                    matchPermission="any"
                     path="/customers"
                     component={CustomerSection}
                   />

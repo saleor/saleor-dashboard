@@ -410,8 +410,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
-        header={product?.name}
         product={product}
+        loading={loading}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         variants={product?.variants}

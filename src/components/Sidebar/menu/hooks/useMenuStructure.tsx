@@ -192,7 +192,11 @@ export function useMenuStructure() {
         ? [
             {
               label: intl.formatMessage(sectionNames.customers),
-              permissions: [PermissionEnum.MANAGE_USERS],
+              permissions: [
+                PermissionEnum.MANAGE_USERS,
+                PermissionEnum.MANAGE_ORDERS,
+                PermissionEnum.MANAGE_STAFF,
+              ],
               id: "customers",
               url: customerListUrl(),
               type: "item",
@@ -202,7 +206,14 @@ export function useMenuStructure() {
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
-      permissions: [PermissionEnum.MANAGE_USERS],
+      // Sidebar gating uses any-of matching, so users with only MANAGE_ORDERS
+      // or MANAGE_STAFF can navigate to customer pages in read-only mode while
+      // edit affordances remain hidden inside the section itself.
+      permissions: [
+        PermissionEnum.MANAGE_USERS,
+        PermissionEnum.MANAGE_ORDERS,
+        PermissionEnum.MANAGE_STAFF,
+      ],
       endAdornment: <Ripple model={rippleNewCustomersView} />,
       id: "customers",
       url: customerListUrl(),

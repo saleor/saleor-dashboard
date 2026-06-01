@@ -5,16 +5,20 @@ import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOve
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
+import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
+import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
+import { rippleProductTypeInHeader } from "@dashboard/products/ripples/productTypeInHeader";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple } from "@dashboard/ripples/types";
+import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
 export const allRipples: Ripple[] = [
@@ -23,6 +27,7 @@ export const allRipples: Ripple[] = [
 
   // Modelling / pages
   ripplePagesAreModels,
+  rippleModelTypeTabs,
 
   // Orders
   rippleNewRefundReasons,
@@ -30,12 +35,14 @@ export const allRipples: Ripple[] = [
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
   rippleOrderLinePriceBreakdown,
+  rippleOrderChannelInHeader,
 
   // Warehouses
   rippleWarehouseMetadata,
 
   // Products
   rippleProductAvailabilityDiagnostics,
+  rippleProductTypeInHeader,
   rippleVariantGenerator,
 
   // Attributes
@@ -58,6 +65,9 @@ export const allRipples: Ripple[] = [
   // Customers
   rippleNewCustomersView,
   rippleCustomerOverview,
+
+  // Staff
+  rippleStaffCustomerProfiles,
 
   // Sidebar
   rippleCloudEnvLink,

@@ -1,0 +1,26 @@
+.link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  min-width: 0;
+  border-radius: 4px;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: 2px;
+}
+
+.link:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.name {
+  display: inline-block;
+  max-width: 16rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}

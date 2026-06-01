@@ -20,3 +20,9 @@
 .active {
   box-shadow: 0 0 0 1px var(--mu-colors-border-accent1);
 }
+
+/* Reserve vertical space for the subtitle/delta row so cards with and without
+ * a subtitle stay the same height regardless of grid row stretching. */
+.subtitleSlot {
+  min-height: 1rem;
+}

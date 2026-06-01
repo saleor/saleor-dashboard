@@ -16,6 +16,7 @@ import {
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
@@ -31,6 +32,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import PageDetailsPage from "../components/PageDetailsPage";
@@ -42,12 +44,29 @@ interface PageCreateProps {
   params: PageCreateUrlQueryParams;
 }
 
+// The list URL captured as prevLocation may still carry `?action=create-page`
+// from when the picker dialog was opened. Without this, navigating back to the
+// list would re-open the picker.
+const stripCreateActionParam = (search: string): string => {
+  const params = new URLSearchParams(search);
+
+  if (params.get("action") === "create-page") {
+    params.delete("action");
+  }
+
+  const result = params.toString();
+
+  return result ? `?${result}` : "";
+};
+
 const PageCreate = ({ params }: PageCreateProps) => {
   const navigate = useNavigator();
+  const location = useLocation<{ prevLocation?: { pathname: string; search: string } }>();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const [, setLastCreatedModelTypeId] = useLastCreatedEntityTypeStorage("MODEL");
   const selectedPageTypeId = params["page-type-id"];
 
   const handleSelectPageTypeId = (pageTypeId: string) =>
@@ -107,7 +126,23 @@ const PageCreate = ({ params }: PageCreateProps) => {
             defaultMessage: "Page created",
           }),
         });
-        navigate(pageUrl(data.pageCreate.page.id));
+
+        const prevLocation = location.state?.prevLocation;
+
+        navigate(pageUrl(data.pageCreate.page.id), {
+          // Pass-through state, to preserve where view was opened from
+          // So "back" button can properly redirect to model list with type of this model.
+          // Strip `action=create-page` from the captured search so the model-type
+          // picker dialog doesn't re-open when the user navigates back to the list.
+          state: prevLocation
+            ? {
+                prevLocation: {
+                  ...prevLocation,
+                  search: stripCreateActionParam(prevLocation.search),
+                },
+              }
+            : undefined,
+        });
       }
     },
   });
@@ -142,9 +177,15 @@ const PageCreate = ({ params }: PageCreateProps) => {
       },
     });
 
+    const mutationErrors = getMutationErrors(result);
+
+    if (mutationErrors.length === 0 && formData.pageType?.id) {
+      setLastCreatedModelTypeId(formData.pageType.id);
+    }
+
     return {
       id: result.data.pageCreate.page?.id || null,
-      errors: getMutationErrors(result),
+      errors: mutationErrors,
     };
   };
   const handleSubmit = createMetadataCreateHandler(
