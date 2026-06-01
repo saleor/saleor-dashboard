@@ -2,7 +2,6 @@ import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
-  type ActiveTab,
   type BulkAction,
   type Dialog,
   type Filters,
@@ -10,18 +9,12 @@ import {
   type Pagination,
   type SingleAction,
   type Sort,
-  type TabActionDialog,
 } from "../types";
 
 export const modelingSection = "/models/";
 
 export const pageListPath = modelingSection;
-export type PageListUrlDialog =
-  | "publish"
-  | "unpublish"
-  | "remove"
-  | "create-page"
-  | TabActionDialog;
+export type PageListUrlDialog = "publish" | "unpublish" | "remove" | "create-page";
 export enum PageListUrlSortField {
   title = "title",
   slug = "slug",
@@ -44,8 +37,7 @@ export type PageListUrlQueryParams = BulkAction &
   PageListUrlFilters &
   Dialog<PageListUrlDialog> &
   PageListUrlSort &
-  Pagination &
-  ActiveTab;
+  Pagination;
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
