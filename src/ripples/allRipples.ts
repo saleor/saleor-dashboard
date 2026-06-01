@@ -5,6 +5,7 @@ import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOve
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
+import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -25,6 +26,7 @@ export const allRipples: Ripple[] = [
 
   // Modelling / pages
   ripplePagesAreModels,
+  rippleModelTypeTabs,
 
   // Orders
   rippleNewRefundReasons,

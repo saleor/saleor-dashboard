@@ -299,6 +299,10 @@
   "/jJLYy": {
     "string": "Transactions"
   },
+  "/js4TV": {
+    "context": "aria label for pinning a tab",
+    "string": "Pin tab"
+  },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
@@ -359,6 +363,10 @@
   },
   "/zFGgP": {
     "string": "+{count} more"
+  },
+  "/zb21Y": {
+    "context": "tab name for all models",
+    "string": "All"
   },
   "0+sGhF": {
     "context": "Suffix for show-more button when hidden problems include active ones",
@@ -4441,6 +4449,10 @@
   "MKtgZB": {
     "string": "Only staff users can access the dashboard"
   },
+  "ML+YsS": {
+    "context": "button",
+    "string": "Create {typeName}"
+  },
   "MNZY28": {
     "context": "table column header",
     "string": "Channel threshold"
@@ -5968,10 +5980,6 @@
   "UcrXYE": {
     "context": "Description for scheduled status when publication date is in the future",
     "string": "Publication scheduled"
-  },
-  "UgCuqX": {
-    "context": "tab name",
-    "string": "All models"
   },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
@@ -8632,6 +8640,10 @@
   "jd/LWa": {
     "string": "Voucher applies to all countries"
   },
+  "jg1Kcw": {
+    "context": "aria label for unpinning a tab",
+    "string": "Unpin tab"
+  },
   "jg8M0x": {
     "context": "sub-header for line-level discounts in summary",
     "string": "Lines"
@@ -9020,6 +9032,10 @@
   "lGlDEH": {
     "context": "header",
     "string": "Group members"
+  },
+  "lHCpM4": {
+    "context": "empty state shown when search returns no results",
+    "string": "No models match \"{query}\""
   },
   "lHccsy": {
     "context": "table head",
@@ -10776,6 +10792,10 @@
   },
   "uoKAmI": {
     "string": "Add new order"
+  },
+  "uq2aqJ": {
+    "context": "overflow tab label",
+    "string": "More"
   },
   "uqxjSR": {
     "context": "column picker section header",
