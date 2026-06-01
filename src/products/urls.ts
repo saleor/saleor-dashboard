@@ -1,4 +1,16 @@
 import { type ChannelsAction } from "@dashboard/channels/urls";
+import { Condition } from "@dashboard/components/ConditionalFilter/FilterElement/Condition";
+import {
+  type ConditionItem,
+  ConditionOptions,
+} from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
+import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
+import {
+  ExpressionValue,
+  FilterElement,
+} from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
+import { prepareStructure } from "@dashboard/components/ConditionalFilter/ValueProvider/utils";
+import { stringify } from "qs";
 import urlJoin from "url-join";
 
 import {
@@ -77,6 +89,46 @@ export interface ProductListUrlQueryParams
 }
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
+
+/**
+ * Creates a product type filter element using the conditional filter system.
+ * The product list encodes filters as URL tokens (field slug + product type slug), not legacy query params.
+ */
+const createProductTypeFilterElement = (productType: {
+  id: string;
+  name: string;
+  slug: string;
+}): FilterElement => {
+  const expressionValue = new ExpressionValue("productType", "ProductType", "productType");
+  const conditionOptions = ConditionOptions.fromStaticElementName("productType");
+  const conditionItem: ConditionItem = { type: "combobox", label: "is", value: "input-1" };
+  const conditionSelected = ConditionSelected.fromConditionItemAndValue(conditionItem, {
+    label: productType.name,
+    value: productType.id,
+    slug: productType.slug,
+  });
+  const condition = new Condition(conditionOptions, conditionSelected, false);
+
+  return new FilterElement(expressionValue, condition, false);
+};
+
+/**
+ * Builds the product list URL pre-filtered by a single product type.
+ */
+export const productListUrlWithProductType = (productType?: {
+  id: string;
+  name: string;
+  slug: string;
+}) => {
+  if (!productType?.id || !productType.slug) {
+    return productListPath;
+  }
+
+  const filterContainer = [createProductTypeFilterElement(productType)];
+  const queryParams = prepareStructure(filterContainer);
+
+  return urlJoin(productListPath, "?" + stringify(queryParams));
+};
 
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog = "remove" | "assign-attribute-value" | ChannelsAction;
