@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 /**
  * postMessage contract embedded widget apps use to report content height.
@@ -51,7 +51,9 @@ export const useWidgetIframeAutoHeight = (
   enabled: boolean,
   { defaultHeight = WIDGET_DEFAULT_HEIGHT }: UseWidgetIframeAutoHeightOptions = {},
 ) => {
-  useEffect(() => {
+  // useLayoutEffect so the default height is applied before paint, avoiding a
+  // one-frame flash at the browser's default iframe height (~150px).
+  useLayoutEffect(() => {
     if (!enabled || !frameEl) {
       return;
     }
