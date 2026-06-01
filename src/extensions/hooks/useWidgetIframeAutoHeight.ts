@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 
 /**
- * postMessage contract an embedded widget app can use to report its content
- * height so the Dashboard can grow/shrink the iframe instead of using a fixed box.
+ * postMessage contract embedded widget apps use to report content height.
+ * Must stay in sync with `@saleor/app-sdk/app-bridge` (`WIDGET_RESIZE_MESSAGE`).
  *
- * IMPORTANT: This is a Dashboard-side convention only. It has no effect until an
- * embedded app actually posts `{ type: WIDGET_RESIZE_MESSAGE, height }` to its
- * parent window. Until/unless it does, the iframe renders at `defaultHeight`.
- * Keep this contract in sync with @saleor/app-sdk if/when it is formalized there.
+ * Has no effect until an app posts `{ type: WIDGET_RESIZE_MESSAGE, height }` to
+ * its parent window. Until then the iframe renders at `defaultHeight`.
  */
 export const WIDGET_RESIZE_MESSAGE = "saleor:widget:resize";
 
@@ -46,7 +44,7 @@ interface UseWidgetIframeAutoHeightOptions {
 /**
  * Sidebar/detail widgets live in a scrollable column with no fixed iframe cap.
  * The iframe starts at `defaultHeight` and grows/shrinks as the app reports its
- * document height, so widgets flow naturally one after another.
+ * content height, so widgets flow naturally one after another.
  */
 export const useWidgetIframeAutoHeight = (
   frameEl: HTMLIFrameElement | null,

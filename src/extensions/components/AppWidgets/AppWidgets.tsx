@@ -137,6 +137,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                       {ext.label}
                     </Text>
                     <IframePost
+                      autoHeight
                       appId={ext.app.id}
                       accessToken={ext.accessToken}
                       extensionId={ext.id}

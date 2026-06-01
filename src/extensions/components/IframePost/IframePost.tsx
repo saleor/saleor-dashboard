@@ -1,15 +1,15 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { getAbsoluteApiUrl } from "@dashboard/config";
+import {
+  useWidgetIframeAutoHeight,
+  WIDGET_DEFAULT_HEIGHT,
+} from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
-import { useWidgetIframeAutoHeight } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/useWidgetIframeAutoHeight";
 import { useNodeRef } from "@dashboard/hooks/useNodeRef";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useEffect, useRef } from "react";
 
 const hiddenStyle: CSSProperties = { visibility: "hidden" };
-
-/** Height for the loader while an auto-height widget reports its content height. */
-const AUTO_HEIGHT_LOADER_HEIGHT = 120;
 
 interface IframePostProps {
   extensionId: string;
@@ -18,6 +18,13 @@ interface IframePostProps {
   accessToken: string;
   params?: AppDetailsUrlMountQueryParams;
   height?: number | string;
+  /**
+   * Grow/shrink the iframe when the embedded app posts `saleor:widget:resize`.
+   * POST iframes do not run the App Bridge handshake; apps must call
+   * `reportWidgetHeight()` from `@saleor/app-sdk/app-bridge` directly (or use
+   * `useWidgetAutoResize` only on GET/AppFrame mounts where the bridge is ready).
+   */
+  autoHeight?: boolean;
   loaderType?: "skeleton" | "throbber";
 }
 
@@ -31,13 +38,13 @@ export const IframePost = ({
   appId,
   accessToken,
   params,
-  height,
+  height = WIDGET_DEFAULT_HEIGHT,
+  autoHeight = false,
   loaderType = "skeleton",
 }: IframePostProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
   const { ref: iframeRef, node: iframeEl, setRef: setIframeRef } = useNodeRef<HTMLIFrameElement>();
-  const autoHeight = height === undefined;
 
   useWidgetIframeAutoHeight(iframeEl, autoHeight);
 
@@ -63,12 +70,10 @@ export const IframePost = ({
     return () => {
       iframe.removeEventListener("load", onload);
     };
-  }, []);
+  }, [iframeRef]);
 
-  // In auto-height mode the iframe sizes itself via postMessage, so the box and
-  // iframe stay unset; the loader keeps a placeholder height to avoid a layout jump.
   const boxHeight = autoHeight ? undefined : height;
-  const loaderHeight = autoHeight ? AUTO_HEIGHT_LOADER_HEIGHT : height;
+  const loaderHeight = autoHeight ? WIDGET_DEFAULT_HEIGHT : height;
 
   return (
     <Box width="100%" __height={boxHeight}>

@@ -1,4 +1,5 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { useWidgetIframeAutoHeight } from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { type AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
@@ -13,7 +14,6 @@ import { useAppActions } from "./useAppActions";
 import { useAppDashboardUpdates } from "./useAppDashboardUpdates";
 import { useTokenRefresh } from "./useTokenRefresh";
 import { useUpdateAppToken } from "./useUpdateAppToken";
-import { useWidgetIframeAutoHeight } from "./useWidgetIframeAutoHeight";
 
 interface Props {
   src: string;

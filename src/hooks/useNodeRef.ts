@@ -2,7 +2,7 @@ import { type RefObject, useCallback, useRef, useState } from "react";
 
 interface UseNodeRefResult<T extends HTMLElement> {
   /** Stable ref for imperative reads that should not trigger re-renders. */
-  ref: RefObject<T>;
+  ref: RefObject<T | null>;
   /** Reactive value, so effects/hooks can re-run when the node mounts or unmounts. */
   node: T | null;
   /** Callback ref to attach to the element; keeps both `ref` and `node` in sync. */
