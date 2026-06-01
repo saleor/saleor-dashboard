@@ -3538,6 +3538,10 @@
     "context": "product variant detail page, top-bar metadata button tooltip",
     "string": "Edit variant metadata"
   },
+  "H9gOMX": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}."
+  },
   "HA0fD3": {
     "string": "Channel created"
   },
