@@ -1,17 +1,16 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { createPageQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  OrderDirection,
+  PageTypeSortField,
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
   usePageListQuery,
+  usePageTypeListQuery,
 } from "@dashboard/graphql";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
+import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -25,14 +24,18 @@ import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerD
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
+import {
+  ALL_MODELS_TAB_ID,
+  type ModelTypeTabCount,
+} from "../../components/ModelTypeTabs/ModelTypeTabs";
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
   pageCreateUrl,
@@ -40,20 +43,30 @@ import {
   type PageListUrlDialog,
   type PageListUrlQueryParams,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
+import { usePageTypeTabCounts } from "./usePageTypeTabCounts";
 
 interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
+const normalizePageTypes = (value: string | string[] | undefined): string[] => {
+  if (!value) {
+    return [];
+  }
+
+  return Array.isArray(value) ? value.filter(Boolean) : [value];
+};
+
 const PageList = ({ params }: PageListProps) => {
   const navigate = useNavigator();
+  const location = useLocation();
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
-  const { valueProvider } = useConditionalFilterContext();
-  const filter = createPageQueryVariables(valueProvider.value);
+
+  const selectedPageTypes = normalizePageTypes(params.pageTypes);
+  const activeTabId = selectedPageTypes[0] ?? ALL_MODELS_TAB_ID;
 
   usePaginationReset(pageListUrl, params, settings.rowNumber);
 
@@ -63,48 +76,114 @@ const PageList = ({ params }: PageListProps) => {
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
-    cleanupFn: clearRowSelection,
-    createUrl: pageListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    keepActiveTab: true,
-  });
-  const {
-    selectedPreset,
-    presets,
-    hasPresetsChanged,
-    onPresetChange,
-    onPresetDelete,
-    onPresetSave,
-    onPresetUpdate,
-    setPresetIdToDelete,
-    getPresetNameToDelete,
-  } = useFilterPresets({
-    params,
-    reset: clearRowSelection,
-    getUrl: pageListUrl,
-    storageUtils,
-  });
-  const paginationState = createPaginationState(settings.rowNumber, params);
 
-  const newQueryVariables = useMemo(
+  const handleTabChange = useCallback(
+    (id: string) => {
+      clearRowSelection();
+      navigate(
+        pageListUrl({
+          pageTypes: id === ALL_MODELS_TAB_ID ? undefined : [id],
+          asc: params.asc,
+          sort: params.sort,
+        }),
+      );
+    },
+    [clearRowSelection, navigate, params.asc, params.sort],
+  );
+
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      clearRowSelection();
+
+      const trimmed = query?.trim() ?? "";
+
+      navigate(
+        pageListUrl({
+          ...params,
+          after: undefined,
+          before: undefined,
+          query: trimmed !== "" ? trimmed : undefined,
+        }),
+      );
+    },
+    [clearRowSelection, navigate, params],
+  );
+
+  const paginationState = createPaginationState(settings.rowNumber, params);
+  const activeFilter = useMemo(
+    () => ({
+      pageTypes: activeTabId === ALL_MODELS_TAB_ID ? undefined : [activeTabId],
+      search: params.query,
+    }),
+    [activeTabId, params.query],
+  );
+
+  const activeQueryVariables = useMemo(
     () => ({
       ...paginationState,
-      filter: {
-        ...filter,
-        search: params.query,
-      },
+      filter: activeFilter,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [paginationState, activeFilter, params.sort, params.asc],
   );
+
   const { data, refetch } = usePageListQuery({
     displayLoader: true,
-    variables: newQueryVariables,
+    variables: activeQueryVariables,
   });
   const pages = mapEdgesToItems(data?.pages);
+
+  const { data: pageTypesData, loading: pageTypesLoading } = usePageTypeListQuery({
+    fetchPolicy: "cache-and-network",
+    variables: {
+      first: 100,
+      sort: { field: PageTypeSortField.NAME, direction: OrderDirection.ASC },
+    },
+  });
+  const pageTypes = useMemo(
+    () => mapEdgesToItems(pageTypesData?.pageTypes) ?? undefined,
+    [pageTypesData],
+  );
+
+  // Fall back to "All" if URL references an unknown page type.
+  useEffect(() => {
+    if (
+      activeTabId !== ALL_MODELS_TAB_ID &&
+      pageTypes &&
+      !pageTypesLoading &&
+      !pageTypes.some(pt => pt.id === activeTabId)
+    ) {
+      navigate(
+        pageListUrl({
+          asc: params.asc,
+          sort: params.sort,
+        }),
+        { replace: true },
+      );
+    }
+  }, [activeTabId, pageTypes, pageTypesLoading, navigate, params.asc, params.sort]);
+
+  const { counts, setCount, fetchers } = usePageTypeTabCounts({
+    pageTypes,
+    activeTabId,
+    allTabId: ALL_MODELS_TAB_ID,
+    pageSize: settings.rowNumber,
+  });
+
+  // Active tab badge comes from the active query, not a cache-first fetcher.
+  const activeCount: ModelTypeTabCount | undefined = data?.pages
+    ? {
+        value: data.pages.edges.length,
+        hasMore: !!data.pages.pageInfo.hasNextPage,
+      }
+    : undefined;
+
+  useEffect(() => {
+    if (activeCount) {
+      setCount(activeTabId, activeCount);
+    }
+  }, [activeCount?.value, activeCount?.hasMore, activeTabId, setCount]);
+
   const paginationValues = usePaginator({
     pageInfo: data?.pages?.pageInfo,
     paginationState,
@@ -197,14 +276,6 @@ const PageList = ({ params }: PageListProps) => {
     loading: searchDialogPageTypesOpts.loading,
     onFetchMore: loadMoreDialogPageTypes,
   };
-  const filterOpts = getFilterOpts({
-    params,
-    pageTypes: mapEdgesToItems(searchDialogPageTypesOpts?.data?.search),
-    pageTypesProps: {
-      ...getSearchFetchMoreProps(searchDialogPageTypesOpts, loadMoreDialogPageTypes),
-      onSearchChange: searchDialogPageTypes,
-    },
-  });
   const handleSetSelectedPageIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!pages) {
@@ -223,15 +294,45 @@ const PageList = ({ params }: PageListProps) => {
     [pages, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
 
+  const handlePageCreate = useCallback(() => {
+    if (activeTabId !== ALL_MODELS_TAB_ID) {
+      navigate(pageCreateUrl({ "page-type-id": activeTabId }), {
+        state: getPrevLocationState(location),
+      });
+
+      return;
+    }
+
+    openModal("create-page");
+  }, [activeTabId, navigate, openModal, location]);
+
+  const activePageType = useMemo(
+    () => pageTypes?.find(pt => pt.id === activeTabId),
+    [pageTypes, activeTabId],
+  );
+
+  const [lastCreatedModelTypeId] = useLastCreatedEntityTypeStorage("MODEL");
+  const defaultPickerOption = useMemo(() => {
+    if (!lastCreatedModelTypeId || !pageTypes) {
+      return null;
+    }
+
+    const match = pageTypes.find(pt => pt.id === lastCreatedModelTypeId);
+
+    return match ? { value: match.id, label: match.name } : null;
+  }, [lastCreatedModelTypeId, pageTypes]);
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
+      {fetchers}
       <PageListPage
         disabled={!data}
         loading={!data}
         settings={settings}
         pages={pages}
         onUpdateListSettings={updateListSettings}
-        onPageCreate={() => openModal("create-page")}
+        onPageCreate={handlePageCreate}
+        activePageTypeName={activePageType?.name}
         onSort={handleSort}
         sort={getSortParams(params)}
         selectedPageIds={selectedRowIds}
@@ -239,21 +340,12 @@ const PageList = ({ params }: PageListProps) => {
         onPagesPublish={() => openModal("publish", { ids: selectedRowIds })}
         onPagesUnpublish={() => openModal("unpublish", { ids: selectedRowIds })}
         onSelectPageIds={handleSetSelectedPageIds}
-        filterOpts={filterOpts}
-        onFilterChange={changeFilters}
         initialSearch={params?.query ?? ""}
         onSearchChange={handleSearchChange}
-        onFilterPresetChange={onPresetChange}
-        onFilterPresetDelete={(id: number) => {
-          setPresetIdToDelete(id);
-          openModal("delete-search");
-        }}
-        onFilterPresetUpdate={onPresetUpdate}
-        onFilterPresetPresetSave={() => openModal("save-search")}
-        selectedFilterPreset={selectedPreset}
-        filterPresets={presets.map(preset => preset.name)}
-        hasPresetsChanged={hasPresetsChanged}
-        onFilterPresetsAll={resetFilters}
+        pageTypes={pageTypes}
+        activeTabId={activeTabId}
+        tabCounts={counts}
+        onTabChange={handleTabChange}
       />
       <ActionDialog
         open={params.action === "publish"}
@@ -329,6 +421,7 @@ const PageList = ({ params }: PageListProps) => {
         confirmButtonState="success"
         open={params.action === "create-page"}
         pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
+        defaultOption={defaultPickerOption}
         fetchPageTypes={searchDialogPageTypes}
         fetchMorePageTypes={fetchMoreDialogPageTypes}
         onClose={closeModal}
@@ -337,21 +430,9 @@ const PageList = ({ params }: PageListProps) => {
             pageCreateUrl({
               "page-type-id": pageTypeId,
             }),
+            { state: getPrevLocationState(location) },
           )
         }
-      />
-      <SaveFilterTabDialog
-        open={params.action === "save-search"}
-        confirmButtonState="default"
-        onClose={closeModal}
-        onSubmit={onPresetSave}
-      />
-      <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
-        confirmButtonState="default"
-        onClose={closeModal}
-        onSubmit={onPresetDelete}
-        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

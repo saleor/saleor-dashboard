@@ -5,6 +5,11 @@ export const messages = defineMessages({
     id: "zv9OGI",
     defaultMessage: "No models found",
   },
+  emptySearch: {
+    id: "lHCpM4",
+    defaultMessage: 'No models match "{query}"',
+    description: "empty state shown when search returns no results",
+  },
   published: {
     id: "GhSB79",
     defaultMessage: "Published",

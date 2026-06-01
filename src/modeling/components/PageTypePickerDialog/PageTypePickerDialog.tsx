@@ -17,6 +17,7 @@ interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   pageTypes: Option[];
+  defaultOption?: Option | null;
   fetchPageTypes: (data: string) => void;
   fetchMorePageTypes: FetchMoreProps;
   onClose: () => void;
@@ -27,17 +28,21 @@ const PageTypePickerDialog = ({
   confirmButtonState,
   open,
   pageTypes,
+  defaultOption,
   fetchPageTypes,
   fetchMorePageTypes,
   onClose,
   onConfirm,
 }: PageTypePickerDialogProps) => {
   const intl = useIntl();
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(defaultOption ?? null);
 
   const debouncedFetchPageTypes = useDebounce(fetchPageTypes, 500);
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      setSelectedOption(defaultOption ?? null);
+    },
     onClose: () => {
       setSelectedOption(null);
       fetchPageTypes("");

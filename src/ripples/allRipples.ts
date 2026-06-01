@@ -5,6 +5,7 @@ import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOve
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
+import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
@@ -15,6 +16,7 @@ import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLi
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
 import { rippleProductMetadata } from "@dashboard/products/ripples/productMetadata";
+import { rippleProductTypeInHeader } from "@dashboard/products/ripples/productTypeInHeader";
 import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
@@ -28,6 +30,7 @@ export const allRipples: Ripple[] = [
 
   // Modelling / pages
   ripplePagesAreModels,
+  rippleModelTypeTabs,
 
   // Orders
   rippleNewRefundReasons,
@@ -44,6 +47,7 @@ export const allRipples: Ripple[] = [
   // Products
   rippleProductAvailabilityDiagnostics,
   rippleProductMetadata,
+  rippleProductTypeInHeader,
   rippleProductVariantMetadata,
   rippleVariantGenerator,
 

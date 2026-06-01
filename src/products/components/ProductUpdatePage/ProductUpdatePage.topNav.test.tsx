@@ -114,7 +114,6 @@ const renderPage = (onShowMetadata = jest.fn()) =>
           limits={null as never}
           variants={[]}
           media={[]}
-          header={mockProduct.name}
           product={mockProduct}
           saveButtonBarState="default"
           taxClasses={[]}
@@ -182,7 +181,6 @@ describe("ProductUpdatePage top nav", () => {
             limits={null as never}
             variants={[]}
             media={[]}
-            header=""
             product={undefined}
             saveButtonBarState="default"
             taxClasses={[]}

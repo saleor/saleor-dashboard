@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 360px;
+  padding: 6px 12px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--mu-colors-text-default1);
+  font: inherit;
+  font-size: 14px;
+}
+
+.input::placeholder {
+  color: var(--mu-colors-text-default2);
+}
+
+.input:focus {
+  outline: none;
+}
