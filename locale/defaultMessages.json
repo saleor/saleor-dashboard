@@ -3514,6 +3514,10 @@
     "context": "draft created from replace event title",
     "string": "Draft was reissued from order"
   },
+  "H9gOMX": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}."
+  },
   "HA0fD3": {
     "string": "Channel created"
   },
