@@ -23,6 +23,8 @@ interface ProductType {
 
 interface ProductOrganizationProps {
   canChangeType: boolean;
+  /** When true, product type is shown elsewhere (e.g. page header) and omitted here. */
+  hideProductType?: boolean;
   categories?: Option[];
   categoryInputDisplayValue: string;
   collections?: Option[];
@@ -52,6 +54,7 @@ interface ProductOrganizationProps {
 export const ProductOrganization = (props: ProductOrganizationProps) => {
   const {
     canChangeType,
+    hideProductType = false,
     categories,
     categoryInputDisplayValue,
     collections,
@@ -109,7 +112,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
-        {canChangeType ? (
+        {canChangeType && !hideProductType ? (
           <DynamicCombobox
             disabled={disabled}
             data-test-id="product-type"
@@ -164,7 +167,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
             })}
             loading={fetchMoreProductTypes?.loading}
           />
-        ) : (
+        ) : !hideProductType ? (
           <Box display="flex" flexDirection="column" gap={3}>
             <Box display="flex" flexDirection="column">
               <Text size={4} fontWeight="bold">
@@ -181,7 +184,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
               )}
             </Box>
           </Box>
-        )}
+        ) : null}
 
         <Box data-test-id="category">
           <DynamicCombobox

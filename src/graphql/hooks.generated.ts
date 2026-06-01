@@ -3122,6 +3122,7 @@ export const ProductFragmentDoc = gql`
   productType {
     id
     name
+    slug
     hasVariants
     isShippingRequired
   }

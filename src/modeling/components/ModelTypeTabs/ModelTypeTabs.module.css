@@ -1,0 +1,144 @@
+.row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  min-width: 0;
+}
+
+.measureLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.strip {
+  display: flex;
+  gap: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0 24px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  max-width: 220px;
+  padding: 12px 16px;
+  margin-bottom: -1px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  color: var(--mu-colors-text-default2);
+  white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tabLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--mu-colors-text-default1);
+  border-bottom-color: var(--mu-colors-text-default1);
+}
+
+.count {
+  color: var(--mu-colors-text-default2);
+  font-variant-numeric: tabular-nums;
+}
+
+.tab[aria-selected="true"] .count {
+  color: var(--mu-colors-text-default1);
+}
+
+.pinButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 18px;
+  margin-left: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    width 0.18s ease,
+    opacity 0.18s ease,
+    margin-left 0.18s ease;
+}
+
+.tab[aria-selected="true"]:hover .pinButton {
+  width: 18px;
+  margin-left: 4px;
+  opacity: 1;
+}
+
+.pinButton:hover {
+  color: var(--mu-colors-text-default1);
+  background: var(--mu-colors-background-default2);
+}
+
+.rightSlot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 24px;
+}
+
+.moreSlot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 24px;
+}
+
+/*
+ * Flatten the macaw <Button> chrome so the "More" trigger reads as part of
+ * the tab strip rather than a CTA. Scoping through .moreSlot bumps specificity
+ * to 0,2,0 — enough to beat macaw's single-class rules without !important.
+ */
+.moreSlot .moreButton {
+  min-height: 0;
+  height: auto;
+  padding: 6px 10px;
+  gap: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--mu-colors-text-default2);
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.moreSlot .moreButton:hover {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.moreSlot .moreButton svg {
+  width: 14px;
+  height: 14px;
+}

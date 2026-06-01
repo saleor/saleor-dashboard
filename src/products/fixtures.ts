@@ -338,6 +338,7 @@ export const product: (
     isShippingRequired: true,
     id: "pt76406",
     name: "Versatile",
+    slug: "versatile",
     nonSelectionVariantAttributes: [
       {
         __typename: "Attribute",
