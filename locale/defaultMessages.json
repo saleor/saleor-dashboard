@@ -300,6 +300,10 @@
     "context": "input label",
     "string": "Global threshold"
   },
+  "/jEC3m": {
+    "context": "product media gallery dropzone hint",
+    "string": "Drag and drop or click to upload"
+  },
   "/jJLYy": {
     "string": "Transactions"
   },
@@ -7412,6 +7416,10 @@
     "context": "section header",
     "string": "Refund Order"
   },
+  "bqSNm/": {
+    "context": "success notification when product media is uploaded",
+    "string": "Image added"
+  },
   "brkxbY": {
     "string": "There are no transactions to refund"
   },
@@ -9146,9 +9154,6 @@
   },
   "lTrKHs": {
     "string": "Go to products"
-  },
-  "lUvX5F": {
-    "string": "Image added"
   },
   "lVwmf5": {
     "context": "total price of ordered products",
