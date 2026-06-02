@@ -1,4 +1,4 @@
-import { TriangleAlert } from "@material-ui/icons";
+import { Alarm } from "@material-ui/icons";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedDate, FormattedMessage } from "react-intl";
@@ -20,7 +20,7 @@ export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerConte
     data-test-id="deprecation-banner"
   >
     <Box display="flex" alignItems="center" color="critical2" __paddingTop="2px">
-      <TriangleAlert size={16} />
+      <Alarm size={16} />
     </Box>
     <Text size={2} color="critical2">
       <FormattedMessage
