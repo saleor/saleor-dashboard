@@ -20,6 +20,7 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
@@ -28,6 +29,7 @@ import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer, { type CustomerEditData } from "../OrderCustomer";
+import { messages as orderDetailsPageMessages } from "../OrderDetailsPage/messages";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
@@ -58,6 +60,7 @@ interface OrderDraftPageProps extends FetchMoreProps {
   onShippingMethodEdit: () => void;
   onProfileView: () => void;
   onOrderLineShowMetadata: (id: string) => void;
+  onOrderShowMetadata: () => void;
 }
 
 const draftOrderListUrl = orderDraftListUrl();
@@ -83,6 +86,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     onShippingMethodEdit,
     onProfileView,
     onOrderLineShowMetadata,
+    onOrderShowMetadata,
     order,
     channelUsabilityData,
     users,
@@ -107,7 +111,14 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
 
   return (
     <DetailPageLayout>
-      <TopNav href={backLinkUrl} title={<Title order={order} />}>
+      <TopNav href={backLinkUrl} title={<Title order={order} />} actionsGap={3}>
+        <TopNav.MetadataButton
+          onClick={onOrderShowMetadata}
+          disabled={!order}
+          data-test-id="show-order-metadata"
+          title={intl.formatMessage(orderDetailsPageMessages.editOrderMetadata)}
+          ripple={rippleDraftOrderMetadata}
+        />
         <TopNav.Menu
           items={[
             {

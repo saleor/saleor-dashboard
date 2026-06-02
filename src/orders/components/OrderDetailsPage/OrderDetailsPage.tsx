@@ -5,7 +5,6 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -25,11 +24,11 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { Button, Divider } from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
+import { Divider } from "@saleor/macaw-ui-next";
 import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -205,14 +204,12 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
       {({ submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <Button
-                variant="secondary"
-                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+            <TopNav href={backLinkUrl} title={<Title order={order} />} actionsGap={3}>
+              <TopNav.MetadataButton
                 onClick={onOrderShowMetadata}
                 data-test-id="show-order-metadata"
-                title="Edit order metadata"
-                marginRight={3}
+                title={intl.formatMessage(messages.editOrderMetadata)}
+                ripple={rippleOrderMetadata}
               />
 
               <TopNav.Menu

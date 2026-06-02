@@ -20,6 +20,10 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 - `EXTENSIONS_API_URL` - Optional URI of the Saleor Marketplace API used to fetch the list of extensions in JSON. Saleor Cloud projects have this preconfigured; self-hosted deployments can omit it and the Dashboard will fall back to a bundled `extensions.json` dataset and show a self-hosted banner in the Explore view.
 
+- `DEPRECATED_SALEOR_VERSION` - Optional. A `<major>.<minor>` version (e.g. `3.20`). When the connected Saleor instance reports a version that is the same or older (compared on major and minor only), the Dashboard shows a banner in the sidebar warning that the instance will be automatically upgraded. Requires `DEPRECATED_SALEOR_VERSION_TIMESTAMP` to also be set and valid, otherwise the banner is disabled.
+
+- `DEPRECATED_SALEOR_VERSION_TIMESTAMP` - Optional. ISO date or timestamp (e.g. `2026-09-01`) shown in the deprecation banner as the automatic upgrade date. Only the date is rendered. Required together with `DEPRECATED_SALEOR_VERSION`.
+
 ## Fetching schema
 
 By default dashboard will use `fetch-schema` script from package.json to get Saleor schema from specific branch e.g `main` for unstable one. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.

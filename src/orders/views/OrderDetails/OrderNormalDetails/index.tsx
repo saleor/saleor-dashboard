@@ -361,7 +361,7 @@ export const OrderNormalDetails = ({
         orderId={id}
       />
       <OrderMetadataDialog
-        open={params.action === "view-order-metadata"}
+        open={params.action === "view-order-metadata" && !!data?.order}
         onClose={closeModal}
         order={data?.order}
       />

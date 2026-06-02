@@ -50,6 +50,10 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
+  "+LyCI8": {
+    "context": "detail page top bar, settings menu button tooltip",
+    "string": "More actions"
+  },
   "+PclgM": {
     "context": "tabel column header",
     "string": "Total"
@@ -3530,6 +3534,14 @@
     "context": "draft created from replace event title",
     "string": "Draft was reissued from order"
   },
+  "H6ad9p": {
+    "context": "product variant detail page, top-bar metadata button tooltip",
+    "string": "Edit variant metadata"
+  },
+  "H9gOMX": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}."
+  },
   "HA0fD3": {
     "string": "Channel created"
   },
@@ -6107,6 +6119,10 @@
   "V2JtVu": {
     "string": "Same as implicit AND, using explicit keyword"
   },
+  "V4Pdx+": {
+    "context": "product detail page, top-bar metadata button tooltip",
+    "string": "Edit product metadata"
+  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -6496,6 +6512,10 @@
   },
   "XOkUxQ": {
     "string": "Product unavailable in voucher channels"
+  },
+  "XP5btK": {
+    "context": "product variant metadata dialog header",
+    "string": "Variant Metadata"
   },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
@@ -9338,6 +9358,10 @@
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
+  "mykruj": {
+    "context": "detail page top bar, translations button tooltip",
+    "string": "Open translations"
+  },
   "mzASqs": {
     "context": "days after label",
     "string": "days after issue"
@@ -9743,6 +9767,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pLSGmd": {
+    "context": "product metadata dialog header",
+    "string": "Product Metadata"
+  },
   "pMAlSC": {
     "context": "Shown when a value cannot be determined due to permissions",
     "string": "Unknown"
@@ -10083,6 +10111,10 @@
   "quV5zH": {
     "context": "dialog title",
     "string": "Delete Token"
+  },
+  "qvaap2": {
+    "context": "order detail page, top-bar metadata button tooltip",
+    "string": "Edit order metadata"
   },
   "qwp4zK": {
     "context": "Health check subtitle when product can be purchased",

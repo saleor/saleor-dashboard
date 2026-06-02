@@ -22,8 +22,6 @@ import {
   useProductVariantDetailsQuery,
   useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
   useVariantDeleteMutation,
   useVariantMediaAssignMutation,
   useVariantMediaUnassignMutation,
@@ -48,7 +46,6 @@ import {
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useEffect, useState } from "react";
@@ -56,6 +53,7 @@ import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import { ProductVariantMetadataDialog } from "../../components/ProductVariantMetadataDialog/ProductVariantMetadataDialog";
 import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
 import {
@@ -92,9 +90,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   });
   const productId = data?.productVariant?.product.id;
 
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [openModal] = createDialogActionHandlers<
+  const [openModal, closeModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
   >(navigate, params => productVariantEditUrl(variantId, params), params);
@@ -225,12 +221,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       ...channelErrors,
     ];
   };
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.productVariant,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const handleSubmit = handleUpdate;
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantEditUrl(variantId, {
@@ -334,6 +325,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         variant={variant}
         header={variant?.name || variant?.sku}
         onDelete={() => openModal("remove")}
+        onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
@@ -361,6 +353,11 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+      />
+      <ProductVariantMetadataDialog
+        open={params.action === "view-metadata" && !!variant}
+        onClose={closeModal}
+        variant={variant}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

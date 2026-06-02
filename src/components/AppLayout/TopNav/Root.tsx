@@ -15,6 +15,8 @@ interface TopNavProps {
   href?: string;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;
+  /** Gap between header action buttons. Detail pages use a slightly wider spacing. */
+  actionsGap?: 2 | 3;
 }
 
 export const Root = ({
@@ -24,6 +26,7 @@ export const Root = ({
   href,
   withoutBorder = false,
   isAlignToRight = true,
+  actionsGap = 2,
   children,
   ...wrapperProps
 }: PropsWithChildren<TopNavProps> & Omit<BoxProps, keyof TopNavProps>) => {
@@ -69,7 +72,7 @@ export const Root = ({
           display="flex"
           flexWrap="nowrap"
           height="100%"
-          gap={2}
+          gap={actionsGap}
           __flex={isAlignToRight ? "initial" : 1}
         >
           {isPickerActive && channels.length > 0 && (

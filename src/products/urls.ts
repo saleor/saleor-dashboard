@@ -131,7 +131,11 @@ export const productListUrlWithProductType = (productType?: {
 };
 
 export const productPath = (id: string) => urlJoin(productSection + id);
-export type ProductUrlDialog = "remove" | "assign-attribute-value" | ChannelsAction;
+export type ProductUrlDialog =
+  | "remove"
+  | "assign-attribute-value"
+  | "view-metadata"
+  | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog> & SingleAction;
 export type ProductCreateUrlDialog = "assign-attribute-value" | ChannelsAction;
 interface ProductCreateUrlProductType {
@@ -150,7 +154,7 @@ export const productVariantEditPath = (variantId: string) =>
 export const productVariantLegacyEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
 
-export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value";
+export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value" | "view-metadata";
 export type ProductVariantEditUrlQueryParams = Dialog<ProductVariantEditUrlDialog> & SingleAction;
 export const productVariantEditUrl = (
   variantId: string,

@@ -50,21 +50,21 @@ export const useHandleMetadataSubmit = <
   const onSubmit = async (data: MetadataFormData): Promise<void> => {
     submittedData.current = data;
 
-    // Submit metadata
     const errors = await fulfillmentSubmitHandler(data);
+
+    if (errors.length > 0) {
+      return;
+    }
 
     const result = client.refetchQueries({ include: [refetchDocument] });
 
     await Promise.all(result.queries.map(q => q.refetch()));
 
-    // Check if submission succeeded
-    if (errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
-      });
-      onClose();
-    }
+    notify({
+      status: "success",
+      text: intl.formatMessage({ id: "gelco+", defaultMessage: "Metadata updated" }),
+    });
+    onClose();
   };
 
   return {

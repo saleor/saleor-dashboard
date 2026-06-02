@@ -197,7 +197,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
             orderAddManualTransaction,
           }) => (
             <>
-              {!isOrderDraft && !isOrderUnconfirmed && (
+              {order && !isOrderDraft && !isOrderUnconfirmed && (
                 <OrderNormalDetails
                   id={id}
                   params={params}
@@ -224,7 +224,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   closeModal={closeModal}
                 />
               )}
-              {isOrderDraft && (
+              {order && isOrderDraft && (
                 <OrderDraftDetails
                   id={id}
                   params={params}
@@ -243,7 +243,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   closeModal={closeModal}
                 />
               )}
-              {isOrderUnconfirmed && (
+              {order && isOrderUnconfirmed && (
                 <OrderUnconfirmedDetails
                   id={id}
                   params={params}

@@ -2,27 +2,27 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import {
-  OrderDetailsWithMetadataDocument,
-  type OrderDetailsWithMetadataQuery,
-} from "@dashboard/graphql";
+import { ProductDetailsDocument, type ProductDetailsQuery } from "@dashboard/graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-type OrderMetadataDialogData = NonNullable<OrderDetailsWithMetadataQuery["order"]>;
+type ProductMetadataDialogData = NonNullable<ProductDetailsQuery["product"]>;
 
-interface OrderMetadataDialogProps {
+interface ProductMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  order: OrderMetadataDialogData | undefined;
+  product: ProductMetadataDialogData | undefined | null;
 }
 
-export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialogProps) => {
+export const ProductMetadataDialog = ({ onClose, open, product }: ProductMetadataDialogProps) => {
   const intl = useIntl();
+  const normalizedProduct = product
+    ? { ...product, privateMetadata: product.privateMetadata ?? [] }
+    : undefined;
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
-    initialData: order,
+    initialData: normalizedProduct,
     onClose,
-    refetchDocument: OrderDetailsWithMetadataDocument,
+    refetchDocument: ProductDetailsDocument,
   });
 
   const {
@@ -35,7 +35,7 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
     handleChange,
     formData,
   } = useMetadataForm({
-    graphqlData: order,
+    graphqlData: normalizedProduct,
     submitInProgress,
     lastSubmittedData,
   });
@@ -54,8 +54,9 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
         await onSubmit(formData);
       }}
       title={intl.formatMessage({
-        defaultMessage: "Order Metadata",
-        id: "oL7VUz",
+        defaultMessage: "Product Metadata",
+        description: "product metadata dialog header",
+        id: "pLSGmd",
       })}
       data={{
         metadata: mapFieldArrayToMetadataInput(metadataFields),
