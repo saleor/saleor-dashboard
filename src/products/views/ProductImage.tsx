@@ -90,10 +90,10 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
 
   const handleDelete = () => deleteImage({ variables: { id: mediaId } });
   const handleImageClick = (id: string) => () => navigate(productImageUrl(productId, id));
-  const handleUpdate = (formData: { description: string }) => {
+  const handleUpdate = (formData: { alt: string }) => {
     updateImage({
       variables: {
-        alt: formData.description,
+        alt: formData.alt,
         id: mediaId,
       },
     });

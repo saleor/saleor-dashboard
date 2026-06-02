@@ -162,7 +162,7 @@ interface ProductMediaPageProps {
   onDelete: () => void;
   onRowClick: (id: string) => () => void;
   onShowMetadata: () => void;
-  onSubmit: (data: { description: string }) => void;
+  onSubmit: (data: { alt: string }) => void;
 }
 
 const ProductMediaPage = (props: ProductMediaPageProps) => {
@@ -183,7 +183,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
   const navigate = useNavigator();
 
   return (
-    <Form initial={{ description: mediaObj ? mediaObj.alt : "" }} onSubmit={onSubmit} confirmLeave>
+    <Form initial={{ alt: mediaObj?.alt ?? "" }} onSubmit={onSubmit} confirmLeave>
       {({ change, data, submit }) => (
         <>
           <TopNav
@@ -228,12 +228,12 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   <TextField
-                    name="description"
+                    name="alt"
                     label={intl.formatMessage(messages.altText)}
                     helperText={intl.formatMessage(messages.optional)}
                     disabled={disabled}
                     onChange={change}
-                    value={data.description}
+                    value={data.alt}
                     multiline
                     fullWidth
                   />

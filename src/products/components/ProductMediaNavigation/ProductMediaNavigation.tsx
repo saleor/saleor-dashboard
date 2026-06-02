@@ -19,9 +19,6 @@ const useStyles = makeStyles(
     card: {
       marginBottom: theme.spacing(2),
     },
-    highlightedImageContainer: {
-      borderColor: theme.palette.primary.main,
-    },
     image: {
       height: "100%",
       objectFit: "contain",
@@ -36,6 +33,9 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(0.5),
       position: "relative",
+    },
+    highlightedImageContainer: {
+      border: `2px solid ${vars.colors.text.default1}`,
     },
     root: {
       display: "grid",
