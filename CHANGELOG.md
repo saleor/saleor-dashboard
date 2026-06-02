@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.7
+
+### Patch Changes
+
+- [#6604](https://github.com/saleor/saleor-dashboard/pull/6604) [`3f7e21d`](https://github.com/saleor/saleor-dashboard/commit/3f7e21db9af16ec2e3acc2ca1d3510d9f3f128d1) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added a deprecation banner in the sidebar that warns when the connected Saleor instance runs a deprecated version. When the connected version is the same or older than the configured `DEPRECATED_SALEOR_VERSION` (compared on major and minor), a banner appears below the Saleor logo informing users that the instance will be automatically upgraded on the date set in `DEPRECATED_SALEOR_VERSION_TIMESTAMP`. The banner is shown only when both environment variables are set and valid.
+
+- [#6568](https://github.com/saleor/saleor-dashboard/pull/6568) [`2ae78ff`](https://github.com/saleor/saleor-dashboard/commit/2ae78ff3b0e21bd3e67de9a2d96366c01a1fa23c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Models list now organizes content by model type using horizontal tabs. The previous filter UI and filter presets on this page were removed — the active tab is the type filter. Each tab shows a count badge (e.g. "5" or "20+" when more than one page is available).
+
+- [#6595](https://github.com/saleor/saleor-dashboard/pull/6595) [`aff6526`](https://github.com/saleor/saleor-dashboard/commit/aff652625d1de13330be70a3291713087505067e) Thanks [@mirekm](https://github.com/mirekm)! - Product type now appears in the product page header, next to the product name. Click the type to open your catalog filtered to products of that type, or use More actions → Product type settings to edit the type itself. The type is no longer repeated in the organization panel on the right.
+
+- [#6584](https://github.com/saleor/saleor-dashboard/pull/6584) [`d3e3f58`](https://github.com/saleor/saleor-dashboard/commit/d3e3f58de1f7a8c0959073239585ad6e2be7474e) Thanks [@mirekm](https://github.com/mirekm)! - Order details now show clearer, merchant-friendly dates in the header. Instead of an unlabeled timestamp, merchants will see labels like “Placed today at 10:30 AM” or “Created Jan 15 at 10:30 AM” for draft orders, with the exact timezone-aware timestamp available on hover.
+
+- [#6598](https://github.com/saleor/saleor-dashboard/pull/6598) [`4469500`](https://github.com/saleor/saleor-dashboard/commit/446950052f240916bb492ba73b828d12a6b2ef4c) Thanks [@mirekm](https://github.com/mirekm)! - Drop product sidebar spacing between Taxes and app app widgets
+
 ## 3.23.6
 
 ### Patch Changes
