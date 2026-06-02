@@ -34,6 +34,12 @@ export const productMediaReorder = gql`
       errors {
         ...ProductError
       }
+      product {
+        id
+        media {
+          ...ProductMedia
+        }
+      }
     }
   }
 `;

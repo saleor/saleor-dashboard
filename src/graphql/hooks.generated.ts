@@ -14849,9 +14849,16 @@ export const ProductMediaReorderDocument = gql`
     errors {
       ...ProductError
     }
+    product {
+      id
+      media {
+        ...ProductMedia
+      }
+    }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaReorderMutationFn = Apollo.MutationFunction<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>;
 
 /**

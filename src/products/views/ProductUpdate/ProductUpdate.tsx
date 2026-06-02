@@ -107,7 +107,25 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       productVariants: true,
     },
   });
-  const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({});
+  const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({
+    onCompleted: data => {
+      const errors = data.productMediaReorder?.errors ?? [];
+
+      if (errors.length) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.mediaReorderSuccess),
+        });
+      }
+    },
+  });
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
       notify({
@@ -286,8 +304,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
-  const handleImageReorder = createImageReorderHandler(product, variables =>
-    reorderProductImages({ variables }),
+  const handleImageReorder = createImageReorderHandler(product, options =>
+    reorderProductImages(options),
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(

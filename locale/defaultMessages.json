@@ -4000,6 +4000,10 @@
     "context": "voucher value",
     "string": "Value"
   },
+  "JV3DcT": {
+    "context": "success notification when product media gallery order is saved",
+    "string": "Media order updated"
+  },
   "JVaz1C": {
     "context": "window title",
     "string": "Create Webhook"

@@ -39,7 +39,7 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
     <div {...props}>
       {media.map((mediaObj, index) => (
         <SortableMedia
-          key={`item-${index}`}
+          key={mediaObj.id}
           index={index}
           media={mediaObj}
           editHref={getEditHref(mediaObj.id)}

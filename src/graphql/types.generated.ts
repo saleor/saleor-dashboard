@@ -12765,7 +12765,7 @@ export type ProductMediaReorderMutationVariables = Exact<{
 }>;
 
 
-export type ProductMediaReorderMutation = { __typename: 'Mutation', productMediaReorder: { __typename: 'ProductMediaReorder', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
+export type ProductMediaReorderMutation = { __typename: 'Mutation', productMediaReorder: { __typename: 'ProductMediaReorder', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null } | null } | null };
 
 export type ProductVariantSetDefaultMutationVariables = Exact<{
   productId: Scalars['ID'];

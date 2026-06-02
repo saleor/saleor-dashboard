@@ -39,4 +39,9 @@ export const productUpdatePageMessages = defineMessages({
       "{success, plural, one {# variant} other {# variants}} created, {failed, plural, one {# failed} other {# failed}}",
     description: "warning message when some variants failed to create",
   },
+  mediaReorderSuccess: {
+    id: "JV3DcT",
+    defaultMessage: "Media order updated",
+    description: "success notification when product media gallery order is saved",
+  },
 });
