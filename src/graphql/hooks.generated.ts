@@ -15180,9 +15180,16 @@ export const ProductMediaDeleteDocument = gql`
     errors {
       ...ProductError
     }
+    product {
+      id
+      media {
+        ...ProductMedia
+      }
+    }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaDeleteMutationFn = Apollo.MutationFunction<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>;
 
 /**

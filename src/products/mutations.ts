@@ -193,6 +193,12 @@ export const productMediaDeleteMutation = gql`
       errors {
         ...ProductError
       }
+      product {
+        id
+        media {
+          ...ProductMedia
+        }
+      }
     }
   }
 `;

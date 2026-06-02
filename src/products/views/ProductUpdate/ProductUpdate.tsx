@@ -12,6 +12,7 @@ import {
   ErrorPolicyEnum,
   type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
+  ProductMediaType,
   type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
@@ -177,22 +178,42 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
   });
-  const [deleteProductImage] = useProductMediaDeleteMutation({
-    onCompleted: () =>
+  const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductUrlDialog,
+    ProductUrlQueryParams
+  >(navigate, params => productUrl(id, params), params);
+  const [deleteProductImage, deleteProductImageOpts] = useProductMediaDeleteMutation({
+    onCompleted: data => {
+      const errors = data.productMediaDelete?.errors ?? [];
+
+      if (errors.length) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+
+        return;
+      }
+
+      closeModal();
       notify({
         status: "success",
         text: intl.formatMessage({
           id: "Gi8zwc",
           defaultMessage: "Image deleted",
         }),
-      }),
+      });
+    },
   });
-  const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ProductUrlDialog,
-    ProductUrlQueryParams
-  >(navigate, params => productUrl(id, params), params);
   const product = data?.product;
+  const mediaToDelete = useMemo(
+    () => product?.media?.find(media => media.id === params.id),
+    [params.id, product?.media],
+  );
+  const isVideoMediaToDelete = mediaToDelete?.type === ProductMediaType.VIDEO;
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
@@ -304,7 +325,31 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [bulkCreateVariants, id, intl, notify, refetch],
   );
-  const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
+  const handleImageDelete = (mediaId: string) => () => openModal("remove-media", { id: mediaId });
+  const handleConfirmMediaDelete = () => {
+    const mediaId = params.id;
+    const currentMedia = product?.media;
+
+    if (!mediaId || !product || !currentMedia) {
+      return;
+    }
+
+    deleteProductImage({
+      variables: { id: mediaId },
+      optimisticResponse: {
+        __typename: "Mutation",
+        productMediaDelete: {
+          __typename: "ProductMediaDelete",
+          errors: [],
+          product: {
+            __typename: "Product",
+            id: product.id,
+            media: currentMedia.filter(media => media.id !== mediaId),
+          },
+        },
+      },
+    });
+  };
   const [submit, submitOpts] = useProductUpdateHandler(product);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
@@ -491,6 +536,22 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         <FormattedMessage
           {...messages.deleteProductDialogSubtitle}
           values={{ name: product?.name }}
+        />
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "remove-media" && !!params.id}
+        onClose={closeModal}
+        confirmButtonState={deleteProductImageOpts.status}
+        onConfirm={handleConfirmMediaDelete}
+        variant="delete"
+        title={intl.formatMessage(
+          isVideoMediaToDelete ? messages.deleteMediaVideoTitle : messages.deleteMediaImageTitle,
+        )}
+      >
+        <FormattedMessage
+          {...(isVideoMediaToDelete
+            ? messages.deleteMediaVideoConfirmation
+            : messages.deleteMediaImageConfirmation)}
         />
       </ActionDialog>
     </>

@@ -133,6 +133,7 @@ export const productListUrlWithProductType = (productType?: {
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog =
   | "remove"
+  | "remove-media"
   | "assign-attribute-value"
   | "view-metadata"
   | ChannelsAction;
