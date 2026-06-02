@@ -8,6 +8,6 @@ import { DeprecationBannerContent } from "./DeprecationBannerContent";
  * This whole build targets a deprecated Saleor version, so the banner is always
  * shown. The upgrade date is hardcoded intentionally (not read from env vars).
  */
-const UPGRADE_DATE = new Date(2026, 5, 3); // 3 June 2026
+const UPGRADE_DATE = new Date(2026, 6, 1); // 1 July 2026
 
 export const DeprecationBanner = () => <DeprecationBannerContent upgradeDate={UPGRADE_DATE} />;
