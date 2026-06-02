@@ -22,6 +22,7 @@ import {
   type OrderNoteAddMutation,
   type OrderNoteUpdateMutation,
   type OrderShippingMethodUpdateMutation,
+  type OrderStatus,
   type OrderTransactionRequestActionMutation,
   type OrderUpdateMutation,
   type OrderVoidMutation,
@@ -41,7 +42,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { orderUrl, type OrderUrlQueryParams } from "../../urls";
+import { orderDetailsUrl, type OrderUrlQueryParams } from "../../urls";
 
 interface OrderDetailsMessages {
   children: (props: {
@@ -69,17 +70,23 @@ interface OrderDetailsMessages {
     handleAddManualTransaction: (data: CreateManualTransactionCaptureMutation) => void;
   }) => React.ReactElement;
   id: string;
+  orderStatus?: OrderStatus;
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessages) => {
+export const OrderDetailsMessages = ({
+  children,
+  id,
+  orderStatus,
+  params,
+}: OrderDetailsMessages) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const { locale } = useLocale();
   const [, closeModal] = createDialogActionHandlers(
     navigate,
-    params => orderUrl(id, params),
+    urlParams => orderDetailsUrl(id, urlParams, orderStatus),
     params,
   );
   const handlePaymentCapture = (data: OrderCaptureMutation) => {

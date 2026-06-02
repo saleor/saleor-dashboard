@@ -1,5 +1,4 @@
 import useAppState from "@dashboard/hooks/useAppState";
-import { ActiveOrdersNavProvider } from "@dashboard/orders/ActiveOrdersNavContext";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
@@ -26,42 +25,40 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <DevModePanel />
       <NavigatorSearch />
 
-      <ActiveOrdersNavProvider>
-        <Box display="grid" __gridTemplateColumns="auto 1fr">
-          {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
-          <Box
-            height="100vh"
-            borderColor="default1"
-            borderRightWidth={1}
-            backgroundColor="default2"
-            borderStyle="solid"
-            position="sticky"
-            top={0}
-            borderLeftWidth={0}
-            borderTopWidth={0}
-            borderBottomWidth={0}
-          >
-            <Sidebar />
-          </Box>
-          <Box height="100%" width="100%" overflow="hidden">
-            <Box as="main" width="100%" height="100%">
-              {children}
-            </Box>
-            <Box
-              ref={setAnchor}
-              position="sticky"
-              bottom={0}
-              left={0}
-              right={0}
-              backgroundColor="default1"
-              borderTopWidth={1}
-              borderTopStyle="solid"
-              borderColor="default1"
-              zIndex="2"
-            />
-          </Box>
+      <Box display="grid" __gridTemplateColumns="auto 1fr">
+        {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
+        <Box
+          height="100vh"
+          borderColor="default1"
+          borderRightWidth={1}
+          backgroundColor="default2"
+          borderStyle="solid"
+          position="sticky"
+          top={0}
+          borderLeftWidth={0}
+          borderTopWidth={0}
+          borderBottomWidth={0}
+        >
+          <Sidebar />
         </Box>
-      </ActiveOrdersNavProvider>
+        <Box height="100%" width="100%" overflow="hidden">
+          <Box as="main" width="100%" height="100%">
+            {children}
+          </Box>
+          <Box
+            ref={setAnchor}
+            position="sticky"
+            bottom={0}
+            left={0}
+            right={0}
+            backgroundColor="default1"
+            borderTopWidth={1}
+            borderTopStyle="solid"
+            borderColor="default1"
+            zIndex="2"
+          />
+        </Box>
+      </Box>
     </SidebarProvider>
   );
 };

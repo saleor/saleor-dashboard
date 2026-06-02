@@ -14,6 +14,7 @@ import {
   orderDraftListPath,
   type OrderDraftListUrlQueryParams,
   OrderDraftListUrlSortField,
+  orderDraftPath,
   orderFulfillPath,
   type OrderFulfillUrlQueryParams,
   orderGrantRefundEditPath,
@@ -158,6 +159,7 @@ const Component = () => {
           path={orderManualTransactionRefundPath(":id")}
           component={OrderManualTransactionRefund}
         />
+        <Route path={orderDraftPath(":id")} component={OrderDetails} />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

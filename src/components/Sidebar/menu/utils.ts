@@ -1,18 +1,12 @@
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { orderDraftListUrl, orderListUrl, orderPath } from "@dashboard/orders/urls";
+import { orderDraftListUrl, orderDraftPath, orderListUrl, orderPath } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
 import { type SidebarMenuItem } from "./types";
 
 const ORDER_RESERVED_PATH_SEGMENTS = ["drafts", "settings"];
-
-export type ActiveOrderMenuSection = "drafts" | "orders";
-
-export interface IsMenuActiveOptions {
-  activeOrderSection?: ActiveOrderMenuSection;
-}
 
 const getOrderDetailId = (activeUrl: string): string | null => {
   const match = matchPath<{ orderId: string }>(activeUrl, {
@@ -31,6 +25,19 @@ const getOrderDetailId = (activeUrl: string): string | null => {
   }
 
   return orderId;
+};
+
+const getOrderDraftDetailId = (activeUrl: string): string | null => {
+  const match = matchPath<{ id: string }>(activeUrl, {
+    path: orderDraftPath(":id"),
+    exact: true,
+  });
+
+  if (!match?.params.id) {
+    return null;
+  }
+
+  return decodeURIComponent(match.params.id);
 };
 
 const resolveExtensionMenuUrl = (extension: Extension): string | undefined => {
@@ -62,11 +69,7 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
   return items;
 };
 
-export function isMenuActive(
-  location: string,
-  menuItem: SidebarMenuItem,
-  options?: IsMenuActiveOptions,
-) {
+export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   const menuUrlsToCheck = [...(menuItem.matchUrls || []), menuItem.url]
     .filter((item): item is string => Boolean(item))
     .map(item => item.split("?")[0]);
@@ -83,22 +86,29 @@ export function isMenuActive(
 
   const orderDraftListPath = orderDraftListUrl().split("?")[0];
   const orderListPath = orderListUrl().split("?")[0];
+  const isDraftOrderDetailPage = getOrderDraftDetailId(activeUrl) !== null;
   const isOrderDetailPage = getOrderDetailId(activeUrl) !== null;
-  const activeOrderSection = options?.activeOrderSection;
 
   if (
     menuUrlsToCheck.some(url => url === orderListPath) &&
-    (activeUrl === orderDraftListPath || (isOrderDetailPage && activeOrderSection !== "orders"))
+    (activeUrl === orderDraftListPath || isDraftOrderDetailPage)
   ) {
     return false;
   }
 
   if (
     menuUrlsToCheck.some(url => url === orderDraftListPath) &&
-    isOrderDetailPage &&
-    activeOrderSection === "drafts"
+    (activeUrl === orderDraftListPath || isDraftOrderDetailPage)
   ) {
     return true;
+  }
+
+  if (
+    menuUrlsToCheck.some(url => url === orderDraftListPath) &&
+    isOrderDetailPage &&
+    !isDraftOrderDetailPage
+  ) {
+    return false;
   }
 
   return menuUrlsToCheck.some(menuItemUrl => {

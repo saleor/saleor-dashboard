@@ -18,15 +18,15 @@ import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderD
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { useSetActiveOrdersNavSection } from "../../ActiveOrdersNavContext";
 import OrderOperations from "../../containers/OrderOperations";
+import { useOrderDetailsUrlCanonicalization } from "../../hooks/useOrderDetailsUrlCanonicalization";
 import {
+  orderDetailsUrl,
   orderDraftListUrl,
   orderListUrl,
-  orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
 } from "../../urls";
@@ -43,16 +43,28 @@ interface OrderDetailsProps {
 
 const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const navigate = useNavigator();
-  const setActiveOrderSection = useSetActiveOrdersNavSection();
   const { queue } = useBackgroundTask();
   const intl = useIntl();
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
   const apolloClient = useApolloClient();
+  const { data, loading } = useOrderDetails(id);
+
+  const order = data?.order;
+  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
+  const isOrderDraft = order?.status === OrderStatus.DRAFT;
+
+  useOrderDetailsUrlCanonicalization(id, order?.status);
+
+  const buildOrderUrl = useCallback(
+    (urlParams: OrderUrlQueryParams) => orderDetailsUrl(id, urlParams, order?.status),
+    [id, order?.status],
+  );
+
   const [openModal, closeModal] = createDialogActionHandlers<OrderUrlDialog, OrderUrlQueryParams>(
     navigate,
-    urlParams => orderUrl(id, urlParams),
+    buildOrderUrl,
     params,
     ["type"],
   );
@@ -68,22 +80,6 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
       });
     },
   });
-
-  const { data, loading } = useOrderDetails(id);
-
-  const order = data?.order;
-  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
-  const isOrderDraft = order?.status === OrderStatus.DRAFT;
-
-  useEffect(() => {
-    if (!order?.status) {
-      setActiveOrderSection(undefined);
-    } else {
-      setActiveOrderSection(order.status === OrderStatus.DRAFT ? "drafts" : "orders");
-    }
-
-    return () => setActiveOrderSection(undefined);
-  }, [id, order?.status, setActiveOrderSection]);
 
   if (order === null) {
     return <NotFoundPage onBack={handleBack} />;
@@ -122,7 +118,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   };
 
   return (
-    <OrderDetailsMessages id={id} params={params}>
+    <OrderDetailsMessages id={id} orderStatus={order?.status} params={params}>
       {orderMessages => (
         <OrderOperations
           order={id}
