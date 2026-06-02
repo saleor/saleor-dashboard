@@ -3140,6 +3140,10 @@
     "context": "pages section name",
     "string": "Pages"
   },
+  "H9gOMX": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}."
+  },
   "HADMte": {
     "context": "onboarding step title",
     "string": "Explore orders"
