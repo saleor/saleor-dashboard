@@ -44,4 +44,9 @@ export const productUpdatePageMessages = defineMessages({
     defaultMessage: "Media order updated",
     description: "success notification when product media gallery order is saved",
   },
+  mediaUploadSuccess: {
+    id: "bqSNm/",
+    defaultMessage: "Image added",
+    description: "success notification when product media is uploaded",
+  },
 });

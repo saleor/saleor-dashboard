@@ -10,6 +10,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ErrorPolicyEnum,
+  type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
   type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
@@ -138,9 +139,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       navigate(productListUrl());
     },
   });
-  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
-    onCompleted: data => {
-      const imageError = data.productMediaCreate.errors.find(
+  const handleProductMediaCreateCompleted = useCallback(
+    (data: ProductMediaCreateMutation) => {
+      const errors = data.productMediaCreate?.errors ?? [];
+      const imageError = errors.find(
         error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
       );
 
@@ -150,8 +152,30 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
           text: intl.formatMessage(errorMessages.imageUploadErrorText),
         });
+
+        return;
       }
+
+      if (errors.length) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+
+        return;
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(messages.mediaUploadSuccess),
+      });
     },
+    [intl, notify],
+  );
+  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
+    onCompleted: handleProductMediaCreateCompleted,
   });
   const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
@@ -171,26 +195,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const product = data?.product;
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
-    onCompleted: data => {
-      const errors = data.productMediaCreate.errors;
-
-      if (errors.length) {
-        errors.map(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      } else {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "lUvX5F",
-            defaultMessage: "Image added",
-          }),
-        });
-      }
-    },
+    onCompleted: handleProductMediaCreateCompleted,
   });
   const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
