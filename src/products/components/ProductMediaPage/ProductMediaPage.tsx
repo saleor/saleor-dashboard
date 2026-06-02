@@ -45,11 +45,6 @@ const messages = defineMessages({
     defaultMessage: "Media View",
     description: "section header",
   },
-  optional: {
-    id: "lzdvwp",
-    defaultMessage: "Optional",
-    description: "field is optional",
-  },
   editMediaMetadata: {
     id: "cg1bRE",
     defaultMessage: "Edit media metadata",
@@ -230,7 +225,6 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                   <TextField
                     name="alt"
                     label={intl.formatMessage(messages.altText)}
-                    helperText={intl.formatMessage(messages.optional)}
                     disabled={disabled}
                     onChange={change}
                     value={data.alt}
