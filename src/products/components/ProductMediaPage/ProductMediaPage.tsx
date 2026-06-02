@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -12,8 +13,8 @@ import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
-import { defineMessages, useIntl } from "react-intl";
+import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
+import { defineMessages, type IntlShape, useIntl } from "react-intl";
 
 import ProductMediaNavigation from "../ProductMediaNavigation";
 
@@ -22,6 +23,16 @@ const messages = defineMessages({
     id: "Ihp4D3",
     defaultMessage: "Edit Media",
     description: "header",
+  },
+  editImage: {
+    id: "EHRXv4",
+    defaultMessage: "Edit Image",
+    description: "product media detail page header",
+  },
+  editVideo: {
+    id: "YDIpJq",
+    defaultMessage: "Edit Video",
+    description: "product media detail page header",
   },
   mediaInformation: {
     id: "9RvXNg",
@@ -39,27 +50,87 @@ const messages = defineMessages({
     description: "field is optional",
   },
 });
+// Fits below top nav + savebar, this card's header, and content padding.
+const previewStageHeight = `calc(100vh - ${topBarHeight} - ${savebarHeight} - 120px)`;
+
 const useStyles = makeStyles(
   theme => ({
-    image: {
-      height: "100%",
-      objectFit: "contain",
-      width: "100%",
+    grid: {
+      alignItems: "start",
     },
-    imageContainer: {
-      "& iframe": {
-        width: "100%",
-        maxHeight: 420,
-      },
+    mediaViewColumn: {
+      alignSelf: "start",
+      position: "sticky",
+      top: theme.spacing(3),
+    },
+    previewStage: {
+      alignItems: "center",
       border: `1px solid ${vars.colors.border.default1}`,
       borderRadius: theme.spacing(),
-      margin: `0 auto ${theme.spacing(2)}px`,
-      width: "100%",
+      boxSizing: "border-box",
+      display: "flex",
+      height: previewStageHeight,
+      justifyContent: "center",
+      maxHeight: previewStageHeight,
+      overflow: "visible",
       padding: theme.spacing(2),
+      width: "100%",
+    },
+    previewMedia: {
+      display: "block",
+      maxHeight: "100%",
+      maxWidth: "100%",
+      objectFit: "contain",
+    },
+    previewVideo: {
+      alignSelf: "center",
+      aspectRatio: "16 / 9",
+      flexShrink: 1,
+      height: "auto",
+      maxHeight: "100%",
+      maxWidth: "100%",
+      minWidth: 0,
+      position: "relative",
+      width: "100%",
+      // Provider oembed HTML (e.g. YouTube) uses a padding-bottom responsive wrapper.
+      "& > div": {
+        height: "100%",
+        overflow: "hidden",
+        paddingBottom: "0 !important",
+        position: "relative",
+        width: "100%",
+      },
+      "& iframe": {
+        border: 0,
+        display: "block",
+        height: "100%",
+        left: 0,
+        maxHeight: "none",
+        maxWidth: "none",
+        position: "absolute",
+        top: 0,
+        width: "100%",
+      },
+    },
+    previewSkeleton: {
+      height: "100%",
+      width: "100%",
     },
   }),
   { name: "ProductMediaPage" },
 );
+
+function getEditMediaTitle(mediaType: string | undefined, intl: IntlShape) {
+  if (mediaType === ProductMediaType.VIDEO) {
+    return intl.formatMessage(messages.editVideo);
+  }
+
+  if (mediaType === ProductMediaType.IMAGE) {
+    return intl.formatMessage(messages.editImage);
+  }
+
+  return intl.formatMessage(messages.editMedia);
+}
 
 interface ProductMediaPageProps {
   productId: string;
@@ -88,6 +159,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
     disabled,
     mediaObj,
     media,
+    product: productName,
     saveButtonBarState,
     onDelete,
     onRowClick,
@@ -101,8 +173,25 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
     <Form initial={{ description: mediaObj ? mediaObj.alt : "" }} onSubmit={onSubmit} confirmLeave>
       {({ change, data, submit }) => (
         <>
-          <TopNav href={productUrl(productId)} title={intl.formatMessage(messages.editMedia)} />
-          <Grid variant="inverted">
+          <TopNav
+            href={productUrl(productId)}
+            title={
+              disabled && !productName ? (
+                <Skeleton __width="200px" />
+              ) : (
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Text size={6} color="default2" ellipsis __maxWidth="200px" title={productName}>
+                    {productName}
+                  </Text>
+                  <Text size={6} color="default2">
+                    /
+                  </Text>
+                  <Text size={6}>{getEditMediaTitle(mediaObj?.type, intl)}</Text>
+                </Box>
+              )
+            }
+          />
+          <Grid variant="inverted" className={classes.grid}>
             <div>
               <ProductMediaNavigation
                 disabled={disabled}
@@ -130,7 +219,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                 </DashboardCard.Content>
               </DashboardCard>
             </div>
-            <div>
+            <div className={classes.mediaViewColumn}>
               <DashboardCard>
                 <DashboardCard.Header>
                   <DashboardCard.Title>
@@ -138,27 +227,27 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                   </DashboardCard.Title>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
-                  {mediaObj ? (
-                    mediaObj?.type === ProductMediaType.IMAGE ? (
-                      <div className={classes.imageContainer}>
+                  <div className={classes.previewStage}>
+                    {mediaObj ? (
+                      mediaObj?.type === ProductMediaType.IMAGE ? (
                         <MediaWithFallback
                           key={mediaObj.url}
-                          className={classes.image}
+                          className={classes.previewMedia}
                           src={mediaObj.url}
                           alt={mediaObj.alt}
                         />
-                      </div>
+                      ) : (
+                        <div
+                          className={classes.previewVideo}
+                          dangerouslySetInnerHTML={{
+                            __html: JSON.parse(mediaObj?.oembedData)?.html,
+                          }}
+                        />
+                      )
                     ) : (
-                      <div
-                        className={classes.imageContainer}
-                        dangerouslySetInnerHTML={{
-                          __html: JSON.parse(mediaObj?.oembedData)?.html,
-                        }}
-                      />
-                    )
-                  ) : (
-                    <Skeleton />
-                  )}
+                      <Skeleton className={classes.previewSkeleton} />
+                    )}
+                  </div>
                 </DashboardCard.Content>
               </DashboardCard>
             </div>
