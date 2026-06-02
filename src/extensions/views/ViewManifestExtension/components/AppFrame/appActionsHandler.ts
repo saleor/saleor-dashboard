@@ -3,7 +3,6 @@ import { useActiveAppExtension } from "@dashboard/extensions/components/AppExten
 import {
   applyWidgetHeightToFrame,
   createWidgetResizeOkResponse,
-  type WidgetResizeAction,
 } from "@dashboard/extensions/hooks/widgetIframeResize";
 import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -18,6 +17,7 @@ import {
   type RedirectAction,
   type RequestPermissions,
   type UpdateRouting,
+  type WidgetResize,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -289,7 +289,7 @@ const useHandlePopupCloseAction = () => {
 };
 
 const useHandleWidgetResizeAction = (frameEl: HTMLIFrameElement | null) => ({
-  handle: (action: WidgetResizeAction) => {
+  handle: (action: WidgetResize) => {
     const { actionId, height } = action.payload;
 
     debug(`Handling WidgetResize action with ID: %s, height: %s`, actionId, height);

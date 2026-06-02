@@ -1,4 +1,4 @@
-import type { DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import type { DispatchResponseEvent, WidgetResize } from "@saleor/app-sdk/app-bridge";
 
 /** Height used before (and if) an app reports its own. Prevents collapse to the ~150px iframe default. */
 export const WIDGET_DEFAULT_HEIGHT = 200;
@@ -6,28 +6,16 @@ export const WIDGET_DEFAULT_HEIGHT = 200;
 /** Upper bound so a buggy or hostile app cannot blow up the Dashboard layout. */
 export const WIDGET_MAX_HEIGHT = 5000;
 
-/**
- * App Bridge action from `@saleor/app-sdk` (`actions.WidgetResize`).
- * Kept local until Dashboard depends on an app-sdk release that exports this type.
- */
-export type WidgetResizeAction = {
-  type: "widgetResize";
-  payload: {
-    height: number;
-    actionId: string;
-  };
-};
-
 /** Matches `@saleor/app-sdk` `actions.WidgetResize` height rules. */
 export const isPositiveFiniteWidgetHeight = (height: number): boolean =>
   Number.isFinite(height) && height > 0;
 
-export const isWidgetResizeAction = (data: unknown): data is WidgetResizeAction => {
+export const isWidgetResizeAction = (data: unknown): data is WidgetResize => {
   if (typeof data !== "object" || data === null) {
     return false;
   }
 
-  const action = data as Partial<WidgetResizeAction>;
+  const action = data as Partial<WidgetResize>;
   const { height, actionId } = action.payload ?? {};
 
   return (
