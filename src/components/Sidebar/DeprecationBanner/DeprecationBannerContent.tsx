@@ -20,7 +20,7 @@ export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerConte
     data-test-id="deprecation-banner"
   >
     <Box display="flex" alignItems="center" color="critical2" __paddingTop="2px">
-      <Alarm size={16} />
+      <Alarm fontSize="medium" />
     </Box>
     <Text size={2} color="critical2">
       <FormattedMessage
