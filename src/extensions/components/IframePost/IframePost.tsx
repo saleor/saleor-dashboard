@@ -19,10 +19,9 @@ interface IframePostProps {
   params?: AppDetailsUrlMountQueryParams;
   height?: number | string;
   /**
-   * Grow/shrink the iframe when the embedded app posts `saleor:widget:resize`.
-   * POST iframes do not run the App Bridge handshake; apps must call
-   * `reportWidgetHeight()` from `@saleor/app-sdk/app-bridge` directly (or use
-   * `useWidgetAutoResize` only on GET/AppFrame mounts where the bridge is ready).
+   * Grow/shrink the iframe when the embedded app dispatches `actions.WidgetResize`.
+   * POST widgets do not use AppFrame / `useAppActions`; resize is handled here via
+   * the same `widgetResize` App Bridge action and `ok` response.
    */
   autoHeight?: boolean;
   loaderType?: "skeleton" | "throbber";
@@ -45,8 +44,9 @@ export const IframePost = ({
   const formRef = useRef<HTMLFormElement | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
   const { ref: iframeRef, node: iframeEl, setRef: setIframeRef } = useNodeRef<HTMLIFrameElement>();
+  const appOrigin = new URL(extensionUrl).origin;
 
-  useWidgetIframeAutoHeight(iframeEl, autoHeight);
+  useWidgetIframeAutoHeight(iframeEl, autoHeight, { appOrigin });
 
   useEffect(() => {
     if (formRef.current) {

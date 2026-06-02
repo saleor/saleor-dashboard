@@ -29,6 +29,7 @@ jest.mock("./appActionsHandler", () => ({
     useHandlePermissionRequest: jest.fn(),
     useHandleAppFormUpdate: jest.fn(),
     useHandlePopupCloseAction: jest.fn(),
+    useHandleWidgetResizeAction: jest.fn(),
   },
 }));
 
@@ -53,6 +54,7 @@ describe("useAppActions", () => {
   const mockHandlePermissionRequest = jest.fn();
   const mockHandleAppFormUpdate = jest.fn();
   const mockHandlePopupClose = jest.fn();
+  const mockHandleWidgetResize = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -80,6 +82,9 @@ describe("useAppActions", () => {
     });
     (AppActionsHandler.useHandlePopupCloseAction as jest.Mock).mockReturnValue({
       handle: mockHandlePopupClose,
+    });
+    (AppActionsHandler.useHandleWidgetResizeAction as jest.Mock).mockReturnValue({
+      handle: mockHandleWidgetResize,
     });
 
     // Reset capture message mock to return a proper scope
@@ -234,6 +239,39 @@ describe("useAppActions", () => {
 
     // Assert
     expect(mockHandleNotification).toHaveBeenCalledWith(notificationAction);
+    expect(mockPostToExtension).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it("should handle widgetResize action", () => {
+    const widgetResizeAction = {
+      type: "widgetResize",
+      payload: {
+        actionId: "resize-1",
+        height: 300,
+      },
+    } as Actions;
+
+    const mockResponse = {
+      type: "response",
+      payload: { actionId: "resize-1", ok: true },
+    };
+
+    mockHandleWidgetResize.mockReturnValue(mockResponse);
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: widgetResizeAction,
+        }),
+      );
+    });
+
+    expect(mockHandleWidgetResize).toHaveBeenCalledWith(widgetResizeAction);
     expect(mockPostToExtension).toHaveBeenCalledWith(mockResponse);
   });
 

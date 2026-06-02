@@ -1,15 +1,20 @@
+import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 import { act, renderHook } from "@testing-library/react";
 
-import {
-  useWidgetIframeAutoHeight,
-  WIDGET_DEFAULT_HEIGHT,
-  WIDGET_RESIZE_MESSAGE,
-} from "./useWidgetIframeAutoHeight";
+import { useWidgetIframeAutoHeight, WIDGET_DEFAULT_HEIGHT } from "./useWidgetIframeAutoHeight";
+
+jest.mock(
+  "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension",
+  () => ({
+    postToExtension: jest.fn(),
+  }),
+);
+
+const mockPostToExtension = postToExtension as jest.MockedFunction<typeof postToExtension>;
 
 const dispatchMessage = (data: unknown, source: Window | null) => {
   const event = new MessageEvent("message", { data });
 
-  // jsdom does not populate `source` from the init dict, so set it explicitly.
   Object.defineProperty(event, "source", { value: source, configurable: true });
 
   act(() => {
@@ -17,12 +22,19 @@ const dispatchMessage = (data: unknown, source: Window | null) => {
   });
 };
 
+const widgetResizeAction = (height: number, actionId = "resize-action-id") => ({
+  type: "widgetResize" as const,
+  payload: { height, actionId },
+});
+
 describe("useWidgetIframeAutoHeight", () => {
+  const appOrigin = "https://app.example.com";
   let iframe: HTMLIFrameElement;
 
   beforeEach(() => {
     iframe = document.createElement("iframe");
     document.body.appendChild(iframe);
+    mockPostToExtension.mockClear();
   });
 
   afterEach(() => {
@@ -30,77 +42,85 @@ describe("useWidgetIframeAutoHeight", () => {
   });
 
   it("applies the default height when enabled", () => {
-    // Arrange & Act
-    renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+    renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
-    // Assert
     expect(iframe.style.height).toBe(`${WIDGET_DEFAULT_HEIGHT}px`);
   });
 
   it("does not touch height when disabled", () => {
-    // Arrange & Act
-    renderHook(() => useWidgetIframeAutoHeight(iframe, false));
+    renderHook(() => useWidgetIframeAutoHeight(iframe, false, { appOrigin }));
 
-    // Assert
     expect(iframe.style.height).toBe("");
   });
 
-  it("updates height from a valid message sent by the iframe window", () => {
-    // Arrange
-    renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+  it("updates height from a widgetResize action sent by the iframe window", () => {
+    renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
-    // Act
-    dispatchMessage({ type: WIDGET_RESIZE_MESSAGE, height: 321.4 }, iframe.contentWindow);
+    dispatchMessage(widgetResizeAction(321.4), iframe.contentWindow);
 
-    // Assert - rounded up
     expect(iframe.style.height).toBe("322px");
+    expect(mockPostToExtension).toHaveBeenCalledWith(
+      {
+        type: "response",
+        payload: { actionId: "resize-action-id", ok: true },
+      },
+      iframe,
+      appOrigin,
+    );
   });
 
   it("clamps absurdly large heights", () => {
-    // Arrange
-    renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+    renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
-    // Act
-    dispatchMessage({ type: WIDGET_RESIZE_MESSAGE, height: 10_000_000 }, iframe.contentWindow);
+    dispatchMessage(widgetResizeAction(10_000_000), iframe.contentWindow);
 
-    // Assert
     expect(iframe.style.height).toBe("5000px");
   });
 
   it("ignores messages coming from a different window", () => {
-    // Arrange
-    renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+    renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
-    // Act - source is the parent window, not the iframe
-    dispatchMessage({ type: WIDGET_RESIZE_MESSAGE, height: 999 }, window);
+    dispatchMessage(widgetResizeAction(999), window);
 
-    // Assert - stays at default
     expect(iframe.style.height).toBe(`${WIDGET_DEFAULT_HEIGHT}px`);
+    expect(mockPostToExtension).not.toHaveBeenCalled();
   });
 
   it("ignores malformed or non-positive heights", () => {
-    // Arrange
-    renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+    renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
-    // Act
-    dispatchMessage({ type: WIDGET_RESIZE_MESSAGE, height: 0 }, iframe.contentWindow);
-    dispatchMessage({ type: WIDGET_RESIZE_MESSAGE, height: "tall" }, iframe.contentWindow);
-    dispatchMessage({ type: "something:else", height: 500 }, iframe.contentWindow);
+    dispatchMessage(widgetResizeAction(0), iframe.contentWindow);
+    dispatchMessage(
+      { type: "widgetResize", payload: { height: "tall", actionId: "x" } },
+      iframe.contentWindow,
+    );
+    dispatchMessage(
+      { type: "something:else", payload: { height: 500, actionId: "x" } },
+      iframe.contentWindow,
+    );
 
-    // Assert - untouched default
     expect(iframe.style.height).toBe(`${WIDGET_DEFAULT_HEIGHT}px`);
+    expect(mockPostToExtension).not.toHaveBeenCalled();
+  });
+
+  it("does not listen when listenForResize is false", () => {
+    renderHook(() =>
+      useWidgetIframeAutoHeight(iframe, true, { appOrigin, listenForResize: false }),
+    );
+
+    dispatchMessage(widgetResizeAction(400), iframe.contentWindow);
+
+    expect(iframe.style.height).toBe(`${WIDGET_DEFAULT_HEIGHT}px`);
+    expect(mockPostToExtension).not.toHaveBeenCalled();
   });
 
   it("resets the inline height on unmount", () => {
-    // Arrange
-    const { unmount } = renderHook(() => useWidgetIframeAutoHeight(iframe, true));
+    const { unmount } = renderHook(() => useWidgetIframeAutoHeight(iframe, true, { appOrigin }));
 
     expect(iframe.style.height).toBe(`${WIDGET_DEFAULT_HEIGHT}px`);
 
-    // Act
     unmount();
 
-    // Assert
     expect(iframe.style.height).toBe("");
   });
 });

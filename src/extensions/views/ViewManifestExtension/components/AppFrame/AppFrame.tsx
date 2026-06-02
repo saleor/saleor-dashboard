@@ -68,7 +68,7 @@ export const AppFrame = ({
     },
   );
 
-  useWidgetIframeAutoHeight(frameEl, autoHeight);
+  useWidgetIframeAutoHeight(frameEl, autoHeight, { listenForResize: false });
 
   /**
    * Listen to Dashboard context like theme or locale and inform app about it
