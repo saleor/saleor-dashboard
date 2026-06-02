@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Upload URL",
     description: "modal button url upload",
   },
+  uploadHint: {
+    id: "/jEC3m",
+    defaultMessage: "Drag and drop or click to upload",
+    description: "product media gallery dropzone hint",
+  },
 });
