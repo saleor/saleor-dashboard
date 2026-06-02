@@ -1,5 +1,5 @@
+import { TriangleAlert } from "@material-ui/icons";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { TriangleAlert } from "lucide-react";
 import React from "react";
 import { FormattedDate, FormattedMessage } from "react-intl";
 
