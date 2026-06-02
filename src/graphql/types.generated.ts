@@ -13009,7 +13009,7 @@ export type ProductMediaByIdQueryVariables = Exact<{
 }>;
 
 
-export type ProductMediaByIdQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, mainImage: { __typename: 'ProductMedia', id: string, alt: string, url: string, type: ProductMediaType, oembedData: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, alt: string, type: ProductMediaType, oembedData: string }> | null } | null };
+export type ProductMediaByIdQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, mainImage: { __typename: 'ProductMedia', id: string, alt: string, url: string, type: ProductMediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, alt: string, type: ProductMediaType, oembedData: string }> | null } | null };
 
 export type GridAttributesQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];

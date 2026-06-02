@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
+import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -76,8 +77,7 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
         ) : (
           <div className={classes.root}>
             {media.map(mediaObj => {
-              const mediaObjOembedData = JSON.parse(mediaObj?.oembedData);
-              const mediaUrl = mediaObjOembedData?.thumbnail_url || mediaObj.url;
+              const mediaUrl = parseOembedData(mediaObj.oembedData).thumbnail_url || mediaObj.url;
 
               return (
                 <div

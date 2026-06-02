@@ -16068,6 +16068,7 @@ export const ProductMediaByIdDocument = gql`
     name
     mainImage: mediaById(id: $mediaId) {
       id
+      ...Metadata
       alt
       url
       type
@@ -16082,7 +16083,7 @@ export const ProductMediaByIdDocument = gql`
     }
   }
 }
-    `;
+    ${MetadataFragmentDoc}`;
 
 /**
  * __useProductMediaByIdQuery__

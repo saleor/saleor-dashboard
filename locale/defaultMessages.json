@@ -338,6 +338,10 @@
     "context": "Badge shown when channel is newly added",
     "string": "new"
   },
+  "/uu/aV": {
+    "context": "product media delete dialog content",
+    "string": "Are you sure you want to delete this video?"
+  },
   "/vCXIP": {
     "string": "Translation"
   },
@@ -814,6 +818,10 @@
   "2eZn56": {
     "context": "customer gift cards empty state placeholder",
     "string": "This customer hasn't redeemed any gift cards yet. Newly issued cards appear here once they're used at checkout."
+  },
+  "2fZByy": {
+    "context": "product media metadata dialog header",
+    "string": "Media Metadata"
   },
   "2fgaAQ": {
     "context": "search input placeholder",
@@ -2929,6 +2937,10 @@
   "EGycu/": {
     "context": "voucher status active",
     "string": "Active"
+  },
+  "EHRXv4": {
+    "context": "product media detail page header",
+    "string": "Edit Image"
   },
   "EHsnZX": {
     "context": "dialog description",
@@ -5697,6 +5709,10 @@
     "context": "sale status",
     "string": "Status"
   },
+  "SwtcgX": {
+    "context": "product media alt text field label",
+    "string": "Alt text"
+  },
   "Sz6CRr": {
     "string": "Create new product"
   },
@@ -6682,6 +6698,10 @@
     "context": "expiry date label",
     "string": "Exact date"
   },
+  "YDIpJq": {
+    "context": "product media detail page header",
+    "string": "Edit Video"
+  },
   "YEIFiI": {
     "string": "Add new structure item to begin creating structure"
   },
@@ -7559,6 +7579,10 @@
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
   },
+  "cg1bRE": {
+    "context": "product media detail page, top-bar metadata button tooltip",
+    "string": "Edit media metadata"
+  },
   "cgsY/X": {
     "context": "page header",
     "string": "Create New Category"
@@ -7663,6 +7687,10 @@
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
+  },
+  "dGlDp6": {
+    "context": "product media delete dialog header",
+    "string": "Delete Video"
   },
   "dGqEJ9": {
     "context": "search box placeholder",

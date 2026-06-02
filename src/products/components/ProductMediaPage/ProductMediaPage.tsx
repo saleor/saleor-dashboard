@@ -9,8 +9,9 @@ import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/Media
 import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
+import { rippleProductMediaMetadata } from "@dashboard/products/ripples/productMediaMetadata";
 import { productUrl } from "@dashboard/products/urls";
+import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
@@ -48,6 +49,16 @@ const messages = defineMessages({
     id: "lzdvwp",
     defaultMessage: "Optional",
     description: "field is optional",
+  },
+  editMediaMetadata: {
+    id: "cg1bRE",
+    defaultMessage: "Edit media metadata",
+    description: "product media detail page, top-bar metadata button tooltip",
+  },
+  altText: {
+    id: "SwtcgX",
+    defaultMessage: "Alt text",
+    description: "product media alt text field label",
   },
 });
 // Fits below top nav + savebar, this card's header, and content padding.
@@ -150,6 +161,7 @@ interface ProductMediaPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onDelete: () => void;
   onRowClick: (id: string) => () => void;
+  onShowMetadata: () => void;
   onSubmit: (data: { description: string }) => void;
 }
 
@@ -163,6 +175,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
     saveButtonBarState,
     onDelete,
     onRowClick,
+    onShowMetadata,
     onSubmit,
   } = props;
   const classes = useStyles(props);
@@ -190,13 +203,21 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                 </Box>
               )
             }
-          />
+          >
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={!mediaObj}
+              data-test-id="show-media-metadata"
+              title={intl.formatMessage(messages.editMediaMetadata)}
+              ripple={rippleProductMediaMetadata}
+            />
+          </TopNav>
           <Grid variant="inverted" className={classes.grid}>
             <div>
               <ProductMediaNavigation
                 disabled={disabled}
                 media={media}
-                highlighted={media ? mediaObj.id : undefined}
+                highlighted={mediaObj?.id}
                 onRowClick={onRowClick}
               />
               <DashboardCard>
@@ -208,7 +229,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                 <DashboardCard.Content>
                   <TextField
                     name="description"
-                    label={intl.formatMessage(commonMessages.description)}
+                    label={intl.formatMessage(messages.altText)}
                     helperText={intl.formatMessage(messages.optional)}
                     disabled={disabled}
                     onChange={change}
@@ -240,7 +261,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                         <div
                           className={classes.previewVideo}
                           dangerouslySetInnerHTML={{
-                            __html: JSON.parse(mediaObj?.oembedData)?.html,
+                            __html: parseOembedData(mediaObj.oembedData).html ?? "",
                           }}
                         />
                       )
