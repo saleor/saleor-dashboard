@@ -40,21 +40,22 @@ export const ProductMediaGalleryDropzone = ({
       }
 
       return (
-        <div className={styles.galleryContainer} data-test-id="product-media-gallery">
-          <div
-            {...getRootProps()}
-            className={clsx(styles.dropLayer, isDragActive && styles.dropLayerActive)}
-          >
-            <input {...getInputProps()} className={styles.hiddenInput} accept="image/*" multiple />
-            {isDragActive && (
+        <div
+          {...getRootProps()}
+          className={styles.galleryContainer}
+          data-test-id="product-media-gallery"
+        >
+          <input {...getInputProps()} className={styles.hiddenInput} accept="image/*" multiple />
+          {children?.({ isDragActive })}
+          {isDragActive && (
+            <div className={styles.dropOverlayWrapper}>
               <div className={styles.dropOverlay}>
                 <Text size={2} color="default2">
                   <FormattedMessage {...messages.uploadHint} />
                 </Text>
               </div>
-            )}
-          </div>
-          {children?.({ isDragActive })}
+            </div>
+          )}
         </div>
       );
     }}

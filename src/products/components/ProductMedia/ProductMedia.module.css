@@ -32,14 +32,11 @@
   min-height: 148px;
 }
 
-.dropLayer {
+.dropOverlayWrapper {
   position: absolute;
   inset: 0;
-  border-radius: 6px;
-}
-
-.dropLayerActive {
   z-index: 1;
+  pointer-events: none;
 }
 
 .dropOverlay {
