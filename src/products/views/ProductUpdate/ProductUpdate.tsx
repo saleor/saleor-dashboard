@@ -24,7 +24,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -111,7 +111,18 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   });
   const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({
     onCompleted: data => {
-      const errors = data.productMediaReorder?.errors ?? [];
+      const result = data.productMediaReorder;
+
+      if (!result) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+
+      const { errors } = result;
 
       if (errors.length) {
         errors.forEach(error =>
@@ -185,7 +196,18 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   >(navigate, params => productUrl(id, params), params);
   const [deleteProductImage, deleteProductImageOpts] = useProductMediaDeleteMutation({
     onCompleted: data => {
-      const errors = data.productMediaDelete?.errors ?? [];
+      const result = data.productMediaDelete;
+
+      if (!result) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+
+      const { errors } = result;
 
       if (errors.length) {
         errors.forEach(error =>
