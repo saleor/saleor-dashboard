@@ -48,8 +48,12 @@ describe("createImageReorderHandler", () => {
     const reorderProductImages = jest.fn();
     const product = createProductWithMedia(["media-a", "media-b", "media-c"]);
     const handler = createImageReorderHandler(product, reorderProductImages);
-    const [, mediaB, mediaC] = product.media;
-    const [mediaA] = product.media;
+
+    if (!product.media) {
+      throw new Error("Expected test product to have media");
+    }
+
+    const [mediaA, mediaB, mediaC] = product.media;
 
     // Act
     handler({ oldIndex: 0, newIndex: 2 });
