@@ -2,6 +2,7 @@ import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { DeprecationBanner } from "./DeprecationBanner/DeprecationBanner";
 import { Menu } from "./menu";
 import { EnvironmentLink } from "./menu/EnvironmentLink";
 import { MountingPoint } from "./MountingPoint";
@@ -18,7 +19,10 @@ export const SidebarContent = () => {
       display="grid"
       __gridTemplateRows="auto 1fr auto"
     >
-      <MountingPoint />
+      <Box>
+        <MountingPoint />
+        <DeprecationBanner />
+      </Box>
       <Menu />
       <Box>
         {isAuthenticatedViaCloud && (

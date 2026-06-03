@@ -9785,6 +9785,10 @@
   "xKLf5H": {
     "string": "Developed by {developer}"
   },
+  "xM8VFu": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}. Your store may stop working."
+  },
   "xNElry": {
     "context": "Transaction card title with name",
     "string": "Transaction - {name}"
