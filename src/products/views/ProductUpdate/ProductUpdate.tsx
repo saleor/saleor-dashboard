@@ -37,7 +37,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -231,11 +231,15 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
   });
   const product = data?.product;
-  const mediaToDelete = useMemo(
-    () => product?.media?.find(media => media.id === params.id),
-    [params.id, product?.media],
-  );
-  const isVideoMediaToDelete = mediaToDelete?.type === ProductMediaType.VIDEO;
+  const [deleteMediaType, setDeleteMediaType] = useState<ProductMediaType | null>(null);
+
+  useEffect(() => {
+    if (params.action !== "remove-media") {
+      setDeleteMediaType(null);
+    }
+  }, [params.action]);
+
+  const isVideoMediaToDelete = deleteMediaType === ProductMediaType.VIDEO;
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
@@ -347,7 +351,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [bulkCreateVariants, id, intl, notify, refetch],
   );
-  const handleImageDelete = (mediaId: string) => () => openModal("remove-media", { id: mediaId });
+  const handleImageDelete = (mediaId: string) => () => {
+    const media = product?.media?.find(item => item.id === mediaId);
+
+    setDeleteMediaType(media?.type ?? null);
+    openModal("remove-media", { id: mediaId });
+  };
   const handleConfirmMediaDelete = () => {
     const mediaId = params.id;
     const currentMedia = product?.media;
