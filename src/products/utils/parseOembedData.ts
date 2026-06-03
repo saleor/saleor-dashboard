@@ -29,6 +29,4 @@ export function parseOembedData(oembedData: string | null | undefined): ParsedOe
   } catch {
     return {};
   }
-
-  return {};
 }
