@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.21.17",
+  "version": "3.21.19",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -70,7 +70,7 @@
     "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "posthog-js": "^1.105.9",
-    "qs": "^6.10.3",
+    "qs": "^6.14.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.2.4",
@@ -118,7 +118,7 @@
     "@types/is-url": "^1.2.32",
     "@types/lodash-es": "^4.17.3",
     "@types/node": "^20.8.0",
-    "@types/qs": "^6.9.12",
+    "@types/qs": "^6.14.0",
     "@types/react": "^17.0.50",
     "@types/react-dom": "^17.0.17",
     "@types/react-dropzone": "^4.2.2",

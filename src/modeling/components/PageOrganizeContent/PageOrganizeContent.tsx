@@ -1,13 +1,14 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
+import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageFormData } from "../PageDetailsPage/form";
@@ -40,6 +41,8 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
   } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(["pageType"], errors);
+  const mounted = useRef(false);
+  const debouncedFetch = useDebounce(fetchPageTypes, 500);
 
   return (
     <DashboardCard>
@@ -54,7 +57,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {canChangeType ? (
-          <Combobox
+          <DynamicCombobox
             autoComplete="off"
             data-test-id="page-types-autocomplete-select"
             disabled={disabled}
@@ -64,15 +67,38 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
               id: "WVrHXL",
               defaultMessage: "Select model type",
             })}
-            options={pageTypes}
-            fetchOptions={fetchPageTypes}
-            fetchMore={fetchMorePageTypes}
+            options={pageTypes ?? []}
             name="pageType"
-            value={{
-              label: pageTypeInputDisplayValue,
-              value: data.pageType?.id,
+            value={
+              data.pageType?.id
+                ? {
+                    label: pageTypeInputDisplayValue,
+                    value: data.pageType?.id,
+                  }
+                : null
+            }
+            onChange={(option: Option | null) => {
+              onPageTypeChange?.({
+                target: { name: "pageType", value: option?.value ?? null },
+              });
             }}
-            onChange={onPageTypeChange}
+            onInputValueChange={debouncedFetch}
+            onFocus={() => {
+              if (!mounted.current) {
+                mounted.current = true;
+                fetchPageTypes?.("");
+              }
+            }}
+            onScrollEnd={() => {
+              if (fetchMorePageTypes?.hasMore) {
+                fetchMorePageTypes.onFetchMore();
+              }
+            }}
+            loading={fetchMorePageTypes?.loading || fetchMorePageTypes?.hasMore}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
+            size="small"
           />
         ) : (
           <>

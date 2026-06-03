@@ -1,4 +1,3 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import {
   CustomCell,
   CustomRenderer,
@@ -6,7 +5,7 @@ import {
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
-import { Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import pick from "lodash/pick";
 import React from "react";
 
@@ -32,6 +31,8 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   onFinishedEditing,
 }) => {
   const [data, setData] = React.useState<Option[]>([]);
+  const [inputValue, setInputValue] = React.useState("");
+  const mounted = React.useRef(false);
 
   const getChoices = React.useCallback(
     async (text: string) => {
@@ -45,33 +46,55 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
     ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
     : { fetchOnFocus: false, fetchChoices: () => Promise.resolve([]), choices: cell.data.choices };
 
+  // Build options with custom value support and empty option
+  const buildOptions = () => {
+    let options = props.choices ?? [];
+
+    // Add empty option if allowed
+    if (userProps.emptyOption) {
+      options = [{ label: "", value: "" }, ...options];
+    }
+
+    // Add custom value option if allowed and input doesn't match existing
+    if (userProps.allowCustomValues && inputValue.trim()) {
+      const hasExactMatch = options.some(
+        opt => opt.label.toLowerCase() === inputValue.trim().toLowerCase(),
+      );
+
+      if (!hasExactMatch) {
+        options = [{ label: `Add: ${inputValue}`, value: inputValue }, ...options];
+      }
+    }
+
+    return options;
+  };
+
   return (
-    <Combobox
-      allowCustomValues={userProps.allowCustomValues}
-      alwaysFetchOnFocus={props.fetchOnFocus}
-      allowEmptyValue={userProps.emptyOption}
-      fetchMore={{
-        hasMore: false,
-        loading: false,
-        onFetchMore: () => undefined,
-      }}
-      options={props.choices ?? []}
+    <DynamicCombobox
+      options={buildOptions()}
       value={cell.data.value}
-      fetchOptions={props.fetchChoices}
       loading={false}
       name=""
-      onChange={event => {
+      onChange={(option: Option | null) => {
         return onFinishedEditing({
           ...cell,
           data: {
             ...cell.data,
-            value: props.choices?.find(c => c.value === event.target.value) ?? {
-              label: event.target.value ?? "",
-              value: event.target.value ?? "",
-            },
+            value: option ? option : { label: "", value: "" },
           },
         });
       }}
+      onInputValueChange={value => {
+        setInputValue(value);
+        props.fetchChoices(value);
+      }}
+      onFocus={() => {
+        if (props.fetchOnFocus && !mounted.current) {
+          mounted.current = true;
+          props.fetchChoices("");
+        }
+      }}
+      size="small"
     />
   );
 };

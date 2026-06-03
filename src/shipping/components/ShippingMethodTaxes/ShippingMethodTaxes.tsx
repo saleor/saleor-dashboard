@@ -1,11 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { sectionNames } from "@dashboard/intl";
+import { commonMessages, sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,30 +31,51 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
+  // Add empty option for "allowEmptyValue" behavior
+  const options = [
+    { label: "", value: "" },
+    ...taxClasses.map(choice => ({
+      label: choice.name,
+      value: choice.id,
+    })),
+  ];
+
   return (
     <DashboardCard className={classes.root}>
       <DashboardCard.Header>
         <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Combobox
-          allowEmptyValue
+        <DynamicCombobox
           autoComplete="off"
           data-test-id="taxes"
           disabled={disabled}
           label={intl.formatMessage(taxesMessages.taxClass)}
-          options={taxClasses.map(choice => ({
-            label: choice.name,
-            value: choice.id,
-          }))}
-          fetchOptions={() => undefined}
-          fetchMore={onFetchMore}
+          options={options}
           name="taxClassId"
-          value={{
-            label: taxClassDisplayName,
-            value,
+          value={
+            value
+              ? {
+                  label: taxClassDisplayName,
+                  value,
+                }
+              : null
+          }
+          onChange={(option: Option | null) => {
+            onChange({
+              target: { name: "taxClassId", value: option?.value ?? null },
+            });
           }}
-          onChange={onChange}
+          onScrollEnd={() => {
+            if (onFetchMore?.hasMore) {
+              onFetchMore.onFetchMore();
+            }
+          }}
+          loading={onFetchMore?.loading || onFetchMore?.hasMore}
+          locale={{
+            loadingText: intl.formatMessage(commonMessages.loading),
+          }}
+          size="small"
         />
       </DashboardCard.Content>
     </DashboardCard>

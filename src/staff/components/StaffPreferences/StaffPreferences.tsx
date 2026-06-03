@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
+import { commonMessages } from "@dashboard/intl";
 import { capitalize } from "@dashboard/misc";
-import { Text } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -14,12 +14,12 @@ interface StaffPreferencesProps {
 
 const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
   const intl = useIntl();
-  const handleLocaleChange = async (locale: Locale) => {
-    if (!locale) {
+  const handleLocaleChange = async (option: Option | null) => {
+    if (!option?.value) {
       return;
     }
 
-    await onLocaleChange(locale);
+    await onLocaleChange(option.value as Locale);
     /*
       Workaround, after changing language we reload the page.
       saleor-sdk causes the error related to wrong cache management.
@@ -28,6 +28,11 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
     */
     window.location.reload();
   };
+
+  const options = Object.values(Locale).map(loc => ({
+    label: capitalize(localeNames[loc]),
+    value: loc,
+  }));
 
   return (
     <DashboardCard>
@@ -41,7 +46,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Combobox
+        <DynamicCombobox
           helperText={intl.formatMessage({
             id: "JJgJwi",
             defaultMessage: "Selecting this will change the language of your dashboard",
@@ -50,17 +55,17 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             id: "mr9jbO",
             defaultMessage: "Preferred Language",
           })}
-          options={Object.values(Locale).map(locale => ({
-            label: capitalize(localeNames[locale]),
-            value: locale,
-          }))}
-          fetchOptions={() => undefined}
+          options={options}
           name="locale"
           value={{
             label: localeNames[locale],
             value: locale,
           }}
-          onChange={event => handleLocaleChange(event.target.value)}
+          onChange={handleLocaleChange}
+          locale={{
+            loadingText: intl.formatMessage(commonMessages.loading),
+          }}
+          size="small"
         />
 
         <FormSpacer />

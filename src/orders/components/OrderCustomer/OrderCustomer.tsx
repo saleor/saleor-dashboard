@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import ExternalLink from "@dashboard/components/ExternalLink";
-import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -14,13 +12,13 @@ import {
   PermissionEnum,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { buttonMessages } from "@dashboard/intl";
+import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Button, DynamicCombobox, Option, Skeleton, Text } from "@saleor/macaw-ui-next";
+import React, { useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
@@ -49,6 +47,120 @@ export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   onBillingAddressEdit?: () => void;
   onShippingAddressEdit?: () => void;
 }
+
+interface OrderCustomerEditFormProps {
+  users: RelayToFlat<SearchCustomersQuery["search"]> | undefined;
+  loading: boolean | undefined;
+  hasMoreUsers: boolean | undefined;
+  fetchUsers: ((query: string) => void) | undefined;
+  onFetchMoreUsers: (() => void) | undefined;
+  onCustomerEdit: ((data: CustomerEditData) => void) | undefined;
+  toggleEditMode: () => void;
+  user: OrderDetailsFragment["user"] | undefined;
+  userEmail: string | undefined;
+  userDisplayName: string;
+  setUserDisplayName: (value: string) => void;
+}
+
+const OrderCustomerEditForm: React.FC<OrderCustomerEditFormProps> = ({
+  users,
+  loading,
+  hasMoreUsers,
+  fetchUsers,
+  onFetchMoreUsers,
+  onCustomerEdit,
+  toggleEditMode,
+  user,
+  userEmail,
+  userDisplayName,
+  setUserDisplayName,
+}) => {
+  const intl = useIntl();
+  const mounted = useRef(false);
+  const [inputValue, setInputValue] = useState("");
+  const debouncedFetch = useDebounce(fetchUsers, 500);
+
+  const userChoices = maybe(() => users, []).map(u => ({
+    label: u.email,
+    value: u.id,
+  }));
+
+  // Build options with custom value support for email addresses
+  const buildOptions = () => {
+    const options = [...userChoices];
+    const trimmedInput = inputValue.trim();
+
+    if (trimmedInput && trimmedInput.includes("@")) {
+      const hasExactMatch = options.some(
+        opt => opt.label.toLowerCase() === trimmedInput.toLowerCase(),
+      );
+
+      if (!hasExactMatch) {
+        options.unshift({ label: `Use email: ${trimmedInput}`, value: trimmedInput });
+      }
+    }
+
+    return options;
+  };
+
+  const handleChange = (option: Option | null) => {
+    if (!option?.value) {
+      return;
+    }
+
+    const value = option.value;
+
+    setUserDisplayName(option.label);
+
+    onCustomerEdit?.({
+      prevUser: user?.id,
+      prevUserEmail: userEmail,
+      [value.includes("@") ? "userEmail" : "user"]: value,
+    });
+    toggleEditMode();
+  };
+
+  return (
+    <DynamicCombobox
+      data-test-id="select-customer"
+      label={intl.formatMessage({
+        id: "hkSkNx",
+        defaultMessage: "Search Customers",
+      })}
+      options={buildOptions()}
+      onScrollEnd={() => {
+        if (hasMoreUsers) {
+          onFetchMoreUsers?.();
+        }
+      }}
+      loading={loading || hasMoreUsers}
+      onInputValueChange={value => {
+        setInputValue(value);
+        debouncedFetch?.(value);
+      }}
+      onFocus={() => {
+        if (!mounted.current) {
+          mounted.current = true;
+          fetchUsers?.("");
+        }
+      }}
+      name="query"
+      value={
+        userDisplayName
+          ? {
+              label: userDisplayName,
+              value: userDisplayName,
+            }
+          : null
+      }
+      onChange={handleChange}
+      locale={{
+        loadingText: intl.formatMessage(commonMessages.loading),
+      }}
+      size="small"
+    />
+  );
+};
 
 const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const {
@@ -111,59 +223,19 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         {user === undefined ? (
           <Skeleton />
         ) : isInEditMode && canEditCustomer ? (
-          <Form confirmLeave initial={{ query: "" }}>
-            {({ change, data }) => {
-              const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-                change(event);
-
-                const value = event.target.value;
-
-                if (!value) {
-                  return;
-                }
-
-                onCustomerEdit({
-                  prevUser: user?.id,
-                  prevUserEmail: userEmail,
-                  [value.includes("@") ? "userEmail" : "user"]: value,
-                });
-                toggleEditMode();
-              };
-              const userChoices = maybe(() => users, []).map(user => ({
-                label: user.email,
-                value: user.id,
-              }));
-              const handleUserChange = createSingleAutocompleteSelectHandler(
-                handleChange,
-                setUserDisplayName,
-                userChoices,
-              );
-
-              return (
-                <Combobox
-                  data-test-id="select-customer"
-                  allowCustomValues={true}
-                  label={intl.formatMessage({
-                    id: "hkSkNx",
-                    defaultMessage: "Search Customers",
-                  })}
-                  options={userChoices}
-                  fetchMore={{
-                    onFetchMore: onFetchMoreUsers,
-                    hasMore: hasMoreUsers,
-                    loading: loading,
-                  }}
-                  fetchOptions={fetchUsers}
-                  name="query"
-                  value={{
-                    label: userDisplayName,
-                    value: data.query,
-                  }}
-                  onChange={handleUserChange}
-                />
-              );
-            }}
-          </Form>
+          <OrderCustomerEditForm
+            users={users}
+            loading={loading}
+            hasMoreUsers={hasMoreUsers}
+            fetchUsers={fetchUsers}
+            onFetchMoreUsers={onFetchMoreUsers}
+            onCustomerEdit={onCustomerEdit}
+            toggleEditMode={toggleEditMode}
+            user={user}
+            userEmail={userEmail}
+            userDisplayName={userDisplayName}
+            setUserDisplayName={setUserDisplayName}
+          />
         ) : user === null ? (
           userEmail === null ? (
             <Text>

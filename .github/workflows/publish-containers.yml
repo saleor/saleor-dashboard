@@ -5,69 +5,132 @@ on:
     types: [published]
 
 jobs:
-  docker:
-    runs-on: ubuntu-22.04
-
+  prepare-variables:
+    name: Prepare variables
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: write
-
+    outputs:
+      image_name: ${{ steps.get-image-name.outputs.image_name }}
+      labels: ${{ steps.metadata.outputs.labels }}
+      tags: ${{ steps.metadata.outputs.tags }}
+      version: ${{ steps.metadata.outputs.version }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # Outputs the name of the repository (owner/repo)
-      - name: Build Image Name
-        id: image
+      - name: Get GHCR image name (owner/repo)
+        id: get-image-name
+        env:
+          GH_REPO: ${{ github.repository }}
         run: |
-          IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-          echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT
+          # github.repository is already in owner/repo format required
+          # by GHCR; normalize it to lowercase.
+          GHCR_IMAGE_NAME="${GH_REPO,,}"
+          echo "image_name=$GHCR_IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      - name: Docker meta
-        id: meta
+      # Required by docker/metadata-action
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check if tag should be tagged as "latest"
+        id: check-latest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_TAG: ${{ github.ref_name }}
+        run: |
+          set -ux
+
+          # Only stable semver releases (e.g. 3.22.0) can be tagged as latest.
+          # Non-semver refs (branch names, PR refs) are not valid candidates to become latest.
+          if ! [[ "$CURRENT_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Tag inferred from this run ('$CURRENT_TAG') is not a semver release - can't be tagged as latest."
+            echo "IS_LATEST=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          CURRENT_LATEST=$(gh api "/repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          HIGHEST=$( (echo "$CURRENT_LATEST"; echo "$CURRENT_TAG") | sort -V | tail -1)
+
+          echo "Selected: $CURRENT_TAG, Latest: $CURRENT_LATEST"
+
+          if [[ "$CURRENT_TAG" == "$HIGHEST" ]]; then
+            echo "IS_LATEST=true" >> $GITHUB_OUTPUT
+          else
+            echo "IS_LATEST=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Docker metadata
+        id: metadata
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ steps.image.outputs.image_name }}
+            ghcr.io/${{ steps.get-image-name.outputs.image_name }}
+          flavor: |
+            latest=false
           tags: |
             type=ref,event=branch
             type=pep440,pattern={{version}}
             type=pep440,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable=${{ steps.check-latest.outputs.IS_LATEST }}
+          context: git
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64
+  build-push:
+    needs: prepare-variables
+    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
+    permissions:
+      contents: read
+      id-token: write # needed for AWS/ECR login (not used, but required permission)
+      packages: write # needed for GHCR
+    with:
+      checkout-ref: ${{ github.ref }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v3
+      enable-ghcr: true
+      oci-full-repository: ghcr.io/${{ needs.prepare-variables.outputs.image_name }}
+      tags: ${{ needs.prepare-variables.outputs.tags }}
+      labels: ${{ needs.prepare-variables.outputs.labels }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      amd64-runner-image: ubuntu-24.04
+      arm64-runner-image: ubuntu-24.04-arm
 
-      - name: Build and Push
-        id: docker_build
-        uses: docker/build-push-action@v5
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          context: .
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          build-args: |
-            COMMIT_ID=${{ github.sha }}
-            PROJECT_VERSION=${{ steps.meta.outputs.version }}
+      build-args: |
+        COMMIT_ID=${{ github.sha }}
+        PROJECT_VERSION=${{ needs.prepare-variables.outputs.version }}
 
-      - name: Image digest
+  summary:
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Display image digest and pushed tags
+        env:
+          tags: ${{ needs.prepare-variables.outputs.tags }}
+          digest: ${{ needs.build-push.outputs.digest }}
         run: |
-          echo $"\
-            Digest: ${{ steps.docker_build.outputs.digest }}
-            Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Tags: $tags"
+          echo "Digest: $digest"
+
+  load-failure-secrets:
+    if: failure()
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      slack-webhook-url: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Load secrets
+        uses: 1password/load-secrets-action@8d0d610af187e78a2772c2d18d627f4c52d3fbfb # v3.1.0
+        id: load-secrets
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/DASHBOARD_BUILD_FAILURE_SLACK_WEBHOOK/password"
+
+  notify-failure:
+    if: failure()
+    needs: [prepare-variables, build-push, load-failure-secrets]
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    with:
+      custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version || github.ref_name }}*"
+      status: failure
+    secrets:
+      slack-webhook-url: ${{ needs.load-failure-secrets.outputs.slack-webhook-url }}
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}

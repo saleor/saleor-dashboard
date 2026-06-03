@@ -1,13 +1,11 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Input, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -61,8 +59,8 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     }
   }, [currencySymbol]);
 
-  const handleChannelChange = (e: ChangeEvent) => {
-    const channelId = e.target.value;
+  const handleChannelChange = (option: Option | null) => {
+    const channelId = option?.value;
     const channel = channels.find(channel => channel.id === channelId);
 
     if (channel) {
@@ -97,10 +95,9 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
             </RuleInputWrapper>
 
             <RuleInputWrapper>
-              <Combobox
+              <DynamicCombobox
                 {...channelfield}
                 onChange={handleChannelChange}
-                fetchOptions={() => undefined}
                 size="small"
                 data-test-id="channel-dropdown"
                 label={intl.formatMessage(commonMessages.channel)}
@@ -108,6 +105,9 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
                 error={!!formState.errors?.channel?.message}
                 helperText={formState.errors?.channel?.message}
                 disabled={disabled || channelfield.disabled}
+                locale={{
+                  loadingText: intl.formatMessage(commonMessages.loading),
+                }}
               />
             </RuleInputWrapper>
           </Box>

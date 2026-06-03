@@ -1,12 +1,11 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
-import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
-import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -31,14 +30,12 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps("");
-  const productTypeDisplayValue = productTypes.find(
-    productType => productType.value === choice,
-  )?.label;
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const debouncedFetch = useDebounce(fetchProductTypes, 500);
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice("");
+      setSelectedOption(null);
       fetchProductTypes("");
     },
   });
@@ -48,23 +45,30 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={() => onConfirm(choice)}
+      onConfirm={() => onConfirm(selectedOption?.value ?? "")}
       title={intl.formatMessage(messages.selectProductType)}
-      disabled={!choice}
+      disabled={!selectedOption}
       size="xs"
     >
-      <Combobox
+      <DynamicCombobox
         data-test-id="dialog-product-type"
         label={intl.formatMessage(messages.productType)}
-        options={productTypes}
-        fetchOptions={fetchProductTypes}
-        fetchMore={fetchMoreProductTypes}
+        options={productTypes ?? []}
         name="productType"
-        value={{
-          label: productTypeDisplayValue,
-          value: choice,
+        value={selectedOption}
+        onChange={setSelectedOption}
+        onInputValueChange={debouncedFetch}
+        onFocus={() => fetchProductTypes("")}
+        onScrollEnd={() => {
+          if (fetchMoreProductTypes?.hasMore) {
+            fetchMoreProductTypes.onFetchMore();
+          }
         }}
-        onChange={e => setChoice(e.target.value)}
+        loading={fetchMoreProductTypes?.loading || fetchMoreProductTypes?.hasMore}
+        locale={{
+          loadingText: intl.formatMessage(commonMessages.loading),
+        }}
+        size="small"
       />
     </ActionDialog>
   );

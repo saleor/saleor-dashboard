@@ -1,9 +1,9 @@
-import { Combobox } from "@dashboard/components/Combobox";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
+import useDebounce from "@dashboard/hooks/useDebounce";
+import { commonMessages } from "@dashboard/intl";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/components/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ClickAwayListener } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -31,7 +31,9 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
 }) => {
   const intl = useIntl();
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const itemsRef = useRef<AssignItem[]>(items);
+  const debouncedSearch = useDebounce(searchItems, 500);
 
   // select holds value and displays it so it needs remounting
   // to display empty input after adding new zone
@@ -43,33 +45,42 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
     itemsRef.current = items;
   }, [items]);
 
-  const handleChoice = ({ target }: ChangeEvent) => {
-    if (!target.value) {
+  const handleChoice = (option: Option | null) => {
+    if (!option?.value) {
       return;
     }
 
     setIsChoicesSelectShown(false);
-    addItem(target.value);
+    setSelectedOption(null);
+    addItem(option.value);
   };
   const handleFooterClickAway = () => {
     setIsChoicesSelectShown(false);
+    setSelectedOption(null);
     searchItems("");
   };
 
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
       <Box marginTop={3}>
-        <Combobox
+        <DynamicCombobox
           data-test-id={`${dataTestId}-auto-complete-select`}
           name={inputName}
           onChange={handleChoice}
-          fetchOptions={searchItems}
+          onInputValueChange={debouncedSearch}
+          onFocus={() => searchItems("")}
           options={mapNodeToChoice(itemsChoices)}
-          fetchMore={fetchMoreItems}
-          value={{
-            value: "",
-            label: "",
+          onScrollEnd={() => {
+            if (fetchMoreItems?.hasMore) {
+              fetchMoreItems.onFetchMore();
+            }
           }}
+          loading={fetchMoreItems?.loading || fetchMoreItems?.hasMore}
+          value={selectedOption}
+          locale={{
+            loadingText: intl.formatMessage(commonMessages.loading),
+          }}
+          size="small"
         />
       </Box>
     </ClickAwayListener>

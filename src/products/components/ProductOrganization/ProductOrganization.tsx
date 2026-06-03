@@ -1,18 +1,20 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox, Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
   ProductErrorFragment,
 } from "@dashboard/graphql";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
+import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
@@ -79,6 +81,10 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     errors,
   );
   const [categoryInputActive, setCategoryInputActive] = React.useState(false);
+  const productTypeMounted = useRef(false);
+  const categoryMounted = useRef(false);
+  const debouncedFetchProductTypes = useDebounce(fetchProductTypes, 500);
+  const debouncedFetchCategories = useDebounce(fetchCategories, 500);
 
   // Input is hide to proper handle showing nested category structure
   const hideInput = !categoryInputActive && data.category && !disabled;
@@ -101,10 +107,10 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
       </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
             data-test-id="product-type"
-            options={productTypes}
+            options={productTypes ?? []}
             value={
               data.productType?.id
                 ? {
@@ -115,14 +121,33 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
             }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
-            onChange={onProductTypeChange}
-            fetchOptions={fetchProductTypes}
-            fetchMore={fetchMoreProductTypes}
+            onChange={(option: Option | null) => {
+              onProductTypeChange?.({
+                target: { name: "productType", value: option?.value ?? null },
+              });
+            }}
+            onInputValueChange={debouncedFetchProductTypes}
+            onFocus={() => {
+              if (!productTypeMounted.current) {
+                productTypeMounted.current = true;
+                fetchProductTypes?.("");
+              }
+            }}
+            onScrollEnd={() => {
+              if (fetchMoreProductTypes?.hasMore) {
+                fetchMoreProductTypes.onFetchMore();
+              }
+            }}
+            loading={fetchMoreProductTypes?.loading || fetchMoreProductTypes?.hasMore}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
             name="productType"
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
+            size="small"
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
@@ -144,9 +169,9 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
         )}
 
         <Box data-test-id="category">
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
-            options={disabled ? [] : categories}
+            options={disabled ? [] : categories ?? []}
             value={
               data.category
                 ? {
@@ -157,9 +182,21 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
             }
             error={!!(formErrors.category || noCategoryError)}
             helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
-            onChange={onCategoryChange}
-            fetchOptions={fetchCategories}
-            fetchMore={fetchMoreCategories}
+            onChange={(option: Option | null) => {
+              onCategoryChange({
+                target: { name: "category", value: option?.value ?? null },
+              });
+            }}
+            onInputValueChange={debouncedFetchCategories}
+            onScrollEnd={() => {
+              if (fetchMoreCategories?.hasMore) {
+                fetchMoreCategories.onFetchMore();
+              }
+            }}
+            loading={fetchMoreCategories?.loading || fetchMoreCategories?.hasMore}
+            locale={{
+              loadingText: intl.formatMessage(commonMessages.loading),
+            }}
             name="category"
             label={intl.formatMessage({
               id: "ccXLVi",
@@ -172,6 +209,11 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
             })}
             onFocus={() => {
               setCategoryInputActive(true);
+
+              if (!categoryMounted.current) {
+                categoryMounted.current = true;
+                fetchCategories("");
+              }
             }}
             onBlur={() => {
               setCategoryInputActive(false);
@@ -182,8 +224,8 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               }
 
               const availableCategories = selectedProductCategory
-                ? [...categories, selectedProductCategory]
-                : categories;
+                ? [...(categories ?? []), selectedProductCategory]
+                : categories ?? [];
 
               const adornment = val
                 ? availableCategories.find(category => category.value === val.value)?.startAdornment
@@ -203,6 +245,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
               );
             }}
             id="category-list"
+            size="small"
           />
         </Box>
         <Multiselect
