@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.41
+
+### Patch Changes
+
+- 419f6b8: Added a hardcoded deprecation banner in the sidebar informing users that this Saleor version is deprecated and will be automatically upgraded on July 1, 2026.
+
 ## 3.20.40
 
 ### Patch Changes
