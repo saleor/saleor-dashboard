@@ -90,7 +90,9 @@ const useStyles = makeStyles(
           backgroundColor: vars.colors.background.default1,
         },
         "& .ce-popover__items": {
-          overflowY: "hidden",
+          // Adding the Table tool pushed the toolbox past the popover's max-height.
+          // Allow the list to scroll instead of clipping the overflowing items.
+          overflowY: "auto",
         },
         "& .ce-popover__item": {
           ...hover,
@@ -119,21 +121,32 @@ const useStyles = makeStyles(
           backgroundColor: vars.colors.background.default1,
         },
         // @editorjs/table theming overrides.
-        // The plugin ships hardcoded light-theme colors; these scaffolds map its
-        // `.tc-*` classes onto macaw vars so tables read correctly in light and dark mode.
-        // The row/column settings popover mounts inside the editor holder (not document.body),
-        // so it is themed here rather than in the "@global" block.
-        // TODO(theme): fill in colors/borders and verify both light and dark mode.
-        "& .tc-wrap": {},
-        "& .tc-table": {},
-        "& .tc-row": {},
-        "& .tc-cell": {},
-        "& .tc-row--heading": {},
-        "& .tc-cell--selected": {},
-        "& .tc-add-row": {},
-        "& .tc-add-column": {},
-        "& .tc-popover": {},
-        "& .tc-popover__item": {},
+        // The plugin hardcodes light-theme colors and exposes them as CSS custom
+        // properties scoped to .tc-wrap / .tc-popover / .tc-toolbox. As with the
+        // .ce-popover block above, we override the vars (not the elements) so the
+        // table reads correctly in light and dark mode. The row/column settings
+        // popover mounts inside the editor holder, so it is themed here, not in "@global".
+        "& .tc-wrap": {
+          "--color-background": vars.colors.background.default1,
+          "--color-border": vars.colors.border.default1,
+          "--color-text-secondary": vars.colors.text.default2,
+          // Cell content is contenteditable and otherwise falls back to the browser
+          // default (black), unreadable on a dark surface — pin it to the theme text color.
+          color: vars.colors.text.default1,
+        },
+        // Row/column drag handle ("::" dots). The hovered color is hardcoded near-black,
+        // invisible in dark mode.
+        "& .tc-toolbox": {
+          "--toggler-dots-color": vars.colors.text.default2,
+          "--toggler-dots-color-hovered": vars.colors.text.default1,
+        },
+        // Row/column settings menu.
+        "& .tc-popover": {
+          "--color-background": vars.colors.background.default1,
+          "--color-border": vars.colors.border.default1,
+          "--color-background-hover": vars.colors.background.default1Hovered,
+          color: vars.colors.text.default1,
+        },
       },
       root: {
         border: `1px solid ${vars.colors.border.default1}`,
