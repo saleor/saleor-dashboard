@@ -31,7 +31,7 @@ type ProductMediaReorderOptions = Pick<
 
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 export function createImageReorderHandler(
-  product: ProductFragment,
+  product: ProductFragment | undefined,
   reorderProductImages: (options: ProductMediaReorderOptions) => void,
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {

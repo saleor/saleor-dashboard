@@ -20,7 +20,7 @@ export const ProductMediaGalleryDropzone = ({
   variant,
   children,
 }: ProductMediaGalleryDropzoneProps) => (
-  <Dropzone disableClick={disableClick} onDrop={onImageUpload}>
+  <Dropzone noClick={disableClick} onDrop={onImageUpload}>
     {({ isDragActive, getInputProps, getRootProps }) => {
       if (variant === "empty") {
         return (
