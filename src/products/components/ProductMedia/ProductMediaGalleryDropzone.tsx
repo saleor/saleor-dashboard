@@ -2,6 +2,7 @@ import Dropzone from "@dashboard/components/Dropzone";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import type * as React from "react";
+import type { DropzoneState } from "react-dropzone";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -21,7 +22,7 @@ export const ProductMediaGalleryDropzone = ({
   children,
 }: ProductMediaGalleryDropzoneProps) => (
   <Dropzone noClick={disableClick} onDrop={onImageUpload}>
-    {({ isDragActive, getInputProps, getRootProps }) => {
+    {({ isDragActive, getInputProps, getRootProps }: DropzoneState) => {
       if (variant === "empty") {
         return (
           <div
