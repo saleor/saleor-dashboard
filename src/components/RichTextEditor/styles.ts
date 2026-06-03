@@ -118,6 +118,22 @@ const useStyles = makeStyles(
         "& .cdx-search-field": {
           backgroundColor: vars.colors.background.default1,
         },
+        // @editorjs/table theming overrides.
+        // The plugin ships hardcoded light-theme colors; these scaffolds map its
+        // `.tc-*` classes onto macaw vars so tables read correctly in light and dark mode.
+        // The row/column settings popover mounts inside the editor holder (not document.body),
+        // so it is themed here rather than in the "@global" block.
+        // TODO(theme): fill in colors/borders and verify both light and dark mode.
+        "& .tc-wrap": {},
+        "& .tc-table": {},
+        "& .tc-row": {},
+        "& .tc-cell": {},
+        "& .tc-row--heading": {},
+        "& .tc-cell--selected": {},
+        "& .tc-add-row": {},
+        "& .tc-add-column": {},
+        "& .tc-popover": {},
+        "& .tc-popover__item": {},
       },
       root: {
         border: `1px solid ${vars.colors.border.default1}`,
