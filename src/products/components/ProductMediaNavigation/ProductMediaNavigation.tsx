@@ -3,9 +3,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { defineMessages, useIntl } from "react-intl";
+
+const skeletonThumbnailCount = 4;
 
 const messages = defineMessages({
   allMedia: {
@@ -36,6 +38,10 @@ const useStyles = makeStyles(
     },
     highlightedImageContainer: {
       border: `2px solid ${vars.colors.text.default1}`,
+    },
+    skeletonImageContainer: {
+      cursor: "default",
+      pointerEvents: "none",
     },
     root: {
       display: "grid",
@@ -73,7 +79,16 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {!media ? (
-          <Skeleton />
+          <div className={classes.root} data-test-id="product-media-navigation-skeleton">
+            {Array.from({ length: skeletonThumbnailCount }, (_, index) => (
+              <Box
+                key={index}
+                className={clsx(classes.imageContainer, classes.skeletonImageContainer)}
+              >
+                <Skeleton __width="100%" __height="100%" borderRadius={2} />
+              </Box>
+            ))}
+          </div>
         ) : (
           <div className={classes.root}>
             {media.map(mediaObj => {
