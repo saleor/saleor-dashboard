@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -38,12 +39,7 @@ import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import {
-  extractMutationErrors,
-  getById,
-  getMutationState,
-  getStringOrPlaceholder,
-} from "../../../../misc";
+import { extractMutationErrors, getById, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
@@ -69,6 +65,7 @@ interface OrderUnconfirmedDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: any;
+  loading: boolean;
   orderAddNote: any;
   orderUpdateNote: PartialMutationProviderOutput<
     OrderNoteUpdateMutation,
@@ -100,8 +97,7 @@ interface OrderUnconfirmedDetailsProps {
     CreateManualTransactionCaptureMutationVariables
   >;
   orderInvoiceSend: any;
-  updateMetadataOpts: any;
-  updatePrivateMetadataOpts: any;
+  saveButtonBarState: ConfirmButtonTransitionState;
   openModal: any;
   closeModal: any;
 }
@@ -110,6 +106,7 @@ export const OrderUnconfirmedDetails = ({
   id,
   params,
   data,
+  loading,
   orderAddNote,
   orderUpdateNote,
   orderLineUpdate,
@@ -127,8 +124,7 @@ export const OrderUnconfirmedDetails = ({
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
-  updateMetadataOpts,
-  updatePrivateMetadataOpts,
+  saveButtonBarState,
   orderTransactionAction,
   orderAddManualTransaction,
   openModal,
@@ -200,7 +196,7 @@ export const OrderUnconfirmedDetails = ({
         <OrderLineDiscountProvider order={order}>
           <OrderDetailsPage
             onOrderReturn={() => navigate(orderReturnUrl(id))}
-            loading={updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
+            loading={loading || saveButtonBarState === "loading"}
             errors={errors}
             onNoteAdd={variables =>
               extractMutationErrors(
@@ -248,16 +244,7 @@ export const OrderUnconfirmedDetails = ({
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
             onOrderShowMetadata={() => openModal("view-order-metadata")}
             onFulfillmentShowMetadata={id => openModal("view-fulfillment-metadata", { id })}
-            saveButtonBarState={getMutationState(
-              updateMetadataOpts.called || updatePrivateMetadataOpts.called,
-              updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
-              [
-                ...(updateMetadataOpts.data?.deleteMetadata.errors || []),
-                ...(updateMetadataOpts.data?.updateMetadata.errors || []),
-                ...(updatePrivateMetadataOpts.data?.deletePrivateMetadata.errors || []),
-                ...(updatePrivateMetadataOpts.data?.updatePrivateMetadata.errors || []),
-              ],
-            )}
+            saveButtonBarState={saveButtonBarState}
             shippingMethods={data?.order?.shippingMethods || []}
             onOrderCancel={() => openModal("cancel")}
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}

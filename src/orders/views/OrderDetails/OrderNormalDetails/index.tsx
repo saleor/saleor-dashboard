@@ -20,12 +20,7 @@ import {
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import {
-  extractMutationErrors,
-  getById,
-  getMutationState,
-  getStringOrPlaceholder,
-} from "@dashboard/misc";
+import { extractMutationErrors, getById, getStringOrPlaceholder } from "@dashboard/misc";
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
 import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
@@ -82,7 +77,6 @@ interface OrderNormalDetailsProps {
     OrderNoteUpdateMutationVariables
   >;
   orderInvoiceRequest: any;
-  handleSubmit: any;
   orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
   orderCancel: any;
   orderPaymentMarkAsPaid: any;
@@ -103,8 +97,6 @@ interface OrderNormalDetailsProps {
     CreateManualTransactionCaptureMutation,
     CreateManualTransactionCaptureMutationVariables
   >;
-  updateMetadataOpts: any;
-  updatePrivateMetadataOpts: any;
   openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
   closeModal: CloseModalFunction;
 }
@@ -121,7 +113,6 @@ export const OrderNormalDetails = ({
   orderAddNote,
   orderUpdateNote,
   orderInvoiceRequest,
-  handleSubmit,
   orderUpdate,
   orderCancel,
   orderPaymentMarkAsPaid,
@@ -133,8 +124,6 @@ export const OrderNormalDetails = ({
   orderInvoiceSend,
   orderTransactionAction,
   orderAddManualTransaction,
-  updateMetadataOpts,
-  updatePrivateMetadataOpts,
   openModal,
   closeModal,
 }: OrderNormalDetailsProps) => {
@@ -200,7 +189,7 @@ export const OrderNormalDetails = ({
       />
       <OrderDetailsPage
         onOrderReturn={() => navigate(orderReturnUrl(id))}
-        loading={loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading}
+        loading={loading}
         errors={errors}
         onNoteUpdateLoading={orderUpdateNote.opts.loading}
         onNoteUpdate={(id, message) =>
@@ -221,16 +210,6 @@ export const OrderNormalDetails = ({
         }
         order={order}
         shop={shop}
-        saveButtonBarState={getMutationState(
-          updateMetadataOpts.called || updatePrivateMetadataOpts.called,
-          updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
-          [
-            ...(updateMetadataOpts.data?.deleteMetadata.errors || []),
-            ...(updateMetadataOpts.data?.updateMetadata.errors || []),
-            ...(updatePrivateMetadataOpts.data?.deletePrivateMetadata.errors || []),
-            ...(updatePrivateMetadataOpts.data?.updatePrivateMetadata.errors || []),
-          ],
-        )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
         onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
@@ -299,7 +278,6 @@ export const OrderNormalDetails = ({
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onRefundAdd={() => openModal("add-refund")}
-        onSubmit={handleSubmit}
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}

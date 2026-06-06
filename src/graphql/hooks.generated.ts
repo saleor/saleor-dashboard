@@ -11952,9 +11952,13 @@ export const OrderConfirmDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderConfirmMutationFn = Apollo.MutationFunction<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>;
 
 /**
