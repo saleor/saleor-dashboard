@@ -8334,6 +8334,10 @@
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
   },
+  "hYrdg+": {
+    "context": "notification after confirming an unconfirmed order",
+    "string": "Confirmed order"
+  },
   "hh0xW7": {
     "string": "Channel Name"
   },
