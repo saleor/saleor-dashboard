@@ -1,5 +1,6 @@
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, type ButtonProps, Spinner, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { type ConfirmButtonTransitionState } from "../ConfirmButton";
@@ -18,12 +19,16 @@ export const ButtonWithLoader = ({
   const intl = useIntl();
   const isLoading = transitionState === "loading";
 
-  const renderSpinner = () => {
+  const renderLoader = () => {
     if (isLoading) {
       return (
-        <Box data-test-id="button-progress" display="flex" position="absolute">
-          <Spinner />
-        </Box>
+        <SaleorThrobber
+          size={20}
+          data-test-id="button-progress"
+          className={sprinkles({
+            position: "absolute",
+          })}
+        />
       );
     }
 
@@ -41,7 +46,7 @@ export const ButtonWithLoader = ({
       onClick={isLoading ? undefined : onClick}
       data-test-state={isLoading ? "loading" : "default"}
     >
-      {renderSpinner()}
+      {renderLoader()}
       <span
         className={sprinkles({
           opacity: isLoading ? "0" : "1",
