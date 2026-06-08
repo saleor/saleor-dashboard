@@ -403,7 +403,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
     createProductMediaOpts.loading ||
-    loading;
+    (loading && !product);
   const formTransitionState = getMutationState(
     submitOpts.called,
     submitOpts.loading,

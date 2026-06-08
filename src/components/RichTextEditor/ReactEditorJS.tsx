@@ -4,12 +4,8 @@ import EditorJS, {
   type ToolConstructable,
 } from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph";
-import {
-  type EditorCore,
-  type Props as ReactEditorJSProps,
-  ReactEditorJS as BaseReactEditorJS,
-} from "@react-editor-js/core";
-import { useCallback } from "react";
+import { type EditorCore, type Props as ReactEditorJSProps } from "@react-editor-js/core";
+import { useEffect, useRef } from "react";
 
 import { convertEditorJSListBlocks } from "./utils";
 
@@ -75,10 +71,65 @@ class ClientEditorCore implements EditorCore {
 
 type Props = Omit<ReactEditorJSProps, "factory">;
 
-function ReactEditorJSClient(props: Props) {
-  const factory = useCallback((config: EditorConfig) => new ClientEditorCore(config), []);
+/**
+ * StrictMode-safe Editor.js mount.
+ *
+ * The upstream `@react-editor-js` component creates the editor inside `useEffect([])`
+ * and tears it down with an async `destroy()`. Under React 18 StrictMode (enabled in dev),
+ * the mount effect runs twice (setup → cleanup → setup), so two Editor.js instances briefly
+ * share the same holder: the first render duplicates the content, then the late async
+ * `destroy()` of the first instance wipes the holder, leaving an empty, non-editable field.
+ *
+ * To avoid this we keep a single editor instance across the simulated remount and defer the
+ * teardown by a tick, cancelling it when React immediately re-runs the setup.
+ */
+function ReactEditorJSClient({
+  holder,
+  children,
+  value,
+  defaultValue,
+  onInitialize,
+  ...restProps
+}: Props) {
+  const holderId = useRef(holder ?? `react-editor-js-${Date.now().toString(16)}`);
+  const editorRef = useRef<ClientEditorCore | null>(null);
+  const destroyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  return <BaseReactEditorJS factory={factory} {...props} />;
+  useEffect(() => {
+    // Cancel a teardown scheduled by StrictMode's simulated unmount so a single editor survives.
+    if (destroyTimeoutRef.current !== null) {
+      clearTimeout(destroyTimeoutRef.current);
+      destroyTimeoutRef.current = null;
+    }
+
+    if (!editorRef.current) {
+      editorRef.current = new ClientEditorCore({
+        holder: holderId.current,
+        ...(defaultValue && { data: defaultValue }),
+        ...restProps,
+      });
+    }
+
+    onInitialize?.(editorRef.current);
+
+    return () => {
+      // Defer teardown a tick; StrictMode re-runs setup synchronously and cancels it above.
+      destroyTimeoutRef.current = setTimeout(() => {
+        editorRef.current?.destroy();
+        editorRef.current = null;
+        destroyTimeoutRef.current = null;
+      }, 0);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (value) {
+      editorRef.current?.render(value);
+    }
+  }, [value]);
+
+  return children ?? <div id={holderId.current} />;
 }
 
 export const ReactEditorJS = ReactEditorJSClient;
