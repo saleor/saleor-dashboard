@@ -42,6 +42,8 @@ const RichTextEditor = ({
   const generatedId = React.useId();
   const id = defaultId ?? generatedId;
   const ref = React.useRef<EditorCore | null>(null);
+  const renderRef = React.useRef<EditorCore["render"] | undefined>(undefined);
+  const [isEditorReady, setIsEditorReady] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
   const isTyped = Boolean(hasValue || isFocused);
@@ -50,13 +52,15 @@ const RichTextEditor = ({
       onInitialize(editor);
     }
 
+    ref.current = editor;
+    renderRef.current = editor.render.bind(editor);
+    setIsEditorReady(true);
+
     if (typeof editorRef === "function") {
       return editorRef(editor);
     }
 
     if (editorRef) {
-      ref.current = editor;
-
       return (editorRef.current = editor);
     }
   }, []);
@@ -66,9 +70,10 @@ const RichTextEditor = ({
   // EditorJS does not rerender when default value changes,
   // so we need to manually update it
   useUpdateOnRerender({
-    render: ref.current?.render.bind(ref.current),
+    renderRef,
     defaultValue: props.defaultValue,
     hasRendered,
+    isEditorReady,
   });
 
   return (
