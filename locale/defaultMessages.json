@@ -8376,7 +8376,7 @@
   },
   "hYrdg+": {
     "context": "notification after confirming an unconfirmed order",
-    "string": "Confirmed order"
+    "string": "Order #{orderNumber} confirmed"
   },
   "hh0xW7": {
     "string": "Channel Name"

@@ -59,7 +59,9 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
         status: isError ? "error" : "success",
         text: isError
           ? getOrderErrorMessage(errors[0], intl)
-          : intl.formatMessage(orderDetailsMessages.orderConfirmed),
+          : intl.formatMessage(orderDetailsMessages.orderConfirmed, {
+              orderNumber: data.orderConfirm?.order?.number ?? order?.number,
+            }),
       });
     },
   });
