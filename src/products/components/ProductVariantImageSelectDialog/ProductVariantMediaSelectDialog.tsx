@@ -4,6 +4,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
+import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { Box } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -64,8 +65,7 @@ const ProductVariantMediaSelectDialog = (props: ProductVariantImageSelectDialogP
           {media
             ?.sort((prev, next) => (prev.sortOrder! > next.sortOrder! ? 1 : -1))
             .map(mediaObj => {
-              const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
-              const mediaUrl = parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+              const mediaUrl = parseOembedData(mediaObj.oembedData).thumbnail_url || mediaObj.url;
               const isSelected = selectedMedia?.includes(mediaObj.id);
 
               return (

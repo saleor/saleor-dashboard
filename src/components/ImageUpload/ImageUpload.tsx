@@ -67,7 +67,7 @@ const ImageUpload = (props: ImageUploadProps) => {
   const classes = useStyles(props);
 
   return (
-    <Dropzone disableClick={disableClick} onDrop={onImageUpload}>
+    <Dropzone noClick={disableClick} onDrop={onImageUpload}>
       {({ isDragActive, getInputProps, getRootProps }) => (
         <>
           <div
