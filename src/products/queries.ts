@@ -174,6 +174,7 @@ export const productMediaQuery = gql`
       name
       mainImage: mediaById(id: $mediaId) {
         id
+        ...Metadata
         alt
         url
         type

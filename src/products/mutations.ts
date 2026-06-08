@@ -34,6 +34,12 @@ export const productMediaReorder = gql`
       errors {
         ...ProductError
       }
+      product {
+        id
+        media {
+          ...ProductMedia
+        }
+      }
     }
   }
 `;
@@ -186,6 +192,12 @@ export const productMediaDeleteMutation = gql`
     productMediaDelete(id: $id) {
       errors {
         ...ProductError
+      }
+      product {
+        id
+        media {
+          ...ProductMedia
+        }
       }
     }
   }

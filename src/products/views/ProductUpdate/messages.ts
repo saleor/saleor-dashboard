@@ -39,4 +39,33 @@ export const productUpdatePageMessages = defineMessages({
       "{success, plural, one {# variant} other {# variants}} created, {failed, plural, one {# failed} other {# failed}}",
     description: "warning message when some variants failed to create",
   },
+  mediaReorderSuccess: {
+    id: "JV3DcT",
+    defaultMessage: "Media order updated",
+    description: "success notification when product media gallery order is saved",
+  },
+  mediaUploadSuccess: {
+    id: "bqSNm/",
+    defaultMessage: "Image added",
+    description: "success notification when product media is uploaded",
+  },
+  deleteMediaImageTitle: {
+    id: "uCn/rd",
+    defaultMessage: "Delete Image",
+    description: "dialog header",
+  },
+  deleteMediaVideoTitle: {
+    id: "dGlDp6",
+    defaultMessage: "Delete Video",
+    description: "product media delete dialog header",
+  },
+  deleteMediaImageConfirmation: {
+    id: "VEext+",
+    defaultMessage: "Are you sure you want to delete this image?",
+  },
+  deleteMediaVideoConfirmation: {
+    id: "/uu/aV",
+    defaultMessage: "Are you sure you want to delete this video?",
+    description: "product media delete dialog content",
+  },
 });

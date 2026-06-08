@@ -2,12 +2,15 @@
 import {
   booleanCell,
   buttonCell,
-  loadingCell,
   moneyCell,
   moneyDiscountedCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  skeletonCell,
+  type SkeletonCellVariant,
+} from "@dashboard/components/Datagrid/customCells/SkeletonCell";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type Locale } from "@dashboard/components/Locale";
@@ -87,6 +90,14 @@ export const isPriceBreakdownColumn = (
 ): columnId is PriceBreakdownColumnId =>
   PRICE_BREAKDOWN_COLUMN_IDS.includes(columnId as PriceBreakdownColumnId);
 
+const getSkeletonVariant = (columnId: string | undefined): SkeletonCellVariant => {
+  if (columnId === "quantity") {
+    return "narrow";
+  }
+
+  return "default";
+};
+
 export const createGetCellContent =
   ({
     columns,
@@ -102,11 +113,16 @@ export const createGetCellContent =
       ? { ...readonlyOptions, cursor: "pointer" }
       : readonlyOptions;
 
+    const columnId = columns[column]?.id;
+
     if (loading) {
-      return loadingCell();
+      if (isFirstColumn(column)) {
+        return readonlyTextCell("", false);
+      }
+
+      return skeletonCell(getSkeletonVariant(columnId));
     }
 
-    const columnId = columns[column]?.id;
     const rowData = added.includes(row) ? undefined : data[getDatagridRowDataIndex(row, removed)];
 
     if (!rowData || !columnId) {
