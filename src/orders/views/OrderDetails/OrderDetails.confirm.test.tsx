@@ -3,6 +3,7 @@ import { type MockedResponse, MockLink } from "@apollo/client/testing";
 import {
   OrderConfirmDocument,
   OrderDetailsWithMetadataDocument,
+  type OrderDetailsWithMetadataQuery,
   OrderStatus,
 } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
@@ -60,7 +61,7 @@ describe("OrderDetails confirm flow", () => {
     });
 
     expect(
-      cache.readQuery({
+      cache.readQuery<OrderDetailsWithMetadataQuery>({
         query: OrderDetailsWithMetadataDocument,
         variables: { id: ORDER_ID, hasManageProducts: true },
       })?.order?.status,
@@ -74,7 +75,7 @@ describe("OrderDetails confirm flow", () => {
 
     // Assert
     expect(
-      cache.readQuery({
+      cache.readQuery<OrderDetailsWithMetadataQuery>({
         query: OrderDetailsWithMetadataDocument,
         variables: { id: ORDER_ID, hasManageProducts: true },
       })?.order?.status,
