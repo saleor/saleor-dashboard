@@ -45,7 +45,11 @@ export const handleOrderDetailsSubmit = async ({
   updateMetadata,
   updatePrivateMetadata,
 }: HandleOrderDetailsSubmitParams): Promise<OrderDetailsSubmitError[]> => {
-  if (order?.status === OrderStatus.UNCONFIRMED) {
+  if (!order) {
+    return [];
+  }
+
+  if (order.status === OrderStatus.UNCONFIRMED) {
     const confirmResult = await orderConfirm({ variables: { id: order.id } });
     const confirmErrors = confirmResult.data?.orderConfirm?.errors ?? [];
 
