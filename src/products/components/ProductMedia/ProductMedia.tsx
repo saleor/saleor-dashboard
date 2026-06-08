@@ -1,16 +1,18 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
 import { type ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { type ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Skeleton, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import { messages } from "./messages";
+import styles from "./ProductMedia.module.css";
+import { ProductMediaGalleryDropzone } from "./ProductMediaGalleryDropzone";
 
 interface SortableMediaProps {
   media: {
@@ -39,7 +41,7 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
     <div {...props}>
       {media.map((mediaObj, index) => (
         <SortableMedia
-          key={`item-${index}`}
+          key={mediaObj.id}
           index={index}
           media={mediaObj}
           editHref={getEditHref(mediaObj.id)}
@@ -177,43 +179,27 @@ const ProductMedia = (props: ProductMediaProps) => {
               <Skeleton />
             </Box>
           ) : media.length > 0 ? (
-            <>
-              <ImageUpload
-                className={sprinkles({
-                  height: "100%",
-                  width: "100%",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                })}
-                isActiveClassName={sprinkles({ zIndex: "1" })}
-                disableClick={true}
-                hideUploadIcon={true}
-                iconContainerActiveClassName={sprinkles({ display: "block" })}
-                onImageUpload={handleImageUpload}
-              >
-                {({ isDragActive }) => (
-                  <MediaListContainer
-                    distance={20}
-                    helperClass="dragged"
-                    axis="xy"
-                    media={media}
-                    preview={imagesToUpload}
-                    onSortEnd={onImageReorder}
-                    className={sprinkles({
-                      display: "flex",
-                      gap: 5,
-                      flexWrap: "wrap",
-                      opacity: isDragActive ? "0.2" : "1",
-                    })}
-                    onDelete={onImageDelete}
-                    getEditHref={getImageEditUrl}
-                  />
-                )}
-              </ImageUpload>
-            </>
+            <ProductMediaGalleryDropzone
+              variant="gallery"
+              disableClick={true}
+              onImageUpload={handleImageUpload}
+            >
+              {({ isDragActive }) => (
+                <MediaListContainer
+                  distance={20}
+                  helperClass="dragged"
+                  axis="xy"
+                  media={media}
+                  preview={imagesToUpload}
+                  onSortEnd={onImageReorder}
+                  className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
+                  onDelete={onImageDelete}
+                  getEditHref={getImageEditUrl}
+                />
+              )}
+            </ProductMediaGalleryDropzone>
           ) : (
-            <ImageUpload onImageUpload={handleImageUpload} />
+            <ProductMediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
           )}
         </Box>
       </DashboardCard.Content>
