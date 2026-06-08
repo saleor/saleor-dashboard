@@ -50,6 +50,8 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
     ["type"],
   );
   const handleBack = () => navigate(orderListUrl());
+  const { data, loading } = useOrderDetails(id);
+  const order = data?.order;
   const [orderConfirm, orderConfirmOpts] = useOrderConfirmMutation({
     onCompleted: data => {
       const errors = data.orderConfirm?.errors ?? [];
@@ -65,10 +67,6 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
       });
     },
   });
-
-  const { data, loading } = useOrderDetails(id);
-
-  const order = data?.order;
   const confirmSaveButtonBarState: ConfirmButtonTransitionState = getMutationState(
     orderConfirmOpts.called || updateMetadataOpts.called || updatePrivateMetadataOpts.called,
     orderConfirmOpts.loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
