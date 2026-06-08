@@ -147,6 +147,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     shop?.fulfillmentAutoApprove && !shop?.fulfillmentAllowUnpaid && !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(line => line.quantityToFulfill > 0);
   const handleSubmit = async (data: MetadataIdSchema) => {
+    if (!onSubmit) {
+      return [];
+    }
+
     const result = await onSubmit(data);
 
     if (Array.isArray(result)) {
@@ -390,7 +394,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     </DetailPageLayout>
   );
 
-  if (isOrderUnconfirmed) {
+  if (isOrderUnconfirmed && onSubmit) {
     return (
       <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
         {({ submit }) => renderLayout(submit)}
