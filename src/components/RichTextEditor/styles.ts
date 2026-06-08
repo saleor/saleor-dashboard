@@ -139,6 +139,10 @@ const useStyles = makeStyles(
         "& .tc-toolbox": {
           "--toggler-dots-color": vars.colors.text.default2,
           "--toggler-dots-color-hovered": vars.colors.text.default1,
+          // The toolbox (z-index:1, position:absolute) forms a stacking context below the
+          // sticky header row (.tc-row:first-child, z-index:2), so its settings popover gets
+          // covered by the header. Lift the whole toolbox above the header.
+          zIndex: 3,
         },
         // Row/column settings menu.
         "& .tc-popover": {
