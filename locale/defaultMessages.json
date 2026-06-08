@@ -1222,6 +1222,10 @@
     "context": "Refund status success",
     "string": "Success"
   },
+  "5/487e": {
+    "context": "notification after confirming an unconfirmed order",
+    "string": "Order #{orderNumber} confirmed"
+  },
   "5/BH83": {
     "context": "success activate alert message",
     "string": "{count,plural,one{Gift card} other{{count} gift cards}} activated"
@@ -8373,10 +8377,6 @@
   },
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
-  },
-  "hYrdg+": {
-    "context": "notification after confirming an unconfirmed order",
-    "string": "Order #{orderNumber} confirmed"
   },
   "hh0xW7": {
     "string": "Channel Name"
