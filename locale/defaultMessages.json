@@ -2667,7 +2667,7 @@
   },
   "EaM4Ss": {
     "context": "deprecation banner shown in the sidebar",
-    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}. Your store may stop working. Upgrade or contact Saleor support immediately."
+    "string": "This Saleor version is deprecated and scheduled for automatic upgrade on {date}. To avoid disruption to your store operations, please upgrade immediately or contact Saleor Support for urgent assistance."
   },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
@@ -5589,6 +5589,10 @@
   "VceXrc": {
     "context": "initial balance filter label",
     "string": "Initial balance"
+  },
+  "Vcocsr": {
+    "context": "deprecation banner title shown in the sidebar",
+    "string": "Action required: Saleor upgrade required"
   },
   "Vdy5g7": {
     "context": "weight units type",

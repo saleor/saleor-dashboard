@@ -22,13 +22,18 @@ export const DeprecationBannerContent = ({ upgradeDate }: DeprecationBannerConte
     <Box display="flex" alignItems="center" color="critical2" __paddingTop="2px">
       <Alarm fontSize="medium" />
     </Box>
-    <Text size={2} color="critical2">
-      <FormattedMessage
-        {...deprecationBannerMessages.message}
-        values={{
-          date: <FormattedDate value={upgradeDate} year="numeric" month="long" day="numeric" />,
-        }}
-      />
-    </Text>
+    <Box display="flex" flexDirection="column" gap={1}>
+      <Text size={2} fontWeight="bold" color="critical2">
+        <FormattedMessage {...deprecationBannerMessages.title} />
+      </Text>
+      <Text size={2} color="critical2">
+        <FormattedMessage
+          {...deprecationBannerMessages.message}
+          values={{
+            date: <FormattedDate value={upgradeDate} year="numeric" month="long" day="numeric" />,
+          }}
+        />
+      </Text>
+    </Box>
   </Box>
 );
