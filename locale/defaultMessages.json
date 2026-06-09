@@ -2665,6 +2665,10 @@
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
   },
+  "EaM4Ss": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}. Your store may stop working. Upgrade or contact Saleor support immediately."
+  },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
   },
@@ -10062,10 +10066,6 @@
   },
   "xKLf5H": {
     "string": "Developed by {developer}"
-  },
-  "xM8VFu": {
-    "context": "deprecation banner shown in the sidebar",
-    "string": "This Saleor version is deprecated and will be automatically upgraded on {date}. Your store may stop working. Upgrade or contact Saleor support immediately."
   },
   "xNElry": {
     "context": "Transaction card title with name",
