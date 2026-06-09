@@ -32,7 +32,7 @@ describe("useRichText", () => {
     expect(result.current.isReadyForMount).toBe(true);
     expect(result.current.isDirty).toBe(false);
   });
-  it("returns undefined when JSON cannot be parsed", () => {
+  it("mounts empty editor when JSON cannot be parsed", () => {
     const { result, rerender } = renderHook(
       ({ initial, loading }) => useRichText({ initial, loading, triggerChange }),
       { initialProps: { initial: undefined as string | undefined, loading: true } },
@@ -40,9 +40,26 @@ describe("useRichText", () => {
 
     expect(result.current.isReadyForMount).toBe(false);
     rerender({ initial: "this-isnt-valid-json", loading: false });
-    expect(result.current.defaultValue).toBe(undefined);
-    expect(result.current.isReadyForMount).toBe(false);
+    expect(result.current.defaultValue).toStrictEqual({ blocks: [] });
+    expect(result.current.isReadyForMount).toBe(true);
     expect(result.current.isDirty).toBe(false);
+  });
+
+  it("resets editor readiness while loading", () => {
+    const { result, rerender } = renderHook(
+      ({ initial, loading }) => useRichText({ initial, loading, triggerChange }),
+      {
+        initialProps: {
+          initial: JSON.stringify(fixtures.short),
+          loading: false,
+        },
+      },
+    );
+
+    expect(result.current.isReadyForMount).toBe(true);
+    rerender({ initial: JSON.stringify(fixtures.short), loading: true });
+    expect(result.current.isReadyForMount).toBe(false);
+    expect(result.current.defaultValue).toBeUndefined();
   });
   it("runs editorJS .save() when getValue is called", async () => {
     const saveFn = jest.fn(async () => fixtures.short);

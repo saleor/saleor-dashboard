@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
@@ -14,10 +15,9 @@ import {
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
+import { getMutationState } from "@dashboard/misc";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -30,6 +30,8 @@ import {
   type OrderUrlDialog,
   type OrderUrlQueryParams,
 } from "../../urls";
+import { handleOrderDetailsSubmit } from "./handleOrderDetailsSubmit";
+import { orderDetailsMessages } from "./messages";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
@@ -70,52 +72,48 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   );
   const handleBack = () =>
     navigate(order?.status === OrderStatus.DRAFT ? orderDraftListUrl() : orderListUrl());
-  const [orderConfirm] = useOrderConfirmMutation({
-    onCompleted: ({ orderConfirm: { errors } }) => {
-      const isError = !!errors.length;
+  const [orderConfirm, orderConfirmOpts] = useOrderConfirmMutation({
+    onCompleted: data => {
+      const errors = data.orderConfirm?.errors ?? [];
+      const isError = errors.length > 0;
 
       notify({
         status: isError ? "error" : "success",
-        text: isError ? getOrderErrorMessage(errors[0], intl) : "Confirmed Order",
+        text: isError
+          ? getOrderErrorMessage(errors[0], intl)
+          : intl.formatMessage(orderDetailsMessages.orderConfirmed, {
+              orderNumber: data.orderConfirm?.order?.number ?? order?.number,
+            }),
       });
     },
   });
+  const confirmSaveButtonBarState: ConfirmButtonTransitionState = getMutationState(
+    orderConfirmOpts.called || updateMetadataOpts.called || updatePrivateMetadataOpts.called,
+    orderConfirmOpts.loading || updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
+    [
+      ...(orderConfirmOpts.data?.orderConfirm?.errors || []),
+      ...(updateMetadataOpts.data?.deleteMetadata.errors || []),
+      ...(updateMetadataOpts.data?.updateMetadata.errors || []),
+      ...(updatePrivateMetadataOpts.data?.deletePrivateMetadata.errors || []),
+      ...(updatePrivateMetadataOpts.data?.updatePrivateMetadata.errors || []),
+    ],
+    orderConfirmOpts.error ? [{ error: orderConfirmOpts.error }] : [],
+  );
 
   if (order === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
 
-  const handleSubmit = async (data: MetadataIdSchema) => {
-    if (order?.status === OrderStatus.UNCONFIRMED) {
-      await orderConfirm({ variables: { id: order?.id } });
-    }
-
-    const initial = createOrderMetadataIdSchema(order);
-    const metadataPromises = Object.entries(initial).map(([id, metaEntry]) => {
-      const update = createMetadataUpdateHandler(
-        { ...metaEntry, id },
-        () => Promise.resolve([]),
-        variables => updateMetadata({ variables }),
-        variables => updatePrivateMetadata({ variables }),
-      );
-
-      return update(data[id]);
+  const handleSubmit = async (formData: MetadataIdSchema) =>
+    handleOrderDetailsSubmit({
+      formData,
+      intl,
+      notify,
+      order,
+      orderConfirm,
+      updateMetadata: variables => updateMetadata({ variables }),
+      updatePrivateMetadata: variables => updatePrivateMetadata({ variables }),
     });
-    const result = await Promise.all(metadataPromises);
-    const errors = result.reduce((p, c) => p.concat(c), []);
-
-    if (errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          id: "gelco+",
-          defaultMessage: "Metadata updated",
-        }),
-      });
-    }
-
-    return result;
-  };
 
   return (
     <OrderDetailsMessages id={id} orderStatus={order?.status} params={params}>
@@ -202,7 +200,6 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   orderAddNote={orderAddNote}
                   orderUpdateNote={orderUpdateNote}
                   orderInvoiceRequest={orderInvoiceRequest}
-                  handleSubmit={handleSubmit}
                   orderUpdate={orderUpdate}
                   orderCancel={orderCancel}
                   orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
@@ -214,8 +211,6 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   orderInvoiceSend={orderInvoiceSend}
                   orderTransactionAction={orderTransactionAction}
                   orderAddManualTransaction={orderAddManualTransaction}
-                  updateMetadataOpts={updateMetadataOpts}
-                  updatePrivateMetadataOpts={updatePrivateMetadataOpts}
                   openModal={openModal}
                   closeModal={closeModal}
                 />
@@ -244,6 +239,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   id={id}
                   params={params}
                   data={data}
+                  loading={loading}
                   orderAddNote={orderAddNote}
                   orderUpdateNote={orderUpdateNote}
                   orderLineUpdate={orderLineUpdate}
@@ -261,8 +257,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   orderFulfillmentCancel={orderFulfillmentCancel}
                   orderFulfillmentUpdateTracking={orderFulfillmentUpdateTracking}
                   orderInvoiceSend={orderInvoiceSend}
-                  updateMetadataOpts={updateMetadataOpts}
-                  updatePrivateMetadataOpts={updatePrivateMetadataOpts}
+                  saveButtonBarState={confirmSaveButtonBarState}
                   orderTransactionAction={orderTransactionAction}
                   orderAddManualTransaction={orderAddManualTransaction}
                   openModal={openModal}

@@ -10,7 +10,9 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ErrorPolicyEnum,
+  type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
+  ProductMediaType,
   type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
@@ -22,7 +24,7 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -35,7 +37,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -107,7 +109,36 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       productVariants: true,
     },
   });
-  const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({});
+  const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({
+    onCompleted: data => {
+      const result = data.productMediaReorder;
+
+      if (!result) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+
+      const { errors } = result;
+
+      if (errors.length) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+      } else {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.mediaReorderSuccess),
+        });
+      }
+    },
+  });
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
       notify({
@@ -120,9 +151,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       navigate(productListUrl());
     },
   });
-  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
-    onCompleted: data => {
-      const imageError = data.productMediaCreate.errors.find(
+  const handleProductMediaCreateCompleted = useCallback(
+    (data: ProductMediaCreateMutation) => {
+      const errors = data.productMediaCreate?.errors ?? [];
+      const imageError = errors.find(
         error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
       );
 
@@ -132,47 +164,85 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
           text: intl.formatMessage(errorMessages.imageUploadErrorText),
         });
+
+        return;
       }
-    },
-  });
-  const [deleteProductImage] = useProductMediaDeleteMutation({
-    onCompleted: () =>
+
+      if (errors.length) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl),
+          }),
+        );
+
+        return;
+      }
+
       notify({
         status: "success",
-        text: intl.formatMessage({
-          id: "Gi8zwc",
-          defaultMessage: "Image deleted",
-        }),
-      }),
+        text: intl.formatMessage(messages.mediaUploadSuccess),
+      });
+    },
+    [intl, notify],
+  );
+  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
+    onCompleted: handleProductMediaCreateCompleted,
   });
   const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
-  const product = data?.product;
-  const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
-  const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
+  const [deleteProductImage, deleteProductImageOpts] = useProductMediaDeleteMutation({
     onCompleted: data => {
-      const errors = data.productMediaCreate.errors;
+      const result = data.productMediaDelete;
+
+      if (!result) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+
+      const { errors } = result;
 
       if (errors.length) {
-        errors.map(error =>
+        errors.forEach(error =>
           notify({
             status: "error",
             text: getProductErrorMessage(error, intl),
           }),
         );
-      } else {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "lUvX5F",
-            defaultMessage: "Image added",
-          }),
-        });
+
+        return;
       }
+
+      closeModal();
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "Gi8zwc",
+          defaultMessage: "Image deleted",
+        }),
+      });
     },
+  });
+  const product = data?.product;
+  const [deleteMediaType, setDeleteMediaType] = useState<ProductMediaType | null>(null);
+
+  useEffect(() => {
+    if (params.action !== "remove-media") {
+      setDeleteMediaType(null);
+    }
+  }, [params.action]);
+
+  const isVideoMediaToDelete = deleteMediaType === ProductMediaType.VIDEO;
+  const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
+  const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
+    onCompleted: handleProductMediaCreateCompleted,
   });
   const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
@@ -281,13 +351,42 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [bulkCreateVariants, id, intl, notify, refetch],
   );
-  const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
+  const handleImageDelete = (mediaId: string) => () => {
+    const media = product?.media?.find(item => item.id === mediaId);
+
+    setDeleteMediaType(media?.type ?? null);
+    openModal("remove-media", { id: mediaId });
+  };
+  const handleConfirmMediaDelete = () => {
+    const mediaId = params.id;
+    const currentMedia = product?.media;
+
+    if (!mediaId || !product || !currentMedia) {
+      return;
+    }
+
+    deleteProductImage({
+      variables: { id: mediaId },
+      optimisticResponse: {
+        __typename: "Mutation",
+        productMediaDelete: {
+          __typename: "ProductMediaDelete",
+          errors: [],
+          product: {
+            __typename: "Product",
+            id: product.id,
+            media: currentMedia.filter(media => media.id !== mediaId),
+          },
+        },
+      },
+    });
+  };
   const [submit, submitOpts] = useProductUpdateHandler(product);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
-  const handleImageReorder = createImageReorderHandler(product, variables =>
-    reorderProductImages({ variables }),
+  const handleImageReorder = createImageReorderHandler(product, options =>
+    reorderProductImages(options),
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
@@ -304,7 +403,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
     createProductMediaOpts.loading ||
-    loading;
+    (loading && !product);
   const formTransitionState = getMutationState(
     submitOpts.called,
     submitOpts.loading,
@@ -468,6 +567,22 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         <FormattedMessage
           {...messages.deleteProductDialogSubtitle}
           values={{ name: product?.name }}
+        />
+      </ActionDialog>
+      <ActionDialog
+        open={params.action === "remove-media" && !!params.id}
+        onClose={closeModal}
+        confirmButtonState={deleteProductImageOpts.status}
+        onConfirm={handleConfirmMediaDelete}
+        variant="delete"
+        title={intl.formatMessage(
+          isVideoMediaToDelete ? messages.deleteMediaVideoTitle : messages.deleteMediaImageTitle,
+        )}
+      >
+        <FormattedMessage
+          {...(isVideoMediaToDelete
+            ? messages.deleteMediaVideoConfirmation
+            : messages.deleteMediaImageConfirmation)}
         />
       </ActionDialog>
     </>

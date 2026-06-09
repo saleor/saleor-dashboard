@@ -11952,9 +11952,13 @@ export const OrderConfirmDocument = gql`
     errors {
       ...OrderError
     }
+    order {
+      ...OrderDetails
+    }
   }
 }
-    ${OrderErrorFragmentDoc}`;
+    ${OrderErrorFragmentDoc}
+${OrderDetailsFragmentDoc}`;
 export type OrderConfirmMutationFn = Apollo.MutationFunction<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>;
 
 /**
@@ -14849,9 +14853,16 @@ export const ProductMediaReorderDocument = gql`
     errors {
       ...ProductError
     }
+    product {
+      id
+      media {
+        ...ProductMedia
+      }
+    }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaReorderMutationFn = Apollo.MutationFunction<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>;
 
 /**
@@ -15173,9 +15184,16 @@ export const ProductMediaDeleteDocument = gql`
     errors {
       ...ProductError
     }
+    product {
+      id
+      media {
+        ...ProductMedia
+      }
+    }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaDeleteMutationFn = Apollo.MutationFunction<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>;
 
 /**
@@ -16068,6 +16086,7 @@ export const ProductMediaByIdDocument = gql`
     name
     mainImage: mediaById(id: $mediaId) {
       id
+      ...Metadata
       alt
       url
       type
@@ -16082,7 +16101,7 @@ export const ProductMediaByIdDocument = gql`
     }
   }
 }
-    `;
+    ${MetadataFragmentDoc}`;
 
 /**
  * __useProductMediaByIdQuery__

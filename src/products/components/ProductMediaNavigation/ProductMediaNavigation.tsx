@@ -1,10 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
+import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, vars } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { defineMessages, useIntl } from "react-intl";
+
+const skeletonThumbnailCount = 4;
 
 const messages = defineMessages({
   allMedia: {
@@ -17,9 +20,6 @@ const useStyles = makeStyles(
   theme => ({
     card: {
       marginBottom: theme.spacing(2),
-    },
-    highlightedImageContainer: {
-      borderColor: theme.palette.primary.main,
     },
     image: {
       height: "100%",
@@ -35,6 +35,13 @@ const useStyles = makeStyles(
       overflow: "hidden",
       padding: theme.spacing(0.5),
       position: "relative",
+    },
+    highlightedImageContainer: {
+      border: `2px solid ${vars.colors.text.default1}`,
+    },
+    skeletonImageContainer: {
+      cursor: "default",
+      pointerEvents: "none",
     },
     root: {
       display: "grid",
@@ -72,12 +79,20 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {!media ? (
-          <Skeleton />
+          <div className={classes.root} data-test-id="product-media-navigation-skeleton">
+            {Array.from({ length: skeletonThumbnailCount }, (_, index) => (
+              <Box
+                key={index}
+                className={clsx(classes.imageContainer, classes.skeletonImageContainer)}
+              >
+                <Skeleton __width="100%" __height="100%" borderRadius={2} />
+              </Box>
+            ))}
+          </div>
         ) : (
           <div className={classes.root}>
             {media.map(mediaObj => {
-              const mediaObjOembedData = JSON.parse(mediaObj?.oembedData);
-              const mediaUrl = mediaObjOembedData?.thumbnail_url || mediaObj.url;
+              const mediaUrl = parseOembedData(mediaObj.oembedData).thumbnail_url || mediaObj.url;
 
               return (
                 <div

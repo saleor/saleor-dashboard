@@ -11,7 +11,7 @@ describe("ButtonWithLoader", () => {
     expect(screen.getByRole("button")).toHaveTextContent("Confirm");
   });
 
-  it("should render a button with loading spinner", () => {
+  it("should render a button with loading throbber", () => {
     // Arrange & Act
     render(<ButtonWithLoader transitionState="loading" />);
     // Assert

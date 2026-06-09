@@ -133,6 +133,7 @@ export const productListUrlWithProductType = (productType?: {
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog =
   | "remove"
+  | "remove-media"
   | "assign-attribute-value"
   | "view-metadata"
   | ChannelsAction;
@@ -172,7 +173,8 @@ export const productVariantAddUrl = (
 
 export const productImagePath = (productId: string, imageId: string) =>
   urlJoin(productSection, productId, "image", imageId);
-export type ProductImageUrlQueryParams = Dialog<"remove">;
+export type ProductImageUrlDialog = "remove" | "view-metadata";
+export type ProductImageUrlQueryParams = Dialog<ProductImageUrlDialog>;
 export const productImageUrl = (
   productId: string,
   imageId: string,

@@ -1,6 +1,7 @@
 import { Root as Portal } from "@radix-ui/react-portal";
 import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useEffect } from "react";
 
 import { savebarHeight } from "../AppLayout/consts";
 import { useSavebarRef } from "./SavebarRefContext";
@@ -10,7 +11,15 @@ export interface SavebarProps {
 }
 
 export const SavebarRoot = ({ children }: SavebarProps) => {
-  const { anchor } = useSavebarRef();
+  const { anchor, setSavebarMounted } = useSavebarRef();
+
+  useEffect(() => {
+    setSavebarMounted(true);
+
+    return () => {
+      setSavebarMounted(false);
+    };
+  }, [setSavebarMounted]);
 
   if (!anchor.current) {
     return null;
