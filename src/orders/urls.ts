@@ -1,4 +1,4 @@
-import { type ChannelFragment, type TransactionActionEnum } from "@dashboard/graphql";
+import { type ChannelFragment, OrderStatus, type TransactionActionEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { stringify } from "qs";
 import urlJoin from "url-join";
@@ -230,6 +230,16 @@ export const orderDraftListUrl = (params?: OrderDraftListUrlQueryParams): string
 
 export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
+export const orderDraftPath = (id: string) => urlJoin(orderDraftListPath, id);
+
+export const orderDetailsPath = (id: string, status?: OrderStatus | null) => {
+  if (status === OrderStatus.DRAFT) {
+    return orderDraftPath(id);
+  }
+
+  return orderPath(id);
+};
+
 export type OrderUrlDialog =
   | "add-order-line"
   | "add-refund"
@@ -272,6 +282,15 @@ export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFu
 
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const orderDraftUrl = (id: string, params?: OrderUrlQueryParams) =>
+  orderDraftPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const orderDetailsUrl = (
+  id: string,
+  params?: OrderUrlQueryParams,
+  status?: OrderStatus | null,
+) => orderDetailsPath(encodeURIComponent(id), status) + "?" + stringifyQs(params);
 
 export const orderFulfillPath = (id: string) => urlJoin(orderPath(id), "fulfill");
 

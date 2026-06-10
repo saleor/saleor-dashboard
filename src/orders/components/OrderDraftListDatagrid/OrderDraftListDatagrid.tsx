@@ -9,7 +9,7 @@ import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import { type OrderDraft } from "@dashboard/orders/types";
-import { type OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
+import { type OrderDraftListUrlSortField, orderDraftUrl } from "@dashboard/orders/urls";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
@@ -90,7 +90,7 @@ export const OrderDraftListDatagrid = ({
     ([, row]: Item) => {
       const rowData = orders[row];
 
-      return orderUrl(rowData.id);
+      return orderDraftUrl(rowData.id);
     },
     [orders],
   );

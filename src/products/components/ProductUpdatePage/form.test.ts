@@ -24,8 +24,6 @@ const baseData = {
     updateChannels: [],
   },
   description: undefined,
-  metadata: undefined,
-  privateMetadata: undefined,
 };
 
 describe("useProductUpdateForm", () => {
@@ -112,8 +110,6 @@ describe("useProductUpdateForm", () => {
         updateChannels: [],
       },
       description: undefined,
-      metadata: undefined,
-      privateMetadata: undefined,
       slug: "test-slug-1",
       category: "test-category",
       collections: ["collection-1"],

@@ -1,6 +1,7 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
+import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -106,8 +107,7 @@ type MediaTileProps = MediaTileBaseProps &
 const MediaTile = (props: MediaTileProps) => {
   const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
   const classes = useStyles(props);
-  const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
-  const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
+  const mediaUrl = parseOembedData(media.oembedData).thumbnail_url || media.url;
 
   return (
     <div className={classes.mediaContainer} data-test-id="product-image">

@@ -6,9 +6,7 @@ import {
   type DatagridChangeOpts,
   type UseDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  type MetadataErrorFragment,
   type ProductChannelListingUpdateInput,
   type ProductFragment,
   type SearchCategoriesQuery,
@@ -35,7 +33,7 @@ import { type Option } from "@saleor/macaw-ui-next";
 
 import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
-export interface ProductUpdateFormData extends MetadataFormData {
+export interface ProductUpdateFormData {
   category: string | null;
   taxClassId: string;
   collections: Option[];
@@ -69,10 +67,7 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
 }
 
 export interface ProductUpdateHandlers
-  extends Record<
-      "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxClass",
-      FormChange
-    >,
+  extends Record<"selectCategory" | "selectCollection" | "selectTaxClass", FormChange>,
     Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
@@ -118,9 +113,7 @@ export interface UseProductUpdateFormOpts
   isSimpleProduct: boolean;
 }
 
-export type SubmitResult = SubmitPromise<
-  Array<UseProductUpdateHandlerError | MetadataErrorFragment>
->;
+export type SubmitResult = SubmitPromise<Array<UseProductUpdateHandlerError>>;
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;

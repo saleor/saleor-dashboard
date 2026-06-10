@@ -148,9 +148,7 @@ export const CategoryUpdatePage = ({
               />
             )}
             {extensionMenuItems.length > 0 && (
-              <Box marginLeft={3}>
-                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-              </Box>
+              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
             )}
           </TopNav>
           <DetailPageLayout.Content>

@@ -17,7 +17,7 @@ import {
 } from "@dashboard/graphql";
 import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import { type ProductStockInput } from "../components/ProductStocks";
@@ -202,9 +202,7 @@ export function getProductUpdatePageFormData(
       [],
     ),
     isAvailable: !!product?.isAvailable,
-    metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
-    privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
     rating: maybe(() => product.rating, null),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),

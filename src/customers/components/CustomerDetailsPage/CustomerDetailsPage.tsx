@@ -4,7 +4,6 @@ import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -27,8 +26,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
+import { Box, Divider, Text } from "@saleor/macaw-ui-next";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
@@ -182,11 +180,9 @@ const CustomerDetailsPage = ({
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={customerBackLink} title={titleNode}>
+            <TopNav href={customerBackLink} title={titleNode} actionsGap={3}>
               {canEditCustomers && (
-                <Button
-                  variant="secondary"
-                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                <TopNav.MetadataButton
                   onClick={onShowMetadata}
                   disabled={!customer}
                   data-test-id="show-customer-metadata"

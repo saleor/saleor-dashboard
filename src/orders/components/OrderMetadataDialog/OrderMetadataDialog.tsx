@@ -2,11 +2,14 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { OrderDetailsDocument, type OrderDetailsQuery } from "@dashboard/graphql";
+import {
+  OrderDetailsWithMetadataDocument,
+  type OrderDetailsWithMetadataQuery,
+} from "@dashboard/graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
+type OrderMetadataDialogData = NonNullable<OrderDetailsWithMetadataQuery["order"]>;
 
 interface OrderMetadataDialogProps {
   open: boolean;
@@ -19,7 +22,7 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: order,
     onClose,
-    refetchDocument: OrderDetailsDocument,
+    refetchDocument: OrderDetailsWithMetadataDocument,
   });
 
   const {

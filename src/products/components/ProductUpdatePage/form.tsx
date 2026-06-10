@@ -33,8 +33,6 @@ import {
 import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
 import createMultiselectChangeHandler from "@dashboard/utils/handlers/multiselectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import getMetadata from "@dashboard/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
@@ -105,11 +103,6 @@ export function useProductUpdateForm(
     formId: PRODUCT_UPDATE_FORM_ID,
   });
   const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
-  const {
     channels,
     handleChannelChange,
     handleChannelListUpdate,
@@ -171,7 +164,6 @@ export function useProductUpdateForm(
     opts.setSelectedTaxClass,
     opts.taxClasses,
   );
-  const changeMetadata = makeMetadataChangeHandler(handleChange);
   const data: ProductUpdateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
@@ -186,7 +178,6 @@ export function useProductUpdateForm(
 
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...form.changedData,
-    ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     attributes: mergeAttributes(
       attributes.data,
       getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
@@ -281,7 +272,6 @@ export function useProductUpdateForm(
     formErrors: form.errors,
     handlers: {
       changeChannels: handleChannelChange,
-      changeMetadata,
       changeVariants: handleVariantChange,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

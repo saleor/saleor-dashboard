@@ -67,6 +67,18 @@
             "In tincidunt, dui vitae suscipit sodales, lacus justo porttitor nulla<br>"
           ]
         }
+      },
+      {
+        "type": "table",
+        "data": {
+          "withHeadings": true,
+          "stretched": false,
+          "content": [
+            ["Kine", "Pigs", "Chicken"],
+            ["1 pcs", "3 pcs", "12 pcs"],
+            ["100$", "200$", "150$"]
+          ]
+        }
       }
     ],
     "version": "2.19.0"

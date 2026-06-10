@@ -50,6 +50,10 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
+  "+LyCI8": {
+    "context": "detail page top bar, settings menu button tooltip",
+    "string": "More actions"
+  },
   "+PclgM": {
     "context": "tabel column header",
     "string": "Total"
@@ -296,6 +300,10 @@
     "context": "input label",
     "string": "Global threshold"
   },
+  "/jEC3m": {
+    "context": "product media gallery dropzone hint",
+    "string": "Drag and drop or click to upload"
+  },
   "/jJLYy": {
     "string": "Transactions"
   },
@@ -333,6 +341,10 @@
   "/rsk2X": {
     "context": "Badge shown when channel is newly added",
     "string": "new"
+  },
+  "/uu/aV": {
+    "context": "product media delete dialog content",
+    "string": "Are you sure you want to delete this video?"
   },
   "/vCXIP": {
     "string": "Translation"
@@ -811,6 +823,10 @@
     "context": "customer gift cards empty state placeholder",
     "string": "This customer hasn't redeemed any gift cards yet. Newly issued cards appear here once they're used at checkout."
   },
+  "2fZByy": {
+    "context": "product media metadata dialog header",
+    "string": "Media Metadata"
+  },
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
@@ -1205,6 +1221,10 @@
   "4z1O0N": {
     "context": "Refund status success",
     "string": "Success"
+  },
+  "5/487e": {
+    "context": "notification after confirming an unconfirmed order",
+    "string": "Order #{orderNumber} confirmed"
   },
   "5/BH83": {
     "context": "success activate alert message",
@@ -2926,6 +2946,10 @@
     "context": "voucher status active",
     "string": "Active"
   },
+  "EHRXv4": {
+    "context": "product media detail page header",
+    "string": "Edit Image"
+  },
   "EHsnZX": {
     "context": "dialog description",
     "string": "Are you sure you want to approve this fullfillment?"
@@ -3530,6 +3554,10 @@
     "context": "draft created from replace event title",
     "string": "Draft was reissued from order"
   },
+  "H6ad9p": {
+    "context": "product variant detail page, top-bar metadata button tooltip",
+    "string": "Edit variant metadata"
+  },
   "H9gOMX": {
     "context": "deprecation banner shown in the sidebar",
     "string": "This Saleor version is deprecated and will be automatically upgraded on {date}."
@@ -3979,6 +4007,10 @@
   "JV+EiM": {
     "context": "voucher value",
     "string": "Value"
+  },
+  "JV3DcT": {
+    "context": "success notification when product media gallery order is saved",
+    "string": "Media order updated"
   },
   "JVaz1C": {
     "context": "window title",
@@ -5689,6 +5721,10 @@
     "context": "sale status",
     "string": "Status"
   },
+  "SwtcgX": {
+    "context": "product media alt text field label",
+    "string": "Alt text"
+  },
   "Sz6CRr": {
     "string": "Create new product"
   },
@@ -6111,6 +6147,10 @@
   "V2JtVu": {
     "string": "Same as implicit AND, using explicit keyword"
   },
+  "V4Pdx+": {
+    "context": "product detail page, top-bar metadata button tooltip",
+    "string": "Edit product metadata"
+  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -6501,6 +6541,10 @@
   "XOkUxQ": {
     "string": "Product unavailable in voucher channels"
   },
+  "XP5btK": {
+    "context": "product variant metadata dialog header",
+    "string": "Variant Metadata"
+  },
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
@@ -6665,6 +6709,10 @@
   "YBqLHs": {
     "context": "expiry date label",
     "string": "Exact date"
+  },
+  "YDIpJq": {
+    "context": "product media detail page header",
+    "string": "Edit Video"
   },
   "YEIFiI": {
     "string": "Add new structure item to begin creating structure"
@@ -7372,6 +7420,10 @@
     "context": "section header",
     "string": "Refund Order"
   },
+  "bqSNm/": {
+    "context": "success notification when product media is uploaded",
+    "string": "Image added"
+  },
   "brkxbY": {
     "string": "There are no transactions to refund"
   },
@@ -7543,6 +7595,10 @@
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
   },
+  "cg1bRE": {
+    "context": "product media detail page, top-bar metadata button tooltip",
+    "string": "Edit media metadata"
+  },
   "cgsY/X": {
     "context": "page header",
     "string": "Create New Category"
@@ -7647,6 +7703,10 @@
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
+  },
+  "dGlDp6": {
+    "context": "product media delete dialog header",
+    "string": "Delete Video"
   },
   "dGqEJ9": {
     "context": "search box placeholder",
@@ -9099,9 +9159,6 @@
   "lTrKHs": {
     "string": "Go to products"
   },
-  "lUvX5F": {
-    "string": "Image added"
-  },
   "lVwmf5": {
     "context": "total price of ordered products",
     "string": "Total"
@@ -9341,6 +9398,10 @@
   },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
+  },
+  "mykruj": {
+    "context": "detail page top bar, translations button tooltip",
+    "string": "Open translations"
   },
   "mzASqs": {
     "context": "days after label",
@@ -9747,6 +9808,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pLSGmd": {
+    "context": "product metadata dialog header",
+    "string": "Product Metadata"
+  },
   "pMAlSC": {
     "context": "Shown when a value cannot be determined due to permissions",
     "string": "Unknown"
@@ -10087,6 +10152,10 @@
   "quV5zH": {
     "context": "dialog title",
     "string": "Delete Token"
+  },
+  "qvaap2": {
+    "context": "order detail page, top-bar metadata button tooltip",
+    "string": "Edit order metadata"
   },
   "qwp4zK": {
     "context": "Health check subtitle when product can be purchased",

@@ -1,0 +1,67 @@
+.dropzone {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: var(--mu-colors-border-default1);
+  border-radius: 6px;
+  cursor: pointer;
+  min-height: 120px;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.dropzone:hover {
+  border-color: var(--mu-colors-border-default2);
+}
+
+.dropzoneActive {
+  border-color: var(--mu-colors-border-default2);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.dropzoneContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  text-align: center;
+}
+
+.galleryContainer {
+  position: relative;
+  min-height: 148px;
+}
+
+.dropOverlayWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dropOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: 1px dashed var(--mu-colors-border-default2);
+  border-radius: 6px;
+  background-color: var(--mu-colors-background-default1);
+  pointer-events: none;
+}
+
+.mediaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  transition: opacity 0.15s ease;
+}
+
+.mediaListDimmed {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hiddenInput {
+  display: none;
+}

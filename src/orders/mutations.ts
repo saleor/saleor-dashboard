@@ -110,6 +110,9 @@ export const orderConfirmMutation = gql`
       errors {
         ...OrderError
       }
+      order {
+        ...OrderDetails
+      }
     }
   }
 `;

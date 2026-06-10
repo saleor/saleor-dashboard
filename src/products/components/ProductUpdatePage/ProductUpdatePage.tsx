@@ -15,7 +15,6 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -52,6 +51,7 @@ import ProductExternalMediaDialog from "@dashboard/products/components/ProductEx
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
+import { rippleProductMetadata } from "@dashboard/products/ripples/productMetadata";
 import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
 import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
@@ -135,6 +135,7 @@ interface ProductUpdatePageProps {
   onVariantShow: (id: string) => void;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
+  onShowMetadata: () => void;
   onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
   onImageUpload: (file: File) => any;
   onMediaUrlUpload: (mediaUrl: string) => any;
@@ -172,6 +173,7 @@ const ProductUpdatePage = ({
   referenceCategories = [],
   referenceCollections = [],
   onDelete,
+  onShowMetadata,
   onImageDelete,
   onImageReorder,
   onImageUpload,
@@ -458,10 +460,17 @@ const ProductUpdatePage = ({
               <TopNav
                 href={backLinkProductUrl}
                 title={<ProductDetailsTitle product={product} loading={loading} />}
+                actionsGap={3}
               >
+                <TopNav.MetadataButton
+                  onClick={onShowMetadata}
+                  disabled={!product}
+                  data-test-id="show-product-metadata"
+                  title={intl.formatMessage(messages.editProductMetadata)}
+                  ripple={rippleProductMetadata}
+                />
                 {canTranslate && (
                   <TranslationsButton
-                    marginRight={3}
                     onClick={() =>
                       navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
                     }
@@ -473,7 +482,7 @@ const ProductUpdatePage = ({
                 />
               </TopNav>
 
-              <DetailPageLayout.Content>
+              <DetailPageLayout.Content paddingBottom={10}>
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}
@@ -557,7 +566,6 @@ const ProductUpdatePage = ({
                       "Add search engine title and description to make this product easier to find",
                   })}
                 />
-                <Metadata data={data} onChange={handlers.changeMetadata} />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
                 <ProductOrganization

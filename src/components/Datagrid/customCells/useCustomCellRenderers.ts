@@ -9,6 +9,7 @@ import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
 import { pillCellRenderer } from "./PillCell";
+import { skeletonCellRenderer } from "./SkeletonCell";
 import { statusCellRenderer } from "./StatusCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
 
@@ -25,6 +26,7 @@ export function useCustomCellRenderers() {
       numberCellRenderer(locale),
       dateCellRenderer(locale),
       dropdownCellRenderer,
+      skeletonCellRenderer,
       thumbnailCellRenderer,
       ...customRenderers,
     ],
