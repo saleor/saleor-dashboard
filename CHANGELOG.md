@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.8
+
+### Patch Changes
+
+- [#6615](https://github.com/saleor/saleor-dashboard/pull/6615) [`cae12c7`](https://github.com/saleor/saleor-dashboard/commit/cae12c75dc5c49e571de6d2d73f0dde6bda46366) Thanks [@mirekm](https://github.com/mirekm)! - Fixed unconfirmed order details so confirming an order updates the page immediately instead of requiring a manual reload. Removed the unused save bar from confirmed order details, including the empty footer slot.
+
+- [#6597](https://github.com/saleor/saleor-dashboard/pull/6597) [`428224e`](https://github.com/saleor/saleor-dashboard/commit/428224ea0d51b997ed074ad00cc09f93c1f0a4f0) Thanks [@mirekm](https://github.com/mirekm)! - Draft orders now open at `/orders/drafts/{id}` so the Drafts sidebar item stays highlighted. Older `/orders/{id}` links to drafts still work and update the address bar automatically.
+
+- [#6613](https://github.com/saleor/saleor-dashboard/pull/6613) [`0693243`](https://github.com/saleor/saleor-dashboard/commit/069324333a77e9befdfc0c86c9abd62e87bf2d21) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Rich-text description editors now support tables. A new "Table" block is available in the editor toolbar across all rich-text fields (product, category, collection and page descriptions, discount and shipping rate descriptions, rich-text attribute values, and translations). Tables support a toggleable heading row, adding and removing rows and columns, and inline formatting (bold, italic, link, strikethrough) inside cells.
+
+- [#6599](https://github.com/saleor/saleor-dashboard/pull/6599) [`2e9704f`](https://github.com/saleor/saleor-dashboard/commit/2e9704f1d2b2ea3bddf685091e04f7fe97b10e4d) Thanks [@mirekm](https://github.com/mirekm)! - Detail-page app widgets in the sidebar no longer sit in a fixed-height box. Apps report content height via the `widgetResize` App Bridge action (`actions.WidgetResize` in `@saleor/app-sdk` ≥ 1.9.0); the Dashboard resizes the iframe and responds with `ok`. GET widgets use `useAppActions`; POST widgets handle the same action in `useWidgetIframeAutoHeight`. App developers can adopt `useWidgetAutoResize` / `reportWidgetHeightFromElement` ([saleor/app-sdk#507](https://github.com/saleor/app-sdk/pull/507)). Apps that have not adopted this yet keep the previous default height.
+
+  Bumps `@saleor/app-sdk` to `1.9.0`.
+
 ## 3.23.7
 
 ### Patch Changes
