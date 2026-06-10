@@ -2,7 +2,7 @@ import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard
 import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { AlertTriangle, ChevronDown, CircleAlert, Search } from "lucide-react";
+import { AlertTriangle, ChevronDown, CircleAlert, Info, Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -26,7 +26,13 @@ import {
 import { AvailableForPurchaseSection } from "./sections/AvailableForPurchaseSection";
 import { PublishedSection } from "./sections/PublishedSection";
 import { VisibleInListingsSection } from "./sections/VisibleInListingsSection";
-import { type AvailabilityIssue, type ChannelSummary } from "./utils/types";
+import { getHeaderIssueBadgeProps } from "./utils/issueBadge";
+import {
+  type AvailabilityIssue,
+  type AvailabilityIssueCategory,
+  type ChannelSummary,
+  type IssueSeverity,
+} from "./utils/types";
 
 interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
@@ -44,6 +50,15 @@ interface AvailabilityChannelItemProps {
   /** Public API verification result for this channel */
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  /** Active stock-availability mode for the shop. Used to tailor the reassurance
+   *  text under the public-API verification badge. Defaults to legacy. */
+  useLegacyShippingZoneStockAvailability?: boolean;
+  /** Whether the product type requires shipping. Drives whether the public-API
+   *  badge's coverage-aware override applies — non-shippable products (digital
+   *  goods, license keys) can be purchased without any shipping zones, so the
+   *  override must not fire for them. Defaults to true (the conservative legacy
+   *  assumption). */
+  isShippingRequired?: boolean;
 }
 
 export const AvailabilityChannelItem = ({
@@ -60,12 +75,23 @@ export const AvailabilityChannelItem = ({
   isExpanded = false,
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability = true,
+  isShippingRequired = true,
 }: AvailabilityChannelItemProps) => {
   const intl = useIntl();
   const dateNow = useCurrentDate();
   const status = getAvailabilityStatus(originalSummary ?? summary, dateNow);
-  const hasIssues = issues.length > 0;
-  const issueErrorCount = issues.filter(i => i.severity === "error").length;
+  // Errors and warnings get promoted into the channel header — they change
+  // the status label, dot color, and surface the issue badge. Info severity
+  // issues are advisories: they are still rendered in the body so users see
+  // the recommendation, but they do not promote the channel into a "has
+  // issues" visual state. (Note: a "warning" is not blocking in plain
+  // English; it shares the header treatment with errors only because both
+  // are non-advisory and worth flagging up front.) The selection rules and
+  // severity escalation live in `getHeaderIssueBadgeProps` so they can be
+  // tested in isolation from React.
+  const issueBadgeProps = React.useMemo(() => getHeaderIssueBadgeProps(issues), [issues]);
+  const hasHeaderIssues = issueBadgeProps !== null;
   // Channel is effectively disabled if marked for removal or explicitly disabled
   const isEffectivelyDisabled = disabled || isMarkedForRemoval;
 
@@ -110,8 +136,10 @@ export const AvailabilityChannelItem = ({
   );
 
   const getStatusLabel = () => {
-    // When there are issues, show "Issues" status regardless of publication status
-    if (hasIssues) {
+    // Only header-worthy issues (errors and warnings) flip the channel into
+    // "Issues" status. Info-severity advisories don't change the headline
+    // state.
+    if (hasHeaderIssues) {
       return intl.formatMessage(messages.status_issues);
     }
 
@@ -126,8 +154,8 @@ export const AvailabilityChannelItem = ({
   };
 
   const getStatusDescription = () => {
-    // When there are issues, show issues description regardless of publication status
-    if (hasIssues) {
+    // Only header-worthy issues drive the description override (see getStatusLabel).
+    if (hasHeaderIssues) {
       return intl.formatMessage(messages.statusDescription_issues);
     }
 
@@ -174,8 +202,8 @@ export const AvailabilityChannelItem = ({
                 <Box>
                   <StatusDot
                     status={status}
-                    hasIssues={hasIssues}
-                    issueType={issueErrorCount > 0 ? "error" : "warning"}
+                    hasIssues={hasHeaderIssues}
+                    issueType={issueBadgeProps?.type ?? "warning"}
                   />
                 </Box>
               </Tooltip.Trigger>
@@ -188,9 +216,14 @@ export const AvailabilityChannelItem = ({
                   <Text size={1} color="default2">
                     {getStatusDescription()}
                   </Text>
-                  {hasIssues && (
-                    <Text size={1} color={issueErrorCount > 0 ? "critical1" : "warning1"}>
-                      {intl.formatMessage(messages.channelHasIssues, { count: issues.length })}
+                  {issueBadgeProps && (
+                    <Text
+                      size={1}
+                      color={issueBadgeProps.type === "error" ? "critical1" : "warning1"}
+                    >
+                      {intl.formatMessage(messages.channelHasIssues, {
+                        count: issueBadgeProps.count,
+                      })}
                     </Text>
                   )}
                 </Box>
@@ -206,8 +239,8 @@ export const AvailabilityChannelItem = ({
             >
               {summary.name}
             </Text>
-            {hasIssues && (
-              <IssueBadge count={issues.length} type={issueErrorCount > 0 ? "error" : "warning"} />
+            {issueBadgeProps && (
+              <IssueBadge count={issueBadgeProps.count} type={issueBadgeProps.type} />
             )}
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -292,6 +325,9 @@ export const AvailabilityChannelItem = ({
           <PublicApiVerificationSection
             verificationResult={verificationResult}
             onVerify={onVerify}
+            useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+            shippingZoneCount={summary.shippingZoneCount}
+            isShippingRequired={isShippingRequired}
           />
         </Box>
       </Accordion.Content>
@@ -303,11 +339,23 @@ interface DeliveryConfigurationSectionProps {
   issues: AvailabilityIssue[];
 }
 
+/**
+ * Issues are grouped into two orthogonal categories — purchasability (cart
+ * add-ability) and shipping (order fulfillment) — to mirror the mental model
+ * Saleor 3.23+ direct stock-availability mode introduces. Each subsection is
+ * rendered only when it has issues; if neither category has any, the whole
+ * section is omitted (the empty state is handled by the channel header).
+ *
+ * The empty-state guard intentionally checks the *renderable* slices rather
+ * than `issues.length` so that issues with an unrecognized future category
+ * cannot collapse the component to an empty bordered box.
+ */
 const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionProps) => {
   const intl = useIntl();
+  const purchasabilityIssues = issues.filter(i => i.category === "purchasability");
+  const shippingIssues = issues.filter(i => i.category === "shipping");
 
-  // Only show when there are issues to display
-  if (issues.length === 0) {
+  if (purchasabilityIssues.length === 0 && shippingIssues.length === 0) {
     return null;
   }
 
@@ -315,29 +363,69 @@ const DeliveryConfigurationSection = ({ issues }: DeliveryConfigurationSectionPr
     <Box
       display="flex"
       flexDirection="column"
-      gap={3}
+      gap={5}
       paddingTop={4}
       marginTop={4}
       borderTopWidth={1}
       borderTopStyle="solid"
       borderColor="default1"
     >
-      <Text size={2} fontWeight="medium" color="default2">
-        {intl.formatMessage(messages.configurationTitle)}
-      </Text>
-
-      <Box display="flex" flexDirection="column" gap={2}>
-        {issues.map(issue => (
-          <IssueCallout key={issue.id} issue={issue} />
-        ))}
-      </Box>
+      {purchasabilityIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryPurchasabilityTitle)}
+          issues={purchasabilityIssues}
+          category="purchasability"
+        />
+      )}
+      {shippingIssues.length > 0 && (
+        <IssueCategorySection
+          title={intl.formatMessage(messages.categoryShippingTitle)}
+          issues={shippingIssues}
+          category="shipping"
+        />
+      )}
     </Box>
   );
 };
 
+interface IssueCategorySectionProps {
+  title: string;
+  issues: AvailabilityIssue[];
+  category: AvailabilityIssueCategory;
+}
+
+const IssueCategorySection = ({ title, issues, category }: IssueCategorySectionProps) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    gap={3}
+    data-test-id="issue-category-section"
+    data-test-category={category}
+  >
+    <Text size={2} fontWeight="medium" color="default2">
+      {title}
+    </Text>
+    <Box display="flex" flexDirection="column" gap={2}>
+      {issues.map(issue => (
+        <IssueCallout key={issue.id} issue={issue} />
+      ))}
+    </Box>
+  </Box>
+);
+
 interface PublicApiVerificationSectionProps {
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
+  useLegacyShippingZoneStockAvailability: boolean;
+  /** Number of shipping zones for the channel — drives the coverage-aware
+   *  override of the "Purchasable" badge in legacy mode. May be "unknown"
+   *  when the dashboard user lacks the permission to read shipping zones,
+   *  in which case we do not downgrade the verdict. */
+  shippingZoneCount: number | "unknown";
+  /** Whether the product requires shipping. The badge override only applies
+   *  to shippable products — digital goods can be purchased without any
+   *  shipping configuration. */
+  isShippingRequired: boolean;
 }
 
 const VERIFICATION_COOLDOWN_MS = 1500;
@@ -345,6 +433,9 @@ const VERIFICATION_COOLDOWN_MS = 1500;
 const PublicApiVerificationSection = ({
   verificationResult,
   onVerify,
+  useLegacyShippingZoneStockAvailability,
+  shippingZoneCount,
+  isShippingRequired,
 }: PublicApiVerificationSectionProps) => {
   const intl = useIntl();
   const isVerifying = verificationResult?.status === "loading";
@@ -403,7 +494,19 @@ const PublicApiVerificationSection = ({
         )}
       </Box>
 
-      {verificationResult && <PublicApiVerificationBadge result={verificationResult} />}
+      {verificationResult && (
+        <PublicApiVerificationBadge
+          result={verificationResult}
+          useLegacyShippingZoneStockAvailability={useLegacyShippingZoneStockAvailability}
+          shippingZoneCount={
+            // Forward the count only when we actually know it. Passing
+            // undefined for "unknown" keeps the API-reported verdict
+            // intact rather than misleading users with limited permissions.
+            shippingZoneCount === "unknown" ? undefined : shippingZoneCount
+          }
+          isShippingRequired={isShippingRequired}
+        />
+      )}
     </Box>
   );
 };
@@ -412,16 +515,62 @@ interface IssueCalloutProps {
   issue: AvailabilityIssue;
 }
 
+interface IssueVisuals {
+  Icon: typeof AlertTriangle;
+  /** macaw-ui color token applied to the icon. */
+  iconColor: "critical1" | "warning1" | "default2";
+  /** macaw-ui color token applied to the issue title. Info issues render the
+   *  title in default text color so they don't look like an actionable warning. */
+  titleColor: "critical1" | "warning1" | "default1";
+  /** Key into the messages catalog used as the icon's accessible name. */
+  iconLabelKey: "issueCalloutIconError" | "issueCalloutIconWarning" | "issueCalloutIconInfo";
+  /** Stable test-id for the icon node, used by component tests instead of a
+   *  data-test-severity attribute leaking onto the wrapper. */
+  iconTestId:
+    | "product-doctor-issue-callout-icon-error"
+    | "product-doctor-issue-callout-icon-warning"
+    | "product-doctor-issue-callout-icon-info";
+}
+
+const getIssueVisuals = (severity: IssueSeverity): IssueVisuals => {
+  switch (severity) {
+    case "error":
+      return {
+        Icon: AlertTriangle,
+        iconColor: "critical1",
+        titleColor: "critical1",
+        iconLabelKey: "issueCalloutIconError",
+        iconTestId: "product-doctor-issue-callout-icon-error",
+      };
+    case "warning":
+      return {
+        Icon: CircleAlert,
+        iconColor: "warning1",
+        titleColor: "warning1",
+        iconLabelKey: "issueCalloutIconWarning",
+        iconTestId: "product-doctor-issue-callout-icon-warning",
+      };
+    case "info":
+      return {
+        Icon: Info,
+        iconColor: "default2",
+        titleColor: "default1",
+        iconLabelKey: "issueCalloutIconInfo",
+        iconTestId: "product-doctor-issue-callout-icon-info",
+      };
+  }
+};
+
 const IssueCallout = ({ issue }: IssueCalloutProps) => {
+  const intl = useIntl();
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const isError = issue.severity === "error";
-  const Icon = isError ? AlertTriangle : CircleAlert;
-  const iconColor = isError ? "critical1" : "warning1";
+  const { Icon, iconColor, titleColor, iconLabelKey, iconTestId } = getIssueVisuals(issue.severity);
+  const iconLabel = intl.formatMessage(messages[iconLabelKey]);
 
   return (
-    <Box display="flex" gap={2} alignItems="flex-start">
+    <Box display="flex" gap={2} alignItems="flex-start" data-test-id="availability-issue-callout">
       <Box color={iconColor} flexShrink="0" paddingTop={0.5}>
-        <Icon size={14} />
+        <Icon size={14} role="img" aria-label={iconLabel} data-test-id={iconTestId} />
       </Box>
       <Box display="flex" flexDirection="column" gap={1} __flex="1">
         <Box
@@ -437,7 +586,7 @@ const IssueCallout = ({ issue }: IssueCalloutProps) => {
           __textAlign="left"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <Text size={2} fontWeight="medium" color={iconColor}>
+          <Text size={2} fontWeight="medium" color={titleColor}>
             {issue.message}
           </Text>
           <ChevronDown

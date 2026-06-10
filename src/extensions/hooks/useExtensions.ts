@@ -6,6 +6,7 @@ import {
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { isSaleorOfficialAppUrl } from "@dashboard/extensions/isSaleorOfficialAppUrl";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import { type ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
@@ -22,8 +23,20 @@ const prepareExtensionsWithActions = ({
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
 }): ExtensionWithParams[] =>
-  extensions.map(
-    ({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
+  extensions
+    .filter(({ id, url, label, mountName, app }) => {
+      if (!isUrlAbsolute(url) && !app.appUrl) {
+        console.warn(
+          "Extension uses a relative URL but its app has no appUrl — dropping from list.",
+          { appId: app.id, extensionId: id, label, mountName },
+        );
+
+        return false;
+      }
+
+      return true;
+    })
+    .map(({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
       const isNewTab = targetName === "NEW_TAB";
       const isWidget = targetName === "WIDGET";
       const appUrl = app.appUrl;
@@ -35,6 +48,8 @@ const prepareExtensionsWithActions = ({
        */
       const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
 
+      const resolvedUrl = isUrlAbsolute(url) ? url : `${appUrl ?? ""}${url}`;
+
       return {
         id,
         app,
@@ -45,6 +60,7 @@ const prepareExtensionsWithActions = ({
         mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
         targetName: AppExtensionManifestTarget.parse(targetName),
         settings,
+        isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
         /**
          * Only available for NEW_TAB, POPUP, APP_PAGE
          * TODO: Change interface to *not* contain this method if type is WIDGET
@@ -101,8 +117,7 @@ const prepareExtensionsWithActions = ({
           });
         },
       };
-    },
-  );
+    });
 
 export const useExtensions = <T extends AllAppExtensionMounts>(
   mountList: readonly T[],

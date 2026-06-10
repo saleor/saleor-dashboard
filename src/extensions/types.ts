@@ -1,5 +1,6 @@
 import { type AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { type AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { type ExtensionCategory, type ExtensionData } from "@dashboard/extensions/schema";
 import {
   type AppTypeEnum,
   type ExtensionListQuery,
@@ -46,50 +47,11 @@ export const getProblemSortDate = (problem: AppProblem): string => {
   return problem.createdAt;
 };
 
-interface CommonExtensionData {
-  id: string;
-  name: {
-    en: string;
-  };
-  description: {
-    en: string;
-  };
-  logo: {
-    light: {
-      source: string;
-    };
-    dark: {
-      source: string;
-    };
-  };
-  installed?: boolean;
-  disabled?: boolean;
-}
+export type { ExtensionData };
 
-interface AppExtensionData extends CommonExtensionData {
-  type: "APP";
-  kind: "OFFICIAL" | "OSS";
-  manifestUrl: string | null;
-  repositoryUrl: string | null; // Typo in the original code
-  isCustomApp?: boolean;
-  appId?: string;
-}
+export type APIExtensionsResponse = ExtensionCategory[];
 
-interface PluginExtensionData extends CommonExtensionData {
-  type: "PLUGIN";
-}
-
-export type ExtensionData = AppExtensionData | PluginExtensionData;
-
-type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
-
-export type ExtensionsGroups = Record<ExtensionGroup, { title: string; items: ExtensionData[] }>;
-
-export type APIExtensionsResponse = Array<{
-  id: string;
-  name: { en: string };
-  extensions: ExtensionData[];
-}>;
+export type ExtensionsGroups = Record<string, { title: string; items: ExtensionData[] }>;
 
 /*
   Candidate for refactoring. InstalledExtension is only one case.
@@ -105,6 +67,7 @@ export type InstalledExtension = {
   actions?: ReactNode;
   problems?: AppProblem[];
   appType?: AppTypeEnum | null;
+  isActive?: boolean | null;
   activeProblemCount: number;
   criticalProblemCount: number;
 };
@@ -120,6 +83,12 @@ export interface Extension {
   open: () => void;
   targetName: AppExtensionManifestTarget;
   settings: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["settings"];
+  /**
+   * True when the extension's resolved URL is hosted under the configured Saleor
+   * Cloud app domain (SALEOR_CLOUD_APP_DOMAIN). Resolved at the time the
+   * extension is mapped from the GraphQL response.
+   */
+  isSaleorOfficial: boolean;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {

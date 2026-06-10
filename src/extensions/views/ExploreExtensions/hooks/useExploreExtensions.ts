@@ -72,7 +72,9 @@ const getFilteredExtensions = ({
 };
 
 export const useExploreExtensions = () => {
-  const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
+  const { data, loading, error, isFallback } = useAppStoreExtensions(
+    getExtensionsConfig().extensionsApiUri,
+  );
   const { data: installedAppsData } = useInstalledAppsQuery({
     variables: {
       first: 100,
@@ -112,5 +114,6 @@ export const useExploreExtensions = () => {
     extensions: extensionsData,
     loading,
     error,
+    isFallback,
   };
 };

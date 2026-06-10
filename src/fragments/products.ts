@@ -18,6 +18,14 @@ export const fragmentMoney = gql`
   }
 `;
 
+export const fragmentMoneyWithFractionDigits = gql`
+  fragment MoneyWithFractionDigits on Money {
+    amount
+    currency
+    fractionDigits
+  }
+`;
+
 export const fragmentPreorder = gql`
   fragment Preorder on PreorderData {
     globalThreshold
@@ -65,16 +73,6 @@ export const channelListingProductWithoutPricingFragment = gql`
       name
       slug
       currencyCode
-    }
-  }
-`;
-export const channelListingProductFragment = gql`
-  fragment ChannelListingProduct on ProductChannelListing {
-    ...ChannelListingProductWithoutPricing
-    pricing {
-      priceRange {
-        ...PriceRange
-      }
     }
   }
 `;
@@ -229,6 +227,7 @@ export const productFragmentDetails = gql`
     productType {
       id
       name
+      slug
       hasVariants
       isShippingRequired
     }

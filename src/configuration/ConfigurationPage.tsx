@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
+
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Box, Paragraph, Text } from "@saleor/macaw-ui-next";
@@ -92,11 +91,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                               {item.description}
                             </Paragraph>
                           </Box>
-                          {item.testId === "configuration-menu-channels" && (
-                            <Box position="relative">
-                              <Ripple model={checkoutAutocompleteSettings} />
-                            </Box>
-                          )}
                         </Box>
                       </Link>
                     ))}

@@ -57,12 +57,16 @@ inputs:
     description: "Comma-separated app identifiers to test (optional, empty = all)"
     required: false
     default: ""
+  ARTIFACT_PREFIX:
+    description: "Prefix for artifact names to avoid collisions in matrix builds"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
   steps:
-    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
-    - uses: actions/setup-node@v4
+    - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: "package.json"
         cache: "pnpm"
@@ -80,7 +84,7 @@ runs:
 
     - name: Cache Playwright browsers
       id: playwright-cache
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: ~/.cache/ms-playwright
         key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
@@ -107,10 +111,8 @@ runs:
 
     - name: Run tests
       shell: bash
+      id: run-tests
       env:
-        ## backward compatibility for older versions
-        API_URI: ${{ inputs.API_URL }}
-
         API_URL: ${{ inputs.API_URL }}
         BASE_URL: ${{ inputs.BASE_URL }}
         E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
@@ -128,6 +130,7 @@ runs:
         BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
         BUILD_URL: ${{ inputs.BUILD_URL }}
         APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
+        ARTIFACT_PREFIX: ${{ inputs.ARTIFACT_PREFIX }}
 
       run: |
         PROJECTS=($PROJECT)
@@ -135,22 +138,23 @@ runs:
         for PROJECT in "${PROJECTS[@]}"; do
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
-        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        PREFIX="${ARTIFACT_PREFIX:+${ARTIFACT_PREFIX}-}"
+        echo "reportName=${PREFIX}all-blob-reports-${SHARD_NUMBER%%/*}" >> "$GITHUB_OUTPUT"
+        echo "ctrfReport=${PREFIX}ctrf-report-${SHARD_NUMBER%%/*}" >> "$GITHUB_OUTPUT"
         pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       if: always()
       with:
-        name: ${{ env.reportName }}
+        name: ${{ steps.run-tests.outputs.reportName }}
         path: blob-report
         retention-days: 1
 
     - name: Upload ctrf report to GitHub Actions Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       if: always()
       with:
-        name: ${{ env.ctrfReport }}
+        name: ${{ steps.run-tests.outputs.ctrfReport }}
         path: ctrf/ctrf-report-*.json
         retention-days: 1

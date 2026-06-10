@@ -12,8 +12,8 @@ import {
   type VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import { type ProductType } from "@dashboard/legacy-sdk/apollo/types";
 import { type RelayToFlat } from "@dashboard/types";
-import { type ProductType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -338,6 +338,7 @@ export const product: (
     isShippingRequired: true,
     id: "pt76406",
     name: "Versatile",
+    slug: "versatile",
     nonSelectionVariantAttributes: [
       {
         __typename: "Attribute",

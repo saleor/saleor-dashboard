@@ -8,7 +8,7 @@ import { type AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Spinner, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -16,13 +16,14 @@ import { Link } from "react-router-dom";
 import useStyles from "../styles";
 import LoginForm, { type LoginFormData } from "./form";
 import { LastLoginIndicator } from "./LastLoginIndicator";
-import { getErrorMessage } from "./messages";
+import { getErrorMessage, loginPageMessages } from "./messages";
 
 interface LoginCardProps {
   errors: UserContextError[];
   disabled: boolean;
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
+  passwordLoginEnabled: boolean;
   onExternalAuthentication: (pluginId: string) => void;
   onSubmit: (event: LoginFormData) => SubmitPromise;
   lastLoginMethod: LastLoginMethod;
@@ -33,7 +34,8 @@ const LoginPage = (props: LoginCardProps) => {
     errors,
     disabled,
     loading,
-    externalAuthentications = [],
+    externalAuthentications,
+    passwordLoginEnabled,
     onExternalAuthentication,
     onSubmit,
     lastLoginMethod,
@@ -42,8 +44,14 @@ const LoginPage = (props: LoginCardProps) => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = useState(false);
   const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
+  const hasExternalAuthentications = (externalAuthentications?.length ?? 0) > 0;
+  const isLoadingLoginMethods = loading || !externalAuthentications;
+  const showLoginMethodsSpinner =
+    !passwordLoginEnabled && !hasExternalAuthentications && isLoadingLoginMethods;
+  const showPasswordLoginDisabledMessage =
+    !passwordLoginEnabled && !hasExternalAuthentications && !isLoadingLoginMethods;
   const showLastLoginIndicatorForPassword =
-    lastLoginMethod === "password" && externalAuthentications.length > 0;
+    lastLoginMethod === "password" && hasExternalAuthentications;
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -65,79 +73,101 @@ const LoginPage = (props: LoginCardProps) => {
               <Text color="critical2">{getErrorMessage(error, intl)}</Text>
             </Box>
           ))}
-          <Input
-            autoFocus
-            width="100%"
-            autoComplete="email"
-            label={intl.formatMessage(commonMessages.email)}
-            id="email"
-            name="email"
-            onChange={handleChange}
-            value={data.email}
-            data-test-id="email"
-            spellCheck={false}
-            disabled={disabled}
-            required
-          />
-          <FormSpacer />
-          <Input
-            width="100%"
-            label={intl.formatMessage({
-              id: "5sg7KC",
-              defaultMessage: "Password",
-            })}
-            id="password"
-            name="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-            type={showPassword ? "text" : "password"}
-            value={data.password}
-            data-test-id="password"
-            spellCheck={false}
-            disabled={disabled}
-            endAdornment={
-              <Button
-                icon={
-                  <EyeIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+          {passwordLoginEnabled && (
+            <>
+              <Input
+                autoFocus
+                width="100%"
+                autoComplete="email"
+                label={intl.formatMessage(commonMessages.email)}
+                id="email"
+                name="email"
+                onChange={handleChange}
+                value={data.email}
+                data-test-id="email"
+                spellCheck={false}
+                disabled={disabled}
+                required
+              />
+              <FormSpacer />
+              <Input
+                width="100%"
+                label={intl.formatMessage({
+                  id: "5sg7KC",
+                  defaultMessage: "Password",
+                })}
+                id="password"
+                name="password"
+                autoComplete="current-password"
+                onChange={handleChange}
+                type={showPassword ? "text" : "password"}
+                value={data.password}
+                data-test-id="password"
+                spellCheck={false}
+                disabled={disabled}
+                endAdornment={
+                  <Button
+                    icon={
+                      <EyeIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
+                    }
+                    onMouseDown={() => setShowPassword(true)}
+                    onMouseUp={() => setShowPassword(false)}
+                    variant="tertiary"
+                    type="button"
+                  />
                 }
-                onMouseDown={() => setShowPassword(true)}
-                onMouseUp={() => setShowPassword(false)}
-                variant="tertiary"
-                type="button"
+                required
               />
-            }
-            required
-          />
-          <Link to={passwordResetUrl}>
-            <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
-              <FormattedMessage
-                id="3tbL7x"
-                defaultMessage="Forgot password?"
-                description="description"
-              />
-            </Text>
-          </Link>
+              <Link to={passwordResetUrl}>
+                <Text className={classes.link} fontSize={3} data-test-id="reset-password-link">
+                  <FormattedMessage
+                    id="3tbL7x"
+                    defaultMessage="Forgot password?"
+                    description="description"
+                  />
+                </Text>
+              </Link>
 
-          <div className={classes.buttonContainer}>
-            <ButtonWithLoader
+              <div className={classes.buttonContainer}>
+                <ButtonWithLoader
+                  width="100%"
+                  disabled={disabled}
+                  variant="primary"
+                  type="submit"
+                  transitionState={loading ? "loading" : "default"}
+                  data-test-id="submit"
+                  position="relative"
+                >
+                  {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
+                  <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
+                </ButtonWithLoader>
+              </div>
+            </>
+          )}
+          {showLoginMethodsSpinner && (
+            <Box
+              display="flex"
+              justifyContent="center"
               width="100%"
-              disabled={disabled}
-              variant="primary"
-              type="submit"
-              transitionState={loading ? "loading" : "default"}
-              data-test-id="submit"
-              position="relative"
+              data-test-id="login-methods-loading"
             >
-              {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
-              <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
-            </ButtonWithLoader>
-          </div>
-          {externalAuthentications.map(externalAuthentication => (
+              <Spinner aria-label={intl.formatMessage(loginPageMessages.loadingLoginMethods)} />
+            </Box>
+          )}
+          {showPasswordLoginDisabledMessage && (
+            <Text color="default2" fontSize={3}>
+              {intl.formatMessage(loginPageMessages.passwordLoginDisabled)}
+            </Text>
+          )}
+          {externalAuthentications?.map(externalAuthentication => (
             <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <ButtonWithLoader
                 width="100%"
-                variant="secondary"
+                variant={passwordLoginEnabled ? "secondary" : "primary"}
                 onClick={() => {
                   onExternalAuthentication(externalAuthentication.id);
                   setOptimisticLoaderAuthId(externalAuthentication.id);

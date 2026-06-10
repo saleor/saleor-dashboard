@@ -5,58 +5,79 @@ on:
   repository_dispatch:
     types: [automation-tests-event]
 
+permissions: {}
+
 jobs:
-  get-environment-variables:
+  extract-version:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
+
+    permissions:
+      contents: read
+
     outputs:
-      VERSION: ${{ steps.get-environment-variables.outputs.version }}
+      VERSION: ${{ steps.extract-version.outputs.version }}
+
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: "package.json"
           cache: "pnpm"
+          cache-dependency-path: .github/scripts/pnpm-lock.yaml
 
       - name: Install dependencies
         run: |
-          cd .github/workflows
+          cd .github/scripts
           pnpm install
 
-      - name: get environment variables
-        id: get-environment-variables
+      - name: Extract version
+        id: extract-version
         run: |
-          node .github/workflows/getEnvironmentVariables.js \
+          node .github/scripts/extract-version.js \
             --custom_version "$CUSTOM_VERSION" \
             --repo_token "$REPO_TOKEN"
 
   run-tests-on-release:
-    needs: get-environment-variables
+    permissions:
+      contents: read
+
+    needs: extract-version
     uses: ./.github/workflows/run-tests-on-release.yml
     with:
-      VERSION: ${{needs.get-environment-variables.outputs.VERSION}}
+      VERSION: ${{needs.extract-version.outputs.VERSION}}
       CUSTOM_VERSION: ${{github.event.client_payload.custom_version }}
       ADDITIONAL_TITLE: "Core automation test"
     secrets: inherit
 
   add-comment-to-release-pr:
     if: ${{ !cancelled() }}
+
+    permissions:
+      pull-requests: write
+
     needs: run-tests-on-release
     runs-on: ubuntu-22.04
+
     steps:
       - name: add-comment-to-release-pr
         env:
           PR_NUMBER: ${{github.event.client_payload.release_pr }}
           PR_COMMENT: ${{needs.run-tests-on-release.outputs.PR_COMMENT}}
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}
+          VAULT_URL: ${{ secrets.VAULT_URL }}
         run: |
           export GITHUB_TOKEN=$( \
-            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+            curl --request GET --url "$VAULT_URL" --header "Authorization: JWT $VAULT_JWT" | jq -r .token \
             )
           gh pr comment "$PR_NUMBER" --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments

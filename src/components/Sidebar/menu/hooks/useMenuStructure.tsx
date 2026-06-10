@@ -4,6 +4,7 @@ import { collectionListUrl } from "@dashboard/collections/urls";
 import { iconSize } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
+import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/SidebarAppAlert";
@@ -28,7 +29,6 @@ import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
@@ -92,7 +92,7 @@ export function useMenuStructure() {
         id: "explore-extensions",
         url: ExtensionsPaths.exploreExtensions,
         permissions: [],
-        type: "item",
+        type: "item" as const,
       },
     ],
   });
@@ -192,7 +192,11 @@ export function useMenuStructure() {
         ? [
             {
               label: intl.formatMessage(sectionNames.customers),
-              permissions: [PermissionEnum.MANAGE_USERS],
+              permissions: [
+                PermissionEnum.MANAGE_USERS,
+                PermissionEnum.MANAGE_ORDERS,
+                PermissionEnum.MANAGE_STAFF,
+              ],
               id: "customers",
               url: customerListUrl(),
               type: "item",
@@ -202,7 +206,15 @@ export function useMenuStructure() {
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
-      permissions: [PermissionEnum.MANAGE_USERS],
+      // Sidebar gating uses any-of matching, so users with only MANAGE_ORDERS
+      // or MANAGE_STAFF can navigate to customer pages in read-only mode while
+      // edit affordances remain hidden inside the section itself.
+      permissions: [
+        PermissionEnum.MANAGE_USERS,
+        PermissionEnum.MANAGE_ORDERS,
+        PermissionEnum.MANAGE_STAFF,
+      ],
+      endAdornment: <Ripple model={rippleNewCustomersView} />,
       id: "customers",
       url: customerListUrl(),
       type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
@@ -263,7 +275,6 @@ export function useMenuStructure() {
       permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
       id: "modeling",
       url: pageListPath,
-      endAdornment: <Ripple model={ripplePagesAreModels} />,
       type: "itemGroup",
     },
     {

@@ -1,25 +1,6 @@
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { DiscountValueTypeEnum, type MoneyFragment } from "@dashboard/graphql";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
-
-import Label from "../Label";
-
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      display: "flex",
-      flexDirection: "column",
-    },
-    horizontalContainer: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "baseline",
-    },
-  }),
-  { name: "MoneySection" },
-);
 
 const messages = defineMessages({
   discount: {
@@ -43,8 +24,8 @@ const messages = defineMessages({
     description: "Previous discount label",
   },
   onlyDiscountSectionTitle: {
-    id: "ojHyj3",
-    defaultMessage: "discount value",
+    id: "ljwv+L",
+    defaultMessage: "Discount value",
     description: "discount value label",
   },
 });
@@ -56,19 +37,18 @@ export enum MoneySectionType {
 }
 
 interface MoneySectionProps {
-  value?: number;
-  calculationMode?: DiscountValueTypeEnum;
-  moneyData?: MoneyFragment;
+  value?: number | null;
+  calculationMode?: DiscountValueTypeEnum | null;
+  moneyData?: MoneyFragment | null;
   sectionType?: MoneySectionType;
 }
 
-const MoneySection = ({
+export const MoneySection = ({
   value,
   calculationMode,
   moneyData,
   sectionType = MoneySectionType.ONLY,
 }: MoneySectionProps) => {
-  const classes = useStyles({});
   const intl = useIntl();
 
   if (!value) {
@@ -76,29 +56,30 @@ const MoneySection = ({
   }
 
   const getDiscountSubtitle = () => {
-    const isDiscountedByPercent = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
-
-    if (isDiscountedByPercent) {
+    if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return `${value}% ${intl.formatMessage(messages.discount)}`;
     }
 
     return intl.formatMessage(messages.fixedAmount);
   };
 
-  const sectionTitleMessageKey = `${sectionType}DiscountSectionTitle` as const;
-
-  const renderMoney = (money: MoneyFragment) => <Text>{`${money.amount} ${money.currency}`}</Text>;
+  const sectionTitleMessages: Record<MoneySectionType, (typeof messages)[keyof typeof messages]> = {
+    [MoneySectionType.OLD]: messages.oldDiscountSectionTitle,
+    [MoneySectionType.NEW]: messages.newDiscountSectionTitle,
+    [MoneySectionType.ONLY]: messages.onlyDiscountSectionTitle,
+  };
 
   return (
-    <div className={classes.container}>
-      <Label text={intl.formatMessage(messages[sectionTitleMessageKey])} />
-      <div className={classes.horizontalContainer}>
-        <Text>{moneyData ? renderMoney(moneyData) : <Text>n/a</Text>}</Text>
-        <HorizontalSpacer />
-        <Label text={getDiscountSubtitle()} />
-      </div>
-    </div>
+    <Box display="flex" flexDirection="column" gap={1}>
+      <Text size={2} color="default2">
+        {intl.formatMessage(sectionTitleMessages[sectionType])}
+      </Text>
+      <Text size={3} fontWeight="medium">
+        {moneyData ? `${moneyData.amount} ${moneyData.currency}` : "n/a"}
+      </Text>
+      <Text size={2} color="default2">
+        {getDiscountSubtitle()}
+      </Text>
+    </Box>
   );
 };
-
-export default MoneySection;

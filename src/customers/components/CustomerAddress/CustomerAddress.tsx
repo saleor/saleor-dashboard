@@ -10,6 +10,11 @@ import { defineMessages, useIntl } from "react-intl";
 interface CustomerAddressProps {
   address: AddressFragment;
   disabled: boolean;
+  /**
+   * When false, the per-card actions menu (set-default / edit / delete) is
+   * hidden because all underlying address mutations require MANAGE_USERS.
+   */
+  canEdit?: boolean;
   isDefaultBillingAddress: boolean;
   isDefaultShippingAddress: boolean;
   addressNumber: number;
@@ -75,6 +80,7 @@ const CustomerAddress = (props: CustomerAddressProps) => {
   const {
     address,
     disabled,
+    canEdit = true,
     isDefaultBillingAddress,
     isDefaultShippingAddress,
     onEdit,
@@ -103,33 +109,35 @@ const CustomerAddress = (props: CustomerAddressProps) => {
             <Skeleton />
           )}
         </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <CardMenu
-            disabled={disabled}
-            menuItems={[
-              {
-                label: intl.formatMessage(messages.setDefaultShipping),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                testId: "set-default-shipping-address",
-              },
-              {
-                label: intl.formatMessage(messages.setDefaultBilling),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                testId: "set-default-billing-address",
-              },
-              {
-                label: intl.formatMessage(messages.editAddress),
-                onSelect: () => onEdit(),
-                testId: "edit-address",
-              },
-              {
-                label: intl.formatMessage(messages.deleteAddress),
-                onSelect: () => onRemove(),
-                testId: "delete-address",
-              },
-            ]}
-          />
-        </DashboardCard.Toolbar>
+        {canEdit && (
+          <DashboardCard.Toolbar>
+            <CardMenu
+              disabled={disabled}
+              menuItems={[
+                {
+                  label: intl.formatMessage(messages.setDefaultShipping),
+                  onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+                  testId: "set-default-shipping-address",
+                },
+                {
+                  label: intl.formatMessage(messages.setDefaultBilling),
+                  onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+                  testId: "set-default-billing-address",
+                },
+                {
+                  label: intl.formatMessage(messages.editAddress),
+                  onSelect: () => onEdit(),
+                  testId: "edit-address",
+                },
+                {
+                  label: intl.formatMessage(messages.deleteAddress),
+                  onSelect: () => onRemove(),
+                  testId: "delete-address",
+                },
+              ]}
+            />
+          </DashboardCard.Toolbar>
+        )}
       </DashboardCard.Header>
       <DashboardCard.Content>
         <AddressFormatter address={address} />

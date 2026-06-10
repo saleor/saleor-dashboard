@@ -2,20 +2,39 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { type IntlShape } from "react-intl";
 
 import { messages } from "../messages";
+import { LEGACY_MODE_FALLBACK } from "./constants";
 import {
   type AvailabilityIssue,
+  type AvailabilityIssueCategory,
   type ChannelDiagnosticData,
   type ProductDiagnosticData,
 } from "./types";
+
+/**
+ * Each individual check returns the issue *without* its category — categories
+ * are attached uniformly at the dispatch site (`runAvailabilityChecks`) based
+ * on which group the check belongs to. This keeps each check function focused
+ * on its detection logic and makes the category mapping a single source of
+ * truth (no risk of a new check being miscategorized).
+ */
+type RawAvailabilityIssue = Omit<AvailabilityIssue, "category">;
 
 interface CheckContext {
   product: ProductDiagnosticData;
   channelData: ChannelDiagnosticData;
   channelListing: ProductDiagnosticData["channelListings"][0];
   intl: IntlShape;
+  /**
+   * Whether the shop is configured with the legacy shipping-zone-based stock
+   * availability behavior. Saleor 3.23 introduced a "direct warehouse-channel"
+   * mode (Shop.useLegacyShippingZoneStockAvailability=false) where shipping
+   * zones no longer affect stock availability, only the channel-warehouse link
+   * does. Some checks become misleading or lose meaning in direct mode.
+   */
+  useLegacyShippingZoneStockAvailability: boolean;
 }
 
-type CheckFunction = (context: CheckContext) => AvailabilityIssue | null;
+type CheckFunction = (context: CheckContext) => RawAvailabilityIssue | null;
 
 /**
  * Check if channel is inactive
@@ -138,10 +157,31 @@ const checkNoWarehouses: CheckFunction = ({ channelData, intl }) => {
 };
 
 /**
- * Check if channel has no shipping zones assigned
+ * Check if channel has no shipping zones assigned.
+ *
+ * Severity is `warning` in BOTH stock-availability modes because the
+ * customer-facing outcome is identical: the product is browseable but no
+ * checkout can complete (no shipping method covers any address). The two
+ * modes only differ in WHY: in legacy mode the public API is *supposed* to
+ * also report the product as unavailable (because stock is gated by
+ * shipping zones); in direct mode the API correctly reports stock — by
+ * design — but checkout still fails. Either way it's a hard, blocking
+ * configuration gap, not an advisory.
+ *
+ * The mode-specific copy stays distinct so the user can tell whether they
+ * also need to worry about the storefront falsely showing stock (legacy)
+ * or just the missing shipping (direct).
  */
-const checkNoShippingZones: CheckFunction = ({ channelData, intl }) => {
-  if (!channelData.shippingZones || channelData.shippingZones.length === 0) {
+const checkNoShippingZones: CheckFunction = ({
+  channelData,
+  intl,
+  useLegacyShippingZoneStockAvailability,
+}) => {
+  if (channelData.shippingZones && channelData.shippingZones.length > 0) {
+    return null;
+  }
+
+  if (useLegacyShippingZoneStockAvailability) {
     return {
       id: "no-shipping-zones",
       severity: "warning",
@@ -156,7 +196,18 @@ const checkNoShippingZones: CheckFunction = ({ channelData, intl }) => {
     };
   }
 
-  return null;
+  return {
+    id: "no-shipping-zones",
+    severity: "warning",
+    channelId: channelData.id,
+    channelName: channelData.name,
+    message: intl.formatMessage(messages.noShippingZonesShippingOnly, {
+      channelName: channelData.name,
+    }),
+    description: intl.formatMessage(messages.noShippingZonesShippingOnlyDescription),
+    actionLabel: intl.formatMessage(messages.configureChannel),
+    actionUrl: channelUrl(channelData.id),
+  };
 };
 
 /**
@@ -196,9 +247,26 @@ const checkNoStock: CheckFunction = ({ product, channelData, intl }) => {
 };
 
 /**
- * Check if warehouses with stock are not in any shipping zone
+ * Check if warehouses with stock are not in any shipping zone.
+ *
+ * Only meaningful under legacy mode, where stock availability is gated by the
+ * intersection of channel warehouses and shipping-zone warehouses. Under the
+ * direct warehouse-channel mode (Saleor 3.23+ when
+ * `useLegacyShippingZoneStockAvailability=false`) shipping zones do not affect
+ * `Product.isAvailable` / `quantityAvailable`, so this signal is no longer a
+ * purchase blocker and would produce a false positive that contradicts the
+ * public API verification.
  */
-const checkWarehouseNotInShippingZone: CheckFunction = ({ product, channelData, intl }) => {
+const checkWarehouseNotInShippingZone: CheckFunction = ({
+  product,
+  channelData,
+  intl,
+  useLegacyShippingZoneStockAvailability,
+}) => {
+  if (!useLegacyShippingZoneStockAvailability) {
+    return null;
+  }
+
   if (!product.variants || product.variants.length === 0) {
     return null;
   }
@@ -259,6 +327,64 @@ const checkWarehouseNotInShippingZone: CheckFunction = ({ product, channelData, 
 };
 
 /**
+ * Surface "stranded" stock: variant has stock in warehouses, but none of those
+ * warehouses are assigned to the current channel. This is the most common
+ * pitfall when migrating to direct warehouse-channel mode (the warehouse needs
+ * to be linked to the channel to count toward stock availability) and is also
+ * useful context under legacy mode, where it explains why `checkNoStock` fired.
+ *
+ * Severity is info — it complements (rather than replaces) the existing
+ * `no-stock` warning by pointing at a concrete fix.
+ */
+const checkStockOutsideChannelWarehouses: CheckFunction = ({ product, channelData, intl }) => {
+  if (!product.variants || product.variants.length === 0) {
+    return null;
+  }
+
+  if (!channelData.warehouses) {
+    return null;
+  }
+
+  const channelWarehouseIds = new Set(channelData.warehouses.map(w => w.id));
+
+  // Collect every warehouse that holds positive stock of any variant.
+  const warehousesWithStock = new Set<string>();
+
+  product.variants.forEach(variant => {
+    variant.stocks?.forEach(stock => {
+      if (stock.quantity > 0) {
+        warehousesWithStock.add(stock.warehouse.id);
+      }
+    });
+  });
+
+  if (warehousesWithStock.size === 0) {
+    return null;
+  }
+
+  const hasStockInChannelWarehouse = Array.from(warehousesWithStock).some(id =>
+    channelWarehouseIds.has(id),
+  );
+
+  if (hasStockInChannelWarehouse) {
+    return null;
+  }
+
+  return {
+    id: "stock-outside-channel-warehouses",
+    severity: "info",
+    channelId: channelData.id,
+    channelName: channelData.name,
+    message: intl.formatMessage(messages.stockOutsideChannelWarehouses, {
+      channelName: channelData.name,
+    }),
+    description: intl.formatMessage(messages.stockOutsideChannelWarehousesDescription),
+    actionLabel: intl.formatMessage(messages.configureChannel),
+    actionUrl: channelUrl(channelData.id),
+  };
+};
+
+/**
  * Checks that don't require warehouse/shipping permissions
  */
 const coreChecks: CheckFunction[] = [
@@ -271,7 +397,11 @@ const coreChecks: CheckFunction[] = [
 /**
  * Checks that require warehouse visibility
  */
-const warehouseChecks: CheckFunction[] = [checkNoWarehouses, checkNoStock];
+const warehouseChecks: CheckFunction[] = [
+  checkNoWarehouses,
+  checkNoStock,
+  checkStockOutsideChannelWarehouses,
+];
 
 /**
  * Checks that require shipping zone visibility
@@ -279,16 +409,29 @@ const warehouseChecks: CheckFunction[] = [checkNoWarehouses, checkNoStock];
 const shippingChecks: CheckFunction[] = [checkNoShippingZones, checkWarehouseNotInShippingZone];
 
 /**
- * Options to skip certain check categories.
- * These are typically set based on user permissions - if the user cannot view
- * warehouse or shipping zone data, the corresponding checks should be skipped
- * to avoid false positives from missing data.
+ * Options controlling which checks run and how they interpret the data.
+ *
+ * `skipWarehouseChecks` / `skipShippingChecks` are typically set based on the
+ * current user's permissions — when the user cannot read warehouse or shipping
+ * zone data, those checks must be skipped to avoid false positives caused by
+ * missing input.
+ *
+ * `useLegacyShippingZoneStockAvailability` mirrors the
+ * `Shop.useLegacyShippingZoneStockAvailability` flag introduced in Saleor 3.23.
+ * It changes how some checks reason about stock availability:
+ *  - legacy (true): stock visibility is gated by shipping zones; the
+ *    `warehouse-not-in-zone` check applies, and missing shipping zones block
+ *    purchases.
+ *  - direct (false): stock visibility is gated only by the channel-warehouse
+ *    link; shipping zones only affect order fulfillment, not availability.
+ *
+ * Defaults to `true` to preserve the historical behavior for callers that
+ * have not yet been updated.
  */
-interface CheckSkipOptions {
-  /** Skip warehouse/stock checks (set when user lacks warehouse view permissions) */
+export interface CheckOptions {
   skipWarehouseChecks?: boolean;
-  /** Skip shipping zone checks (set when user lacks shipping zone view permissions) */
   skipShippingChecks?: boolean;
+  useLegacyShippingZoneStockAvailability?: boolean;
 }
 
 /**
@@ -299,53 +442,52 @@ export function runAvailabilityChecks(
   channelData: ChannelDiagnosticData,
   channelListing: ProductDiagnosticData["channelListings"][0],
   intl: IntlShape,
-  skipOptions?: CheckSkipOptions,
+  options?: CheckOptions,
 ): AvailabilityIssue[] {
+  const useLegacyShippingZoneStockAvailability =
+    options?.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK;
+
   const context: CheckContext = {
     product,
     channelData,
     channelListing,
     intl,
+    useLegacyShippingZoneStockAvailability,
   };
 
   const issues: AvailabilityIssue[] = [];
 
-  // Always run core checks (variants, pricing, channel status)
-  for (const check of coreChecks) {
-    const issue = check(context);
+  const runGroup = (groupChecks: CheckFunction[], category: AvailabilityIssueCategory): void => {
+    for (const check of groupChecks) {
+      const raw = check(context);
 
-    if (issue) {
-      issues.push(issue);
+      if (raw) {
+        issues.push({ ...raw, category });
+      }
     }
-  }
+  };
+
+  // Always run core checks (variants, pricing, channel status). They affect
+  // whether a customer can add the product to cart, so they belong to the
+  // purchasability category.
+  runGroup(coreChecks, "purchasability");
 
   // Run warehouse checks only if we have permission.
   // Note: Warehouse checks run for ALL products (including non-shippable) because:
   // - Non-shippable products may still track inventory (e.g., activation codes, digital license keys)
   // - If a product doesn't track inventory, variant.stocks will be empty and checks will pass
-  if (!skipOptions?.skipWarehouseChecks) {
-    for (const check of warehouseChecks) {
-      const issue = check(context);
-
-      if (issue) {
-        issues.push(issue);
-      }
-    }
+  // Warehouses + stock are part of the purchasability surface.
+  if (!options?.skipWarehouseChecks) {
+    runGroup(warehouseChecks, "purchasability");
   }
 
   // Run shipping checks only if:
   // 1. We have permission (skipShippingChecks is not set)
   // 2. Product requires shipping (non-shippable products don't need shipping configuration)
-  const shouldRunShippingChecks = !skipOptions?.skipShippingChecks && product.isShippingRequired;
+  const shouldRunShippingChecks = !options?.skipShippingChecks && product.isShippingRequired;
 
   if (shouldRunShippingChecks) {
-    for (const check of shippingChecks) {
-      const issue = check(context);
-
-      if (issue) {
-        issues.push(issue);
-      }
-    }
+    runGroup(shippingChecks, "shipping");
   }
 
   return issues;

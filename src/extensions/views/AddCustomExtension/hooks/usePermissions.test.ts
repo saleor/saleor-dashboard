@@ -1,6 +1,6 @@
 import { PermissionEnum, type PermissionFragment } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { usePermissions } from "./usePermissions";
 
@@ -56,5 +56,27 @@ describe("usePermissions", () => {
 
     // Assert
     expect(result.current).toEqual([]);
+  });
+
+  it("should filter out MANAGE_APPS from the returned permissions", () => {
+    // Arrange
+    const mockPermissions: PermissionFragment[] = [
+      { __typename: "Permission", name: "Manage Apps", code: PermissionEnum.MANAGE_APPS },
+      { __typename: "Permission", name: "Manage Orders", code: PermissionEnum.MANAGE_ORDERS },
+      { __typename: "Permission", name: "Manage Products", code: PermissionEnum.MANAGE_PRODUCTS },
+    ];
+
+    mockUseShop.mockReturnValue({
+      permissions: mockPermissions,
+    });
+
+    // Act
+    const { result } = renderHook(() => usePermissions());
+
+    // Assert
+    expect(result.current).toEqual([
+      { __typename: "Permission", name: "Manage Orders", code: PermissionEnum.MANAGE_ORDERS },
+      { __typename: "Permission", name: "Manage Products", code: PermissionEnum.MANAGE_PRODUCTS },
+    ]);
   });
 });

@@ -65,7 +65,7 @@ export interface GiftCardsListConsumerProps
   setFilterPresetOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const GiftCardsListContext = createContext<GiftCardsListConsumerProps | null>(null);
+export const GiftCardsListContext = createContext<GiftCardsListConsumerProps | null>(null);
 
 export const useGiftCardList = () => {
   const context = useContext(GiftCardsListContext);
@@ -135,7 +135,10 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
     variables: newQueryVariables,
     handleError: handleGiftCardListError,
   });
-  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
+  const giftCards =
+    mapEdgesToItems(data?.giftCards)
+      ?.map(getExtendedGiftCard)
+      .filter((g): g is NonNullable<typeof g> => g !== undefined) ?? [];
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,
     sort: getSortParams(params),

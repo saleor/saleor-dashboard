@@ -1,17 +1,12 @@
-import {
-  Box,
-  Button,
-  FullscreenOffIcon,
-  FullscreenOnIcon,
-  PlusIcon,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { type FC, type PropsWithChildren } from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;
   onToggle: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+import { Maximize, Minimize, PlusIcon } from "lucide-react";
 
 const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   isOpen,
@@ -21,7 +16,7 @@ const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
   return (
     <Button data-test-id="button-exit-fullscreen" variant="secondary" onClick={onToggle}>
       <Box as="span" display="flex">
-        {isOpen ? <FullscreenOffIcon /> : <FullscreenOnIcon />}
+        {isOpen ? <Minimize /> : <Maximize />}
       </Box>
       {children}
     </Button>
@@ -69,7 +64,7 @@ const Header: GridHeader = ({ title, children }) => {
       paddingX={6}
       paddingY={5}
     >
-      <Text size={5} fontWeight="bold">
+      <Text size={6} fontWeight="medium">
         {title}
       </Text>
       <Box display="flex" __flexDirection="row-reverse" gap={2}>

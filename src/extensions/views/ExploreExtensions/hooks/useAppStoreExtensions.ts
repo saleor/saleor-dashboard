@@ -1,11 +1,10 @@
-import { messages } from "@dashboard/extensions/messages";
+import { extensionsResponseSchema } from "@dashboard/extensions/schema";
 import { type APIExtensionsResponse, type ExtensionsGroups } from "@dashboard/extensions/types";
 import { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 
-const prepareExtensionsData = (data: APIExtensionsResponse) => {
-  return data.reduce((acc, { name, extensions }) => {
-    const group = name.en.toLowerCase() as keyof ExtensionsGroups;
+const prepareExtensionsData = (data: APIExtensionsResponse): ExtensionsGroups => {
+  return data.reduce<ExtensionsGroups>((acc, { name, extensions }) => {
+    const group = name.en.toLowerCase();
 
     acc[group] = {
       title: name.en,
@@ -13,46 +12,45 @@ const prepareExtensionsData = (data: APIExtensionsResponse) => {
     };
 
     return acc;
-  }, {} as ExtensionsGroups);
+  }, {});
+};
+
+const loadFallbackExtensions = async (): Promise<APIExtensionsResponse> => {
+  const data = await import("@dashboard/extensions/data/extensions.json");
+  const parsed = extensionsResponseSchema.parse(data.default ?? data);
+
+  return parsed.extensionCategories;
+};
+
+const fetchApiExtensions = async (url: string): Promise<APIExtensionsResponse> => {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const data = await response.json();
+  const parsed = extensionsResponseSchema.parse(data);
+
+  return parsed.extensionCategories;
 };
 
 export const useAppStoreExtensions = (appStoreUrl?: string) => {
-  const intl = useIntl();
-
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<ExtensionsGroups>({
-    payments: {
-      items: [],
-      title: "",
-    },
-    cms: { items: [], title: "" },
-    taxes: {
-      items: [],
-      title: "",
-    },
-    automation: {
-      items: [],
-      title: "",
-    },
-  });
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<ExtensionsGroups>({});
+  const isFallback = !appStoreUrl;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!appStoreUrl) return;
-
       try {
         setLoading(true);
 
-        const response = await fetch(appStoreUrl);
+        const categories = appStoreUrl
+          ? await fetchApiExtensions(appStoreUrl)
+          : await loadFallbackExtensions();
 
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-
-        const data = await response.json();
-
-        setData(prepareExtensionsData(data.extensionCategories));
+        setData(prepareExtensionsData(categories));
       } catch (e) {
         setError((e as Error).message);
       } finally {
@@ -63,17 +61,10 @@ export const useAppStoreExtensions = (appStoreUrl?: string) => {
     fetchData();
   }, [appStoreUrl]);
 
-  if (!appStoreUrl) {
-    return {
-      error: intl.formatMessage(messages.emptyExtensionsApiUrl),
-      loading: false,
-      data,
-    };
-  }
-
   return {
     error,
     loading,
     data,
+    isFallback,
   };
 };

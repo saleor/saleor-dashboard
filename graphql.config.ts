@@ -17,7 +17,8 @@ const config: IGraphQLConfig = {
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
-        "./src/**/fragments/*.ts",
+        "./src/**/fragments/!(*staging).ts",
+        "./src/**/fragments.ts",
         "./src/searches/*.ts",
       ],
     },

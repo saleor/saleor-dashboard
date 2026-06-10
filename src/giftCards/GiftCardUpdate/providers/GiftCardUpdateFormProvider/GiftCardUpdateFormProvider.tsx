@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
@@ -15,7 +14,9 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getFormErrors } from "@dashboard/utils/errors";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import createMetadataUpdateHandler, {
+  type ObjectWithMetadata,
+} from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import getMetadata from "@dashboard/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -42,16 +43,18 @@ export interface GiftCardUpdateFormConsumerData extends GiftCardUpdateFormErrors
 }
 
 export interface GiftCardUpdateFormErrors {
-  formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment>;
+  formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment | undefined>;
   handlers: { changeMetadata: FormChange };
 }
 
 type GiftCardUpdateFormConsumerProps = UseFormResult<GiftCardUpdateFormData> &
   GiftCardUpdateFormConsumerData;
 
-export const GiftCardUpdateFormContext = createContext<GiftCardUpdateFormConsumerProps>(null);
+export const GiftCardUpdateFormContext = createContext<GiftCardUpdateFormConsumerProps | null>(
+  null,
+);
 
-const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[]) => {
+export const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[]) => {
   const removed = difference(initTags, changedTags);
   const added = difference(changedTags, initTags);
 
@@ -60,6 +63,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
     removeTags: removed,
   };
 };
+
 const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProps) => {
   const notify = useNotifier();
   const intl = useIntl();
@@ -76,14 +80,14 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
 
     return {
       tags: tags.map(({ name }) => ({ label: name, value: name })),
-      expiryDate,
-      privateMetadata: privateMetadata?.map(mapMetadataItemToInput),
-      metadata: metadata?.map(mapMetadataItemToInput),
+      expiryDate: expiryDate ?? "",
+      privateMetadata: privateMetadata?.map(mapMetadataItemToInput) ?? [],
+      metadata: metadata?.map(mapMetadataItemToInput) ?? [],
     };
   };
   const [updateGiftCard, updateGiftCardOpts] = useGiftCardUpdateMutation({
     onCompleted: data => {
-      const errors = data.giftCardUpdate.errors;
+      const errors = data.giftCardUpdate?.errors ?? [];
       const hasExpiryError = errors.some(error => error.field === "expiryDate");
 
       notify(
@@ -98,9 +102,13 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
     },
   });
   const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {
+    if (!giftCard) {
+      return undefined;
+    }
+
     const result = await updateGiftCard({
       variables: {
-        id: giftCard?.id,
+        id: giftCard.id,
         input: {
           expiryDate,
           ...getGiftCardTagsAddRemoveData(
@@ -116,8 +124,13 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
   };
   const formProps = useForm(getInitialData());
   const { data, change, formId } = formProps;
+  const giftCardMetadata: ObjectWithMetadata = giftCard ?? {
+    id: "",
+    metadata: [],
+    privateMetadata: [],
+  };
   const handleSubmit = createMetadataUpdateHandler(
-    giftCard,
+    giftCardMetadata,
     submit,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -132,16 +145,18 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
   const changeMetadata = makeMetadataChangeHandler(change);
+  const metadataUpdate = getMetadata(data, isMetadataModified, isPrivateMetadataModified);
   const submitData: GiftCardUpdateFormData = {
     ...data,
-    ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
+    metadata: metadataUpdate.metadata ?? data.metadata,
+    privateMetadata: metadataUpdate.privateMetadata ?? data.privateMetadata,
   };
   const formSubmit = () => handleFormSubmit(submitData);
   const formErrors = getFormErrors(
     ["tags", "expiryDate"],
     updateGiftCardOpts?.data?.giftCardUpdate?.errors,
   );
-  const providerValues = {
+  const providerValues: GiftCardUpdateFormConsumerProps = {
     ...formProps,
     opts: updateGiftCardOpts,
     formErrors,

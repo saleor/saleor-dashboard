@@ -1,6 +1,11 @@
+import { VOUCHER_CODE_DRAFT_STATUS } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
+import { useVoucherCodeBulkDeleteMutation } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { getMutationStatus } from "@dashboard/misc";
 import { type ListSettings, ListViews } from "@dashboard/types";
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import { getVoucherCodesToDisplay } from "../utils";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
@@ -8,6 +13,8 @@ import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
 import { useVoucherCodesServer } from "./useVoucherCodesServer";
 
 export const useVoucherCodes = ({ id }: { id: string }) => {
+  const notify = useNotifier();
+  const intl = useIntl();
   const { settings: voucherCodesSettings, updateListSettings: updateVoucherCodesListSettings } =
     useListSettings(ListViews.VOUCHER_CODES);
   const [isServerPagination, setIsServerPagination] = useState(true);
@@ -64,10 +71,73 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     : clientVoucherCodesPagination;
   const { selectedVoucherCodesIds, handleSetSelectedVoucherCodesIds, clearRowSelection } =
     useVoucherCodesRowSelection(voucherCodes);
-  const handleDeleteVoucherCodes = () => {
+
+  const [voucherCodeBulkDelete, voucherCodeBulkDeleteOpts] = useVoucherCodeBulkDeleteMutation({
+    onCompleted: data => {
+      if (data.voucherCodeBulkDelete?.errors.length === 0) {
+        voucherCodesRefetch();
+      }
+    },
+  });
+
+  const handleDeleteVoucherCodes = async () => {
+    const draftCodes: string[] = [];
+    const serverCodeIds: string[] = [];
+
+    for (const codeValue of selectedVoucherCodesIds) {
+      const found = voucherCodes.find(vc => vc.code === codeValue);
+
+      if (found?.status === VOUCHER_CODE_DRAFT_STATUS) {
+        draftCodes.push(codeValue);
+      } else if (found?.id) {
+        serverCodeIds.push(found.id);
+      }
+    }
+
     clearRowSelection();
-    handleDeleteAddedVoucherCodes(selectedVoucherCodesIds);
+
+    if (draftCodes.length > 0) {
+      handleDeleteAddedVoucherCodes(draftCodes);
+    }
+
+    let serverDeletedCount = 0;
+
+    if (serverCodeIds.length > 0) {
+      const result = await voucherCodeBulkDelete({ variables: { ids: serverCodeIds } });
+      const errors = result.data?.voucherCodeBulkDelete?.errors ?? [];
+
+      if (errors.length > 0) {
+        notify({
+          status: "error",
+          text: intl.formatMessage({
+            id: "Y8XVvH",
+            defaultMessage: "Failed to delete voucher codes",
+          }),
+        });
+
+        return;
+      }
+
+      serverDeletedCount = result.data?.voucherCodeBulkDelete?.count ?? 0;
+    }
+
+    const totalDeleted = draftCodes.length + serverDeletedCount;
+
+    if (totalDeleted > 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(
+          {
+            id: "TV940D",
+            defaultMessage:
+              "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}",
+          },
+          { count: totalDeleted },
+        ),
+      });
+    }
   };
+
   const handleUpdateVoucherCodesListSettings = (
     key: keyof ListSettings<ListViews.VOUCHER_CODES>,
     value: number | string[],
@@ -114,8 +184,6 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     clientVoucherCodesPagination.loadPreviousPage();
   };
   const calculateHasNextPage = () => {
-    // In case when client voucher codes takes all slots
-    // on page and there are some server voucher codes to display
     if (
       !isServerPagination &&
       !hasClientPaginationNextPage &&
@@ -139,6 +207,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodes,
     addedVoucherCodes,
     voucherCodesLoading,
+    voucherCodesDeleteTransitionState: getMutationStatus(voucherCodeBulkDeleteOpts),
     voucherCodesPagination: {
       ...voucherCodesPagination,
       pageInfo: {

@@ -300,6 +300,7 @@ export const createInitialPageState = (data: InitialPageAPIResponse[]) =>
 export const createInitialGiftCardsState = (
   data: InitialGiftCardsAPIResponse[],
   tags: string[],
+  code: string[],
 ): InitialGiftCardsState => {
   return data.reduce(
     (acc, query) => {
@@ -336,6 +337,7 @@ export const createInitialGiftCardsState = (
       products: [],
       tags: tags?.map(tag => ({ label: tag, value: tag, slug: tag })) ?? [],
       usedBy: [],
+      code: code?.map(c => ({ label: c, value: c, slug: c })) ?? [],
     } as InitialGiftCardsState,
   );
 };

@@ -1,0 +1,21 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table td {
+  padding: var(--mu-spacing-3);
+}
+
+.table td:first-child {
+  padding-left: 48px;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.noEvent {
+  color: var(--mu-colors-text-default2);
+  padding-left: 48px !important;
+}

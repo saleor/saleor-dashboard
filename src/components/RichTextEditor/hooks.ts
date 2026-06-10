@@ -1,6 +1,6 @@
 import { type EditorConfig } from "@editorjs/editorjs";
 import { type EditorCore } from "@react-editor-js/core";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { type MutableRefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export const useHasRendered = () => {
   const [hasRendered, setHasRendereed] = useState(false);
@@ -13,30 +13,44 @@ export const useHasRendered = () => {
 };
 
 export const useUpdateOnRerender = ({
-  render,
+  renderRef,
   defaultValue,
   hasRendered,
+  isEditorReady,
 }: {
-  render: EditorCore["render"] | undefined;
+  renderRef: MutableRefObject<EditorCore["render"] | undefined>;
   defaultValue: EditorConfig["data"];
   hasRendered: boolean;
+  isEditorReady: boolean;
 }) => {
   const prevDefaultValue = useRef<EditorConfig["data"] | undefined>(undefined);
+  const hasSyncedInitialValue = useRef(false);
 
   useEffect(() => {
-    if (!hasRendered) {
+    if (!hasRendered || !isEditorReady) {
       return;
     }
 
-    // Prevent call render when defaultValue doesn't change
+    if (defaultValue === undefined) {
+      return;
+    }
+
     if (JSON.stringify(defaultValue) === JSON.stringify(prevDefaultValue.current)) {
       return;
     }
 
-    prevDefaultValue.current = defaultValue;
+    const isInitialSync = !hasSyncedInitialValue.current;
 
-    render?.({
+    prevDefaultValue.current = defaultValue;
+    hasSyncedInitialValue.current = true;
+
+    // Editor.js is created with `data` from props; calling render() on first mount duplicates blocks.
+    if (isInitialSync) {
+      return;
+    }
+
+    renderRef.current?.({
       blocks: defaultValue?.blocks ?? [],
     });
-  }, [defaultValue, hasRendered, render]);
+  }, [defaultValue, hasRendered, isEditorReady, renderRef]);
 };

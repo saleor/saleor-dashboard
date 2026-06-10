@@ -44,6 +44,7 @@ export const channelDetailsFragment = gql`
       automaticallyCompleteFullyPaidCheckouts
       automaticCompletionDelay
       automaticCompletionCutOffDate
+      allowLegacyGiftCardUse
     }
   }
 `;

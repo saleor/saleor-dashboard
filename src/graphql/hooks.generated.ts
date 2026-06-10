@@ -198,6 +198,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   isActive
   name
   type
+  appUrl
   problems {
     __typename
     key
@@ -232,14 +233,6 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
-export const UserUserPermissionWithSourcePermissionGroupsFragmentDoc = gql`
-    fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
-  ...UserPermission
-  sourcePermissionGroups(userId: $userId) {
-    id
-  }
-}
-    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -395,6 +388,7 @@ export const ChannelDetailsFragmentDoc = gql`
     automaticallyCompleteFullyPaidCheckouts
     automaticCompletionDelay
     automaticCompletionCutOffDate
+    allowLegacyGiftCardUse
   }
 }
     ${ChannelFragmentDoc}
@@ -510,6 +504,9 @@ export const CustomerDetailsFragmentDoc = gql`
   }
   note
   isActive
+  isConfirmed
+  isStaff
+  externalReference
 }
     ${CustomerFragmentDoc}
 ${AddressFragmentDoc}`;
@@ -651,6 +648,7 @@ ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
 export const VoucherCodeFragmentDoc = gql`
     fragment VoucherCode on VoucherCode {
+  id
   code
   used
   isActive
@@ -1013,13 +1011,6 @@ export const BulkStockErrorFragmentDoc = gql`
   message
 }
     `;
-export const StockErrorFragmentDoc = gql`
-    fragment StockError on StockError {
-  code
-  field
-  message
-}
-    `;
 export const ShippingChannelsErrorFragmentDoc = gql`
     fragment ShippingChannelsError on ShippingError {
   code
@@ -1127,17 +1118,17 @@ export const GiftCardSettingsErrorFragmentDoc = gql`
   message
 }
     `;
-export const SaleBulkDeleteErrorFragmentDoc = gql`
-    fragment SaleBulkDeleteError on DiscountError {
+export const VoucherBulkDeleteErrorFragmentDoc = gql`
+    fragment VoucherBulkDeleteError on DiscountError {
   code
   field
   message
 }
     `;
-export const VoucherBulkDeleteErrorFragmentDoc = gql`
-    fragment VoucherBulkDeleteError on DiscountError {
+export const VoucherCodeBulkDeleteErrorFragmentDoc = gql`
+    fragment VoucherCodeBulkDeleteError on VoucherCodeBulkDeleteError {
   code
-  field
+  path
   message
 }
     `;
@@ -1242,13 +1233,6 @@ export const ProductAttributeAssignmentUpdateErrorFragmentFragmentDoc = gql`
     `;
 export const ShopSettingsUpdateErrorFragmentFragmentDoc = gql`
     fragment ShopSettingsUpdateErrorFragment on ShopError {
-  code
-  field
-  message
-}
-    `;
-export const ShopFetchTaxRatesErrorFragmentFragmentDoc = gql`
-    fragment ShopFetchTaxRatesErrorFragment on ShopError {
   code
   field
   message
@@ -1587,12 +1571,36 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const MoneyWithFractionDigitsFragmentDoc = gql`
+    fragment MoneyWithFractionDigits on Money {
+  amount
+  currency
+  fractionDigits
+}
+    `;
 export const TaxedMoneyFragmentDoc = gql`
     fragment TaxedMoney on TaxedMoney {
   net {
     ...Money
   }
   gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLineDiscountFragmentDoc = gql`
+    fragment OrderLineDiscount on OrderLineDiscount {
+  id
+  type
+  name
+  translatedName
+  valueType
+  value
+  reason
+  total {
+    ...Money
+  }
+  unit {
     ...Money
   }
 }
@@ -1631,7 +1639,21 @@ export const OrderLineFragmentDoc = gql`
   quantityFulfilled
   quantityToFulfill
   totalPrice {
+    gross {
+      ...MoneyWithFractionDigits
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  undiscountedTotalPrice {
     ...TaxedMoney
+    tax {
+      ...Money
+    }
   }
   unitDiscount {
     amount
@@ -1650,6 +1672,10 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
   unitPrice {
     gross {
@@ -1660,22 +1686,42 @@ export const OrderLineFragmentDoc = gql`
       amount
       currency
     }
+    tax {
+      amount
+      currency
+    }
   }
+  taxRate
+  taxClass {
+    id
+    name
+  }
+  voucherCode
   thumbnail {
     url
   }
+  discounts {
+    ...OrderLineDiscount
+  }
 }
     ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
+${MoneyWithFractionDigitsFragmentDoc}
+${MoneyFragmentDoc}
+${TaxedMoneyFragmentDoc}
+${OrderLineDiscountFragmentDoc}`;
 export const OrderDiscountFragmentDoc = gql`
     fragment OrderDiscount on OrderDiscount {
   id
   type
   name
+  translatedName
   calculationMode: valueType
   value
   reason
   amount {
+    ...Money
+  }
+  total {
     ...Money
   }
 }
@@ -1827,6 +1873,14 @@ export const CardPaymentMethodDetailsFragmentDoc = gql`
   lastDigits
 }
     `;
+export const GiftCardPaymentMethodDetailsFragmentDoc = gql`
+    fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
+  name
+  brand
+  lastChars
+  isSaleorGiftcard
+}
+    `;
 export const OtherPaymentMethodDetailsFragmentDoc = gql`
     fragment OtherPaymentMethodDetails on OtherPaymentMethodDetails {
   name
@@ -1898,8 +1952,14 @@ export const TransactionItemFragmentDoc = gql`
     ... on CardPaymentMethodDetails {
       ...CardPaymentMethodDetails
     }
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
+    }
     ... on OtherPaymentMethodDetails {
       ...OtherPaymentMethodDetails
+    }
+    ... on GiftCardPaymentMethodDetails {
+      ...GiftCardPaymentMethodDetails
     }
   }
   events {
@@ -1932,6 +1992,7 @@ export const TransactionItemFragmentDoc = gql`
 }
     ${TransactionBaseItemFragmentDoc}
 ${CardPaymentMethodDetailsFragmentDoc}
+${GiftCardPaymentMethodDetailsFragmentDoc}
 ${OtherPaymentMethodDetailsFragmentDoc}
 ${TransactionEventFragmentDoc}
 ${MoneyFragmentDoc}`;
@@ -2290,6 +2351,13 @@ export const OrderDetailsFragmentDoc = gql`
     email
   }
   userEmail
+  voucher {
+    id
+    name
+    code
+    type
+  }
+  voucherCode
   shippingMethods {
     id
     name
@@ -2373,45 +2441,6 @@ export const ShopOrderSettingsFragmentDoc = gql`
   fulfillmentAllowUnpaid
 }
     `;
-export const OrderFulfillLineFragmentDoc = gql`
-    fragment OrderFulfillLine on OrderLine {
-  id
-  isShippingRequired
-  productName
-  quantity
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  quantityFulfilled
-  quantityToFulfill
-  variant {
-    id
-    name
-    sku
-    preorder {
-      endDate
-    }
-    attributes {
-      values {
-        id
-        name
-      }
-    }
-    stocks {
-      ...Stock
-    }
-    trackInventory
-  }
-  thumbnail(size: 64) {
-    url
-  }
-}
-    ${StockFragmentDoc}`;
 export const OrderLineStockDataFragmentDoc = gql`
     fragment OrderLineStockData on OrderLine {
   id
@@ -2430,6 +2459,38 @@ export const OrderLineStockDataFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}`;
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
+  ...OrderLineStockData
+  isShippingRequired
+  productName
+  allocations {
+    id
+    warehouse {
+      name
+    }
+  }
+  quantityFulfilled
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${OrderLineStockDataFragmentDoc}`;
 export const OrderLineGrantRefundFragmentDoc = gql`
     fragment OrderLineGrantRefund on OrderLine {
   id
@@ -2853,17 +2914,6 @@ export const PriceRangeFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
-export const ChannelListingProductFragmentDoc = gql`
-    fragment ChannelListingProduct on ProductChannelListing {
-  ...ChannelListingProductWithoutPricing
-  pricing {
-    priceRange {
-      ...PriceRange
-    }
-  }
-}
-    ${ChannelListingProductWithoutPricingFragmentDoc}
-${PriceRangeFragmentDoc}`;
 export const ProductWithChannelListingsFragmentDoc = gql`
     fragment ProductWithChannelListings on Product {
   id
@@ -3072,6 +3122,7 @@ export const ProductFragmentDoc = gql`
   productType {
     id
     name
+    slug
     hasVariants
     isShippingRequired
   }
@@ -3409,7 +3460,9 @@ export const ShopFragmentDoc = gql`
   limitQuantityPerCheckout
   enableAccountConfirmationByEmail
   useLegacyUpdateWebhookEmission
+  useLegacyShippingZoneStockAvailability
   preserveAllAddressFields
+  passwordLoginMode
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
@@ -3506,12 +3559,6 @@ export const TaxClassFragmentDoc = gql`
     ${TaxClassBaseFragmentDoc}
 ${TaxRateFragmentDoc}
 ${MetadataFragmentDoc}`;
-export const TimePeriodFragmentDoc = gql`
-    fragment TimePeriod on TimePeriod {
-  amount
-  type
-}
-    `;
 export const CategoryTranslationFragmentDoc = gql`
     fragment CategoryTranslation on CategoryTranslatableContent {
   translation(languageCode: $language) {
@@ -3700,26 +3747,6 @@ export const PageTranslationFragmentDoc = gql`
   }
 }
     ${AttributeValueTranslatableFragmentDoc}`;
-export const PageTranslatableFragmentDoc = gql`
-    fragment PageTranslatable on PageTranslatableContent {
-  id
-  content
-  seoDescription
-  seoTitle
-  title
-  translation(languageCode: $language) {
-    id
-    content
-    seoDescription
-    seoTitle
-    title
-    language {
-      code
-      language
-    }
-  }
-}
-    `;
 export const AttributeTranslationFragmentDoc = gql`
     fragment AttributeTranslation on AttributeTranslatableContent {
   id
@@ -4345,6 +4372,7 @@ export const AvailableExternalAuthenticationsDocument = gql`
       id
       name
     }
+    passwordLoginMode
   }
 }
     `;
@@ -5106,42 +5134,19 @@ export type CollectionUpdateMutationHookResult = ReturnType<typeof useCollection
 export type CollectionUpdateMutationResult = Apollo.MutationResult<Types.CollectionUpdateMutation>;
 export type CollectionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>;
 export const CollectionAssignProductDocument = gql`
-    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!) {
   collectionAddProducts(collectionId: $collectionId, products: $productIds) {
     errors {
       ...CollectionError
     }
   }
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-    collection {
-      id
-      products(
-        first: $first
-        after: $after
-        before: $before
-        last: $last
-        sortBy: {field: COLLECTION, direction: ASC}
-      ) {
-        edges {
-          node {
-            ...CollectionProduct
-          }
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          startCursor
-        }
-      }
-    }
     errors {
       message
     }
   }
 }
-    ${CollectionErrorFragmentDoc}
-${CollectionProductFragmentDoc}`;
+    ${CollectionErrorFragmentDoc}`;
 export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>;
 
 /**
@@ -5160,10 +5165,6 @@ export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.Co
  *      collectionId: // value for 'collectionId'
  *      productIds: // value for 'productIds'
  *      moves: // value for 'moves'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
  *   },
  * });
  */
@@ -5383,36 +5384,14 @@ export type CollectionChannelListingUpdateMutationHookResult = ReturnType<typeof
 export type CollectionChannelListingUpdateMutationResult = Apollo.MutationResult<Types.CollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
 export const ReorderProductsInCollectionDocument = gql`
-    mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
+    mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!) {
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
-    collection {
-      id
-      products(
-        first: $first
-        after: $after
-        before: $before
-        last: $last
-        sortBy: {field: COLLECTION, direction: ASC}
-      ) {
-        edges {
-          node {
-            ...CollectionProduct
-          }
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-          hasPreviousPage
-          startCursor
-        }
-      }
-    }
     errors {
       message
     }
   }
 }
-    ${CollectionProductFragmentDoc}`;
+    `;
 export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>;
 
 /**
@@ -5430,10 +5409,6 @@ export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Type
  *   variables: {
  *      collectionId: // value for 'collectionId'
  *      moves: // value for 'moves'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
  *   },
  * });
  */
@@ -6966,7 +6941,6 @@ export const ShopInfoDocument = gql`
       ...Language
     }
     name
-    trackInventoryByDefault
     permissions {
       ...Permission
     }
@@ -7537,7 +7511,8 @@ export const CustomerDetailsDocument = gql`
     privateMetadata @include(if: $PERMISSION_MANAGE_STAFF) {
       ...MetadataItem
     }
-    orders(first: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    orders(first: 10) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      totalCount
       edges {
         node {
           id
@@ -7551,14 +7526,6 @@ export const CustomerDetailsDocument = gql`
             }
           }
           chargeStatus
-        }
-      }
-    }
-    lastPlacedOrder: orders(first: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
-      edges {
-        node {
-          id
-          created
         }
       }
     }
@@ -7956,6 +7923,42 @@ export function useVoucherBulkDeleteMutation(baseOptions?: ApolloReactHooks.Muta
 export type VoucherBulkDeleteMutationHookResult = ReturnType<typeof useVoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>;
+export const VoucherCodeBulkDeleteDocument = gql`
+    mutation VoucherCodeBulkDelete($ids: [ID!]!) {
+  voucherCodeBulkDelete(ids: $ids) {
+    count
+    errors {
+      ...VoucherCodeBulkDeleteError
+    }
+  }
+}
+    ${VoucherCodeBulkDeleteErrorFragmentDoc}`;
+export type VoucherCodeBulkDeleteMutationFn = Apollo.MutationFunction<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>;
+
+/**
+ * __useVoucherCodeBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `useVoucherCodeBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCodeBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [voucherCodeBulkDeleteMutation, { data, loading, error }] = useVoucherCodeBulkDeleteMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useVoucherCodeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>(VoucherCodeBulkDeleteDocument, options);
+      }
+export type VoucherCodeBulkDeleteMutationHookResult = ReturnType<typeof useVoucherCodeBulkDeleteMutation>;
+export type VoucherCodeBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherCodeBulkDeleteMutation>;
+export type VoucherCodeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCodeBulkDeleteMutation, Types.VoucherCodeBulkDeleteMutationVariables>;
 export const PromotionCreateDocument = gql`
     mutation PromotionCreate($input: PromotionCreateInput!) {
   promotionCreate(input: $input) {
@@ -9619,7 +9622,6 @@ export const AppDocument = gql`
       code
       name
     }
-    dataPrivacy
     dataPrivacyUrl
     brand {
       logo {
@@ -9780,7 +9782,7 @@ export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWe
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
 export const AppHasProblemsDocument = gql`
     query AppHasProblems($first: Int!) {
-  apps(first: $first, filter: {isActive: true}) {
+  apps(first: $first) {
     edges {
       node {
         id
@@ -10655,38 +10657,6 @@ export function useGiftCardDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GiftCardDetailsQueryHookResult = ReturnType<typeof useGiftCardDetailsQuery>;
 export type GiftCardDetailsLazyQueryHookResult = ReturnType<typeof useGiftCardDetailsLazyQuery>;
 export type GiftCardDetailsQueryResult = Apollo.QueryResult<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>;
-export const GiftCardCurrenciesDocument = gql`
-    query GiftCardCurrencies {
-  giftCardCurrencies
-}
-    `;
-
-/**
- * __useGiftCardCurrenciesQuery__
- *
- * To run a query within a React component, call `useGiftCardCurrenciesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardCurrenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardCurrenciesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGiftCardCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-      }
-export function useGiftCardCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-        }
-export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCurrenciesQuery>;
-export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
-export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
 export const DeleteGiftCardDocument = gql`
     mutation DeleteGiftCard($id: ID!) {
   giftCardDelete(id: $id) {
@@ -10870,11 +10840,8 @@ export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTot
 export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
 export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
 export const GiftCardProductsCountDocument = gql`
-    query GiftCardProductsCount($channel: String!) {
+    query GiftCardProductsCount {
   giftCardProductTypes: productTypes(filter: {kind: GIFT_CARD}) {
-    totalCount
-  }
-  giftCardProducts: products(filter: {giftCard: true}, channel: $channel) {
     totalCount
   }
 }
@@ -10892,11 +10859,10 @@ export const GiftCardProductsCountDocument = gql`
  * @example
  * const { data, loading, error } = useGiftCardProductsCountQuery({
  *   variables: {
- *      channel: // value for 'channel'
  *   },
  * });
  */
-export function useGiftCardProductsCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
+export function useGiftCardProductsCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountDocument, options);
       }
@@ -10908,11 +10874,14 @@ export type GiftCardProductsCountQueryHookResult = ReturnType<typeof useGiftCard
 export type GiftCardProductsCountLazyQueryHookResult = ReturnType<typeof useGiftCardProductsCountLazyQuery>;
 export type GiftCardProductsCountQueryResult = Apollo.QueryResult<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>;
 export const CustomerGiftCardListDocument = gql`
-    query CustomerGiftCardList($first: Int, $filter: GiftCardFilterInput) {
-  giftCards(first: $first, filter: $filter) {
-    edges {
-      node {
-        ...CustomerGiftCard
+    query CustomerGiftCardList($userId: ID!, $first: Int) {
+  user(id: $userId) {
+    id
+    giftCards(first: $first) {
+      edges {
+        node {
+          ...CustomerGiftCard
+        }
       }
     }
   }
@@ -10931,12 +10900,12 @@ export const CustomerGiftCardListDocument = gql`
  * @example
  * const { data, loading, error } = useCustomerGiftCardListQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *      first: // value for 'first'
- *      filter: // value for 'filter'
  *   },
  * });
  */
-export function useCustomerGiftCardListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
+export function useCustomerGiftCardListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListDocument, options);
       }
@@ -14897,9 +14866,6 @@ export const ProductDeleteDocument = gql`
     errors {
       ...ProductError
     }
-    product {
-      id
-    }
   }
 }
     ${ProductErrorFragmentDoc}`;
@@ -14938,15 +14904,13 @@ export const ProductMediaReorderDocument = gql`
     product {
       id
       media {
-        id
-        alt
-        sortOrder
-        url
+        ...ProductMedia
       }
     }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaReorderMutationFn = Apollo.MutationFunction<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>;
 
 /**
@@ -15100,9 +15064,6 @@ export const VariantDeleteDocument = gql`
   productVariantDelete(id: $id) {
     errors {
       ...ProductError
-    }
-    productVariant {
-      id
     }
   }
 }
@@ -15274,12 +15235,13 @@ export const ProductMediaDeleteDocument = gql`
     product {
       id
       media {
-        id
+        ...ProductMedia
       }
     }
   }
 }
-    ${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}
+${ProductMediaFragmentDoc}`;
 export type ProductMediaDeleteMutationFn = Apollo.MutationFunction<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>;
 
 /**
@@ -15676,12 +15638,6 @@ export const ProductVariantReorderDocument = gql`
     errors {
       ...ProductError
     }
-    product {
-      id
-      variants {
-        id
-      }
-    }
   }
 }
     ${ProductErrorFragmentDoc}`;
@@ -15765,19 +15721,12 @@ export type ProductVariantChannelListingUpdateMutationOptions = Apollo.BaseMutat
 export const ProductVariantPreorderDeactivateDocument = gql`
     mutation ProductVariantPreorderDeactivate($id: ID!) {
   productVariantPreorderDeactivate(id: $id) {
-    productVariant {
-      id
-      preorder {
-        ...Preorder
-      }
-    }
     errors {
       ...ProductError
     }
   }
 }
-    ${PreorderFragmentDoc}
-${ProductErrorFragmentDoc}`;
+    ${ProductErrorFragmentDoc}`;
 export type ProductVariantPreorderDeactivateMutationFn = Apollo.MutationFunction<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 
 /**
@@ -16185,6 +16134,7 @@ export const ProductMediaByIdDocument = gql`
     name
     mainImage: mediaById(id: $mediaId) {
       id
+      ...Metadata
       alt
       url
       type
@@ -16199,7 +16149,7 @@ export const ProductMediaByIdDocument = gql`
     }
   }
 }
-    `;
+    ${MetadataFragmentDoc}`;
 
 /**
  * __useProductMediaByIdQuery__
@@ -16338,16 +16288,6 @@ export type AvailableColumnAttributesLazyQueryHookResult = ReturnType<typeof use
 export type AvailableColumnAttributesQueryResult = Apollo.QueryResult<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>;
 export const GridWarehousesDocument = gql`
     query GridWarehouses($ids: [ID!]!, $hasWarehouses: Boolean!) {
-  availableWarehouses: warehouses(first: 10) {
-    edges {
-      node {
-        ...Warehouse
-      }
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
   selectedWarehouses: warehouses(first: 100, filter: {ids: $ids}) @include(if: $hasWarehouses) {
     edges {
       node {
@@ -16356,8 +16296,7 @@ export const GridWarehousesDocument = gql`
     }
   }
 }
-    ${WarehouseFragmentDoc}
-${PageInfoFragmentDoc}`;
+    ${WarehouseFragmentDoc}`;
 
 /**
  * __useGridWarehousesQuery__
@@ -16387,8 +16326,47 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const StockVisibilityModeDocument = gql`
+    query StockVisibilityMode {
+  shop {
+    id
+    useLegacyShippingZoneStockAvailability
+  }
+}
+    `;
+
+/**
+ * __useStockVisibilityModeQuery__
+ *
+ * To run a query within a React component, call `useStockVisibilityModeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStockVisibilityModeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStockVisibilityModeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useStockVisibilityModeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>(StockVisibilityModeDocument, options);
+      }
+export function useStockVisibilityModeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>(StockVisibilityModeDocument, options);
+        }
+export type StockVisibilityModeQueryHookResult = ReturnType<typeof useStockVisibilityModeQuery>;
+export type StockVisibilityModeLazyQueryHookResult = ReturnType<typeof useStockVisibilityModeLazyQuery>;
+export type StockVisibilityModeQueryResult = Apollo.QueryResult<Types.StockVisibilityModeQuery, Types.StockVisibilityModeQueryVariables>;
 export const ChannelDiagnosticsDocument = gql`
     query ChannelDiagnostics {
+  shop {
+    id
+    useLegacyShippingZoneStockAvailability
+  }
   channels {
     id
     name
@@ -16451,12 +16429,6 @@ export type ChannelDiagnosticsQueryResult = Apollo.QueryResult<Types.ChannelDiag
 export const SetRefundReasonTypeDocument = gql`
     mutation SetRefundReasonType($modelTypeId: ID!) {
   refundSettingsUpdate(input: {refundReasonReferenceType: $modelTypeId}) {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
     errors {
       message
       code
@@ -16496,12 +16468,6 @@ export const ClearRefundReasonTypeDocument = gql`
     errors {
       message
       code
-    }
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
     }
   }
 }
@@ -18619,12 +18585,6 @@ export const RefundSettingsUpdateDocument = gql`
       code
       message
     }
-    refundSettings {
-      reasonReferenceType {
-        name
-        id
-      }
-    }
   }
 }
     `;
@@ -18657,12 +18617,6 @@ export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Typ
 export const RefundReasonReferenceClearDocument = gql`
     mutation RefundReasonReferenceClear {
   refundReasonReferenceClear {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
     errors {
       code
       message
@@ -19038,7 +18992,7 @@ export type ChangeUserPasswordMutationHookResult = ReturnType<typeof useChangeUs
 export type ChangeUserPasswordMutationResult = Apollo.MutationResult<Types.ChangeUserPasswordMutation>;
 export type ChangeUserPasswordMutationOptions = Apollo.BaseMutationOptions<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>;
 export const StaffListDocument = gql`
-    query StaffList($first: Int, $after: String, $last: Int, $before: String, $filter: StaffUserInput, $sort: UserSortingInput) {
+    query StaffList($first: Int, $after: String, $last: Int, $before: String, $filter: StaffUserInput, $sort: UserSortingInput, $includeCustomerData: Boolean = false) {
   staffUsers(
     before: $before
     after: $after
@@ -19053,6 +19007,13 @@ export const StaffListDocument = gql`
         ...StaffMember
         avatar(size: 128) {
           url
+        }
+        orders(first: 1) @include(if: $includeCustomerData) {
+          edges {
+            node {
+              id
+            }
+          }
         }
       }
     }
@@ -19084,6 +19045,7 @@ export const StaffListDocument = gql`
  *      before: // value for 'before'
  *      filter: // value for 'filter'
  *      sort: // value for 'sort'
+ *      includeCustomerData: // value for 'includeCustomerData'
  *   },
  * });
  */
@@ -19102,6 +19064,13 @@ export const StaffMemberDetailsDocument = gql`
     query StaffMemberDetails($id: ID!) {
   user(id: $id) {
     ...StaffMemberDetails
+    orders(first: 1) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
   }
 }
     ${StaffMemberDetailsFragmentDoc}`;
@@ -19461,13 +19430,9 @@ export const TaxConfigurationUpdateDocument = gql`
     errors {
       ...TaxConfigurationUpdateError
     }
-    taxConfiguration {
-      ...TaxConfiguration
-    }
   }
 }
-    ${TaxConfigurationUpdateErrorFragmentDoc}
-${TaxConfigurationFragmentDoc}`;
+    ${TaxConfigurationUpdateErrorFragmentDoc}`;
 export type TaxConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>;
 
 /**
@@ -19504,13 +19469,9 @@ export const TaxCountryConfigurationUpdateDocument = gql`
     errors {
       ...TaxCountryConfigurationUpdateError
     }
-    taxCountryConfiguration {
-      ...TaxCountryConfiguration
-    }
   }
 }
-    ${TaxCountryConfigurationUpdateErrorFragmentDoc}
-${TaxCountryConfigurationFragmentDoc}`;
+    ${TaxCountryConfigurationUpdateErrorFragmentDoc}`;
 export type TaxCountryConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
 
 /**
@@ -19544,13 +19505,9 @@ export const TaxCountryConfigurationDeleteDocument = gql`
     errors {
       ...TaxCountryConfigurationDeleteError
     }
-    taxCountryConfiguration {
-      ...TaxCountryConfiguration
-    }
   }
 }
-    ${TaxCountryConfigurationDeleteErrorFragmentDoc}
-${TaxCountryConfigurationFragmentDoc}`;
+    ${TaxCountryConfigurationDeleteErrorFragmentDoc}`;
 export type TaxCountryConfigurationDeleteMutationFn = Apollo.MutationFunction<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
 
 /**

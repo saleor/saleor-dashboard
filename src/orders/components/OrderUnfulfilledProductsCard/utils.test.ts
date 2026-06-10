@@ -2,18 +2,38 @@ import { type OrderLineFragment } from "@dashboard/graphql";
 
 import { toLineWithUnfulfilledQuantity } from "./utils";
 
-const line = {
+const taxedMoneyPln20 = {
+  __typename: "TaxedMoney" as const,
+  net: {
+    __typename: "Money" as const,
+    amount: 20,
+    currency: "PLN",
+  },
+  gross: {
+    __typename: "Money" as const,
+    amount: 20,
+    currency: "PLN",
+    fractionDigits: 2,
+  },
+  tax: {
+    __typename: "Money" as const,
+    amount: 0,
+    currency: "PLN",
+  },
+};
+
+const line: OrderLineFragment = {
   __typename: "OrderLine",
   id: "id==",
   isShippingRequired: true,
-  allocations: [],
+  allocations: null,
   variant: {
     __typename: "ProductVariant",
     id: "variantId==",
     name: "M",
     quantityAvailable: 700,
     preorder: null,
-    stocks: [],
+    stocks: null,
     product: {
       __typename: "Product",
       id: "UHJvZHVjdDoxMTY=",
@@ -26,19 +46,8 @@ const line = {
   quantity: 5,
   quantityFulfilled: 4,
   quantityToFulfill: 1,
-  totalPrice: {
-    __typename: "TaxedMoney",
-    net: {
-      __typename: "Money",
-      amount: 20,
-      currency: "PLN",
-    },
-    gross: {
-      __typename: "Money",
-      amount: 20,
-      currency: "PLN",
-    },
-  },
+  totalPrice: taxedMoneyPln20,
+  undiscountedTotalPrice: taxedMoneyPln20,
   unitDiscount: {
     __typename: "Money",
     amount: 0,
@@ -60,6 +69,11 @@ const line = {
       amount: 20,
       currency: "PLN",
     },
+    tax: {
+      __typename: "Money",
+      amount: 0,
+      currency: "PLN",
+    },
   },
   unitPrice: {
     __typename: "TaxedMoney",
@@ -73,14 +87,23 @@ const line = {
       amount: 20,
       currency: "PLN",
     },
+    tax: {
+      __typename: "Money",
+      amount: 0,
+      currency: "PLN",
+    },
   },
+  taxRate: 0,
+  taxClass: null,
+  voucherCode: null,
   thumbnail: null,
+  discounts: null,
 };
 
 describe("toLineWithUnfulfilledQuantity", () => {
   it("should return lines with quantityToFulfill as quantity", () => {
     // Arrange
-    const lines = [line] as OrderLineFragment[];
+    const lines: OrderLineFragment[] = [line];
 
     // Act
     const result = toLineWithUnfulfilledQuantity(lines);

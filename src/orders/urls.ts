@@ -1,10 +1,13 @@
-import { type TransactionActionEnum } from "@dashboard/graphql";
+import { type ChannelFragment, OrderStatus, type TransactionActionEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { stringify } from "qs";
 import urlJoin from "url-join";
 
 import { Condition } from "../components/ConditionalFilter/FilterElement/Condition";
-import { ConditionOptions } from "../components/ConditionalFilter/FilterElement/ConditionOptions";
+import {
+  type ConditionItem,
+  ConditionOptions,
+} from "../components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../components/ConditionalFilter/FilterElement/ConditionSelected";
 import {
   ExpressionValue,
@@ -157,6 +160,42 @@ export const orderListUrlWithCustomerId = (userId?: string) => {
   return urlJoin(orderListPath, "?" + stringify(queryParams));
 };
 
+/**
+ * Creates a channels filter element using the conditional filter system.
+ * The orders list exposes a `channels` multiselect (filter element "channels", input-1, "in" operator)
+ * that serializes channel slugs into the URL.
+ */
+const createChannelsFilterElement = (
+  channel: Pick<ChannelFragment, "id" | "name" | "slug">,
+): FilterElement => {
+  const expressionValue = new ExpressionValue("channels", "Channels", "channels");
+  const conditionOptions = ConditionOptions.fromName("channels");
+  const conditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-1" };
+  const conditionSelected = ConditionSelected.fromConditionItemAndValue(conditionItem, [
+    { label: channel.name, value: channel.id, slug: channel.slug },
+  ]);
+  const condition = new Condition(conditionOptions, conditionSelected, false);
+
+  return new FilterElement(expressionValue, condition, false);
+};
+
+/**
+ * Builds the order list URL pre-filtered by a single channel.
+ */
+export const orderListUrlWithChannel = (
+  channel?: Pick<ChannelFragment, "id" | "name" | "slug">,
+) => {
+  if (!channel) {
+    return orderListPath;
+  }
+
+  const channelFilter = createChannelsFilterElement(channel);
+  const filterContainer = [channelFilter];
+  const queryParams = prepareStructure(filterContainer);
+
+  return urlJoin(orderListPath, "?" + stringify(queryParams));
+};
+
 export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
 export enum OrderDraftListUrlFiltersEnum {
   createdFrom = "createdFrom",
@@ -190,6 +229,16 @@ export const orderDraftListUrl = (params?: OrderDraftListUrlQueryParams): string
 };
 
 export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
+
+export const orderDraftPath = (id: string) => urlJoin(orderDraftListPath, id);
+
+export const orderDetailsPath = (id: string, status?: OrderStatus | null) => {
+  if (status === OrderStatus.DRAFT) {
+    return orderDraftPath(id);
+  }
+
+  return orderPath(id);
+};
 
 export type OrderUrlDialog =
   | "add-order-line"
@@ -233,6 +282,15 @@ export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFu
 
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
   orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const orderDraftUrl = (id: string, params?: OrderUrlQueryParams) =>
+  orderDraftPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+export const orderDetailsUrl = (
+  id: string,
+  params?: OrderUrlQueryParams,
+  status?: OrderStatus | null,
+) => orderDetailsPath(encodeURIComponent(id), status) + "?" + stringifyQs(params);
 
 export const orderFulfillPath = (id: string) => urlJoin(orderPath(id), "fulfill");
 

@@ -32,14 +32,8 @@ export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.orig
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
-export const getAppsConfig = () => ({
-  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URL,
-  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(";") || [
-    ".ngrok.io",
-    ".saleor.live",
-    ".trycloudflare.com",
-  ],
-});
+export const getSaleorCloudAppDomain = (): string | null =>
+  window?.__SALEOR_CONFIG__?.SALEOR_CLOUD_APP_DOMAIN || null;
 
 export const getExtensionsConfig = () => ({
   extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,
@@ -154,7 +148,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.DISCOUNTS_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "type", "startDate", "endDate"],
+    columns: ["name", "status", "type", "startDate", "endDate"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
     columns: ["name", "countries"],
@@ -162,7 +156,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.STAFF_MEMBERS_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "email", "status"],
+    columns: ["name", "status", "customer", "email"],
   },
   [ListViews.PERMISSION_GROUP_LIST]: {
     rowNumber: PAGINATE_BY,

@@ -15,7 +15,6 @@ import {
 } from "@dashboard/graphql";
 import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import { diff } from "fast-array-diff";
-import moment from "moment";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -113,7 +112,7 @@ export const createPreorderEndDateChangeHandler =
   event => {
     form.change(event);
 
-    if (moment(event.target.value).isSameOrBefore(Date.now())) {
+    if (new Date(event.target.value) <= new Date()) {
       form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
     } else {
       form.clearErrors("preorderEndDateTime");

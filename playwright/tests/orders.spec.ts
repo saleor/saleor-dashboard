@@ -144,6 +144,9 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   await ordersPage.clickFulfillButton();
   await fulfillmentPage.clickFulfillButton();
   await ordersPage.expectSuccessBanner({ message: "fulfilled" });
+  // Wait for Apollo to refetch order data after the fulfillment mutation completes,
+  // so the status chip reflects the updated "Fulfilled" state before asserting.
+  await ordersPage.page.waitForResponse("**/graphql/");
   await expect(ordersPage.pageHeaderStatusInfo, "Order should be yet fulfilled").toContainText(
     "Fulfilled",
   );

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
 

@@ -44,7 +44,12 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   const user = getUserOrApp(event);
   const userUrl = getUserOrAppUrl(event);
 
-  switch (event.type) {
+  // We cast to the staging GiftCardEventsEnum because the new enum (from 3.23 schema)
+  // extends the stable one (3.22) with additional values. In 3.22, event.type will never contain
+  // the new values, so this cast is safe. In 3.23, the staging enum will match the stable schema
+  // and the cast becomes a no-op.
+  // TODO: Remove this cast when 3.23 is released and the stable schema includes the new enum values.
+  switch (event.type as GiftCardEventsEnum) {
     case GiftCardEventsEnum.ACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.activated, {
@@ -79,6 +84,12 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
             issuedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
+    case GiftCardEventsEnum.REFUNDED_IN_ORDER:
+      return event.orderId && event.orderNumber
+        ? intl.formatMessage(timelineMessages.refundedInOrder, {
+            orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
+          })
+        : intl.formatMessage(timelineMessages.refundedInOrderNoLink);
     case GiftCardEventsEnum.RESENT:
       return intl.formatMessage(timelineMessages.resent);
     case GiftCardEventsEnum.SENT_TO_CUSTOMER:

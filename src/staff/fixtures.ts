@@ -141,7 +141,25 @@ export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     isActive: true,
     lastName: "Smith",
   },
-].map(staffMember => ({ __typename: "User" as const, ...staffMember }));
+].map((staffMember, index) => ({
+  __typename: "User" as const,
+  orders: {
+    __typename: "OrderCountableConnection" as const,
+    edges:
+      index === 0
+        ? [
+            {
+              __typename: "OrderCountableEdge" as const,
+              node: {
+                __typename: "Order" as const,
+                id: "T3JkZXI6MQ==",
+              },
+            },
+          ]
+        : [],
+  },
+  ...staffMember,
+}));
 export const staffMember: StaffMemberDetailsFragment = {
   __typename: "User",
   avatar: { __typename: "Image" as const, url: avatarImage },

@@ -82,6 +82,8 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page #e2e #produ
   await variantsPage.addAllMetaData();
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
+  await variantsPage.saveButton.waitFor({ state: "visible" });
+  await expect(variantsPage.saveButton).toBeEnabled();
   await expect(
     variantsPage.variantsList.locator(variantsPage.variantsNames, {
       hasText: variantName,
@@ -104,6 +106,7 @@ test("TC: SALEOR_44 As an admin I should be able to delete a several products @b
   await productPage.deleteProductDialog.clickDeleteButton();
   await productPage.expectSuccessBanner();
   await productPage.gotoProductListPage();
+  await productPage.waitForDatagridLoaderToDisappear();
 
   expect(
     await productPage.findRowIndexBasedOnText(PRODUCTS.productsToBeBulkDeleted.names),

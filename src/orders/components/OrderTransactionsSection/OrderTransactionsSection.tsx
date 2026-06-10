@@ -5,8 +5,6 @@ import {
   type OrderDetailsQuery,
   type TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
-import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
@@ -57,12 +55,9 @@ export const OrderTransactionsSection = ({
           justifyContent="space-between"
           paddingX={6}
         >
-          <Box display="flex" alignItems="center" justifyContent="center" gap={4}>
-            <Text size={6} fontWeight="medium">
-              <FormattedMessage defaultMessage="Transactions" id="/jJLYy" />
-            </Text>
-            <Ripple model={rippleRefreshedOrderSections} />
-          </Box>
+          <Text size={6} fontWeight="medium">
+            <FormattedMessage defaultMessage="Transactions" id="/jJLYy" />
+          </Text>
           <OrderAddTransaction order={order} onAddTransaction={onAddManualTransaction} />
         </Box>
 

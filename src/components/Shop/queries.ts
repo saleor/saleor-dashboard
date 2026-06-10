@@ -25,7 +25,6 @@ export const shopInfo = gql`
         ...Language
       }
       name
-      trackInventoryByDefault
       permissions {
         ...Permission
       }

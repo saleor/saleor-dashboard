@@ -4,6 +4,7 @@ import { ExportGiftCardsDialog } from "@dialogs/exportGiftCardsDialog";
 import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
 import { ResendGiftCardCodeDialog } from "@dialogs/resendGiftCardCodeDialog";
 import { SetGiftCardsBalanceDialog } from "@dialogs/setGiftCardBalanceDialog";
+import { FiltersPage } from "@pageElements/filtersPage";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import { expect, type Page } from "@playwright/test";
@@ -22,6 +23,8 @@ export class GiftCardsPage extends BasePage {
   readonly exportGiftCardsDialog: ExportGiftCardsDialog;
 
   readonly setGiftCardsBalanceDialog: SetGiftCardsBalanceDialog;
+
+  readonly filtersPage!: FiltersPage;
 
   constructor(
     page: Page,
@@ -55,6 +58,7 @@ export class GiftCardsPage extends BasePage {
     this.deleteDialog = new DeleteDialog(page);
     this.exportGiftCardsDialog = new ExportGiftCardsDialog(page);
     this.setGiftCardsBalanceDialog = new SetGiftCardsBalanceDialog(page);
+    this.filtersPage = new FiltersPage(page);
   }
 
   async clickIssueCardButton() {

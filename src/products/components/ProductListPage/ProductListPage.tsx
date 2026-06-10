@@ -237,6 +237,7 @@ const ProductListPage = (props: ProductListPageProps) => {
             type="expression-filter"
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
+            showSearchTooltip
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { runAvailabilityChecks } from "../utils/availabilityChecks";
+import { LEGACY_MODE_FALLBACK } from "../utils/constants";
 import {
   type AvailabilityIssue,
   type ChannelDiagnosticData,
@@ -108,6 +109,13 @@ export function useProductAvailabilityDiagnostics({
       missingPermissions: [] as string[],
     };
 
+    // `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+) is fetched
+    // alongside the channel data in `channelDiagnosticsQuery`. Default to
+    // legacy until the query resolves so we don't transiently downgrade
+    // existing severity levels on first render.
+    const useLegacyShippingZoneStockAvailability =
+      channelData?.shop?.useLegacyShippingZoneStockAvailability ?? LEGACY_MODE_FALLBACK;
+
     if (!product || !enabled) {
       return {
         issues: [],
@@ -116,6 +124,11 @@ export function useProductAvailabilityDiagnostics({
         hasWarnings: false,
         isLoading: false,
         permissions: defaultPermissions,
+        useLegacyShippingZoneStockAvailability,
+        // Default to true (conservative legacy assumption) when no product
+        // data is available — matches LEGACY_MODE_FALLBACK's spirit of not
+        // silently downgrading prior behavior.
+        isShippingRequired: product?.isShippingRequired ?? true,
       };
     }
 
@@ -129,6 +142,8 @@ export function useProductAvailabilityDiagnostics({
         hasWarnings: false,
         isLoading: true,
         permissions: defaultPermissions,
+        useLegacyShippingZoneStockAvailability,
+        isShippingRequired: product.isShippingRequired,
       };
     }
 
@@ -218,6 +233,7 @@ export function useProductAvailabilityDiagnostics({
           {
             skipWarehouseChecks: !hasFullChannelData || !basePermissions.canViewChannelWarehouses,
             skipShippingChecks: !hasFullChannelData || !basePermissions.canViewShippingZones,
+            useLegacyShippingZoneStockAvailability,
           },
         );
 
@@ -294,6 +310,8 @@ export function useProductAvailabilityDiagnostics({
       hasWarnings: issues.some(issue => issue.severity === "warning"),
       isLoading: false,
       permissions,
+      useLegacyShippingZoneStockAvailability,
+      isShippingRequired: product.isShippingRequired,
     };
   }, [product, channelData, loading, enabled, intl, basePermissions]);
 

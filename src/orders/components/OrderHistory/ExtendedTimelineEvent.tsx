@@ -6,40 +6,16 @@ import { type TitleElement } from "@dashboard/components/Timeline/TimelineEventH
 import { toActor } from "@dashboard/components/Timeline/utils";
 import { type OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import camelCase from "lodash/camelCase";
 import { CheckIcon } from "lucide-react";
-import { defineMessages, type MessageDescriptor, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
+import { ExtendedDiscountTimelineEvent } from "./ExtendedDiscountTimelineEvent/ExtendedDiscountTimelineEvent";
+import { OrderLineItem } from "./OrderLineItem";
 import {
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
   isTimelineEventOfDiscountType,
 } from "./utils";
-
-interface OrderLineItemProps {
-  orderLine: OrderEventFragment["lines"][0]["orderLine"];
-  quantity: number;
-  itemName: string;
-}
-
-const OrderLineItem = ({ orderLine, quantity, itemName }: OrderLineItemProps) => (
-  <Box display="flex" alignItems="center" justifyContent="space-between" gap={3}>
-    <Box display="flex" flexDirection="column">
-      <Text size={3} fontWeight="medium">
-        {orderLine?.productName || itemName}
-      </Text>
-      {orderLine?.variantName && (
-        <Text size={2} color="default2">
-          {orderLine.variantName}
-        </Text>
-      )}
-    </Box>
-    <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
-      ×{quantity}
-    </Text>
-  </Box>
-);
 
 interface LabelValueRowProps {
   label: string;
@@ -55,7 +31,7 @@ const LabelValueRow = ({ label, children }: LabelValueRowProps) => (
   </Box>
 );
 
-const titles: Record<string, MessageDescriptor> = defineMessages({
+const titles = defineMessages({
   draftCreatedFromReplace: {
     id: "H6SfJd",
     defaultMessage: "Draft was reissued from order",
@@ -101,14 +77,23 @@ const titles: Record<string, MessageDescriptor> = defineMessages({
     defaultMessage: "{productName} discount was updated",
     description: "order line discount updated title",
   },
-  orderMarkedAsPaid: {
-    id: "TQlnsR",
-    defaultMessage: "Order was marked as paid",
-    description: "order marked as paid event title",
-  },
 });
 
-const messages = defineMessages({
+const eventTypeToTitleKey: Partial<Record<OrderEventsEnum, keyof typeof titles>> = {
+  [OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE]: "draftCreatedFromReplace",
+  [OrderEventsEnum.FULFILLMENT_REFUNDED]: "fulfillmentRefunded",
+  [OrderEventsEnum.FULFILLMENT_REPLACED]: "fulfillmentReplaced",
+  [OrderEventsEnum.FULFILLMENT_RETURNED]: "fulfillmentReturned",
+  [OrderEventsEnum.ORDER_DISCOUNT_ADDED]: "orderDiscountAdded",
+  [OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED]: "orderDiscountAutomaticallyUpdated",
+  [OrderEventsEnum.ORDER_DISCOUNT_UPDATED]: "orderDiscountUpdated",
+  [OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED]: "orderLineDiscountUpdated",
+};
+
+// Some timeline events intentionally do not map to a dedicated title in this component.
+const FALLBACK_TITLE_TEXT = "";
+
+const localMessages = defineMessages({
   refundedAmount: {
     id: "nngeI3",
     defaultMessage: "Refunded amount",
@@ -143,49 +128,61 @@ const ExtendedTimelineEvent = ({
 }: ExtendedTimelineEventProps) => {
   const { id, type, message, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const intl = useIntl();
-  const eventTypeInCamelCase = camelCase(type);
-  const getEventTitleMessageInCamelCase = (): MessageDescriptor => {
-    if (hasOrderLineDiscountWithNoPreviousValue(event)) {
-      return titles.orderLineDiscountAdded;
-    }
-
-    return titles[eventTypeInCamelCase];
-  };
-  const getTitleProps = (): Record<string, string | undefined> => {
-    if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
-      return { productName: lines[0]?.itemName };
-    }
-
-    return {};
-  };
-  const titleElements = {
-    orderNumber: getOrderNumberLink(event),
-    title: {
-      text: intl.formatMessage(getEventTitleMessageInCamelCase(), getTitleProps()),
-    },
-  };
-  const selectTitleElements = (): TitleElement[] => {
-    const { title, orderNumber } = titleElements;
-
-    switch (type) {
-      case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
-        return [title, orderNumber];
-      }
-      default: {
-        return [title];
-      }
-    }
-  };
 
   if (isTimelineEventOfDiscountType(type)) {
+    if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
+      const productName = lines?.[0]?.itemName;
+      const isAdded = hasOrderLineDiscountWithNoPreviousValue(event);
+      const messageDescriptor = isAdded
+        ? titles.orderLineDiscountAdded
+        : titles.orderLineDiscountUpdated;
+
+      return (
+        <ExtendedDiscountTimelineEvent
+          event={event}
+          title={
+            <FormattedMessage
+              {...messageDescriptor}
+              values={{
+                productName: (
+                  <Text size={3} fontWeight="medium" as="span">
+                    {productName}
+                  </Text>
+                ),
+              }}
+            />
+          }
+          isLastInGroup={isLastInGroup}
+        />
+      );
+    }
+
+    const titleKey = eventTypeToTitleKey[type];
+    const titleMessage = titleKey ? titles[titleKey] : undefined;
+
     return (
       <ExtendedDiscountTimelineEvent
         event={event}
-        titleElements={selectTitleElements()}
+        titleElements={titleMessage ? [{ text: intl.formatMessage(titleMessage) }] : undefined}
         isLastInGroup={isLastInGroup}
       />
     );
   }
+
+  const titleKey = eventTypeToTitleKey[type];
+  const titleMessage = titleKey ? titles[titleKey] : undefined;
+  const titleText = titleMessage ? intl.formatMessage(titleMessage) : FALLBACK_TITLE_TEXT;
+  const titleElement: TitleElement = { text: titleText };
+
+  const selectTitleElements = (): TitleElement[] => {
+    if (type === OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE) {
+      const orderNumberLink = getOrderNumberLink(event);
+
+      return orderNumberLink ? [titleElement, orderNumberLink] : [titleElement];
+    }
+
+    return [titleElement];
+  };
 
   const hasFooterContent =
     amount || amount === 0 || shippingCostsIncluded || !!transactionReference;
@@ -202,14 +199,12 @@ const ExtendedTimelineEvent = ({
       isLastInGroup={isLastInGroup}
     >
       <Box display="flex" flexDirection="column" gap={1}>
-        {/* Message content */}
         {message && (
           <Text size={2} style={{ whiteSpace: "pre-wrap" }}>
             {message}
           </Text>
         )}
 
-        {/* Order lines */}
         {lines && lines.length > 0 && (
           <>
             {message && <Box paddingTop={1} />}
@@ -217,30 +212,29 @@ const ExtendedTimelineEvent = ({
               <OrderLineItem
                 key={orderLine?.id ? `${id}-line-${orderLine.id}` : `${id}-line-${i}`}
                 orderLine={orderLine}
-                quantity={quantity}
-                itemName={itemName}
+                quantity={quantity ?? 0}
+                fallbackItemName={itemName ?? "Product"}
               />
             ))}
           </>
         )}
 
-        {/* Footer with metadata */}
         {hasFooterContent && (
           <Box display="flex" flexDirection="column" gap={1} paddingTop={2}>
             {(amount || amount === 0) && (
-              <LabelValueRow label={intl.formatMessage(messages.refundedAmount)}>
+              <LabelValueRow label={intl.formatMessage(localMessages.refundedAmount)}>
                 <Text size={2}>
                   <Money money={{ amount, currency: orderCurrency }} />
                 </Text>
               </LabelValueRow>
             )}
             {shippingCostsIncluded && (
-              <LabelValueRow label={intl.formatMessage(messages.refundedShipment)}>
+              <LabelValueRow label={intl.formatMessage(localMessages.refundedShipment)}>
                 <CheckIcon size={14} />
               </LabelValueRow>
             )}
             {!!transactionReference && (
-              <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
+              <LabelValueRow label={intl.formatMessage(localMessages.transactionReference)}>
                 <CopyableText text={transactionReference} />
               </LabelValueRow>
             )}

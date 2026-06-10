@@ -6,6 +6,7 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
+import Table from "@editorjs/table";
 import createGenericInlineTool from "editorjs-inline-tool";
 
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
@@ -27,6 +28,15 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
   quote: {
     class: Quote,
     inlineToolbar,
+  },
+  table: {
+    // @ts-expect-error Type mismatch between editorjs libraries (@editorjs/table and @editorjs/editorjs)
+    class: Table,
+    inlineToolbar,
+    config: {
+      rows: 2,
+      cols: 2,
+    },
   },
   paragraph: {
     // @ts-expect-error Type mismatch between editorjs libraries (@editorjs/list and @editorjs/editorjs)

@@ -30,6 +30,7 @@ export const OrderDetailsRowActions = ({
       className={classes.rowAction}
       style={{
         boxShadow: rightColumnBoxShadow,
+        gridTemplateColumns: firstMenuItem?.Icon ? "1fr auto 1fr" : "1fr",
       }}
     >
       <IconButton

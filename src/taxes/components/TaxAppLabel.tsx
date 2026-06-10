@@ -1,6 +1,6 @@
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import moment from "moment";
 import { FormattedMessage } from "react-intl";
 
 interface TaxAppLabelProps {
@@ -10,7 +10,18 @@ interface TaxAppLabelProps {
   id: string;
 }
 
+const formatDate = (locale: string, created: string): string => {
+  const dateTimeString = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date(created));
+
+  return `(${dateTimeString})`;
+};
+
 export const TaxAppLabel = ({ name, logoUrl, created }: TaxAppLabelProps) => {
+  const { locale } = useLocale();
   const logo = logoUrl ? { source: logoUrl } : undefined;
 
   return (
@@ -33,7 +44,7 @@ export const TaxAppLabel = ({ name, logoUrl, created }: TaxAppLabelProps) => {
       )}
       {created && (
         <Text size={2} color="default2">
-          ({moment(created).format("YYYY-MM-DD")})
+          {formatDate(locale, created)}
         </Text>
       )}
     </Box>

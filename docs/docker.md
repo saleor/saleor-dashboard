@@ -26,9 +26,7 @@ The replacement is not limited to `API_URL` only. You can also replace other env
 docker exec -it \
   -e "API_URL=NEW_API_URL" \
   -e "APP_MOUNT_URI=NEW_APP_MOUNT_URI" \
-  -e "APPS_MARKETPLACE_API_URL=NEW_APPS_MARKETPLACE_API_URL" \
   -e "EXTENSIONS_API_URL=NEW_EXTENSIONS_API_URL" \
-  -e "APPS_TUNNEL_URL_KEYWORDS=NEW_APPS_TUNNEL_URL_KEYWORDS" \
   -e "IS_CLOUD_INSTANCE=NEW_IS_CLOUD_INSTANCE" \
   -e "LOCALE_CODE=NEW_LOCALE_CODE" \
   saleor-dashboard /docker-entrypoint.d/50-replace-env-vars.sh
@@ -40,9 +38,7 @@ Of course you can also provide all the environment variables at the `docker run`
 docker run --publish 8080:80 \
   -e "API_URL=NEW_API_URL" \
   -e "APP_MOUNT_URI=NEW_APP_MOUNT_URI" \
-  -e "APPS_MARKETPLACE_API_URL=NEW_APPS_MARKETPLACE_API_URL" \
   -e "EXTENSIONS_API_URL=NEW_EXTENSIONS_API_URL" \
-  -e "APPS_TUNNEL_URL_KEYWORDS=NEW_APPS_TUNNEL_URL_KEYWORDS" \
   -e "IS_CLOUD_INSTANCE=NEW_IS_CLOUD_INSTANCE" \
   -e "LOCALE_CODE=NEW_LOCALE_CODE" \
   saleor-dashboard

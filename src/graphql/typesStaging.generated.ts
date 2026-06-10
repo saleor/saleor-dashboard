@@ -86,7 +86,9 @@ export enum AccountErrorCode {
   DELETE_OWN_ACCOUNT = 'DELETE_OWN_ACCOUNT',
   DELETE_STAFF_ACCOUNT = 'DELETE_STAFF_ACCOUNT',
   DELETE_SUPERUSER_ACCOUNT = 'DELETE_SUPERUSER_ACCOUNT',
+  DISABLED_AUTHENTICATION_METHOD = 'DISABLED_AUTHENTICATION_METHOD',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INACTIVE = 'INACTIVE',
   INVALID = 'INVALID',
@@ -281,9 +283,9 @@ export type AppInstallInput = {
   /** Determine if app will be set active or not. */
   activateAfterInstallation?: InputMaybe<Scalars['Boolean']>;
   /** Name of the app to install. */
-  appName?: InputMaybe<Scalars['String']>;
+  appName: Scalars['String'];
   /** URL to app's manifest in JSON format. */
-  manifestUrl?: InputMaybe<Scalars['String']>;
+  manifestUrl: Scalars['String'];
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
@@ -1505,8 +1507,10 @@ export type CollectionCreateInput = {
 };
 
 export enum CollectionErrorCode {
+  /** @deprecated Products without variants can now be assigned to collections. This error will never be returned. */
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
@@ -2265,6 +2269,62 @@ export type CustomerInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
+export type CustomerOrderWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerOrderWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerOrderWhereInput>>;
+  /** Filter by authorize status. */
+  authorizeStatus?: InputMaybe<OrderAuthorizeStatusEnumFilterInput>;
+  /** Filter by billing address of the order. */
+  billingAddress?: InputMaybe<AddressFilterInput>;
+  /** Filter by channel. */
+  channelId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by charge status. */
+  chargeStatus?: InputMaybe<OrderChargeStatusEnumFilterInput>;
+  /** Filter by checkout id. */
+  checkoutId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by checkout token. */
+  checkoutToken?: InputMaybe<UuidFilterInput>;
+  /** Filter order by created at date. */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by whether the order has any invoices. */
+  hasInvoices?: InputMaybe<Scalars['Boolean']>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  invoices?: InputMaybe<Array<InvoiceFilterInput>>;
+  /** Filter by whether the order uses the click and collect delivery method. */
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
+  /** Filter based on whether the order includes a gift card purchase. */
+  isGiftCardBought?: InputMaybe<Scalars['Boolean']>;
+  /** Filter based on whether a gift card was used in the order. */
+  isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by number of lines in the order. */
+  linesCount?: InputMaybe<IntFilterInput>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by order number. */
+  number?: InputMaybe<IntFilterInput>;
+  /** Filter by the product type of related order lines. */
+  productTypeId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by shipping address of the order. */
+  shippingAddress?: InputMaybe<AddressFilterInput>;
+  /** Filter by order status. */
+  status?: InputMaybe<OrderStatusEnumFilterInput>;
+  /** Filter by total gross amount of the order. */
+  totalGross?: InputMaybe<PriceFilterInput>;
+  /** Filter by total net amount of the order. */
+  totalNet?: InputMaybe<PriceFilterInput>;
+  /** Filter order by updated at date. */
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by user email. */
+  userEmail?: InputMaybe<StringFilterInput>;
+  /** Filter by voucher code used in the order. */
+  voucherCode?: InputMaybe<StringFilterInput>;
+};
+
 export type CustomerWhereInput = {
   /** List of conditions that must be met. */
   AND?: InputMaybe<Array<CustomerWhereInput>>;
@@ -2334,58 +2394,11 @@ export type DecimalRangeInput = {
   lte?: InputMaybe<Scalars['Decimal']>;
 };
 
-export type DigitalContentInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean'];
-};
-
-export type DigitalContentUploadInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']>;
-  /** Represents an file in a multipart request. */
-  contentFile: Scalars['Upload'];
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean'];
-};
-
-export type DigitalContentUrlCreateInput = {
-  /** Digital content ID which URL will belong to. */
-  content: Scalars['ID'];
-};
+export enum DeliveryOptionsCalculateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
 
 export enum DiscountErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
@@ -2492,7 +2505,10 @@ export type DraftOrderCreateInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -2560,7 +2576,10 @@ export type DraftOrderInput = {
   user?: InputMaybe<Scalars['ID']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   * @deprecated Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']>;
   /**
    * A code of the voucher associated with the order.
@@ -2915,6 +2934,7 @@ export enum GiftCardEventsEnum {
   EXPIRY_DATE_UPDATED = 'EXPIRY_DATE_UPDATED',
   ISSUED = 'ISSUED',
   NOTE_ADDED = 'NOTE_ADDED',
+  REFUNDED_IN_ORDER = 'REFUNDED_IN_ORDER',
   RESENT = 'RESENT',
   SENT_TO_CUSTOMER = 'SENT_TO_CUSTOMER',
   TAGS_UPDATED = 'TAGS_UPDATED',
@@ -2934,6 +2954,27 @@ export type GiftCardFilterInput = {
   tags?: InputMaybe<Array<Scalars['String']>>;
   used?: InputMaybe<Scalars['Boolean']>;
   usedBy?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type GiftCardPaymentMethodDetailsInput = {
+  /**
+   * Brand of the gift card used for the transaction. Max length is 40 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  brand?: InputMaybe<Scalars['String']>;
+  /**
+   * Last characters of the gift card used for the transaction. Max length is 4 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  lastChars?: InputMaybe<Scalars['String']>;
+  /**
+   * Name of the payment method used for the transaction. Max length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  name: Scalars['String'];
 };
 
 export type GiftCardResendInput = {
@@ -6112,6 +6153,21 @@ export type PageWhereInput = {
   slug?: InputMaybe<StringFilterInput>;
 };
 
+/**
+ * Controls whether password-based authentication is allowed.
+ *
+ *     ENABLED - any user can log in with a password. This is the default behavior.
+ *     CUSTOMERS_ONLY - only customer users can log in with a password.
+ *         If a staff user logs in with a password, they will be treated as a customer
+ *         — the issued token will not contain any staff permissions.
+ *     DISABLED - no user can log in with a password.
+ */
+export enum PasswordLoginModeEnum {
+  CUSTOMERS_ONLY = 'CUSTOMERS_ONLY',
+  DISABLED = 'DISABLED',
+  ENABLED = 'ENABLED'
+}
+
 export enum PaymentChargeStatusEnum {
   CANCELLED = 'CANCELLED',
   FULLY_CHARGED = 'FULLY_CHARGED',
@@ -6235,13 +6291,19 @@ export type PaymentMethodDetailsFilterInput = {
 };
 
 /**
- * Details of the payment method used for the transaction. One of `card` or `other` is required.
+ * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
  *
  * Added in Saleor 3.22.
  */
 export type PaymentMethodDetailsInput = {
   /** Details of the card payment method used for the transaction. */
   card?: InputMaybe<CardPaymentMethodDetailsInput>;
+  /**
+   * Details of the gift card payment method used for the transaction.
+   *
+   * Added in Saleor 3.23.
+   */
+  giftCard?: InputMaybe<GiftCardPaymentMethodDetailsInput>;
   /** Details of the non-card payment method used for this transaction. */
   other?: InputMaybe<OtherPaymentMethodDetailsInput>;
 };
@@ -6286,9 +6348,11 @@ export enum PaymentMethodTokenizationResult {
  *     The following types are possible:
  *     CARD - represents a card payment method.
  *     OTHER - represents any payment method that is not a card payment.
+ *     GIFT_CARD - represents a gift card payment method.
  */
 export enum PaymentMethodTypeEnum {
   CARD = 'CARD',
+  GIFT_CARD = 'GIFT_CARD',
   OTHER = 'OTHER'
 }
 
@@ -6515,6 +6579,7 @@ export enum ProductBulkCreateErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   BLANK = 'BLANK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_PRICE = 'INVALID_PRICE',
@@ -6708,6 +6773,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
@@ -6722,8 +6788,7 @@ export enum ProductErrorCode {
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE',
   UNSUPPORTED_MEDIA_PROVIDER = 'UNSUPPORTED_MEDIA_PROVIDER',
-  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE',
-  VARIANT_NO_DIGITAL_CONTENT = 'VARIANT_NO_DIGITAL_CONTENT'
+  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE'
 }
 
 export enum ProductFieldEnum {
@@ -6947,6 +7012,7 @@ export enum ProductTypeConfigurable {
 }
 
 export enum ProductTypeEnum {
+  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
   DIGITAL = 'DIGITAL',
   SHIPPABLE = 'SHIPPABLE'
 }
@@ -6968,7 +7034,7 @@ export type ProductTypeInput = {
    * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
    */
   hasVariants?: InputMaybe<Scalars['Boolean']>;
-  /** Determines if products are digital. */
+  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
   isDigital?: InputMaybe<Scalars['Boolean']>;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: InputMaybe<Scalars['Boolean']>;
@@ -6999,7 +7065,10 @@ export enum ProductTypeKindEnum {
 }
 
 export enum ProductTypeSortField {
-  /** Sort products by type. */
+  /**
+   * Sort products by type.
+   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
+   */
   DIGITAL = 'DIGITAL',
   /** Sort products by name. */
   NAME = 'NAME',
@@ -7874,6 +7943,7 @@ export enum ShopErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
+  PASSWORD_AUTH_RESTRICTION = 'PASSWORD_AUTH_RESTRICTION',
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE'
 }
@@ -7881,8 +7951,6 @@ export enum ShopErrorCode {
 export type ShopSettingsInput = {
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
-  /** Enable automatic fulfillment for all digital products. */
-  automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
   /**
    * Charge taxes on shipping.
    * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
@@ -7890,10 +7958,6 @@ export type ShopSettingsInput = {
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
-  /** Default number of max downloads per digital content URL. */
-  defaultDigitalMaxDownloads?: InputMaybe<Scalars['Int']>;
-  /** Default number of days which digital content URL will be valid. */
-  defaultDigitalUrlValidDays?: InputMaybe<Scalars['Int']>;
   /** Default email sender's address. */
   defaultMailSenderAddress?: InputMaybe<Scalars['String']>;
   /** Default email sender's name. */
@@ -7929,6 +7993,12 @@ export type ShopSettingsInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
+   * Controls whether password-based authentication is allowed.
+   *
+   * Added in Saleor 3.23.
+   */
+  passwordLoginMode?: InputMaybe<PasswordLoginModeEnum>;
+  /**
    * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
    *
    * Added in Saleor 3.22.
@@ -7946,6 +8016,12 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']>;
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
@@ -8416,6 +8492,26 @@ export type TransactionCreateInput = {
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Filter input for transaction events data.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionEventFilterInput = {
+  /**
+   * Filter transaction events by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter transaction events by type.
+   *
+   * Added in Saleor 3.23.
+   */
+  type?: InputMaybe<TransactionEventTypeEnumFilterInput>;
+};
+
 export type TransactionEventInput = {
   /** The message related to the event. */
   message?: InputMaybe<Scalars['String']>;
@@ -8479,6 +8575,13 @@ export enum TransactionEventTypeEnum {
   REFUND_REVERSE = 'REFUND_REVERSE',
   REFUND_SUCCESS = 'REFUND_SUCCESS'
 }
+
+export type TransactionEventTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<TransactionEventTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<TransactionEventTypeEnum>>;
+};
 
 /** Filter input for transactions. */
 export type TransactionFilterInput = {
@@ -8554,6 +8657,28 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   REFUND_IS_PENDING = 'REFUND_IS_PENDING'
 }
 
+export enum TransactionSortField {
+  /**
+   * Sort transactions by creation date.
+   *
+   * Added in Saleor 3.23.
+   */
+  CREATED_AT = 'CREATED_AT',
+  /**
+   * Sort transactions by modification date.
+   *
+   * Added in Saleor 3.23.
+   */
+  MODIFIED_AT = 'MODIFIED_AT'
+}
+
+export type TransactionSortingInput = {
+  /** Specifies the direction in which to sort transactions. */
+  direction: OrderDirection;
+  /** Sort transactions by the selected field. */
+  field: TransactionSortField;
+};
+
 export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -8609,7 +8734,25 @@ export type TransactionWhereInput = {
   OR?: InputMaybe<Array<TransactionWhereInput>>;
   /** Filter by app identifier. */
   appIdentifier?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter transactions by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+   *
+   * Added in Saleor 3.23.
+   */
+  events?: InputMaybe<Array<TransactionEventFilterInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Filter transactions by modified at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  modifiedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by PSP reference. */
   pspReference?: InputMaybe<StringFilterInput>;
 };
@@ -9257,14 +9400,39 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9589,14 +9757,39 @@ export enum WebhookEventTypeEnum {
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9834,10 +10027,15 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   PROMOTION_CREATED = 'PROMOTION_CREATED',
@@ -9930,49 +10128,3 @@ export enum WeightUnitsEnum {
   OZ = 'OZ',
   TONNE = 'TONNE'
 }
-
-export type ChannelCreateMutationVariables = Exact<{
-  input: ChannelCreateInput;
-}>;
-
-
-export type ChannelCreateMutation = { __typename: 'Mutation', channelCreate: { __typename: 'ChannelCreate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
-
-export type ChannelUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: ChannelUpdateInput;
-}>;
-
-
-export type ChannelUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
-
-export type BaseChannelsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BaseChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
-
-export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
-
-export type ChannelQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
-
-export type AddressFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
-
-export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
-
-export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
-
-export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
-
-export type WarehouseFragment = { __typename: 'Warehouse', id: string, name: string };
-
-export type WarehouseWithShippingFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
-
-export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };

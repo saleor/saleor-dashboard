@@ -12,6 +12,7 @@ interface NewFilterProps extends SearchPageProps {
   type: "expression-filter";
   searchPlaceholder: string;
   actions?: ReactNode;
+  showSearchTooltip?: boolean;
 }
 
 interface OldFiltersProps<TKeys extends string = string>
@@ -20,6 +21,7 @@ interface OldFiltersProps<TKeys extends string = string>
   type?: "old-filter-select";
   searchPlaceholder: string;
   actions?: ReactNode;
+  showSearchTooltip?: boolean;
   filterStructure?: IFilter<TKeys>;
   errorMessages?: FilterErrorMessages<TKeys>;
 }
@@ -31,6 +33,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
   searchPlaceholder,
   onSearchChange,
   actions,
+  showSearchTooltip,
   ...props
 }: ListFiltersProps<TFilterKeys>) => {
   const isExpressionFilter = props.type === "expression-filter";
@@ -56,6 +59,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
               initialSearch={initialSearch}
               placeholder={searchPlaceholder}
               onSearchChange={onSearchChange}
+              showSearchTooltip={showSearchTooltip}
             />
           </Box>
         </Box>

@@ -159,6 +159,34 @@ describe("ConditionalFilter / API / Page / InitialGiftCardsState", () => {
     expect(result).toEqual(expectedOutput);
   });
 
+  it("should filter by code", () => {
+    // Arrange
+    const initialPageState = InitialGiftCardsStateResponse.empty();
+
+    initialPageState.code = [
+      {
+        label: "06FA-658A-EDB0",
+        value: "06FA-658A-EDB0",
+        slug: "06FA-658A-EDB0",
+      },
+    ];
+
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.code", "06FA-658A-EDB0"));
+    const expectedOutput = [
+      {
+        label: "06FA-658A-EDB0",
+        value: "06FA-658A-EDB0",
+        slug: "06FA-658A-EDB0",
+      },
+    ];
+
+    // Act
+    const result = initialPageState.filterByUrlToken(token);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
   it("should filter by is active", () => {
     // Arrange
     const initialPageState = InitialGiftCardsStateResponse.empty();

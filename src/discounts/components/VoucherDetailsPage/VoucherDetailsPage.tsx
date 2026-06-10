@@ -41,7 +41,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import { Divider, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -128,7 +128,8 @@ interface VoucherDetailsPageProps
   openChannelsModal: () => void;
   onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
-  onDeleteVoucherCodes: () => void;
+  deleteVoucherCodesTransitionState: ConfirmButtonTransitionState;
+  onDeleteVoucherCodes: () => Promise<void>;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
   voucherCodesPagination: LocalPagination;
   voucherCodesSettings: UseListSettings["settings"];
@@ -164,6 +165,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onRemove,
   onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
+  deleteVoucherCodesTransitionState,
   onDeleteVoucherCodes,
   onSubmit,
   toggle,
@@ -277,9 +279,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 />
               )}
               {extensionMenuItems.length > 0 && (
-                <Box marginLeft={3}>
-                  <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-                </Box>
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
               )}
             </TopNav>
             <DetailPageLayout.Content>
@@ -288,6 +288,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 selectedCodesIds={selectedVoucherCodesIds}
                 onSelectVoucherCodesIds={onSelectVoucherCodesIds}
                 onDeleteCodes={onDeleteVoucherCodes}
+                deleteCodesTransitionState={deleteVoucherCodesTransitionState}
                 loading={voucherCodesLoading}
                 onMultiCodesGenerate={codes => {
                   triggerChange();

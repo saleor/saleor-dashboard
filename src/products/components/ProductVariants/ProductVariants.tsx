@@ -2,7 +2,7 @@ import { type ChannelData } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid, { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { Datagrid, type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import {
   type DatagridChangeOpts,
   DatagridChangeStateContext,

@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Text, vars } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 
 import useAppChannel from "../AppChannelContext";
@@ -15,6 +15,8 @@ interface TopNavProps {
   href?: string;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;
+  /** Gap between header action buttons. Detail pages use a slightly wider spacing. */
+  actionsGap?: 2 | 3;
 }
 
 export const Root = ({
@@ -24,6 +26,7 @@ export const Root = ({
   href,
   withoutBorder = false,
   isAlignToRight = true,
+  actionsGap = 2,
   children,
   ...wrapperProps
 }: PropsWithChildren<TopNavProps> & Omit<BoxProps, keyof TopNavProps>) => {
@@ -47,7 +50,7 @@ export const Root = ({
         <ContextualLine
           gridColumn="8"
           // The subtitle should be aligned with the title, not back button
-          marginLeft={href ? 12 : 0}
+          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
           paddingBottom={0}
           __marginBottom="-10px"
         >
@@ -69,7 +72,7 @@ export const Root = ({
           display="flex"
           flexWrap="nowrap"
           height="100%"
-          gap={2}
+          gap={actionsGap}
           __flex={isAlignToRight ? "initial" : 1}
         >
           {isPickerActive && channels.length > 0 && (
@@ -86,7 +89,7 @@ export const Root = ({
         <ContextualLine
           gridColumn="8"
           // The subtitle should be aligned with the title, not back button
-          marginLeft={href ? 12 : 0}
+          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
           __marginTop={href ? "-0.6rem" : 0}
         >
           {subtitle}

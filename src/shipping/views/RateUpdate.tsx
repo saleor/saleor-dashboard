@@ -29,6 +29,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { sectionNames } from "@dashboard/intl";
+import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/types";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
@@ -59,7 +60,6 @@ import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { type ShippingMethodPostalCodeRule } from "@saleor/sdk/dist/apollo/types";
 import { useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

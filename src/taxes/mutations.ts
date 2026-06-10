@@ -6,9 +6,6 @@ export const taxConfigurationUpdate = gql`
       errors {
         ...TaxConfigurationUpdateError
       }
-      taxConfiguration {
-        ...TaxConfiguration
-      }
     }
   }
 `;
@@ -25,9 +22,6 @@ export const taxCountryConfigurationUpdate = gql`
       errors {
         ...TaxCountryConfigurationUpdateError
       }
-      taxCountryConfiguration {
-        ...TaxCountryConfiguration
-      }
     }
   }
 `;
@@ -37,9 +31,6 @@ export const taxCountryConfigurationDelete = gql`
     taxCountryConfigurationDelete(countryCode: $countryCode) {
       errors {
         ...TaxCountryConfigurationDeleteError
-      }
-      taxCountryConfiguration {
-        ...TaxCountryConfiguration
       }
     }
   }

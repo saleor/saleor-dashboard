@@ -35,7 +35,8 @@ const useStyles = makeStyles(
           background: "none",
         },
         "& .ce-conversion-toolbar": {
-          background: theme.palette.background.paper,
+          background: vars.colors.background.default1,
+          color: vars.colors.text.default1,
         },
         "& .ce-header": {
           marginBottom: 0,
@@ -43,7 +44,7 @@ const useStyles = makeStyles(
         },
         "& .ce-inline-tool": {
           ...hover,
-          color: theme.palette.text.primary,
+          color: vars.colors.text.default1,
           height: 32,
           transition: theme.transitions.duration.short + "ms",
           width: 32,
@@ -51,9 +52,10 @@ const useStyles = makeStyles(
         "& .ce-inline-toolbar": {
           "& input": {
             background: "none",
+            color: vars.colors.text.default1,
           },
-          background: theme.palette.background.paper,
-          color: theme.palette.text.primary,
+          background: vars.colors.background.default1,
+          color: vars.colors.text.default1,
         },
         "& .ce-inline-toolbar__dropdown": {
           ...hover,
@@ -72,14 +74,25 @@ const useStyles = makeStyles(
         },
         "& .ce-toolbar__plus": {
           left: -9,
-          color: theme.palette.text.primary,
+          color: vars.colors.text.default1,
           ...hover,
         },
         "& .ce-popover": {
+          // EditorJS exposes its popover palette as CSS custom properties on .ce-popover.
+          // The visible background is .ce-popover__container { background: var(--color-background) },
+          // so we have to override the vars rather than the popover element itself.
+          "--color-background": vars.colors.background.default1,
+          "--color-text-primary": vars.colors.text.default1,
+          "--color-text-secondary": vars.colors.text.default2,
+          "--color-border": vars.colors.border.default1,
+          "--color-background-item-hover": vars.colors.background.default1Hovered,
+          "--color-background-item-focus": vars.colors.background.default1Focused,
           backgroundColor: vars.colors.background.default1,
         },
         "& .ce-popover__items": {
-          overflowY: "hidden",
+          // Adding the Table tool pushed the toolbox past the popover's max-height.
+          // Allow the list to scroll instead of clipping the overflowing items.
+          overflowY: "auto",
         },
         "& .ce-popover__item": {
           ...hover,
@@ -106,6 +119,37 @@ const useStyles = makeStyles(
         },
         "& .cdx-search-field": {
           backgroundColor: vars.colors.background.default1,
+        },
+        // @editorjs/table theming overrides.
+        // The plugin hardcodes light-theme colors and exposes them as CSS custom
+        // properties scoped to .tc-wrap / .tc-popover / .tc-toolbox. As with the
+        // .ce-popover block above, we override the vars (not the elements) so the
+        // table reads correctly in light and dark mode. The row/column settings
+        // popover mounts inside the editor holder, so it is themed here, not in "@global".
+        "& .tc-wrap": {
+          "--color-background": vars.colors.background.default1,
+          "--color-border": vars.colors.border.default1,
+          "--color-text-secondary": vars.colors.text.default2,
+          // Cell content is contenteditable and otherwise falls back to the browser
+          // default (black), unreadable on a dark surface — pin it to the theme text color.
+          color: vars.colors.text.default1,
+        },
+        // Row/column drag handle ("::" dots). The hovered color is hardcoded near-black,
+        // invisible in dark mode.
+        "& .tc-toolbox": {
+          "--toggler-dots-color": vars.colors.text.default2,
+          "--toggler-dots-color-hovered": vars.colors.text.default1,
+          // The toolbox (z-index:1, position:absolute) forms a stacking context below the
+          // sticky header row (.tc-row:first-child, z-index:2), so its settings popover gets
+          // covered by the header. Lift the whole toolbox above the header.
+          zIndex: 3,
+        },
+        // Row/column settings menu.
+        "& .tc-popover": {
+          "--color-background": vars.colors.background.default1,
+          "--color-border": vars.colors.border.default1,
+          "--color-background-hover": vars.colors.background.default1Hovered,
+          color: vars.colors.text.default1,
         },
       },
       root: {
@@ -156,6 +200,27 @@ const useStyles = makeStyles(
         minHeight: 56,
         padding: `${vars.spacing[6]} ${vars.spacing[2]}`,
         paddingBottom: vars.spacing[1.5],
+      },
+      // EditorJS renders tooltips into document.body, so we need to style them globally.
+      // Default colors are hardcoded in the library and lack contrast in dark mode.
+      // buttonDefaultPrimary auto-inverts across themes, so the tooltip always pops:
+      // light mode → dark tooltip + light text, dark mode → light tooltip + dark text.
+      "@global": {
+        ".ct:before, .ct:after": {
+          backgroundColor: `${vars.colors.background.buttonDefaultPrimary} !important`,
+        },
+        ".ct__content": {
+          color: `${vars.colors.text.buttonDefaultPrimary} !important`,
+        },
+        // Override EditorJS's hardcoded light-blue text selection (looks too bright in dark mode).
+        // Split into two rules — combining ::selection and ::-moz-selection in one comma list
+        // invalidates the whole rule in browsers that don't recognise the other pseudo-element.
+        ".codex-editor ::selection": {
+          backgroundColor: `${vars.colors.background.accent1Pressed} !important`,
+        },
+        ".codex-editor ::-moz-selection": {
+          backgroundColor: `${vars.colors.background.accent1Pressed} !important`,
+        },
       },
     };
   },

@@ -116,7 +116,21 @@ export const fragmentOrderLine = gql`
     quantityFulfilled
     quantityToFulfill
     totalPrice {
+      gross {
+        ...MoneyWithFractionDigits
+      }
+      net {
+        ...Money
+      }
+      tax {
+        ...Money
+      }
+    }
+    undiscountedTotalPrice {
       ...TaxedMoney
+      tax {
+        ...Money
+      }
     }
     unitDiscount {
       amount
@@ -135,6 +149,10 @@ export const fragmentOrderLine = gql`
         amount
         currency
       }
+      tax {
+        amount
+        currency
+      }
     }
     unitPrice {
       gross {
@@ -145,9 +163,40 @@ export const fragmentOrderLine = gql`
         amount
         currency
       }
+      tax {
+        amount
+        currency
+      }
     }
+    taxRate
+    taxClass {
+      id
+      name
+    }
+    voucherCode
     thumbnail {
       url
+    }
+    discounts {
+      ...OrderLineDiscount
+    }
+  }
+`;
+
+export const fragmentOrderLineDiscount = gql`
+  fragment OrderLineDiscount on OrderLineDiscount {
+    id
+    type
+    name
+    translatedName
+    valueType
+    value
+    reason
+    total {
+      ...Money
+    }
+    unit {
+      ...Money
     }
   }
 `;
@@ -325,10 +374,14 @@ export const orderDiscount = gql`
     id
     type
     name
+    translatedName
     calculationMode: valueType
     value
     reason
     amount {
+      ...Money
+    }
+    total {
       ...Money
     }
   }
@@ -469,6 +522,13 @@ export const fragmentOrderDetails = gql`
       email
     }
     userEmail
+    voucher {
+      id
+      name
+      code
+      type
+    }
+    voucherCode
     shippingMethods {
       id
       name
@@ -525,46 +585,6 @@ export const fragmentShopOrderSettings = gql`
   }
 `;
 
-export const fragmentOrderFulfillLine = gql`
-  fragment OrderFulfillLine on OrderLine {
-    id
-    isShippingRequired
-    productName
-    quantity
-    allocations {
-      id
-      quantity
-      warehouse {
-        id
-        name
-      }
-    }
-    quantityFulfilled
-    quantityToFulfill
-    variant {
-      id
-      name
-      sku
-      preorder {
-        endDate
-      }
-      attributes {
-        values {
-          id
-          name
-        }
-      }
-      stocks {
-        ...Stock
-      }
-      trackInventory
-    }
-    thumbnail(size: 64) {
-      url
-    }
-  }
-`;
-
 export const fragmentOrderLineStockData = gql`
   fragment OrderLineStockData on OrderLine {
     id
@@ -580,6 +600,39 @@ export const fragmentOrderLineStockData = gql`
       stocks {
         ...Stock
       }
+    }
+  }
+`;
+
+export const fragmentOrderFulfillLine = gql`
+  fragment OrderFulfillLine on OrderLine {
+    ...OrderLineStockData
+    isShippingRequired
+    productName
+    allocations {
+      id
+      warehouse {
+        name
+      }
+    }
+    quantityFulfilled
+    variant {
+      id
+      name
+      sku
+      preorder {
+        endDate
+      }
+      attributes {
+        values {
+          id
+          name
+        }
+      }
+      trackInventory
+    }
+    thumbnail(size: 64) {
+      url
     }
   }
 `;
@@ -642,6 +695,13 @@ export const transactionItemFragment = gql`
     lastDigits
   }
 
+  fragment GiftCardPaymentMethodDetails on GiftCardPaymentMethodDetails {
+    name
+    brand
+    lastChars
+    isSaleorGiftcard
+  }
+
   fragment TransactionItem on TransactionItem {
     ...TransactionBaseItem
     pspReference
@@ -663,8 +723,14 @@ export const transactionItemFragment = gql`
       ... on CardPaymentMethodDetails {
         ...CardPaymentMethodDetails
       }
+      ... on GiftCardPaymentMethodDetails {
+        ...GiftCardPaymentMethodDetails
+      }
       ... on OtherPaymentMethodDetails {
         ...OtherPaymentMethodDetails
+      }
+      ... on GiftCardPaymentMethodDetails {
+        ...GiftCardPaymentMethodDetails
       }
     }
     events {

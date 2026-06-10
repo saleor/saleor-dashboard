@@ -1,5 +1,5 @@
 import { Locale, LocaleContext } from "@dashboard/components/Locale";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { type ReactNode } from "react";
 
 import useDateLocalize from "./useDateLocalize";
@@ -38,7 +38,7 @@ describe("useDateLocalize", () => {
     const formatted = result.current("2024-01-15T14:30:00Z", "lll");
 
     // Assert
-    expect(formatted).toBe("Jan 15, 2024 2:30 PM");
+    expect(formatted).toBe("Jan 15, 2024, 2:30 PM");
   });
 
   it("formats date with PL locale", () => {

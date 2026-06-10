@@ -7,14 +7,13 @@ import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppE
 import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
+import { SaleorProvider } from "@dashboard/legacy-sdk";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
-import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { SaleorProvider } from "@saleor/sdk";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
@@ -54,6 +53,7 @@ import { NotFound } from "./NotFound";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
+import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext";
 
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));
@@ -85,6 +85,7 @@ const TranslationsSection = lazy(() => import("./translations"));
 const WarehouseSection = lazy(() => import("./warehouses"));
 const ConfigurationSection = lazy(() => import("./configuration"));
 const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
+const HomePage = lazy(() => import("./home/HomePage").then(m => ({ default: m.HomePage })));
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
 );
@@ -114,7 +115,6 @@ const handleLegacyTheming = (): void => {
 handleLegacyTheming();
 
 const App = (): JSX.Element => (
-  // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
@@ -192,6 +192,9 @@ const Routes = () => {
                 <Switch>
                   {legacyRedirects}
                   <SectionRoute exact path="/" component={WelcomePage} />
+                  <SectionRoute exact path="/home" component={HomePage} />
+                  <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
+                  <SectionRoute exact path="/home/widgets" component={HomePage} />
                   <SectionRoute
                     permissions={[
                       PermissionEnum.MANAGE_PRODUCTS,
@@ -214,7 +217,12 @@ const Routes = () => {
                     component={CollectionSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_USERS]}
+                    permissions={[
+                      PermissionEnum.MANAGE_USERS,
+                      PermissionEnum.MANAGE_ORDERS,
+                      PermissionEnum.MANAGE_STAFF,
+                    ]}
+                    matchPermission="any"
                     path="/customers"
                     component={CustomerSection}
                   />

@@ -6,9 +6,13 @@ import {
 } from "../GiftCardUpdateFormProvider";
 
 const useGiftCardUpdate = (): Pick<GiftCardUpdateFormConsumerData, "opts"> => {
-  const { opts } = useContext(GiftCardUpdateFormContext);
+  const context = useContext(GiftCardUpdateFormContext);
 
-  return { opts };
+  if (!context) {
+    throw new Error("useGiftCardUpdate must be used within GiftCardUpdateFormProvider");
+  }
+
+  return { opts: context.opts };
 };
 
 export default useGiftCardUpdate;

@@ -29,6 +29,7 @@ import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
 import {
+  orderDraftUrl,
   orderListUrl,
   type OrderListUrlDialog,
   type OrderListUrlQueryParams,
@@ -86,7 +87,7 @@ const OrderList = ({ params }: OrderListProps) => {
           defaultMessage: "Draft order created",
         }),
       });
-      navigate(orderUrl(data.draftOrderCreate.order.id));
+      navigate(orderDraftUrl(data.draftOrderCreate.order.id));
     },
   });
   const limitOpts = useShopLimitsQuery({

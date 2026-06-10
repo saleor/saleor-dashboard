@@ -9,7 +9,7 @@ const isFilterKey = (key: string): boolean => /^\d+$/.test(key);
 const stripLeadingQuestionMark = (search: string): string =>
   search.startsWith("?") ? search.slice(1) : search;
 
-export interface FilterUrlState {
+interface FilterUrlState {
   search: string;
   filterParams: Record<string, unknown>;
   preservedParams: Record<string, unknown>;

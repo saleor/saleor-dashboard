@@ -1,7 +1,6 @@
-// @ts-strict-ignore
 import { createContext } from "react";
 
-const TimezoneContext = createContext<string>(undefined);
+const TimezoneContext = createContext<string | undefined>(undefined);
 
 const { Consumer: TimezoneConsumer, Provider: TimezoneProvider } = TimezoneContext;
 

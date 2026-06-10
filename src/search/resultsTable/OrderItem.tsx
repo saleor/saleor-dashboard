@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { type GlobalSearchQuery } from "@dashboard/graphql";
-import { orderUrl } from "@dashboard/orders/urls";
+import { orderDetailsUrl } from "@dashboard/orders/urls";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,14 +22,15 @@ export const OrderItem = ({
   const { theme } = useTheme();
 
   const { color, localized } = getPaymentLabel(intl, theme, node.chargeStatus, node.paymentStatus);
+  const orderHref = orderDetailsUrl(node.id, undefined, node.status);
 
   return (
-    <Row href={orderUrl(node.id)} className={className} onClick={onClick}>
-      <TypeCell href={orderUrl(node.id)}>
+    <Row href={orderHref} className={className} onClick={onClick}>
+      <TypeCell href={orderHref}>
         <FormattedMessage id="XPruqs" defaultMessage="Order" />
       </TypeCell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)}>
+        <LinkCell href={orderHref}>
           <Box display="flex" alignItems="center" justifyContent="center" gap={5}>
             <Box>
               <Box
@@ -50,7 +51,7 @@ export const OrderItem = ({
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)}>
+        <LinkCell href={orderHref}>
           <Box display="flex" alignItems="center" gap={0.5} paddingLeft={5}>
             <Text fontSize={2} fontWeight="medium" color="default2">
               #
@@ -62,14 +63,14 @@ export const OrderItem = ({
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)}>
+        <LinkCell href={orderHref}>
           <Text size={2} fontWeight="medium" color="default2" paddingLeft={5}>
             {node?.total?.gross?.currency}
           </Text>
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)}>
+        <LinkCell href={orderHref}>
           <Text
             size={2}
             fontWeight="medium"
@@ -83,10 +84,10 @@ export const OrderItem = ({
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)} />
+        <LinkCell href={orderHref} />
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={orderUrl(node.id)}>
+        <LinkCell href={orderHref}>
           <DisplayDate date={node?.updatedAt} />
         </LinkCell>
       </GridTable.Cell>

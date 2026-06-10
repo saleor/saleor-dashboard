@@ -35,7 +35,7 @@ import {
   orderDraftListUrl,
   type OrderDraftListUrlDialog,
   type OrderDraftListUrlQueryParams,
-  orderUrl,
+  orderDraftUrl,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -75,7 +75,7 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
           defaultMessage: "Draft order created",
         }),
       });
-      navigate(orderUrl(data.draftOrderCreate.order.id));
+      navigate(orderDraftUrl(data.draftOrderCreate.order.id));
     },
   });
   const { channel } = useAppChannel(false);
@@ -162,7 +162,7 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
       <OrderDraftListPage
         // @ts-expect-error - due to strict-ignores, this prop is not typed properly but it is passed.
         onRowClick={item => {
-          navigate(orderUrl(item));
+          navigate(orderDraftUrl(item));
         }}
         selectedFilterPreset={selectedPreset}
         filterOpts={getFilterOpts(params)}

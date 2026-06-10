@@ -5,7 +5,6 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -29,24 +28,23 @@ import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Button, Divider } from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
-import { useContext } from "react";
+import { Divider } from "@saleor/macaw-ui-next";
+import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import OrderChannelSectionCard from "../OrderChannelSectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
-import OrderHistory, { type FormData as HistoryFormData } from "../OrderHistory";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
+import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/LinePriceWaterfallModal";
+import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
-import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
+import { OrderUnfulfilledProductsCard } from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
 import {
@@ -63,7 +61,7 @@ interface OrderDetailsPageProps {
     name: string;
   }>;
   loading: boolean;
-  saveButtonBarState: ConfirmButtonTransitionState;
+  saveButtonBarState?: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (id: string, data: OrderDraftDetailsProductsFormData) => void;
@@ -95,7 +93,7 @@ interface OrderDetailsPageProps {
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
-  onSubmit: (data: MetadataIdSchema) => SubmitPromise;
+  onSubmit?: (data: MetadataIdSchema) => SubmitPromise;
 }
 
 const OrderDetailsPage = (props: OrderDetailsPageProps) => {
@@ -139,6 +137,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const orderDiscountContext = useContext(OrderDiscountContext);
+  const [pricingLineId, setPricingLineId] = useState<string | null>(null);
+  const pricingWaterfall = useOrderLinePriceWaterfall({ order, lineId: pricingLineId });
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -147,7 +147,15 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     shop?.fulfillmentAutoApprove && !shop?.fulfillmentAllowUnpaid && !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(line => line.quantityToFulfill > 0);
   const handleSubmit = async (data: MetadataIdSchema) => {
+    if (!onSubmit) {
+      return [];
+    }
+
     const result = await onSubmit(data);
+
+    if (Array.isArray(result)) {
+      return result;
+    }
 
     return getMutationErrors(result);
   };
@@ -199,197 +207,202 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     path: orderListUrl(),
   });
 
-  return (
-    <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
-      {({ submit }) => {
-        return (
-          <DetailPageLayout>
-            <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <Box position="relative" marginRight={3}>
-                <Button
-                  variant="secondary"
-                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                  onClick={onOrderShowMetadata}
-                  data-test-id="show-order-metadata"
-                  title="Edit order metadata"
-                />
-                <Box position="absolute" __top="-4px" __right="-4px">
-                  <Ripple model={rippleOrderMetadata} />
-                </Box>
-              </Box>
+  const renderLayout = (submit?: () => SubmitPromise<any[]>) => (
+    <DetailPageLayout withSavebar={isOrderUnconfirmed}>
+      <TopNav href={backLinkUrl} title={<Title order={order} />} actionsGap={3}>
+        <TopNav.MetadataButton
+          onClick={onOrderShowMetadata}
+          data-test-id="show-order-metadata"
+          title={intl.formatMessage(messages.editOrderMetadata)}
+          ripple={rippleOrderMetadata}
+        />
 
-              <TopNav.Menu
-                dataTestId="menu"
-                items={[
-                  ...selectCardMenuItems,
-                  ...extensionMenuItems,
-                  {
-                    label: intl.formatMessage(messages.openGraphiQL),
-                    onSelect: openPlaygroundURL,
-                    testId: "graphiql-redirect",
-                  },
-                ]}
-              />
-            </TopNav>
+        <TopNav.Menu
+          dataTestId="menu"
+          items={[
+            ...selectCardMenuItems,
+            ...extensionMenuItems,
+            {
+              label: intl.formatMessage(messages.openGraphiQL),
+              onSelect: openPlaygroundURL,
+              testId: "graphiql-redirect",
+            },
+          ]}
+        />
+      </TopNav>
 
-            <DetailPageLayout.Content data-test-id="order-fulfillment">
-              {!isOrderUnconfirmed ? (
-                <OrderUnfulfilledProductsCard
-                  showFulfillmentAction={canFulfill}
-                  notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
-                  lines={unfulfilled}
-                  onFulfill={onOrderFulfill}
-                  loading={loading}
-                  onOrderLineShowMetadata={onOrderLineShowMetadata}
-                />
-              ) : (
-                <>
-                  <OrderDraftDetails
-                    order={order}
-                    errors={errors}
-                    loading={loading}
-                    onOrderLineShowMetadata={onOrderLineShowMetadata}
-                    onOrderLineAdd={onOrderLineAdd}
-                    onOrderLineChange={onOrderLineChange}
-                    onOrderLineRemove={onOrderLineRemove}
-                  />
-                  <CardSpacer />
-                </>
-              )}
-              {order?.fulfillments?.map(fulfillment => (
-                <OrderFulfillmentCard
-                  dataTestId="fulfilled-order-section"
-                  key={fulfillment.id}
-                  fulfillment={fulfillment}
-                  fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+      <DetailPageLayout.Content data-test-id="order-fulfillment">
+        {!isOrderUnconfirmed ? (
+          <OrderUnfulfilledProductsCard
+            showFulfillmentAction={canFulfill}
+            notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
+            lines={unfulfilled}
+            onFulfill={onOrderFulfill}
+            loading={loading}
+            onOrderLineShowMetadata={onOrderLineShowMetadata}
+            onShowLinePriceBreakdown={setPricingLineId}
+          />
+        ) : (
+          <>
+            <OrderDraftDetails
+              order={order}
+              errors={errors}
+              loading={loading}
+              onOrderLineShowMetadata={onOrderLineShowMetadata}
+              onOrderLineAdd={onOrderLineAdd}
+              onOrderLineChange={onOrderLineChange}
+              onOrderLineRemove={onOrderLineRemove}
+            />
+            <CardSpacer />
+          </>
+        )}
+        {order?.fulfillments?.map(fulfillment => (
+          <OrderFulfillmentCard
+            dataTestId="fulfilled-order-section"
+            key={fulfillment.id}
+            fulfillment={fulfillment}
+            fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+            order={order}
+            onOrderLineShowMetadata={onOrderLineShowMetadata}
+            onShowLinePriceBreakdown={setPricingLineId}
+            onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
+            onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
+            onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
+            onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+          />
+        ))}
+
+        {order && !isOrderUnconfirmed && (
+          <>
+            <OrderSummary
+              order={order}
+              onMarkAsPaid={onMarkAsPaid}
+              useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
+              onLegacyPaymentsApiCapture={onPaymentCapture}
+              onLegacyPaymentsApiRefund={onPaymentRefund}
+              onLegacyPaymentsApiVoid={onPaymentVoid}
+            />
+            <CardSpacer />
+
+            {orderShouldUseTransactions(order) && (
+              <>
+                <OrderTransactionsSection
                   order={order}
-                  onOrderLineShowMetadata={onOrderLineShowMetadata}
-                  onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
-                  onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
-                  onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
-                  onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentVoid={onPaymentVoid}
+                  onAddManualTransaction={onAddManualTransaction}
+                  onRefundAdd={onRefundAdd}
                 />
-              ))}
+                <CardSpacer />
+              </>
+            )}
+          </>
+        )}
 
-              {order && !isOrderUnconfirmed && (
-                <>
-                  <OrderSummary
-                    order={order}
-                    onMarkAsPaid={onMarkAsPaid}
-                    useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
-                    onLegacyPaymentsApiCapture={onPaymentCapture}
-                    onLegacyPaymentsApiRefund={onPaymentRefund}
-                    onLegacyPaymentsApiVoid={onPaymentVoid}
-                  />
-                  <CardSpacer />
+        {order && isOrderUnconfirmed && orderDiscountContext && (
+          <>
+            <OrderSummary
+              order={order}
+              onMarkAsPaid={onMarkAsPaid}
+              useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
+              onLegacyPaymentsApiCapture={onPaymentCapture}
+              onLegacyPaymentsApiRefund={onPaymentRefund}
+              onLegacyPaymentsApiVoid={onPaymentVoid}
+              isEditable
+              onShippingMethodEdit={onShippingMethodEdit}
+              errors={errors}
+              {...orderDiscountContext}
+            />
+            <CardSpacer />
 
-                  {orderShouldUseTransactions(order) && (
-                    <>
-                      <OrderTransactionsSection
-                        order={order}
-                        shop={shop}
-                        onTransactionAction={onTransactionAction}
-                        onPaymentCapture={onPaymentCapture}
-                        onPaymentVoid={onPaymentVoid}
-                        onAddManualTransaction={onAddManualTransaction}
-                        onRefundAdd={onRefundAdd}
-                      />
-                      <CardSpacer />
-                    </>
-                  )}
-                </>
-              )}
-
-              {order && isOrderUnconfirmed && orderDiscountContext && (
-                <>
-                  <OrderSummary
-                    order={order}
-                    onMarkAsPaid={onMarkAsPaid}
-                    useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
-                    onLegacyPaymentsApiCapture={onPaymentCapture}
-                    onLegacyPaymentsApiRefund={onPaymentRefund}
-                    onLegacyPaymentsApiVoid={onPaymentVoid}
-                    isEditable
-                    onShippingMethodEdit={onShippingMethodEdit}
-                    errors={errors}
-                    {...orderDiscountContext}
-                  />
-                  <CardSpacer />
-
-                  {orderShouldUseTransactions(order) && (
-                    <OrderTransactionsSection
-                      order={order}
-                      shop={shop}
-                      onTransactionAction={onTransactionAction}
-                      onPaymentCapture={onPaymentCapture}
-                      onPaymentVoid={onPaymentVoid}
-                      onAddManualTransaction={onAddManualTransaction}
-                      onRefundAdd={onRefundAdd}
-                    />
-                  )}
-                </>
-              )}
-
-              <OrderHistory
-                history={order?.events}
-                onNoteUpdateLoading={onNoteUpdateLoading}
-                orderCurrency={order?.total?.gross.currency}
-                onNoteAdd={onNoteAdd}
-                onNoteUpdate={onNoteUpdate}
-              />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <OrderCustomer
-                canEditAddresses={canEditAddresses}
-                canEditCustomer={false}
+            {orderShouldUseTransactions(order) && (
+              <OrderTransactionsSection
                 order={order}
-                errors={errors}
-                onBillingAddressEdit={onBillingAddressEdit}
-                onShippingAddressEdit={onShippingAddressEdit}
-                onProfileView={onProfileView}
+                shop={shop}
+                onTransactionAction={onTransactionAction}
+                onPaymentCapture={onPaymentCapture}
+                onPaymentVoid={onPaymentVoid}
+                onAddManualTransaction={onAddManualTransaction}
+                onRefundAdd={onRefundAdd}
               />
-              <CardSpacer />
-              <Divider />
-              <OrderChannelSectionCard channel={order?.channel} />
-              <CardSpacer />
-              <Divider />
-              {!isOrderUnconfirmed && (
-                <>
-                  <OrderInvoiceList
-                    invoices={order?.invoices}
-                    onInvoiceClick={onInvoiceClick}
-                    onInvoiceGenerate={onInvoiceGenerate}
-                    onInvoiceSend={onInvoiceSend}
-                  />
-                  <CardSpacer />
-                  <Divider />
-                </>
-              )}
-              <OrderCustomerNote note={maybe(() => order.customerNote)} />
-              {ORDER_DETAILS_WIDGETS.length > 0 && order?.id && (
-                <>
-                  <CardSpacer />
-                  <Divider />
-                  <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
-                </>
-              )}
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(orderListUrl())} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={allowSave()}
-              >
-                {saveLabel?.confirm}
-              </Savebar.ConfirmButton>
-            </Savebar>
-          </DetailPageLayout>
-        );
-      }}
-    </Form>
+            )}
+          </>
+        )}
+
+        <OrderHistory
+          history={order?.events}
+          onNoteUpdateLoading={onNoteUpdateLoading}
+          orderCurrency={order?.total?.gross.currency}
+          onNoteAdd={onNoteAdd}
+          onNoteUpdate={onNoteUpdate}
+        />
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar>
+        <OrderCustomer
+          canEditAddresses={canEditAddresses}
+          canEditCustomer={false}
+          order={order}
+          errors={errors}
+          onBillingAddressEdit={onBillingAddressEdit}
+          onShippingAddressEdit={onShippingAddressEdit}
+          onProfileView={onProfileView}
+        />
+        <CardSpacer />
+        <Divider />
+        {!isOrderUnconfirmed && (
+          <>
+            <OrderInvoiceList
+              invoices={order?.invoices}
+              onInvoiceClick={onInvoiceClick}
+              onInvoiceGenerate={onInvoiceGenerate}
+              onInvoiceSend={onInvoiceSend}
+            />
+            <CardSpacer />
+            <Divider />
+          </>
+        )}
+        <OrderCustomerNote note={maybe(() => order.customerNote)} />
+        {ORDER_DETAILS_WIDGETS.length > 0 && order?.id && (
+          <>
+            <CardSpacer />
+            <Divider />
+            <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
+          </>
+        )}
+      </DetailPageLayout.RightSidebar>
+      {isOrderUnconfirmed && submit && saveButtonBarState && (
+        <Savebar>
+          <Savebar.Spacer />
+          <Savebar.CancelButton onClick={() => navigate(orderListUrl())} />
+          <Savebar.ConfirmButton
+            transitionState={saveButtonBarState}
+            onClick={submit}
+            disabled={allowSave()}
+          >
+            {saveLabel?.confirm}
+          </Savebar.ConfirmButton>
+        </Savebar>
+      )}
+      {pricingWaterfall && (
+        <LinePriceWaterfallModal
+          waterfall={pricingWaterfall}
+          onClose={() => setPricingLineId(null)}
+        />
+      )}
+    </DetailPageLayout>
   );
+
+  if (isOrderUnconfirmed && onSubmit) {
+    return (
+      <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
+        {({ submit }) => renderLayout(submit)}
+      </Form>
+    );
+  }
+
+  return renderLayout();
 };
 
 OrderDetailsPage.displayName = "OrderDetailsPage";

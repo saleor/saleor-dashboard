@@ -13,27 +13,33 @@ jobs:
       contents: read
       deployments: write
     steps:
-      - uses: rlespinasse/github-slug-action@3.1.0
+      - uses: rlespinasse/github-slug-action@e4699e49fcf890a3172a02c56ba78d867dbb9fd5 # 3.1.0
       - name: Set domain
         id: set-domain
         # Set test instance domain based on branch name slug
         run: |
-          echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "domain=${GITHUB_HEAD_REF_SLUG_URL}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_TESTENVS_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_TESTENVS_CICD_ROLE_NAME }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Remove S3 directory
-        run: aws s3 rm --recursive s3://${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}/${{ steps.set-domain.outputs.domain }}/
+        run: aws s3 rm --recursive "s3://$BUCKET/$DOMAIN"/
+        env:
+          BUCKET: ${{ secrets.AWS_TEST_DEPLOYMENT_BUCKET }}
+          DOMAIN: ${{ steps.set-domain.outputs.domain }}
 
       - name: Invalidate cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_TEST_CF_DIST_ID }} --paths "/${{ steps.set-domain.outputs.domain }}/*"
+        run: aws cloudfront create-invalidation --distribution-id "$CF_DIST_ID" --paths "/${DOMAIN}/*"
+        env:
+          CF_DIST_ID: ${{ secrets.AWS_TEST_CF_DIST_ID }}
+          DOMAIN: ${{ steps.set-domain.outputs.domain }}
 
       - name: Mark deployment as deactivated
-        uses: bobheadxi/deployments@v0.4.2
+        uses: bobheadxi/deployments@2666faab9444f09ccd666f2dbe67687a5f6512f0 # v0.4.2
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}

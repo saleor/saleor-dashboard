@@ -1,6 +1,6 @@
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 
 import { useMetadataForm } from "./useMetadataForm";
 

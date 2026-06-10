@@ -1,8 +1,32 @@
-type IssueSeverity = "error" | "warning" | "info";
+export type IssueSeverity = "error" | "warning" | "info";
+
+/**
+ * Diagnostic categories mirror the two orthogonal concerns that Saleor 3.23
+ * direct stock-availability mode now treats as independent:
+ *
+ * - "purchasability": can a customer add this product to cart? Driven by
+ *   warehouses, stock, channel-listing, variant pricing, and publication.
+ * - "shipping": can a customer complete checkout for a shippable order?
+ *   Driven by shipping zones and shipping methods.
+ *
+ * In legacy mode the two are entangled (no shipping zones implies no
+ * availability), but the categorization is still informative because it tells
+ * the user which surface area each issue affects.
+ *
+ * Canonical issue → category mapping (kept in sync by `runAvailabilityChecks`
+ * so each individual check function stays focused on detection only):
+ *
+ *   purchasability:  channel-inactive, no-variants, no-variant-in-channel,
+ *                    no-variant-priced, no-warehouses, no-stock,
+ *                    stock-outside-channel-warehouses
+ *   shipping:        no-shipping-zones, warehouse-not-in-zone
+ */
+export type AvailabilityIssueCategory = "purchasability" | "shipping";
 
 export interface AvailabilityIssue {
   id: string;
   severity: IssueSeverity;
+  category: AvailabilityIssueCategory;
   channelId: string;
   channelName: string;
   message: string;
@@ -117,4 +141,18 @@ export interface DiagnosticsResult {
   hasWarnings: boolean;
   isLoading: boolean;
   permissions: DiagnosticsPermissions;
+  /**
+   * Mirrors `Shop.useLegacyShippingZoneStockAvailability` (Saleor 3.23+).
+   * Surfaced here so consuming UI can adapt copy without re-querying the shop.
+   */
+  useLegacyShippingZoneStockAvailability: boolean;
+  /**
+   * Mirrors `productType.isShippingRequired`. Surfaced here so UI layers
+   * (notably the public-API verification badge) can suppress
+   * shipping-related warnings for non-shippable products like digital goods,
+   * activation codes, or license keys — which can be purchased without any
+   * shipping configuration. Defaults to `true` (the conservative legacy
+   * assumption) when the product is not yet known.
+   */
+  isShippingRequired: boolean;
 }

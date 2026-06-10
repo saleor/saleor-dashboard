@@ -52,7 +52,7 @@ const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
 
 const PAGE_STATIC = ["pageTypes"];
 
-const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy"];
+const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy", "code"];
 
 const COLLECTION_STATICS = ["channel", "published"];
 

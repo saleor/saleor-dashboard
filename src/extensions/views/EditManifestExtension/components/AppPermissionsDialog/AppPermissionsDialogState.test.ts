@@ -1,5 +1,5 @@
 import { PermissionEnum } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, waitFor } from "@testing-library/react";
 
 import { useAppPermissionsDialogState } from "./AppPermissionsDialogState";
 
@@ -26,7 +26,6 @@ describe("useAppPermissionsDialogState", () => {
     test("One added permission", async () => {
       const {
         result: { current },
-        waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
           PermissionEnum.MANAGE_CHANNELS,
@@ -54,7 +53,6 @@ describe("useAppPermissionsDialogState", () => {
     test("One removed permission", async () => {
       const {
         result: { current },
-        waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
           PermissionEnum.MANAGE_CHANNELS,
@@ -78,7 +76,6 @@ describe("useAppPermissionsDialogState", () => {
     test("One added and one removed permission", async () => {
       const {
         result: { current },
-        waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
           PermissionEnum.MANAGE_CHANNELS,

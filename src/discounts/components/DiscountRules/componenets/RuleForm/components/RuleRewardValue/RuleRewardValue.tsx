@@ -1,12 +1,13 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { type Rule } from "@dashboard/discounts/models";
-import { Box, Input } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../../../messages";
 import { DiscountTypeSwitch } from "../DiscountTypeSwitch";
 import { RuleInputWrapper } from "../RuleInputWrapper";
+import styles from "./RuleRewardValue.module.css";
 
 interface RuleRewardPriceProps {
   currencySymbol: string | null;
@@ -24,34 +25,42 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
   const { field: rewardValueType } = useController<Rule, "rewardValue">({
     name: "rewardValue",
   });
+  const rewardValueError = error || formState.errors?.rewardValue?.message;
 
   return (
-    <Box display="flex" gap={2}>
-      <DiscountTypeSwitch
-        onChange={type => rewardTypeField.onChange(type)}
-        selected={discountType}
-        currencySymbol={currencySymbol}
-      />
-      <RuleInputWrapper width="100%">
-        <Input
-          value={rewardValueType.value || ""}
-          onBlur={rewardValueType.onBlur}
-          name={rewardValueType.name}
-          ref={rewardValueType.ref}
-          onChange={e => {
-            const value = parseInt(e.target.value, 10);
-
-            rewardValueType.onChange(Number.isNaN(value) ? null : value);
-          }}
-          error={!!error || !!formState.errors?.rewardValue?.message}
-          helperText={error || formState.errors?.rewardValue?.message}
-          disabled={disabled || rewardValueType.disabled}
-          type="number"
-          size="small"
-          label={intl.formatMessage(messages.discountValue)}
-          data-test-id="reward-value-input"
+    <div className={styles.container}>
+      <div className={styles.wrapper} data-error={!!rewardValueError}>
+        <DiscountTypeSwitch
+          onChange={type => rewardTypeField.onChange(type)}
+          selected={discountType}
+          currencySymbol={currencySymbol}
         />
-      </RuleInputWrapper>
-    </Box>
+        <div className={styles.divider} />
+        <RuleInputWrapper width="100%">
+          <Input
+            value={rewardValueType.value || ""}
+            onBlur={rewardValueType.onBlur}
+            name={rewardValueType.name}
+            ref={rewardValueType.ref}
+            onChange={e => {
+              const value = parseInt(e.target.value, 10);
+
+              rewardValueType.onChange(Number.isNaN(value) ? null : value);
+            }}
+            error={!!rewardValueError}
+            disabled={disabled || rewardValueType.disabled}
+            type="number"
+            size="small"
+            label={intl.formatMessage(messages.discountValue)}
+            data-test-id="reward-value-input"
+          />
+        </RuleInputWrapper>
+      </div>
+      {rewardValueError && (
+        <Text className={styles.error} color="critical1" size={2}>
+          {rewardValueError}
+        </Text>
+      )}
+    </div>
   );
 };

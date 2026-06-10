@@ -137,7 +137,7 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
   [OrderEventsEnum.OTHER]: CircleIcon,
 };
 
-export interface TimelineEventProps {
+interface TimelineEventProps {
   children?: React.ReactNode;
   date: string | React.ReactNode;
   title?: React.ReactNode;
@@ -213,13 +213,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   const infoIcon = eventDataString ? (
     <Tooltip>
       <Tooltip.Trigger>
-        <Box
-          as="span"
-          className={styles.infoIcon}
-          cursor="pointer"
-          display="inline-flex"
-          alignItems="center"
-        >
+        <Box as="span" className={styles.infoIcon} display="inline-flex" alignItems="center">
           <InfoIcon size={16} color={ICON_COLOR} />
         </Box>
       </Tooltip.Trigger>

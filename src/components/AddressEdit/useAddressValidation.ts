@@ -4,7 +4,7 @@ import {
   CountryCode,
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
-import { type ChoiceValue } from "@saleor/sdk/dist/apollo/types";
+import { type ChoiceValue } from "@dashboard/legacy-sdk/apollo/types";
 
 interface AreaChoices {
   label: string;

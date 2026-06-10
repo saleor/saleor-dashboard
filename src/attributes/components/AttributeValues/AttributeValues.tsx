@@ -1,4 +1,3 @@
-import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
@@ -13,7 +12,6 @@ import {
   type AttributeValueListFragment,
 } from "@dashboard/graphql";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import {
   type ListProps,
   type PaginateListProps,
@@ -138,21 +136,16 @@ const AttributeValues = ({
           <Box display="flex" flexDirection="column" gap={4}>
             {/* Search input - always visible when search is enabled */}
             {showSearch && (
-              <Box position="relative">
-                <SearchInput
-                  value={searchQuery}
-                  onChange={onSearchChange!}
-                  placeholder={intl.formatMessage({
-                    id: "9seX5T",
-                    defaultMessage: "Search attribute values...",
-                    description: "attribute values search placeholder",
-                  })}
-                  data-test-id="attribute-value-search-input"
-                />
-                <Box position="absolute" __top="-4px" __right="-4px">
-                  <Ripple model={rippleAttributeValuesSearch} />
-                </Box>
-              </Box>
+              <SearchInput
+                value={searchQuery}
+                onChange={onSearchChange!}
+                placeholder={intl.formatMessage({
+                  id: "9seX5T",
+                  defaultMessage: "Search attribute values...",
+                  description: "attribute values search placeholder",
+                })}
+                data-test-id="attribute-value-search-input"
+              />
             )}
             {/* No values at all (not searching) */}
             {values.length === 0 && !searchQuery ? (

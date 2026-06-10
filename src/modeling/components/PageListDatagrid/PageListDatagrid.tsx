@@ -1,6 +1,6 @@
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
@@ -21,6 +21,7 @@ interface PageListDatagridProps extends ListProps, SortPage<PageListUrlSortField
   pages: Pages | undefined;
   loading: boolean;
   hasRowHover?: boolean;
+  searchQuery?: string;
   onSelectPageIds: (rowsIndex: number[], clearSelection: () => void) => void;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
@@ -33,6 +34,7 @@ export const PageListDatagrid = ({
   settings,
   onUpdateListSettings,
   hasRowHover,
+  searchQuery,
   onRowClick,
   rowAnchor,
   onSelectPageIds,
@@ -116,7 +118,11 @@ export const PageListDatagrid = ({
         verticalBorder={false}
         rows={pages?.length ?? 0}
         availableColumns={visibleColumns}
-        emptyText={intl.formatMessage(messages.empty)}
+        emptyText={
+          searchQuery
+            ? intl.formatMessage(messages.emptySearch, { query: searchQuery })
+            : intl.formatMessage(messages.empty)
+        }
         onRowSelectionChange={onSelectPageIds}
         getCellContent={getCellContent}
         getCellError={() => false}

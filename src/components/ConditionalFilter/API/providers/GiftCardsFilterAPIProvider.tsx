@@ -8,6 +8,7 @@ import {
   CustomerHandler,
   GiftCardTagsHandler,
   type Handler,
+  NoopValuesHandler,
   ProductsHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";
@@ -33,6 +34,10 @@ const createAPIHandler = (
 
   if (rowType === "usedBy") {
     return new CustomerHandler(client, inputValue);
+  }
+
+  if (rowType === "code") {
+    return new NoopValuesHandler([]);
   }
 
   if (rowType === "isActive") {

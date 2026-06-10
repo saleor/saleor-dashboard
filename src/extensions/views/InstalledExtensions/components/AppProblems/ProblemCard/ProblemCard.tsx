@@ -28,6 +28,7 @@ interface ProblemCardProps {
   problem: AppProblem;
   appId: string;
   appType?: AppTypeEnum | null;
+  isActive?: boolean | null;
   index: number;
   onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
@@ -37,6 +38,7 @@ export const ProblemCard = ({
   problem,
   appId,
   appType,
+  isActive,
   index,
   onClearProblem,
   hasManagedAppsPermission,
@@ -44,7 +46,7 @@ export const ProblemCard = ({
   const intl = useIntl();
   const critical = isProblemCritical(problem);
   const dismissed = isProblemDismissed(problem);
-  const actionLink = getActionLink(problem, appId, appType);
+  const actionLink = getActionLink(problem, appId, appType, isActive);
   const canForceClear =
     hasManagedAppsPermission && problem.__typename === "AppProblem" && !!onClearProblem;
 

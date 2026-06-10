@@ -78,22 +78,37 @@ export const messages = defineMessages({
     description: "Warning when channel has no warehouses",
   },
   noWarehousesDescription: {
-    id: "T7r26L",
-    defaultMessage: "Products in this channel cannot be fulfilled without warehouses.",
+    id: "icyljC",
+    defaultMessage:
+      "Without an assigned warehouse, this product will appear unavailable to customers in this channel and orders cannot be fulfilled.",
     description: "Description for no warehouses warning",
   },
 
-  // No shipping zones
+  // No shipping zones (legacy mode: blocks purchase)
   noShippingZones: {
     id: "8W1v0N",
     defaultMessage: 'No shipping zones for "{channelName}"',
     description: "Warning when channel has no shipping zones",
   },
   noShippingZonesDescription: {
-    id: "EAKKtg",
+    id: "vuOZYs",
     defaultMessage:
-      "Customers cannot checkout without shipping methods. Add shipping zones to this channel.",
+      "Without shipping zones, this product will appear unavailable to customers and orders cannot be shipped. Add at least one shipping zone to this channel.",
     description: "Description for no shipping zones warning",
+  },
+
+  // No shipping zones (direct warehouse-channel mode: shipping-only impact)
+  noShippingZonesShippingOnly: {
+    id: "Rt95cf",
+    defaultMessage: 'No shipping zones for "{channelName}"',
+    description: "Info when channel has no shipping zones in direct stock-availability mode",
+  },
+  noShippingZonesShippingOnlyDescription: {
+    id: "7CZ8Tp",
+    defaultMessage:
+      "Customers can browse and add this product to cart, but no shipping methods will be available at checkout. Add at least one shipping zone to this channel to enable shipping.",
+    description:
+      "Description for no shipping zones info when shop uses direct warehouse-channel stock availability",
   },
 
   // No stock
@@ -115,9 +130,24 @@ export const messages = defineMessages({
     description: "Warning when warehouse with stock not in shipping zone",
   },
   warehouseNotInZoneDescription: {
-    id: "QfK+5Q",
-    defaultMessage: "Warehouses with stock are not assigned to any shipping zone in this channel.",
-    description: "Description for warehouse not in zone warning",
+    id: "ksIgHn",
+    defaultMessage:
+      "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability.",
+    description:
+      "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
+  },
+
+  // Stock exists but in warehouses not assigned to the channel
+  stockOutsideChannelWarehouses: {
+    id: "uaZNZS",
+    defaultMessage: 'Stock is in warehouses not assigned to "{channelName}"',
+    description: "Info when product has stock only in warehouses not linked to the channel",
+  },
+  stockOutsideChannelWarehousesDescription: {
+    id: "/8a4cU",
+    defaultMessage:
+      "This product has stock in warehouses that are not linked to this channel. Assign the warehouse to the channel for the stock to count toward availability.",
+    description: "Description for stock-outside-channel-warehouses info",
   },
 
   // Actions
@@ -255,6 +285,18 @@ export const messages = defineMessages({
     defaultMessage: "Not visible",
     description: "Product is not visible via public API",
   },
+  publicApiReportsStockNoCoverage: {
+    id: "vZN+nE",
+    defaultMessage: "Reports stock, but no coverage",
+    description:
+      "Public API verification: API says product has stock, but no shipping zones cover the channel (legacy mode)",
+  },
+  publicApiBrowseableNoShipping: {
+    id: "yD1Ylr",
+    defaultMessage: "Browseable, can't ship",
+    description:
+      "Public API verification: customer can browse the product but no shipping method is available at checkout (direct mode, no shipping zones)",
+  },
   publicApiVariantsInStock: {
     id: "7G7tg3",
     defaultMessage: "{count, plural, one {# variant in stock} other {# variants in stock}}",
@@ -279,6 +321,48 @@ export const messages = defineMessages({
     id: "vLc9Td",
     defaultMessage: "Public API verification",
     description: "Title for public API verification section",
+  },
+
+  // Mode-aware reassurance shown beneath the verification badge after a run.
+  // Tells the user what the public-API result means for the shop's active
+  // stock-availability mode (Saleor 3.23+).
+  verificationReassurance_purchasableLegacy: {
+    id: "QEXGYB",
+    defaultMessage:
+      "The public API confirms the product is purchasable for customers covered by the channel's shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in legacy mode",
+  },
+  verificationReassurance_purchasableDirect: {
+    id: "uL33aH",
+    defaultMessage:
+      "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones.",
+    description: "Reassurance under verification badge when product is purchasable in direct mode",
+  },
+  verificationReassurance_notPurchasable: {
+    id: "UuX9YV",
+    defaultMessage:
+      "The public API does not return this product as purchasable. Review the issues listed above to resolve.",
+    description: "Reassurance under verification badge when product is not purchasable",
+  },
+  verificationReassurance_notVisible: {
+    id: "tFx7UX",
+    defaultMessage:
+      "The public API cannot find this product. Confirm it is published and listed in this channel.",
+    description: "Reassurance under verification badge when product is not visible to public API",
+  },
+  verificationReassurance_notReachableLegacy: {
+    id: "AFZfCS",
+    defaultMessage:
+      "The public API reports the product as in stock, but no shipping zones are configured for this channel — no customer is currently covered, so checkout cannot complete.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in legacy mode",
+  },
+  verificationReassurance_notDeliverableDirect: {
+    id: "A6mmoM",
+    defaultMessage:
+      "The public API reports the product as in stock — direct mode resolves stock from the warehouse-channel link without requiring a shipping zone. However, no shipping zones are configured for this channel, so customers cannot complete checkout.",
+    description:
+      "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
   },
   testButton: {
     defaultMessage: "Test",
@@ -521,6 +605,42 @@ export const messages = defineMessages({
     defaultMessage: "All channels configured correctly",
     description: "Message when no diagnostic issues found",
   },
+  allChannelsHealthyWithAdvisory: {
+    id: "kGBmBz",
+    defaultMessage: "All channels configured correctly · 1 advisory",
+    description: "Message when no errors or warnings, but exactly one info-level advisory exists",
+  },
+  allChannelsHealthyWithAdvisories: {
+    id: "reogdY",
+    defaultMessage: "All channels configured correctly · {count} advisories",
+    description: "Message when no errors or warnings, but more than one info-level advisory exists",
+  },
+
+  // Stock availability mode indicator (Saleor 3.23+)
+  stockAvailabilityModeLegacy: {
+    id: "7sSOgb",
+    defaultMessage: "Stock availability uses shipping zones (legacy)",
+    description:
+      "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=true",
+  },
+  stockAvailabilityModeLegacyTooltip: {
+    id: "GYBoVb",
+    defaultMessage:
+      "Stock is considered available only when the warehouse is both assigned to this channel and covered by an active shipping zone for the destination address.",
+    description: "Tooltip explanation for legacy stock-availability mode",
+  },
+  stockAvailabilityModeDirect: {
+    id: "BfhUcl",
+    defaultMessage: "Stock availability uses direct warehouse-channel link",
+    description:
+      "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=false",
+  },
+  stockAvailabilityModeDirectTooltip: {
+    id: "tSmJPv",
+    defaultMessage:
+      "Stock is considered available whenever the warehouse is assigned to this channel. Shipping zones only affect order fulfillment, not availability.",
+    description: "Tooltip explanation for direct stock-availability mode",
+  },
   issuesSummary: {
     id: "v/tz3W",
     defaultMessage:
@@ -532,10 +652,49 @@ export const messages = defineMessages({
     defaultMessage: "{count, plural, one {# issue} other {# issues}}",
     description: "Badge showing number of issues in a channel",
   },
-  configurationTitle: {
-    id: "f71A+Y",
-    defaultMessage: "Delivery configuration",
-    description: "Title for delivery configuration section in channel",
+  // Issue category headings — group diagnostic issues by which surface area
+  // they affect (Saleor 3.23+ direct mode treats these as orthogonal).
+  categoryPurchasabilityTitle: {
+    id: "WZ2kxO",
+    defaultMessage: "Purchasability",
+    description:
+      "Section heading for issues that affect whether a customer can purchase (warehouses, stock, channel listing, pricing)",
+  },
+  categoryShippingTitle: {
+    id: "LYKO9m",
+    defaultMessage: "Shipping",
+    description:
+      "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
+  },
+  // Accessible (aria-label) names for the issue badge variants. They are the
+  // textual equivalent of the rendered icon for assistive technology, and
+  // also serve as a stable query handle in tests.
+  issueBadgeIconError: {
+    id: "kyOwDW",
+    defaultMessage: "Error",
+    description: "aria-label for the error icon inside a channel issue badge",
+  },
+  issueBadgeIconWarning: {
+    id: "/0QqzO",
+    defaultMessage: "Warning",
+    description: "aria-label for the warning icon inside a channel issue badge",
+  },
+  // Accessible names for the per-issue callout icons rendered inside the
+  // expanded channel body. Same idea as `issueBadgeIcon*`.
+  issueCalloutIconError: {
+    id: "eXcTEd",
+    defaultMessage: "Error",
+    description: "aria-label for the error icon inside an availability issue callout",
+  },
+  issueCalloutIconWarning: {
+    id: "iBY7aI",
+    defaultMessage: "Warning",
+    description: "aria-label for the warning icon inside an availability issue callout",
+  },
+  issueCalloutIconInfo: {
+    id: "cYjzDx",
+    defaultMessage: "Information",
+    description: "aria-label for the info icon inside an availability issue callout",
   },
   warehousesConfigured: {
     id: "MFC20a",

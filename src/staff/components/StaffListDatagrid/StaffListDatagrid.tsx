@@ -1,5 +1,5 @@
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
@@ -62,7 +62,7 @@ export const StaffListDatagrid = ({
       intl,
       currentTheme,
     }),
-    [staffMembers, intl, visibleColumns],
+    [staffMembers, intl, visibleColumns, currentTheme],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {

@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import type React from "react";
 import { useHistory } from "react-router";
 import { MemoryRouter } from "react-router-dom";
@@ -82,11 +82,8 @@ describe("useModalUrlValueProvider", () => {
       };
 
       // Act
-      const hook = renderHook<
-        { initialState: InitialProductAPIState },
-        ReturnType<typeof useModalUrlValueProvider>
-      >(
-        ({ initialState }) =>
+      const hook = renderHook(
+        ({ initialState }: { initialState: InitialProductAPIState }) =>
           useModalUrlValueProvider(initialState, emptyProductFetchingParams, "product"),
         {
           wrapper,

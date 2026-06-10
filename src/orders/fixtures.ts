@@ -1056,6 +1056,7 @@ export const ORDER_AMOUNT = 234.93;
 
 export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
+  voucher: null,
   giftCards: [],
   displayGrossPrices: true,
   actions: [OrderAction.CAPTURE, OrderAction.MARK_AS_PAID, OrderAction.REFUND, OrderAction.VOID],
@@ -1389,16 +1390,23 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               __typename: "Image" as const,
               url: placeholder,
             },
+            discounts: [],
             totalPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 159.42,
                 currency: "USD",
+                fractionDigits: 2,
               },
               net: {
                 __typename: "Money",
                 amount: 159.42,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1413,6 +1421,29 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               net: {
                 __typename: "Money",
                 amount: 79.71,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
+                currency: "USD",
+              },
+            },
+            undiscountedTotalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1434,6 +1465,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               net: {
                 __typename: "Money",
                 amount: 79.71,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1475,6 +1511,9 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 },
               ],
             },
+            taxRate: 0,
+            voucherCode: null,
+            taxClass: null,
           },
           quantity: 1,
         },
@@ -1522,16 +1561,23 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               __typename: "Image" as const,
               url: placeholder,
             },
+            discounts: [],
             totalPrice: {
               __typename: "TaxedMoney",
               gross: {
                 __typename: "Money",
                 amount: 159.42,
                 currency: "USD",
+                fractionDigits: 2,
               },
               net: {
                 __typename: "Money",
                 amount: 159.42,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1546,6 +1592,29 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               net: {
                 __typename: "Money",
                 amount: 79.71,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
+                currency: "USD",
+              },
+            },
+            undiscountedTotalPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              net: {
+                __typename: "Money",
+                amount: 159.42,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1567,6 +1636,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               net: {
                 __typename: "Money",
                 amount: 79.71,
+                currency: "USD",
+              },
+              tax: {
+                __typename: "Money",
+                amount: 0,
                 currency: "USD",
               },
             },
@@ -1608,6 +1682,9 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
                 },
               ],
             },
+            taxRate: 0,
+            voucherCode: null,
+            taxClass: null,
           },
           quantity: 1,
         },
@@ -1657,16 +1734,23 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 55.53,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
           amount: 55.53,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1681,6 +1765,29 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         net: {
           __typename: "Money",
           amount: 18.51,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
+      },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 55.53,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 55.53,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1702,6 +1809,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         net: {
           __typename: "Money",
           amount: 18.51,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1741,6 +1853,9 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           },
         ],
       },
+      taxRate: 0,
+      voucherCode: null,
+      taxClass: null,
     },
     {
       __typename: "OrderLine",
@@ -1768,16 +1883,23 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
           amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1792,6 +1914,29 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         net: {
           __typename: "Money",
           amount: 79.71,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
+      },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1813,6 +1958,11 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         net: {
           __typename: "Money",
           amount: 79.71,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -1852,6 +2002,9 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
           },
         ],
       },
+      taxRate: 0,
+      voucherCode: null,
+      taxClass: null,
     },
   ],
   metadata: [
@@ -1963,10 +2116,12 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   totalCancelPending: prepareMoney(0),
   totalRemainingGrant: prepareMoney(0),
   transactions: orderTransactions,
+  voucherCode: null,
 });
 
 export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as const,
+  voucher: null,
   chargeStatus: OrderChargeStatusEnum.NONE,
   displayGrossPrices: true,
   authorizeStatus: OrderAuthorizeStatusEnum.NONE,
@@ -2048,16 +2203,23 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
           amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2072,6 +2234,29 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         net: {
           __typename: "Money",
           amount: 79.71,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
+      },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2093,6 +2278,11 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         net: {
           __typename: "Money" as const,
           amount: 65.95,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money" as const,
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2132,6 +2322,9 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           },
         ],
       },
+      taxRate: 0,
+      voucherCode: null,
+      taxClass: null,
     },
     {
       __typename: "OrderLine" as const,
@@ -2159,16 +2352,23 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         __typename: "Image" as const,
         url: placeholder,
       },
+      discounts: [],
       totalPrice: {
         __typename: "TaxedMoney",
         gross: {
           __typename: "Money",
           amount: 159.42,
           currency: "USD",
+          fractionDigits: 2,
         },
         net: {
           __typename: "Money",
           amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2183,6 +2383,29 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         net: {
           __typename: "Money",
           amount: 79.71,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
+          currency: "USD",
+        },
+      },
+      undiscountedTotalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 159.42,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money",
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2204,6 +2427,11 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         net: {
           __typename: "Money" as const,
           amount: 68.2,
+          currency: "USD",
+        },
+        tax: {
+          __typename: "Money" as const,
+          amount: 0,
           currency: "USD",
         },
       },
@@ -2243,6 +2471,9 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
           },
         ],
       },
+      taxRate: 0,
+      voucherCode: null,
+      taxClass: null,
     },
   ],
   metadata: [],
@@ -2316,6 +2547,7 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   },
   user: null,
   userEmail: null,
+  voucherCode: null,
 });
 
 export const draftOrderWithTransactions: OrderDetailsFragment = {

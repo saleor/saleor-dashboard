@@ -94,6 +94,10 @@ interface DatagridProps {
   renderRowActions?: (index: number) => ReactElement;
   rowActionBarWidth?: number;
   onRowClick?: (item: Item) => void;
+  /** Fired when a cell is activated via keyboard (Enter/Space) or double-click.
+   *  Glide's `onCellActivated` covers the keyboard equivalent of `onCellClicked`.
+   *  Use this together with `onRowClick` to give clickable cells keyboard parity. */
+  onCellActivated?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
@@ -117,7 +121,7 @@ interface DatagridProps {
   onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
 }
 
-const Datagrid = ({
+export const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,
@@ -131,6 +135,7 @@ const Datagrid = ({
   renderRowActions,
   rowActionBarWidth = defaultRowActionBarWidth,
   onRowClick,
+  onCellActivated,
   getColumnTooltipContent,
   readonly = false,
   rowMarkers = "checkbox",
@@ -392,20 +397,28 @@ const Datagrid = ({
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
-  const drawHeader: DrawHeaderCallback = useCallback(args => {
-    const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+  const drawHeader: DrawHeaderCallback = useCallback(
+    args => {
+      const { ctx, rect, isSelected, spriteManager, theme, column } = args;
 
-    if (isSelected && column.id !== "empty") {
-      const iconSize = 16;
-      const padding = 8;
-      const x = rect.x + rect.width - iconSize - padding;
-      const y = rect.y + (rect.height - iconSize) / 2;
+      if (isSelected) {
+        ctx.fillStyle = themeValues.colors.background.default1;
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+      }
 
-      spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
-    }
+      if (isSelected && column.id !== "empty") {
+        const iconSize = 16;
+        const padding = 8;
+        const x = rect.x + rect.width - iconSize - padding;
+        const y = rect.y + (rect.height - iconSize) / 2;
 
-    return false;
-  }, []);
+        spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
+      }
+
+      return false;
+    },
+    [themeValues],
+  );
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
@@ -541,6 +554,7 @@ const Datagrid = ({
                     onColumnResize={handleColumnResize}
                     onHeaderClicked={handleHeaderClicked}
                     onCellClicked={handleCellClick}
+                    onCellActivated={onCellActivated}
                     onGridSelectionChange={handleGridSelectionChange}
                     onItemHovered={handleRowHover}
                     getRowThemeOverride={handleGetThemeOverride}
@@ -629,5 +643,3 @@ const Datagrid = ({
     </FullScreenContainer>
   );
 };
-
-export default Datagrid;

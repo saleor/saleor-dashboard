@@ -107,6 +107,7 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
       products: [],
       tags: [],
       usedBy: [],
+      code: [],
     });
   });
 
@@ -185,6 +186,7 @@ describe("TokenArray / fetchingParams / toGiftCardsFetchingParams", () => {
       products: [],
       tags: [],
       usedBy: [],
+      code: [],
     };
 
     const token = {
@@ -203,6 +205,7 @@ describe("TokenArray / fetchingParams / toGiftCardsFetchingParams", () => {
       products: ["product-1", "product-2", "product-3"],
       tags: [],
       usedBy: [],
+      code: [],
     });
   });
 });

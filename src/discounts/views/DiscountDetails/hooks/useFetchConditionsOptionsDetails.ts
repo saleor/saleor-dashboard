@@ -52,7 +52,14 @@ export function getAllConditionsOptionsIdsToFetch(
   }
 
   const allConditionsIds = data.promotion.rules.reduce((acc, rule) => {
-    reduceConditionsLabels(rule.cataloguePredicate, acc);
+    /**
+     * TODO: Saleor stores predicate as JSON, which for Dashboard is "unknown".
+     * We need to create a Zod schema that will parse it to known shape. If parsing fails, Sentry should be triggered.
+     * Currently code implicitly casts, which should be ok, but is not entirely safe
+     */
+    const predicate = rule.cataloguePredicate as CataloguePredicateAPI;
+
+    reduceConditionsLabels(predicate, acc);
 
     return acc;
   }, initAllConditionsIds);

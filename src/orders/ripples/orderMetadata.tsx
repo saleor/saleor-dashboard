@@ -3,12 +3,12 @@ import { type Ripple } from "@dashboard/ripples/types";
 export const rippleOrderMetadata: Ripple = {
   type: "improvement",
   ID: "order-metadata",
-  TTL_seconds: 60 * 60 * 24 * 3, // 3 days
+  TTL_seconds: 60 * 60 * 24 * 7,
+  dateAdded: new Date(2026, 4, 31),
   content: {
-    oneLiner: "Order metadata editing moved to dialog",
-    contextual: "Order metadata is now edited via this button which opens a dedicated dialog",
+    oneLiner: "Order metadata in header",
+    contextual: "Order metadata is now edited from this button, which opens a dedicated dialog.",
     global:
-      "Order metadata editing has been moved from an inline card to a dedicated dialog for better organization and easier editing.",
+      "Order metadata has moved from the order details page into a header button that opens a dedicated dialog. Public and private metadata are easier to find and edit.",
   },
-  dateAdded: new Date("2025-11-10"),
 };

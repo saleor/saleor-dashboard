@@ -1,3 +1,4 @@
+import { type CataloguePredicateAPI, type OrderPredicateAPI } from "@dashboard/discounts/types";
 import {
   type PromotionRuleDetailsFragment,
   type PromotionRuleInput,
@@ -35,27 +36,39 @@ export const mapAPIRuleToForm = (
   }
 
   if (type === PromotionTypeEnum.CATALOGUE) {
+    /**
+     * TODO: Saleor stores predicate as JSON, which for Dashboard is "unknown".
+     * We need to create a Zod schema that will parse it to known shape. If parsing fails, Sentry should be triggered.
+     * Currently code implicitly casts, which should be ok, but is not entirely safe
+     */
+    const predicate = rule.cataloguePredicate as CataloguePredicateAPI;
+
     const catalogueConditions = prepareCatalogueRuleConditions(
-      rule.cataloguePredicate,
+      predicate,
       labelMaps.conditionsValues,
     );
 
     return {
       ...baseRuleData,
       conditions: catalogueConditions,
-      hasPredicateNestedConditions: hasPredicateNestedConditions(rule.cataloguePredicate),
+      hasPredicateNestedConditions: hasPredicateNestedConditions(predicate),
     };
   }
 
   if (type === PromotionTypeEnum.ORDER) {
-    const orderconditions = prepareOrderConditions(
-      rule.orderPredicate?.discountedObjectPredicate ?? {},
-    );
+    /**
+     * TODO: Saleor stores predicate as JSON, which for Dashboard is "unknown".
+     * We need to create a Zod schema that will parse it to known shape. If parsing fails, Sentry should be triggered.
+     * Currently code implicitly casts, which should be ok, but is not entirely safe
+     */
+    const predicate = rule.orderPredicate as OrderPredicateAPI;
+
+    const orderconditions = prepareOrderConditions(predicate?.discountedObjectPredicate ?? {});
 
     return {
       ...baseRuleData,
       conditions: orderconditions,
-      hasPredicateNestedConditions: hasPredicateNestedConditions(rule.orderPredicate),
+      hasPredicateNestedConditions: hasPredicateNestedConditions(predicate),
     };
   }
 

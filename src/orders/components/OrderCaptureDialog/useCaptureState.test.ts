@@ -1,5 +1,5 @@
 import { type IMoney } from "@dashboard/utils/intl";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { type CaptureStateInput, useCaptureState } from "./useCaptureState";
 

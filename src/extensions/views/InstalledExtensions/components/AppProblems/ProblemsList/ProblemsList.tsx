@@ -20,6 +20,7 @@ interface ProblemsListProps {
   problems: AppProblem[];
   appId: string;
   appType?: AppTypeEnum | null;
+  isActive?: boolean | null;
   onClearProblem?: (problemId: string) => void;
   hasManagedAppsPermission?: boolean;
   showInline?: boolean;
@@ -32,6 +33,7 @@ export const ProblemsList = ({
   problems,
   appId,
   appType,
+  isActive,
   onClearProblem,
   hasManagedAppsPermission,
   showInline = true,
@@ -90,6 +92,7 @@ export const ProblemsList = ({
               problem={problem}
               appId={appId}
               appType={appType}
+              isActive={isActive}
               index={index}
               onClearProblem={onClearProblem}
               hasManagedAppsPermission={hasManagedAppsPermission}
@@ -144,6 +147,7 @@ export const ProblemsList = ({
                 problem={problem}
                 appId={appId}
                 appType={appType}
+                isActive={isActive}
                 index={index}
                 onClearProblem={onClearProblem}
                 hasManagedAppsPermission={hasManagedAppsPermission}

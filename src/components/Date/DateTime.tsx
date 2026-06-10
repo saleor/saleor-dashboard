@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
@@ -16,7 +15,7 @@ export const DateTime = ({ date, plain }: DateTimeProps) => {
   const currentDate = useCurrentDate();
 
   const getTitle = (value: string, locale?: string, tz?: string) => {
-    let date = moment(value).locale(locale);
+    let date: moment.Moment = locale ? moment(value).locale(locale) : moment(value);
 
     if (tz !== undefined) {
       date = date.tz(tz);

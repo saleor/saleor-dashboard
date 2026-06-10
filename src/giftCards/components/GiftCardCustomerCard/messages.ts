@@ -1,20 +1,11 @@
 import { defineMessages } from "react-intl";
 
 export const giftCardCustomerCardMessages = defineMessages({
-  customerGiftCardsPresentSubtitle: {
-    id: "vzce9B",
-    defaultMessage: "Only five newest gift cards are shown here",
-    description: "customer gift cards card subtitle",
-  },
   customerGiftCardsAbsentSubtitle: {
-    id: "ZrdoSS",
-    defaultMessage: "There are no gift cards used by this customer",
-    description: "customer gift cards card no cards subtitle",
-  },
-  customerGiftCardsViewAllButton: {
-    id: "FQc5z6",
-    defaultMessage: "View All",
-    description: "customer gift cards card view all button",
+    id: "2eZn56",
+    defaultMessage:
+      "This customer hasn't redeemed any gift cards yet. Newly issued cards appear here once they're used at checkout.",
+    description: "customer gift cards empty state placeholder",
   },
   customerGiftCardsIssueNewCardButton: {
     id: "mbOuGl",
@@ -22,8 +13,8 @@ export const giftCardCustomerCardMessages = defineMessages({
     description: "customer gift cards card issue button",
   },
   customerGiftCardsCardTitle: {
-    id: "ZJJ2vA",
-    defaultMessage: "Gift Cards used by this customer",
-    description: "customer gift cards card title",
+    id: "9UYpUB",
+    defaultMessage: "Gift cards",
+    description: "customer gift cards card header",
   },
 });

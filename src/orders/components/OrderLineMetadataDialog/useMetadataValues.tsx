@@ -1,7 +1,4 @@
-import {
-  type OrderLineMetadataDetailsFragment,
-  useOrderLinesMetadataLazyQuery,
-} from "@dashboard/graphql";
+import { useOrderLinesMetadataLazyQuery } from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { useEffect, useMemo } from "react";
 
@@ -17,24 +14,27 @@ export const useMetadataValues = ({
   const hasManageProducts = useHasManageProductsPermission();
   const [fetchMetadata, { data, loading }] = useOrderLinesMetadataLazyQuery();
 
-  useEffect(() => {
-    if (open) {
-      fetchMetadata({
-        variables: { id: orderId, hasManageProducts },
-      });
-    }
-  }, [fetchMetadata, hasManageProducts, open, orderId]);
+  useEffect(
+    function fetchOrderLinesMetadataWhenDialogOpens() {
+      if (open) {
+        fetchMetadata({
+          variables: { id: orderId, hasManageProducts },
+        });
+      }
+    },
+    [fetchMetadata, hasManageProducts, open, orderId],
+  );
 
   const lineData = useMemo(() => {
     if (!lineId) {
-      return null;
+      return undefined;
     }
 
     return data?.order?.lines.find(line => line.id === lineId);
   }, [data, lineId]);
 
   return {
-    data: lineData as OrderLineMetadataDetailsFragment,
+    data: lineData,
     loading,
   } as const;
 };

@@ -1,25 +1,19 @@
 blockExoticSubdeps: true
 
-minimumReleaseAge: 720 # 12h
+# Requires versions to be older than 21 days
+# Follows recommendations from https://snyk.io/articles/npm-security-best-practices-shai-hulud-attack/
+minimumReleaseAge: 30240 # in minutes
 minimumReleaseAgeExclude:
   - "@saleor/app-sdk"
+  - "@saleor/macaw-ui"
+  # https://github.com/protobufjs/protobuf.js/security/advisories/GHSA-xq3m-2v4x-88gg
+  - "protobufjs@7.5.5"
 
 trustPolicy: no-downgrade
+
 trustPolicyExclude:
-  - vite@6.4.1
-  # due to "@types/node@20.19.31"
-  - "undici-types@6.21.0"
-  # due to eslint-plugin-import@2.32.0
+  # Semver packages are not signed before 7.x. Check pnpm-lock which package is still using 6.x and plan upgrade entire tree.
   - "semver@6.3.1"
-  # due to @graphql-tools/url-loader@8.0.33
-  - "jose@4.15.9"
-  - "@graphql-tools/executor-graphql-ws@2.0.7"
-  - "@graphql-tools/executor-http@1.3.3"
-  - "@graphql-tools/wrap@10.1.4"
-  - "@graphql-tools/delegate@10.2.23"
-  - "@graphql-tools/batch-execute@9.0.19"
-  # due to @graphql-codegen/import-types-preset@2.2.6
-  - "ua-parser-js@1.0.41"
 
 packages:
   - "."
@@ -48,10 +42,15 @@ overrides:
   "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1"
   "js-yaml@<3.14.2": ">=3.14.2"
   "preact@>=10.28.0 <10.28.2": ">=10.28.2"
-  "read-yaml-file@<2.0.0": ">=2.1.0"
+  "read-yaml-file@<2.0.0": "2.1.0"
   "tmp@<0.2.4": ">=0.2.4"
   "vite@>=6.0.0 <6.4.1": ">=6.4.1"
   "ws@>=8.0.0 <8.17.1": ">=8.17.1"
+  "rollup@>=4.0.0 <4.59.0": ">=4.59.0"
+  "immutable@<3.8.3": ">=3.8.3"
+  "@tootallnate/once@<3.0.1": ">=3.0.1"
+  "protobufjs@<7.5.6": ">=7.5.6 < 8"
+  "flatted@<=3.4.1": ">=3.4.2"
 
 auditConfig:
   ignoreCves:
@@ -59,3 +58,6 @@ auditConfig:
     # consumers (test-exclude, glob@7, etc.) that call require('minimatch')
     # as a function. All affected paths are dev/build tools only.
     - CVE-2026-26996
+    # minimatch ReDoS variants — same dev/build-only rationale as above
+    - CVE-2026-27903
+    - CVE-2026-27904

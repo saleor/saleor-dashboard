@@ -151,6 +151,7 @@ export const voucherFragment = gql`
 
 export const voucherCodeFragment = gql`
   fragment VoucherCode on VoucherCode {
+    id
     code
     used
     isActive

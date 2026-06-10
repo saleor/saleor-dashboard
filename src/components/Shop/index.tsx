@@ -19,11 +19,11 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
   const { authenticated, user } = useUser();
   const analytics = useAnalytics();
   const { data } = useShopInfoQuery({
-    skip: !authenticated || !user,
+    skip: !authenticated,
   });
 
   useEffect(() => {
-    if (data) {
+    if (data && user) {
       const { shop } = data;
 
       analytics.initialize({
@@ -32,7 +32,7 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, user]);
 
   return (
     <>

@@ -91,6 +91,7 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount #vouchers #e2e",
   ).not.toBeVisible();
   await vouchersPage.clickSaveButton();
   await vouchersPage.expectSuccessBanner();
+  await vouchersPage.waitForGrid();
 
   const codesRowsAfterSave = await vouchersPage.getNumberOfGridRows();
 

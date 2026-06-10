@@ -3,7 +3,8 @@ import {
   ConditionalFilters,
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
-import { Box, Button, CloseIcon, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
+import { XIcon } from "lucide-react";
 import { type FC } from "react";
 import { useIntl } from "react-intl";
 
@@ -55,7 +56,7 @@ export const ModalFilters: FC = () => {
               <Text>{formatMessage(conditionalFilterMessages.popoverTitle)}</Text>
               <Box display="flex" alignItems="center" gap={2}>
                 <Popover.Close>
-                  <Button variant="tertiary" icon={<CloseIcon />} onClick={clearEmpty} />
+                  <Button variant="tertiary" icon={<XIcon />} onClick={clearEmpty} />
                 </Popover.Close>
               </Box>
             </Box>
