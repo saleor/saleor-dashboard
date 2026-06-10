@@ -16,6 +16,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import eslintGraphql from "@graphql-eslint/eslint-plugin";
 import reactYouMightNotNeedAnEffect from "eslint-plugin-react-you-might-not-need-an-effect";
+import depend from "eslint-plugin-depend";
 
 export default tseslint.config(
   globalIgnores([
@@ -48,6 +49,12 @@ export default tseslint.config(
   reactHooks.configs.flat["recommended-latest"],
   reactRefresh.configs.vite,
   reactYouMightNotNeedAnEffect.configs.recommended,
+  {
+    plugins: { depend },
+    rules: {
+      "depend/ban-dependencies": "warn",
+    },
+  },
   {
     settings: {
       react: {
