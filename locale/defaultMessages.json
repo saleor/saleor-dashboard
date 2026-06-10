@@ -903,6 +903,10 @@
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products will be only fulfilled from this warehouse stock"
   },
+  "3XDi5q": {
+    "context": "deprecation banner title shown in the sidebar",
+    "string": "Action required: Saleor upgrade required"
+  },
   "3a5wL8": {
     "string": "Active"
   },
@@ -2664,10 +2668,6 @@
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
-  },
-  "EaM4Ss": {
-    "context": "deprecation banner shown in the sidebar",
-    "string": "This Saleor version is deprecated and scheduled for automatic upgrade on {date}. To avoid disruption to your store operations, please upgrade immediately or contact Saleor Support for urgent assistance."
   },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
@@ -5589,10 +5589,6 @@
   "VceXrc": {
     "context": "initial balance filter label",
     "string": "Initial balance"
-  },
-  "Vcocsr": {
-    "context": "deprecation banner title shown in the sidebar",
-    "string": "Action required: Saleor upgrade required"
   },
   "Vdy5g7": {
     "context": "weight units type",
@@ -8819,6 +8815,10 @@
   "pkjXPD": {
     "context": "order status",
     "string": "Fulfilled"
+  },
+  "plJ8R3": {
+    "context": "deprecation banner shown in the sidebar",
+    "string": "This Saleor version is deprecated and scheduled for automatic upgrade on {date}. To avoid disruption to your store operations, please upgrade immediately or contact Saleor Support for urgent assistance."
   },
   "ppLwx3": {
     "context": "number of categories",
