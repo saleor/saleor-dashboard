@@ -237,7 +237,7 @@ function usePageForm(
   };
   const getSubmitData = async (): Promise<PageSubmitData> => ({
     ...data,
-    ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
+    ...(pageExists ? {} : getMetadata(formData, isMetadataModified, isPrivateMetadataModified)),
     ...getPublicationData(formData),
     content: await richText.getValue(),
     attributes: mergeAttributes(

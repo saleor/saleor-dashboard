@@ -62,6 +62,7 @@ interface PageDetailsPageProps {
   selectedPageType?: PageDetailsFragment["pageType"];
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onRemove: () => void;
+  onShowMetadata?: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
@@ -96,6 +97,7 @@ const PageDetailsPage = ({
   selectedPageType,
   attributeValues,
   onRemove,
+  onShowMetadata,
   onSubmit,
   fetchPageTypes,
   fetchMorePageTypes,
@@ -178,7 +180,16 @@ const PageDetailsPage = ({
             <TopNav
               href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
+              actionsGap={3}
             >
+              {pageExists && onShowMetadata && (
+                <TopNav.MetadataButton
+                  onClick={onShowMetadata}
+                  disabled={!page}
+                  data-test-id="show-page-metadata"
+                  title={intl.formatMessage(messages.editPageMetadata)}
+                />
+              )}
               {canTranslate && (
                 <TranslationsButton
                   onClick={() =>
@@ -233,8 +244,12 @@ const PageDetailsPage = ({
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
-              <CardSpacer />
-              <Metadata data={data} onChange={handlers.changeMetadata} />
+              {!pageExists && (
+                <>
+                  <CardSpacer />
+                  <Metadata data={data} onChange={handlers.changeMetadata} />
+                </>
+              )}
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <VisibilityCard

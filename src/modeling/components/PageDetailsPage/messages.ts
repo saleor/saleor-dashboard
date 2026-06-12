@@ -31,4 +31,9 @@ export const messages = defineMessages({
     defaultMessage: "Set availability date",
     description: "model availability date label",
   },
+  editPageMetadata: {
+    id: "bWGTLR",
+    defaultMessage: "Edit model metadata",
+    description: "model detail page, top-bar metadata button tooltip",
+  },
 });

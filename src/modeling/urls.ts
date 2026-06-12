@@ -42,7 +42,7 @@ export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
 export const pagePath = (id: string) => urlJoin(modelingSection, id);
-type PageUrlDialog = "remove" | "assign-attribute-value";
+type PageUrlDialog = "remove" | "assign-attribute-value" | "view-metadata";
 interface PageCreateUrlPageType {
   "page-type-id"?: string;
 }
