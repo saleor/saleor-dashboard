@@ -35,6 +35,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { modelingSection } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
@@ -213,6 +214,7 @@ const PageDetailsPage = ({
                   disabled={!page}
                   data-test-id="show-page-metadata"
                   title={intl.formatMessage(messages.editPageMetadata)}
+                  ripple={rippleModelMetadata}
                 />
               )}
               {canTranslate && (
