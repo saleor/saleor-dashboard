@@ -90,7 +90,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     },
   });
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-  const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({});
+  const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({
+    disableErrorHandling: true,
+  });
   const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
