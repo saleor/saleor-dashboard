@@ -1,11 +1,54 @@
-import { type PageDetailsFragment } from "@dashboard/graphql";
+import { UserContext } from "@dashboard/auth/useUser";
+import { type PageDetailsFragment, PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import { page } from "@dashboard/modeling/fixtures";
-import Wrapper from "@test/wrapper";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import PageDetailsPage from "./PageDetailsPage";
+
+const staffUser: UserFragment = {
+  __typename: "User",
+  id: "user-1",
+  email: "admin@example.com",
+  firstName: "Admin",
+  lastName: "User",
+  isStaff: true,
+  dateJoined: "2024-01-01T00:00:00Z",
+  metadata: [],
+  userPermissions: [
+    {
+      __typename: "UserPermission",
+      code: PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+      name: "Manage page types",
+    },
+  ],
+  avatar: null,
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
+};
+
+const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
+  <MemoryRouter>
+    <UserContext.Provider
+      value={{
+        login: undefined,
+        loginByExternalPlugin: undefined,
+        logout: undefined,
+        requestLoginByExternalPlugin: undefined,
+        authenticating: false,
+        isCredentialsLogin: false,
+        authenticated: true,
+        errors: [],
+        refetchUser: undefined,
+        user: staffUser,
+      }}
+    >
+      <ThemeProvider>{children}</ThemeProvider>
+    </UserContext.Provider>
+  </MemoryRouter>
+);
 
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -92,16 +135,12 @@ const renderPage = ({
   pageProp,
   onShowMetadata = jest.fn(),
 }: {
-  pageProp: PageDetailsFragment | null;
+  pageProp: PageDetailsFragment | null | undefined;
   onShowMetadata?: () => void;
-}) =>
-  render(
-    <Wrapper>
-      <MemoryRouter>
-        <PageDetailsPage {...defaultProps} page={pageProp} onShowMetadata={onShowMetadata} />
-      </MemoryRouter>
-    </Wrapper>,
-  );
+}): ReturnType<typeof render> =>
+  render(<PageDetailsPage {...defaultProps} page={pageProp} onShowMetadata={onShowMetadata} />, {
+    wrapper: Wrapper,
+  });
 
 describe("PageDetailsPage top nav", () => {
   it("renders the metadata button on edit view", () => {
@@ -140,5 +179,23 @@ describe("PageDetailsPage top nav", () => {
     // Assert
     expect(screen.queryByTestId("show-page-metadata")).not.toBeInTheDocument();
     expect(screen.getByTestId("metadata-mock")).toBeInTheDocument();
+    expect(screen.getByTestId("page-organize-content-mock")).toBeInTheDocument();
+  });
+
+  it("renders model type in the header on edit view", () => {
+    // Arrange & Act
+    renderPage({ pageProp: mockPage });
+
+    // Assert
+    expect(screen.getByTestId("model-type-display")).toBeInTheDocument();
+    expect(screen.queryByTestId("page-organize-content-mock")).not.toBeInTheDocument();
+  });
+
+  it("shows the actions menu when model type settings are available", () => {
+    // Arrange & Act
+    renderPage({ pageProp: mockPage });
+
+    // Assert
+    expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
   });
 });

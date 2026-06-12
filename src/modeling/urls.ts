@@ -41,6 +41,17 @@ export type PageListUrlQueryParams = BulkAction &
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
+/**
+ * Builds the model list URL pre-filtered by a single model type.
+ */
+export const pageListUrlWithPageType = (pageType?: { id: string }) => {
+  if (!pageType?.id) {
+    return pageListPath;
+  }
+
+  return pageListUrl({ pageTypes: [pageType.id] });
+};
+
 export const pagePath = (id: string) => urlJoin(modelingSection, id);
 type PageUrlDialog = "remove" | "assign-attribute-value" | "view-metadata";
 interface PageCreateUrlPageType {

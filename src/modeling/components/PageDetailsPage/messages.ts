@@ -36,4 +36,9 @@ export const messages = defineMessages({
     defaultMessage: "Edit model metadata",
     description: "model detail page, top-bar metadata button tooltip",
   },
+  openModelTypeSettings: {
+    id: "iMZEfi",
+    defaultMessage: "Model type settings",
+    description: "model detail page menu, opens model type configuration",
+  },
 });
