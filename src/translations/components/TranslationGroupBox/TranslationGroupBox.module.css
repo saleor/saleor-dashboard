@@ -1,0 +1,18 @@
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  transform: rotate(-90deg);
+}
+
+button[data-state="open"] .chevron,
+[data-state="open"] .chevron {
+  transform: rotate(0deg);
+}
+
+.content {
+  overflow: visible;
+  border-bottom-left-radius: var(--mu-border-radius-4);
+  border-bottom-right-radius: var(--mu-border-radius-4);
+}

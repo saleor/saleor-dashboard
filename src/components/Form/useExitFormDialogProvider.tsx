@@ -72,7 +72,19 @@ export function useExitFormDialogProvider() {
 
     if (value) {
       setEnableExitDialog(true);
+    } else if (!hasAnyFormsDirty()) {
+      setEnableExitDialog(false);
     }
+  };
+  const unregisterForm = (id: symbol) => {
+    delete formsData.current[id];
+
+    if (!hasAnyFormsDirty()) {
+      setEnableExitDialog(false);
+    }
+  };
+  const resetFormsState = () => {
+    setStateDefaultValues();
   };
   const setBlockNav = (value: boolean) => (blockNav.current = value);
   const setDefaultNavAction = () => (navAction.current = defaultValues.navAction);
@@ -160,6 +172,8 @@ export function useExitFormDialogProvider() {
     setIsSubmitting,
     setIsSubmitDisabled,
     leave: handleLeave,
+    resetFormsState,
+    unregisterForm,
   };
 
   return {

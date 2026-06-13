@@ -286,7 +286,7 @@ describe("mapAttributeValuesToTranslationFields", () => {
     // Arrange
     const attributeValues = [
       makeAttrValue({
-        attributeValue: { __typename: "AttributeValue", id: "av-3" },
+        attributeValue: { __typename: "AttributeValue", id: "av-3", inputType: null },
         plainText: "Cotton",
       }),
     ];

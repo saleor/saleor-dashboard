@@ -16,6 +16,8 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
   setIsSubmitting: () => undefined,
   leave: () => undefined,
   setIsSubmitDisabled: () => undefined,
+  resetFormsState: () => undefined,
+  unregisterForm: () => undefined,
 });
 
 const ExitFormDialogProvider = ({ children }) => {

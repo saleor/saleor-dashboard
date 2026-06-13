@@ -19,6 +19,8 @@ export interface ExitFormDialogData {
   setIsSubmitting: (value: boolean) => void;
   leave: () => void;
   setIsSubmitDisabled: (value: boolean) => void;
+  resetFormsState: () => void;
+  unregisterForm: (id: symbol) => void;
 }
 
 export interface FormData {

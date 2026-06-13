@@ -1,23 +1,16 @@
-// @ts-strict-ignore
 import {
   type LanguageCodeEnum,
+  type SaleTranslationFragment,
   useSaleTranslationDetailsQuery,
   useUpdateSaleTranslationsMutation,
 } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { useIntl } from "react-intl";
 
-import TranslationsSalesPage from "../components/TranslationsSalesPage";
-import { type TranslationField, type TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import { TranslationsSalesPage } from "../components/TranslationsSalesPage/TranslationsSalesPage";
+import { useTranslationEntityView } from "../hooks/useTranslationEntityView";
+import { type TranslationDetailQueryParams } from "../translationQueryParams";
 
-export interface TranslationsSalesQueryParams {
-  activeField: string;
-}
+export interface TranslationsSalesQueryParams extends TranslationDetailQueryParams {}
+
 interface TranslationsSalesProps {
   id: string;
   languageCode: LanguageCodeEnum;
@@ -25,69 +18,21 @@ interface TranslationsSalesProps {
 }
 
 const TranslationsSales = ({ id, languageCode, params }: TranslationsSalesProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
-  const shop = useShop();
-  const intl = useIntl();
   const saleTranslations = useSaleTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-  const [updateTranslations, updateTranslationsOpts] = useUpdateSaleTranslationsMutation({
-    onCompleted: data => {
-      if (data.saleTranslate.errors.length === 0) {
-        saleTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-        });
-        navigate("?", { replace: true });
-      }
-    },
+  const entityMutation = useUpdateSaleTranslationsMutation();
+  const viewProps = useTranslationEntityView<SaleTranslationFragment>({
+    id,
+    languageCode,
+    params,
+    translatableContentTypename: "SaleTranslatableContent",
+    detailsQuery: saleTranslations,
+    entityMutation,
   });
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field,
-        }),
-      { replace: true },
-    );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
-  };
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) =>
-    extractMutationErrors(
-      updateTranslations({
-        variables: {
-          id,
-          input: getParsedTranslationInputData({
-            data,
-            fieldName,
-          }),
-          language: languageCode,
-        },
-      }),
-    );
-  const translation = saleTranslations?.data?.translation;
 
-  return (
-    <TranslationsSalesPage
-      translationId={id}
-      activeField={params.activeField}
-      disabled={saleTranslations.loading || updateTranslationsOpts.loading}
-      languages={shop?.languages || []}
-      languageCode={languageCode}
-      saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
-      onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "SaleTranslatableContent" ? translation : null}
-    />
-  );
+  return <TranslationsSalesPage translationId={id} {...viewProps} />;
 };
 
 TranslationsSales.displayName = "TranslationsSales";
-export default TranslationsSales;
+export { TranslationsSales };

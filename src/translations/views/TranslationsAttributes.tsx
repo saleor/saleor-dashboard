@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   type LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
@@ -7,24 +6,30 @@ import {
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
+import { maybe } from "@dashboard/misc";
 import { ListViews, type Pagination } from "@dashboard/types";
-import { stringifyQs } from "@dashboard/utils/urls";
 import { type OutputData } from "@editorjs/editorjs";
-import { useIntl } from "react-intl";
 
-import { extractMutationErrors, getMutationState, maybe } from "../../misc";
-import TranslationsAttributesPage, { fieldNames } from "../components/TranslationsAttributesPage";
+import { submitBulkAttributeTranslations } from "../bulkSubmit";
+import {
+  fieldNames,
+  TranslationsAttributesPage,
+} from "../components/TranslationsAttributesPage/TranslationsAttributesPage";
+import { useTranslationDetailNavigation } from "../hooks/useTranslationDetailNavigation";
+import { useTranslationSaveFeedback } from "../hooks/useTranslationSaveFeedback";
+import { useTranslationSaveState } from "../hooks/useTranslationSaveState";
+import { extractTranslationMutationErrors } from "../translationMutationErrors";
+import { type TranslationDetailQueryParams } from "../translationQueryParams";
 import { type TranslationField } from "../types";
 
 type HandleSubmitData = string | OutputData;
 
-export interface TranslationsAttributesQueryParams extends Pagination {
-  activeField: string;
-}
+export interface TranslationsAttributesQueryParams
+  extends Pagination,
+    TranslationDetailQueryParams {}
+
 interface TranslationsAttributesProps {
   id: string;
   languageCode: LanguageCodeEnum;
@@ -32,10 +37,9 @@ interface TranslationsAttributesProps {
 }
 
 const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttributesProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
   const shop = useShop();
-  const intl = useIntl();
+  const { onBulkChange, onDiscard, onEdit, navigateToQuery } =
+    useTranslationDetailNavigation(params);
   const { updateListSettings, settings } = useListSettings(
     ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
   );
@@ -52,6 +56,17 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
       beforeValues: valuesPaginationState.before,
     },
   });
+  const {
+    clearFieldError,
+    clearFieldErrors,
+    completeBulkSave,
+    completeSingleFieldSave,
+    fieldErrors,
+  } = useTranslationSaveFeedback({
+    exitBulkMode: () => navigateToQuery({}),
+    exitEditMode: () => navigateToQuery({ bulk: params.bulk }),
+    refetch: () => attributeTranslations.refetch(),
+  });
   const translationData = attributeTranslations?.data?.translation;
   const translation =
     translationData?.__typename === "AttributeTranslatableContent" ? translationData : null;
@@ -61,57 +76,34 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
     valuesPaginationState,
   );
   const [updateAttributeTranslations, updateAttributeTranslationsOpts] =
-    useUpdateAttributeTranslationsMutation({
-      onCompleted: data => {
-        if (data.attributeTranslate.errors.length === 0) {
-          attributeTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
+    useUpdateAttributeTranslationsMutation();
   const [updateAttributeValueTranslations, updateAttributeValueTranslationsOpts] =
-    useUpdateAttributeValueTranslationsMutation({
-      onCompleted: data => {
-        if (data.attributeValueTranslate.errors.length === 0) {
-          attributeTranslations.refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-          });
-          navigate("?", { replace: true });
-        }
-      },
-    });
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field,
-        }),
-      { replace: true },
-    );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
-  };
+    useUpdateAttributeValueTranslationsMutation();
+  const { disabled, saveButtonState } = useTranslationSaveState(
+    attributeTranslations.loading,
+    updateAttributeTranslationsOpts,
+    updateAttributeValueTranslationsOpts,
+  );
+
   const handleSubmit = ({ name }: TranslationField, data: HandleSubmitData) => {
     const [fieldName, fieldId] = name.split(":");
 
     if (fieldName === fieldNames.attribute) {
-      updateAttributeTranslations({
-        variables: {
-          id: fieldId,
-          input: { name: data as string },
-          language: languageCode,
-        },
-      });
-    } else if ([fieldNames.value, fieldNames.richTextValue].includes(fieldName)) {
+      return extractTranslationMutationErrors(
+        updateAttributeTranslations({
+          variables: {
+            id: fieldId,
+            input: { name: data as string },
+            language: languageCode,
+          },
+        }),
+      ).then(completeSingleFieldSave);
+    }
+
+    if ([fieldNames.value, fieldNames.richTextValue].includes(fieldName)) {
       const isRichText = fieldName === fieldNames.richTextValue;
 
-      return extractMutationErrors(
+      return extractTranslationMutationErrors(
         updateAttributeValueTranslations({
           variables: {
             id: fieldId,
@@ -119,29 +111,64 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
             language: languageCode,
           },
         }),
-      );
+      ).then(completeSingleFieldSave);
     }
+
+    return Promise.resolve([]);
   };
-  const saveButtonState = getMutationState(
-    updateAttributeTranslationsOpts.called || updateAttributeValueTranslationsOpts.called,
-    updateAttributeTranslationsOpts.loading || updateAttributeValueTranslationsOpts.loading,
-    maybe(() => updateAttributeTranslationsOpts.data.attributeTranslate.errors, []),
-    maybe(() => updateAttributeValueTranslationsOpts.data.attributeValueTranslate.errors, []),
-  );
+
+  const handleBulkSubmit = async (
+    values: Parameters<typeof submitBulkAttributeTranslations>[0]["values"],
+  ) => {
+    const result = await submitBulkAttributeTranslations({
+      onAttributeChoiceSubmit: async (field, data) => {
+        const [fieldName, fieldId] = field.name.split(":");
+        const isRichText = fieldName === fieldNames.richTextValue;
+
+        return extractTranslationMutationErrors(
+          updateAttributeValueTranslations({
+            variables: {
+              id: fieldId,
+              input: isRichText ? { richText: JSON.stringify(data) } : { name: data as string },
+              language: languageCode,
+            },
+          }),
+        );
+      },
+      onAttributeSubmit: async (field, data) => {
+        const [, fieldId] = field.name.split(":");
+
+        return extractTranslationMutationErrors(
+          updateAttributeTranslations({
+            variables: {
+              id: fieldId,
+              input: { name: data as string },
+              language: languageCode,
+            },
+          }),
+        );
+      },
+      values,
+    });
+
+    return completeBulkSave(result);
+  };
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
       <TranslationsAttributesPage
         translationId={id}
         activeField={params.activeField}
-        disabled={
-          attributeTranslations.loading ||
-          updateAttributeTranslationsOpts.loading ||
-          updateAttributeValueTranslationsOpts.loading
-        }
+        bulk={!!params.bulk}
+        disabled={disabled}
         languageCode={languageCode}
         languages={maybe(() => shop.languages, [])}
         saveButtonState={saveButtonState}
+        fieldErrors={fieldErrors}
+        onBulkChange={onBulkChange}
+        onBulkSubmit={handleBulkSubmit}
+        onClearFieldError={clearFieldError}
+        onClearFieldErrors={clearFieldErrors}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={handleSubmit}
@@ -154,4 +181,4 @@ const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttrib
 };
 
 TranslationsAttributes.displayName = "TranslationsAttributes";
-export default TranslationsAttributes;
+export { TranslationsAttributes };

@@ -1,0 +1,19 @@
+.translationProgressBar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background-color: var(--mu-colors-background-default1);
+  overflow: hidden;
+}
+
+.translationProgressCompletePill {
+  width: 24px;
+  height: 24px;
+}
+
+.translationProgressBarFill {
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--mu-colors-text-default1);
+  transition: width 0.2s ease;
+}
