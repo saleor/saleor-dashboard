@@ -7844,7 +7844,7 @@
     "string": "Not set"
   },
   "e822us": {
-    "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+    "string": "Note: some languages might have incomplete translations that will be displayed in English."
   },
   "e8O72h": {
     "context": "password login mode option",
