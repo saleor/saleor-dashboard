@@ -187,10 +187,10 @@ const TranslationsPages = ({ location, match }: TranslationsEntityRouteProps) =>
 };
 const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsAttributesQueryParams = {
-    ...parseTranslationDetailQueryParams(qs, location.search),
-    ...qs,
-  };
+  const params: TranslationsAttributesQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
     <TranslationsAttributesView

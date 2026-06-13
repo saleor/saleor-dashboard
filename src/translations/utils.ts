@@ -4,6 +4,7 @@ import {
   type AttributeValueTranslatableFragment,
   type AttributeValueTranslationInput,
 } from "@dashboard/graphql";
+import { isFieldTranslationComplete } from "@dashboard/translations/progress";
 import {
   PageTranslationInputFieldName,
   type TranslationField,
@@ -67,6 +68,18 @@ const getAttributeValueTranslationFieldType = (
 export const getAttributeValueTranslationContent = (
   translation: AttributeValueTranslatableFragment["translation"],
 ): string | null => translation?.richText || translation?.plainText || null;
+
+export const isAttributeValueTranslationComplete = (
+  attributeValue: Pick<AttributeValueTranslatableFragment, "attributeValue" | "translation">,
+): boolean => {
+  const type = getAttributeValueTranslationFieldType(attributeValue.attributeValue?.inputType);
+  const translation =
+    type === TranslationFieldType.RICH
+      ? (attributeValue.translation?.richText ?? null)
+      : (attributeValue.translation?.plainText ?? null);
+
+  return isFieldTranslationComplete(translation, type);
+};
 
 export const mapAttributeValuesToTranslationFields = (
   attributeValues: AttributeValueTranslatableFragment[],

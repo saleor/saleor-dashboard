@@ -4,6 +4,7 @@ import {
   getFieldsProgress,
   getProgressPercentage,
   getSectionsProgress,
+  getTranslationCompletion,
   isFieldTranslationComplete,
 } from "./progress";
 
@@ -38,6 +39,19 @@ describe("isFieldTranslationComplete", () => {
         TranslationFieldType.RICH,
       ),
     ).toBe(true);
+  });
+});
+
+describe("getTranslationCompletion", () => {
+  it("counts fields using type-aware completion rules", () => {
+    // Arrange & Act
+    const progress = getTranslationCompletion([
+      { translation: "Name", type: TranslationFieldType.SHORT },
+      { translation: JSON.stringify({ blocks: [] }), type: TranslationFieldType.RICH },
+    ]);
+
+    // Assert
+    expect(progress).toEqual({ completed: 1, total: 2 });
   });
 });
 

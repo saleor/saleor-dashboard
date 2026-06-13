@@ -6,7 +6,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { type TranslationsEntityListProps } from "./types";
-import { sumCompleted } from "./utils";
+import { getSingleNameTranslationCompletion } from "./utils";
 
 const TranslationsSaleList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useSaleTranslationsQuery({
@@ -26,10 +26,7 @@ const TranslationsSaleList = ({ params, variables }: TranslationsEntityListProps
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
             node.__typename === "SaleTranslatableContent" && {
-              completion: {
-                current: sumCompleted([node.translation?.name]),
-                max: 1,
-              },
+              completion: getSingleNameTranslationCompletion(node.translation?.name),
               id: node.sale?.id,
               name: node.sale?.name,
             },

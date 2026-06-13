@@ -5,6 +5,11 @@ export interface TranslationProgress {
   total: number;
 }
 
+export interface TranslationFieldInput {
+  translation: string | null | undefined;
+  type: TranslationFieldType;
+}
+
 export function isFieldTranslationComplete(
   translation: string | null,
   type: TranslationFieldType,
@@ -24,6 +29,20 @@ export function isFieldTranslationComplete(
   }
 
   return translation.trim().length > 0;
+}
+
+export function getTranslationCompletion(fields: TranslationFieldInput[]): TranslationProgress {
+  const total = fields.length;
+
+  if (total === 0) {
+    return { completed: 0, total: 0 };
+  }
+
+  const completed = fields.filter(field =>
+    isFieldTranslationComplete(field.translation ?? null, field.type),
+  ).length;
+
+  return { completed, total };
 }
 
 export function getFieldsProgress(fields: TranslationField[]): TranslationProgress {
