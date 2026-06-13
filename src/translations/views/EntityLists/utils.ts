@@ -1,5 +1,9 @@
-import { type ShippingMethodTranslationsQuery } from "@dashboard/graphql";
+import {
+  type ProductTranslationFragment,
+  type ShippingMethodTranslationsQuery,
+} from "@dashboard/graphql";
 import { type TranslatableEntity } from "@dashboard/translations/components/TranslationsEntitiesList";
+import { getAttributeValueTranslationContent } from "@dashboard/translations/utils";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export function mapTranslationsToEntities(
@@ -31,6 +35,24 @@ export function mapTranslationsToEntities(
   }, [] as TranslatableEntity[]);
 }
 
-export function sumCompleted(list: any[]): number {
+export function sumCompleted(list: Array<string | null | undefined>): number {
   return list.reduce((acc, field) => acc + (field ? 1 : 0), 0);
+}
+
+export function getProductTranslationCompletion({
+  translation,
+  attributeValues,
+}: Pick<ProductTranslationFragment, "translation" | "attributeValues">) {
+  return {
+    current: sumCompleted([
+      translation?.description,
+      translation?.name,
+      translation?.seoDescription,
+      translation?.seoTitle,
+      ...(attributeValues?.map(({ translation: attributeTranslation }) =>
+        getAttributeValueTranslationContent(attributeTranslation),
+      ) ?? []),
+    ]),
+    max: 4 + (attributeValues?.length ?? 0),
+  };
 }

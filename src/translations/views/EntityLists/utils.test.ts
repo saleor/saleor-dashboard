@@ -1,6 +1,10 @@
-import { type ShippingMethodTranslationsQuery } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  LanguageCodeEnum,
+  type ShippingMethodTranslationsQuery,
+} from "@dashboard/graphql";
 
-import { mapTranslationsToEntities } from "./utils";
+import { getProductTranslationCompletion, mapTranslationsToEntities } from "./utils";
 
 describe("mapTranslationsToEntities", () => {
   it("should return empty array if data is undefined", () => {
@@ -113,5 +117,52 @@ describe("mapTranslationsToEntities", () => {
         name: "name",
       },
     ]);
+  });
+});
+
+describe("getProductTranslationCompletion", () => {
+  it("counts plain text attribute translations toward completion", () => {
+    // Arrange & Act
+    const result = getProductTranslationCompletion({
+      translation: {
+        __typename: "ProductTranslation",
+        id: "t-1",
+        name: "Product",
+        description: null,
+        seoDescription: null,
+        seoTitle: null,
+        language: { __typename: "LanguageDisplay", code: LanguageCodeEnum.PL, language: "Polish" },
+      },
+      attributeValues: [
+        {
+          __typename: "AttributeValueTranslatableContent",
+          id: "av-content-1",
+          name: "",
+          plainText: null,
+          richText: null,
+          attributeValue: {
+            __typename: "AttributeValue",
+            id: "av-1",
+            inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+          },
+          attribute: { __typename: "AttributeTranslatableContent", id: "attr-1", name: "Material" },
+          translation: {
+            __typename: "AttributeValueTranslation",
+            id: "avt-1",
+            name: "",
+            plainText: "Bawełna",
+            richText: null,
+            language: {
+              __typename: "LanguageDisplay",
+              code: LanguageCodeEnum.PL,
+              language: "Polish",
+            },
+          },
+        },
+      ],
+    });
+
+    // Assert
+    expect(result).toEqual({ current: 2, max: 5 });
   });
 });
