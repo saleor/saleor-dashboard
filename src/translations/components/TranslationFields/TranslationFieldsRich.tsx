@@ -42,7 +42,7 @@ const TranslationFieldsRich = ({
   const [isFocused, setIsFocused] = useState(false);
   const showShortcut = !hideActions;
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
-    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), disabled, !hideActions);
+    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), disabled, edit);
   const canSubmitWithShortcut = showShortcut && !disabled && saveButtonState !== "loading";
   const handleCmdEnterSubmit = useMemo(
     () =>

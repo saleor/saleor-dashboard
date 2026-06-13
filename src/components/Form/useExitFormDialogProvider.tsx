@@ -117,6 +117,13 @@ export function useExitFormDialogProvider() {
       // needs to be done before the shouldBlockNav condition
       // so it doesn't trigger setting default values
       if (isOnlyQuerying(transition)) {
+        if (shouldBlockNav()) {
+          navAction.current = transition;
+          setShowDialog(true);
+
+          return false;
+        }
+
         // transition type requires this function to return either
         // false | void | string where string opens up the browser prompt
         // hence we return null

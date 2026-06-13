@@ -38,7 +38,7 @@ const TranslationFieldsLong = ({
 
   return edit ? (
     <Form
-      confirmLeave={!hideActions}
+      confirmLeave={edit}
       initial={{ translation: initial }}
       onSubmit={data => (onSubmit ? onSubmit(data.translation ?? "") : Promise.resolve([]))}
     >

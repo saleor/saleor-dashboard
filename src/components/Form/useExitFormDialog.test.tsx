@@ -80,6 +80,39 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.pathname).toBe(targetPath);
   });
+  it("blocks query navigation on same pathname when form is dirty", async () => {
+    // Given
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = setup(submitFn);
+
+    // When
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.push("/?bulk=1");
+    });
+
+    // Then
+    expect(result.current.exit.shouldBlockNavigation()).toBe(true);
+    expect(result.current.history.location.search).toBe("");
+  });
+  it("allows query navigation on same pathname when form is clean", async () => {
+    // Given
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = setup(submitFn);
+
+    // When
+    act(() => {
+      result.current.history.push("/?bulk=1");
+    });
+
+    // Then
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
+    expect(result.current.history.location.search).toBe("?bulk=1");
+  });
   it("navigates to full url with querystring", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));
