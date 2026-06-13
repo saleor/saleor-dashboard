@@ -3609,6 +3609,7 @@ export const AttributeValueTranslatableFragmentDoc = gql`
   richText
   attributeValue {
     id
+    inputType
   }
   attribute {
     id
