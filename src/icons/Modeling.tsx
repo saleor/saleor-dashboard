@@ -6,7 +6,7 @@ import {
 const MODELING_VIEWBOX_SIZE = 20;
 const modelingStrokeWidth = getNavigationCustomIconStrokeWidth(MODELING_VIEWBOX_SIZE);
 
-export const ModelingIcon = () => (
+export const ModelingIcon = (): JSX.Element => (
   <svg
     width={navigationLucideIconProps.size}
     height={navigationLucideIconProps.size}

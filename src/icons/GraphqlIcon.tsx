@@ -5,7 +5,7 @@ const graphqlVertexRadius = 2.25;
 const graphqlIconOffsetX = 1;
 const graphqlIconOffsetY = 2;
 
-export const GraphqlIcon = () => (
+export const GraphqlIcon = (): JSX.Element => (
   <Box __transform={`translate(${graphqlIconOffsetX}px, ${graphqlIconOffsetY}px)`}>
     <svg
       width={navigationLucideIconProps.size}
