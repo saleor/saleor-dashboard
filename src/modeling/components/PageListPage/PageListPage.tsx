@@ -20,7 +20,7 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import { rippleModelTypeTabs } from "../../ripples/modelTypeTabs";
+import { rippleGroupedModelTypeTabs } from "../../ripples/groupedModelTypeTabs";
 import { ModelSearchInput } from "../ModelSearchInput/ModelSearchInput";
 import { type ModelTypeTabCount, ModelTypeTabs } from "../ModelTypeTabs/ModelTypeTabs";
 import { type ModelTypeTabGrouping } from "../ModelTypeTabs/useModelTypeTabGrouping";
@@ -111,7 +111,7 @@ const PageListPage = ({
           counts={tabCounts}
           onTabChange={onTabChange}
           grouping={grouping}
-          rightSlot={<Ripple model={rippleModelTypeTabs} />}
+          rightSlot={<Ripple model={rippleGroupedModelTypeTabs} />}
         />
         <DashboardCard>
           <Box
