@@ -31,4 +31,10 @@ export const iconStrokeWidthBySize = {
  */
 export const iconStrokeWidth = 1.5;
 
+/** Shared Lucide props for sidebar and sidebar shortcut icons (16px in a 20px slot). */
+export const sidebarLucideIconProps = {
+  size: iconSize.small,
+  strokeWidth: iconStrokeWidthBySize.small,
+} as const;
+
 export type IconSize = keyof typeof iconSize;

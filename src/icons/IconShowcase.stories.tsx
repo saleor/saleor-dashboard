@@ -17,7 +17,7 @@ import { ExclamationIconFilled } from "./ExclamationIconFilled";
 import { GraphqlIcon } from "./GraphqlIcon";
 import { HomeIcon } from "./Home";
 import { MarketplaceIcon } from "./Marketplace";
-import ModelingIcon from "./Modeling";
+import { ModelingIcon } from "./Modeling";
 import { OrdersIcon } from "./Orders";
 import PermissionGroups from "./PermissionGroups";
 import { PluginIcon } from "./PluginIcon";
