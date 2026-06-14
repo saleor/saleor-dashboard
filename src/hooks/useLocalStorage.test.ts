@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 
 import useLocalStorage from "./useLocalStorage";
 
@@ -42,6 +42,34 @@ describe("useLocalStorage", () => {
     const { result } = renderHook(() => useLocalStorage(key, initialValue));
 
     expect(result.current[0]).toBe(booleanValue);
+  });
+  it("properly restores false boolean values", () => {
+    localStorage.setItem(key, JSON.stringify(false));
+
+    const { result } = renderHook(() => useLocalStorage(key, true));
+
+    expect(result.current[0]).toBe(false);
+  });
+  it("properly restores zero number values", () => {
+    localStorage.setItem(key, JSON.stringify(0));
+
+    const { result } = renderHook(() => useLocalStorage(key, 12));
+
+    expect(result.current[0]).toBe(0);
+  });
+  it("persists false boolean values on update", () => {
+    const { result } = renderHook(() => useLocalStorage(key, true));
+
+    act(() => {
+      result.current[1](false);
+    });
+
+    expect(result.current[0]).toBe(false);
+    expect(localStorage.getItem(key)).toBe("false");
+
+    const { result: reloaded } = renderHook(() => useLocalStorage(key, true));
+
+    expect(reloaded.current[0]).toBe(false);
   });
   it("properly casts value to object", () => {
     localStorage.setItem(key, JSON.stringify(objectValue));
