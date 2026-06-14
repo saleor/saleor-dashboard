@@ -143,13 +143,15 @@ export const isGroupAllSelected = (
   group: Extract<ModelTabNode, { kind: "group" }>,
   selectedIds: string[],
 ): boolean => {
-  if (selectedIds.length !== group.subtypes.length) {
+  const uniqueSelectedIds = [...new Set(selectedIds)];
+
+  if (uniqueSelectedIds.length !== group.subtypes.length) {
     return false;
   }
 
   const subtypeIds = new Set(group.subtypes.map(subtype => subtype.id));
 
-  return selectedIds.every(id => subtypeIds.has(id));
+  return uniqueSelectedIds.every(id => subtypeIds.has(id));
 };
 
 export const isModelTabNodeActive = (node: ModelTabNode, selectedIds: string[]): boolean => {

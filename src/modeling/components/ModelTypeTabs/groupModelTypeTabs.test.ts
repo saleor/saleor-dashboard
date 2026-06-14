@@ -181,6 +181,17 @@ describe("group tab helpers", () => {
     expect(result).toBe(true);
   });
 
+  it("rejects duplicate ids in selectedIds", () => {
+    // Arrange
+    const selectedIds = ["cart", "cart"];
+
+    // Act
+    const result = isGroupAllSelected(group, selectedIds);
+
+    // Assert
+    expect(result).toBe(false);
+  });
+
   it("detects active standalone and grouped selections", () => {
     // Arrange
     const standalone = { kind: "type" as const, id: "article", name: "Article" };

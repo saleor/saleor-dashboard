@@ -57,7 +57,9 @@ const normalizePageTypes = (value: string | string[] | undefined): string[] => {
     return [];
   }
 
-  return Array.isArray(value) ? value.filter(Boolean) : [value];
+  const ids = Array.isArray(value) ? value.filter(Boolean) : [value];
+
+  return [...new Set(ids)];
 };
 
 const PageList = ({ params }: PageListProps) => {
