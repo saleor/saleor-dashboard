@@ -1,10 +1,9 @@
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
+import { GiftIcon } from "@dashboard/icons/GiftIcon";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
-import { Gift } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -55,7 +54,7 @@ export const useShortcuts = (): Shortcut[] => {
       {
         id: "recent-changes-ripples",
         name: intl.formatMessage(shortcutsMessages.recentChanges),
-        icon: <Gift {...sidebarLucideIconProps} />,
+        icon: <GiftIcon />,
         action: () => {
           setModalState(true);
         },

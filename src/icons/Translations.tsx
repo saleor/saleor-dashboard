@@ -1,4 +1,5 @@
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
 import { Languages } from "lucide-react";
 
-export const TranslationsIcon = () => <Languages {...sidebarLucideIconProps} />;
+import { createNavigationLucideIcon } from "./createNavigationLucideIcon";
+
+export const TranslationsIcon = createNavigationLucideIcon(Languages);

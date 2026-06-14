@@ -8,7 +8,7 @@ export const SidebarIconSlot = ({ children }: { children: React.ReactNode }) => 
     display="flex"
     alignItems="center"
     justifyContent="center"
-    flexShrink={0}
+    __flexShrink={0}
     __width={SIDEBAR_ICON_SLOT_SIZE}
     __height={SIDEBAR_ICON_SLOT_SIZE}
   >

@@ -1,4 +1,5 @@
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
 import { Percent } from "lucide-react";
 
-export const DiscountsIcon = () => <Percent {...sidebarLucideIconProps} />;
+import { createNavigationLucideIcon } from "./createNavigationLucideIcon";
+
+export const DiscountsIcon = createNavigationLucideIcon(Percent);

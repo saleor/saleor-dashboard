@@ -1,4 +1,5 @@
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
 import { Grid2x2Plus } from "lucide-react";
 
-export const MarketplaceIcon = () => <Grid2x2Plus {...sidebarLucideIconProps} />;
+import { createNavigationLucideIcon } from "./createNavigationLucideIcon";
+
+export const MarketplaceIcon = createNavigationLucideIcon(Grid2x2Plus);

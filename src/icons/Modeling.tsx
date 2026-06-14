@@ -1,13 +1,16 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import {
+  getNavigationCustomIconStrokeWidth,
+  navigationLucideIconProps,
+} from "@dashboard/components/icons";
 
-const modelingIconSize = iconSize.small;
-const modelingStrokeWidth = iconStrokeWidthBySize.small * (20 / 24) * (modelingIconSize / 20);
+const MODELING_VIEWBOX_SIZE = 20;
+const modelingStrokeWidth = getNavigationCustomIconStrokeWidth(MODELING_VIEWBOX_SIZE);
 
 export const ModelingIcon = () => (
   <svg
-    width={modelingIconSize}
-    height={modelingIconSize}
-    viewBox="0 0 20 20"
+    width={navigationLucideIconProps.size}
+    height={navigationLucideIconProps.size}
+    viewBox={`0 0 ${MODELING_VIEWBOX_SIZE} ${MODELING_VIEWBOX_SIZE}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >

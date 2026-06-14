@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
+import { navigationLucideIconProps } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
@@ -107,7 +107,7 @@ export function useMenuStructure() {
       type: "item",
     },
     {
-      icon: renderIcon(<Search {...sidebarLucideIconProps} />),
+      icon: renderIcon(<Search {...navigationLucideIconProps} />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
           {intl.formatMessage(sectionNames.search)}

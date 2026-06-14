@@ -1,17 +1,14 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-
-const graphqlIconSize = iconSize.small;
-const graphqlStrokeWidth = iconStrokeWidthBySize.small;
+import { navigationLucideIconProps } from "@dashboard/components/icons";
 
 export const GraphqlIcon = () => (
   <svg
-    width={graphqlIconSize}
-    height={graphqlIconSize}
+    width={navigationLucideIconProps.size}
+    height={navigationLucideIconProps.size}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="2 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={graphqlStrokeWidth}
+    strokeWidth={navigationLucideIconProps.strokeWidth}
     strokeLinecap="round"
     strokeLinejoin="round"
     data-macaw-ui-candidate

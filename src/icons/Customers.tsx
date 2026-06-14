@@ -1,4 +1,5 @@
-import { sidebarLucideIconProps } from "@dashboard/components/icons";
 import { User } from "lucide-react";
 
-export const CustomersIcon = () => <User {...sidebarLucideIconProps} />;
+import { createNavigationLucideIcon } from "./createNavigationLucideIcon";
+
+export const CustomersIcon = createNavigationLucideIcon(User);
