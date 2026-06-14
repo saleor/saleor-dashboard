@@ -1,16 +1,18 @@
 import { type Ripple } from "@dashboard/ripples/types";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import { Settings2 } from "lucide-react";
+import { type CSSProperties } from "react";
+
+const settingsIconStyle: CSSProperties = {
+  verticalAlign: "text-bottom",
+};
 
 const groupedModelTypeTabsContextual = (
   <Text>
     Similar model types can now be grouped into a single tab based on a type name separator. Use the
     dropdown to switch between all grouped types or a single one. You can adjust the way grouping
     works or disable it in the settings{" "}
-    <Box as="span" display="inline-flex" __verticalAlign="text-bottom">
-      <Settings2 size={16} aria-hidden />
-    </Box>
-    .
+    <Settings2 size={16} aria-hidden style={settingsIconStyle} />.
   </Text>
 );
 
