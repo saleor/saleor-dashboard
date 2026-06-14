@@ -60,15 +60,6 @@
   border-bottom-color: var(--mu-colors-text-default1);
 }
 
-.count {
-  color: var(--mu-colors-text-default2);
-  font-variant-numeric: tabular-nums;
-}
-
-.tab[aria-selected="true"] .count {
-  color: var(--mu-colors-text-default1);
-}
-
 .groupTab {
   display: inline-flex;
   align-items: center;
@@ -211,18 +202,19 @@
   background: var(--mu-colors-background-default2);
 }
 
-.rightSlot {
+.trailingSlot {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 24px;
+  gap: 8px;
+  margin-left: 8px;
+  padding-right: 24px;
 }
 
 .moreSlot {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 24px;
 }
 
 /*

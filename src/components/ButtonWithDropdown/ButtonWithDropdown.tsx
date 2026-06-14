@@ -1,10 +1,11 @@
 import { Box, Button, type ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
+import { type ReactNode } from "react";
 
 interface ButtonWithDropdownProps extends ButtonProps {
   onClick?: () => void;
   options: Array<{
-    label: string;
+    label: ReactNode;
     testId?: string;
     onSelect: <T>(params?: T) => void;
   }>;
@@ -39,7 +40,7 @@ export const ButtonWithDropdown = ({
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >
-                <Text>{item.label}</Text>
+                {typeof item.label === "string" ? <Text>{item.label}</Text> : item.label}
               </List.Item>
             </Dropdown.Item>
           ))}

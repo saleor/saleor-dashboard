@@ -14,6 +14,7 @@ import {
 } from "react";
 import { useIntl } from "react-intl";
 
+import { CountPill, type ModelTypeTabCount } from "./CountPill";
 import {
   aggregateCounts,
   ALL_MODELS_TAB_ID,
@@ -29,6 +30,7 @@ import { modelTypeTabsMessages } from "./messages";
 import styles from "./ModelTypeTabs.module.css";
 import { type ModelTypeTabGrouping, useModelTypeTabGrouping } from "./useModelTypeTabGrouping";
 
+export type { ModelTypeTabCount } from "./CountPill";
 export { ALL_MODELS_TAB_ID } from "./groupModelTypeTabs";
 
 const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
@@ -36,11 +38,6 @@ const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
 export interface ModelTypeTabItem {
   id: string;
   name: string;
-}
-
-export interface ModelTypeTabCount {
-  value: number;
-  hasMore: boolean;
 }
 
 export interface ModelTypeTabsProps {
@@ -59,26 +56,6 @@ export interface ModelTypeTabsProps {
 }
 
 type ModelTypeTabStripItem = { kind: "all"; id: string; name: string } | ModelTabNode;
-
-const formatCount = (count: ModelTypeTabCount | undefined) => {
-  if (!count) {
-    return null;
-  }
-
-  const label = count.hasMore ? `${count.value}+` : `${count.value}`;
-
-  return ` (${label})`;
-};
-
-const renderCount = (count: ModelTypeTabCount | undefined) => {
-  const label = formatCount(count);
-
-  if (!label) {
-    return null;
-  }
-
-  return <span className={styles.count}>{label}</span>;
-};
 
 const getStripItemId = (item: ModelTypeTabStripItem): string => {
   if (item.kind === "all") {
@@ -229,7 +206,6 @@ const GroupTabDropdown = ({
   const options = useMemo(() => {
     const allIds = group.subtypes.map(subtype => subtype.id);
     const allCount = aggregateCounts(allIds, counts);
-    const allCountLabel = formatCount(allCount)?.trim();
     const allLabel = intl.formatMessage(modelTypeTabsMessages.groupAllLabel, {
       prefix: group.prefix,
       separator,
@@ -237,21 +213,19 @@ const GroupTabDropdown = ({
 
     return [
       {
-        label: allCountLabel ? `${allLabel} ${allCountLabel}` : allLabel,
+        nameLabel: allLabel,
+        count: allCount,
         testId: `model-type-tab-${group.id}-all`,
         onSelect: () => onTabChange(allIds),
         isActive: isGroupAllSelected(group, selectedIds),
       },
-      ...group.subtypes.map(subtype => {
-        const countLabel = formatCount(counts[subtype.id])?.trim();
-
-        return {
-          label: countLabel ? `${subtype.suffix} ${countLabel}` : subtype.suffix,
-          testId: `model-type-tab-${subtype.id}`,
-          onSelect: () => onTabChange([subtype.id]),
-          isActive: selectedIds.length === 1 && selectedIds[0] === subtype.id,
-        };
-      }),
+      ...group.subtypes.map(subtype => ({
+        nameLabel: subtype.suffix,
+        count: counts[subtype.id],
+        testId: `model-type-tab-${subtype.id}`,
+        onSelect: () => onTabChange([subtype.id]),
+        isActive: selectedIds.length === 1 && selectedIds[0] === subtype.id,
+      })),
     ];
   }, [counts, group, intl, onTabChange, selectedIds, separator]);
 
@@ -292,9 +266,19 @@ const GroupTabDropdown = ({
                   data-test-id={option.testId}
                   className={option.isActive ? styles.dropdownItemActive : undefined}
                 >
-                  <Box display="flex" alignItems="center" gap={2}>
+                  <Box display="flex" alignItems="center" gap={2} __width="100%">
                     {option.isActive ? <Check size={14} /> : <Box __width="14px" />}
-                    <Text>{option.label}</Text>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      gap={3}
+                      __flexGrow={1}
+                      __minWidth={0}
+                    >
+                      <Text>{option.nameLabel}</Text>
+                      <CountPill count={option.count} active={option.isActive} />
+                    </Box>
                   </Box>
                 </List.Item>
               </Dropdown.Item>
@@ -444,11 +428,23 @@ export const ModelTypeTabs = ({
   const overflowOptions = useMemo(
     () =>
       overflowItems.map(item => {
-        const countLabel = formatCount(getStripItemCount(item, counts))?.trim();
+        const count = getStripItemCount(item, counts);
         const label = getStripItemLabel(item, selectedIds);
+        const isActive = isStripItemActive(item, selectedIds);
 
         return {
-          label: countLabel ? `${label} ${countLabel}` : label,
+          label: (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              gap={3}
+              __width="100%"
+            >
+              <Text>{label}</Text>
+              <CountPill count={count} active={isActive} />
+            </Box>
+          ),
           testId: `model-type-tab-${getStripItemId(item)}`,
           onSelect: () => onTabChange(getStripItemSelection(item)),
         };
@@ -491,7 +487,7 @@ export const ModelTypeTabs = ({
     );
   };
 
-  const renderTabLabel = (item: ModelTypeTabStripItem) => {
+  const renderTabLabel = (item: ModelTypeTabStripItem, isActive: boolean) => {
     const label = getStripItemLabel(item, selectedIds);
     const count = getStripItemCount(item, counts);
 
@@ -501,7 +497,7 @@ export const ModelTypeTabs = ({
         <span className={styles.tabLabel} title={label}>
           {label}
         </span>
-        {renderCount(count)}
+        <CountPill count={count} active={isActive} />
       </>
     );
   };
@@ -523,7 +519,7 @@ export const ModelTypeTabs = ({
             className={styles.tabMain}
             onClick={() => onTabChange(getStripItemSelection(item))}
           >
-            {renderTabLabel(item)}
+            {renderTabLabel(item, isActive)}
           </button>
           <GroupTabDropdown
             group={item}
@@ -547,7 +543,7 @@ export const ModelTypeTabs = ({
         onClick={() => onTabChange(getStripItemSelection(item))}
         data-test-id={`model-type-tab-${itemId}`}
       >
-        {renderTabLabel(item)}
+        {renderTabLabel(item, isActive)}
         {renderTabPin(item, isActive)}
       </button>
     );
@@ -557,7 +553,7 @@ export const ModelTypeTabs = ({
     if (item.kind === "group") {
       return (
         <span className={styles.groupTab}>
-          <span className={styles.tabMain}>{renderTabLabel(item)}</span>
+          <span className={styles.tabMain}>{renderTabLabel(item, false)}</span>
           <span className={styles.caretButton} aria-hidden>
             <ChevronDown size={14} />
           </span>
@@ -567,7 +563,7 @@ export const ModelTypeTabs = ({
 
     return (
       <button type="button" tabIndex={-1} className={styles.tab}>
-        {renderTabLabel(item)}
+        {renderTabLabel(item, false)}
       </button>
     );
   };
@@ -596,15 +592,6 @@ export const ModelTypeTabs = ({
       >
         {displayItems.map(item => renderTab(item, isStripItemActive(item, selectedIds)))}
       </div>
-      <div className={styles.rightSlot}>
-        <ModelTypeTabsSettings
-          separator={separator}
-          groupingEnabled={groupingEnabled}
-          onSeparatorChange={setSeparator}
-          onGroupingEnabledChange={setGroupingEnabled}
-        />
-        {rightSlot}
-      </div>
       {showMore && (
         <div className={styles.moreSlot}>
           <ButtonWithDropdown
@@ -618,6 +605,15 @@ export const ModelTypeTabs = ({
           </ButtonWithDropdown>
         </div>
       )}
+      <div className={styles.trailingSlot}>
+        {rightSlot}
+        <ModelTypeTabsSettings
+          separator={separator}
+          groupingEnabled={groupingEnabled}
+          onSeparatorChange={setSeparator}
+          onGroupingEnabledChange={setGroupingEnabled}
+        />
+      </div>
     </div>
   );
 };
