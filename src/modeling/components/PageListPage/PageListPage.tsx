@@ -23,6 +23,7 @@ import { useLocation } from "react-router";
 import { rippleModelTypeTabs } from "../../ripples/modelTypeTabs";
 import { ModelSearchInput } from "../ModelSearchInput/ModelSearchInput";
 import { type ModelTypeTabCount, ModelTypeTabs } from "../ModelTypeTabs/ModelTypeTabs";
+import { type ModelTypeTabGrouping } from "../ModelTypeTabs/useModelTypeTabGrouping";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
@@ -38,10 +39,11 @@ interface PageListPageProps extends PageListProps, SortPage<PageListUrlSortField
   onPagesUnpublish: () => void;
   onPageCreate: () => void;
   pageTypes: Array<{ id: string; name: string }> | undefined;
-  activeTabId: string;
+  selectedIds: string[];
   activePageTypeName: string | undefined;
   tabCounts: Record<string, ModelTypeTabCount | undefined>;
-  onTabChange: (id: string) => void;
+  onTabChange: (ids: string[]) => void;
+  grouping: ModelTypeTabGrouping;
 }
 
 const PageListPage = ({
@@ -53,10 +55,11 @@ const PageListPage = ({
   onPagesUnpublish,
   onPageCreate,
   pageTypes,
-  activeTabId,
+  selectedIds,
   activePageTypeName,
   tabCounts,
   onTabChange,
+  grouping,
   ...listProps
 }: PageListPageProps) => {
   const intl = useIntl();
@@ -104,9 +107,10 @@ const PageListPage = ({
       <Box display="flex" flexDirection="column" __minWidth={0} __minHeight={0}>
         <ModelTypeTabs
           pageTypes={pageTypes}
-          activeId={activeTabId}
+          selectedIds={selectedIds}
           counts={tabCounts}
           onTabChange={onTabChange}
+          grouping={grouping}
           rightSlot={<Ripple model={rippleModelTypeTabs} />}
         />
         <DashboardCard>

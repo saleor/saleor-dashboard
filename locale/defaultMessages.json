@@ -2526,6 +2526,10 @@
     "context": "app has been removed",
     "string": "Extension removed"
   },
+  "C2VZAl": {
+    "context": "aria label for grouped model type tab menu",
+    "string": "Choose {prefix} subtype"
+  },
   "C4IOEN": {
     "string": "Created structure"
   },
@@ -4676,6 +4680,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {voucherCode}?"
   },
+  "NEmY1y": {
+    "context": "title for model type tab settings",
+    "string": "Tab grouping"
+  },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
   },
@@ -5395,6 +5403,10 @@
     "context": "add new refund button",
     "string": "New refund"
   },
+  "Qu4wS5": {
+    "context": "label for selecting all subtypes in a grouped model type tab",
+    "string": "{prefix}{separator}All"
+  },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
     "string": "Already captured"
@@ -5708,6 +5720,10 @@
   "SgFE10": {
     "context": "product type digital",
     "string": "Digital"
+  },
+  "SjMQrX": {
+    "context": "label for model type tab grouping separator input",
+    "string": "Group separator"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -11369,6 +11385,10 @@
   "wsDF7X": {
     "context": "product variant attribute entity type",
     "string": "Product variants"
+  },
+  "wu/9MB": {
+    "context": "label for enabling grouped model type tabs",
+    "string": "Group similar model types"
   },
   "x/ZVlU": {
     "string": "Product"

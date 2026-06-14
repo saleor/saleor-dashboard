@@ -1,13 +1,35 @@
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { Pin, PinOff } from "lucide-react";
-import { type ReactNode, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Box, Checkbox, Dropdown, Input, List, Popover, Text } from "@saleor/macaw-ui-next";
+import { Check, ChevronDown, Layers, Pin, PinOff, Settings2 } from "lucide-react";
+import {
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useIntl } from "react-intl";
 
+import {
+  aggregateCounts,
+  ALL_MODELS_TAB_ID,
+  getActiveSubtypeInGroup,
+  getModelTabNodeId,
+  getModelTabNodeSelection,
+  groupModelTypeTabs,
+  isGroupAllSelected,
+  isModelTabNodeActive,
+  type ModelTabNode,
+} from "./groupModelTypeTabs";
 import { modelTypeTabsMessages } from "./messages";
 import styles from "./ModelTypeTabs.module.css";
+import { type ModelTypeTabGrouping, useModelTypeTabGrouping } from "./useModelTypeTabGrouping";
 
-export const ALL_MODELS_TAB_ID = "__all__";
+export { ALL_MODELS_TAB_ID } from "./groupModelTypeTabs";
 
 const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
 
@@ -23,12 +45,20 @@ export interface ModelTypeTabCount {
 
 export interface ModelTypeTabsProps {
   pageTypes: ModelTypeTabItem[] | undefined;
-  activeId: string;
+  selectedIds: string[];
   counts: Record<string, ModelTypeTabCount | undefined>;
-  onTabChange: (id: string) => void;
+  onTabChange: (ids: string[]) => void;
+  /**
+   * Grouping state owned by the parent so a single source of truth drives both the
+   * tab strip and the parent's count bookkeeping. Falls back to a local hook instance
+   * when rendered standalone (Storybook, tests).
+   */
+  grouping?: ModelTypeTabGrouping;
   /** Optional slot anchored to the right of the strip, sharing the bottom border. */
   rightSlot?: ReactNode;
 }
+
+type ModelTypeTabStripItem = { kind: "all"; id: string; name: string } | ModelTabNode;
 
 const formatCount = (count: ModelTypeTabCount | undefined) => {
   if (!count) {
@@ -50,22 +80,250 @@ const renderCount = (count: ModelTypeTabCount | undefined) => {
   return <span className={styles.count}>{label}</span>;
 };
 
+const getStripItemId = (item: ModelTypeTabStripItem): string => {
+  if (item.kind === "all") {
+    return item.id;
+  }
+
+  return getModelTabNodeId(item);
+};
+
+const getStripItemSelection = (item: ModelTypeTabStripItem): string[] => {
+  if (item.kind === "all") {
+    return [];
+  }
+
+  return getModelTabNodeSelection(item);
+};
+
+const isStripItemActive = (item: ModelTypeTabStripItem, selectedIds: string[]): boolean => {
+  if (item.kind === "all") {
+    return selectedIds.length === 0;
+  }
+
+  return isModelTabNodeActive(item, selectedIds);
+};
+
+const getStripItemLabel = (item: ModelTypeTabStripItem, selectedIds: string[]): string => {
+  if (item.kind === "all" || item.kind === "type") {
+    return item.name;
+  }
+
+  const activeSubtype = getActiveSubtypeInGroup(item, selectedIds);
+
+  if (activeSubtype) {
+    return `${item.prefix} · ${activeSubtype.suffix}`;
+  }
+
+  return item.prefix;
+};
+
+const getStripItemCount = (
+  item: ModelTypeTabStripItem,
+  counts: Record<string, ModelTypeTabCount | undefined>,
+): ModelTypeTabCount | undefined => {
+  if (item.kind === "all") {
+    return counts[item.id];
+  }
+
+  if (item.kind === "type") {
+    return counts[item.id];
+  }
+
+  if (item.kind === "group") {
+    return (
+      counts[item.id] ??
+      aggregateCounts(
+        item.subtypes.map(subtype => subtype.id),
+        counts,
+      )
+    );
+  }
+
+  return undefined;
+};
+
 // Reserved horizontal budget for the More button + its surrounding slot padding.
 const MORE_BUTTON_RESERVED_WIDTH = 140;
 
-export const ModelTypeTabs = ({
-  pageTypes,
-  activeId,
+interface ModelTypeTabsSettingsProps {
+  separator: string;
+  groupingEnabled: boolean;
+  onSeparatorChange: (value: string) => void;
+  onGroupingEnabledChange: (value: boolean) => void;
+}
+
+const ModelTypeTabsSettings = ({
+  separator,
+  groupingEnabled,
+  onSeparatorChange,
+  onGroupingEnabledChange,
+}: ModelTypeTabsSettingsProps) => {
+  const intl = useIntl();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <Popover.Trigger>
+        <button
+          type="button"
+          className={styles.settingsButton}
+          aria-label={intl.formatMessage(modelTypeTabsMessages.settingsTitle)}
+          data-test-id="model-type-tabs-settings"
+        >
+          <Settings2 size={16} />
+        </button>
+      </Popover.Trigger>
+      <Popover.Content align="end">
+        <Box
+          padding={4}
+          display="flex"
+          flexDirection="column"
+          gap={4}
+          backgroundColor="default1"
+          borderRadius={2}
+          boxShadow="defaultModal"
+          __minWidth="280px"
+        >
+          <Text size={3} fontWeight="bold">
+            {intl.formatMessage(modelTypeTabsMessages.settingsTitle)}
+          </Text>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <Text size={2}>{intl.formatMessage(modelTypeTabsMessages.separatorLabel)}</Text>
+            <Input
+              value={separator}
+              onChange={event => onSeparatorChange(event.target.value)}
+              data-test-id="model-type-tabs-separator"
+            />
+          </Box>
+          <Checkbox
+            checked={groupingEnabled}
+            onCheckedChange={checked => onGroupingEnabledChange(checked === true)}
+            data-test-id="model-type-tabs-grouping-enabled"
+          >
+            {intl.formatMessage(modelTypeTabsMessages.groupingEnabledLabel)}
+          </Checkbox>
+        </Box>
+      </Popover.Content>
+    </Popover>
+  );
+};
+
+interface GroupTabDropdownProps {
+  group: Extract<ModelTabNode, { kind: "group" }>;
+  selectedIds: string[];
+  counts: Record<string, ModelTypeTabCount | undefined>;
+  onTabChange: (ids: string[]) => void;
+  separator: string;
+}
+
+const GroupTabDropdown = ({
+  group,
+  selectedIds,
   counts,
   onTabChange,
+  separator,
+}: GroupTabDropdownProps) => {
+  const intl = useIntl();
+
+  const options = useMemo(() => {
+    const allIds = group.subtypes.map(subtype => subtype.id);
+    const allCount = aggregateCounts(allIds, counts);
+    const allCountLabel = formatCount(allCount)?.trim();
+    const allLabel = intl.formatMessage(modelTypeTabsMessages.groupAllLabel, {
+      prefix: group.prefix,
+      separator,
+    });
+
+    return [
+      {
+        label: allCountLabel ? `${allLabel} ${allCountLabel}` : allLabel,
+        testId: `model-type-tab-${group.id}-all`,
+        onSelect: () => onTabChange(allIds),
+        isActive: isGroupAllSelected(group, selectedIds),
+      },
+      ...group.subtypes.map(subtype => {
+        const countLabel = formatCount(counts[subtype.id])?.trim();
+
+        return {
+          label: countLabel ? `${subtype.suffix} ${countLabel}` : subtype.suffix,
+          testId: `model-type-tab-${subtype.id}`,
+          onSelect: () => onTabChange([subtype.id]),
+          isActive: selectedIds.length === 1 && selectedIds[0] === subtype.id,
+        };
+      }),
+    ];
+  }, [counts, group, intl, onTabChange, selectedIds, separator]);
+
+  const handleCaretClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+  };
+
+  const handleCaretKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+  };
+
+  return (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <button
+          type="button"
+          className={styles.caretButton}
+          aria-label={intl.formatMessage(modelTypeTabsMessages.groupMenuLabel, {
+            prefix: group.prefix,
+          })}
+          data-test-id={`model-type-tab-${group.id}-menu`}
+          onClick={handleCaretClick}
+          onKeyDown={handleCaretKeyDown}
+        >
+          <ChevronDown size={14} />
+        </button>
+      </Dropdown.Trigger>
+      <Dropdown.Content align="start">
+        <Box>
+          <List padding={2} borderRadius={4} boxShadow="defaultOverlay" backgroundColor="default1">
+            {options.map(option => (
+              <Dropdown.Item key={option.testId}>
+                <List.Item
+                  borderRadius={4}
+                  paddingX={1.5}
+                  paddingY={2}
+                  onClick={option.onSelect}
+                  data-test-id={option.testId}
+                  className={option.isActive ? styles.dropdownItemActive : undefined}
+                >
+                  <Box display="flex" alignItems="center" gap={2}>
+                    {option.isActive ? <Check size={14} /> : <Box __width="14px" />}
+                    <Text>{option.label}</Text>
+                  </Box>
+                </List.Item>
+              </Dropdown.Item>
+            ))}
+          </List>
+        </Box>
+      </Dropdown.Content>
+    </Dropdown>
+  );
+};
+
+export const ModelTypeTabs = ({
+  pageTypes,
+  selectedIds,
+  counts,
+  onTabChange,
+  grouping,
   rightSlot,
 }: ModelTypeTabsProps) => {
   const intl = useIntl();
   const stripRef = useRef<HTMLDivElement>(null);
-  const measureTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const measureTabRefs = useRef<Array<HTMLElement | null>>([]);
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const visibleCountRef = useRef<number | null>(null);
   const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>(PINNED_TABS_STORAGE_KEY, []);
+  // Used only when no parent-owned grouping is supplied (standalone rendering).
+  const fallbackGrouping = useModelTypeTabGrouping();
+  const { separator, setSeparator, groupingEnabled, setGroupingEnabled, groupingOptions } =
+    grouping ?? fallbackGrouping;
 
   visibleCountRef.current = visibleCount;
 
@@ -80,17 +338,22 @@ export const ModelTypeTabs = ({
     [setPinnedIds],
   );
 
-  const items: ModelTypeTabItem[] = useMemo(() => {
-    const all: ModelTypeTabItem = {
+  const tabNodes = useMemo(
+    () => groupModelTypeTabs(pageTypes ?? [], groupingOptions),
+    [groupingOptions, pageTypes],
+  );
+
+  const items: ModelTypeTabStripItem[] = useMemo(() => {
+    const all: ModelTypeTabStripItem = {
+      kind: "all",
       id: ALL_MODELS_TAB_ID,
       name: intl.formatMessage(modelTypeTabsMessages.allTab),
     };
-    const types = pageTypes ?? [];
-    const pinned = types.filter(t => pinnedSet.has(t.id));
-    const unpinned = types.filter(t => !pinnedSet.has(t.id));
+    const pinned = tabNodes.filter(node => pinnedSet.has(getModelTabNodeId(node)));
+    const unpinned = tabNodes.filter(node => !pinnedSet.has(getModelTabNodeId(node)));
 
     return [all, ...pinned, ...unpinned];
-  }, [intl, pageTypes, pinnedSet]);
+  }, [intl, pinnedSet, tabNodes]);
   const itemsLength = items.length;
 
   const recompute = useCallback(() => {
@@ -118,8 +381,6 @@ export const ModelTypeTabs = ({
       return;
     }
 
-    // If the More button is already mounted, clientWidth already excludes its slot.
-    // Otherwise we need to reserve space for the slot the next render will introduce.
     const moreAlreadyMounted =
       visibleCountRef.current !== null && visibleCountRef.current < widths.length;
     const reserve = moreAlreadyMounted ? 0 : MORE_BUTTON_RESERVED_WIDTH;
@@ -141,7 +402,6 @@ export const ModelTypeTabs = ({
     setVisibleCount(prev => (prev === next ? prev : next));
   }, [itemsLength]);
 
-  // Recompute after every commit — picks up tab label changes (e.g. counts arriving async).
   useLayoutEffect(() => {
     recompute();
   });
@@ -158,10 +418,9 @@ export const ModelTypeTabs = ({
     return () => observer.disconnect();
   }, [recompute]);
 
-  // Promote the active tab into the visible set if it would otherwise be hidden.
-  const activeIndex = items.findIndex(it => it.id === activeId);
+  const activeIndex = items.findIndex(item => isStripItemActive(item, selectedIds));
   let displayItems = items;
-  let overflowItems: ModelTypeTabItem[] = [];
+  let overflowItems: ModelTypeTabStripItem[] = [];
 
   if (visibleCount !== null && visibleCount < items.length) {
     const visibleCap = visibleCount;
@@ -180,40 +439,151 @@ export const ModelTypeTabs = ({
   }
 
   const showMore = overflowItems.length > 0;
-  // Hide the visible strip while we haven't measured yet to avoid a flash of all-tabs.
   const measuring = visibleCount === null;
 
   const overflowOptions = useMemo(
     () =>
       overflowItems.map(item => {
-        const countLabel = formatCount(counts[item.id])?.trim();
+        const countLabel = formatCount(getStripItemCount(item, counts))?.trim();
+        const label = getStripItemLabel(item, selectedIds);
 
         return {
-          label: countLabel ? `${item.name} ${countLabel}` : item.name,
-          testId: `model-type-tab-${item.id}`,
-          onSelect: () => onTabChange(item.id),
+          label: countLabel ? `${label} ${countLabel}` : label,
+          testId: `model-type-tab-${getStripItemId(item)}`,
+          onSelect: () => onTabChange(getStripItemSelection(item)),
         };
       }),
-    [overflowItems, counts, onTabChange],
+    [counts, onTabChange, overflowItems, selectedIds],
   );
+
+  const renderTabPin = (item: ModelTypeTabStripItem, isActive: boolean) => {
+    const itemId = getStripItemId(item);
+
+    if (!isActive || item.kind === "all") {
+      return null;
+    }
+
+    const pinned = isPinned(itemId);
+
+    return (
+      <span
+        role="button"
+        tabIndex={0}
+        className={styles.pinButton}
+        aria-label={intl.formatMessage(
+          pinned ? modelTypeTabsMessages.unpinTab : modelTypeTabsMessages.pinTab,
+        )}
+        data-test-id={`model-type-tab-pin-${itemId}`}
+        onClick={event => {
+          event.stopPropagation();
+          togglePin(itemId);
+        }}
+        onKeyDown={event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            togglePin(itemId);
+          }
+        }}
+      >
+        {pinned ? <PinOff size={14} /> : <Pin size={14} />}
+      </span>
+    );
+  };
+
+  const renderTabLabel = (item: ModelTypeTabStripItem) => {
+    const label = getStripItemLabel(item, selectedIds);
+    const count = getStripItemCount(item, counts);
+
+    return (
+      <>
+        {item.kind === "group" && <Layers size={14} className={styles.groupIcon} aria-hidden />}
+        <span className={styles.tabLabel} title={label}>
+          {label}
+        </span>
+        {renderCount(count)}
+      </>
+    );
+  };
+
+  const renderTab = (item: ModelTypeTabStripItem, isActive: boolean) => {
+    const itemId = getStripItemId(item);
+
+    if (item.kind === "group") {
+      return (
+        <div
+          key={itemId}
+          role="tab"
+          aria-selected={isActive}
+          className={styles.groupTab}
+          data-test-id={`model-type-tab-${itemId}`}
+        >
+          <button
+            type="button"
+            className={styles.tabMain}
+            onClick={() => onTabChange(getStripItemSelection(item))}
+          >
+            {renderTabLabel(item)}
+          </button>
+          <GroupTabDropdown
+            group={item}
+            selectedIds={selectedIds}
+            counts={counts}
+            onTabChange={onTabChange}
+            separator={separator}
+          />
+          {renderTabPin(item, isActive)}
+        </div>
+      );
+    }
+
+    return (
+      <button
+        key={itemId}
+        type="button"
+        role="tab"
+        aria-selected={isActive}
+        className={styles.tab}
+        onClick={() => onTabChange(getStripItemSelection(item))}
+        data-test-id={`model-type-tab-${itemId}`}
+      >
+        {renderTabLabel(item)}
+        {renderTabPin(item, isActive)}
+      </button>
+    );
+  };
+
+  const renderMeasureTab = (item: ModelTypeTabStripItem) => {
+    if (item.kind === "group") {
+      return (
+        <span className={styles.groupTab}>
+          <span className={styles.tabMain}>{renderTabLabel(item)}</span>
+          <span className={styles.caretButton} aria-hidden>
+            <ChevronDown size={14} />
+          </span>
+        </span>
+      );
+    }
+
+    return (
+      <button type="button" tabIndex={-1} className={styles.tab}>
+        {renderTabLabel(item)}
+      </button>
+    );
+  };
 
   return (
     <div className={styles.row}>
-      {/* Hidden measurement layer — always renders all tabs at their natural width. */}
       <div className={styles.measureLayer} aria-hidden>
         {items.map((item, idx) => (
-          <button
-            key={item.id}
-            type="button"
-            tabIndex={-1}
+          <span
+            key={getStripItemId(item)}
             ref={el => {
               measureTabRefs.current[idx] = el;
             }}
-            className={styles.tab}
           >
-            <span className={styles.tabLabel}>{item.name}</span>
-            {renderCount(counts[item.id])}
-          </button>
+            {renderMeasureTab(item)}
+          </span>
         ))}
       </div>
 
@@ -224,54 +594,17 @@ export const ModelTypeTabs = ({
         data-test-id="model-type-tabs"
         style={measuring ? { visibility: "hidden" } : undefined}
       >
-        {displayItems.map(item => {
-          const isActive = item.id === activeId;
-          const canPin = isActive && item.id !== ALL_MODELS_TAB_ID;
-          const pinned = isPinned(item.id);
-
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              className={styles.tab}
-              onClick={() => onTabChange(item.id)}
-              data-test-id={`model-type-tab-${item.id}`}
-            >
-              <span className={styles.tabLabel} title={item.name}>
-                {item.name}
-              </span>
-              {renderCount(counts[item.id])}
-              {canPin && (
-                <span
-                  role="button"
-                  tabIndex={0}
-                  className={styles.pinButton}
-                  aria-label={intl.formatMessage(
-                    pinned ? modelTypeTabsMessages.unpinTab : modelTypeTabsMessages.pinTab,
-                  )}
-                  data-test-id={`model-type-tab-pin-${item.id}`}
-                  onClick={e => {
-                    e.stopPropagation();
-                    togglePin(item.id);
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      togglePin(item.id);
-                    }
-                  }}
-                >
-                  {pinned ? <PinOff size={14} /> : <Pin size={14} />}
-                </span>
-              )}
-            </button>
-          );
-        })}
+        {displayItems.map(item => renderTab(item, isStripItemActive(item, selectedIds)))}
       </div>
-      {rightSlot && <div className={styles.rightSlot}>{rightSlot}</div>}
+      <div className={styles.rightSlot}>
+        <ModelTypeTabsSettings
+          separator={separator}
+          groupingEnabled={groupingEnabled}
+          onSeparatorChange={setSeparator}
+          onGroupingEnabledChange={setGroupingEnabled}
+        />
+        {rightSlot}
+      </div>
       {showMore && (
         <div className={styles.moreSlot}>
           <ButtonWithDropdown
