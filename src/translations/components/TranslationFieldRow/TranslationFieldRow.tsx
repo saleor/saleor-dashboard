@@ -97,7 +97,7 @@ const renderTranslationInput = (
   onSubmit: (data: string | OutputData) => SubmitPromise,
   onValueChange?: (value: string) => void,
 ) => {
-  const initial = field.translation;
+  const initial = isEditing ? (field.editInitial ?? field.translation) : field.translation;
 
   if (!isEditing) {
     if (field.type === TranslationFieldType.SHORT) {

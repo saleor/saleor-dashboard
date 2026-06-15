@@ -137,6 +137,32 @@ describe("isBulkFieldDirty", () => {
     // Act & Assert
     expect(isBulkFieldDirty(richField, revertedRichText)).toBe(false);
   });
+
+  it("treats app-suggested draft as dirty against persisted translation", () => {
+    // Arrange - editInitial is UI-only; dirty check compares draft to field.translation
+    const fieldWithAppDraft: TranslationField = {
+      ...shortField,
+      translation: "Persisted translation",
+      editInitial: "App suggested translation",
+    };
+
+    // Act & Assert
+    expect(isBulkFieldDirty(fieldWithAppDraft, fieldWithAppDraft.editInitial)).toBe(true);
+  });
+
+  it("does not mark field dirty when app draft matches persisted translation", () => {
+    // Arrange
+    const fieldWithMatchingDraft: TranslationField = {
+      ...shortField,
+      translation: "Same value",
+      editInitial: "Same value",
+    };
+
+    // Act & Assert
+    expect(isBulkFieldDirty(fieldWithMatchingDraft, fieldWithMatchingDraft.editInitial)).toBe(
+      false,
+    );
+  });
 });
 
 describe("getDirtyBulkSubmitValues", () => {

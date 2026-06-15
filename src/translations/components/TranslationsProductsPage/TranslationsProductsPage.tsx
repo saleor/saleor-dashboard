@@ -20,6 +20,7 @@ import {
 import {
   type TranslationField,
   TranslationInputFieldName,
+  type TranslationSectionConfig,
   type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
 import {
@@ -36,6 +37,39 @@ import { useIntl } from "react-intl";
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import { useTranslationProductFormAppResponse } from "./use-translation-product-form-app-response";
 import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
+
+interface ProductAppResponseFields {
+  productDescription?: string;
+  productName?: string;
+  seoDescription?: string;
+  seoName?: string;
+}
+
+const applyProductAppDraftsToSections = (
+  sections: TranslationSectionConfig[],
+  appResponseFields: ProductAppResponseFields,
+): TranslationSectionConfig[] =>
+  sections.map(section => ({
+    ...section,
+    fields: section.fields.map(field => {
+      const draftByFieldName: Record<string, string | undefined> = {
+        [TranslationInputFieldName.name]: appResponseFields.productName,
+        [TranslationInputFieldName.description]: appResponseFields.productDescription,
+        [TranslationInputFieldName.seoDescription]: appResponseFields.seoDescription,
+        [TranslationInputFieldName.seoTitle]: appResponseFields.seoName,
+      };
+      const draft = draftByFieldName[field.name];
+
+      if (!draft) {
+        return field;
+      }
+
+      return {
+        ...field,
+        editInitial: draft,
+      };
+    }),
+  }));
 
 interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment | null;
@@ -89,16 +123,15 @@ export const TranslationsProductsPage = ({
     onEdit,
   });
 
-  const sections = useMemo(() => {
-    const productSections = [
+  const sections = useMemo((): TranslationSectionConfig[] => {
+    const productSections: TranslationSectionConfig[] = [
       createGeneralNameDescriptionSection(
         intl,
         {
           description: data?.product?.description,
           name: data?.product?.name,
-          translationDescription:
-            appResponseFields.productDescription ?? data?.translation?.description,
-          translationName: appResponseFields.productName ?? data?.translation?.name,
+          translationDescription: data?.translation?.description ?? null,
+          translationName: data?.translation?.name ?? null,
         },
         {
           descriptionLabel: intl.formatMessage({
@@ -114,9 +147,8 @@ export const TranslationsProductsPage = ({
       createSeoTranslationSection(intl, {
         seoDescription: data?.product?.seoDescription,
         seoTitle: data?.product?.seoTitle,
-        translationSeoDescription:
-          appResponseFields.seoDescription ?? data?.translation?.seoDescription,
-        translationSeoTitle: appResponseFields.seoName ?? data?.translation?.seoTitle,
+        translationSeoDescription: data?.translation?.seoDescription ?? null,
+        translationSeoTitle: data?.translation?.seoTitle ?? null,
       }),
     ];
 
@@ -129,7 +161,7 @@ export const TranslationsProductsPage = ({
       );
     }
 
-    return productSections;
+    return applyProductAppDraftsToSections(productSections, appResponseFields);
   }, [appResponseFields, data, intl]);
 
   const handleValueChange = (field: TranslationField, value: string): void => {

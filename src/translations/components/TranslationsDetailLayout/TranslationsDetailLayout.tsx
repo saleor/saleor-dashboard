@@ -1,8 +1,12 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { isBulkFieldDirty } from "@dashboard/translations/bulkFieldDirty";
 import { useTranslationBulkValues } from "@dashboard/translations/hooks/useTranslationBulkValues";
 import { useTranslationExitForm } from "@dashboard/translations/hooks/useTranslationExitForm";
 import { useTranslationLanguagePair } from "@dashboard/translations/hooks/useTranslationLanguagePair";
-import { isTranslationEditMode } from "@dashboard/translations/translationQueryParams";
+import {
+  getActiveFieldsFromParams,
+  isTranslationEditMode,
+} from "@dashboard/translations/translationQueryParams";
 import {
   type TranslationField,
   type TranslationSectionConfig,
@@ -76,6 +80,30 @@ export const TranslationsDetailLayout = ({
       resetValues();
     },
     [activeField, bulk, resetValues],
+  );
+
+  useEffect(
+    function seedDraftValuesFromEditInitial() {
+      if (!isEditMode) {
+        return;
+      }
+
+      const activeFields = getActiveFieldsFromParams({ activeField });
+
+      sections.forEach(section => {
+        section.fields.forEach(field => {
+          const isActiveField = bulk || activeFields.includes(field.name);
+          const draft = field.editInitial;
+
+          if (!isActiveField || draft === undefined || !isBulkFieldDirty(field, draft)) {
+            return;
+          }
+
+          handleValueChange(field, draft);
+        });
+      });
+    },
+    [activeField, bulk, handleValueChange, isEditMode, sections],
   );
 
   const clearEditState = () => {

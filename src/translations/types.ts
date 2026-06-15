@@ -35,6 +35,8 @@ export interface TranslationField<T extends string = string> {
   displayName: string;
   name: T;
   translation: string | null;
+  /** Optional draft shown in edit inputs; persisted baseline remains in `translation`. */
+  editInitial?: string | null;
   type: TranslationFieldType;
   value: string;
   hint?: string;
