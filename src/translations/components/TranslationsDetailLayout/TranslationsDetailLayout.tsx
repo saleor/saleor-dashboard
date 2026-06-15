@@ -130,7 +130,7 @@ export const TranslationsDetailLayout = ({
           const isActiveField = bulk || activeFields.includes(field.name);
           const draft = field.editInitial;
 
-          if (!isActiveField || draft === undefined || !isBulkFieldDirty(field, draft)) {
+          if (!isActiveField || draft == null || !isBulkFieldDirty(field, draft)) {
             return;
           }
 

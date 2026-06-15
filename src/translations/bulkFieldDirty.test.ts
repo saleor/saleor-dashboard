@@ -147,7 +147,7 @@ describe("isBulkFieldDirty", () => {
     };
 
     // Act & Assert
-    expect(isBulkFieldDirty(fieldWithAppDraft, fieldWithAppDraft.editInitial)).toBe(true);
+    expect(isBulkFieldDirty(fieldWithAppDraft, "App suggested translation")).toBe(true);
   });
 
   it("does not mark field dirty when app draft matches persisted translation", () => {
@@ -159,9 +159,7 @@ describe("isBulkFieldDirty", () => {
     };
 
     // Act & Assert
-    expect(isBulkFieldDirty(fieldWithMatchingDraft, fieldWithMatchingDraft.editInitial)).toBe(
-      false,
-    );
+    expect(isBulkFieldDirty(fieldWithMatchingDraft, "Same value")).toBe(false);
   });
 });
 
