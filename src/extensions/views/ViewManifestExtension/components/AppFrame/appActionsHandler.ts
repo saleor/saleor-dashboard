@@ -1,5 +1,9 @@
 import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
+import {
+  applyWidgetHeightToFrame,
+  createWidgetResizeOkResponse,
+} from "@dashboard/extensions/hooks/widgetIframeResize";
 import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -13,6 +17,7 @@ import {
   type RedirectAction,
   type RequestPermissions,
   type UpdateRouting,
+  type WidgetResize,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -283,6 +288,22 @@ const useHandlePopupCloseAction = () => {
   };
 };
 
+const useHandleWidgetResizeAction = (frameEl: HTMLIFrameElement | null) => ({
+  handle: (action: WidgetResize) => {
+    const { actionId, height } = action.payload;
+
+    debug(`Handling WidgetResize action with ID: %s, height: %s`, actionId, height);
+
+    if (!frameEl) {
+      return createWidgetResizeOkResponse(actionId);
+    }
+
+    applyWidgetHeightToFrame(frameEl, height);
+
+    return createWidgetResizeOkResponse(actionId);
+  },
+});
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
@@ -292,4 +313,5 @@ export const AppActionsHandler = {
   useHandlePermissionRequest,
   useHandleAppFormUpdate,
   useHandlePopupCloseAction,
+  useHandleWidgetResizeAction,
 };

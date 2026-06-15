@@ -1,6 +1,11 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { getAbsoluteApiUrl } from "@dashboard/config";
+import {
+  useWidgetIframeAutoHeight,
+  WIDGET_DEFAULT_HEIGHT,
+} from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { useNodeRef } from "@dashboard/hooks/useNodeRef";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { type CSSProperties, useEffect, useRef } from "react";
 
@@ -13,6 +18,12 @@ interface IframePostProps {
   accessToken: string;
   params?: AppDetailsUrlMountQueryParams;
   height?: number | string;
+  /**
+   * Grow/shrink the iframe when the embedded app dispatches `actions.WidgetResize`.
+   * POST widgets do not use AppFrame / `useAppActions`; resize is handled here via
+   * the same `widgetResize` App Bridge action and `ok` response.
+   */
+  autoHeight?: boolean;
   loaderType?: "skeleton" | "throbber";
 }
 
@@ -26,12 +37,16 @@ export const IframePost = ({
   appId,
   accessToken,
   params,
-  height = 200,
+  height = WIDGET_DEFAULT_HEIGHT,
+  autoHeight = false,
   loaderType = "skeleton",
 }: IframePostProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
+  const { ref: iframeRef, node: iframeEl, setRef: setIframeRef } = useNodeRef<HTMLIFrameElement>();
+  const appOrigin = new URL(extensionUrl).origin;
+
+  useWidgetIframeAutoHeight(iframeEl, autoHeight, { appOrigin });
 
   useEffect(() => {
     if (formRef.current) {
@@ -55,10 +70,13 @@ export const IframePost = ({
     return () => {
       iframe.removeEventListener("load", onload);
     };
-  }, []);
+  }, [iframeRef]);
+
+  const boxHeight = autoHeight ? undefined : height;
+  const loaderHeight = autoHeight ? WIDGET_DEFAULT_HEIGHT : height;
 
   return (
-    <Box width="100%" __height={height as number | string}>
+    <Box width="100%" __height={boxHeight}>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
         <input type="hidden" name="saleorApiUrl" value={getAbsoluteApiUrl()} />
         <input type="hidden" name="accessToken" value={accessToken} />
@@ -71,23 +89,19 @@ export const IframePost = ({
       <Box
         ref={loadingRef}
         width="100%"
-        __height={height as number | string}
+        __height={loaderHeight}
         display={loaderType === "throbber" ? "flex" : "block"}
         alignItems={loaderType === "throbber" ? "center" : undefined}
         justifyContent={loaderType === "throbber" ? "center" : undefined}
       >
-        {loaderType === "throbber" ? (
-          <SaleorThrobber />
-        ) : (
-          <Skeleton __height={height as number | string} />
-        )}
+        {loaderType === "throbber" ? <SaleorThrobber /> : <Skeleton __height={loaderHeight} />}
       </Box>
       <Box
         style={hiddenStyle}
-        ref={iframeRef}
+        ref={setIframeRef}
         as="iframe"
         borderWidth={0}
-        __height={height as number | string}
+        __height={boxHeight}
         sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups"
         name={`ext-frame-${extensionId}`}
         width="100%"

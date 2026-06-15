@@ -363,6 +363,86 @@ describe("AppActionsHandler", function () {
       });
     });
   });
+  describe("useHandleWidgetResizeAction", () => {
+    it("Sets iframe height and returns ok response", () => {
+      const iframe = document.createElement("iframe");
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(iframe));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-1",
+          height: 321.4,
+        },
+      });
+
+      expect(iframe.style.height).toBe("322px");
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-1",
+          ok: true,
+        },
+      });
+    });
+
+    it("Returns ok when frame element is missing", () => {
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(null));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-2",
+          height: 100,
+        },
+      });
+
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-2",
+          ok: true,
+        },
+      });
+    });
+
+    it("Returns ok without changing height for invalid heights", () => {
+      const iframe = document.createElement("iframe");
+
+      iframe.style.height = "200px";
+
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(iframe));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-3",
+          height: -10,
+        },
+      });
+
+      expect(iframe.style.height).toBe("200px");
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-3",
+          ok: true,
+        },
+      });
+    });
+  });
   describe("useHandlePopupCloseAction", () => {
     it("Calls deactivate and returns ok response", () => {
       // Arrange

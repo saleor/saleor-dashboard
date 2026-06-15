@@ -21,9 +21,6 @@ type AppWidgetsProps = {
   params: AppDetailsUrlMountQueryParams;
 };
 
-// TODO We will add size negotiations after render
-const defaultIframeSize = 200;
-
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const navigate = useNavigator();
   const themeRef = useRef<ThemeType>();
@@ -118,12 +115,13 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 );
 
                 const renderIframeGETvariant = () => (
-                  <Box __height={defaultIframeSize}>
+                  <Box>
                     <Text size={3} color="default2" href={appPageUrl}>
                       {ext.label}
                     </Text>
                     <AppFrame
                       target="WIDGET"
+                      autoHeight
                       src={GETappIframeUrl}
                       appToken={ext.accessToken}
                       appId={ext.app.id}
@@ -139,6 +137,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                       {ext.label}
                     </Text>
                     <IframePost
+                      autoHeight
                       appId={ext.app.id}
                       accessToken={ext.accessToken}
                       extensionId={ext.id}
