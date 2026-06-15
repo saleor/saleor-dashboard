@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.21.21
+
+### Patch Changes
+
+- d5c6c0c: Added `Referrer-Policy: origin-when-cross-origin` header to the
+  NGINX config bundled inside the container image.
+
 ## 3.21.20
 
 ### Patch Changes
