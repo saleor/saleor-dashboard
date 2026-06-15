@@ -1,26 +1,47 @@
+import { type ApolloQueryResult } from "@apollo/client";
 import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { PageDetailsDocument, type PageDetailsFragment } from "@dashboard/graphql";
-import { useEffect } from "react";
+import {
+  PageDetailsDocument,
+  type PageDetailsFragment,
+  type PageDetailsQuery,
+} from "@dashboard/graphql";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 
 interface PageMetadataDialogProps {
   open: boolean;
   onClose: () => void;
   page: PageDetailsFragment | undefined | null;
+  refetchPage?: () => Promise<ApolloQueryResult<PageDetailsQuery>>;
 }
 
-export const PageMetadataDialog = ({ onClose, open, page }: PageMetadataDialogProps) => {
+export const PageMetadataDialog = ({
+  onClose,
+  open,
+  page,
+  refetchPage,
+}: PageMetadataDialogProps) => {
   const intl = useIntl();
-  const normalizedPage = page
-    ? { ...page, privateMetadata: page.privateMetadata ?? [] }
-    : undefined;
+  const normalizedPage = useMemo(
+    () =>
+      page
+        ? {
+            ...page,
+            metadata: page.metadata ?? [],
+            privateMetadata: page.privateMetadata ?? [],
+          }
+        : undefined,
+    [page],
+  );
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedPage,
     onClose,
     refetchDocument: PageDetailsDocument,
+    refetch: refetchPage,
   });
 
   const {
@@ -31,25 +52,40 @@ export const PageMetadataDialog = ({ onClose, open, page }: PageMetadataDialogPr
     reset,
     formIsDirty,
     handleChange,
-    formData,
+    getFormData,
   } = useMetadataForm({
     graphqlData: normalizedPage,
     submitInProgress,
     lastSubmittedData,
   });
 
+  const wasOpenRef = useRef(false);
+
   useEffect(() => {
     if (!open) {
+      wasOpenRef.current = false;
       reset();
+
+      return;
     }
-  }, [open, reset]);
+
+    if (!normalizedPage || wasOpenRef.current) {
+      return;
+    }
+
+    reset({
+      metadata: normalizedPage.metadata.map(mapMetadataItemToInput),
+      privateMetadata: normalizedPage.privateMetadata.map(mapMetadataItemToInput),
+    });
+    wasOpenRef.current = true;
+  }, [open, normalizedPage, reset]);
 
   return (
     <MetadataDialog
       open={open}
       onClose={onClose}
       onSave={async () => {
-        await onSubmit(formData);
+        await onSubmit(getFormData());
       }}
       title={intl.formatMessage({
         defaultMessage: "Model Metadata",

@@ -226,8 +226,8 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
         attributeValues={attributeValues}
-        onRemove={() => openModal("remove")}
-        onShowMetadata={() => openModal("view-metadata")}
+        onRemove={() => openModal("remove", { id: undefined })}
+        onShowMetadata={() => openModal("view-metadata", { id: undefined })}
         onSubmit={handleUpdate}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
@@ -253,6 +253,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         open={params.action === "view-metadata" && !!pageDetails.data?.page}
         onClose={closeModal}
         page={pageDetails.data?.page}
+        refetchPage={pageDetails.refetch}
       />
       <ActionDialog
         open={params.action === "remove"}

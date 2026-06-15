@@ -122,7 +122,7 @@ interface UsePageFormOpts {
 interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
   page: PageDetailsFragment;
-  onSubmit: (data: PageData) => SubmitPromise;
+  onSubmit: (data: PageSubmitData) => SubmitPromise;
   disabled: boolean;
 }
 
@@ -140,7 +140,7 @@ const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): Pa
 
 function usePageForm(
   page: PageDetailsFragment,
-  onSubmit: (data: PageData) => SubmitPromise,
+  onSubmit: (data: PageSubmitData) => SubmitPromise,
   disabled: boolean,
   opts: UsePageFormOpts,
 ): UsePageUpdateFormOutput {
@@ -246,7 +246,7 @@ function usePageForm(
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
   });
-  const handleSubmit = async (data: PageData) => {
+  const handleSubmit = async (data: PageSubmitData) => {
     let errors = validatePageCreateData(data);
 
     setValidationErrors(errors);

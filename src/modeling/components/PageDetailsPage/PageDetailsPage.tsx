@@ -48,7 +48,7 @@ import { useIntl } from "react-intl";
 
 import PageInfo from "../PageInfo";
 import { PageOrganizeContent } from "../PageOrganizeContent/PageOrganizeContent";
-import PageForm, { type PageData, type PageUpdateHandlers } from "./form";
+import PageForm, { type PageData, type PageSubmitData, type PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
 import { PageDetailsTitle } from "./Title";
 
@@ -67,7 +67,7 @@ interface PageDetailsPageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onRemove: () => void;
   onShowMetadata?: () => void;
-  onSubmit: (data: PageData) => SubmitPromise;
+  onSubmit: (data: PageSubmitData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
   fetchMorePageTypes?: FetchMoreProps;
   assignReferencesAttributeId?: string;
