@@ -60,13 +60,106 @@
   border-bottom-color: var(--mu-colors-text-default1);
 }
 
-.count {
-  color: var(--mu-colors-text-default2);
-  font-variant-numeric: tabular-nums;
+.groupTab {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  max-width: 260px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
 }
 
-.tab[aria-selected="true"] .count {
+.groupTab[aria-selected="true"] {
+  border-bottom-color: var(--mu-colors-text-default1);
+}
+
+.groupIcon {
+  flex-shrink: 0;
+  color: var(--mu-colors-text-default2);
+}
+
+.groupTab[aria-selected="true"] .groupIcon {
   color: var(--mu-colors-text-default1);
+}
+
+.groupTab:hover .groupIcon {
+  color: var(--mu-colors-text-default1);
+}
+
+.tabMain {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 4px 12px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  color: var(--mu-colors-text-default2);
+  white-space: nowrap;
+}
+
+.groupTab[aria-selected="true"] .tabMain {
+  color: var(--mu-colors-text-default1);
+}
+
+.tabMain:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.caretButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.caretButton:hover {
+  color: var(--mu-colors-text-default1);
+  background: var(--mu-colors-background-default2);
+}
+
+.groupTab[aria-selected="true"] .caretButton {
+  color: var(--mu-colors-text-default1);
+}
+
+.groupTab:hover .tabMain,
+.groupTab:hover .caretButton {
+  color: var(--mu-colors-text-default1);
+}
+
+.settingsButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+}
+
+.settingsButton:hover {
+  color: var(--mu-colors-text-default1);
+  background: var(--mu-colors-background-default2);
+}
+
+.dropdownItemActive {
+  background: var(--mu-colors-background-default2);
 }
 
 .pinButton {
@@ -87,7 +180,8 @@
   transition:
     width 0.18s ease,
     opacity 0.18s ease,
-    margin-left 0.18s ease;
+    margin-left 0.18s ease,
+    margin-right 0.18s ease;
 }
 
 .tab[aria-selected="true"]:hover .pinButton {
@@ -96,23 +190,31 @@
   opacity: 1;
 }
 
+.groupTab[aria-selected="true"]:hover .pinButton {
+  width: 18px;
+  margin-left: 10px;
+  margin-right: 8px;
+  opacity: 1;
+}
+
 .pinButton:hover {
   color: var(--mu-colors-text-default1);
   background: var(--mu-colors-background-default2);
 }
 
-.rightSlot {
+.trailingSlot {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 24px;
+  gap: 8px;
+  margin-left: 8px;
+  padding-right: 24px;
 }
 
 .moreSlot {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding: 0 24px;
 }
 
 /*

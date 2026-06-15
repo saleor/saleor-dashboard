@@ -3,6 +3,7 @@ import type { ComponentType } from "react";
 import { fn } from "storybook/test";
 
 import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
+import { getGroupTabId } from "./groupModelTypeTabs";
 import { ALL_MODELS_TAB_ID, ModelTypeTabs } from "./ModelTypeTabs";
 
 const samplePageTypes = [
@@ -12,6 +13,17 @@ const samplePageTypes = [
   { id: "pt-4", name: "Landing Page" },
   { id: "pt-5", name: "Legal" },
 ];
+
+const groupedPageTypes = [
+  { id: "pt-article", name: "Article" },
+  { id: "pt-cart", name: "Storefront — Cart" },
+  { id: "pt-checkout", name: "Storefront — Checkout" },
+  { id: "pt-chrome", name: "Storefront — Chrome" },
+  { id: "pt-homepage", name: "Storefront — Homepage" },
+  { id: "pt-legal", name: "Legal" },
+];
+
+const storefrontGroupId = getGroupTabId("Storefront");
 
 const meta: Meta<typeof ModelTypeTabs> = {
   title: "Modeling/ModelTypeTabs",
@@ -28,7 +40,7 @@ type Story = StoryObj<typeof ModelTypeTabs>;
 export const AllTabActive: Story = {
   args: {
     pageTypes: samplePageTypes,
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: {
       [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
       "pt-1": { value: 12, hasMore: false },
@@ -43,7 +55,7 @@ export const AllTabActive: Story = {
 export const SpecificTypeActive: Story = {
   args: {
     pageTypes: samplePageTypes,
-    activeId: "pt-3",
+    selectedIds: ["pt-3"],
     counts: {
       [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
       "pt-1": { value: 12, hasMore: false },
@@ -52,10 +64,42 @@ export const SpecificTypeActive: Story = {
   },
 };
 
+export const GroupedTypesAllActive: Story = {
+  args: {
+    pageTypes: groupedPageTypes,
+    selectedIds: ["pt-cart", "pt-checkout", "pt-chrome", "pt-homepage"],
+    counts: {
+      [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
+      [storefrontGroupId]: { value: 4, hasMore: false },
+      "pt-cart": { value: 1, hasMore: false },
+      "pt-checkout": { value: 1, hasMore: false },
+      "pt-chrome": { value: 1, hasMore: false },
+      "pt-homepage": { value: 1, hasMore: false },
+      "pt-article": { value: 2, hasMore: false },
+      "pt-legal": { value: 1, hasMore: false },
+    },
+  },
+};
+
+export const GroupedSubtypeActive: Story = {
+  args: {
+    pageTypes: groupedPageTypes,
+    selectedIds: ["pt-checkout"],
+    counts: {
+      [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
+      [storefrontGroupId]: { value: 4, hasMore: false },
+      "pt-cart": { value: 1, hasMore: false },
+      "pt-checkout": { value: 1, hasMore: false },
+      "pt-chrome": { value: 1, hasMore: false },
+      "pt-homepage": { value: 1, hasMore: false },
+    },
+  },
+};
+
 export const NoCountsYet: Story = {
   args: {
     pageTypes: samplePageTypes,
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: {},
   },
 };
@@ -63,7 +107,7 @@ export const NoCountsYet: Story = {
 export const NoPageTypes: Story = {
   args: {
     pageTypes: [],
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: {
       [ALL_MODELS_TAB_ID]: { value: 0, hasMore: false },
     },
@@ -73,7 +117,7 @@ export const NoPageTypes: Story = {
 export const Loading: Story = {
   args: {
     pageTypes: undefined,
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: {},
   },
 };
@@ -94,7 +138,7 @@ manyPageTypes.forEach((pt, i) => {
 export const ManyTypesOverflow: Story = {
   args: {
     pageTypes: manyPageTypes,
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: manyCounts,
   },
   decorators: [
@@ -109,7 +153,7 @@ export const ManyTypesOverflow: Story = {
 export const ManyTypesActiveInOverflow: Story = {
   args: {
     pageTypes: manyPageTypes,
-    activeId: "pt-many-20",
+    selectedIds: ["pt-many-20"],
     counts: manyCounts,
   },
   decorators: [
@@ -124,7 +168,7 @@ export const ManyTypesActiveInOverflow: Story = {
 export const ManyTypesNarrow: Story = {
   args: {
     pageTypes: manyPageTypes,
-    activeId: ALL_MODELS_TAB_ID,
+    selectedIds: [],
     counts: manyCounts,
   },
   decorators: [

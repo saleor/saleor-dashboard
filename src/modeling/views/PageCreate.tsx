@@ -117,6 +117,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [pageCreate, pageCreateOpts] = usePageCreateMutation({
+    disableErrorHandling: true,
     onCompleted: data => {
       if (data.pageCreate.errors.length === 0) {
         notify({

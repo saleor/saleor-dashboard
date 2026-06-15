@@ -31,4 +31,14 @@ export const messages = defineMessages({
     defaultMessage: "Set availability date",
     description: "model availability date label",
   },
+  editPageMetadata: {
+    id: "bWGTLR",
+    defaultMessage: "Edit model metadata",
+    description: "model detail page, top-bar metadata button tooltip",
+  },
+  openModelTypeSettings: {
+    id: "iMZEfi",
+    defaultMessage: "Model type settings",
+    description: "model detail page menu, opens model type configuration",
+  },
 });

@@ -814,6 +814,10 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
+  "2WV5Q8": {
+    "context": "model type a11y label prefix",
+    "string": "Model type"
+  },
   "2Xt+sw": {
     "context": "dialog header",
     "string": "Add postal codes"
@@ -2549,6 +2553,10 @@
   "C2N30x": {
     "context": "app has been removed",
     "string": "Extension removed"
+  },
+  "C2VZAl": {
+    "context": "aria label for grouped model type tab menu",
+    "string": "Choose {prefix} subtype"
   },
   "C4IOEN": {
     "string": "Created structure"
@@ -4701,6 +4709,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {voucherCode}?"
   },
+  "NEmY1y": {
+    "context": "title for model type tab settings",
+    "string": "Tab grouping"
+  },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
   },
@@ -5424,6 +5436,10 @@
     "context": "add new refund button",
     "string": "New refund"
   },
+  "Qu4wS5": {
+    "context": "label for selecting all subtypes in a grouped model type tab",
+    "string": "{prefix}{separator}All"
+  },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
     "string": "Already captured"
@@ -5737,6 +5753,10 @@
   "SgFE10": {
     "context": "product type digital",
     "string": "Digital"
+  },
+  "SjMQrX": {
+    "context": "label for model type tab grouping separator input",
+    "string": "Group separator"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -7361,6 +7381,10 @@
     "context": "amount filter label",
     "string": "Amount"
   },
+  "bWGTLR": {
+    "context": "model detail page, top-bar metadata button tooltip",
+    "string": "Edit model metadata"
+  },
   "bZenNC": {
     "string": "Description (optional)"
   },
@@ -7814,6 +7838,10 @@
   "e/61NZ": {
     "context": "current balance filter label",
     "string": "Current balance"
+  },
+  "e/f4WI": {
+    "context": "error message when model slug is not unique",
+    "string": "Model with this slug already exists. Please provide another."
   },
   "e0RKe+": {
     "context": "generate invoice button",
@@ -8560,6 +8588,10 @@
   "iLNRJL": {
     "context": "product type a11y label prefix",
     "string": "Product type"
+  },
+  "iMZEfi": {
+    "context": "model detail page menu, opens model type configuration",
+    "string": "Model type settings"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -9927,6 +9959,10 @@
   "pepgIN": {
     "string": "Choose the Model Type whose extended Models will serve as refund reasons."
   },
+  "pg1ODC": {
+    "context": "model type scope link in model header, opens filtered model list",
+    "string": "View models of {modelTypeName}"
+  },
   "pgTwKM": {
     "context": "section header",
     "string": "Model attributes"
@@ -10810,6 +10846,10 @@
   "u9WrRb": {
     "string": "Add Custom Extensions"
   },
+  "uCJ+gT": {
+    "context": "model metadata dialog header",
+    "string": "Model Metadata"
+  },
   "uCn/rd": {
     "context": "dialog header",
     "string": "Delete Image"
@@ -11445,6 +11485,10 @@
   "wsDF7X": {
     "context": "product variant attribute entity type",
     "string": "Product variants"
+  },
+  "wu/9MB": {
+    "context": "label for enabling grouped model type tabs",
+    "string": "Group similar model types"
   },
   "x/N8AY": {
     "context": "field translation status",

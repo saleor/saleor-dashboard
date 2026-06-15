@@ -33,6 +33,7 @@ interface MetadataFormReturn {
   formIsDirty: boolean;
   handleChange: (event: ChangeEvent, isPrivate: boolean) => void;
   formData: MetadataFormData;
+  getFormData: () => MetadataFormData;
 }
 
 export const useMetadataForm = ({
@@ -137,5 +138,6 @@ export const useMetadataForm = ({
     formIsDirty: formState.isDirty,
     handleChange,
     formData: getValues(),
+    getFormData: () => getValues(),
   };
 };

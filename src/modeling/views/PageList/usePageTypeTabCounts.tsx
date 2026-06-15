@@ -63,8 +63,8 @@ const TabCountFetcher = ({ pageTypeId, pageSize, onCount, tabId }: TabCountFetch
 
 interface UsePageTypeTabCountsArgs {
   pageTypes: Array<{ id: string }> | undefined;
-  /** Active tab id — that tab is skipped (parent supplies count from active query). */
-  activeTabId: string;
+  /** Selected page type ids from the URL — empty means the "All" tab is active. */
+  selectedPageTypes: string[];
   /** Tab id reserved for the "All models" entry. */
   allTabId: string;
   /** Page size at first render — stable for inactive tabs so they don't refetch on resize. */
@@ -73,7 +73,7 @@ interface UsePageTypeTabCountsArgs {
 
 export const usePageTypeTabCounts = ({
   pageTypes,
-  activeTabId,
+  selectedPageTypes,
   allTabId,
   pageSize,
 }: UsePageTypeTabCountsArgs) => {
@@ -92,9 +92,13 @@ export const usePageTypeTabCounts = ({
     });
   }, []);
 
+  const isActiveAll = selectedPageTypes.length === 0;
+  const isActiveSingleType = (typeId: string) =>
+    selectedPageTypes.length === 1 && selectedPageTypes[0] === typeId;
+
   const fetchers = (
     <>
-      {activeTabId !== allTabId && (
+      {!isActiveAll && (
         <TabCountFetcher
           tabId={allTabId}
           pageTypeId={null}
@@ -103,7 +107,7 @@ export const usePageTypeTabCounts = ({
         />
       )}
       {pageTypes
-        ?.filter(pt => pt.id !== activeTabId)
+        ?.filter(pt => !isActiveSingleType(pt.id))
         .map(pt => (
           <TabCountFetcher
             key={pt.id}

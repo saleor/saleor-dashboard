@@ -32,10 +32,12 @@ import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
+import { resolveActiveTabCountKey } from "../../components/ModelTypeTabs/groupModelTypeTabs";
 import {
   ALL_MODELS_TAB_ID,
   type ModelTypeTabCount,
 } from "../../components/ModelTypeTabs/ModelTypeTabs";
+import { useModelTypeTabGrouping } from "../../components/ModelTypeTabs/useModelTypeTabGrouping";
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
   pageCreateUrl,
@@ -55,7 +57,9 @@ const normalizePageTypes = (value: string | string[] | undefined): string[] => {
     return [];
   }
 
-  return Array.isArray(value) ? value.filter(Boolean) : [value];
+  const ids = Array.isArray(value) ? value.filter(Boolean) : [value];
+
+  return [...new Set(ids)];
 };
 
 const PageList = ({ params }: PageListProps) => {
@@ -65,10 +69,19 @@ const PageList = ({ params }: PageListProps) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
 
-  const selectedPageTypes = normalizePageTypes(params.pageTypes);
-  const activeTabId = selectedPageTypes[0] ?? ALL_MODELS_TAB_ID;
+  // Stabilise the array reference so dependent memos/effects don't churn every render.
+  const selectedPageTypesKey = Array.isArray(params.pageTypes)
+    ? params.pageTypes.join(",")
+    : (params.pageTypes ?? "");
+  const selectedPageTypes = useMemo(
+    () => normalizePageTypes(params.pageTypes),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedPageTypesKey],
+  );
 
   usePaginationReset(pageListUrl, params, settings.rowNumber);
+
+  const grouping = useModelTypeTabGrouping();
 
   const {
     clearRowSelection,
@@ -78,11 +91,11 @@ const PageList = ({ params }: PageListProps) => {
   } = useRowSelection(params);
 
   const handleTabChange = useCallback(
-    (id: string) => {
+    (ids: string[]) => {
       clearRowSelection();
       navigate(
         pageListUrl({
-          pageTypes: id === ALL_MODELS_TAB_ID ? undefined : [id],
+          pageTypes: ids.length ? ids : undefined,
           asc: params.asc,
           sort: params.sort,
         }),
@@ -112,10 +125,10 @@ const PageList = ({ params }: PageListProps) => {
   const paginationState = createPaginationState(settings.rowNumber, params);
   const activeFilter = useMemo(
     () => ({
-      pageTypes: activeTabId === ALL_MODELS_TAB_ID ? undefined : [activeTabId],
+      pageTypes: selectedPageTypes.length ? selectedPageTypes : undefined,
       search: params.query,
     }),
-    [activeTabId, params.query],
+    [selectedPageTypes, params.query],
   );
 
   const activeQueryVariables = useMemo(
@@ -145,27 +158,36 @@ const PageList = ({ params }: PageListProps) => {
     [pageTypesData],
   );
 
-  // Fall back to "All" if URL references an unknown page type.
+  // Fall back to "All" if URL references unknown page types.
   useEffect(() => {
-    if (
-      activeTabId !== ALL_MODELS_TAB_ID &&
-      pageTypes &&
-      !pageTypesLoading &&
-      !pageTypes.some(pt => pt.id === activeTabId)
-    ) {
-      navigate(
-        pageListUrl({
-          asc: params.asc,
-          sort: params.sort,
-        }),
-        { replace: true },
-      );
+    if (!pageTypes || pageTypesLoading) {
+      return;
     }
-  }, [activeTabId, pageTypes, pageTypesLoading, navigate, params.asc, params.sort]);
+
+    const validIds = selectedPageTypes.filter(id => pageTypes.some(pt => pt.id === id));
+
+    if (validIds.length === selectedPageTypes.length) {
+      return;
+    }
+
+    navigate(
+      pageListUrl({
+        pageTypes: validIds.length ? validIds : undefined,
+        asc: params.asc,
+        sort: params.sort,
+      }),
+      { replace: true },
+    );
+  }, [selectedPageTypes, pageTypes, pageTypesLoading, navigate, params.asc, params.sort]);
+
+  const activeTabCountKey = useMemo(
+    () => resolveActiveTabCountKey(selectedPageTypes, pageTypes ?? [], grouping.groupingOptions),
+    [selectedPageTypes, pageTypes, grouping.groupingOptions],
+  );
 
   const { counts, setCount, fetchers } = usePageTypeTabCounts({
     pageTypes,
-    activeTabId,
+    selectedPageTypes,
     allTabId: ALL_MODELS_TAB_ID,
     pageSize: settings.rowNumber,
   });
@@ -180,9 +202,9 @@ const PageList = ({ params }: PageListProps) => {
 
   useEffect(() => {
     if (activeCount) {
-      setCount(activeTabId, activeCount);
+      setCount(activeTabCountKey, activeCount);
     }
-  }, [activeCount?.value, activeCount?.hasMore, activeTabId, setCount]);
+  }, [activeCount?.value, activeCount?.hasMore, activeTabCountKey, setCount]);
 
   const paginationValues = usePaginator({
     pageInfo: data?.pages?.pageInfo,
@@ -295,8 +317,8 @@ const PageList = ({ params }: PageListProps) => {
   );
 
   const handlePageCreate = useCallback(() => {
-    if (activeTabId !== ALL_MODELS_TAB_ID) {
-      navigate(pageCreateUrl({ "page-type-id": activeTabId }), {
+    if (selectedPageTypes.length === 1) {
+      navigate(pageCreateUrl({ "page-type-id": selectedPageTypes[0] }), {
         state: getPrevLocationState(location),
       });
 
@@ -304,11 +326,14 @@ const PageList = ({ params }: PageListProps) => {
     }
 
     openModal("create-page");
-  }, [activeTabId, navigate, openModal, location]);
+  }, [selectedPageTypes, navigate, openModal, location]);
 
   const activePageType = useMemo(
-    () => pageTypes?.find(pt => pt.id === activeTabId),
-    [pageTypes, activeTabId],
+    () =>
+      selectedPageTypes.length === 1
+        ? pageTypes?.find(pt => pt.id === selectedPageTypes[0])
+        : undefined,
+    [pageTypes, selectedPageTypes],
   );
 
   const [lastCreatedModelTypeId] = useLastCreatedEntityTypeStorage("MODEL");
@@ -343,9 +368,10 @@ const PageList = ({ params }: PageListProps) => {
         initialSearch={params?.query ?? ""}
         onSearchChange={handleSearchChange}
         pageTypes={pageTypes}
-        activeTabId={activeTabId}
+        selectedIds={selectedPageTypes}
         tabCounts={counts}
         onTabChange={handleTabChange}
+        grouping={grouping}
       />
       <ActionDialog
         open={params.action === "publish"}

@@ -38,9 +38,11 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 ) {
   return async (data: TData): Promise<Array<MetadataErrorFragment | TError>> => {
     const errors = await update(data);
-    const hasMetadataChanged = !areMetadataArraysEqual(initial.metadata, data.metadata);
+    const initialMetadata = initial.metadata ?? [];
+    const initialPrivateMetadata = initial.privateMetadata ?? [];
+    const hasMetadataChanged = !areMetadataArraysEqual(initialMetadata, data.metadata);
     const hasPrivateMetadataChanged = !areMetadataArraysEqual(
-      initial.privateMetadata,
+      initialPrivateMetadata,
       data.privateMetadata,
     );
 
@@ -48,9 +50,9 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
       return errors;
     }
 
-    if (errors?.length === 0) {
+    if (!errors?.length) {
       if (data.metadata && hasMetadataChanged) {
-        const initialKeys = initial.metadata.map(m => m.key);
+        const initialKeys = initialMetadata.map(m => m.key);
         const modifiedKeys = data.metadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
         const metadataInput = filterMetadataArray(data.metadata);
@@ -73,7 +75,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
       }
 
       if (data.privateMetadata && hasPrivateMetadataChanged) {
-        const initialKeys = initial.privateMetadata.map(m => m.key);
+        const initialKeys = initialPrivateMetadata.map(m => m.key);
         const modifiedKeys = data.privateMetadata.map(m => m.key);
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
         const privateMetadataInput = filterMetadataArray(data.privateMetadata);

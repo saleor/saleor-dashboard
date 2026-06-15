@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { iconSize } from "@dashboard/components/icons";
+import { navigationLucideIconProps } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
@@ -24,7 +24,7 @@ import { CustomersIcon } from "@dashboard/icons/Customers";
 import { DiscountsIcon } from "@dashboard/icons/Discounts";
 import { HomeIcon } from "@dashboard/icons/Home";
 import { MarketplaceIcon } from "@dashboard/icons/Marketplace";
-import ModelingIcon from "@dashboard/icons/Modeling";
+import { ModelingIcon } from "@dashboard/icons/Modeling";
 import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
@@ -42,6 +42,7 @@ import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
 import { useIntl } from "react-intl";
 
+import { SidebarIconSlot } from "../../SidebarIconSlot";
 import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
@@ -106,7 +107,7 @@ export function useMenuStructure() {
       type: "item",
     },
     {
-      icon: renderIcon(<Search size={iconSize.small} strokeWidth={2.4} />),
+      icon: renderIcon(<Search {...navigationLucideIconProps} />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
           {intl.formatMessage(sectionNames.search)}
@@ -323,9 +324,5 @@ export function useMenuStructure() {
 }
 
 function renderIcon(icon: React.ReactNode) {
-  return (
-    <Box color="default2" __width={20} __height={20}>
-      {icon}
-    </Box>
-  );
+  return <SidebarIconSlot>{icon}</SidebarIconSlot>;
 }

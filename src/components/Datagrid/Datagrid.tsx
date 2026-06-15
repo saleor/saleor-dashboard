@@ -38,6 +38,7 @@ import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
+import { DEFAULT_ROW_MARKER_WIDTH } from "./const";
 import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
 import { headerIcons } from "./headerIcons";
 import useDatagridChange, {
@@ -117,6 +118,8 @@ interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
   showTopBorder?: boolean;
   themeOverride?: Partial<Theme>;
+  rowMarkerWidth?: number;
+  rowMarkerTheme?: Partial<Theme>;
 }
 
 export const Datagrid = ({
@@ -155,6 +158,8 @@ export const Datagrid = ({
   navigatorOpts,
   showTopBorder = true,
   themeOverride,
+  rowMarkerWidth,
+  rowMarkerTheme: rowMarkerThemeOverride,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -171,8 +176,9 @@ export const Datagrid = ({
       accentColor: themeValues.colors.background.accent1,
       accentFg: themeValues.colors.background.default1,
       accentLight: themeValues.colors.background.default2,
+      ...rowMarkerThemeOverride,
     }),
-    [themeValues],
+    [themeValues, rowMarkerThemeOverride],
   );
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
@@ -591,7 +597,7 @@ export const Datagrid = ({
                             )}
                       </div>
                     }
-                    rowMarkerWidth={48}
+                    rowMarkerWidth={rowMarkerWidth ?? DEFAULT_ROW_MARKER_WIDTH}
                   />
                   {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                   {hasColumnGroups && <div className={classes.columnGroupFixer} />}
