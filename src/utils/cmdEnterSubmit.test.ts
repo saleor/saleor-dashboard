@@ -1,4 +1,4 @@
-import { createCmdEnterSubmitHandler, isCmdEnter } from "./cmdEnterSubmit";
+import { createCmdEnterSubmitHandler, isCmdEnter, preventPlainEnterSubmit } from "./cmdEnterSubmit";
 
 describe("isCmdEnter", () => {
   it("returns true for meta+Enter", () => {
@@ -63,5 +63,55 @@ describe("createCmdEnterSubmitHandler", () => {
     // Assert
     expect(event.preventDefault).not.toHaveBeenCalled();
     expect(submit).not.toHaveBeenCalled();
+  });
+});
+
+describe("preventPlainEnterSubmit", () => {
+  it("prevents default for plain Enter when enabled", () => {
+    // Arrange
+    const event = {
+      metaKey: false,
+      ctrlKey: false,
+      key: "Enter",
+      preventDefault: jest.fn(),
+    };
+
+    // Act
+    preventPlainEnterSubmit(event);
+
+    // Assert
+    expect(event.preventDefault).toHaveBeenCalled();
+  });
+
+  it("does not prevent default for cmd+Enter", () => {
+    // Arrange
+    const event = {
+      metaKey: true,
+      ctrlKey: false,
+      key: "Enter",
+      preventDefault: jest.fn(),
+    };
+
+    // Act
+    preventPlainEnterSubmit(event);
+
+    // Assert
+    expect(event.preventDefault).not.toHaveBeenCalled();
+  });
+
+  it("does not prevent default when disabled", () => {
+    // Arrange
+    const event = {
+      metaKey: false,
+      ctrlKey: false,
+      key: "Enter",
+      preventDefault: jest.fn(),
+    };
+
+    // Act
+    preventPlainEnterSubmit(event, false);
+
+    // Assert
+    expect(event.preventDefault).not.toHaveBeenCalled();
   });
 });

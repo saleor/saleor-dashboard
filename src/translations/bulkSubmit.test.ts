@@ -1,4 +1,5 @@
 import {
+  type BulkTranslationValue,
   type TranslationField,
   TranslationFieldType,
   type TranslationSectionConfig,
@@ -10,7 +11,6 @@ import {
   submitBulkEntityTranslations,
   submitBulkTranslations,
 } from "./bulkSubmit";
-import { type BulkTranslationValue } from "./hooks/useTranslationBulkValues";
 
 const entityField: TranslationField = {
   displayName: "Name",

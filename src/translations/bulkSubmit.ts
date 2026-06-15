@@ -1,4 +1,5 @@
 import {
+  type BulkTranslationValue,
   type PageTranslationInputFieldName,
   type TranslationField,
   type TranslationInputFieldName,
@@ -18,7 +19,6 @@ import {
   mapScopedMutationErrors,
   type TranslationMutationError,
 } from "./bulkSubmitResult";
-import { type BulkTranslationValue } from "./hooks/useTranslationBulkValues";
 
 type EntityFieldName = TranslationInputFieldName | PageTranslationInputFieldName;
 

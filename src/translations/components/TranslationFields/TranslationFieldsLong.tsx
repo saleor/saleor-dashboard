@@ -15,6 +15,7 @@ interface TranslationFieldsLongProps {
   disabled: boolean;
   edit: boolean;
   hideActions?: boolean;
+  saveDisabled?: boolean;
   initial: string | null;
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
@@ -26,6 +27,7 @@ const TranslationFieldsLong = ({
   disabled,
   edit,
   hideActions = false,
+  saveDisabled = false,
   initial,
   saveButtonState,
   onDiscard,
@@ -38,15 +40,14 @@ const TranslationFieldsLong = ({
 
   return edit ? (
     <Form
-      confirmLeave={edit}
+      confirmLeave={false}
       initial={{ translation: initial }}
       onSubmit={data => (onSubmit ? onSubmit(data.translation ?? "") : Promise.resolve([]))}
     >
       {({ change, data, submit }) => {
-        const handleCmdEnterSubmit = createCmdEnterSubmitHandler(
-          submit,
-          showShortcut && !disabled && saveButtonState !== "loading",
-        );
+        const canSubmitWithShortcut =
+          showShortcut && !disabled && !saveDisabled && saveButtonState !== "loading";
+        const handleCmdEnterSubmit = createCmdEnterSubmitHandler(submit, canSubmitWithShortcut);
 
         return (
           <div>
@@ -82,6 +83,7 @@ const TranslationFieldsLong = ({
             {!hideActions && (
               <TranslationFieldsSave
                 saveButtonState={saveButtonState}
+                saveDisabled={saveDisabled}
                 onDiscard={onDiscard}
                 onSave={submit}
               />

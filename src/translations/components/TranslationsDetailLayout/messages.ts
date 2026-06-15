@@ -42,8 +42,8 @@ export const translationDetailMessages = defineMessages({
     description: "empty translation placeholder",
   },
   saveAllTranslations: {
-    id: "q/AK2b",
-    defaultMessage: "Save all translations",
+    id: "uR2ks6",
+    defaultMessage: "Save changes",
     description: "bulk save button",
   },
   translationSaved: {

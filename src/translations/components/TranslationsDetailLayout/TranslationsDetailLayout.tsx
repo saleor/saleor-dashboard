@@ -1,13 +1,16 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useTranslationBulkValues } from "@dashboard/translations/hooks/useTranslationBulkValues";
+import { useTranslationExitForm } from "@dashboard/translations/hooks/useTranslationExitForm";
 import { useTranslationLanguagePair } from "@dashboard/translations/hooks/useTranslationLanguagePair";
+import { isTranslationEditMode } from "@dashboard/translations/translationQueryParams";
 import {
   type TranslationField,
   type TranslationSectionConfig,
   type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
+import { type OutputData } from "@editorjs/editorjs";
 import { Box } from "@saleor/macaw-ui-next";
+import { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { TranslationContextBar } from "../TranslationContextBar/TranslationContextBar";
@@ -60,13 +63,30 @@ export const TranslationsDetailLayout = ({
     languages,
     targetLanguageCode: languageCode,
   });
-  const { getBulkSubmitValues, handleValueChange, resetValues } =
+  const { getDirtyValues, handleValueChange, hasDirtyFields, resetValues } =
     useTranslationBulkValues(sections);
-  const { resetFormsState } = useExitFormDialog();
+  const isEditMode = isTranslationEditMode(bulk, activeField);
+  const { resetFormsState } = useTranslationExitForm({
+    enabled: isEditMode,
+    isDirty: hasDirtyFields,
+  });
+
+  useEffect(
+    function resetTrackedValuesOnEditModeChange() {
+      resetValues();
+    },
+    [activeField, bulk, resetValues],
+  );
+
+  const clearEditState = () => {
+    resetValues();
+    resetFormsState();
+  };
 
   const handleFieldValueChange = (field: TranslationField, value: string) => {
+    handleValueChange(field, value);
+
     if (bulk) {
-      handleValueChange(field, value);
       onClearFieldError?.(field.name);
     }
 
@@ -74,25 +94,37 @@ export const TranslationsDetailLayout = ({
   };
 
   const handleBulkSave = async () => {
-    if (!onBulkSubmit) {
+    if (!onBulkSubmit || !hasDirtyFields) {
       return;
     }
 
-    const values = getBulkSubmitValues();
+    const values = getDirtyValues();
     const result = await onBulkSubmit(values);
 
     if (!result.hasErrors) {
-      resetValues();
-      resetFormsState();
+      clearEditState();
     }
   };
 
   const handleBulkDiscard = () => {
-    resetValues();
-    resetFormsState();
+    clearEditState();
     onClearFieldErrors?.();
     onDiscard();
   };
+
+  const handleFieldDiscard = (fieldName?: string) => {
+    clearEditState();
+    onDiscard(fieldName);
+  };
+
+  const handleFieldSubmit = (field: TranslationField, data: string | OutputData) =>
+    onSubmit(field, data).then(errors => {
+      if (errors.length === 0) {
+        clearEditState();
+      }
+
+      return errors;
+    });
 
   if (!languagePair) {
     return null;
@@ -122,11 +154,12 @@ export const TranslationsDetailLayout = ({
           bulk={bulk}
           activeField={activeField}
           disabled={disabled}
+          hasDirtyFields={hasDirtyFields}
           saveButtonState={saveButtonState}
           richTextResetKey={resolvedRichTextResetKey}
           onEdit={onEdit}
-          onDiscard={onDiscard}
-          onSubmit={(field, data) => onSubmit(field, data)}
+          onDiscard={handleFieldDiscard}
+          onSubmit={handleFieldSubmit}
           onValueChange={handleFieldValueChange}
           fieldErrors={fieldErrors}
         />
@@ -137,7 +170,7 @@ export const TranslationsDetailLayout = ({
           <Savebar.CancelButton onClick={handleBulkDiscard} />
           <Savebar.ConfirmButton
             transitionState={saveButtonState}
-            disabled={disabled}
+            disabled={disabled || !hasDirtyFields}
             onClick={handleBulkSave}
           >
             <FormattedMessage {...translationDetailMessages.saveAllTranslations} />

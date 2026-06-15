@@ -3,7 +3,6 @@ import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { type LanguageFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type BulkTranslationSubmitResult } from "@dashboard/translations/bulkSubmitResult";
-import { type BulkTranslationValue } from "@dashboard/translations/hooks/useTranslationBulkValues";
 import { type ListSettings } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
 
@@ -63,6 +62,12 @@ export interface TranslationSectionConfig {
 export interface TranslationSectionPagination {
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
+}
+
+export interface BulkTranslationValue {
+  field: TranslationField;
+  section: TranslationSectionConfig;
+  data: string | OutputData;
 }
 
 export interface TranslationsEntitiesPageProps {

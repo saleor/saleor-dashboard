@@ -22,6 +22,7 @@ interface TranslationFieldRowProps {
   isEditing: boolean;
   showPerFieldActions: boolean;
   hideFieldActions?: boolean;
+  saveDisabled?: boolean;
   disabled: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
@@ -88,6 +89,7 @@ const renderTranslationInput = (
   field: TranslationField,
   isEditing: boolean,
   hideFieldActions: boolean,
+  saveDisabled: boolean,
   disabled: boolean,
   saveButtonState: ConfirmButtonTransitionState,
   richTextResetKey: string,
@@ -146,6 +148,7 @@ const renderTranslationInput = (
         disabled={disabled}
         edit
         hideActions={hideFieldActions}
+        saveDisabled={saveDisabled}
         initial={initial}
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
@@ -161,6 +164,7 @@ const renderTranslationInput = (
         disabled={disabled}
         edit
         hideActions={hideFieldActions}
+        saveDisabled={saveDisabled}
         initial={initial}
         saveButtonState={saveButtonState}
         onDiscard={onDiscard}
@@ -176,6 +180,7 @@ const renderTranslationInput = (
       disabled={disabled}
       edit
       hideActions={hideFieldActions}
+      saveDisabled={saveDisabled}
       initial={initial}
       saveButtonState={saveButtonState}
       onDiscard={onDiscard}
@@ -193,6 +198,7 @@ export const TranslationFieldRow = ({
   isEditing,
   showPerFieldActions,
   hideFieldActions = false,
+  saveDisabled = false,
   disabled,
   saveButtonState,
   richTextResetKey,
@@ -263,6 +269,7 @@ export const TranslationFieldRow = ({
             field,
             isEditing,
             hideFieldActions,
+            saveDisabled,
             disabled,
             saveButtonState,
             richTextResetKey,

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { createContext } from "react";
+import { createContext, useEffect, useRef } from "react";
 
 import ExitFormDialog from "./ExitFormDialog";
 import { type ExitFormDialogData } from "./types";
@@ -13,6 +13,7 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
   shouldBlockNavigation: () => false,
+  showDialog: false,
   setIsSubmitting: () => undefined,
   leave: () => undefined,
   setIsSubmitDisabled: () => undefined,
@@ -23,11 +24,16 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
 const ExitFormDialogProvider = ({ children }) => {
   const { handleClose, handleLeave, providerData, showDialog, shouldBlockNav } =
     useExitFormDialogProvider();
+  const shouldBlockNavRef = useRef(shouldBlockNav);
+
+  useEffect(function syncShouldBlockNavRef() {
+    shouldBlockNavRef.current = shouldBlockNav;
+  });
 
   useBeforeUnload(e => {
-    // If form is dirty and user does a refresh,
-    // the browser will ask about unsaved changes
-    if (shouldBlockNav()) {
+    // Only for real document unload (refresh, tab close). In-app navigation is
+    // handled by history.block and should show the dashboard modal instead.
+    if (shouldBlockNavRef.current()) {
       e.preventDefault();
       e.returnValue = "";
     }

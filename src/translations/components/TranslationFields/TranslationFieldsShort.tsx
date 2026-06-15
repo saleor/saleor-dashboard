@@ -2,10 +2,13 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import Form from "@dashboard/components/Form";
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import { createCmdEnterSubmitHandler } from "@dashboard/utils/cmdEnterSubmit";
+import {
+  createCmdEnterSubmitHandler,
+  preventPlainEnterSubmit,
+} from "@dashboard/utils/cmdEnterSubmit";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { type KeyboardEventHandler, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translationDetailMessages } from "../TranslationsDetailLayout/messages";
@@ -15,6 +18,7 @@ interface TranslationFieldsShortProps {
   disabled: boolean;
   edit: boolean;
   hideActions?: boolean;
+  saveDisabled?: boolean;
   initial: string | null;
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
@@ -27,6 +31,7 @@ const TranslationFieldsShort = ({
   disabled,
   edit,
   hideActions = false,
+  saveDisabled = false,
   initial,
   saveButtonState,
   onDiscard,
@@ -39,15 +44,18 @@ const TranslationFieldsShort = ({
 
   return edit ? (
     <Form
-      confirmLeave={edit}
+      confirmLeave={false}
       initial={{ translation: initial }}
       onSubmit={data => (onSubmit ? onSubmit(data.translation ?? "") : Promise.resolve([]))}
     >
       {({ change, data, submit }) => {
-        const handleCmdEnterSubmit = createCmdEnterSubmitHandler(
-          submit,
-          showShortcut && !disabled && saveButtonState !== "loading",
-        );
+        const canSubmitWithShortcut =
+          showShortcut && !disabled && !saveDisabled && saveButtonState !== "loading";
+        const handleCmdEnterSubmit = createCmdEnterSubmitHandler(submit, canSubmitWithShortcut);
+        const handleKeyDown: KeyboardEventHandler = event => {
+          preventPlainEnterSubmit(event, hideActions);
+          handleCmdEnterSubmit(event);
+        };
 
         return (
           <div>
@@ -69,7 +77,7 @@ const TranslationFieldsShort = ({
                     onValueChange(event.target.value);
                   }
                 }}
-                onKeyDown={handleCmdEnterSubmit}
+                onKeyDown={handleKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
               />
@@ -82,6 +90,7 @@ const TranslationFieldsShort = ({
             {!hideActions && (
               <TranslationFieldsSave
                 saveButtonState={saveButtonState}
+                saveDisabled={saveDisabled}
                 onDiscard={onDiscard}
                 onSave={submit}
               />

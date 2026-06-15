@@ -27,6 +27,7 @@ interface TranslationSectionProps {
   bulk: boolean;
   activeField?: string | string[];
   disabled: boolean;
+  hasDirtyFields: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   richTextResetKey: string;
   initialExpanded?: boolean;
@@ -46,6 +47,7 @@ export const TranslationSection = ({
   bulk,
   activeField,
   disabled,
+  hasDirtyFields,
   saveButtonState,
   richTextResetKey,
   initialExpanded = true,
@@ -154,6 +156,7 @@ export const TranslationSection = ({
             isEditing={isFieldEditing(field.name)}
             showPerFieldActions={!bulk}
             hideFieldActions={bulk}
+            saveDisabled={!bulk && isFieldEditing(field.name) && !hasDirtyFields}
             disabled={disabled}
             saveButtonState={saveButtonState}
             richTextResetKey={richTextResetKey}

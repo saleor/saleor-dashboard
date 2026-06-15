@@ -19,6 +19,7 @@ interface TranslationFieldsRichProps {
   disabled: boolean;
   edit: boolean;
   hideActions?: boolean;
+  saveDisabled?: boolean;
   initial: string | null;
   saveButtonState: ConfirmButtonTransitionState;
   resetKey: string;
@@ -31,6 +32,7 @@ const TranslationFieldsRich = ({
   disabled,
   edit,
   hideActions = false,
+  saveDisabled = false,
   initial,
   saveButtonState,
   resetKey,
@@ -42,8 +44,9 @@ const TranslationFieldsRich = ({
   const [isFocused, setIsFocused] = useState(false);
   const showShortcut = !hideActions;
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
-    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), disabled, edit);
-  const canSubmitWithShortcut = showShortcut && !disabled && saveButtonState !== "loading";
+    useRichTextSubmit(initial ?? "", onSubmit ?? (async () => []), disabled, false);
+  const canSubmitWithShortcut =
+    showShortcut && !disabled && !saveDisabled && saveButtonState !== "loading";
   const handleCmdEnterSubmit = useMemo(
     () =>
       createCmdEnterSubmitHandler(() => {
@@ -103,6 +106,7 @@ const TranslationFieldsRich = ({
       {!hideActions && (
         <TranslationFieldsSave
           saveButtonState={saveButtonState}
+          saveDisabled={saveDisabled}
           onDiscard={onDiscard}
           onSave={handleSubmit}
         />

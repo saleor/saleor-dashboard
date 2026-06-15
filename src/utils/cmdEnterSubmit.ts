@@ -17,3 +17,12 @@ export const createCmdEnterSubmitHandler =
     event.preventDefault();
     submit();
   };
+
+/** Stops single-line inputs from implicitly submitting a parent <form> on plain Enter. */
+export const preventPlainEnterSubmit = (event: ReactKeyboardEventLike, enabled = true): void => {
+  if (!enabled || event.key !== "Enter" || isCmdEnter(event)) {
+    return;
+  }
+
+  event.preventDefault();
+};

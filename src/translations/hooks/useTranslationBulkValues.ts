@@ -1,36 +1,15 @@
 import {
+  getDirtyBulkSubmitValues,
+  hasDirtyBulkFields,
+} from "@dashboard/translations/bulkFieldDirty";
+import {
+  type BulkTranslationValue,
   type TranslationField,
-  TranslationFieldType,
   type TranslationSectionConfig,
 } from "@dashboard/translations/types";
-import { type OutputData } from "@editorjs/editorjs";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-export interface BulkTranslationValue {
-  field: TranslationField;
-  section: TranslationSectionConfig;
-  data: string | OutputData;
-}
-
-const parseBulkFieldValue = (
-  field: TranslationField,
-  rawValue: string | null,
-): string | OutputData => {
-  if (field.type === TranslationFieldType.RICH) {
-    if (!rawValue) {
-      return { blocks: [] } as OutputData;
-    }
-
-    try {
-      return JSON.parse(rawValue) as OutputData;
-    } catch {
-      return { blocks: [] } as OutputData;
-    }
-  }
-
-  return rawValue ?? "";
-};
-
+/** Tracks in-progress translation field values for value-diff dirty detection in bulk and single-field edit modes. */
 export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
   const [values, setValues] = useState<Record<string, string>>({});
 
@@ -45,23 +24,17 @@ export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
     setValues({});
   }, []);
 
-  const getBulkSubmitValues = useCallback((): BulkTranslationValue[] => {
-    return sections.flatMap(section =>
-      section.fields.map(field => {
-        const rawValue = values[field.name] ?? field.translation;
+  const hasDirtyFields = useMemo(() => hasDirtyBulkFields(sections, values), [sections, values]);
 
-        return {
-          field,
-          section,
-          data: parseBulkFieldValue(field, rawValue),
-        };
-      }),
-    );
-  }, [sections, values]);
+  const getDirtyValues = useCallback(
+    (): BulkTranslationValue[] => getDirtyBulkSubmitValues(sections, values),
+    [sections, values],
+  );
 
   return {
-    getBulkSubmitValues,
+    getDirtyValues,
     handleValueChange,
+    hasDirtyFields,
     resetValues,
   };
 }

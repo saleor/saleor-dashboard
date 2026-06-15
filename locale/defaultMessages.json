@@ -9991,10 +9991,6 @@
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
   },
-  "q/AK2b": {
-    "context": "bulk save button",
-    "string": "Save all translations"
-  },
   "q/FMPM": {
     "context": "dialog header",
     "string": "Publish models"
@@ -10851,6 +10847,10 @@
   "uQk8gB": {
     "context": "export all items to csv file",
     "string": "All gift cards ({number})"
+  },
+  "uR2ks6": {
+    "context": "bulk save button",
+    "string": "Save changes"
   },
   "uRTj1Q": {
     "context": "error message",

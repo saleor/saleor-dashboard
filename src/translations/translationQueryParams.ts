@@ -43,6 +43,13 @@ export function getActiveFieldsFromParams(params: TranslationDetailQueryParams):
   return Array.isArray(params.activeField) ? params.activeField : [params.activeField];
 }
 
+export function isTranslationEditMode(
+  bulk: boolean,
+  activeField?: TranslationDetailQueryParams["activeField"],
+): boolean {
+  return bulk || getActiveFieldsFromParams({ activeField }).length > 0;
+}
+
 export function buildTranslationDetailQueryString(params: TranslationDetailQueryParams): string {
   const query: Record<string, string | string[]> = {};
 

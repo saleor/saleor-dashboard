@@ -1,5 +1,6 @@
 import { type LanguageCodeEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
+import { type BulkTranslationValue } from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
 
 import { submitBulkTranslations } from "../bulkSubmit";
@@ -12,7 +13,6 @@ import {
   type TranslationInputFieldName,
 } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
-import { type BulkTranslationValue } from "./useTranslationBulkValues";
 import { useTranslationDetailNavigation } from "./useTranslationDetailNavigation";
 import { useTranslationSaveFeedback } from "./useTranslationSaveFeedback";
 import { type TranslationMutationOpts, useTranslationSaveState } from "./useTranslationSaveState";
