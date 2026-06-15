@@ -1,7 +1,7 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import ModelingIcon from "@dashboard/icons/Modeling";
+import { ModelingIcon } from "@dashboard/icons/Modeling";
 import { pageListUrlWithPageType } from "@dashboard/modeling/urls";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
