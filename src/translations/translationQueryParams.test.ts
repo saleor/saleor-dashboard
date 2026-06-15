@@ -1,4 +1,4 @@
-import { isTranslationEditMode } from "./translationQueryParams";
+import { getRemovedActiveFields, isTranslationEditMode } from "./translationQueryParams";
 
 describe("translationQueryParams", () => {
   describe("isTranslationEditMode", () => {
@@ -20,6 +20,23 @@ describe("translationQueryParams", () => {
     it("returns false when not in bulk and no active field", () => {
       // Arrange // Act // Assert
       expect(isTranslationEditMode(false, undefined)).toBe(false);
+    });
+  });
+
+  describe("getRemovedActiveFields", () => {
+    it("returns fields removed from multi-field edit mode", () => {
+      // Arrange // Act // Assert
+      expect(getRemovedActiveFields(["name", "description"], ["description"])).toEqual(["name"]);
+    });
+
+    it("returns the previous field when switching single-field edit targets", () => {
+      // Arrange // Act // Assert
+      expect(getRemovedActiveFields(["name"], ["description"])).toEqual(["name"]);
+    });
+
+    it("returns an empty list when active fields grow", () => {
+      // Arrange // Act // Assert
+      expect(getRemovedActiveFields(["name"], ["name", "description"])).toEqual([]);
     });
   });
 });

@@ -1,6 +1,7 @@
 import {
   getDirtyBulkSubmitValues,
   hasDirtyBulkFields,
+  isBulkFieldDirty,
 } from "@dashboard/translations/bulkFieldDirty";
 import {
   type BulkTranslationValue,
@@ -24,6 +25,27 @@ export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
     setValues({});
   }, []);
 
+  const clearFieldValues = useCallback((fieldNames: string[]) => {
+    if (fieldNames.length === 0) {
+      return;
+    }
+
+    setValues(previousValues => {
+      const nextValues = { ...previousValues };
+
+      fieldNames.forEach(fieldName => {
+        delete nextValues[fieldName];
+      });
+
+      return nextValues;
+    });
+  }, []);
+
+  const isFieldDirty = useCallback(
+    (field: TranslationField) => isBulkFieldDirty(field, values[field.name]),
+    [values],
+  );
+
   const hasDirtyFields = useMemo(() => hasDirtyBulkFields(sections, values), [sections, values]);
 
   const getDirtyValues = useCallback(
@@ -32,9 +54,11 @@ export function useTranslationBulkValues(sections: TranslationSectionConfig[]) {
   );
 
   return {
+    clearFieldValues,
     getDirtyValues,
     handleValueChange,
     hasDirtyFields,
+    isFieldDirty,
     resetValues,
   };
 }

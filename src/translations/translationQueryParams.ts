@@ -43,6 +43,13 @@ export function getActiveFieldsFromParams(params: TranslationDetailQueryParams):
   return Array.isArray(params.activeField) ? params.activeField : [params.activeField];
 }
 
+export function getRemovedActiveFields(
+  previousActiveFields: string[],
+  nextActiveFields: string[],
+): string[] {
+  return previousActiveFields.filter(field => !nextActiveFields.includes(field));
+}
+
 export function isTranslationEditMode(
   bulk: boolean,
   activeField?: TranslationDetailQueryParams["activeField"],

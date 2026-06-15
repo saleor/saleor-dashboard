@@ -5,6 +5,7 @@ import { useTranslationExitForm } from "@dashboard/translations/hooks/useTransla
 import { useTranslationLanguagePair } from "@dashboard/translations/hooks/useTranslationLanguagePair";
 import {
   getActiveFieldsFromParams,
+  getRemovedActiveFields,
   isTranslationEditMode,
 } from "@dashboard/translations/translationQueryParams";
 import {
@@ -14,7 +15,7 @@ import {
 } from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { TranslationContextBar } from "../TranslationContextBar/TranslationContextBar";
@@ -67,19 +68,53 @@ export const TranslationsDetailLayout = ({
     languages,
     targetLanguageCode: languageCode,
   });
-  const { getDirtyValues, handleValueChange, hasDirtyFields, resetValues } =
-    useTranslationBulkValues(sections);
+  const {
+    clearFieldValues,
+    getDirtyValues,
+    handleValueChange,
+    hasDirtyFields,
+    isFieldDirty,
+    resetValues,
+  } = useTranslationBulkValues(sections);
   const isEditMode = isTranslationEditMode(bulk, activeField);
   const { resetFormsState } = useTranslationExitForm({
     enabled: isEditMode,
     isDirty: hasDirtyFields,
   });
+  const prevNavigationRef = useRef<{
+    activeFields: string[];
+    bulk: boolean;
+    isEditMode: boolean;
+  } | null>(null);
 
   useEffect(
-    function resetTrackedValuesOnEditModeChange() {
-      resetValues();
+    function reconcileTrackedValuesOnNavigationChange() {
+      const activeFields = getActiveFieldsFromParams({ activeField });
+      const previous = prevNavigationRef.current;
+
+      if (!previous) {
+        prevNavigationRef.current = { activeFields, bulk, isEditMode };
+
+        return;
+      }
+
+      const bulkChanged = previous.bulk !== bulk;
+      const editModeEntered = !previous.isEditMode && isEditMode;
+      const editModeExited = previous.isEditMode && !isEditMode;
+
+      if (editModeExited || bulkChanged || editModeEntered) {
+        resetValues();
+      } else if (isEditMode) {
+        const removedFields = getRemovedActiveFields(previous.activeFields, activeFields);
+
+        if (removedFields.length > 0) {
+          clearFieldValues(removedFields);
+        }
+      }
+
+      prevNavigationRef.current = { activeFields, bulk, isEditMode };
     },
-    [activeField, bulk, resetValues],
+    [activeField, bulk, clearFieldValues, isEditMode, resetValues],
   );
 
   useEffect(
@@ -141,18 +176,32 @@ export const TranslationsDetailLayout = ({
   };
 
   const handleFieldDiscard = (fieldName?: string) => {
-    clearEditState();
+    const activeFields = getActiveFieldsFromParams({ activeField });
+
+    if (fieldName && activeFields.length > 1) {
+      clearFieldValues([fieldName]);
+    } else {
+      clearEditState();
+    }
+
     onDiscard(fieldName);
   };
 
-  const handleFieldSubmit = (field: TranslationField, data: string | OutputData) =>
-    onSubmit(field, data).then(errors => {
+  const handleFieldSubmit = (field: TranslationField, data: string | OutputData) => {
+    const activeFields = getActiveFieldsFromParams({ activeField });
+
+    return onSubmit(field, data).then(errors => {
       if (errors.length === 0) {
-        clearEditState();
+        if (activeFields.length > 1) {
+          clearFieldValues([field.name]);
+        } else {
+          clearEditState();
+        }
       }
 
       return errors;
     });
+  };
 
   if (!languagePair) {
     return null;
@@ -182,7 +231,7 @@ export const TranslationsDetailLayout = ({
           bulk={bulk}
           activeField={activeField}
           disabled={disabled}
-          hasDirtyFields={hasDirtyFields}
+          isFieldDirty={isFieldDirty}
           saveButtonState={saveButtonState}
           richTextResetKey={resolvedRichTextResetKey}
           onEdit={onEdit}
