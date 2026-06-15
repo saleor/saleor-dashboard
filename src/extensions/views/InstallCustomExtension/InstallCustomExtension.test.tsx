@@ -9,6 +9,12 @@ import { InstallCustomExtension } from "./InstallCustomExtension";
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => <div>{children}</div>),
 }));
+
+jest.mock("@dashboard/hooks/useNavigator", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+}));
+
 jest.mock("@dashboard/theme/hook", () => ({
   useTheme: () => ({ theme: "defaultLight", setTheme: jest.fn() }),
 }));
