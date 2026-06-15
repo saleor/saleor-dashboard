@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.22.42
+
+### Patch Changes
+
+- [#6639](https://github.com/saleor/saleor-dashboard/pull/6639) [`f4243a5`](https://github.com/saleor/saleor-dashboard/commit/f4243a562f9d4a498812b447d0f310e253d13393) Thanks [@NyanKiyoshi](https://github.com/NyanKiyoshi)! - Added `Referrer-Policy: origin-when-cross-origin` header to the
+  NGINX config bundled inside the container image.
+
+- [#6629](https://github.com/saleor/saleor-dashboard/pull/6629) [`4d01e67`](https://github.com/saleor/saleor-dashboard/commit/4d01e6791125f2d4c437a2fec75629f81e2c06c0) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed an issue where the Return/Replace flow excluded order lines from the granted refund when their fulfillment was waiting for approval. Previously, only shipping costs were sent to the payment provider in such cases - now the refund correctly includes both the returned items and shipping.
+
 ## 3.22.41
 
 ### Patch Changes
