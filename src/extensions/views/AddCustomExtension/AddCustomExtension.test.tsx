@@ -43,11 +43,6 @@ jest.mock("react-router-dom", () => ({
   ),
 }));
 
-jest.mock("@dashboard/hooks/useNavigator", () => ({
-  __esModule: true,
-  default: () => jest.fn(),
-}));
-
 jest.mock("@dashboard/components/Savebar");
 
 jest.mock("./hooks/usePermissions");

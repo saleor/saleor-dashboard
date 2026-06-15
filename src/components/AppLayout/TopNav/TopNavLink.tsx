@@ -1,21 +1,17 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { Button, sprinkles } from "@saleor/macaw-ui-next";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Variant = "secondary" | "tertiary";
 
-export const TopNavLink = ({ to, variant = "secondary" }: { to: string; variant?: Variant }) => {
-  const navigate = useNavigator();
-
-  return (
+export const TopNavLink = ({ to, variant = "secondary" }: { to: string; variant?: Variant }) => (
+  <Link to={to} className={sprinkles({ marginRight: 3 })}>
     <Button
-      className={sprinkles({ marginRight: 3 })}
       icon={<ArrowLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
       variant={variant}
       size="large"
       data-test-id="app-header-back-button"
-      onClick={() => navigate(to)}
     />
-  );
-};
+  </Link>
+);
