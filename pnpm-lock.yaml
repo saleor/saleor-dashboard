@@ -418,6 +418,9 @@ importers:
       eslint-config-prettier:
         specifier: ^10.1.8
         version: 10.1.8(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-depend:
+        specifier: ^1.5.0
+        version: 1.5.0(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-formatjs:
         specifier: ^5.4.2
         version: 5.4.2(eslint@9.39.2(jiti@2.6.1))(ts-jest@27.1.5(@babel/core@7.29.0)(@types/jest@26.0.24)(babel-jest@27.5.1(@babel/core@7.29.0))(esbuild@0.27.3)(jest@27.5.1(ts-node@10.9.2(@swc/core@1.15.11)(@types/node@20.19.32)(typescript@5.8.3)))(typescript@5.8.3))(typescript@5.8.3)
@@ -7935,6 +7938,14 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
+  eslint-plugin-depend@1.5.0:
+    resolution:
+      {
+        integrity: sha512-i3UeLYmclf1Icp35+6W7CR4Bp2PIpDgBuf/mpmXK5UeLkZlvYJ21VuQKKHHAIBKRTPivPGX/gZl5JGno1o9Y0A==,
+      }
+    peerDependencies:
+      eslint: ">=8.40.0"
+
   eslint-plugin-formatjs@5.4.2:
     resolution:
       {
@@ -10609,6 +10620,12 @@ packages:
     resolution:
       {
         integrity: sha512-sEKPVl2rM+MNVkGQt3ChdmD8YsigmXdn5NifZn6jiwn9LRJpWm8F3guhaqrJT/JOat6pwpbXEk6kv+b9DMIjsQ==,
+      }
+
+  module-replacements@2.11.0:
+    resolution:
+      {
+        integrity: sha512-j5sNQm3VCpQQ7nTqGeOZtoJtV3uKERgCBm9QRhmGRiXiqkf7iRFOkfxdJRZWLkqYY8PNf4cDQF/WfXUYLENrRA==,
       }
 
   moment-timezone@0.5.48:
@@ -19505,6 +19522,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-plugin-depend@1.5.0(eslint@9.39.2(jiti@2.6.1)):
+    dependencies:
+      empathic: 2.0.0
+      eslint: 9.39.2(jiti@2.6.1)
+      module-replacements: 2.11.0
+      semver: 7.7.4
+
   eslint-plugin-formatjs@5.4.2(eslint@9.39.2(jiti@2.6.1))(ts-jest@27.1.5(@babel/core@7.29.0)(@types/jest@26.0.24)(babel-jest@27.5.1(@babel/core@7.29.0))(esbuild@0.27.3)(jest@27.5.1(ts-node@10.9.2(@swc/core@1.15.11)(@types/node@20.19.32)(typescript@5.8.3)))(typescript@5.8.3))(typescript@5.8.3):
     dependencies:
       "@formatjs/icu-messageformat-parser": 2.11.4
@@ -21522,6 +21546,8 @@ snapshots:
   mkdirp@2.1.6: {}
 
   modern-ahocorasick@1.1.0: {}
+
+  module-replacements@2.11.0: {}
 
   moment-timezone@0.5.48:
     dependencies:

@@ -806,6 +806,10 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
+  "2WV5Q8": {
+    "context": "model type a11y label prefix",
+    "string": "Model type"
+  },
   "2Xt+sw": {
     "context": "dialog header",
     "string": "Add postal codes"
@@ -7341,6 +7345,10 @@
     "context": "amount filter label",
     "string": "Amount"
   },
+  "bWGTLR": {
+    "context": "model detail page, top-bar metadata button tooltip",
+    "string": "Edit model metadata"
+  },
   "bZenNC": {
     "string": "Description (optional)"
   },
@@ -7789,6 +7797,10 @@
   "e/61NZ": {
     "context": "current balance filter label",
     "string": "Current balance"
+  },
+  "e/f4WI": {
+    "context": "error message when model slug is not unique",
+    "string": "Model with this slug already exists. Please provide another."
   },
   "e0RKe+": {
     "context": "generate invoice button",
@@ -8527,6 +8539,10 @@
   "iLNRJL": {
     "context": "product type a11y label prefix",
     "string": "Product type"
+  },
+  "iMZEfi": {
+    "context": "model detail page menu, opens model type configuration",
+    "string": "Model type settings"
   },
   "iPg/Z+": {
     "context": "Pagination info showing current range",
@@ -9867,6 +9883,10 @@
   "pepgIN": {
     "string": "Choose the Model Type whose extended Models will serve as refund reasons."
   },
+  "pg1ODC": {
+    "context": "model type scope link in model header, opens filtered model list",
+    "string": "View models of {modelTypeName}"
+  },
   "pgTwKM": {
     "context": "section header",
     "string": "Model attributes"
@@ -10741,6 +10761,10 @@
   },
   "u9WrRb": {
     "string": "Add Custom Extensions"
+  },
+  "uCJ+gT": {
+    "context": "model metadata dialog header",
+    "string": "Model Metadata"
   },
   "uCn/rd": {
     "context": "dialog header",
