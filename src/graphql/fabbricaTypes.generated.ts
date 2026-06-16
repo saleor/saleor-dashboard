@@ -8174,6 +8174,18 @@ export type Fulfillment = Node & ObjectWithMetadata & {
   privateMetafield: Maybe<Scalars['String']>;
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields: Maybe<Scalars['Metadata']>;
+  /**
+   * Reason for returning this fulfillment.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this fulfillment.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: Maybe<Page>;
   /** Amount of refunded shipping price. */
   shippingRefundedAmount: Maybe<Money>;
   /** Status of fulfillment. */
@@ -8326,6 +8338,18 @@ export type FulfillmentLine = Node & {
   orderLine: Maybe<OrderLine>;
   /** The number of items included in the fulfillment line. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: Maybe<Page>;
 };
 
 /** Event sent when fulfillment metadata is updated. */
@@ -13916,6 +13940,22 @@ export type Mutation = {
    */
   requestPasswordReset: Maybe<RequestPasswordReset>;
   /**
+   * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
+   */
+  returnReasonReferenceClear: Maybe<ReturnReasonReferenceTypeClear>;
+  /**
+   * Update return settings across all channels.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
+   */
+  returnSettingsUpdate: Maybe<ReturnSettingsUpdate>;
+  /**
    * Deletes sales.
    *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
@@ -15928,6 +15968,11 @@ export type MutationRequestPasswordResetArgs = {
 };
 
 
+export type MutationReturnSettingsUpdateArgs = {
+  input: ReturnSettingsUpdateInput;
+};
+
+
 export type MutationSaleBulkDeleteArgs = {
   ids: Array<Scalars['ID']>;
 };
@@ -17831,6 +17876,7 @@ export type OrderGrantRefundCreateErrorCode =
   | 'AMOUNT_GREATER_THAN_AVAILABLE'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
+  | 'NOT_CONFIGURED'
   | 'NOT_FOUND'
   | 'REQUIRED'
   | 'SHIPPING_COSTS_ALREADY_GRANTED';
@@ -17874,6 +17920,8 @@ export type OrderGrantRefundCreateLineError = {
 
 export type OrderGrantRefundCreateLineErrorCode =
   | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_CONFIGURED'
   | 'NOT_FOUND'
   | 'QUANTITY_GREATER_THAN_AVAILABLE';
 
@@ -17884,6 +17932,12 @@ export type OrderGrantRefundCreateLineInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
 };
 
 /**
@@ -17918,6 +17972,7 @@ export type OrderGrantRefundUpdateErrorCode =
   | 'AMOUNT_GREATER_THAN_AVAILABLE'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
+  | 'NOT_CONFIGURED'
   | 'NOT_FOUND'
   | 'REQUIRED'
   | 'SHIPPING_COSTS_ALREADY_GRANTED';
@@ -17956,6 +18011,12 @@ export type OrderGrantRefundUpdateLineAddInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
 };
 
 export type OrderGrantRefundUpdateLineError = {
@@ -17972,6 +18033,8 @@ export type OrderGrantRefundUpdateLineError = {
 
 export type OrderGrantRefundUpdateLineErrorCode =
   | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_CONFIGURED'
   | 'NOT_FOUND'
   | 'QUANTITY_GREATER_THAN_AVAILABLE';
 
@@ -18035,6 +18098,12 @@ export type OrderGrantedRefundLine = {
   quantity: Scalars['Int'];
   /** Reason for refunding the line. */
   reason: Maybe<Scalars['String']>;
+  /**
+   * Reason Model (Page) reference for this refund line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: Maybe<Page>;
 };
 
 /**
@@ -18492,6 +18561,18 @@ export type OrderReturnFulfillmentLineInput = {
   fulfillmentLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace: InputMaybe<Scalars['Boolean']>;
 };
@@ -18501,6 +18582,18 @@ export type OrderReturnLineInput = {
   orderLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace: InputMaybe<Scalars['Boolean']>;
 };
@@ -18514,6 +18607,18 @@ export type OrderReturnProductsInput = {
   includeShippingCosts: InputMaybe<Scalars['Boolean']>;
   /** List of unfulfilled lines to return. */
   orderLines: InputMaybe<Array<OrderReturnLineInput>>;
+  /**
+   * Reason for returning this order.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this return.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference: InputMaybe<Scalars['ID']>;
   /** If true, Saleor will call refund action for all lines. */
   refund: InputMaybe<Scalars['Boolean']>;
 };
@@ -25023,6 +25128,8 @@ export type Query = {
    * @deprecated Field no longer supported
    */
   reportProductSales: Maybe<ProductVariantCountableConnection>;
+  /** Returns related settings. Returns `ReturnSettings` configuration, global for the entire shop. */
+  returnSettings: ReturnSettings;
   /**
    * Look up a sale by ID.
    *
@@ -25935,6 +26042,88 @@ export type RequestPasswordReset = {
   /** @deprecated Use `errors` field instead. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
+};
+
+/**
+ * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type ReturnReasonReferenceTypeClear = {
+  __typename: 'ReturnReasonReferenceTypeClear';
+  errors: Array<ReturnReasonReferenceTypeClearError>;
+  /** Return settings. */
+  returnSettings: Maybe<ReturnSettings>;
+  /** @deprecated Use `errors` field instead. */
+  returnSettingsErrors: Array<ReturnReasonReferenceTypeClearError>;
+};
+
+export type ReturnReasonReferenceTypeClearError = {
+  __typename: 'ReturnReasonReferenceTypeClearError';
+  /** Failed to clear return reason reference type */
+  code: ReturnSettingsErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+/**
+ * Return related settings from site settings.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ReturnSettings = {
+  __typename: 'ReturnSettings';
+  /**
+   * Model type used for return reasons.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReferenceType: Maybe<PageType>;
+};
+
+export type ReturnSettingsErrorCode =
+  | 'GRAPHQL_ERROR'
+  | 'INVALID'
+  | 'NOT_FOUND'
+  | 'REQUIRED';
+
+/**
+ * Update return settings across all channels.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type ReturnSettingsUpdate = {
+  __typename: 'ReturnSettingsUpdate';
+  errors: Array<ReturnSettingsUpdateError>;
+  /** Return settings. */
+  returnSettings: Maybe<ReturnSettings>;
+  /** @deprecated Use `errors` field instead. */
+  returnSettingsErrors: Array<ReturnSettingsUpdateError>;
+};
+
+export type ReturnSettingsUpdateError = {
+  __typename: 'ReturnSettingsUpdateError';
+  /** Failed to update Return Settings */
+  code: ReturnSettingsErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field: Maybe<Scalars['String']>;
+  /** The error message. */
+  message: Maybe<Scalars['String']>;
+};
+
+export type ReturnSettingsUpdateInput = {
+  /**
+   * The ID of a model type, that will be used to reference return reasons. All models of this type will be accepted as return reasons.
+   *
+   * Added in Saleor 3.23.
+   */
+  returnReasonReferenceType: Scalars['ID'];
 };
 
 export type RewardTypeEnum =

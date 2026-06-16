@@ -360,6 +360,8 @@ export class OrderFixture {
         __typename: "FulfillmentLine",
         id: "",
         quantity: 0,
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine",
           id: "",
@@ -485,6 +487,8 @@ export class OrderFixture {
       id: "warehouse-id-1",
       name: "Americas",
     },
+    reason: null,
+    reasonReference: null,
     metadata: [],
     privateMetadata: [],
   } satisfies FulfillmentFragment;

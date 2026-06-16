@@ -1126,6 +1126,8 @@ describe("Get the total value of all replaced products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -1284,6 +1286,8 @@ describe("Get the total value of all replaced products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -1442,6 +1446,8 @@ describe("Get the total value of all replaced products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -1600,6 +1606,8 @@ describe("Get the total value of all replaced products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -1758,6 +1766,8 @@ describe("Get the total value of all replaced products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
     ];
@@ -2509,6 +2519,8 @@ describe("Get the total value of all selected products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -2667,6 +2679,8 @@ describe("Get the total value of all selected products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -2825,6 +2839,8 @@ describe("Get the total value of all selected products", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
     ];
@@ -3105,6 +3121,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -3263,6 +3281,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
       {
@@ -3421,6 +3441,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           voucherCode: null,
           taxClass: null,
         },
+        reason: null,
+        reasonReference: null,
         __typename: "FulfillmentLine",
       },
     ];

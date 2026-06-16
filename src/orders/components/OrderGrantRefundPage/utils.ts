@@ -90,7 +90,12 @@ export const getGrantedRefundData = (
     reason: grantedRefund?.reason ?? "",
     amount: grantedRefund.amount.amount,
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
-    lines: grantedRefund?.lines ?? [],
+    lines: (grantedRefund?.lines ?? []).map(line => ({
+      id: line.id,
+      quantity: line.quantity,
+      reason: line.reason,
+      reasonReference: line.reasonReference?.id,
+    })),
     transactionId: grantedRefund?.transaction?.id ?? "",
   };
 };
