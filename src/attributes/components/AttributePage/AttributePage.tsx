@@ -56,6 +56,7 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
+import { AttributeDetailsTitle } from "./Title";
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
@@ -235,13 +236,25 @@ const AttributePage = ({
               <TopNav
                 href={attributePageBackLink}
                 title={
-                  attribute === null
-                    ? intl.formatMessage({
-                        id: "8cUEPV",
-                        defaultMessage: "Create New Attribute",
-                        description: "page title",
-                      })
-                    : attribute?.name
+                  attribute === null ? (
+                    intl.formatMessage({
+                      id: "8cUEPV",
+                      defaultMessage: "Create New Attribute",
+                      description: "page title",
+                    })
+                  ) : (
+                    <AttributeDetailsTitle
+                      attribute={
+                        attribute
+                          ? {
+                              name: attribute.name,
+                              type: attribute.type,
+                            }
+                          : null
+                      }
+                      loading={disabled}
+                    />
+                  )
                 }
               >
                 {canTranslate && (
@@ -303,13 +316,12 @@ const AttributePage = ({
                 <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
-                <AttributeOrganization
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <CardSpacer />
+                {attribute === null && (
+                  <>
+                    <AttributeOrganization data={data} disabled={disabled} onChange={change} />
+                    <CardSpacer />
+                  </>
+                )}
                 <AttributeProperties
                   data={data}
                   errors={apiErrors}

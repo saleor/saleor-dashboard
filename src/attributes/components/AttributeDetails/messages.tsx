@@ -26,11 +26,6 @@ export const messages = defineMessages({
     defaultMessage: "Catalog Input type for Store Owner",
     description: "attribute's editor component",
   },
-  valueRequired: {
-    id: "njBulj",
-    defaultMessage: "Value Required",
-    description: "check to require attribute to have value",
-  },
   selectUnit: {
     id: "PiSXjb",
     defaultMessage: "Select unit",

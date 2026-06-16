@@ -1,4 +1,17 @@
+import { Condition } from "@dashboard/components/ConditionalFilter/FilterElement/Condition";
+import {
+  type ConditionItem,
+  ConditionOptions,
+} from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
+import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
+import {
+  ExpressionValue,
+  FilterElement,
+} from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
+import { prepareStructure } from "@dashboard/components/ConditionalFilter/ValueProvider/utils";
+import { type AttributeTypeEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
+import { stringify } from "qs";
 import urlJoin from "url-join";
 
 import {
@@ -39,6 +52,33 @@ export type AttributeListUrlQueryParams = ActiveTab &
 export const attributeListPath = attributeSection;
 export const attributeListUrl = (params?: AttributeListUrlQueryParams) =>
   attributeListPath + "?" + stringifyQs(params);
+
+const createAttributeTypeFilterElement = (attributeType: AttributeTypeEnum): FilterElement => {
+  const expressionValue = new ExpressionValue("attributeType", "Type", "attributeType");
+  const conditionOptions = ConditionOptions.fromStaticElementName("attributeType");
+  const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
+  const conditionSelected = ConditionSelected.fromConditionItemAndValue(
+    conditionItem,
+    attributeType,
+  );
+  const condition = new Condition(conditionOptions, conditionSelected, false);
+
+  return new FilterElement(expressionValue, condition, false);
+};
+
+/**
+ * Builds the attribute list URL pre-filtered by a single attribute class.
+ */
+export const attributeListUrlWithAttributeType = (attributeType?: AttributeTypeEnum) => {
+  if (!attributeType) {
+    return attributeListPath;
+  }
+
+  const filterContainer = [createAttributeTypeFilterElement(attributeType)];
+  const queryParams = prepareStructure(filterContainer);
+
+  return urlJoin(attributeListPath, "?" + stringify(queryParams));
+};
 
 export type AttributeAddUrlDialog =
   | "add-value"
