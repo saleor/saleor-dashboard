@@ -52,6 +52,7 @@ export const AttributeListDatagrid = ({
   );
   const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
     useColumns({
+      gridName: "attribute_list",
       selectedColumns: settings?.columns ?? [],
       staticColumns: attributesListStaticColumns,
       onSave: onColumnChange,
