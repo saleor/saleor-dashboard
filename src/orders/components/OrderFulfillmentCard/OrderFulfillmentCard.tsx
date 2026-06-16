@@ -6,10 +6,12 @@ import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
+import { FormattedMessage } from "react-intl";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import { ActionButtons } from "./ActionButtons";
+import { orderFulfillmentCardMessages } from "./messages";
 
 interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
@@ -60,13 +62,16 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     return null;
   }
 
-  const getLines = () => {
-    if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines).map(fulfillmentLineToLine);
-    }
-
-    return fulfillment?.lines.map(fulfillmentLineToLine) || [];
-  };
+  const getFulfillmentLines = () =>
+    statusesToMergeLines.includes(fulfillment?.status)
+      ? mergeRepeatedOrderLines(fulfillment.lines)
+      : (fulfillment?.lines ?? []);
+  const getLines = () => getFulfillmentLines().map(fulfillmentLineToLine);
+  const lineReasons = getFulfillmentLines().map(line => ({
+    reason: line.reason ?? null,
+    reasonType: line.reasonReference?.title ?? null,
+  }));
+  const hasLineReasons = lineReasons.some(({ reason, reasonType }) => reason || reasonType);
 
   return (
     <Box data-test-id={dataTestId} backgroundColor={"default2"}>
@@ -136,9 +141,30 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
+      {(fulfillment.reason || fulfillment.reasonReference) && (
+        <Box paddingX={6} paddingY={4} backgroundColor="default2">
+          {fulfillment.reasonReference && (
+            <Box marginBottom={fulfillment.reason ? 1 : 0}>
+              <Text size={2} color="default2">
+                <FormattedMessage {...orderFulfillmentCardMessages.reasonType} />
+              </Text>{" "}
+              <Text size={2}>{fulfillment.reasonReference.title}</Text>
+            </Box>
+          )}
+          {fulfillment.reason && (
+            <Box>
+              <Text size={2} color="default2">
+                <FormattedMessage {...orderFulfillmentCardMessages.reason} />
+              </Text>{" "}
+              <Text size={2}>{fulfillment.reason}</Text>
+            </Box>
+          )}
+        </Box>
+      )}
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}
+          lineReasons={hasLineReasons ? lineReasons : undefined}
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
           onShowLinePriceBreakdown={onShowLinePriceBreakdown}

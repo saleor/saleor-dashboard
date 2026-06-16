@@ -11,6 +11,11 @@ import {
 } from "@dashboard/graphql";
 import { getUserInitials } from "@dashboard/misc";
 
+export type OrderRefundLineReason = {
+  reason: string | null;
+  reasonType: string | null;
+};
+
 export type OrderRefundDisplay = {
   id: string;
   type: "standard" | "manual";
@@ -22,6 +27,7 @@ export type OrderRefundDisplay = {
   };
   reasonNote: string | null;
   reasonType: string | null;
+  lineReasons: OrderRefundLineReason[];
   createdAt: string;
   user: {
     email: string;
@@ -158,6 +164,7 @@ export abstract class OrderRefundsViewModel {
         ),
         reasonNote: null,
         reasonType: null,
+        lineReasons: [],
         creator: this.getCreator(latestEvent.createdBy),
       };
 
@@ -207,6 +214,12 @@ export abstract class OrderRefundsViewModel {
       type: "standard",
       reasonType: refund.reasonReference?.title ?? null,
       reasonNote: refund.reason,
+      lineReasons: (refund.lines ?? [])
+        .filter(line => line.reason || line.reasonReference)
+        .map(line => ({
+          reason: line.reason ?? null,
+          reasonType: line.reasonReference?.title ?? null,
+        })),
       creator: this.getCreator(refund.app || refund.user),
     }));
   }

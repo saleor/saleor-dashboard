@@ -56,6 +56,17 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           <Text ellipsis size={2} color="default2">
             {refund.reasonNote}
           </Text>
+          {refund.lineReasons.map((lineReason, index) => (
+            <Text key={index} ellipsis display="block" size={2} color="default2">
+              {lineReason.reasonType && (
+                <Text as="span" size={2} fontWeight="medium">
+                  {lineReason.reasonType}
+                  {lineReason.reason ? ": " : ""}
+                </Text>
+              )}
+              {lineReason.reason}
+            </Text>
+          ))}
         </Box>
       </GridTable.Cell>
 

@@ -22,9 +22,15 @@ import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
+export interface LineReasonDisplay {
+  reason: string | null;
+  reasonType: string | null;
+}
+
 export const orderDetailsStaticColumnsAdapter = (
   intl: IntlShape,
   emptyColumn: AvailableColumn,
+  { withReasonColumn }: { withReasonColumn?: boolean } = {},
 ): AvailableColumn[] => [
   emptyColumn,
   {
@@ -62,6 +68,15 @@ export const orderDetailsStaticColumnsAdapter = (
     title: intl.formatMessage(columnsMessages.isGift),
     width: 150,
   },
+  ...(withReasonColumn
+    ? [
+        {
+          id: "reason",
+          title: intl.formatMessage(columnsMessages.reason),
+          width: 200,
+        },
+      ]
+    : []),
 ];
 
 interface GetCellContentProps {
@@ -74,6 +89,8 @@ interface GetCellContentProps {
   /** When true, discounted price/total cells render with a pointer cursor
    *  to signal that clicking them opens the per-line price breakdown modal. */
   interactivePricing?: boolean;
+  /** Per-line reasons aligned by index with `data`; enables the `reason` column. */
+  lineReasons?: LineReasonDisplay[];
 }
 
 const isLineDiscounted = (line: OrderLineFragment): boolean =>
@@ -107,6 +124,7 @@ export const createGetCellContent =
     intl,
     locale,
     interactivePricing,
+    lineReasons,
   }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     const discountedOpts: Partial<GridCell> = interactivePricing
@@ -146,6 +164,12 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.variant?.name ?? "-", false);
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
+      case "reason": {
+        const lineReason = lineReasons?.[getDatagridRowDataIndex(row, removed)];
+        const parts = [lineReason?.reasonType, lineReason?.reason].filter(Boolean);
+
+        return readonlyTextCell(parts.join(": "), false);
+      }
       case "price":
         if (isLineDiscounted(rowData)) {
           return moneyDiscountedCell(
