@@ -16,7 +16,7 @@ const TOTAL_COLUMNS = 6;
 export const ShowAllLinesBar = ({ expanded, totalCount, onToggle }: ShowAllLinesBarProps) => {
   return (
     <GridTable.Row>
-      <GridTable.Cell colSpan={TOTAL_COLUMNS} padding={0} backgroundColor="default1">
+      <GridTable.Cell colSpan={TOTAL_COLUMNS} padding={0} backgroundColor="default2">
         <Box
           as="button"
           type="button"
@@ -29,7 +29,7 @@ export const ShowAllLinesBar = ({ expanded, totalCount, onToggle }: ShowAllLines
           width="100%"
           paddingY={2}
           cursor="pointer"
-          backgroundColor={{ default: "default1", hover: "default1Hovered" }}
+          backgroundColor={{ default: "default2", hover: "default1Hovered" }}
           borderWidth={0}
         >
           <Text size={2} color="default2" fontWeight="medium">

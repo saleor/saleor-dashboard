@@ -113,8 +113,8 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           </Box>
         </GridTable.Cell>
       </GridTable.Row>
-      {visibleLines.map(line => (
-        <RefundLineSubRow key={line.id} line={line} />
+      {visibleLines.map((line, index) => (
+        <RefundLineSubRow key={line.id} line={line} isFirst={index === 0} />
       ))}
       {hasCollapsibleLines && (
         <ShowAllLinesBar
