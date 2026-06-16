@@ -45,10 +45,10 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
 };
 
-const getMeasurementUnitMessage = (
+export const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
   formatMessage: IntlShape["formatMessage"],
-): MessageDescriptor | React.ReactNode => {
+): React.ReactNode => {
   const message = UNIT_MESSAGES_MAPPING[unit];
 
   return typeof message === "string" || React.isValidElement(message)

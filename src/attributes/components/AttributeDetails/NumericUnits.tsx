@@ -122,7 +122,7 @@ export const NumericUnits = ({
         >
           <Paragraph fontWeight="medium" fontSize={3} margin={0}>
             <FormattedMessage {...M.messages.selectUnit} />
-            <Text size={2} fontWeight="light" color="default2" display="block">
+            <Text size={2} color="default2" display="block">
               <FormattedMessage {...M.messages.selectUnitCaption} />
             </Text>
           </Paragraph>

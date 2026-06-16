@@ -88,6 +88,7 @@ export const createGetCellContent =
           ? attributeInputTypeCell(
               rowData.inputType,
               getAttributeInputTypeLabel(intl, rowData.inputType),
+              { hasUnit: rowData.unit != null },
             )
           : readonlyTextCell(PLACEHOLDER);
       case "attribute-type":

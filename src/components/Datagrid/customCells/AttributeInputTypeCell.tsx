@@ -25,31 +25,41 @@ interface AttributeInputTypeCellProps {
   readonly kind: typeof CELL_KIND;
   readonly inputType: AttributeInputTypeEnum;
   readonly label: string;
+  readonly hasUnit: boolean;
 }
 
 export type AttributeInputTypeCell = CustomCell<AttributeInputTypeCellProps>;
 
-const getIconDataUri = (inputType: AttributeInputTypeEnum, color: string): string =>
+const getIconDataUri = (
+  inputType: AttributeInputTypeEnum,
+  color: string,
+  hasUnit: boolean,
+): string =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-    renderAttributeInputTypeIconSvg(inputType, ICON_SIZE, color),
+    renderAttributeInputTypeIconSvg(inputType, ICON_SIZE, color, { hasUnit }),
   )}`;
 
 export const attributeInputTypeCell = (
   inputType: AttributeInputTypeEnum,
   label: string,
-  opts?: Partial<GridCell>,
-): AttributeInputTypeCell => ({
-  allowOverlay: false,
-  readonly: true,
-  copyData: label,
-  ...opts,
-  kind: GridCellKind.Custom,
-  data: {
-    kind: CELL_KIND,
-    inputType,
-    label,
-  },
-});
+  opts?: Partial<GridCell> & { hasUnit?: boolean },
+): AttributeInputTypeCell => {
+  const { hasUnit = false, ...gridCellOpts } = opts ?? {};
+
+  return {
+    allowOverlay: false,
+    readonly: true,
+    copyData: label,
+    ...gridCellOpts,
+    kind: GridCellKind.Custom,
+    data: {
+      kind: CELL_KIND,
+      inputType,
+      label,
+      hasUnit,
+    },
+  };
+};
 
 export const attributeInputTypeCellRenderer: CustomRenderer<AttributeInputTypeCell> = {
   kind: GridCellKind.Custom,
@@ -59,7 +69,7 @@ export const attributeInputTypeCellRenderer: CustomRenderer<AttributeInputTypeCe
     const { rect, ctx, theme, imageLoader, col, row } = args;
     const iconColor = theme.textLight;
     const image = imageLoader.loadOrGetImage(
-      getIconDataUri(cell.data.inputType, iconColor),
+      getIconDataUri(cell.data.inputType, iconColor, cell.data.hasUnit),
       col,
       row,
     );

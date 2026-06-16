@@ -16,6 +16,7 @@ import { type IntlShape } from "react-intl";
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
     inputType: attribute.data.inputType,
+    unit: attribute.data.unit,
   };
 }
 

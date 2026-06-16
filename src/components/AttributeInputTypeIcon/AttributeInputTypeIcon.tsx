@@ -9,17 +9,19 @@ import { type AttributeInputTypeIconSize } from "./types";
 interface AttributeInputTypeIconProps {
   inputType: AttributeInputTypeEnum;
   size?: AttributeInputTypeIconSize;
+  hasUnit?: boolean;
 }
 
 export const AttributeInputTypeIcon = ({
   inputType,
   size = "small",
+  hasUnit = false,
 }: AttributeInputTypeIconProps): JSX.Element => {
   const intl = useIntl();
 
   return (
     <AttributeLabelIcon
-      icon={getAttributeInputTypeIcon(inputType)}
+      icon={getAttributeInputTypeIcon(inputType, { hasUnit })}
       size={size}
       ariaLabel={getAttributeInputTypeLabel(intl, inputType)}
     />

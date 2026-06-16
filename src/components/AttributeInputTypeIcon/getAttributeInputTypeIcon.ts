@@ -10,9 +10,15 @@ import {
   ListChecks,
   type LucideIcon,
   Palette,
+  Ruler,
   ToggleLeft,
   Type,
 } from "lucide-react";
+
+export interface AttributeIconOptions {
+  /** Numeric attributes with a measurement unit use a ruler icon instead of the default hash. */
+  hasUnit?: boolean;
+}
 
 /**
  * React UI: Lucide icons for AttributeInputTypeIcon / AttributeInputTypeLabel.
@@ -35,5 +41,13 @@ export const attributeInputTypeIcons: Record<AttributeInputTypeEnum, LucideIcon>
   [AttributeInputTypeEnum.SWATCH]: Palette,
 };
 
-export const getAttributeInputTypeIcon = (inputType: AttributeInputTypeEnum): LucideIcon =>
-  attributeInputTypeIcons[inputType];
+export const getAttributeInputTypeIcon = (
+  inputType: AttributeInputTypeEnum,
+  options?: AttributeIconOptions,
+): LucideIcon => {
+  if (inputType === AttributeInputTypeEnum.NUMERIC && options?.hasUnit) {
+    return Ruler;
+  }
+
+  return attributeInputTypeIcons[inputType];
+};

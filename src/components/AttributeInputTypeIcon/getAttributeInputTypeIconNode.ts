@@ -1,5 +1,6 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
+import { type AttributeIconOptions } from "./getAttributeInputTypeIcon";
 import { type IconNode } from "./iconNodeToSvg";
 
 /**
@@ -70,6 +71,21 @@ const numericIconNode: IconNode = [
   ["line", { x1: "16", x2: "14", y1: "3", y2: "21", key: "weycgp" }],
 ];
 
+// Lucide "Ruler" — numeric attributes that carry a measurement unit.
+const numericWithUnitIconNode: IconNode = [
+  [
+    "path",
+    {
+      d: "M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z",
+      key: "icamh8",
+    },
+  ],
+  ["path", { d: "m14.5 12.5 2-2", key: "inckbg" }],
+  ["path", { d: "m11.5 9.5 2-2", key: "fmmyf7" }],
+  ["path", { d: "m8.5 6.5 2-2", key: "vc6u1g" }],
+  ["path", { d: "m17.5 15.5 2-2", key: "wo5hmg" }],
+];
+
 const booleanIconNode: IconNode = [
   ["circle", { cx: "9", cy: "12", r: "3", key: "u3jwor" }],
   ["rect", { width: "20", height: "14", x: "2", y: "5", rx: "7", key: "g7kal2" }],
@@ -120,5 +136,13 @@ export const attributeInputTypeIconNodes: Record<AttributeInputTypeEnum, IconNod
   [AttributeInputTypeEnum.SWATCH]: swatchIconNode,
 };
 
-export const getAttributeInputTypeIconNode = (inputType: AttributeInputTypeEnum): IconNode =>
-  attributeInputTypeIconNodes[inputType];
+export const getAttributeInputTypeIconNode = (
+  inputType: AttributeInputTypeEnum,
+  options?: AttributeIconOptions,
+): IconNode => {
+  if (inputType === AttributeInputTypeEnum.NUMERIC && options?.hasUnit) {
+    return numericWithUnitIconNode;
+  }
+
+  return attributeInputTypeIconNodes[inputType];
+};
