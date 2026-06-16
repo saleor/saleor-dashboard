@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 import { EventTime } from "../OrderTransaction/components/TransactionEvents/components";
 import { OrderTransactionRefundStatusPill } from "../OrderTransactionRefundPage/components/OrderTransactionRefundStatusPill/OrderTransactionRefundStatusPill";
+import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { getGrantedRefundStatusMessage, getNotEditableRefundMessage } from "./utils";
 
 interface OrderDetailsRefundLineProps {
@@ -47,25 +48,15 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           {noReasonTypeNorNote && (
             <Text size={2}>{intl.formatMessage(refundGridMessages.manualRefund)}</Text>
           )}
-          {refund.reasonType && (
-            <Text size={2} fontWeight="medium">
-              {refund.reasonType}
-              {refund.reasonNote && ": "}
-            </Text>
-          )}
-          <Text ellipsis size={2} color="default2">
-            {refund.reasonNote}
-          </Text>
+          <ReasonDisplay ellipsis reasonReference={refund.reasonType} reason={refund.reasonNote} />
           {refund.lineReasons.map((lineReason, index) => (
-            <Text key={index} ellipsis display="block" size={2} color="default2">
-              {lineReason.reasonType && (
-                <Text as="span" size={2} fontWeight="medium">
-                  {lineReason.reasonType}
-                  {lineReason.reason ? ": " : ""}
-                </Text>
-              )}
-              {lineReason.reason}
-            </Text>
+            <ReasonDisplay
+              key={index}
+              ellipsis
+              display="block"
+              reasonReference={lineReason.reasonType}
+              reason={lineReason.reason}
+            />
           ))}
         </Box>
       </GridTable.Cell>

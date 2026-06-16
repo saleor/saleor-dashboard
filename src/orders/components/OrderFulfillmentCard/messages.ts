@@ -1,18 +1,5 @@
 import { defineMessages } from "react-intl";
 
-export const orderFulfillmentCardMessages = defineMessages({
-  reasonType: {
-    id: "39oPYf",
-    defaultMessage: "Reason type:",
-    description: "fulfillment reason reference label",
-  },
-  reason: {
-    id: "ppva3K",
-    defaultMessage: "Reason:",
-    description: "fulfillment reason label",
-  },
-});
-
 export const actionButtonsMessages = defineMessages({
   refund: {
     id: "K//bUK",

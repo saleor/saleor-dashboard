@@ -923,10 +923,6 @@
     "context": "Features preview",
     "string": "Features preview"
   },
-  "39oPYf": {
-    "context": "fulfillment reason reference label",
-    "string": "Reason type:"
-  },
   "39yi8w": {
     "context": "selected currency",
     "string": "Selected currency"
@@ -9995,10 +9991,6 @@
   "ppLwx3": {
     "context": "number of categories",
     "string": "Categories ({quantity})"
-  },
-  "ppva3K": {
-    "context": "fulfillment reason label",
-    "string": "Reason:"
   },
   "pr/aHj": {
     "context": "success gift card disable message",
