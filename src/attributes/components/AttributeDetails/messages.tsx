@@ -31,6 +31,12 @@ export const messages = defineMessages({
     defaultMessage: "Select unit",
     description: "check to require numeric attribute unit",
   },
+  selectUnitCaption: {
+    id: "g1KZlx",
+    defaultMessage:
+      "If enabled, values for this attribute will be stored together with a measurement unit (e.g. kg, cm).",
+    description: "caption explaining numeric attribute unit",
+  },
   unitSystem: {
     id: "ghje1I",
     defaultMessage: "System",

@@ -8180,6 +8180,10 @@
   "g0GAdN": {
     "string": "Delete attributes"
   },
+  "g1KZlx": {
+    "context": "caption explaining numeric attribute unit",
+    "string": "If enabled, values for this attribute will be stored together with a measurement unit (e.g. kg, cm)."
+  },
   "g1bk+A": {
     "context": "payment method type other",
     "string": "Other"

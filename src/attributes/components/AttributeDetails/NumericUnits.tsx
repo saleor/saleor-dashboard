@@ -3,12 +3,12 @@ import { Select } from "@dashboard/components/Select";
 import { type MeasurementUnitsEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type Option, Paragraph, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import * as M from "./messages";
+import styles from "./NumericUnits.module.css";
 import {
   getUnitChoices,
   type UnitSystem,
@@ -16,19 +16,6 @@ import {
   type UnitType,
   unitTypeChoices,
 } from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      border: "none",
-      borderTop: `1px solid ${theme.palette.divider}`,
-      height: 0,
-      margin: "0.5rem 0",
-      width: "100%",
-    },
-  }),
-  { name: "NumericUnits" },
-);
 
 interface UnitData {
   unit: MeasurementUnitsEnum | null | undefined;
@@ -39,21 +26,21 @@ interface UnitData {
 interface NumericUnitsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "errors" | "clearErrors"
+    "setError" | "data" | "errors" | "clearErrors"
   > {
   disabled: boolean;
+  onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }
 
 export const NumericUnits = ({
   data,
   disabled,
   errors,
-  set,
   setError,
   clearErrors,
+  onUnitChange,
 }: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
-  const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({
     unit: data.unit ?? null,
   });
@@ -77,7 +64,13 @@ export const NumericUnits = ({
     [],
   );
 
-  useEffect(() => set({ unit }), [unit]);
+  useEffect(() => {
+    const normalizedUnit = unit ?? null;
+
+    if ((data.unit ?? null) !== normalizedUnit) {
+      onUnitChange(normalizedUnit);
+    }
+  }, [data.unit, onUnitChange, unit]);
   useEffect(() => {
     if (data.unit) {
       const selectInitialUnitData = () => {
@@ -118,21 +111,25 @@ export const NumericUnits = ({
   }, [unitData, errors]);
 
   return (
-    <div>
-      <div className={classes.hr} />
-
-      <Checkbox
-        data-test-id="numeric-with-unit"
-        name="selectUnit"
-        checked={data.unit !== null}
-        onCheckedChange={checked => setUnitData({ unit: checked ? undefined : null })}
-        disabled={disabled}
-        marginY={2}
-      >
-        <Text fontSize={3}>{formatMessage(M.messages.selectUnit)}</Text>
-      </Checkbox>
-      {data.unit !== null && (
-        <Box display="flex" gap={4} justifyContent="space-between">
+    <Box marginTop={5}>
+      <Box className={styles.propertyControl}>
+        <Checkbox
+          data-test-id="numeric-with-unit"
+          name="selectUnit"
+          checked={unit !== null}
+          onCheckedChange={checked => setUnitData({ unit: checked ? undefined : null })}
+          disabled={disabled}
+        >
+          <Paragraph fontWeight="medium" fontSize={3} margin={0}>
+            <FormattedMessage {...M.messages.selectUnit} />
+            <Text size={2} fontWeight="light" color="default2" display="block">
+              <FormattedMessage {...M.messages.selectUnitCaption} />
+            </Text>
+          </Paragraph>
+        </Checkbox>
+      </Box>
+      {unit !== null && (
+        <Box display="flex" gap={4} justifyContent="space-between" marginTop={4}>
           <Box width="100%">
             <Select
               error={!system && errorProps.error}
@@ -191,6 +188,6 @@ export const NumericUnits = ({
           </Box>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };

@@ -9,6 +9,10 @@ import {
   type AttributeUrlQueryParams,
 } from "@dashboard/attributes/urls";
 import {
+  getAttributePageInitialForm,
+  isAttributeUpdateFormPristine,
+} from "@dashboard/attributes/utils/attributePageForm";
+import {
   ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES,
   ENTITY_TYPES_WITH_TYPES_RESTRICTION,
   REFERENCE_ATTRIBUTE_TYPES,
@@ -29,8 +33,8 @@ import {
   type AttributeDetailsQuery,
   AttributeEntityTypeEnum,
   type AttributeErrorFragment,
-  AttributeInputTypeEnum,
-  AttributeTypeEnum,
+  type AttributeInputTypeEnum,
+  type AttributeTypeEnum,
   type MeasurementUnitsEnum,
   PermissionEnum,
 } from "@dashboard/graphql";
@@ -45,10 +49,11 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type ListSettings, type ReorderAction } from "@dashboard/types";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { type Option } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -59,6 +64,31 @@ import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSectio
 import { AttributeValues } from "../AttributeValues/AttributeValues";
 import { messages } from "./messages";
 import { AttributeDetailsTitle } from "./Title";
+
+function AttributePageDirtyStateSync({
+  attribute,
+  isSaveDisabled,
+  triggerChange,
+}: {
+  attribute?: AttributePageProps["attribute"];
+  isSaveDisabled?: boolean;
+  triggerChange: (value?: boolean) => void;
+}) {
+  // Derive the exit-dialog dirty flag from the pristine comparison instead of
+  // marking it imperatively. Running it in an effect (after render/navigation)
+  // is important: marking the form dirty synchronously inside a handler that
+  // also navigates (e.g. closing the assign-reference-types modal) would make
+  // the exit-form guard block that same-page navigation.
+  useEffect(() => {
+    if (!attribute) {
+      return;
+    }
+
+    triggerChange(!isSaveDisabled);
+  }, [attribute, isSaveDisabled, triggerChange]);
+
+  return null;
+}
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
@@ -136,42 +166,26 @@ const AttributePage = ({
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const initialForm: AttributePageFormData = !attribute
-    ? {
-        availableInGrid: true,
-        entityType: null,
-        filterableInDashboard: true,
-        filterableInStorefront: true,
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        metadata: [],
-        name: "",
-        privateMetadata: [],
-        slug: "",
-        storefrontSearchPosition: "",
-        type: AttributeTypeEnum.PRODUCT_TYPE,
-        valueRequired: true,
-        visibleInStorefront: true,
-        unit: undefined,
-        referenceTypes: [],
+  const isCreate = attribute === null;
+  const initialForm = useMemo(() => getAttributePageInitialForm(attribute), [attribute]);
+  const checkIfSaveIsDisabled = useCallback(
+    (data: AttributePageFormData) => {
+      if (disabled) {
+        return true;
       }
-    : {
-        availableInGrid: attribute.availableInGrid,
-        entityType: attribute.entityType,
-        filterableInDashboard: attribute.filterableInDashboard,
-        filterableInStorefront: attribute.filterableInStorefront,
-        inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
-        metadata: attribute.metadata.map(mapMetadataItemToInput),
-        name: attribute?.name ?? "",
-        privateMetadata: attribute.privateMetadata.map(mapMetadataItemToInput),
-        slug: attribute?.slug ?? "",
-        storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
-        type: attribute?.type ?? AttributeTypeEnum.PRODUCT_TYPE,
-        valueRequired: !!attribute.valueRequired,
-        visibleInStorefront: attribute.visibleInStorefront,
-        unit: attribute?.unit ?? null,
-        referenceTypes:
-          attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
-      };
+
+      if (isCreate) {
+        return false;
+      }
+
+      if (!attribute) {
+        return true;
+      }
+
+      return isAttributeUpdateFormPristine(data, initialForm);
+    },
+    [attribute, disabled, initialForm, isCreate],
+  );
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
 
@@ -189,8 +203,24 @@ const AttributePage = ({
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
-      {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({
+        change,
+        set,
+        data,
+        isSaveDisabled,
+        submit,
+        errors,
+        setError,
+        clearErrors,
+        triggerChange,
+      }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
         const activeRefSearch =
           data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
@@ -208,8 +238,9 @@ const AttributePage = ({
         const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
 
-          if (attribute === null && fieldName === "entityType") {
+          if (isCreate && fieldName === "entityType") {
             set({ referenceTypes: [] });
+            triggerChange();
           }
 
           change(event);
@@ -223,6 +254,9 @@ const AttributePage = ({
             );
           const mergedReferenceTypes = [...data.referenceTypes, ...toAdd];
 
+          // Dirty state is derived from the form data via AttributePageDirtyStateSync,
+          // so we must not mark it dirty synchronously here: closing the modal navigates
+          // and the exit-form guard would block that navigation if the form were already dirty.
           set({ referenceTypes: mergedReferenceTypes });
           onCloseAssignReferenceTypes();
         };
@@ -236,6 +270,11 @@ const AttributePage = ({
 
         return (
           <>
+            <AttributePageDirtyStateSync
+              attribute={attribute}
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
             <DetailPageLayout>
               <TopNav
                 href={attributePageBackLink}
@@ -287,12 +326,17 @@ const AttributePage = ({
               </TopNav>
               <DetailPageLayout.Content>
                 <AttributeDetails
-                  canChangeType={attribute === null}
+                  canChangeType={isCreate}
                   data={data}
                   disabled={disabled}
                   apiErrors={apiErrors}
                   onChange={handleChange}
-                  set={set}
+                  onUnitChange={unit => {
+                    if ((data.unit ?? null) !== (unit ?? null)) {
+                      set({ unit });
+                      triggerChange();
+                    }
+                  }}
                   errors={errors}
                   setError={setError}
                   clearErrors={clearErrors}

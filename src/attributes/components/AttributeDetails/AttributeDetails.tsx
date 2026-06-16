@@ -51,17 +51,27 @@ const entityTypeMessages = defineMessages({
 interface AttributeDetailsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "clearErrors" | "errors"
+    "setError" | "data" | "clearErrors" | "errors"
   > {
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
   onChange: FormChange;
+  onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
-  const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
-    props;
+  const {
+    canChangeType,
+    errors,
+    clearErrors,
+    setError,
+    data,
+    disabled,
+    apiErrors,
+    onChange,
+    onUnitChange,
+  } = props;
   const intl = useIntl();
   const inputTypeChoices = [
     {
@@ -217,7 +227,7 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
             disabled={disabled}
             clearErrors={clearErrors}
             setError={setError}
-            set={set}
+            onUnitChange={onUnitChange}
           />
         )}
       </DashboardCard.Content>
