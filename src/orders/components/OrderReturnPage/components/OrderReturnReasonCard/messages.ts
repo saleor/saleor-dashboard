@@ -7,13 +7,13 @@ export const orderReturnReasonCardMessages = defineMessages({
     description: "order return reason card title",
   },
   reasonLabel: {
-    defaultMessage: "Reason",
-    id: "J3nYmU",
+    defaultMessage: "Reason note",
+    id: "Kf/GoV",
     description: "order return reason card, reason textarea label",
   },
   structuredReasonLabel: {
-    defaultMessage: "Structured reason",
-    id: "pscdgK",
+    defaultMessage: "Reason",
+    id: "aTDks/",
     description: "order return reason card, structured reason select label",
   },
   none: {

@@ -499,10 +499,6 @@
     "context": "dialog title",
     "string": "Capture Payment"
   },
-  "0fgK7h": {
-    "context": "grant refund, structured reason reference select label",
-    "string": "Structured reason for refund"
-  },
   "0g0LHg": {
     "context": "card header and checkbox label",
     "string": "Emit update webhooks for metadata changes"
@@ -1188,6 +1184,9 @@
   "4Za2EN": {
     "string": "Returns Model Type"
   },
+  "4bNRr4": {
+    "string": "Reason note"
+  },
   "4fJ17F": {
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
@@ -1406,6 +1405,10 @@
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
+  },
+  "5l/mGp": {
+    "context": "grant refund, reason input field placeholder",
+    "string": "Reason note"
   },
   "5nrCxC": {
     "string": "Go to model types"
@@ -1956,6 +1959,10 @@
   "8maISA": {
     "context": "deactivate customer dialog, header",
     "string": "Deactivate customer"
+  },
+  "8nVvtB": {
+    "context": "grant refund, structured reason reference select label",
+    "string": "Reason"
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -3310,6 +3317,10 @@
     "context": "order returned success message",
     "string": "Products returned, refund sent"
   },
+  "G+tGzh": {
+    "context": "input label",
+    "string": "Reason note"
+  },
   "G/pgG3": {
     "context": "dialog header",
     "string": "Select a channel"
@@ -3954,10 +3965,6 @@
     "context": "order line is gift",
     "string": "Is gift"
   },
-  "J3nYmU": {
-    "context": "order return reason card, reason textarea label",
-    "string": "Reason"
-  },
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"
@@ -4231,6 +4238,10 @@
   },
   "KeO51o": {
     "string": "Channel"
+  },
+  "Kf/GoV": {
+    "context": "order return reason card, reason textarea label",
+    "string": "Reason note"
   },
   "Kfuqfq": {
     "context": "transfer funds button",
@@ -4943,9 +4954,6 @@
   },
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
-  },
-  "ORpN0D": {
-    "string": "Structured reason"
   },
   "OSnO9P": {
     "string": "All transactions are non-refundable"
@@ -7206,6 +7214,10 @@
   "aSn2Ud": {
     "string": "Add reason"
   },
+  "aTDks/": {
+    "context": "order return reason card, structured reason select label",
+    "string": "Reason"
+  },
   "aTe9zV": {
     "context": "customer overview stat label: average order value of recent orders",
     "string": "Avg order value"
@@ -7565,10 +7577,6 @@
   "cBHRxx": {
     "context": "button",
     "string": "Assign Warehouse"
-  },
-  "cBVHN5": {
-    "context": "grant refund, reason input field placeholder",
-    "string": "Reason for refund"
   },
   "cD0BQQ": {
     "context": "sku preview example showing resulting SKU",
@@ -9996,10 +10004,6 @@
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
   },
-  "pscdgK": {
-    "context": "order return reason card, structured reason select label",
-    "string": "Structured reason"
-  },
   "psmnv9": {
     "string": "Edit permissions"
   },
@@ -10449,10 +10453,6 @@
   "s2y5eG": {
     "context": "Status label",
     "string": "Status"
-  },
-  "s3jmO9": {
-    "context": "input label",
-    "string": "Reason notes"
   },
   "s3xi3B": {
     "context": "extension form app name field label",

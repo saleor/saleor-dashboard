@@ -17,8 +17,8 @@ export const grantRefundPageMessages = defineMessages({
     id: "Ys86kI",
   },
   structuredReasonForRefund: {
-    defaultMessage: "Structured reason for refund",
-    id: "0fgK7h",
+    defaultMessage: "Reason",
+    id: "8nVvtB",
     description: "grant refund, structured reason reference select label",
   },
   none: {
@@ -27,8 +27,8 @@ export const grantRefundPageMessages = defineMessages({
     description: "grant refund, empty structured reason option",
   },
   reasonForRefund: {
-    defaultMessage: "Reason for refund",
-    id: "cBVHN5",
+    defaultMessage: "Reason note",
+    id: "5l/mGp",
     description: "grant refund, reason input field placeholder",
   },
   refundTitle: {

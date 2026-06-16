@@ -10,12 +10,12 @@ export const reasonReferenceModalMessages = defineMessages({
     id: "P98zBi",
   },
   reasonLabel: {
-    defaultMessage: "Reason",
-    id: "AkCxS/",
+    defaultMessage: "Reason note",
+    id: "4bNRr4",
   },
   reasonReferenceLabel: {
-    defaultMessage: "Structured reason",
-    id: "ORpN0D",
+    defaultMessage: "Reason",
+    id: "AkCxS/",
   },
   noneOption: {
     defaultMessage: "None",
