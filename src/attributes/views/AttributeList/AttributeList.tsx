@@ -62,7 +62,7 @@ const AttributeList = ({ params }: AttributeListProps) => {
       },
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [filters, paginationState, params],
   );
   const { data, loading, refetch } = useAttributeListQuery({
     variables: newQueryVariables,

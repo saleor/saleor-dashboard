@@ -13,6 +13,12 @@ import { getEntityUrl } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
+export function getAttributeRowLabelProps(attribute: AttributeInput) {
+  return {
+    inputType: attribute.data.inputType,
+  };
+}
+
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];
   const definedAttributeValue = attribute.data.values.find(

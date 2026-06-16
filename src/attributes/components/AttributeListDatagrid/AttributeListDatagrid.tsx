@@ -1,4 +1,4 @@
-import { type AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
+import { AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
@@ -81,9 +81,15 @@ export const AttributeListDatagrid = ({
   );
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col].id as AttributeListUrlSortField;
+      const columnName = visibleColumns[col].id;
 
-      onSort(columnName);
+      if (
+        !Object.values(AttributeListUrlSortField).includes(columnName as AttributeListUrlSortField)
+      ) {
+        return;
+      }
+
+      onSort(columnName as AttributeListUrlSortField);
     },
     [visibleColumns, onSort],
   );

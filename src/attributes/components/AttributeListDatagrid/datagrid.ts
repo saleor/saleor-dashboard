@@ -1,5 +1,7 @@
 import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
+import { getAttributeInputTypeLabel } from "@dashboard/attributes/utils/getAttributeInputTypeLabel";
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
+import { attributeInputTypeCell } from "@dashboard/components/Datagrid/customCells/AttributeInputTypeCell";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type AttributeFragment } from "@dashboard/graphql";
@@ -11,20 +13,27 @@ import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
+const NON_SORTABLE_COLUMNS = ["input-type"];
+
 export const attributesListStaticColumnsAdapter = (
   intl: IntlShape,
   sort: Sort<AttributeListUrlSortField>,
 ) =>
   [
     {
+      id: "name",
+      title: intl.formatMessage(columnsMessages.name),
+      width: 300,
+    },
+    {
       id: "slug",
       title: intl.formatMessage(columnsMessages.slug),
       width: 300,
     },
     {
-      id: "name",
-      title: intl.formatMessage(columnsMessages.name),
-      width: 300,
+      id: "input-type",
+      title: intl.formatMessage(columnsMessages.inputType),
+      width: 200,
     },
     {
       id: "visible",
@@ -38,7 +47,9 @@ export const attributesListStaticColumnsAdapter = (
     },
   ].map(column => ({
     ...column,
-    icon: getColumnSortDirectionIcon(sort, column.id),
+    icon: getColumnSortDirectionIcon(sort, column.id, {
+      nonSortableColumns: NON_SORTABLE_COLUMNS,
+    }),
   }));
 
 export const createGetCellContent =
@@ -64,6 +75,14 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.slug ?? PLACEHOLDER);
       case "name":
         return readonlyTextCell(rowData?.name ?? PLACEHOLDER);
+      case "input-type":
+        // attributeInputTypeCell is canvas-only; see AttributeInputTypeCell.tsx
+        return rowData?.inputType
+          ? attributeInputTypeCell(
+              rowData.inputType,
+              getAttributeInputTypeLabel(intl, rowData.inputType),
+            )
+          : readonlyTextCell(PLACEHOLDER);
       case "visible":
         return readonlyTextCell(translateBoolean(rowData?.visibleInStorefront, intl));
       case "use-in-faceted-search":

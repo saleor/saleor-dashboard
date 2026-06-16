@@ -1,5 +1,6 @@
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
+  getAttributeRowLabelProps,
   getErrorMessage,
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
@@ -32,7 +33,7 @@ export const SingleReferenceField = ({
   const selected = getSingleReferenceDisplayValue(attribute);
 
   return (
-    <BasicAttributeRow label={attribute.label}>
+    <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
       <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
         {selected ? (
           <>
