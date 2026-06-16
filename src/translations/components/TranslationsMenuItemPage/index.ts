@@ -1,2 +1,1 @@
-export { default } from "./TranslationsMenuItemPage";
-export * from "./TranslationsMenuItemPage";
+export { TranslationsMenuItemPage } from "./TranslationsMenuItemPage";

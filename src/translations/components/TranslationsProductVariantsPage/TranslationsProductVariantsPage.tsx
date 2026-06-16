@@ -1,13 +1,18 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, type ProductVariantTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsDetailLayout } from "@dashboard/translations/components/TranslationsDetailLayout/TranslationsDetailLayout";
+import { isAttributeValueTranslationField } from "@dashboard/translations/translationFieldRouting";
 import {
-  TranslationInputFieldName,
+  createAttributeValuesSection,
+  createSingleNameSection,
+} from "@dashboard/translations/translationSectionBuilders";
+import {
+  type TranslationField,
   type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
 import {
@@ -18,38 +23,80 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
-import TranslationFields from "../TranslationFields";
 
-interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
-  data: ProductVariantTranslationFragment;
+interface TranslationsProductVariantsPageProps extends TranslationsEntitiesPageProps {
+  data: ProductVariantTranslationFragment | null;
   productId: string;
   variantId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage = ({
+export const TranslationsProductVariantsPage = ({
   translationId,
   activeField,
+  bulk,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
+  fieldErrors,
   productId,
   variantId,
+  onBulkChange,
+  onBulkSubmit,
+  onClearFieldError,
+  onClearFieldErrors,
   onDiscard,
   onEdit,
   onSubmit,
   onAttributeValueSubmit,
-}: TranslationsProductsPageProps) => {
+}: TranslationsProductVariantsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const sections = useMemo(() => {
+    const variantSections = [
+      createSingleNameSection(
+        intl,
+        {
+          name: data?.name,
+          translationName: data?.translation?.name,
+        },
+        {
+          nameLabel: intl.formatMessage({
+            id: "T1f2Yl",
+            defaultMessage: "Variant Name",
+          }),
+        },
+      ),
+    ];
+
+    if (data?.attributeValues?.length > 0) {
+      variantSections.push(
+        createAttributeValuesSection(
+          intl,
+          mapAttributeValuesToTranslationFields(data.attributeValues, intl),
+        ),
+      );
+    }
+
+    return variantSections;
+  }, [data, intl]);
+
+  const handleSubmit = (field: TranslationField, submitData) => {
+    if (isAttributeValueTranslationField(field, sections)) {
+      return onAttributeValueSubmit(field, submitData);
+    }
+
+    return onSubmit(field, submitData);
+  };
 
   return (
-    <>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={bulk}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
@@ -87,50 +134,27 @@ const TranslationsProductsPage = ({
           />
         </Box>
       </TopNav>
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.generalInformations)}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "T1f2Yl",
-              defaultMessage: "Variant Name",
-            }),
-            name: TranslationInputFieldName.name,
-            translation: data?.translation?.name || null,
-            type: "short",
-            value: data?.name,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-      <CardSpacer />
-      {data?.attributeValues?.length > 0 && (
-        <>
-          <TranslationFields
-            activeField={activeField}
-            disabled={disabled}
-            initialState={true}
-            title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
-            saveButtonState={saveButtonState}
-            richTextResetKey={languageCode}
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={onAttributeValueSubmit}
-          />
-          <CardSpacer />
-        </>
-      )}
-    </>
+      <DetailPageLayout.Content>
+        <TranslationsDetailLayout
+          sections={sections}
+          activeField={activeField}
+          bulk={bulk}
+          disabled={disabled}
+          languageCode={languageCode}
+          languages={languages}
+          saveButtonState={saveButtonState}
+          fieldErrors={fieldErrors}
+          onBulkChange={onBulkChange}
+          onBulkSubmit={onBulkSubmit}
+          onClearFieldError={onClearFieldError}
+          onClearFieldErrors={onClearFieldErrors}
+          onDiscard={onDiscard}
+          onEdit={onEdit}
+          onSubmit={handleSubmit}
+        />
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
 
-TranslationsProductsPage.displayName = "TranslationsProductsPage";
-export default TranslationsProductsPage;
+TranslationsProductVariantsPage.displayName = "TranslationsProductVariantsPage";

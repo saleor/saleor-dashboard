@@ -1,0 +1,20 @@
+.columnHeaderRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.fieldRows {
+  display: flex;
+  flex-direction: column;
+  /* Room for Editor.js inline toolbar / conversion dropdown on the last row */
+  padding-bottom: 72px;
+}
+
+@media (max-width: 768px) {
+  .columnHeaderRow {
+    display: none;
+  }
+}

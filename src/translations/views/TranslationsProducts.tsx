@@ -1,27 +1,17 @@
-// @ts-strict-ignore
 import {
   type LanguageCodeEnum,
+  type ProductTranslationFragment,
   useProductTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdateProductTranslationsMutation,
 } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { getMultipleUrlValues, stringifyQs } from "@dashboard/utils/urls";
-import { type OutputData } from "@editorjs/editorjs";
-import { useIntl } from "react-intl";
 
-import { extractMutationErrors, maybe } from "../../misc";
-import { TranslationsProductsPage } from "../components/TranslationsProductsPage";
-import { type TranslationField, type TranslationInputFieldName } from "../types";
-import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
+import { TranslationsProductsPage } from "../components/TranslationsProductsPage/TranslationsProductsPage";
+import { useTranslationEntityView } from "../hooks/useTranslationEntityView";
+import { type TranslationDetailQueryParams } from "../translationQueryParams";
 
-type HandleSubmitAttributeValue = OutputData | string;
+export interface TranslationsProductsQueryParams extends TranslationDetailQueryParams {}
 
-export interface TranslationsProductsQueryParams {
-  activeField: string;
-}
 interface TranslationsProductsProps {
   id: string;
   languageCode: LanguageCodeEnum;
@@ -29,129 +19,31 @@ interface TranslationsProductsProps {
 }
 
 const TranslationsProducts = ({ id, languageCode, params }: TranslationsProductsProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
-  const shop = useShop();
-  const intl = useIntl();
   const productTranslations = useProductTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-  const onUpdate = (errors: unknown[]) => {
-    if (errors.length === 0) {
-      productTranslations.refetch();
-      notify({
-        status: "success",
-        text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-      });
-    }
-  };
-  const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
-    onCompleted: data => onUpdate(data.productTranslate.errors),
+  const entityMutation = useUpdateProductTranslationsMutation();
+  const attributeValueMutation = useUpdateAttributeValueTranslationsMutation();
+  const viewProps = useTranslationEntityView<ProductTranslationFragment>({
+    id,
+    languageCode,
+    params,
+    translatableContentTypename: "ProductTranslatableContent",
+    detailsQuery: productTranslations,
+    entityMutation,
+    attributeValueMutation,
+    multiFieldNavigation: true,
   });
-  const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
-  });
-  const onEdit = (field: string | string[]) =>
-    navigate(
-      "?" +
-        stringifyQs(
-          {
-            activeField: field,
-          },
-          "repeat",
-        ),
-      { replace: true },
-    );
-  const onDiscard = (field?: string) => {
-    if (!field) {
-      return navigate("?", { replace: true });
-    }
-
-    const activeFields = getMultipleUrlValues(new URL(window.location.href).search, "activeField");
-
-    navigate(
-      "?" +
-        stringifyQs(
-          {
-            activeField: activeFields.filter(f => f !== field),
-          },
-          "repeat",
-        ),
-      { replace: true },
-    );
-  };
-
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) => {
-    return extractMutationErrors(
-      updateTranslations({
-        variables: {
-          id,
-          input: getParsedTranslationInputData({
-            data,
-            fieldName,
-          }),
-          language: languageCode,
-        },
-      }),
-    ).then(errors => {
-      if (errors.length === 0) {
-        const activeFields = getMultipleUrlValues(
-          new URL(window.location.href).search,
-          "activeField",
-        );
-
-        const newActiveFields = activeFields.filter(f => f !== fieldName);
-
-        navigate(
-          "?" +
-            stringifyQs(
-              {
-                activeField: newActiveFields,
-              },
-              "repeat",
-            ),
-          { replace: true },
-        );
-      }
-
-      return errors;
-    });
-  };
-  const handleAttributeValueSubmit = (
-    { id, type }: TranslationField<TranslationInputFieldName>,
-    data: HandleSubmitAttributeValue,
-  ) =>
-    extractMutationErrors(
-      updateAttributeValueTranslations({
-        variables: {
-          id,
-          input: getAttributeValueTranslationsInputData(type, data),
-          language: languageCode,
-        },
-      }),
-    );
-  const translation = productTranslations?.data?.translation;
 
   return (
     <TranslationsProductsPage
       translationId={id}
       productId={id}
-      activeField={params.activeField}
-      disabled={productTranslations.loading || updateTranslationsOpts.loading}
-      languageCode={languageCode}
-      languages={maybe(() => shop.languages, [])}
-      saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
-      onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={translation?.__typename === "ProductTranslatableContent" ? translation : null}
+      {...viewProps}
+      onAttributeValueSubmit={viewProps.onAttributeValueSubmit!}
     />
   );
 };
 
 TranslationsProducts.displayName = "TranslationsProducts";
-export default TranslationsProducts;
+export { TranslationsProducts };

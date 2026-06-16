@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
@@ -9,12 +8,19 @@ import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/g
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, type ProductTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsDetailLayout } from "@dashboard/translations/components/TranslationsDetailLayout/TranslationsDetailLayout";
 import { createProductTranslateFormPayloadEvent } from "@dashboard/translations/components/TranslationsProductsPage/create-product-translate-form-payload-event";
+import { isAttributeValueTranslationField } from "@dashboard/translations/translationFieldRouting";
+import {
+  createAttributeValuesSection,
+  createGeneralNameDescriptionSection,
+  createSeoTranslationSection,
+} from "@dashboard/translations/translationSectionBuilders";
 import {
   type TranslationField,
   TranslationInputFieldName,
+  type TranslationSectionConfig,
   type TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
 import {
@@ -25,16 +31,48 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
-import TranslationFields from "../TranslationFields";
 import { useTranslationProductFormAppResponse } from "./use-translation-product-form-app-response";
 import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
 
+interface ProductAppResponseFields {
+  productDescription?: string;
+  productName?: string;
+  seoDescription?: string;
+  seoName?: string;
+}
+
+const applyProductAppDraftsToSections = (
+  sections: TranslationSectionConfig[],
+  appResponseFields: ProductAppResponseFields,
+): TranslationSectionConfig[] =>
+  sections.map(section => ({
+    ...section,
+    fields: section.fields.map(field => {
+      const draftByFieldName: Record<string, string | undefined> = {
+        [TranslationInputFieldName.name]: appResponseFields.productName,
+        [TranslationInputFieldName.description]: appResponseFields.productDescription,
+        [TranslationInputFieldName.seoDescription]: appResponseFields.seoDescription,
+        [TranslationInputFieldName.seoTitle]: appResponseFields.seoName,
+      };
+      const draft = draftByFieldName[field.name];
+
+      if (!draft) {
+        return field;
+      }
+
+      return {
+        ...field,
+        editInitial: draft,
+      };
+    }),
+  }));
+
 interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
-  data: ProductTranslationFragment;
+  data: ProductTranslationFragment | null;
   productId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
@@ -43,11 +81,17 @@ export const TranslationsProductsPage = ({
   translationId,
   productId,
   activeField,
+  bulk,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
+  fieldErrors,
+  onBulkChange,
+  onBulkSubmit,
+  onClearFieldError,
+  onClearFieldErrors,
   onDiscard,
   onEdit,
   onSubmit,
@@ -70,10 +114,6 @@ export const TranslationsProductsPage = ({
     cachedProductSeoName,
     setCachedFormField,
   } = useTranslationsProductsDataCache();
-
-  /**
-   * Handle app response and trigger onEdit for dirty fields
-   */
   const { appResponseFields, resetKey } = useTranslationProductFormAppResponse({
     productData: data?.product,
     cachedProductDescription,
@@ -83,25 +123,73 @@ export const TranslationsProductsPage = ({
     onEdit,
   });
 
-  function handleValueChange(field: TranslationField, value: string): void {
-    if (field.name === "name") {
+  const sections = useMemo((): TranslationSectionConfig[] => {
+    const productSections: TranslationSectionConfig[] = [
+      createGeneralNameDescriptionSection(
+        intl,
+        {
+          description: data?.product?.description,
+          name: data?.product?.name,
+          translationDescription: data?.translation?.description ?? null,
+          translationName: data?.translation?.name ?? null,
+        },
+        {
+          descriptionLabel: intl.formatMessage({
+            id: "Q8Qw5B",
+            defaultMessage: "Description",
+          }),
+          nameLabel: intl.formatMessage({
+            id: "ZIc5lM",
+            defaultMessage: "Product Name",
+          }),
+        },
+      ),
+      createSeoTranslationSection(intl, {
+        seoDescription: data?.product?.seoDescription,
+        seoTitle: data?.product?.seoTitle,
+        translationSeoDescription: data?.translation?.seoDescription ?? null,
+        translationSeoTitle: data?.translation?.seoTitle ?? null,
+      }),
+    ];
+
+    if (data?.attributeValues?.length > 0) {
+      productSections.push(
+        createAttributeValuesSection(
+          intl,
+          mapAttributeValuesToTranslationFields(data.attributeValues, intl),
+        ),
+      );
+    }
+
+    return applyProductAppDraftsToSections(productSections, appResponseFields);
+  }, [appResponseFields, data, intl]);
+
+  const handleValueChange = (field: TranslationField, value: string): void => {
+    if (field.name === TranslationInputFieldName.name) {
       setCachedFormField("productName", value);
     }
 
-    if (field.name === "description") {
+    if (field.name === TranslationInputFieldName.description) {
       setCachedFormField("productDescription", value);
     }
 
-    if (field.name === "seoDescription") {
+    if (field.name === TranslationInputFieldName.seoDescription) {
       setCachedFormField("seoDescription", value);
     }
 
-    if (field.name === "seoTitle") {
+    if (field.name === TranslationInputFieldName.seoTitle) {
       setCachedFormField("seoName", value);
     }
-  }
+  };
 
-  // Emit data to app
+  const handleSubmit = (field: TranslationField, submitData) => {
+    if (isAttributeValueTranslationField(field, sections)) {
+      return onAttributeValueSubmit(field, submitData);
+    }
+
+    return onSubmit(field, submitData);
+  };
+
   useEffect(() => {
     if (active && data?.product) {
       attachFormState(
@@ -124,7 +212,7 @@ export const TranslationsProductsPage = ({
   }, [activeField]);
 
   return (
-    <DetailPageLayout gridTemplateColumns={1}>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={bulk}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
@@ -177,98 +265,25 @@ export const TranslationsProductsPage = ({
         </Box>
       </TopNav>
       <DetailPageLayout.Content>
-        <TranslationFields
-          onValueChange={handleValueChange}
+        <TranslationsDetailLayout
+          sections={sections}
           activeField={activeField}
+          bulk={bulk}
           disabled={disabled}
-          initialState={true}
-          title={intl.formatMessage(commonMessages.generalInformations)}
-          fields={[
-            {
-              displayName: intl.formatMessage({
-                id: "ZIc5lM",
-                defaultMessage: "Product Name",
-              }),
-              name: TranslationInputFieldName.name,
-              translation: (appResponseFields.productName ?? data?.translation?.name) || null,
-              type: "short",
-              value: data?.product?.name,
-            },
-            {
-              displayName: intl.formatMessage({
-                id: "Q8Qw5B",
-                defaultMessage: "Description",
-              }),
-              name: TranslationInputFieldName.description,
-              translation:
-                (appResponseFields.productDescription ?? data?.translation?.description) || null,
-              type: "rich",
-              value: data?.product?.description,
-            },
-          ]}
+          languageCode={languageCode}
+          languages={languages}
+          richTextResetKey={`${languageCode}_${resetKey.current}`}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
-          onEdit={onEdit}
+          fieldErrors={fieldErrors}
+          onBulkChange={onBulkChange}
+          onBulkSubmit={onBulkSubmit}
+          onClearFieldError={onClearFieldError}
+          onClearFieldErrors={onClearFieldErrors}
           onDiscard={onDiscard}
-          onSubmit={onSubmit}
-        />
-        <CardSpacer />
-        <TranslationFields
+          onEdit={onEdit}
+          onSubmit={handleSubmit}
           onValueChange={handleValueChange}
-          activeField={activeField}
-          disabled={disabled}
-          initialState={true}
-          title={intl.formatMessage({
-            id: "TGX4T1",
-            defaultMessage: "Search Engine Preview",
-          })}
-          fields={[
-            {
-              displayName: intl.formatMessage({
-                id: "HlEpii",
-                defaultMessage: "Search Engine Title",
-              }),
-              name: TranslationInputFieldName.seoTitle,
-              translation: (appResponseFields.seoName ?? data?.translation?.seoTitle) || null,
-              type: "short",
-              value: data?.product?.seoTitle,
-            },
-            {
-              displayName: intl.formatMessage({
-                id: "US3IPU",
-                defaultMessage: "Search Engine Description",
-              }),
-              name: TranslationInputFieldName.seoDescription,
-              translation:
-                (appResponseFields.seoDescription ?? data?.translation?.seoDescription) || null,
-              type: "long",
-              value: data?.product?.seoDescription,
-            },
-          ]}
-          saveButtonState={saveButtonState}
-          richTextResetKey={languageCode + resetKey.current}
-          onEdit={onEdit}
-          onDiscard={onDiscard}
-          onSubmit={onSubmit}
         />
-        <CardSpacer />
-        {data?.attributeValues?.length > 0 && (
-          <>
-            <TranslationFields
-              activeField={activeField}
-              disabled={disabled}
-              initialState={true}
-              title={intl.formatMessage(commonMessages.translationAttributes)}
-              fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
-              saveButtonState={saveButtonState}
-              richTextResetKey={languageCode + resetKey.current}
-              onEdit={onEdit}
-              onDiscard={onDiscard}
-              onSubmit={onAttributeValueSubmit}
-            />
-            <CardSpacer />
-          </>
-        )}
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );
