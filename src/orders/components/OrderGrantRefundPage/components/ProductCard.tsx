@@ -6,8 +6,10 @@ import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { ReasonReferenceModal } from "../../ReasonReferenceModal/ReasonReferenceModal";
 import { useGrantRefundContext } from "../context";
 import { grantRefundPageMessages, productCardMessages } from "../messages";
 import { useProductsCardStyles } from "../styles";
@@ -20,11 +22,14 @@ interface ProductsCardProps {
 
 export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
   const classes = useProductsCardStyles();
-  const { dispatch, state } = useGrantRefundContext();
+  const { dispatch, state, reasonReferenceTypeId } = useGrantRefundContext();
+  const [editedReasonLineId, setEditedReasonLineId] = useState<string | null>(null);
 
   if (lines.length === 0) {
     return null;
   }
+
+  const editedReasonLine = editedReasonLineId ? state.lines.get(editedReasonLineId) : undefined;
 
   const getHandleAmountChange =
     (line: OrderLineGrantRefundFragment) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +83,9 @@ export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
           <TableCell className={classes.colQuantityInput}>
             <FormattedMessage {...productCardMessages.qtyToRefund} />
           </TableCell>
+          <TableCell>
+            <FormattedMessage {...productCardMessages.reason} />
+          </TableCell>
         </TableHead>
         <TableBody>
           {renderCollection(
@@ -120,6 +128,21 @@ export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
                       }
                     />
                   </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="secondary"
+                      whiteSpace="nowrap"
+                      data-test-id={"lineReasonButton" + line.id}
+                      disabled={!stateLine?.selectedQuantity}
+                      onClick={() => setEditedReasonLineId(line.id)}
+                    >
+                      <FormattedMessage
+                        {...(stateLine?.reason || stateLine?.reasonReference
+                          ? productCardMessages.editReason
+                          : productCardMessages.addReason)}
+                      />
+                    </Button>
+                  </TableCell>
                 </TableRowLink>
               );
             },
@@ -133,6 +156,23 @@ export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
           )}
         </TableBody>
       </Table>
+      <ReasonReferenceModal
+        open={editedReasonLineId !== null}
+        reason={editedReasonLine?.reason ?? ""}
+        reasonReference={editedReasonLine?.reasonReference ?? ""}
+        referenceModelTypeId={reasonReferenceTypeId}
+        onClose={() => setEditedReasonLineId(null)}
+        onConfirm={({ reason, reasonReference }) => {
+          if (editedReasonLineId) {
+            dispatch({
+              type: "setLineReason",
+              lineId: editedReasonLineId,
+              reason,
+              reasonReference,
+            });
+          }
+        }}
+      />
     </>
   );
 };

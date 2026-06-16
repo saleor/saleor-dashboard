@@ -16,6 +16,16 @@ export const grantRefundPageMessages = defineMessages({
       "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order.",
     id: "Ys86kI",
   },
+  structuredReasonForRefund: {
+    defaultMessage: "Structured reason for refund",
+    id: "0fgK7h",
+    description: "grant refund, structured reason reference select label",
+  },
+  none: {
+    defaultMessage: "None",
+    id: "qR2Nuz",
+    description: "grant refund, empty structured reason option",
+  },
   reasonForRefund: {
     defaultMessage: "Reason for refund",
     id: "cBVHN5",
@@ -97,5 +107,20 @@ export const productCardMessages = defineMessages({
     defaultMessage: "Unit price",
     id: "KWXwFo",
     description: "grant refund table, column header",
+  },
+  reason: {
+    defaultMessage: "Reason",
+    id: "bdScE/",
+    description: "grant refund table, column header",
+  },
+  addReason: {
+    defaultMessage: "Add reason",
+    id: "PxvG+u",
+    description: "grant refund table, add reason button",
+  },
+  editReason: {
+    defaultMessage: "Edit reason",
+    id: "U/L97C",
+    description: "grant refund table, edit reason button",
   },
 });

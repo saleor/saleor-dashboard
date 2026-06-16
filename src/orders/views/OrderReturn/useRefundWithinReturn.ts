@@ -23,6 +23,8 @@ interface UseReturnWithinReturnResult {
 export interface GrantRefundInputLine {
   id: string;
   quantity: number;
+  reason?: string | null;
+  reasonReference?: string | null;
 }
 
 export function useRefundWithinReturn({

@@ -9,11 +9,13 @@ import {
   type OrderDetailsGrantedRefundFragment,
   type OrderDetailsGrantRefundFragment,
   type OrderLineGrantRefundFragment,
+  useModelsOfTypeQuery,
+  useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -61,6 +63,23 @@ const OrderGrantRefundPage = ({
   const grantedRefund = useMemo(() => getGrantedRefundData(initialData), [initialData]);
   const unfulfilledLines = (order?.lines ?? []).filter(line => line.quantityToFulfill > 0);
   const [state, dispatch] = React.useReducer(grantRefundReducer, grantRefundDefaultState);
+
+  const { data: refundSettingsData } = useRefundSettingsQuery();
+  const reasonReferenceTypeId = refundSettingsData?.refundSettings.reasonReferenceType?.id ?? "";
+  const { data: reasonModelsData } = useModelsOfTypeQuery({
+    variables: { pageTypeId: reasonReferenceTypeId },
+    skip: !reasonReferenceTypeId,
+  });
+  const reasonReferenceOptions = useMemo(
+    () => [
+      { value: "", label: intl.formatMessage(grantRefundPageMessages.none) },
+      ...(reasonModelsData?.pages?.edges ?? []).map(edge => ({
+        value: edge.node.id,
+        label: edge.node.title,
+      })),
+    ],
+    [reasonModelsData, intl],
+  );
 
   useEffect(() => {
     if (grantedRefund) {
@@ -140,6 +159,7 @@ const OrderGrantRefundPage = ({
             state,
             form: { change, data, set },
             totalSelectedPrice,
+            reasonReferenceTypeId,
           }}
         >
           <DetailPageLayout.Content>
@@ -187,6 +207,24 @@ const OrderGrantRefundPage = ({
                   amount={order?.shippingPrice?.gross}
                   canRefundShipping={canRefundShipping}
                 />
+
+                {!!reasonReferenceTypeId && (
+                  <Box __maxWidth="400px">
+                    <Text fontWeight="medium" display="block" marginBottom={2}>
+                      {intl.formatMessage(grantRefundPageMessages.structuredReasonForRefund)}
+                    </Text>
+                    <Select
+                      data-test-id="refundReasonReferenceSelect"
+                      disabled={loading}
+                      options={reasonReferenceOptions}
+                      value={data.reasonReference}
+                      onChange={value => {
+                        setIsDirty(true);
+                        set({ reasonReference: value as string });
+                      }}
+                    />
+                  </Box>
+                )}
 
                 <Box display="flex" gap={3}>
                   <Box __flexGrow={2} flexBasis="0">

@@ -8,6 +8,7 @@ import {
   type OrderErrorFragment,
   type OrderGrantRefundCreateErrorFragment,
   type TransactionRequestRefundForGrantedRefundErrorFragment,
+  useReturnSettingsQuery,
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
@@ -18,6 +19,7 @@ import { useIntl } from "react-intl";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
 import { TransactionSubmitCard } from "./components";
+import { OrderReturnReasonCard } from "./components/OrderReturnReasonCard/OrderReturnReasonCard";
 import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
 import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
 import OrderRefundForm, { type OrderRefundSubmitData } from "./form";
@@ -52,6 +54,8 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   } = props;
   const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
   const intl = useIntl();
+  const { data: returnSettingsData } = useReturnSettingsQuery();
+  const reasonReferenceTypeId = returnSettingsData?.returnSettings.reasonReferenceType?.id ?? "";
 
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
@@ -75,6 +79,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
                   onSetMaxQuantity={handlers.handleSetMaximalUnfulfiledItemsQuantities}
                   onChangeSelected={handlers.changeItemsToBeReplaced}
+                  lineReasons={data.lineReasons}
+                  onChangeLineReason={handlers.changeLineReason}
+                  reasonReferenceTypeId={reasonReferenceTypeId}
                 />
                 <CardSpacer />
               </>
@@ -93,6 +100,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeQuantity={handlers.changeWaitingItemsQuantity}
                     onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={data.lineReasons}
+                    onChangeLineReason={handlers.changeLineReason}
+                    reasonReferenceTypeId={reasonReferenceTypeId}
                   />
                   <CardSpacer />
                 </Fragment>
@@ -112,11 +122,24 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                     onChangeQuantity={handlers.changeFulfiledItemsQuantity}
                     onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
                     onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={data.lineReasons}
+                    onChangeLineReason={handlers.changeLineReason}
+                    reasonReferenceTypeId={reasonReferenceTypeId}
                   />
                   <CardSpacer />
                 </Fragment>
               ),
             )}
+            <OrderReturnReasonCard
+              reason={data.reason}
+              reasonReference={data.reasonReference}
+              reasonReferenceTypeId={reasonReferenceTypeId}
+              disabled={loading}
+              onChangeReason={value => change({ target: { name: "reason", value } })}
+              onChangeReasonReference={value =>
+                change({ target: { name: "reasonReference", value } })
+              }
+            />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             {orderHasTransactions(order) ? (

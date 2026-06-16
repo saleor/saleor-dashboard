@@ -39,6 +39,8 @@ export const prepareLineData = (lines: Map<string, ReducerOrderLine>): Line[] =>
     .map(([, line]) => ({
       id: line.orderLineId,
       quantity: line.selectedQuantity,
+      reason: line.reason || undefined,
+      reasonReference: line.reasonReference || undefined,
     }));
 
 export const getLineAvailableQuantity = ({
@@ -72,6 +74,7 @@ export const getLineAvailableQuantity = ({
 export interface OrderGrantRefundData {
   amount: number;
   reason: string;
+  reasonReference: string;
   lines: OrderGrantRefundCreateLineInput[];
   grantRefundForShipping: boolean;
   grantRefundId: string;
@@ -88,6 +91,7 @@ export const getGrantedRefundData = (
   return {
     grantRefundId: grantedRefund.id,
     reason: grantedRefund?.reason ?? "",
+    reasonReference: grantedRefund?.reasonReference?.id ?? "",
     amount: grantedRefund.amount.amount,
     grantRefundForShipping: grantedRefund.shippingCostsIncluded,
     lines: (grantedRefund?.lines ?? []).map(line => ({
