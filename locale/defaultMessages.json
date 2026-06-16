@@ -3283,10 +3283,6 @@
     "context": "page header",
     "string": "Add Collection"
   },
-  "Fxahwt": {
-    "context": "modal title",
-    "string": "Add refund reason for this line"
-  },
   "Fyd+zC": {
     "string": "Matches the exact phrase only"
   },
@@ -5083,10 +5079,6 @@
     "context": "save preset, header",
     "string": "Save view preset"
   },
-  "PALiyV": {
-    "context": "modal title",
-    "string": "Edit refund reason for this line"
-  },
   "PAqicb": {
     "context": "button",
     "string": "Cancel order"
@@ -6613,6 +6605,10 @@
   },
   "XOkUxQ": {
     "string": "Product unavailable in voucher channels"
+  },
+  "XP/41+": {
+    "context": "collapse refunded line sub-rows",
+    "string": "Show less"
   },
   "XP5btK": {
     "context": "product variant metadata dialog header",
@@ -10348,6 +10344,10 @@
   "rQOS7K": {
     "context": "status label active",
     "string": "Active"
+  },
+  "rTBpeo": {
+    "context": "expand refunded line sub-rows",
+    "string": "Show all {count} lines"
   },
   "rVIlBs": {
     "context": "page header with order number",

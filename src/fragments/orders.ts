@@ -876,6 +876,11 @@ export const fragmentOrderGrantedRefunds = gql`
       }
       orderLine {
         id
+        productName
+        variantName
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }

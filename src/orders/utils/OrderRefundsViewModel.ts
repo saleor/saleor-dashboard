@@ -11,7 +11,12 @@ import {
 } from "@dashboard/graphql";
 import { getUserInitials } from "@dashboard/misc";
 
-export type OrderRefundLineReason = {
+export type OrderRefundLine = {
+  id: string;
+  quantity: number;
+  productName: string;
+  variantName: string | null;
+  thumbnailUrl: string | null;
   reason: string | null;
   reasonType: string | null;
 };
@@ -27,7 +32,8 @@ export type OrderRefundDisplay = {
   };
   reasonNote: string | null;
   reasonType: string | null;
-  lineReasons: OrderRefundLineReason[];
+  // Per-line refund details, populated for granted (standard) refunds only.
+  lines: OrderRefundLine[];
   createdAt: string;
   user: {
     email: string;
@@ -164,7 +170,7 @@ export abstract class OrderRefundsViewModel {
         ),
         reasonNote: null,
         reasonType: null,
-        lineReasons: [],
+        lines: [],
         creator: this.getCreator(latestEvent.createdBy),
       };
 
@@ -214,9 +220,14 @@ export abstract class OrderRefundsViewModel {
       type: "standard",
       reasonType: refund.reasonReference?.title ?? null,
       reasonNote: refund.reason,
-      lineReasons: (refund.lines ?? [])
-        .filter(line => line.reason || line.reasonReference)
+      lines: (refund.lines ?? [])
+        .filter(line => line.quantity > 0)
         .map(line => ({
+          id: line.id,
+          quantity: line.quantity,
+          productName: line.orderLine.productName,
+          variantName: line.orderLine.variantName ?? null,
+          thumbnailUrl: line.orderLine.thumbnail?.url ?? null,
           reason: line.reason ?? null,
           reasonType: line.reasonReference?.title ?? null,
         })),

@@ -26,9 +26,9 @@ import {
 } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ReasonReferenceModal } from "../ReasonReferenceModal/ReasonReferenceModal";
 import { ModelsPicker } from "./components/ModelsPicker/ModelsPicker";
 import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
-import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
   type OrderRefundTransactionDatagridError,
@@ -76,6 +76,7 @@ interface OrderTransactionRefundPageProps {
 export interface LineToRefund {
   quantity: number | string;
   reason: string;
+  reasonReference: string;
 }
 
 export interface OrderTransactionRefundPageFormData {
@@ -221,9 +222,10 @@ const OrderTransactionRefundPage = ({
     });
   };
 
-  const onReasonChange = (reason: string, index: number) => {
+  const onReasonChange = (reason: string, reasonReference: string, index: number) => {
     handleReasonChange({
       reason,
+      reasonReference,
       index,
       linesToRefund,
       refundFieldsUpdate,
@@ -342,12 +344,14 @@ const OrderTransactionRefundPage = ({
             {submitBehavior.submitLabels.confirm}
           </Savebar.ConfirmButton>
         </Savebar>
-        <OrderTransactionReasonModal
+        <ReasonReferenceModal
           open={editedRefundLineIndex !== null}
-          reason={linesToRefund[editedRefundLineIndex!]?.reason}
+          reason={linesToRefund[editedRefundLineIndex!]?.reason ?? ""}
+          reasonReference={linesToRefund[editedRefundLineIndex!]?.reasonReference ?? ""}
+          referenceModelTypeId={modelForRefundReasonRefId ?? ""}
           onClose={() => setEditedRefundLineIndex(null)}
-          onConfirm={(reason: string) => {
-            onReasonChange(reason, editedRefundLineIndex!);
+          onConfirm={({ reason, reasonReference }) => {
+            onReasonChange(reason, reasonReference, editedRefundLineIndex!);
           }}
         />
       </Box>

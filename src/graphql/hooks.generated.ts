@@ -2108,6 +2108,11 @@ export const OrderGrantedRefundFragmentDoc = gql`
     }
     orderLine {
       id
+      productName
+      variantName
+      thumbnail(size: 64) {
+        url
+      }
     }
   }
 }

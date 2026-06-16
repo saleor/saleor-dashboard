@@ -3838,6 +3838,12 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },
@@ -3871,6 +3877,12 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },
