@@ -121,6 +121,7 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   isFilterPresetOpen: false,
   setFilterPresetOpen: fn(),
   presets: [],
+  builtInPresetCount: 0,
   selectedPreset: 0,
   onPresetChange: fn(),
   onPresetDelete: fn(),

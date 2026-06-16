@@ -22,7 +22,10 @@ export interface AttributeUpdateComparableData {
   visibleInStorefront: boolean;
 }
 
-export function getAttributePageInitialForm(attribute?: Attribute | null): AttributePageFormData {
+export function getAttributePageInitialForm(
+  attribute?: Attribute | null,
+  defaultType?: AttributeTypeEnum,
+): AttributePageFormData {
   if (!attribute) {
     return {
       availableInGrid: true,
@@ -35,7 +38,7 @@ export function getAttributePageInitialForm(attribute?: Attribute | null): Attri
       privateMetadata: [],
       slug: "",
       storefrontSearchPosition: "",
-      type: AttributeTypeEnum.PRODUCT_TYPE,
+      type: defaultType ?? AttributeTypeEnum.PRODUCT_TYPE,
       valueRequired: true,
       visibleInStorefront: true,
       unit: undefined,

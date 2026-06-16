@@ -5,7 +5,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
-import { type AttributeFragment } from "@dashboard/graphql";
+import { type AttributeFragment, type AttributeTypeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
@@ -22,6 +22,8 @@ interface AttributeListPageProps
     SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];
   selectedAttributesIds: string[];
+  builtInFilterPresets?: string[];
+  defaultAttributeType?: AttributeTypeEnum;
   onAttributesDelete: () => void;
   onSelectAttributesIds: (rows: number[], clearSelection: () => void) => void;
 }
@@ -36,6 +38,8 @@ const AttributeListPage = ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   filterPresets,
+  builtInFilterPresets = [],
+  defaultAttributeType,
   selectedFilterPreset,
   onAttributesDelete,
   selectedAttributesIds,
@@ -60,6 +64,7 @@ const AttributeListPage = ({
               onSelect={onFilterPresetChange}
               onRemove={onFilterPresetDelete}
               onUpdate={onFilterPresetUpdate}
+              builtInPresets={builtInFilterPresets}
               savedPresets={filterPresets}
               activePreset={selectedFilterPreset}
               onSelectAll={onFilterPresetsAll}
@@ -75,7 +80,13 @@ const AttributeListPage = ({
           </Box>
           <Box>
             <Button
-              onClick={() => navigate(attributeAddUrl())}
+              onClick={() =>
+                navigate(
+                  defaultAttributeType
+                    ? attributeAddUrl({ type: defaultAttributeType })
+                    : attributeAddUrl(),
+                )
+              }
               variant="primary"
               data-test-id="create-attribute-button"
             >

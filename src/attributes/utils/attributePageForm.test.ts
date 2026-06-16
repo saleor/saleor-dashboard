@@ -2,6 +2,7 @@ import { type AttributePageFormData } from "@dashboard/attributes/components/Att
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 
 import {
+  getAttributePageInitialForm,
   getAttributeUpdateComparableData,
   isAttributeUpdateFormPristine,
 } from "./attributePageForm";
@@ -23,6 +24,24 @@ const baseFormData: AttributePageFormData = {
   unit: null,
   referenceTypes: [],
 };
+
+describe("getAttributePageInitialForm", () => {
+  it("should default to product type when creating without default type", () => {
+    // Arrange & Act
+    const form = getAttributePageInitialForm(null);
+
+    // Assert
+    expect(form.type).toBe(AttributeTypeEnum.PRODUCT_TYPE);
+  });
+
+  it("should use provided default type when creating", () => {
+    // Arrange & Act
+    const form = getAttributePageInitialForm(null, AttributeTypeEnum.PAGE_TYPE);
+
+    // Assert
+    expect(form.type).toBe(AttributeTypeEnum.PAGE_TYPE);
+  });
+});
 
 describe("getAttributeUpdateComparableData", () => {
   it("normalizes slug from name when slug is empty", () => {

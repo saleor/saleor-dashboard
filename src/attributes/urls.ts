@@ -9,7 +9,7 @@ import {
   FilterElement,
 } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { prepareStructure } from "@dashboard/components/ConditionalFilter/ValueProvider/utils";
-import { type AttributeTypeEnum } from "@dashboard/graphql";
+import { AttributeTypeEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { stringify } from "qs";
 import urlJoin from "url-join";
@@ -80,13 +80,51 @@ export const attributeListUrlWithAttributeType = (attributeType?: AttributeTypeE
   return urlJoin(attributeListPath, "?" + stringify(queryParams));
 };
 
+const builtInAttributeTypePresetTabIndex: Record<AttributeTypeEnum, number> = {
+  [AttributeTypeEnum.PRODUCT_TYPE]: 1,
+  [AttributeTypeEnum.PAGE_TYPE]: 2,
+};
+
+export const getAttributeTypeFromBuiltInPresetTab = (
+  activeTab: number | undefined,
+): AttributeTypeEnum | undefined => {
+  if (!activeTab) {
+    return undefined;
+  }
+
+  return (
+    Object.entries(builtInAttributeTypePresetTabIndex) as Array<[AttributeTypeEnum, number]>
+  ).find(([, tabIndex]) => tabIndex === activeTab)?.[0];
+};
+
+/**
+ * Builds the attribute list URL for a built-in attribute class preset.
+ */
+export const attributeListUrlWithAttributeTypePreset = (attributeType: AttributeTypeEnum) =>
+  `${attributeListUrlWithAttributeType(attributeType)}&activeTab=${builtInAttributeTypePresetTabIndex[attributeType]}`;
+
 export type AttributeAddUrlDialog =
   | "add-value"
   | "edit-value"
   | "remove-value"
   | "remove-values"
   | "assign-reference-types";
-export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> & SingleAction;
+export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> &
+  SingleAction & {
+    type?: AttributeTypeEnum;
+  };
+
+const attributeTypeValues = new Set<string>(Object.values(AttributeTypeEnum));
+
+export const parseAttributeTypeFromQueryParam = (
+  value: string | undefined,
+): AttributeTypeEnum | undefined => {
+  if (value && attributeTypeValues.has(value)) {
+    return value as AttributeTypeEnum;
+  }
+
+  return undefined;
+};
 export const attributeAddPath = urlJoin(attributeSection, "add");
 export const attributeAddUrl = (params?: AttributeAddUrlQueryParams) =>
   attributeAddPath + "?" + stringifyQs(params);

@@ -117,6 +117,7 @@ interface AttributePageProps {
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
   children: (data: AttributePageFormData) => React.ReactNode;
+  defaultAttributeType?: AttributeTypeEnum;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -159,6 +160,7 @@ const AttributePage = ({
   searchQuery,
   onSearchChange,
   children,
+  defaultAttributeType,
 }: AttributePageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -167,7 +169,10 @@ const AttributePage = ({
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const isCreate = attribute === null;
-  const initialForm = useMemo(() => getAttributePageInitialForm(attribute), [attribute]);
+  const initialForm = useMemo(
+    () => getAttributePageInitialForm(attribute, defaultAttributeType),
+    [attribute, defaultAttributeType],
+  );
   const checkIfSaveIsDisabled = useCallback(
     (data: AttributePageFormData) => {
       if (disabled) {
