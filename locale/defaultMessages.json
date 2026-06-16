@@ -6780,6 +6780,10 @@
     "context": "automatic completion delay input label",
     "string": "Delay before completion (minutes). Default is 30."
   },
+  "YNUHeb": {
+    "context": "attribute metadata dialog header",
+    "string": "Attribute Metadata"
+  },
   "YPCB7b": {
     "context": "label for fixed amount discount type",
     "string": "Fixed amount"
@@ -6976,6 +6980,10 @@
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "ZNnEEs": {
+    "context": "attribute type",
+    "string": "Model Attribute"
   },
   "ZOamBQ": {
     "context": "charge status overcharged",
@@ -8649,6 +8657,10 @@
     "context": "password login mode option description",
     "string": "All users can log in with a password"
   },
+  "ij+L2R": {
+    "context": "attribute class scope link in attribute header, opens filtered attribute list",
+    "string": "View {attributeClassName} attributes"
+  },
   "ij3dWD": {
     "context": "custom extension page create, error message",
     "string": "Extension name is required"
@@ -8808,6 +8820,10 @@
   "jhyt3I": {
     "context": "label for max capturable amount when partial authorization",
     "string": "Remaining max (authorized)"
+  },
+  "jiQ7vn": {
+    "context": "attribute input type column",
+    "string": "Input type"
   },
   "jiXbx5": {
     "context": "fulfillment status canceled",
@@ -9562,6 +9578,10 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
+  },
+  "nKZUy3": {
+    "context": "attribute detail page, top-bar metadata button tooltip",
+    "string": "Edit attribute metadata"
   },
   "nKwgxY": {
     "context": "select label",
@@ -10916,6 +10936,10 @@
     "context": "note about customer",
     "string": "Note"
   },
+  "uUZ2Z8": {
+    "context": "attribute class a11y label prefix",
+    "string": "Attribute class"
+  },
   "uX+Vg7": {
     "string": "Voucher updated"
   },
@@ -11039,9 +11063,6 @@
   "v17Lly": {
     "context": "label",
     "string": "Max Delivery Time"
-  },
-  "v1pNHW": {
-    "string": "Attribute Class"
   },
   "v1vJ77": {
     "string": "Edit rule"
@@ -11288,6 +11309,10 @@
     "context": "generate variants button",
     "string": "Generate variants"
   },
+  "vz1vWe": {
+    "context": "caption",
+    "string": "If enabled, customers can use this attribute to filter products in the storefront."
+  },
   "vz3yxp": {
     "string": "Channels permissions"
   },
@@ -11309,6 +11334,10 @@
   "w067gF": {
     "context": "refund section header",
     "string": "Refunds"
+  },
+  "w1puHO": {
+    "context": "caption",
+    "string": "If enabled, a value must be provided when this attribute is used."
   },
   "w2Cewo": {
     "string": "Search engine title"
@@ -11946,10 +11975,6 @@
   "zb1rmx": {
     "context": "alert message",
     "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
-  },
-  "zbJHl7": {
-    "context": "attribute type",
-    "string": "Content Attribute"
   },
   "zcyBm+": {
     "context": "tooltip title for undiscounted subtotal next to order subtotal",

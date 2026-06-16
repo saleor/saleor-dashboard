@@ -97,7 +97,8 @@ export type AttributeUrlDialog =
   | "remove"
   | "remove-value"
   | "remove-values"
-  | "assign-reference-types";
+  | "assign-reference-types"
+  | "view-metadata";
 export type AttributeUrlQueryParams = BulkAction & Dialog<AttributeUrlDialog> & SingleAction;
 export const attributePath = (id: string) => urlJoin(attributeSection, id);
 export const attributeUrl = (id: string, params?: AttributeUrlQueryParams) =>

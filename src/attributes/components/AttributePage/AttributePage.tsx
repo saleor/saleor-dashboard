@@ -2,6 +2,7 @@ import {
   AssignReferenceTypesDialog,
   type ReferenceTypes,
 } from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
+import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import {
   type AttributeAddUrlQueryParams,
   attributeListPath,
@@ -56,6 +57,7 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
+import { messages } from "./messages";
 import { AttributeDetailsTitle } from "./Title";
 
 interface AttributePageProps {
@@ -66,6 +68,7 @@ interface AttributePageProps {
   values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
   params: AttributeAddUrlQueryParams | AttributeUrlQueryParams;
   onDelete: () => void;
+  onShowMetadata?: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
@@ -110,6 +113,7 @@ const AttributePage = ({
   values,
   params,
   onDelete,
+  onShowMetadata,
   onSubmit,
   onValueAdd,
   onValueDelete,
@@ -256,7 +260,17 @@ const AttributePage = ({
                     />
                   )
                 }
+                actionsGap={3}
               >
+                {attribute !== null && onShowMetadata && (
+                  <TopNav.MetadataButton
+                    onClick={onShowMetadata}
+                    disabled={!attribute}
+                    data-test-id="show-attribute-metadata"
+                    title={intl.formatMessage(messages.editAttributeMetadata)}
+                    ripple={rippleAttributeViewOverhaul}
+                  />
+                )}
                 {canTranslate && (
                   <TranslationsButton
                     onClick={() =>
@@ -313,7 +327,9 @@ const AttributePage = ({
                     />
                   </>
                 )}
-                <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
+                {attribute === null && (
+                  <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
+                )}
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
                 {attribute === null && (

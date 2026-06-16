@@ -1,4 +1,5 @@
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
+import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
@@ -58,6 +59,7 @@ export const allRipples: Ripple[] = [
 
   // Attributes
   rippleAttributeValuesSearch,
+  rippleAttributeViewOverhaul,
 
   // ...
 
