@@ -15,6 +15,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Input type",
     description: "attribute input type column",
   },
+  attributeType: {
+    id: "cjaUrx",
+    defaultMessage: "Attribute type",
+    description: "attribute type column",
+  },
   visible: {
     id: "W75xMz",
     defaultMessage: "Visible in storefront",

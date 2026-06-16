@@ -7660,6 +7660,10 @@
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
   },
+  "cjaUrx": {
+    "context": "attribute type column",
+    "string": "Attribute type"
+  },
   "ckSjjv": {
     "string": "Too complex conditions to display, use playground to see details."
   },
