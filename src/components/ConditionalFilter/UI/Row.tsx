@@ -1,6 +1,11 @@
+import {
+  enrichAttributeComboboxOption,
+  enrichAttributeComboboxOptions,
+} from "@dashboard/components/AttributeInputTypeIcon/enrichAttributeComboboxOptions";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
+import { useMemo } from "react";
 
 import { getItemConstraint } from "./constrains";
 import { type ErrorLookup } from "./errors";
@@ -20,6 +25,14 @@ interface RowProps {
 export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowProps) => {
   const constrain = getItemConstraint(item.constraint);
   const isAttribute = item.isAttribute;
+  const attributeOptions = useMemo(
+    () => enrichAttributeComboboxOptions(item.availableAttributesList ?? []),
+    [item.availableAttributesList],
+  );
+  const selectedAttributeValue = useMemo(
+    () => (item.selectedAttribute ? enrichAttributeComboboxOption(item.selectedAttribute) : null),
+    [item.selectedAttribute],
+  );
 
   return (
     <Box
@@ -60,8 +73,8 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
       {isAttribute && (
         <DynamicCombobox
           data-test-id={`attribute-value-${index}`}
-          value={item.selectedAttribute ?? null}
-          options={item.availableAttributesList ?? []}
+          value={selectedAttributeValue}
+          options={attributeOptions}
           loading={item.attributeLoading}
           onChange={value => {
             if (!value) return;

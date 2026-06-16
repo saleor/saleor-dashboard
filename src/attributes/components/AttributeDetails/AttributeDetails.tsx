@@ -1,4 +1,5 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
+import { AttributeInputTypeOptionLabel } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeOptionLabel";
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
@@ -13,12 +14,15 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { type AttributePageFormData } from "../AttributePage";
-import { inputTypeMessages, messages } from "./messages";
+import { messages } from "./messages";
+
+const attributeInputTypeOptions = Object.values(AttributeInputTypeEnum);
 
 const entityTypeMessages = defineMessages({
   page: {
@@ -73,56 +77,14 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
     onUnitChange,
   } = props;
   const intl = useIntl();
-  const inputTypeChoices = [
-    {
-      label: intl.formatMessage(inputTypeMessages.dropdown),
-      value: AttributeInputTypeEnum.DROPDOWN,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.multiselect),
-      value: AttributeInputTypeEnum.MULTISELECT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.file),
-      value: AttributeInputTypeEnum.FILE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.references),
-      value: AttributeInputTypeEnum.REFERENCE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.singleReference),
-      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.plainText),
-      value: AttributeInputTypeEnum.PLAIN_TEXT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.richText),
-      value: AttributeInputTypeEnum.RICH_TEXT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.numeric),
-      value: AttributeInputTypeEnum.NUMERIC,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.boolean),
-      value: AttributeInputTypeEnum.BOOLEAN,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.date),
-      value: AttributeInputTypeEnum.DATE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.dateTime),
-      value: AttributeInputTypeEnum.DATE_TIME,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.swatch),
-      value: AttributeInputTypeEnum.SWATCH,
-    },
-  ];
+  const inputTypeChoices = useMemo(
+    () =>
+      attributeInputTypeOptions.map(inputType => ({
+        label: <AttributeInputTypeOptionLabel inputType={inputType} />,
+        value: inputType,
+      })),
+    [],
+  );
   const entityTypeChoices = [
     {
       label: intl.formatMessage(entityTypeMessages.page),

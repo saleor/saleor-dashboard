@@ -225,6 +225,7 @@ export const AvailableAttributeFragmentDoc = gql`
   id
   name
   slug
+  inputType
 }
     `;
 export const UserPermissionFragmentDoc = gql`

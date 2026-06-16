@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
+import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -142,7 +143,14 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
                       />
                     </TableCell>
                     <TableCell className={classes.colName} data-test-id="name">
-                      {maybe(() => attribute.name) ? attribute.name : <Skeleton />}
+                      {maybe(() => attribute.name) ? (
+                        <AttributeNameWithTypeIcon
+                          name={attribute.name}
+                          inputType={attribute.inputType}
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
                     </TableCell>
                     <TableCell className={classes.colSlug} data-test-id="slug">
                       {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}

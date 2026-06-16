@@ -87,5 +87,6 @@ export const availableAttributeFragment = gql`
     id
     name
     slug
+    inputType
   }
 `;
