@@ -1,6 +1,7 @@
 import { AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { LIST_INSET_ROW_MARKER_WIDTH } from "@dashboard/components/Datagrid/const";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -100,6 +101,7 @@ export const AttributeListDatagrid = ({
         readonly
         loading={disabled}
         rowMarkers="checkbox-visible"
+        rowMarkerWidth={LIST_INSET_ROW_MARKER_WIDTH}
         columnSelect="single"
         hasRowHover={true}
         onColumnMoved={handlers.onMove}
