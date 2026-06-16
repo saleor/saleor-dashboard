@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { reasonReferenceModalMessages } from "./messages";
 
-export interface ReasonReferenceValue {
+interface ReasonReferenceValue {
   reason: string;
   reasonReference: string;
 }

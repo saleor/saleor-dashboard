@@ -499,6 +499,10 @@
     "context": "dialog title",
     "string": "Capture Payment"
   },
+  "0fgK7h": {
+    "context": "grant refund, structured reason reference select label",
+    "string": "Structured reason for refund"
+  },
   "0g0LHg": {
     "context": "card header and checkbox label",
     "string": "Emit update webhooks for metadata changes"
@@ -907,6 +911,10 @@
     "context": "filter range separator",
     "string": "and"
   },
+  "37IPJQ": {
+    "context": "return items table, edit reason button",
+    "string": "Edit reason"
+  },
   "38dS1A": {
     "context": "code ending with label",
     "string": "Code ending with {last4CodeChars}"
@@ -914,6 +922,10 @@
   "38dc43": {
     "context": "Features preview",
     "string": "Features preview"
+  },
+  "39oPYf": {
+    "context": "fulfillment reason reference label",
+    "string": "Reason type:"
   },
   "39yi8w": {
     "context": "selected currency",
@@ -990,6 +1002,9 @@
   "3fBg0U": {
     "context": "Message when no issues found",
     "string": "No availability issues detected"
+  },
+  "3fKAKV": {
+    "string": "Configure refunds and returns behavior"
   },
   "3fgyFh": {
     "context": "order history message",
@@ -1173,6 +1188,9 @@
   "4Z6BtA": {
     "context": "order history message",
     "string": "Payment confirmation was sent to customer"
+  },
+  "4Za2EN": {
+    "string": "Returns Model Type"
   },
   "4fJ17F": {
     "context": "Charge in progress transaction amount, data display header",
@@ -1636,6 +1654,10 @@
   },
   "73SSOz": {
     "string": "All lines as ordered by the client."
+  },
+  "73mL5a": {
+    "context": "return items table, column header",
+    "string": "Reason"
   },
   "74Cxe8": {
     "context": "table header product label",
@@ -2310,6 +2332,9 @@
     "context": "dialog description",
     "string": "Choose countries you want to add to shipping zone from list below"
   },
+  "AkCxS/": {
+    "string": "Reason"
+  },
   "AkyGP2": {
     "string": "Channel deleted"
   },
@@ -2589,6 +2614,9 @@
   "CB7xpk": {
     "context": "subheader on extension install page",
     "string": "You are about to install {extensionName}"
+  },
+  "CCjH3M": {
+    "string": "Refunds & returns settings"
   },
   "CD1NDm": {
     "context": "placeholder for required attribute dropdown",
@@ -3414,6 +3442,10 @@
     "context": "column title",
     "string": "Value"
   },
+  "GY93MP": {
+    "context": "order line return/refund reason",
+    "string": "Reason"
+  },
   "GYBoVb": {
     "context": "Tooltip explanation for legacy stock-availability mode",
     "string": "Stock is considered available only when the warehouse is both assigned to this channel and covered by an active shipping zone for the destination address."
@@ -3930,6 +3962,10 @@
     "context": "order line is gift",
     "string": "Is gift"
   },
+  "J3nYmU": {
+    "context": "order return reason card, reason textarea label",
+    "string": "Reason"
+  },
   "J3uE0t": {
     "context": "section header",
     "string": "Attribute Values"
@@ -4073,6 +4109,9 @@
   "JjeZEG": {
     "context": "section header",
     "string": "Organize Product"
+  },
+  "Jk7dD2": {
+    "string": "Choose the Model Type whose extended Models will serve as return reasons."
   },
   "Jk8bsM": {
     "context": "badge next to customer name marking this user as staff",
@@ -4732,6 +4771,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NVYVA+": {
+    "context": "return items table, add reason button",
+    "string": "Add reason"
+  },
   "NVp0fa": {
     "context": "modeling section name",
     "string": "Modeling"
@@ -4909,6 +4952,9 @@
   "ORQvOg": {
     "string": "You don't have permission to perform this action"
   },
+  "ORpN0D": {
+    "string": "Structured reason"
+  },
   "OSnO9P": {
     "string": "All transactions are non-refundable"
   },
@@ -5033,6 +5079,9 @@
   "P8vgix": {
     "context": "select all model types preset label",
     "string": "All model types"
+  },
+  "P98zBi": {
+    "string": "Edit reason"
   },
   "P9YktI": {
     "context": "save preset, header",
@@ -5196,6 +5245,10 @@
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
+  },
+  "PxvG+u": {
+    "context": "grant refund table, add reason button",
+    "string": "Add reason"
   },
   "Pyjarj": {
     "string": "This shipping rate has no postal codes assigned"
@@ -5933,6 +5986,10 @@
   "U+Fl4Z": {
     "context": "customer detail, label above the address when default billing and default shipping are the same",
     "string": "Default address"
+  },
+  "U/L97C": {
+    "context": "grant refund table, edit reason button",
+    "string": "Edit reason"
   },
   "U0IK0G": {
     "context": "label for authorized amount",
@@ -7154,6 +7211,9 @@
     "context": "ProductTypeDeleteWarningDialog multiple assigned items description",
     "string": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
   },
+  "aSn2Ud": {
+    "string": "Add reason"
+  },
   "aTe9zV": {
     "context": "customer overview stat label: average order value of recent orders",
     "string": "Avg order value"
@@ -7361,6 +7421,10 @@
     "context": "amount filter label",
     "string": "Amount"
   },
+  "bW4TOw": {
+    "context": "configuration section name for refund and return settings",
+    "string": "Refunds & returns settings"
+  },
   "bWGTLR": {
     "context": "model detail page, top-bar metadata button tooltip",
     "string": "Edit model metadata"
@@ -7379,6 +7443,10 @@
   "bcf60I": {
     "context": "voucher",
     "string": "Applies to"
+  },
+  "bdScE/": {
+    "context": "grant refund table, column header",
+    "string": "Reason"
   },
   "bfj3NC": {
     "context": "Button with Manage app label",
@@ -8624,6 +8692,9 @@
     "context": "translation progress",
     "string": "{current} of {max}"
   },
+  "ilTOqQ": {
+    "string": "Return reasons"
+  },
   "imYtnq": {
     "string": "Selected {number, plural, one {# item} other {# items}}"
   },
@@ -9331,10 +9402,6 @@
   "mFC5Rq": {
     "string": "Assign Warehouses"
   },
-  "mFr9YY": {
-    "context": "configuration section name for refund settings",
-    "string": "Refunds Settings"
-  },
   "mGiA6q": {
     "context": "modal button upload",
     "string": "Upload"
@@ -9475,6 +9542,10 @@
   "nAm4XY": {
     "context": "customer detail sidebar, section header",
     "string": "External reference"
+  },
+  "nAmCTW": {
+    "context": "order return reason card, empty structured reason option",
+    "string": "None"
   },
   "nBzIBG": {
     "string": "Delete permission group"
@@ -9925,6 +9996,10 @@
     "context": "number of categories",
     "string": "Categories ({quantity})"
   },
+  "ppva3K": {
+    "context": "fulfillment reason label",
+    "string": "Reason:"
+  },
   "pr/aHj": {
     "context": "success gift card disable message",
     "string": "Gift card disabled"
@@ -9932,6 +10007,10 @@
   "ps+h1G": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
+  },
+  "pscdgK": {
+    "context": "order return reason card, structured reason select label",
+    "string": "Structured reason"
   },
   "psmnv9": {
     "string": "Edit permissions"
@@ -10080,6 +10159,10 @@
   "qQih8j": {
     "context": "voucher status scheduled",
     "string": "Scheduled"
+  },
+  "qR2Nuz": {
+    "context": "grant refund, empty structured reason option",
+    "string": "None"
   },
   "qRMXUE": {
     "context": "card header",
@@ -10273,9 +10356,6 @@
   "rQOS7K": {
     "context": "status label active",
     "string": "Active"
-  },
-  "rUnw7n": {
-    "string": "Configure refunds behavior"
   },
   "rVIlBs": {
     "context": "page header with order number",
@@ -10557,9 +10637,6 @@
   },
   "t1Bd7E": {
     "string": "Payment captured"
-  },
-  "t1scMK": {
-    "string": "Refunds settings"
   },
   "t3aiWF": {
     "context": "section header",
@@ -11270,6 +11347,9 @@
     "context": "dialog header",
     "string": "Delete structures"
   },
+  "wAgQU+": {
+    "string": "Select a Model Type. All Models extending the type will be available as return reasons when returning products."
+  },
   "wBGCR1": {
     "context": "Badge shown when channel is marked for removal",
     "string": "to remove"
@@ -11363,6 +11443,10 @@
   "wjKYSU": {
     "context": "WarehousesSection subtitle",
     "string": "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."
+  },
+  "wjiYEH": {
+    "context": "order return reason card title",
+    "string": "Reason for return"
   },
   "wkeWw9": {
     "context": "create refund title",
@@ -11593,6 +11677,9 @@
   },
   "y08GTW": {
     "string": "Channel is required"
+  },
+  "y7/amd": {
+    "string": "Current return reasons from"
   },
   "y7mfbl": {
     "string": "Currently, there are no countries assigned to this shipping zone"

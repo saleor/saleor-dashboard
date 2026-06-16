@@ -5,7 +5,7 @@ import { pageCreateUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { Box, Combobox, Skeleton, Text } from "@saleor/macaw-ui-next";
 
-export interface ReasonSettingsSectionProps {
+interface ReasonSettingsSectionProps {
   title: string;
   description: string;
   selectLabel: string;
