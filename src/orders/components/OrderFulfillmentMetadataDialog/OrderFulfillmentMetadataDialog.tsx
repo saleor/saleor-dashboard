@@ -22,7 +22,7 @@ export const OrderFulfillmentMetadataDialog = ({
   fulfillmentId,
 }: OrderFulfillmentMetadataDialogProps) => {
   const intl = useIntl();
-  const { data: fulfillment, loading } = useFulfillmentMetadataValues({
+  const { data: fulfillment } = useFulfillmentMetadataValues({
     orderId,
     fulfillmentId,
     open,
@@ -70,7 +70,8 @@ export const OrderFulfillmentMetadataDialog = ({
         privateMetadata: mapFieldArrayToMetadataInput(privateMetadataFields),
       }}
       onChange={handleChange}
-      loading={loading || submitInProgress}
+      loading={submitInProgress}
+      contentLoading={open && !fulfillment}
       errors={{
         metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
         privateMetadata: privateMetadataErrors.length

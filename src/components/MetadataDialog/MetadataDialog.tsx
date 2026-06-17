@@ -1,6 +1,7 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
+import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
@@ -20,6 +21,8 @@ export interface MetadataDialogProps {
   };
   onChange: (event: ChangeEvent, isPrivate: boolean) => void;
   loading?: boolean;
+  /** Shows skeleton cards while the metadata is being fetched (e.g. lazily loaded dialogs) */
+  contentLoading?: boolean;
   disabled?: boolean;
   errors?: {
     metadata?: string;
@@ -36,6 +39,7 @@ export const MetadataDialog = ({
   data,
   onChange,
   loading = false,
+  contentLoading = false,
   disabled = false,
   errors = {},
   formIsDirty = false,
@@ -77,21 +81,30 @@ export const MetadataDialog = ({
           overflowY="auto"
         >
           <Box display="flex" flexDirection="column" gap={2}>
-            <MetadataCard
-              data={data.metadata}
-              isPrivate={false}
-              disabled={disabled || loading}
-              onChange={event => onChange(event, false)}
-              error={errors.metadata}
-            />
+            {contentLoading ? (
+              <>
+                <MetadataLoadingCard />
+                <MetadataLoadingCard isPrivate />
+              </>
+            ) : (
+              <>
+                <MetadataCard
+                  data={data.metadata}
+                  isPrivate={false}
+                  disabled={disabled || loading}
+                  onChange={event => onChange(event, false)}
+                  error={errors.metadata}
+                />
 
-            <MetadataCard
-              data={data.privateMetadata}
-              isPrivate={true}
-              disabled={disabled || loading}
-              onChange={event => onChange(event, true)}
-              error={errors.privateMetadata}
-            />
+                <MetadataCard
+                  data={data.privateMetadata}
+                  isPrivate={true}
+                  disabled={disabled || loading}
+                  onChange={event => onChange(event, true)}
+                  error={errors.privateMetadata}
+                />
+              </>
+            )}
           </Box>
         </Box>
 
