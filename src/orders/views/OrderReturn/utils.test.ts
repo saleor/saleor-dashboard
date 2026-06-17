@@ -20,6 +20,8 @@ const baseFormData = (overrides: Partial<OrderReturnFormData> = {}): OrderReturn
   amountCalculationMode: OrderRefundAmountCalculationMode.NONE,
   reason: "",
   reasonReference: "",
+  refundReason: "",
+  refundReasonReference: "",
   itemsToBeReplaced: [] as FormsetReplacementData,
   fulfilledItemsQuantities: [] as FormsetQuantityData,
   waitingItemsQuantities: [] as FormsetQuantityData,

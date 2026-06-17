@@ -19,6 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
 import { GrantRefundCheckbox } from "./GrantRefundCheckbox";
+import { GrantRefundReasonFields } from "./GrantRefundReasonFields";
 import { submitCardMessages } from "./messages";
 import RefundShipmentCheckbox from "./RefundShipmentCheckbox";
 import { SendRefundCheckbox } from "./SendRefundCheckbox";
@@ -42,6 +43,9 @@ interface TransactionSubmitCardProps {
   isAmountDirty: boolean;
   transactionId?: string;
   onAmountChange: (value: number) => void;
+  refundReason: string;
+  refundReasonReference: string;
+  refundReasonReferenceTypeId: string;
 }
 
 export const TransactionSubmitCard = ({
@@ -61,6 +65,9 @@ export const TransactionSubmitCard = ({
   isAmountDirty,
   transactionId,
   onAmountChange,
+  refundReason,
+  refundReasonReference,
+  refundReasonReferenceTypeId,
 }: TransactionSubmitCardProps) => {
   const intl = useIntl();
   const canSendRefund = canSendRefundDuringReturn({
@@ -124,6 +131,15 @@ export const TransactionSubmitCard = ({
             disabled={!autoGrantRefund}
             width="100%"
           />
+          {autoGrantRefund && (
+            <GrantRefundReasonFields
+              refundReason={refundReason}
+              refundReasonReference={refundReasonReference}
+              refundReasonReferenceTypeId={refundReasonReferenceTypeId}
+              disabled={disabled}
+              onChange={onChange}
+            />
+          )}
           <ConfirmButton
             data-test-id="return-submit-button"
             transitionState={submitStatus}

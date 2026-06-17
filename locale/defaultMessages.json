@@ -395,6 +395,10 @@
     "context": "info about variant metadata with link to edit",
     "string": "The read-only metadata of the actual variant used in this order. {link}"
   },
+  "02a84g": {
+    "context": "grant refund within return, structured reason select label",
+    "string": "Reason"
+  },
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
@@ -2100,6 +2104,10 @@
   "9Mro3c": {
     "context": "Transaction event status - pending",
     "string": "Pending"
+  },
+  "9NKTJe": {
+    "context": "grant refund within return, reason textarea label",
+    "string": "Reason note"
   },
   "9OZ/fr": {
     "context": "open full-screen mode with bulk edit",
@@ -11781,6 +11789,10 @@
   },
   "yH56V+": {
     "string": "Ooops!..."
+  },
+  "yH5odt": {
+    "context": "grant refund within return, empty structured reason option",
+    "string": "None"
   },
   "yHeZRQ": {
     "string": "Product Export Failed"

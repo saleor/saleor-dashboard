@@ -51,6 +51,8 @@ export interface OrderReturnData {
   amountCalculationMode: OrderRefundAmountCalculationMode;
   reason: string;
   reasonReference: string;
+  refundReason: string;
+  refundReasonReference: string;
 }
 
 interface OrderReturnHandlers {
@@ -94,6 +96,8 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   transactionId: "",
   reason: "",
   reasonReference: "",
+  refundReason: "",
+  refundReasonReference: "",
 });
 
 function useOrderReturnForm(

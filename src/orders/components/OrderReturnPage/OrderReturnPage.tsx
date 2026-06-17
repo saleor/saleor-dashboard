@@ -8,6 +8,7 @@ import {
   type OrderErrorFragment,
   type OrderGrantRefundCreateErrorFragment,
   type TransactionRequestRefundForGrantedRefundErrorFragment,
+  useRefundSettingsQuery,
   useReturnSettingsQuery,
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -56,6 +57,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   const intl = useIntl();
   const { data: returnSettingsData } = useReturnSettingsQuery();
   const reasonReferenceTypeId = returnSettingsData?.returnSettings.reasonReferenceType?.id ?? "";
+  const { data: refundSettingsData } = useRefundSettingsQuery();
+  const refundReasonReferenceTypeId =
+    refundSettingsData?.refundSettings.reasonReferenceType?.id ?? "";
 
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
@@ -161,6 +165,9 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                 submitStatus={submitStatus}
                 onAmountChange={handlers.handleAmountChange}
                 isAmountDirty={isAmountDirty}
+                refundReason={data.refundReason}
+                refundReasonReference={data.refundReasonReference}
+                refundReasonReferenceTypeId={refundReasonReferenceTypeId}
               />
             ) : (
               <PaymentSubmitCard
