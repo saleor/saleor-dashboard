@@ -21,7 +21,7 @@ export interface GroupModelTypeTabsOptions {
 }
 
 /** Default value shown in the separator input (comma-separated list). */
-export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " - , —, :";
+export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = "- , —, :";
 
 export const MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER = ",";
 

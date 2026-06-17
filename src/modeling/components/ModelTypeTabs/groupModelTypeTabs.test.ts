@@ -29,7 +29,7 @@ describe("parseModelTypeTabSeparators", () => {
     const result = parseModelTypeTabSeparators(value);
 
     // Assert
-    expect(result).toEqual([" - ", "—", ":"]);
+    expect(result).toEqual(["- ", "—", ":"]);
   });
 
   it("returns no separators when input is whitespace only", () => {
