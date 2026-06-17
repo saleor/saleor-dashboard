@@ -30,6 +30,7 @@ jest.mock("./appActionsHandler", () => ({
     useHandleAppFormUpdate: jest.fn(),
     useHandlePopupCloseAction: jest.fn(),
     useHandleWidgetResizeAction: jest.fn(),
+    useHandleRefreshEntityAction: jest.fn(),
   },
 }));
 
@@ -55,6 +56,7 @@ describe("useAppActions", () => {
   const mockHandleAppFormUpdate = jest.fn();
   const mockHandlePopupClose = jest.fn();
   const mockHandleWidgetResize = jest.fn();
+  const mockHandleRefreshEntity = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -85,6 +87,9 @@ describe("useAppActions", () => {
     });
     (AppActionsHandler.useHandleWidgetResizeAction as jest.Mock).mockReturnValue({
       handle: mockHandleWidgetResize,
+    });
+    (AppActionsHandler.useHandleRefreshEntityAction as jest.Mock).mockReturnValue({
+      handle: mockHandleRefreshEntity,
     });
 
     // Reset capture message mock to return a proper scope
@@ -146,6 +151,32 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
+  });
+
+  it("should route refreshEntity action to the refresh entity handler", () => {
+    // Arrange
+    const refreshAction = {
+      type: "refreshEntity",
+      payload: { actionId: "refresh-1" },
+    } as unknown as Actions;
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: refreshAction,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockHandleRefreshEntity).toHaveBeenCalledWith(refreshAction);
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
   });
 
   it("should ignore messages without type and actionId (e.g., from browser extensions)", () => {

@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.23.9
+
+### Patch Changes
+
+- [#6637](https://github.com/saleor/saleor-dashboard/pull/6637) [`64211cc`](https://github.com/saleor/saleor-dashboard/commit/64211cc38d4cd1ec8dc6979b86c68bfc6dcfad05) Thanks [@NyanKiyoshi](https://github.com/NyanKiyoshi)! - Added `Referrer-Policy: origin-when-cross-origin` header to the
+  NGINX config bundled inside the container image.
+
+- [#6642](https://github.com/saleor/saleor-dashboard/pull/6642) [`b77ac26`](https://github.com/saleor/saleor-dashboard/commit/b77ac26c32323ffbc64a6bb356b1efb1e4057b5b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed an issue where the Return/Replace flow excluded order lines from the granted refund when their fulfillment was waiting for approval. Previously, only shipping costs were sent to the payment provider in such cases - now the refund correctly includes both the returned items and shipping.
+
+- [#6636](https://github.com/saleor/saleor-dashboard/pull/6636) [`9452013`](https://github.com/saleor/saleor-dashboard/commit/945201346cba8ea1aff6f3ce48016422dc8310ae) Thanks [@mirekm](https://github.com/mirekm)! - Models list tabs now auto-group similar model types that share a name prefix:
+  - **Grouped tabs** — types like "Storefront — Cart" and "Storefront — Checkout" appear under a single "Storefront" tab.
+  - **Subtype picker** — use the dropdown on a grouped tab to switch between "All" and individual subtypes.
+  - **Configurable grouping** — adjust the name separator or turn grouping on/off from the settings control next to the tabs.
+
+- [#6631](https://github.com/saleor/saleor-dashboard/pull/6631) [`318c323`](https://github.com/saleor/saleor-dashboard/commit/318c32398f1fb90c66ed7b49ce7104843afd6b1d) Thanks [@mirekm](https://github.com/mirekm)! - Model detail pages now align with other detail views:
+  - **Metadata** — edit public and private metadata from a header button instead of an inline section on saved models.
+  - **Model type** — the model type appears in the header beside the title, with a link to browse other models of that type.
+  - **Slug validation** — duplicate slug errors show once in the SEO section with a clearer message instead of also triggering a toast.
+
+- [#6635](https://github.com/saleor/saleor-dashboard/pull/6635) [`abcfbde`](https://github.com/saleor/saleor-dashboard/commit/abcfbdee6a2708d9903fe5399b41b55d949d322b) Thanks [@mirekm](https://github.com/mirekm)! - Updated sidebar navigation icons for a more consistent look and weight across menu items and shortcuts.
+
+- [#6646](https://github.com/saleor/saleor-dashboard/pull/6646) [`6f10050`](https://github.com/saleor/saleor-dashboard/commit/6f100505d53e948e3cd37ed52e767bfb53179d33) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Show product thumbnail on Order events, when lines are included
+
+- [#6647](https://github.com/saleor/saleor-dashboard/pull/6647) [`231a298`](https://github.com/saleor/saleor-dashboard/commit/231a29846056344f90bb684a7d73b0c0eee0ca33) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dashboard now responds to the `refreshEntity` app-bridge action. Apps embedded as widgets or popups on an entity detail page (orders, draft orders, products, gift cards, customers, collections, vouchers, categories, promotions, models, model types and menus) can request the host page to silently refetch its entity in the background, without a full page reload. The action is a fire-and-forget acknowledgement and refreshes whichever entity the page hosting the app is currently showing.
+
+- [#6634](https://github.com/saleor/saleor-dashboard/pull/6634) [`dfe0c76`](https://github.com/saleor/saleor-dashboard/commit/dfe0c762b2faf1fbb78f032f1bc00088cbc160fd) Thanks [@mirekm](https://github.com/mirekm)! - Translation detail pages now make it easier to work through a language:
+  - **Progress** — see how many fields are translated and what is still missing.
+  - **Bulk edit** — turn on bulk edit to update several fields at once and save them together.
+  - **Clearer layout** — fields are grouped into sections so names, descriptions, SEO, and attributes are easier to scan.
+
 ## 3.23.8
 
 ### Patch Changes

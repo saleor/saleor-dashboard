@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.23.8",
+  "version": "3.23.9",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -18,6 +18,7 @@
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.cjs",
     "check-types": "pnpm run /^check-types:.*$/",
     "check-types:playwright": "tsc --noEmit --project playwright/tsconfig.json",
+    "check-types:scripts": "tsc --noEmit --project scripts/tsconfig.json",
     "check-types:src": "tsc --noEmit && tsc-strict",
     "chromatic": "chromatic --exit-zero-on-changes",
     "dep-status": "depcruise --config .dependency-cruiser.mjs src",
@@ -40,6 +41,7 @@
     "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix --allow-remove-files",
     "lint": "pnpm run /^lint:.*$/",
+    "lint:changesets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-changesets.ts",
     "lint:eslint": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:prettier": "prettier --ignore-unknown --write .",
     "prepare": "is-ci || husky install",
@@ -54,7 +56,7 @@
     "test-storybook:coverage": "vitest --project=storybook --coverage",
     "test:ci": "CI=true jest --coverage --silent && pnpm run test:lint-rules",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
-    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs",
+    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-changesets.test.ts",
     "test:quiet": "jest --silent",
     "test:watch": "jest --watch",
     "update-payment-assets": "node scripts/update-payment-assets.cjs"
@@ -163,7 +165,7 @@
     "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@mizdra/graphql-codegen-typescript-fabbrica": "^0.6.1",
     "@playwright/test": "1.58.2",
-    "@saleor/app-sdk": "1.9.0",
+    "@saleor/app-sdk": "1.11.0",
     "@sentry/cli": "^2.58.2",
     "@storybook/addon-mcp": "^0.4.1",
     "@storybook/addon-vitest": "10.2.19",

@@ -2,6 +2,7 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   PermissionEnum,
   useMenuDeleteMutation,
@@ -57,6 +58,9 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
   const { data, loading, refetch } = useMenuDetailsQuery({
     variables: { id },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
     onCompleted: data => handleDelete(data, navigate, notify, intl),
   });

@@ -46,57 +46,31 @@ describe("filteredConditionalItems", () => {
   });
 });
 describe("createOrderMetadataIdSchema", () => {
-  it("returns order and fulfillment metadata", () => {
+  it("returns an empty metadata schema keyed by order and fulfillment ids", () => {
+    // Metadata is loaded on demand by dedicated dialogs, so it is no longer part of
+    // the eagerly fetched order details. The schema only keeps the id-keyed shape.
     // Arrange
     const order = {
       id: "some-order-id",
-      metadata: [{ key: "mt1", value: "mt1-value" }],
-      privateMetadata: [{ key: "pmt1", value: "pmt1-value" }],
-      fulfillments: [
-        {
-          id: "some-fulfillment-id",
-          metadata: [{ key: "fmt1", value: "fmt1-value" }],
-          privateMetadata: [{ key: "fpmt1", value: "fpmt1-value" }],
-        },
-        {
-          id: "some-fulfillment-id",
-          metadata: [{ key: "fmt1", value: "fmt1-value" }],
-          privateMetadata: [{ key: "fpmt1", value: "fpmt1-value" }],
-        },
-      ],
+      fulfillments: [{ id: "some-fulfillment-id" }, { id: "another-fulfillment-id" }],
     };
+
     // Act
     const metadata = createOrderMetadataIdSchema(order as OrderDetailsFragment);
 
     // Assert
     expect(metadata).toEqual({
-      "some-fulfillment-id": {
-        metadata: [
-          {
-            key: "fmt1",
-            value: "fmt1-value",
-          },
-        ],
-        privateMetadata: [
-          {
-            key: "fpmt1",
-            value: "fpmt1-value",
-          },
-        ],
-      },
       "some-order-id": {
-        metadata: [
-          {
-            key: "mt1",
-            value: "mt1-value",
-          },
-        ],
-        privateMetadata: [
-          {
-            key: "pmt1",
-            value: "pmt1-value",
-          },
-        ],
+        metadata: [],
+        privateMetadata: [],
+      },
+      "some-fulfillment-id": {
+        metadata: [],
+        privateMetadata: [],
+      },
+      "another-fulfillment-id": {
+        metadata: [],
+        privateMetadata: [],
       },
     });
   });

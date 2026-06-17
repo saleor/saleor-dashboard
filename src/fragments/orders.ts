@@ -77,6 +77,9 @@ export const fragmentOrderEvent = gql`
         id
         productName
         variantName
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }
@@ -303,13 +306,6 @@ export const fragmentOrderLineMetadataDetails = gql`
   }
 `;
 
-export const fragmentOrderLineWithMetadata = gql`
-  fragment OrderLineWithMetadata on OrderLine {
-    ...OrderLine
-    ...OrderLineMetadata
-  }
-`;
-
 export const fragmentRefundOrderLine = gql`
   fragment RefundOrderLine on OrderLine {
     id
@@ -328,7 +324,6 @@ export const fragmentRefundOrderLine = gql`
 
 export const fulfillmentFragment = gql`
   fragment Fulfillment on Fulfillment {
-    ...Metadata
     id
     created
     lines {
@@ -344,17 +339,6 @@ export const fulfillmentFragment = gql`
     warehouse {
       id
       name
-    }
-  }
-`;
-
-export const fulfillmentFragmentWithMetadata = gql`
-  fragment FulfillmentWithMetadata on Fulfillment {
-    ...Fulfillment
-    lines {
-      orderLine {
-        ...OrderLineWithMetadata
-      }
     }
   }
 `;
@@ -391,7 +375,6 @@ export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
     displayGrossPrices
-    ...Metadata
     billingAddress {
       ...Address
     }
@@ -408,7 +391,6 @@ export const fragmentOrderDetails = gql`
       ...OrderGrantedRefund
     }
     isShippingRequired
-    canFinalize
     created
     customerNote
     discounts {
@@ -559,15 +541,19 @@ export const fragmentOrderDetails = gql`
   }
 `;
 
-export const fragmentOrderDetailsWithMetadata = gql`
-  fragment OrderDetailsWithMetadata on Order {
-    ...OrderDetails
-    fulfillments {
-      ...FulfillmentWithMetadata
-    }
-    lines {
-      ...OrderLine
-    }
+// Order and fulfillment metadata are loaded on demand when their dialogs open,
+// instead of eagerly with the order details page query.
+export const fragmentOrderMetadata = gql`
+  fragment OrderMetadata on Order {
+    id
+    ...Metadata
+  }
+`;
+
+export const fragmentFulfillmentMetadata = gql`
+  fragment FulfillmentMetadata on Fulfillment {
+    id
+    ...Metadata
   }
 `;
 
