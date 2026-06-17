@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useId } from "react";
 import { createReactEditorJS } from "react-editor-js";
 
-import { tools } from "./consts";
+import { getTools } from "./consts";
 import { useHasRendered } from "./hooks";
 import { type EditorJsProps } from "./RichTextEditor";
 import useStyles from "./styles";
@@ -14,6 +14,9 @@ interface RichTextEditorContentProps extends Omit<EditorJsProps, "defaultValue">
 }
 
 const ReactEditorJS = createReactEditorJS();
+// Read-only view: image tool is registered without an uploader so saved image
+// blocks render, but no new uploads are accepted.
+const tools = getTools();
 const RichTextEditorContent = ({
   id: defaultId,
   className,

@@ -50,6 +50,9 @@ importers:
       "@editorjs/header":
         specifier: 2.8.8
         version: 2.8.8
+      "@editorjs/image":
+        specifier: ^2.10.3
+        version: 2.10.3
       "@editorjs/list":
         specifier: 2.0.8
         version: 2.0.8
@@ -1459,6 +1462,12 @@ packages:
     resolution:
       {
         integrity: sha512-ieg3dzo2m1/ELze/RMNADiAiC5amXxIlVXoJ5vvXITOu/p/dPsrF+Oi3h5gBYvtGk9vg5LJUSG5YWU0tBUO1tw==,
+      }
+
+  "@editorjs/image@2.10.3":
+    resolution:
+      {
+        integrity: sha512-ekCsGICZOIdghF/U2T34H7CItqaWAoJDXbkRD+x8l/LIo/7Ozf7KovYm21qz+CluArgV4RurVFHqwlz+O0vfJA==,
       }
 
   "@editorjs/list@2.0.8":
@@ -14315,6 +14324,10 @@ snapshots:
       "@editorjs/editorjs": 2.30.7
 
   "@editorjs/helpers@0.0.4": {}
+
+  "@editorjs/image@2.10.3":
+    dependencies:
+      "@codexteam/icons": 0.3.3
 
   "@editorjs/list@2.0.8":
     dependencies:
