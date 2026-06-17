@@ -50,7 +50,7 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           borderBottomWidth={0}
           backgroundColor="default2"
         >
-          <EventTime date={refund.createdAt} />
+          <EventTime date={refund.createdAt} color="default2" />
         </GridTable.Cell>
       </GridTable.Row>
       <GridTable.Row>
