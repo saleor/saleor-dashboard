@@ -40,6 +40,7 @@
     "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix --allow-remove-files",
     "lint": "pnpm run /^lint:.*$/",
+    "lint:changesets": "node scripts/check-changesets.mjs",
     "lint:eslint": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:prettier": "prettier --ignore-unknown --write .",
     "prepare": "is-ci || husky install",
@@ -54,7 +55,7 @@
     "test-storybook:coverage": "vitest --project=storybook --coverage",
     "test:ci": "CI=true jest --coverage --silent && pnpm run test:lint-rules",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
-    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs",
+    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs && node scripts/check-changesets.test.mjs",
     "test:quiet": "jest --silent",
     "test:watch": "jest --watch",
     "update-payment-assets": "node scripts/update-payment-assets.cjs"
