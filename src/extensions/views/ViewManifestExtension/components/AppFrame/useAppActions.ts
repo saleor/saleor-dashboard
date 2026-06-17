@@ -32,11 +32,21 @@ export const useAppActions = (
   const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
   const { handle: handlePopupClose } = AppActionsHandler.useHandlePopupCloseAction();
   const { handle: handleWidgetResize } = AppActionsHandler.useHandleWidgetResizeAction(frameEl);
+  const { handle: handleRefreshEntity } = AppActionsHandler.useHandleRefreshEntityAction();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
   const [handshakeDone, setHandshakeDone] = useState(false);
   const handleAction = (action: Actions | undefined): DispatchResponseEvent | void => {
+    // TODO: `refreshEntity` is not yet part of the `@saleor/app-sdk` `Actions`
+    // union. Handle it via the raw string literal until the SDK type ships, then
+    // move it into the typed switch below.
+    if ((action as { type?: string } | undefined)?.type === "refreshEntity") {
+      const { actionId } = (action as unknown as { payload: { actionId: string } }).payload;
+
+      return handleRefreshEntity(actionId);
+    }
+
     switch (action?.type) {
       case "notification": {
         return handleNotification(action);

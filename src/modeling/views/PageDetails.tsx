@@ -13,6 +13,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type AttributeErrorFragment,
   type AttributeValueInput,
@@ -89,6 +90,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
       firstValues: VALUES_PAGINATE_BY,
     },
   });
+
+  useRegisterEntityRefresh(pageDetails.refetch);
+
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({
     disableErrorHandling: true,

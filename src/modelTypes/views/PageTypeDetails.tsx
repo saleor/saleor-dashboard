@@ -7,6 +7,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   useAssignPageAttributeMutation,
   usePageTypeAttributeReorderMutation,
@@ -150,9 +151,16 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
         pageTypeId: id,
       },
     });
-  const { data, loading: dataLoading } = usePageTypeDetailsQuery({
+  const {
+    data,
+    loading: dataLoading,
+    refetch,
+  } = usePageTypeDetailsQuery({
     variables: { id },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const { loadMore, search, result } = useAvailablePageAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,

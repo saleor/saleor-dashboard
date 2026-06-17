@@ -1,5 +1,6 @@
 import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
+import { useTriggerEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   applyWidgetHeightToFrame,
   createWidgetResizeOkResponse,
@@ -304,8 +305,32 @@ const useHandleWidgetResizeAction = (frameEl: HTMLIFrameElement | null) => ({
   },
 });
 
+/**
+ * TODO: Replace the inline `actionId` argument with the `@saleor/app-sdk`
+ * `RefreshEntity` action type once it is published in the SDK.
+ *
+ * TODO: POST-method widgets (IframePost) are not wired to this action yet - they
+ * use a separate listener that only handles `widgetResize`.
+ */
+const useHandleRefreshEntityAction = () => {
+  const triggerEntityRefresh = useTriggerEntityRefresh();
+
+  return {
+    handle: (actionId: string) => {
+      debug(`Handling RefreshEntity action with ID: %s`, actionId);
+
+      // Fire-and-forget: ack immediately, refresh the current page in the
+      // background. No-op when no entity page is registered.
+      triggerEntityRefresh();
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
+  useHandleRefreshEntityAction,
   useHandleUpdateRoutingAction,
   useHandleRedirectAction,
   useNotifyReadyAction,
