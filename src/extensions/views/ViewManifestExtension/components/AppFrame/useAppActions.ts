@@ -38,15 +38,6 @@ export const useAppActions = (
    */
   const [handshakeDone, setHandshakeDone] = useState(false);
   const handleAction = (action: Actions | undefined): DispatchResponseEvent | void => {
-    // TODO: `refreshEntity` is not yet part of the `@saleor/app-sdk` `Actions`
-    // union. Handle it via the raw string literal until the SDK type ships, then
-    // move it into the typed switch below.
-    if ((action as { type?: string } | undefined)?.type === "refreshEntity") {
-      const { actionId } = (action as unknown as { payload: { actionId: string } }).payload;
-
-      return handleRefreshEntity(actionId);
-    }
-
     switch (action?.type) {
       case "notification": {
         return handleNotification(action);
@@ -78,6 +69,9 @@ export const useAppActions = (
       }
       case "widgetResize": {
         return handleWidgetResize(action);
+      }
+      case "refreshEntity": {
+        return handleRefreshEntity(action);
       }
       default: {
         const actionType = (action as unknown as { type?: string })?.type;

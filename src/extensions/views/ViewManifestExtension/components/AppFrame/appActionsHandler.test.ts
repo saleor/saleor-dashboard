@@ -135,7 +135,12 @@ describe("AppActionsHandler", function () {
       } = renderHook(() => AppActionsHandler.useHandleRefreshEntityAction());
 
       // Act
-      const response = handle("refresh-action-id");
+      const response = handle({
+        type: "refreshEntity",
+        payload: {
+          actionId: "refresh-action-id",
+        },
+      });
 
       // Assert
       expect(mockTriggerEntityRefresh).toHaveBeenCalledTimes(1);

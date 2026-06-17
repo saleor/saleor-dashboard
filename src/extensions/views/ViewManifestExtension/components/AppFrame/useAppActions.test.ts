@@ -175,7 +175,7 @@ describe("useAppActions", () => {
     });
 
     // Assert
-    expect(mockHandleRefreshEntity).toHaveBeenCalledWith("refresh-1");
+    expect(mockHandleRefreshEntity).toHaveBeenCalledWith(refreshAction);
     expect(mockCaptureMessage).not.toHaveBeenCalled();
   });
 
