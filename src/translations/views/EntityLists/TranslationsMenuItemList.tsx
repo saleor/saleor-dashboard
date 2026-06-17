@@ -6,7 +6,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { type TranslationsEntityListProps } from "./types";
-import { sumCompleted } from "./utils";
+import { getSingleNameTranslationCompletion } from "./utils";
 
 const TranslationsMenuItemList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useMenuItemTranslationsQuery({
@@ -26,10 +26,7 @@ const TranslationsMenuItemList = ({ params, variables }: TranslationsEntityListP
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
             node.__typename === "MenuItemTranslatableContent" && {
-              completion: {
-                current: sumCompleted([node.translation?.name]),
-                max: 1,
-              },
+              completion: getSingleNameTranslationCompletion(node.translation?.name),
               id: node?.menuItem.id,
               name: node?.menuItem.name,
             },

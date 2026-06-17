@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
@@ -11,22 +10,28 @@ import { type AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@das
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { type TranslationsEntitiesPageProps } from "@dashboard/translations/types";
+import { TranslationsDetailLayout } from "@dashboard/translations/components/TranslationsDetailLayout/TranslationsDetailLayout";
+import {
+  TranslationFieldType,
+  type TranslationSectionConfig,
+  type TranslationsEntitiesPageProps,
+  TranslationSubmitScope,
+} from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
+import { getTranslationFields } from "@dashboard/translations/utils";
 import { type ListSettings } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { getTranslationFields } from "../../utils";
-import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
 interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
-  data: AttributeTranslationDetailsFragment;
+  data: AttributeTranslationDetailsFragment | null;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
 }
@@ -37,14 +42,20 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue",
 };
 
-const TranslationsAttributesPage = ({
+export const TranslationsAttributesPage = ({
   translationId,
   activeField,
+  bulk,
   disabled,
   languages,
   languageCode,
   data,
   saveButtonState,
+  fieldErrors,
+  onBulkChange,
+  onBulkSubmit,
+  onClearFieldError,
+  onClearFieldErrors,
   onDiscard,
   onEdit,
   onSubmit,
@@ -60,9 +71,57 @@ const TranslationsAttributesPage = ({
     translationLanguage: languageCode,
     attributeId: data?.attribute?.id,
   });
+  const sections = useMemo(() => {
+    if (!data?.attribute) {
+      return [];
+    }
+
+    const attributeSections: TranslationSectionConfig[] = [
+      {
+        id: "general",
+        submitScope: TranslationSubmitScope.attribute,
+        subtitle: intl.formatMessage({
+          id: "ywLJ93",
+          defaultMessage: "The attribute label shown in your storefront",
+          description: "attribute translation section subtitle",
+        }),
+        title: intl.formatMessage(commonMessages.generalInformations),
+        fields: [
+          {
+            displayName: intl.formatMessage({
+              id: "DRMMDs",
+              defaultMessage: "Attribute Name",
+            }),
+            name: `${fieldNames.attribute}:${data.attribute.id}`,
+            translation: data.translation?.name || null,
+            type: TranslationFieldType.SHORT,
+            value: data.attribute.name ?? "",
+          },
+        ],
+      },
+    ];
+
+    const choiceEdges = data.attribute.choices?.edges;
+
+    if (withChoices && (choiceEdges?.length ?? 0) > 0 && data.attribute.choices) {
+      attributeSections.push({
+        id: "choices",
+        submitScope: TranslationSubmitScope.attributeChoice,
+        subtitle: intl.formatMessage(messages.valuesSubtitle),
+        title: intl.formatMessage(messages.values),
+        fields: getTranslationFields(data.attribute.choices, intl),
+        pagination: {
+          onUpdateListSettings,
+          settings,
+        },
+      });
+    }
+
+    return attributeSections;
+  }, [data, intl, onUpdateListSettings, settings, withChoices]);
 
   return (
-    <DetailPageLayout gridTemplateColumns={1}>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={bulk}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.attributes,
@@ -102,52 +161,26 @@ const TranslationsAttributesPage = ({
         </Box>
       </TopNav>
       <DetailPageLayout.Content>
-        <TranslationFields
+        <TranslationsDetailLayout
+          sections={sections}
           activeField={activeField}
+          bulk={bulk}
           disabled={disabled}
-          initialState={true}
-          title={intl.formatMessage(commonMessages.generalInformations)}
-          fields={[
-            {
-              displayName: intl.formatMessage({
-                id: "DRMMDs",
-                defaultMessage: "Attribute Name",
-              }),
-              name: fieldNames.attribute + ":" + data?.attribute.id,
-              translation: data?.translation?.name || null,
-              type: "short" as const,
-              value: data?.attribute?.name,
-            },
-          ]}
+          languageCode={languageCode}
+          languages={languages}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
-          onEdit={onEdit}
+          fieldErrors={fieldErrors}
+          onBulkChange={onBulkChange}
+          onBulkSubmit={onBulkSubmit}
+          onClearFieldError={onClearFieldError}
+          onClearFieldErrors={onClearFieldErrors}
           onDiscard={onDiscard}
+          onEdit={onEdit}
           onSubmit={onSubmit}
         />
-        <CardSpacer />
-        {data?.attribute?.choices.edges.length > 0 && withChoices && (
-          <TranslationFields
-            activeField={activeField}
-            disabled={disabled}
-            initialState={true}
-            title={intl.formatMessage(messages.values)}
-            fields={getTranslationFields(data?.attribute?.choices, intl)}
-            saveButtonState={saveButtonState}
-            richTextResetKey={languageCode}
-            pagination={{
-              settings,
-              onUpdateListSettings,
-            }}
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={onSubmit}
-          />
-        )}
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );
 };
 
 TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
-export default TranslationsAttributesPage;

@@ -23,6 +23,8 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: (data?: OutputData) => void;
   onBlur?: () => void;
+  onFocus?: () => void;
+  onKeyDownCapture?: React.KeyboardEventHandler<HTMLDivElement>;
 }
 
 const RichTextEditor = ({
@@ -36,6 +38,8 @@ const RichTextEditor = ({
   onInitialize,
   onChange,
   onBlur,
+  onFocus,
+  onKeyDownCapture,
   ...props
 }: RichTextEditorProps) => {
   const classes = useStyles({});
@@ -124,11 +128,15 @@ const RichTextEditor = ({
               [classes.rootHasLabel]: label !== "",
               [classes.rootTyped]: isTyped || props.defaultValue?.blocks?.length! > 0,
             })}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => {
+            onFocusCapture={() => {
+              setIsFocused(true);
+              onFocus?.();
+            }}
+            onBlurCapture={() => {
               setIsFocused(false);
               onBlur?.();
             }}
+            onKeyDownCapture={onKeyDownCapture}
           />
         </ReactEditorJS>
       )}

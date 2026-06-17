@@ -8,12 +8,17 @@ export function useRichTextSubmit(
   initial: string,
   onSubmit: (data: OutputData) => SubmitPromise,
   loading: boolean,
+  trackDirty = true,
 ) {
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
   const { defaultValue, editorRef, isReadyForMount, handleChange, getValue } = useRichText({
     initial,
     loading,
-    triggerChange: () => setIsDirty(true),
+    triggerChange: () => {
+      if (trackDirty) {
+        setIsDirty(true);
+      }
+    },
   });
   const handleSubmit = useCallback(async () => {
     const result = onSubmit(await getValue());

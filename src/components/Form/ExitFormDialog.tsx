@@ -16,7 +16,14 @@ const ExitFormDialog = ({ onLeave, onClose, isOpen }: ExitFormDialogProps) => {
   const intl = useIntl();
 
   return (
-    <DashboardModal open={isOpen} onChange={onClose}>
+    <DashboardModal
+      open={isOpen}
+      onChange={open => {
+        if (!open) {
+          onClose();
+        }
+      }}
+    >
       <DashboardModal.Content size="sm">
         <DashboardModal.Header>
           {intl.formatMessage(messages.unableToSaveTitle)}

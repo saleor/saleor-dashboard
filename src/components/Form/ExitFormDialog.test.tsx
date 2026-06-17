@@ -10,6 +10,21 @@ jest.mock("@saleor/macaw-ui", () => ({
   DialogHeader: jest.fn(() => () => <></>),
 }));
 describe("ExitFormDialog", () => {
+  it("does not call onClose when the modal opens", () => {
+    // Arrange
+    const props = {
+      onClose: jest.fn(),
+      onLeave: jest.fn(),
+      isOpen: true,
+    };
+
+    // Act
+    render(<ExitFormDialog {...props} />);
+
+    // Assert
+    expect(props.onClose).not.toHaveBeenCalled();
+  });
+
   it("closes when ignore changes is clicked", async () => {
     // Arrange
     const props = {

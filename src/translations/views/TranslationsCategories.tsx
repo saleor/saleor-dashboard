@@ -1,26 +1,16 @@
-// @ts-strict-ignore
 import {
+  type CategoryTranslationFragment,
   type LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
   useUpdateCategoryTranslationsMutation,
 } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { type OutputData } from "@editorjs/editorjs";
-import { useIntl } from "react-intl";
 
-import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
-import { type TranslationField, type TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import { TranslationsCategoriesPage } from "../components/TranslationsCategoriesPage/TranslationsCategoriesPage";
+import { useTranslationEntityView } from "../hooks/useTranslationEntityView";
+import { type TranslationDetailQueryParams } from "../translationQueryParams";
 
-type HandleSubmitData = string | OutputData;
+export interface TranslationsCategoriesQueryParams extends TranslationDetailQueryParams {}
 
-export interface TranslationsCategoriesQueryParams {
-  activeField: string;
-}
 interface TranslationsCategoriesProps {
   id: string;
   languageCode: LanguageCodeEnum;
@@ -28,69 +18,21 @@ interface TranslationsCategoriesProps {
 }
 
 const TranslationsCategories = ({ id, languageCode, params }: TranslationsCategoriesProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
-  const shop = useShop();
-  const intl = useIntl();
   const categoryTranslations = useCategoryTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-  const [updateTranslations, updateTranslationsOpts] = useUpdateCategoryTranslationsMutation({
-    onCompleted: data => {
-      if (data.categoryTranslate.errors.length === 0) {
-        categoryTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-        });
-        navigate("?", { replace: true });
-      }
-    },
+  const entityMutation = useUpdateCategoryTranslationsMutation();
+  const viewProps = useTranslationEntityView<CategoryTranslationFragment>({
+    id,
+    languageCode,
+    params,
+    translatableContentTypename: "CategoryTranslatableContent",
+    detailsQuery: categoryTranslations,
+    entityMutation,
   });
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field,
-        }),
-      { replace: true },
-    );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
-  };
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: HandleSubmitData,
-  ) =>
-    extractMutationErrors(
-      updateTranslations({
-        variables: {
-          id,
-          input: getParsedTranslationInputData({
-            data,
-            fieldName,
-          }),
-          language: languageCode,
-        },
-      }),
-    );
-  const translation = categoryTranslations?.data?.translation;
 
-  return (
-    <TranslationsCategoriesPage
-      translationId={id}
-      activeField={params.activeField}
-      disabled={categoryTranslations.loading || updateTranslationsOpts.loading}
-      languageCode={languageCode}
-      languages={shop?.languages || []}
-      saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
-      onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "CategoryTranslatableContent" ? translation : null}
-    />
-  );
+  return <TranslationsCategoriesPage translationId={id} {...viewProps} />;
 };
 
 TranslationsCategories.displayName = "TranslationsCategories";
-export default TranslationsCategories;
+export { TranslationsCategories };

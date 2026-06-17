@@ -567,6 +567,10 @@
     "context": "grant refund table, column header",
     "string": "Qty to refund"
   },
+  "10kBsY": {
+    "context": "page translation section subtitle",
+    "string": "Title and content shown on the model page"
+  },
   "11ep0q": {
     "context": "button",
     "string": "Show metadata"
@@ -684,6 +688,10 @@
   "1rpzrM": {
     "context": "search placeholder",
     "string": "Search by country name"
+  },
+  "1sSrNS": {
+    "context": "translation context bar",
+    "string": "Translating from {sourceLanguage} to {targetLanguage}"
   },
   "1shOIS": {
     "context": "column title",
@@ -1363,6 +1371,10 @@
     "context": "Dry run items list default message",
     "string": "Choose the object"
   },
+  "5cKZsg": {
+    "context": "seo translation section subtitle",
+    "string": "How this item appears in search results"
+  },
   "5dLpx0": {
     "context": "references attribute type",
     "string": "References"
@@ -1825,6 +1837,10 @@
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
   },
+  "8CXYxE": {
+    "context": "translation progress complete state",
+    "string": "All fields translated"
+  },
   "8Cjxdt": {
     "string": "Overcharged"
   },
@@ -2130,6 +2146,10 @@
     "context": "cancel button",
     "string": "Cancel order"
   },
+  "9agEIc": {
+    "context": "empty translation placeholder",
+    "string": "No translation yet"
+  },
   "9d24PR": {
     "string": "Create rule"
   },
@@ -2392,6 +2412,10 @@
   },
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
+  },
+  "B9jV/6": {
+    "context": "edit single translation field",
+    "string": "Edit"
   },
   "BA4leV": {
     "string": "API guide"
@@ -2859,9 +2883,6 @@
   },
   "DWWw3M": {
     "string": "Model type Name"
-  },
-  "DaPGcn": {
-    "string": "Model title"
   },
   "DbNXK5": {
     "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
@@ -3595,6 +3616,10 @@
   "HN1Gvw": {
     "context": "option description",
     "string": "Allocate order-line to a warehouse with the most stock. If not enough stock is available in a single warehouse, the remaining quantity is allocated in the next warehouse with the most stock and repeated if necessary."
+  },
+  "HNwxfx": {
+    "context": "seo description field hint",
+    "string": "Meta description shown in search engine previews"
   },
   "HP6m+q": {
     "string": "Attributes and Product Types"
@@ -4961,6 +4986,10 @@
     "context": "dialog header",
     "string": "Assign Model"
   },
+  "OqQ2Si": {
+    "context": "name field hint",
+    "string": "Displayed as the primary name in your storefront"
+  },
   "OqYCQ4": {
     "context": "allow legacy gift card use description",
     "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
@@ -5748,9 +5777,6 @@
   "Sz6CRr": {
     "string": "Create new product"
   },
-  "T/5OyA": {
-    "string": "No translation yet"
-  },
   "T0Mfxq": {
     "context": "product status title",
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
@@ -6358,9 +6384,6 @@
   "WK62MN": {
     "string": "Fulfillment"
   },
-  "WLyKAQ": {
-    "string": "Translation saved"
-  },
   "WMGoqz": {
     "context": "used by filter label",
     "string": "Used by"
@@ -6656,9 +6679,6 @@
     "context": "button to set cut-off date to current date and time",
     "string": "Set to current date and time"
   },
-  "Xtd0AT": {
-    "string": "Original String"
-  },
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
   },
@@ -6946,6 +6966,10 @@
   "ZJPYFl": {
     "context": "accepted header names",
     "string": "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>"
+  },
+  "ZJh40A": {
+    "context": "bulk translation save success",
+    "string": "All translations saved"
   },
   "ZLcjD2": {
     "string": "Password reset failed"
@@ -7353,10 +7377,6 @@
     "context": "total of all sent refunds",
     "string": "Result"
   },
-  "bVY7j0": {
-    "context": "Translated Name",
-    "string": "Translation"
-  },
   "bVbEZ/": {
     "context": "amount filter label",
     "string": "Amount"
@@ -7392,9 +7412,6 @@
     "context": "order return amount button",
     "string": "Return & Replace products"
   },
-  "bh+Keo": {
-    "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
-  },
   "bh9+8A": {
     "context": "voucher requirement",
     "string": "Minimal order value"
@@ -7406,6 +7423,10 @@
   "biVFKU": {
     "context": "subsection header",
     "string": "Billing Address"
+  },
+  "bin73/": {
+    "context": "page title field hint",
+    "string": "Displayed as the page title in your storefront"
   },
   "bj1U23": {
     "string": "Are you sure you want to delete {menuName}?"
@@ -7690,6 +7711,10 @@
   "cyR7Kh": {
     "string": "Back"
   },
+  "d+Wc8t": {
+    "context": "description field hint",
+    "string": "Main description content for this item"
+  },
   "d+qgix": {
     "string": "Next step"
   },
@@ -7954,6 +7979,10 @@
     "context": "dialog header",
     "string": "Delete Customer"
   },
+  "ez6WHE": {
+    "context": "translation progress count",
+    "string": "{completed} of {total} fields translated"
+  },
   "f/Drvo": {
     "context": "order history message",
     "string": "Transaction cancel requested"
@@ -8188,6 +8217,10 @@
   "gG4YAW": {
     "context": "Number of shipping zones",
     "string": "{count, plural, =0 {No shipping zones} one {# shipping zone} other {# shipping zones}}"
+  },
+  "gGSCAj": {
+    "context": "general translation section subtitle",
+    "string": "Core content shown on the storefront"
   },
   "gHB1Wx": {
     "context": "Number of countries covered by shipping",
@@ -8568,9 +8601,17 @@
     "context": "dialog header",
     "string": "Media Selection"
   },
+  "iSp+AA": {
+    "context": "field translation status",
+    "string": "Needs translation"
+  },
   "iUIn50": {
     "context": "section notice",
     "string": "Unfulfilled products will be restocked"
+  },
+  "iUhCur": {
+    "context": "attributes translation section subtitle",
+    "string": "Custom attribute values assigned to this item"
   },
   "iUy2dx": {
     "context": "vouchers section name",
@@ -8801,6 +8842,9 @@
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
   },
+  "jtxRC6": {
+    "string": "Press {key1} {key2} to save"
+  },
   "ju8zHP": {
     "string": "Added postal codes will be excluded from using this delivery methods. If none are added all postal codes will be able to use that shipping rate"
   },
@@ -8824,6 +8868,10 @@
   "jww7Wl": {
     "context": "confirmation dialog title",
     "string": "Generate {count} variants?"
+  },
+  "jxCLwG": {
+    "context": "bulk edit toggle label",
+    "string": "Edit in bulk"
   },
   "jxoMLL": {
     "context": "product field",
@@ -9479,6 +9527,10 @@
   "nBzIBG": {
     "string": "Delete permission group"
   },
+  "nDwEdh": {
+    "context": "attribute values section subtitle",
+    "string": "Selectable values for this attribute"
+  },
   "nEWp+k": {
     "context": "quantity of ordered products",
     "string": "Quantity"
@@ -9762,6 +9814,10 @@
     "context": "button",
     "string": "Assign"
   },
+  "oj4cW/": {
+    "context": "translation context bar without known source language",
+    "string": "Translating original content to {targetLanguage}"
+  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -9873,6 +9929,10 @@
   },
   "pSqXo6": {
     "string": "Related Order"
+  },
+  "pTja1U": {
+    "context": "page content field hint",
+    "string": "Main body content of the model page"
   },
   "pTpx0p": {
     "context": "order history message",
@@ -10202,6 +10262,10 @@
   },
   "qyJtWy": {
     "string": "Show less"
+  },
+  "qyLv3R": {
+    "context": "label for untranslated base content",
+    "string": "Original"
   },
   "qzDwLa": {
     "context": "Invalid url value",
@@ -10555,6 +10619,10 @@
     "context": "ShippingZoneSettingsCard title",
     "string": "Settings"
   },
+  "t/eWc4": {
+    "context": "single translation save success",
+    "string": "Translation saved"
+  },
   "t1Bd7E": {
     "string": "Payment captured"
   },
@@ -10819,6 +10887,10 @@
   "uQk8gB": {
     "context": "export all items to csv file",
     "string": "All gift cards ({number})"
+  },
+  "uR2ks6": {
+    "context": "bulk save button",
+    "string": "Save changes"
   },
   "uRTj1Q": {
     "context": "error message",
@@ -11314,6 +11386,10 @@
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
+  "wS1Wms": {
+    "context": "seo title field hint",
+    "string": "Title tag shown in browser tabs and search results"
+  },
   "wTHjt3": {
     "string": "Search Orders..."
   },
@@ -11413,6 +11489,10 @@
   "wu/9MB": {
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
+  },
+  "x/N8AY": {
+    "context": "field translation status",
+    "string": "Translated"
   },
   "x/ZVlU": {
     "string": "Product"
@@ -11698,13 +11778,13 @@
     "context": "order payment",
     "string": "Paid with Gift Card: ({link})"
   },
+  "yjN2GA": {
+    "context": "bulk translation save error summary",
+    "string": "{count, plural, one {# field could not be saved} other {# fields could not be saved}}"
+  },
   "ymo+cm": {
     "context": "voucher discount",
     "string": "All products"
-  },
-  "ymvZrH": {
-    "context": "page models",
-    "string": "Models"
   },
   "yn7Stx": {
     "context": "date group header",
@@ -11721,6 +11801,10 @@
   "ytKTTO": {
     "context": "draft orders section name",
     "string": "Drafts"
+  },
+  "ywLJ93": {
+    "context": "attribute translation section subtitle",
+    "string": "The attribute label shown in your storefront"
   },
   "yyJcyW": {
     "string": "App manifest contains issues. You can still install it, but it may not work properly. See technical details below:"

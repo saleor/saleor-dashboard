@@ -1,2 +1,1 @@
-export { default } from "./TranslationsAttributesPage";
-export * from "./TranslationsAttributesPage";
+export { fieldNames, TranslationsAttributesPage } from "./TranslationsAttributesPage";

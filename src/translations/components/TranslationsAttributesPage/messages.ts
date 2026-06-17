@@ -6,6 +6,11 @@ export const transtionsAttributesPageFieldsMessages = defineMessages({
     defaultMessage: "Values",
     description: "section name",
   },
+  valuesSubtitle: {
+    id: "nDwEdh",
+    defaultMessage: "Selectable values for this attribute",
+    description: "attribute values section subtitle",
+  },
 
   valueNumber: {
     id: "UvD+xp",

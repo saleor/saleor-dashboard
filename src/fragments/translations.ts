@@ -8,6 +8,7 @@ export const attributeValueTranslatableFragment = gql`
     richText
     attributeValue {
       id
+      inputType
     }
     attribute {
       id

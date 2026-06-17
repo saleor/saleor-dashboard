@@ -18,6 +18,7 @@ export const KeyboardKey = ({ children }: KeyboardKeyProps): ReactElement => (
 
 interface SendFormKeyboardShortcutHintProps {
   visible?: boolean;
+  action?: "send" | "save";
 }
 
 /**
@@ -25,6 +26,7 @@ interface SendFormKeyboardShortcutHintProps {
  */
 export const SendFormKeyboardShortcutHint = ({
   visible = true,
+  action = "send",
 }: SendFormKeyboardShortcutHintProps): ReactElement => (
   <Box
     display="flex"
@@ -37,14 +39,25 @@ export const SendFormKeyboardShortcutHint = ({
     }}
   >
     <Text size={1} color="default2">
-      <FormattedMessage
-        id="ILrXJV"
-        defaultMessage="Press {key1} {key2} to send"
-        values={{
-          key1: <KeyboardKey>{getModifierKey()}</KeyboardKey>,
-          key2: <KeyboardKey>↵</KeyboardKey>,
-        }}
-      />
+      {action === "save" ? (
+        <FormattedMessage
+          id="jtxRC6"
+          defaultMessage="Press {key1} {key2} to save"
+          values={{
+            key1: <KeyboardKey>{getModifierKey()}</KeyboardKey>,
+            key2: <KeyboardKey>↵</KeyboardKey>,
+          }}
+        />
+      ) : (
+        <FormattedMessage
+          id="ILrXJV"
+          defaultMessage="Press {key1} {key2} to send"
+          values={{
+            key1: <KeyboardKey>{getModifierKey()}</KeyboardKey>,
+            key2: <KeyboardKey>↵</KeyboardKey>,
+          }}
+        />
+      )}
     </Text>
   </Box>
 );
