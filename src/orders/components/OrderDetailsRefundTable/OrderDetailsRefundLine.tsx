@@ -42,19 +42,19 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
   return (
     <Fragment key={refund.id}>
       <GridTable.Row>
-        <GridTable.Cell paddingLeft={8}>
+        <GridTable.Cell paddingLeft={8} backgroundColor="default2">
           <OrderTransactionRefundStatusPill
             status={refund.status}
             label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
             size="small"
           />
         </GridTable.Cell>
-        <GridTable.Cell>
+        <GridTable.Cell backgroundColor="default2">
           <Box display="flex" justifyContent="flex-end">
             <Money money={refund.amount} />
           </Box>
         </GridTable.Cell>
-        <GridTable.Cell>
+        <GridTable.Cell backgroundColor="default2">
           <Box>
             {noReasonTypeNorNote && (
               <Text size={2}>{intl.formatMessage(refundGridMessages.manualRefund)}</Text>
@@ -69,7 +69,7 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
 
         <Tooltip>
           <Tooltip.Trigger>
-            <GridTable.Cell>
+            <GridTable.Cell backgroundColor="default2">
               {!!refund.user?.email && (
                 <UserAvatar initials={getUserInitials(refund.user as User)} />
               )}
@@ -81,10 +81,10 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
             </Tooltip.Content>
           )}
         </Tooltip>
-        <GridTable.Cell>
+        <GridTable.Cell backgroundColor="default2">
           <EventTime date={refund.createdAt} />
         </GridTable.Cell>
-        <GridTable.Cell textAlign="right" paddingRight={6}>
+        <GridTable.Cell textAlign="right" paddingRight={6} backgroundColor="default2">
           <Box data-test-id="edit-refund-button" display="flex" justifyContent="flex-end">
             {isEditable ? (
               <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
