@@ -30,6 +30,7 @@ import {
   getFilteredProducts,
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
   type CollectionFilterInput,
@@ -175,6 +176,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       ...detailsQueryInclude,
     },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const {
     voucherCodes,
     voucherCodesLoading,

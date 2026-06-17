@@ -14,6 +14,11 @@ trustPolicy: no-downgrade
 trustPolicyExclude:
   # Semver packages are not signed before 7.x. Check pnpm-lock which package is still using 6.x and plan upgrade entire tree.
   - "semver@6.3.1"
+  # jose 4.15.9 (transitive via @graphql-codegen/cli -> @graphql-tools/prisma-loader)
+  # was published without provenance attestation, unlike later releases, so the
+  # no-downgrade check flags it. It is already the version shipped in the lockfile.
+  # https://www.npmjs.com/package/jose/v/4.15.9
+  - "jose@4.15.9"
 
 packages:
   - "."

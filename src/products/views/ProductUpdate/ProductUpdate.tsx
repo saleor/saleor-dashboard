@@ -8,6 +8,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   ErrorPolicyEnum,
   type ProductMediaCreateMutation,
@@ -102,6 +103,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       firstValues: VALUES_PAGINATE_BY,
     },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
   const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
