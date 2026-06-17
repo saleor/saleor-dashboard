@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { EventTime } from "../OrderTransaction/components/TransactionEvents/components";
 import { OrderTransactionRefundStatusPill } from "../OrderTransactionRefundPage/components/OrderTransactionRefundStatusPill/OrderTransactionRefundStatusPill";
 import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
+import { REFUND_TABLE_COLUMN_COUNT } from "./consts";
 import { RefundLineSubRow } from "./RefundLineSubRow";
 import { ShowAllLinesBar } from "./ShowAllLinesBar";
 import { getGrantedRefundStatusMessage, getNotEditableRefundMessage } from "./utils";
@@ -42,19 +43,44 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
   return (
     <Fragment key={refund.id}>
       <GridTable.Row>
-        <GridTable.Cell paddingLeft={8} backgroundColor="default2">
+        <GridTable.Cell
+          colSpan={REFUND_TABLE_COLUMN_COUNT}
+          paddingLeft={8}
+          paddingBottom={0}
+          borderBottomWidth={0}
+          backgroundColor="default2"
+        >
+          <EventTime date={refund.createdAt} />
+        </GridTable.Cell>
+      </GridTable.Row>
+      <GridTable.Row>
+        <GridTable.Cell paddingLeft={8} paddingTop={1} borderTopWidth={0} backgroundColor="default2">
+          {!!refund.user?.email && (
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Box display="inline-flex">
+                  <UserAvatar initials={getUserInitials(refund.user as User)} />
+                </Box>
+              </Tooltip.Trigger>
+              <Tooltip.Content>
+                <Text size={2}>{getUserName(refund.user, true)}</Text>
+              </Tooltip.Content>
+            </Tooltip>
+          )}
+        </GridTable.Cell>
+        <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
           <OrderTransactionRefundStatusPill
             status={refund.status}
             label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
             size="small"
           />
         </GridTable.Cell>
-        <GridTable.Cell backgroundColor="default2">
+        <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
           <Box display="flex" justifyContent="flex-end">
             <Money money={refund.amount} />
           </Box>
         </GridTable.Cell>
-        <GridTable.Cell backgroundColor="default2">
+        <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
           <Box>
             {noReasonTypeNorNote && (
               <Text size={2}>{intl.formatMessage(refundGridMessages.manualRefund)}</Text>
@@ -66,25 +92,13 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
             />
           </Box>
         </GridTable.Cell>
-
-        <Tooltip>
-          <Tooltip.Trigger>
-            <GridTable.Cell backgroundColor="default2">
-              {!!refund.user?.email && (
-                <UserAvatar initials={getUserInitials(refund.user as User)} />
-              )}
-            </GridTable.Cell>
-          </Tooltip.Trigger>
-          {!!refund.user?.email && (
-            <Tooltip.Content>
-              <Text size={2}>{getUserName(refund.user, true)}</Text>
-            </Tooltip.Content>
-          )}
-        </Tooltip>
-        <GridTable.Cell backgroundColor="default2">
-          <EventTime date={refund.createdAt} />
-        </GridTable.Cell>
-        <GridTable.Cell textAlign="right" paddingRight={6} backgroundColor="default2">
+        <GridTable.Cell
+          textAlign="right"
+          paddingRight={6}
+          paddingTop={1}
+          borderTopWidth={0}
+          backgroundColor="default2"
+        >
           <Box data-test-id="edit-refund-button" display="flex" justifyContent="flex-end">
             {isEditable ? (
               <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>

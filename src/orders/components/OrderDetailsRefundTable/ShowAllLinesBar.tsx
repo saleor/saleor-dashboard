@@ -3,6 +3,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
+import { REFUND_TABLE_COLUMN_COUNT } from "./consts";
 import { refundGridMessages } from "./messages";
 
 interface ShowAllLinesBarProps {
@@ -11,12 +12,10 @@ interface ShowAllLinesBarProps {
   onToggle: () => void;
 }
 
-const TOTAL_COLUMNS = 6;
-
 export const ShowAllLinesBar = ({ expanded, totalCount, onToggle }: ShowAllLinesBarProps) => {
   return (
     <GridTable.Row>
-      <GridTable.Cell colSpan={TOTAL_COLUMNS} padding={0} backgroundColor="default1">
+      <GridTable.Cell colSpan={REFUND_TABLE_COLUMN_COUNT} padding={0} backgroundColor="default1">
         <Box
           as="button"
           type="button"

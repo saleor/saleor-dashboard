@@ -13,7 +13,7 @@ interface RefundLineSubRowProps {
 export const RefundLineSubRow = ({ line, isFirst }: RefundLineSubRowProps) => {
   return (
     <GridTable.Row className={isFirst ? styles.dashedTop : undefined}>
-      <GridTable.Cell colSpan={2} paddingLeft={8} backgroundColor="default1">
+      <GridTable.Cell colSpan={3} paddingLeft={8} backgroundColor="default1">
         <Box display="flex" alignItems="center" gap={3}>
           <Box width={8} height={8} flexShrink="0" data-test-id="refund-sub-row-thumbnail">
             {line.thumbnailUrl && (
@@ -29,7 +29,7 @@ export const RefundLineSubRow = ({ line, isFirst }: RefundLineSubRowProps) => {
       <GridTable.Cell backgroundColor="default1">
         <ReasonDisplay reasonReference={line.reasonType} reason={line.reason} ellipsis />
       </GridTable.Cell>
-      <GridTable.Cell colSpan={3} backgroundColor="default1" />
+      <GridTable.Cell backgroundColor="default1" />
     </GridTable.Row>
   );
 };

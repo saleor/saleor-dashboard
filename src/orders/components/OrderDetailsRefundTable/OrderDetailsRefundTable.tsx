@@ -7,6 +7,7 @@ import { Plus } from "lucide-react";
 import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { REFUND_TABLE_COLUMN_COUNT } from "./consts";
 import { refundGridMessages } from "./messages";
 import { OrderDetailsRefundLine } from "./OrderDetailsRefundLine";
 
@@ -64,10 +65,9 @@ export const OrderDetailsRefundTable = ({
       <GridTable data-test-id="refund-list" height="100%" paddingX={6}>
         <GridTable.Colgroup>
           <GridTable.Col __width="1%" />
-          <GridTable.Col __width="10%" />
-          <GridTable.Col __width="25%" />
           <GridTable.Col __width="1%" />
-          <GridTable.Col __width="20%" />
+          <GridTable.Col __width="10%" />
+          <GridTable.Col />
           <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
         {mergedRefunds.map((refund, index) => (
@@ -76,7 +76,7 @@ export const OrderDetailsRefundTable = ({
             {index < mergedRefunds.length - 1 && (
               <GridTable.Row>
                 <GridTable.Cell
-                  colSpan={6}
+                  colSpan={REFUND_TABLE_COLUMN_COUNT}
                   padding={0}
                   borderWidth={0}
                   backgroundColor="default1"
