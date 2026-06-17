@@ -5304,10 +5304,6 @@
     "context": "caption",
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
   },
-  "QAJ8Sb": {
-    "context": "label for model type tab grouping separator input",
-    "string": "Split on"
-  },
   "QAisk4": {
     "context": "Webhook events header",
     "string": "Webhook events"
@@ -9868,6 +9864,10 @@
   "owCz2y": {
     "context": "message when matrix view cannot be shown",
     "string": "Matrix view requires exactly 2 attributes with selected values"
+  },
+  "oyXhGL": {
+    "context": "label for model type tab grouping separator input",
+    "string": "Split on"
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
