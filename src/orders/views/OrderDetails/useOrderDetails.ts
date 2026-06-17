@@ -1,11 +1,9 @@
-import { useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
-import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
+import { useOrderDetailsQuery } from "@dashboard/graphql";
 
 export const useOrderDetails = (id: string) => {
-  const hasManageProducts = useHasManageProductsPermission();
-  const { data, loading } = useOrderDetailsWithMetadataQuery({
+  const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
-    variables: { id, hasManageProducts },
+    variables: { id },
   });
 
   return {

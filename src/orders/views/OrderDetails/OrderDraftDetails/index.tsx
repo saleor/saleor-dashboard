@@ -3,7 +3,7 @@ import { type FetchResult } from "@apollo/client";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  type OrderDetailsWithMetadataQueryResult,
+  type OrderDetailsQueryResult,
   type OrderDraftCancelMutation,
   type OrderDraftCancelMutationVariables,
   type OrderDraftFinalizeMutation,
@@ -51,7 +51,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data: OrderDetailsWithMetadataQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
   orderAddNote: any;
   orderUpdateNote: PartialMutationProviderOutput<
     OrderNoteUpdateMutation,
@@ -310,9 +310,9 @@ export const OrderDraftDetails = ({
         orderId={id}
       />
       <OrderMetadataDialog
-        open={params.action === "view-order-metadata" && !!order}
+        open={params.action === "view-order-metadata"}
         onClose={closeModal}
-        order={order}
+        orderId={id}
       />
       <OrderAddressFields
         action={params?.action}

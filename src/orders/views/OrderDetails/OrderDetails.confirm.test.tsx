@@ -2,8 +2,8 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { type MockedResponse, MockLink } from "@apollo/client/testing";
 import {
   OrderConfirmDocument,
-  OrderDetailsWithMetadataDocument,
-  type OrderDetailsWithMetadataQuery,
+  OrderDetailsDocument,
+  type OrderDetailsQuery,
   OrderStatus,
 } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
@@ -47,8 +47,8 @@ describe("OrderDetails confirm flow", () => {
     const cache = new InMemoryCache();
 
     cache.writeQuery({
-      query: OrderDetailsWithMetadataDocument,
-      variables: { id: ORDER_ID, hasManageProducts: true },
+      query: OrderDetailsDocument,
+      variables: { id: ORDER_ID },
       data: {
         order: unconfirmedOrder,
         shop,
@@ -61,9 +61,9 @@ describe("OrderDetails confirm flow", () => {
     });
 
     expect(
-      cache.readQuery<OrderDetailsWithMetadataQuery>({
-        query: OrderDetailsWithMetadataDocument,
-        variables: { id: ORDER_ID, hasManageProducts: true },
+      cache.readQuery<OrderDetailsQuery>({
+        query: OrderDetailsDocument,
+        variables: { id: ORDER_ID },
       })?.order?.status,
     ).toBe(OrderStatus.UNCONFIRMED);
 
@@ -75,9 +75,9 @@ describe("OrderDetails confirm flow", () => {
 
     // Assert
     expect(
-      cache.readQuery<OrderDetailsWithMetadataQuery>({
-        query: OrderDetailsWithMetadataDocument,
-        variables: { id: ORDER_ID, hasManageProducts: true },
+      cache.readQuery<OrderDetailsQuery>({
+        query: OrderDetailsDocument,
+        variables: { id: ORDER_ID },
       })?.order?.status,
     ).toBe(OrderStatus.UNFULFILLED);
   });
