@@ -46,7 +46,7 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
         <GridTable.Cell
           colSpan={REFUND_TABLE_COLUMN_COUNT}
           paddingLeft={8}
-          paddingBottom={0}
+          paddingBottom={1}
           borderBottomWidth={0}
           backgroundColor="default2"
         >
