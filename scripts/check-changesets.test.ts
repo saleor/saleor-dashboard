@@ -1,7 +1,6 @@
-// @ts-check
 import assert from "node:assert";
 
-import { ALLOWED_TYPES, parseBumpTypes } from "./check-changesets.mjs";
+import { ALLOWED_TYPES, parseBumpTypes } from "./check-changesets.ts";
 
 // Arrange / Act / Assert
 
@@ -34,7 +33,7 @@ assert.deepStrictEqual(parseBumpTypes("just a plain markdown file"), []);
 assert.deepStrictEqual(ALLOWED_TYPES, ["patch"]);
 
 // Verify the rule's intent: minor/major are rejected, patch is accepted
-const isAllowed = type => ALLOWED_TYPES.includes(type);
+const isAllowed = (type: string): boolean => ALLOWED_TYPES.includes(type);
 
 assert.strictEqual(isAllowed("patch"), true);
 assert.strictEqual(isAllowed("minor"), false);

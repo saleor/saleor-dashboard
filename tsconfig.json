@@ -29,5 +29,5 @@
       ]
     }
   },
-  "exclude": ["node_modules", "playwright"]
+  "exclude": ["node_modules", "playwright", "scripts"]
 }

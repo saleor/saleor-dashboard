@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// @ts-check
 
 /**
  * Lints changeset files in the `.changeset` folder.
@@ -10,21 +9,20 @@
  * Bumping the minor version is part of the minor release process and is done
  * manually by the release owner - not through changesets added in feature PRs.
  *
- * Usage:
- *   node scripts/check-changesets.mjs                 # scan the whole .changeset folder
- *   node scripts/check-changesets.mjs <file> [...]    # check only the given files (used by lint-staged)
+ * Executed directly by Node's TypeScript type stripping (Node >= 24), e.g.:
+ *   node scripts/check-changesets.ts                 # scan the whole .changeset folder
+ *   node scripts/check-changesets.ts <file> [...]    # check only the given files (used by lint-staged)
  */
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const CHANGESET_DIR = path.join(import.meta.dirname, "..", ".changeset");
 
-const CHANGESET_DIR = path.join(__dirname, "..", ".changeset");
-export const ALLOWED_TYPES = ["patch"];
+export const ALLOWED_TYPES: readonly string[] = ["patch"];
+
 // Markdown files in `.changeset` that are not changesets and must be skipped.
-const IGNORED_FILES = new Set(["README.md"]);
+const IGNORED_FILES = new Set<string>(["README.md"]);
 
 /**
  * Extracts the bump types declared in a changeset's frontmatter.
@@ -33,11 +31,8 @@ const IGNORED_FILES = new Set(["README.md"]);
  *   ---
  *   "saleor-dashboard": patch
  *   ---
- *
- * @param {string} content
- * @returns {string[]} list of bump types found (lowercased)
  */
-export function parseBumpTypes(content) {
+export function parseBumpTypes(content: string): string[] {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 
   if (!match) {
@@ -45,7 +40,7 @@ export function parseBumpTypes(content) {
   }
 
   const frontmatter = match[1];
-  const types = [];
+  const types: string[] = [];
 
   for (const line of frontmatter.split(/\r?\n/)) {
     const trimmed = line.trim();
@@ -65,10 +60,7 @@ export function parseBumpTypes(content) {
   return types;
 }
 
-/**
- * @returns {string[]} absolute paths of changeset files to check
- */
-function resolveFiles() {
+function resolveFiles(): string[] {
   const argFiles = process.argv.slice(2);
 
   if (argFiles.length > 0) {
@@ -87,9 +79,9 @@ function resolveFiles() {
     .map(file => path.join(CHANGESET_DIR, file));
 }
 
-function main() {
+function main(): void {
   const files = resolveFiles();
-  const errors = [];
+  const errors: string[] = [];
 
   for (const file of files) {
     if (!fs.existsSync(file)) {

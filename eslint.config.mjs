@@ -116,9 +116,9 @@ export default tseslint.config(
       "no-case-declarations": "off",
       "prefer-const": "off",
     },
-  }, // Properly resolve Node.js globals in .cjs files and Node scripts
+  }, // Properly resolve Node.js globals in .cjs files
   {
-    files: ["**/*.cjs", "scripts/**/*.mjs"],
+    files: ["**/*.cjs"],
     languageOptions: {
       globals: {
         ...globals.node, // Use all Node.js globals
