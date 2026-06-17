@@ -33,7 +33,6 @@ export class OrderFixture {
     number: "12345",
     created: "2023-10-01T12:00:00Z",
     isShippingRequired: true,
-    canFinalize: false,
     customerNote: "",
     isPaid: true,
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
@@ -173,8 +172,6 @@ export class OrderFixture {
     },
     shippingMethods: [],
     invoices: [],
-    metadata: [],
-    privateMetadata: [],
     voucherCode: null,
   } satisfies Partial<OrderDetailsFragment>;
 
@@ -489,8 +486,6 @@ export class OrderFixture {
     },
     reason: null,
     reasonReference: null,
-    metadata: [],
-    privateMetadata: [],
   } satisfies FulfillmentFragment;
 
   private static giftCards = [

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  // Standalone config for Node scripts executed directly via Node's TypeScript
+  // type stripping (Node >= 24). Kept separate from the root tsconfig so the
+  // app build/type-check is unaffected and these scripts can use Node/ESM
+  // settings (e.g. importing `.ts` extensions) without leaking into `src`.
+  "compilerOptions": {
+    // `esnext`/`bundler` makes TS treat every file as an ES module regardless of
+    // the (absent) root `package.json` "type" field - matching how Node strips
+    // and runs these `.ts` files as ESM (module syntax is detected at runtime).
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": ["node"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    // Node executes the `.ts` sources directly, so relative imports keep their
+    // `.ts` extension instead of being rewritten to `.js`.
+    "allowImportingTsExtensions": true
+  },
+  "include": ["**/*.ts"]
+}

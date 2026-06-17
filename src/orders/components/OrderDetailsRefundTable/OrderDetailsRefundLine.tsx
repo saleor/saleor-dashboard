@@ -54,7 +54,12 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
         </GridTable.Cell>
       </GridTable.Row>
       <GridTable.Row>
-        <GridTable.Cell paddingLeft={8} paddingTop={1} borderTopWidth={0} backgroundColor="default2">
+        <GridTable.Cell
+          paddingLeft={8}
+          paddingTop={1}
+          borderTopWidth={0}
+          backgroundColor="default2"
+        >
           {!!refund.user?.email && (
             <Tooltip>
               <Tooltip.Trigger>
