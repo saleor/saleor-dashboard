@@ -43,6 +43,7 @@ export const attributeInputTypeCell = (
   return {
     allowOverlay: false,
     readonly: true,
+    cursor: "pointer",
     copyData: label,
     ...gridCellOpts,
     kind: GridCellKind.Custom,

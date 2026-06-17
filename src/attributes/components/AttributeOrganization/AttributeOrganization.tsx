@@ -1,7 +1,7 @@
 import { messages as attributeClassMessages } from "@dashboard/components/AttributeClass/messages";
 import { DashboardCard } from "@dashboard/components/Card";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
+import { Box, Paragraph, RadioGroup } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -49,14 +49,18 @@ const AttributeOrganization = ({ data, disabled, onChange }: AttributeOrganizati
               data-test-id={AttributeTypeEnum.PRODUCT_TYPE}
               marginBottom={2}
             >
-              <Text size={2}>{intl.formatMessage(attributeClassMessages.productAttribute)}</Text>
+              <Paragraph fontSize={3} margin={0}>
+                {intl.formatMessage(attributeClassMessages.productAttribute)}
+              </Paragraph>
             </RadioGroup.Item>
             <RadioGroup.Item
               id={AttributeTypeEnum.PAGE_TYPE}
               value={AttributeTypeEnum.PAGE_TYPE}
               data-test-id={AttributeTypeEnum.PAGE_TYPE}
             >
-              <Text size={2}>{intl.formatMessage(attributeClassMessages.modelAttribute)}</Text>
+              <Paragraph fontSize={3} margin={0}>
+                {intl.formatMessage(attributeClassMessages.modelAttribute)}
+              </Paragraph>
             </RadioGroup.Item>
           </Box>
         </RadioGroup>

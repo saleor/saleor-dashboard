@@ -40,6 +40,7 @@ export const attributeTypeCell = (
 ): AttributeTypeCell => ({
   allowOverlay: false,
   readonly: true,
+  cursor: "pointer",
   copyData: label,
   ...opts,
   kind: GridCellKind.Custom,

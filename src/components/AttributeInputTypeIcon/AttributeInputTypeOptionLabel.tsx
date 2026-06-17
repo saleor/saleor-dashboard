@@ -20,9 +20,11 @@ export const AttributeInputTypeOptionLabel = ({
   const intl = useIntl();
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
+    <Box display="flex" alignItems="center" gap={2} flexShrink="0">
       <AttributeInputTypeIcon inputType={inputType} size={iconSize} />
-      <Text size={textSize}>{getAttributeInputTypeLabel(intl, inputType)}</Text>
+      <Text size={textSize} whiteSpace="nowrap">
+        {getAttributeInputTypeLabel(intl, inputType)}
+      </Text>
     </Box>
   );
 };

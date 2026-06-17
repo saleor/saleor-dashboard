@@ -22,10 +22,18 @@ export const AttributeLabelIcon = ({
   const pixelSize = attributeInputTypeIconPixelSize[size];
 
   return (
-    <Box color="default2" display="flex" alignItems="center" flexShrink="0" aria-label={ariaLabel}>
+    <Box
+      color="default2"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexShrink="0"
+      aria-label={ariaLabel}
+    >
       {createElement(icon, {
         size: pixelSize,
         strokeWidth: attributeInputTypeIconStrokeWidthBySize[size],
+        style: { display: "block" },
       })}
     </Box>
   );
