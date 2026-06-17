@@ -2183,6 +2183,9 @@ export const OrderEventFragmentDoc = gql`
       id
       productName
       variantName
+      thumbnail(size: 64) {
+        url
+      }
     }
   }
 }
