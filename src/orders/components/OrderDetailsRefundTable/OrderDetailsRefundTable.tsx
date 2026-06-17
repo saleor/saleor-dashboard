@@ -4,6 +4,7 @@ import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { refundGridMessages } from "./messages";
@@ -69,8 +70,21 @@ export const OrderDetailsRefundTable = ({
           <GridTable.Col __width="20%" />
           <GridTable.Col __width="1%" />
         </GridTable.Colgroup>
-        {mergedRefunds.map(refund => (
-          <OrderDetailsRefundLine key={refund.id} refund={refund} orderId={orderId} />
+        {mergedRefunds.map((refund, index) => (
+          <Fragment key={refund.id}>
+            <OrderDetailsRefundLine refund={refund} orderId={orderId} />
+            {index < mergedRefunds.length - 1 && (
+              <GridTable.Row>
+                <GridTable.Cell
+                  colSpan={6}
+                  padding={0}
+                  borderWidth={0}
+                  backgroundColor="default1"
+                  __height="24px"
+                />
+              </GridTable.Row>
+            )}
+          </Fragment>
         ))}
       </GridTable>
       {mergedRefunds.length === 0 && (
