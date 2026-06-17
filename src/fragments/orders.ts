@@ -77,6 +77,9 @@ export const fragmentOrderEvent = gql`
         id
         productName
         variantName
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }
