@@ -11,17 +11,13 @@ import * as M from "./messages";
 import styles from "./NumericUnits.module.css";
 import {
   getUnitChoices,
+  type ResolvedUnitData,
+  resolveUnitDataFromExistingUnit,
   type UnitSystem,
   unitSystemChoices,
   type UnitType,
   unitTypeChoices,
 } from "./utils";
-
-interface UnitData {
-  unit: MeasurementUnitsEnum | null | undefined;
-  system?: UnitSystem;
-  type?: UnitType;
-}
 
 interface NumericUnitsProps
   extends Pick<
@@ -32,6 +28,17 @@ interface NumericUnitsProps
   onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }
 
+const getInitialUnitData = (
+  unit: MeasurementUnitsEnum | null | undefined,
+  formatMessage: ReturnType<typeof useIntl>["formatMessage"],
+): ResolvedUnitData => {
+  if (!unit) {
+    return { unit: unit ?? null };
+  }
+
+  return resolveUnitDataFromExistingUnit(unit, getUnitChoices(formatMessage));
+};
+
 export const NumericUnits = ({
   data,
   disabled,
@@ -41,9 +48,9 @@ export const NumericUnits = ({
   onUnitChange,
 }: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
-  const [unitData, setUnitData] = useState<UnitData>({
-    unit: data.unit ?? null,
-  });
+  const [unitData, setUnitData] = useState<ResolvedUnitData>(() =>
+    getInitialUnitData(data.unit, formatMessage),
+  );
   const { unit, system, type } = unitData;
   const errorProps = {
     error: !!errors.unit,
@@ -61,54 +68,32 @@ export const NumericUnits = ({
       })),
       getUnitChoices(formatMessage),
     ],
-    [],
+    [formatMessage],
   );
 
-  useEffect(() => {
-    const normalizedUnit = unit ?? null;
+  useEffect(
+    function syncUnitToForm() {
+      const normalizedUnit = unit ?? null;
 
-    if ((data.unit ?? null) !== normalizedUnit) {
-      onUnitChange(normalizedUnit);
-    }
-  }, [data.unit, onUnitChange, unit]);
-  useEffect(() => {
-    if (data.unit) {
-      const selectInitialUnitData = () => {
-        const initialData: UnitData = { unit: data.unit };
+      if ((data.unit ?? null) !== normalizedUnit) {
+        onUnitChange(normalizedUnit);
+      }
+    },
+    [data.unit, onUnitChange, unit],
+  );
 
-        Object.entries(unitChoices).some(([system, types]) => {
-          const systemMatch = Object.entries(types).some(([type, units]) => {
-            const unitMatch = units.some(({ value }) => value === data.unit);
+  useEffect(
+    function validateUnitSelection() {
+      if (unit === undefined && !errors.unit) {
+        setError("unit", formatMessage(commonMessages.requiredField));
+      }
 
-            if (unitMatch) {
-              initialData.type = type as UnitType;
-            }
-
-            return unitMatch;
-          });
-
-          if (systemMatch) {
-            initialData.system = system as UnitSystem;
-          }
-
-          return systemMatch;
-        });
-
-        return initialData;
-      };
-
-      setUnitData(selectInitialUnitData());
-    }
-  }, []);
-  useEffect(() => {
-    if (unit === undefined && !errors.unit) {
-      setError("unit", formatMessage(commonMessages.requiredField));
-    }
-
-    if (errors.unit && (unit || unit === null)) {
-      clearErrors("unit");
-    }
-  }, [unitData, errors]);
+      if (errors.unit && (unit || unit === null)) {
+        clearErrors("unit");
+      }
+    },
+    [clearErrors, errors.unit, formatMessage, setError, unit],
+  );
 
   return (
     <Box marginTop={5}>
@@ -139,8 +124,8 @@ export const NumericUnits = ({
               label={formatMessage(M.messages.unitSystem)}
               name="system"
               onChange={({ target }) => {
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   system: target.value as UnitSystem,
                 }));
               }}
@@ -158,8 +143,8 @@ export const NumericUnits = ({
               label={formatMessage(M.messages.unitOf)}
               name="type"
               onChange={({ target }) => {
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   type: target.value as UnitType,
                 }));
               }}
@@ -175,10 +160,10 @@ export const NumericUnits = ({
               data-test-id="unit"
               disabled={!type || disabled}
               label={formatMessage(M.messages.unit)}
-              name="type"
+              name="unit"
               onChange={({ target }) =>
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   unit: target.value as MeasurementUnitsEnum,
                 }))
               }

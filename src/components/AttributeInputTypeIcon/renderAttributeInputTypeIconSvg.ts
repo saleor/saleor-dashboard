@@ -1,20 +1,16 @@
 /**
  * Canvas / Datagrid only. See getAttributeInputTypeIconNode.ts — not for React UI.
  */
-import { iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { type AttributeIconOptions } from "./getAttributeInputTypeIcon";
 import { getAttributeInputTypeIconNode } from "./getAttributeInputTypeIconNode";
 import { iconNodeToSvg } from "./iconNodeToSvg";
-import { attributeInputTypeIconPixelSize, type AttributeInputTypeIconSize } from "./types";
-
-const strokeWidthBySize: Record<AttributeInputTypeIconSize, number> = {
-  xsmall: iconStrokeWidthBySize.small,
-  small: iconStrokeWidthBySize.small,
-  medium: iconStrokeWidthBySize.medium,
-  large: iconStrokeWidthBySize.large,
-};
+import {
+  attributeInputTypeIconPixelSize,
+  type AttributeInputTypeIconSize,
+  attributeInputTypeIconStrokeWidthBySize,
+} from "./types";
 
 export const renderAttributeInputTypeIconSvg = (
   inputType: AttributeInputTypeEnum,
@@ -25,6 +21,6 @@ export const renderAttributeInputTypeIconSvg = (
   iconNodeToSvg(
     getAttributeInputTypeIconNode(inputType, options),
     attributeInputTypeIconPixelSize[size],
-    strokeWidthBySize[size],
+    attributeInputTypeIconStrokeWidthBySize[size],
     color,
   );

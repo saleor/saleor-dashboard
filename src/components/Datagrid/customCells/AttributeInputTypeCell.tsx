@@ -3,23 +3,17 @@
  * Uses renderAttributeInputTypeIconSvg; React lists/forms should not import this.
  */
 import { renderAttributeInputTypeIconSvg } from "@dashboard/components/AttributeInputTypeIcon/renderAttributeInputTypeIconSvg";
-import {
-  attributeInputTypeIconPixelSize,
-  type AttributeInputTypeIconSize,
-} from "@dashboard/components/AttributeInputTypeIcon/types";
 import { type AttributeInputTypeEnum } from "@dashboard/graphql";
 import {
   type CustomCell,
   type CustomRenderer,
-  getMiddleCenterBias,
   type GridCell,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
 
+import { drawIconLabelCell, ICON_LABEL_CELL_ICON_SIZE } from "./drawIconLabelCell";
+
 const CELL_KIND = "attribute-input-type-cell";
-const ICON_SIZE: AttributeInputTypeIconSize = "xsmall";
-const ICON_GAP = 4;
-const X_PAD = 8;
 
 interface AttributeInputTypeCellProps {
   readonly kind: typeof CELL_KIND;
@@ -36,7 +30,7 @@ const getIconDataUri = (
   hasUnit: boolean,
 ): string =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-    renderAttributeInputTypeIconSvg(inputType, ICON_SIZE, color, { hasUnit }),
+    renderAttributeInputTypeIconSvg(inputType, ICON_LABEL_CELL_ICON_SIZE, color, { hasUnit }),
   )}`;
 
 export const attributeInputTypeCell = (
@@ -65,31 +59,10 @@ export const attributeInputTypeCellRenderer: CustomRenderer<AttributeInputTypeCe
   kind: GridCellKind.Custom,
   isMatch: (cell: CustomCell): cell is AttributeInputTypeCell =>
     (cell.data as AttributeInputTypeCellProps).kind === CELL_KIND,
-  draw: (args, cell) => {
-    const { rect, ctx, theme, imageLoader, col, row } = args;
-    const iconColor = theme.textLight;
-    const image = imageLoader.loadOrGetImage(
-      getIconDataUri(cell.data.inputType, iconColor, cell.data.hasUnit),
-      col,
-      row,
-    );
-    const pixelSize = attributeInputTypeIconPixelSize[ICON_SIZE];
-    const textX = rect.x + X_PAD + pixelSize + ICON_GAP;
-
-    if (image) {
-      const iconY = rect.y + (rect.height - pixelSize) / 2;
-
-      ctx.drawImage(image, rect.x + X_PAD, iconY, pixelSize, pixelSize);
-    }
-
-    ctx.fillStyle = theme.textDark;
-    ctx.font = theme.baseFontStyle;
-    ctx.fillText(
+  draw: (args, cell) =>
+    drawIconLabelCell(
+      args,
+      getIconDataUri(cell.data.inputType, args.theme.textLight, cell.data.hasUnit),
       cell.data.label,
-      textX,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
-
-    return true;
-  },
+    ),
 };

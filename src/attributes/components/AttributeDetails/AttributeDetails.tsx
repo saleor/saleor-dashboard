@@ -1,5 +1,6 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
-import { AttributeInputTypeOptionLabel } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeOptionLabel";
+import { getAttributeInputTypeLabel } from "@dashboard/attributes/utils/getAttributeInputTypeLabel";
+import { AttributeInputTypeOptionAdornment } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeOptionAdornment";
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
@@ -80,10 +81,11 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
   const inputTypeChoices = useMemo(
     () =>
       attributeInputTypeOptions.map(inputType => ({
-        label: <AttributeInputTypeOptionLabel inputType={inputType} />,
+        label: getAttributeInputTypeLabel(intl, inputType),
         value: inputType,
+        startAdornment: <AttributeInputTypeOptionAdornment inputType={inputType} />,
       })),
-    [],
+    [intl],
   );
   const entityTypeChoices = [
     {

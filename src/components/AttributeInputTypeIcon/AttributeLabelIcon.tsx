@@ -1,22 +1,18 @@
-import { iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box } from "@saleor/macaw-ui-next";
 import { type LucideIcon } from "lucide-react";
 import { createElement } from "react";
 
-import { attributeInputTypeIconPixelSize, type AttributeInputTypeIconSize } from "./types";
+import {
+  attributeInputTypeIconPixelSize,
+  type AttributeInputTypeIconSize,
+  attributeInputTypeIconStrokeWidthBySize,
+} from "./types";
 
 interface AttributeLabelIconProps {
   icon: LucideIcon;
   size?: AttributeInputTypeIconSize;
   ariaLabel?: string;
 }
-
-const strokeWidthBySize: Record<AttributeInputTypeIconSize, number> = {
-  xsmall: iconStrokeWidthBySize.small,
-  small: iconStrokeWidthBySize.small,
-  medium: iconStrokeWidthBySize.medium,
-  large: iconStrokeWidthBySize.large,
-};
 
 export const AttributeLabelIcon = ({
   icon,
@@ -29,7 +25,7 @@ export const AttributeLabelIcon = ({
     <Box color="default2" display="flex" alignItems="center" flexShrink="0" aria-label={ariaLabel}>
       {createElement(icon, {
         size: pixelSize,
-        strokeWidth: strokeWidthBySize[size],
+        strokeWidth: attributeInputTypeIconStrokeWidthBySize[size],
       })}
     </Box>
   );

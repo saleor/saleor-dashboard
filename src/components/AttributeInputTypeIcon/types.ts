@@ -1,4 +1,4 @@
-import { type iconSize } from "@dashboard/components/icons";
+import { type iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 
 export type AttributeInputTypeIconSize = "xsmall" | keyof typeof iconSize;
 
@@ -7,4 +7,11 @@ export const attributeInputTypeIconPixelSize: Record<AttributeInputTypeIconSize,
   small: 16,
   medium: 20,
   large: 24,
+};
+
+export const attributeInputTypeIconStrokeWidthBySize: Record<AttributeInputTypeIconSize, number> = {
+  xsmall: iconStrokeWidthBySize.small,
+  small: iconStrokeWidthBySize.small,
+  medium: iconStrokeWidthBySize.medium,
+  large: iconStrokeWidthBySize.large,
 };

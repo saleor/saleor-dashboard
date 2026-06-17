@@ -13,7 +13,7 @@ export const AttributeInputTypeOptionAdornment = ({
   inputType,
   size = "xsmall",
 }: AttributeInputTypeOptionAdornmentProps) => (
-  <Box display="flex" alignItems="center" marginRight={1} flexShrink={0}>
+  <Box display="flex" alignItems="center" marginRight={1} flexShrink="0">
     <AttributeInputTypeIcon inputType={inputType} size={size} />
   </Box>
 );
