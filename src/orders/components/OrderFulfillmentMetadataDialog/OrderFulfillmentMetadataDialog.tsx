@@ -2,28 +2,35 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { OrderDetailsDocument, type OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderFulfillmentMetadataDocument } from "@dashboard/graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
+import { useFulfillmentMetadataValues } from "./useFulfillmentMetadataValues";
 
 interface OrderFulfillmentMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  fulfillment: FulfillmentMetadataDialogData | undefined;
+  orderId: string;
+  fulfillmentId: string;
 }
 
 export const OrderFulfillmentMetadataDialog = ({
   onClose,
   open,
-  fulfillment,
+  orderId,
+  fulfillmentId,
 }: OrderFulfillmentMetadataDialogProps) => {
   const intl = useIntl();
+  const { data: fulfillment } = useFulfillmentMetadataValues({
+    orderId,
+    fulfillmentId,
+    open,
+  });
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: fulfillment,
     onClose,
-    refetchDocument: OrderDetailsDocument,
+    refetchDocument: OrderFulfillmentMetadataDocument,
   });
 
   const {
@@ -64,6 +71,7 @@ export const OrderFulfillmentMetadataDialog = ({
       }}
       onChange={handleChange}
       loading={submitInProgress}
+      contentLoading={open && !fulfillment}
       errors={{
         metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
         privateMetadata: privateMetadataErrors.length

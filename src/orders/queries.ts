@@ -128,31 +128,30 @@ export const orderDetailsQuery = gql`
   }
 `;
 
-export const orderDetailsWithMetadataQuery = gql`
-  query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
-    order(id: $id) {
-      ...OrderDetailsWithMetadata
-    }
-    shop {
-      countries {
-        code
-        country
-      }
-      defaultWeightUnit
-      fulfillmentAllowUnpaid
-      fulfillmentAutoApprove
-      availablePaymentGateways {
-        ...PaymentGateway
-      }
-    }
-  }
-`;
-
 export const orderLinesMetadata = gql`
   query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
     order(id: $id) {
       lines {
         ...OrderLineMetadataDetails
+      }
+    }
+  }
+`;
+
+export const orderMetadataQuery = gql`
+  query OrderMetadata($id: ID!) {
+    order(id: $id) {
+      ...OrderMetadata
+    }
+  }
+`;
+
+export const orderFulfillmentMetadataQuery = gql`
+  query OrderFulfillmentMetadata($id: ID!) {
+    order(id: $id) {
+      id
+      fulfillments {
+        ...FulfillmentMetadata
       }
     }
   }

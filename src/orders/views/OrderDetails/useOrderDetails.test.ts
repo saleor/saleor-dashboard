@@ -1,24 +1,16 @@
-import { useUser } from "@dashboard/auth/useUser";
-import { PermissionEnum, useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
+import { useOrderDetailsQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react";
 
 import { useOrderDetails } from "./useOrderDetails";
 
-jest.mock("@dashboard/auth/useUser");
 jest.mock("@dashboard/graphql");
 
 describe("useOrderDetails", () => {
-  it("should be called with MANAGE_PRODUCTS permission", () => {
+  it("fetches order details by id without loading metadata eagerly", () => {
     // Arrange
-    (useUser as jest.Mock).mockReturnValue({
-      user: {
-        userPermissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
-      },
-    });
-
     const mockData = { order: { id: "1", name: "Test Order" } };
 
-    (useOrderDetailsWithMetadataQuery as jest.Mock).mockReturnValue({
+    (useOrderDetailsQuery as jest.Mock).mockReturnValue({
       data: mockData,
       loading: false,
     });
@@ -27,36 +19,9 @@ describe("useOrderDetails", () => {
     const { result } = renderHook(() => useOrderDetails("1"));
 
     // Assert
-    expect(useOrderDetailsWithMetadataQuery).toHaveBeenCalledWith({
+    expect(useOrderDetailsQuery).toHaveBeenCalledWith({
       displayLoader: true,
-      variables: { id: "1", hasManageProducts: true },
-    });
-    expect(result.current.data).toEqual(mockData);
-    expect(result.current.loading).toBe(false);
-  });
-
-  it("should not be called with MANAGE_PRODUCTS permission", () => {
-    // Arrange
-    (useUser as jest.Mock).mockReturnValue({
-      user: {
-        userPermissions: [{ code: PermissionEnum.MANAGE_ORDERS }],
-      },
-    });
-
-    const mockData = { order: { id: "1", name: "Test Order" } };
-
-    (useOrderDetailsWithMetadataQuery as jest.Mock).mockReturnValue({
-      data: mockData,
-      loading: false,
-    });
-
-    // Act
-    const { result } = renderHook(() => useOrderDetails("1"));
-
-    // Assert
-    expect(useOrderDetailsWithMetadataQuery).toHaveBeenCalledWith({
-      displayLoader: true,
-      variables: { id: "1", hasManageProducts: false },
+      variables: { id: "1" },
     });
     expect(result.current.data).toEqual(mockData);
     expect(result.current.loading).toBe(false);

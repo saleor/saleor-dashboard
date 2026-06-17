@@ -6,7 +6,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
-  OrderDetailsWithMetadataDocument,
+  OrderDetailsDocument,
   OrderStatus,
   useOrderConfirmMutation,
   useUpdateMetadataMutation,
@@ -156,13 +156,13 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
           onInvoiceSend={orderMessages.handleInvoiceSend}
           onTransactionActionSend={async data => {
             await apolloClient.refetchQueries({
-              include: [OrderDetailsWithMetadataDocument],
+              include: [OrderDetailsDocument],
             });
             orderMessages.handleTransactionAction(data);
           }}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
-              include: [OrderDetailsWithMetadataDocument],
+              include: [OrderDetailsDocument],
             });
             orderMessages.handleAddManualTransaction(data);
           }}
