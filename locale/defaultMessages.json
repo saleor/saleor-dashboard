@@ -607,9 +607,6 @@
     "context": "section header",
     "string": "Fulfilled"
   },
-  "19/lwV": {
-    "string": "Determine attributes used to create product types"
-  },
   "19o9WS": {
     "string": "Learn more about {userPermissions}"
   },
@@ -1683,6 +1680,10 @@
   "7G7tg3": {
     "context": "Number of variants that have stock available",
     "string": "{count, plural, one {# variant in stock} other {# variants in stock}}"
+  },
+  "7GcWC8": {
+    "context": "configuration section label",
+    "string": "Tax Settings"
   },
   "7H2D5m": {
     "context": "attribute value deleted",
@@ -3420,6 +3421,10 @@
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
+  "GTg7rP": {
+    "context": "configuration menu item title",
+    "string": "Product attributes"
+  },
   "GUeIcq": {
     "context": "edit structure, header",
     "string": "Edit Item"
@@ -3621,9 +3626,6 @@
     "context": "seo description field hint",
     "string": "Meta description shown in search engine previews"
   },
-  "HP6m+q": {
-    "string": "Attributes and Product Types"
-  },
   "HQR2y0": {
     "context": "attribute value is required",
     "string": "Value Required"
@@ -3759,6 +3761,10 @@
   "I/y4IU": {
     "context": "alert message",
     "string": "one of"
+  },
+  "I0975K": {
+    "context": "configuration menu item title",
+    "string": "Model attributes"
   },
   "I1Mz7h": {
     "string": "Manage Collection Channel Availability"
@@ -4978,6 +4984,10 @@
     "context": "button",
     "string": "Assign members"
   },
+  "OjNTfe": {
+    "context": "built-in attribute list filter preset",
+    "string": "Product attributes"
+  },
   "Om1LKj": {
     "context": "stock input label",
     "string": "Initial stock (all warehouses)"
@@ -5236,6 +5246,10 @@
   "Q+oKl+": {
     "context": "confirmation dialog description",
     "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
+  },
+  "Q/8Uby": {
+    "context": "configuration section label for model types and attributes",
+    "string": "Model Settings"
   },
   "Q/Nbku": {
     "context": "product field",
@@ -6944,6 +6958,10 @@
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
+  "ZCUS72": {
+    "context": "configuration section label for product types and attributes",
+    "string": "Product Settings"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -8037,6 +8055,10 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fFwHC3": {
+    "context": "configuration menu item description",
+    "string": "Manage attributes used for model types"
+  },
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
@@ -8749,6 +8771,10 @@
     "context": "order history message",
     "string": "Shipping tracking number was sent to customer"
   },
+  "j4dRq/": {
+    "context": "configuration menu item description",
+    "string": "Define types of models you use"
+  },
   "j5hGyJ": {
     "context": "attribute is filterable in dashboard",
     "string": "Filterable in dashboard"
@@ -8767,9 +8793,6 @@
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
-  },
-  "jFrdB5": {
-    "string": "Product Settings"
   },
   "jGGnSZ": {
     "context": "page header",
@@ -11034,6 +11057,10 @@
     "context": "column picker section header",
     "string": "Columns"
   },
+  "usPgB+": {
+    "context": "configuration menu item description",
+    "string": "Manage attributes used for product types"
+  },
   "usjqAQ": {
     "context": "Badge showing number of issues in a channel",
     "string": "{count, plural, one {# issue} other {# issues}}"
@@ -11067,6 +11094,10 @@
   "v01/tY": {
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
+  },
+  "v17EX7": {
+    "context": "built-in attribute list filter preset",
+    "string": "Model attributes"
   },
   "v17Lly": {
     "context": "label",
