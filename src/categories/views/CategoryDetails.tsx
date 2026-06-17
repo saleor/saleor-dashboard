@@ -1,6 +1,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryBulkDeleteMutation,
   type CategoryDeleteMutation,
@@ -89,6 +90,9 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     displayLoader: true,
     variables: { ...paginationState, id },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const category = data?.category;
   const subcategories = mapEdgesToItems(data?.category?.children);
   const products = mapEdgesToItems(data?.category?.products);

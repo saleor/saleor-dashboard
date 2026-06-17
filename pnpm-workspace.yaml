@@ -23,6 +23,11 @@ trustPolicyExclude:
   - "@graphql-tools/wrap@10.1.4"
   - "@graphql-tools/delegate@10.2.23"
   - "@graphql-tools/batch-execute@9.0.19"
+  # jose 4.15.9 (transitive via @graphql-codegen/cli -> @graphql-tools/prisma-loader)
+  # was published without provenance attestation, unlike later releases, so the
+  # no-downgrade check flags it. It is already the version shipped in the lockfile.
+  # https://www.npmjs.com/package/jose/v/4.15.9
+  - "jose@4.15.9"
 
 packages:
   - "."

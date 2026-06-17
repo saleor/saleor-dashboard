@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import { type CustomerDetailsQuery, useCustomerDetailsQuery } from "@dashboard/graphql";
 import type * as React from "react";
 import { createContext } from "react";
@@ -18,12 +19,15 @@ export const CustomerDetailsProvider = ({
   children,
   id,
 }: CustomerDetailsProviderProps & { children: React.ReactNode }) => {
-  const { data, loading } = useCustomerDetailsQuery({
+  const { data, loading, refetch } = useCustomerDetailsQuery({
     displayLoader: true,
     variables: {
       id,
     },
   });
+
+  useRegisterEntityRefresh(refetch);
+
   const providerValues: CustomerDetailsConsumerProps = {
     customer: data,
     loading,

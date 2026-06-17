@@ -37,6 +37,12 @@ jest.mock(
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   useNotifier: () => mockNotify,
 }));
+
+const mockTriggerEntityRefresh = jest.fn();
+
+jest.mock("@dashboard/extensions/entity-refresh", () => ({
+  useTriggerEntityRefresh: () => mockTriggerEntityRefresh,
+}));
 jest.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
   close: mockCloseExternalApp,
   openApp: jest.fn(),
@@ -116,6 +122,34 @@ describe("AppActionsHandler", function () {
         status: "success",
         text: "Test content",
         title: "Test title",
+      });
+    });
+  });
+  describe("useHandleRefreshEntityAction", () => {
+    it("Triggers entity refresh and acks with ok", () => {
+      // Arrange
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleRefreshEntityAction());
+
+      // Act
+      const response = handle({
+        type: "refreshEntity",
+        payload: {
+          actionId: "refresh-action-id",
+        },
+      });
+
+      // Assert
+      expect(mockTriggerEntityRefresh).toHaveBeenCalledTimes(1);
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "refresh-action-id",
+          ok: true,
+        },
       });
     });
   });

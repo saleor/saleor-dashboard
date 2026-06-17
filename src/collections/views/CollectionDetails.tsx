@@ -5,6 +5,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CollectionInput,
   type CollectionUpdateMutation,
@@ -95,10 +96,12 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
   });
 
   const [selectedChannel] = useLocalStorage("collectionListChannel", "");
-  const { data, loading } = useCollectionDetailsQuery({
+  const { data, loading, refetch } = useCollectionDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
+
+  useRegisterEntityRefresh(refetch);
 
   const collection = data?.collection;
   const allChannels = createCollectionChannels(availableChannels)?.sort((channel, nextChannel) =>
