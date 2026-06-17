@@ -71,31 +71,32 @@ interface ModelTypeNameSplit {
 }
 
 const splitModelTypeName = (name: string, separators: string[]): ModelTypeNameSplit | null => {
-  let bestMatch: { index: number; separator: string } | null = null;
+  let bestIndex = -1;
+  let bestSeparator = "";
 
-  separators.forEach(separator => {
+  for (const separator of separators) {
     const index = name.indexOf(separator);
 
     if (index === -1) {
-      return;
+      continue;
     }
 
     if (
-      !bestMatch ||
-      index < bestMatch.index ||
-      (index === bestMatch.index && separator.length > bestMatch.separator.length)
+      bestIndex === -1 ||
+      index < bestIndex ||
+      (index === bestIndex && separator.length > bestSeparator.length)
     ) {
-      bestMatch = { index, separator };
+      bestIndex = index;
+      bestSeparator = separator;
     }
-  });
+  }
 
-  if (!bestMatch) {
+  if (bestIndex === -1) {
     return null;
   }
 
-  const { index, separator } = bestMatch;
-  const prefix = name.slice(0, index).trim();
-  const suffix = name.slice(index + separator.length).trim();
+  const prefix = name.slice(0, bestIndex).trim();
+  const suffix = name.slice(bestIndex + bestSeparator.length).trim();
 
   if (!prefix || !suffix) {
     return null;
