@@ -10,9 +10,9 @@ import {
 
 describe("groupModelTypeTabs", () => {
   const storefrontTypes = [
-    { id: "cart", name: "Storefront — Cart" },
-    { id: "checkout", name: "Storefront — Checkout" },
-    { id: "chrome", name: "Storefront — Chrome" },
+    { id: "cart", name: "Storefront - Cart" },
+    { id: "checkout", name: "Storefront - Checkout" },
+    { id: "chrome", name: "Storefront - Chrome" },
   ];
 
   it("returns empty array for empty input", () => {
@@ -26,10 +26,10 @@ describe("groupModelTypeTabs", () => {
     expect(result).toEqual([]);
   });
 
-  it("keeps a single prefixed type as a standalone tab", () => {
+  it("groups a single prefixed type into a group tab", () => {
     // Arrange
     const pageTypes = [
-      { id: "article", name: "Storefront — Article" },
+      { id: "article", name: "Storefront - Article" },
       { id: "legal", name: "Legal" },
     ];
 
@@ -38,7 +38,12 @@ describe("groupModelTypeTabs", () => {
 
     // Assert
     expect(result).toEqual([
-      { kind: "type", id: "article", name: "Storefront — Article" },
+      {
+        kind: "group",
+        id: getGroupTabId("Storefront"),
+        prefix: "Storefront",
+        subtypes: [{ id: "article", name: "Storefront - Article", suffix: "Article" }],
+      },
       { kind: "type", id: "legal", name: "Legal" },
     ]);
   });
@@ -62,9 +67,9 @@ describe("groupModelTypeTabs", () => {
         id: getGroupTabId("Storefront"),
         prefix: "Storefront",
         subtypes: [
-          { id: "cart", name: "Storefront — Cart", suffix: "Cart" },
-          { id: "checkout", name: "Storefront — Checkout", suffix: "Checkout" },
-          { id: "chrome", name: "Storefront — Chrome", suffix: "Chrome" },
+          { id: "cart", name: "Storefront - Cart", suffix: "Cart" },
+          { id: "checkout", name: "Storefront - Checkout", suffix: "Checkout" },
+          { id: "chrome", name: "Storefront - Chrome", suffix: "Chrome" },
         ],
       },
       { kind: "type", id: "legal", name: "Legal" },
@@ -74,9 +79,9 @@ describe("groupModelTypeTabs", () => {
   it("preserves API sort order when emitting groups", () => {
     // Arrange
     const pageTypes = [
-      { id: "checkout", name: "Storefront — Checkout" },
+      { id: "checkout", name: "Storefront - Checkout" },
       { id: "article", name: "Article" },
-      { id: "cart", name: "Storefront — Cart" },
+      { id: "cart", name: "Storefront - Cart" },
     ];
 
     // Act
@@ -147,6 +152,40 @@ describe("groupModelTypeTabs", () => {
     );
   });
 
+  it("groups prefixes case-insensitively", () => {
+    // Arrange
+    const pageTypes = [
+      { id: "bulk-1", name: "a page type to be bulk deleted 1/2" },
+      { id: "bulk-2", name: "A page type to be bulk deleted 2/2" },
+      { id: "edited", name: "A page type to be edited" },
+    ];
+
+    // Act
+    const result = groupModelTypeTabs(pageTypes, { separator: "type to" });
+
+    // Assert
+    expect(result).toEqual([
+      {
+        kind: "group",
+        id: getGroupTabId("a page"),
+        prefix: "a page",
+        subtypes: [
+          {
+            id: "bulk-1",
+            name: "a page type to be bulk deleted 1/2",
+            suffix: "be bulk deleted 1/2",
+          },
+          {
+            id: "bulk-2",
+            name: "A page type to be bulk deleted 2/2",
+            suffix: "be bulk deleted 2/2",
+          },
+          { id: "edited", name: "A page type to be edited", suffix: "be edited" },
+        ],
+      },
+    ]);
+  });
+
   it("uses the default separator constant", () => {
     // Arrange
     const pageTypes = storefrontTypes.slice(0, 2);
@@ -165,8 +204,8 @@ describe("group tab helpers", () => {
     id: getGroupTabId("Storefront"),
     prefix: "Storefront",
     subtypes: [
-      { id: "cart", name: "Storefront — Cart", suffix: "Cart" },
-      { id: "checkout", name: "Storefront — Checkout", suffix: "Checkout" },
+      { id: "cart", name: "Storefront - Cart", suffix: "Cart" },
+      { id: "checkout", name: "Storefront - Checkout", suffix: "Checkout" },
     ],
   };
 
@@ -224,8 +263,8 @@ describe("group tab helpers", () => {
   it("resolves the active count key for a grouped selection", () => {
     // Arrange
     const pageTypes = [
-      { id: "cart", name: "Storefront — Cart" },
-      { id: "checkout", name: "Storefront — Checkout" },
+      { id: "cart", name: "Storefront - Cart" },
+      { id: "checkout", name: "Storefront - Checkout" },
     ];
 
     // Act

@@ -20,11 +20,19 @@ export interface GroupModelTypeTabsOptions {
   enabled?: boolean;
 }
 
-export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " — ";
+export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " - ";
 
 export const GROUP_TAB_ID_PREFIX = "group:";
 
-export const getGroupTabId = (prefix: string) => `${GROUP_TAB_ID_PREFIX}${prefix}`;
+export const getGroupTabId = (prefix: string) =>
+  `${GROUP_TAB_ID_PREFIX}${prefix.toLocaleLowerCase()}`;
+
+interface ModelTypeBucket {
+  displayPrefix: string;
+  subtypes: ModelTypeSubtype[];
+}
+
+const getBucketKey = (prefix: string) => prefix.toLocaleLowerCase();
 
 const splitModelTypeName = (
   name: string,
@@ -61,7 +69,7 @@ export const groupModelTypeTabs = (
     }));
   }
 
-  const buckets = new Map<string, ModelTypeSubtype[]>();
+  const buckets = new Map<string, ModelTypeBucket>();
 
   pageTypes.forEach(pageType => {
     const parts = splitModelTypeName(pageType.name, separator);
@@ -70,26 +78,33 @@ export const groupModelTypeTabs = (
       return;
     }
 
-    const existing = buckets.get(parts.prefix) ?? [];
-
-    existing.push({
+    const bucketKey = getBucketKey(parts.prefix);
+    const subtype: ModelTypeSubtype = {
       id: pageType.id,
       name: pageType.name,
       suffix: parts.suffix,
+    };
+    const existing = buckets.get(bucketKey);
+
+    if (existing) {
+      existing.subtypes.push(subtype);
+
+      return;
+    }
+
+    buckets.set(bucketKey, {
+      displayPrefix: parts.prefix,
+      subtypes: [subtype],
     });
-    buckets.set(parts.prefix, existing);
   });
 
-  const groupedPrefixes = new Set(
-    [...buckets.entries()].filter(([, members]) => members.length >= 2).map(([prefix]) => prefix),
-  );
   const emittedGroups = new Set<string>();
   const nodes: ModelTabNode[] = [];
 
   pageTypes.forEach(pageType => {
     const parts = splitModelTypeName(pageType.name, separator);
 
-    if (!parts || !groupedPrefixes.has(parts.prefix)) {
+    if (!parts) {
       nodes.push({
         kind: "type",
         id: pageType.id,
@@ -99,19 +114,25 @@ export const groupModelTypeTabs = (
       return;
     }
 
-    if (emittedGroups.has(parts.prefix)) {
+    const bucketKey = getBucketKey(parts.prefix);
+
+    if (emittedGroups.has(bucketKey)) {
       return;
     }
 
-    emittedGroups.add(parts.prefix);
+    emittedGroups.add(bucketKey);
 
-    const subtypes = buckets.get(parts.prefix) ?? [];
+    const bucket = buckets.get(bucketKey);
+
+    if (!bucket) {
+      return;
+    }
 
     nodes.push({
       kind: "group",
-      id: getGroupTabId(parts.prefix),
-      prefix: parts.prefix,
-      subtypes,
+      id: getGroupTabId(bucket.displayPrefix),
+      prefix: bucket.displayPrefix,
+      subtypes: bucket.subtypes,
     });
   });
 

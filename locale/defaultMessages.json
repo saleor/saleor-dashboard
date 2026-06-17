@@ -2916,6 +2916,10 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DtSn3X": {
+    "context": "intro for model type tab grouping help tooltip",
+    "string": "Model type names are split at the separator you enter. The part before it becomes the tab name; the part after appears in the tab menu."
+  },
   "Duik8x": {
     "context": "Link to publish the product immediately instead of scheduling",
     "string": "Publish immediately instead"
@@ -2940,6 +2944,10 @@
   "E1C9pp": {
     "context": "transaction event type, authorization amount was changed",
     "string": "Authorization amount adjusted"
+  },
+  "E2QWJR": {
+    "context": "case sensitivity note for model type tab grouping help tooltip",
+    "string": "Letter case is ignored, so \"a page\" and \"A page\" are grouped together. Types without the separator stay as separate tabs."
   },
   "E2uiWk": {
     "string": "Collection updated"
@@ -4332,6 +4340,10 @@
     "context": "weight",
     "string": "from {value} {unit}"
   },
+  "LIYuho": {
+    "context": "example for model type tab grouping help tooltip",
+    "string": "Example: with separator \" - \", types named \"Storefront - Cart\" and \"Storefront - Checkout\" appear under one Storefront tab."
+  },
   "LJPHdt": {
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
@@ -5436,10 +5448,6 @@
     "context": "add new refund button",
     "string": "New refund"
   },
-  "Qu4wS5": {
-    "context": "label for selecting all subtypes in a grouped model type tab",
-    "string": "{prefix}{separator}All"
-  },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
     "string": "Already captured"
@@ -6275,6 +6283,10 @@
   },
   "VrFy8e": {
     "string": "No notes from customer"
+  },
+  "Vsax0N": {
+    "context": "aria label for model type tab grouping help",
+    "string": "How tab grouping works"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -9908,6 +9920,10 @@
     "context": "Label for available for purchase toggle",
     "string": "Available for purchase"
   },
+  "pN5cV1": {
+    "context": "scope note for model type tab grouping help tooltip",
+    "string": "This is only a display convenience saved in your browser. It does not rename, merge, or change your model types, models, or any other store data."
+  },
   "pNxrLQ": {
     "string": "Model type created"
   },
@@ -11420,6 +11436,10 @@
   },
   "wbsq7O": {
     "string": "Usage"
+  },
+  "wdqbOW": {
+    "context": "label for selecting all subtypes in a grouped model type tab",
+    "string": "{prefix} <all>All</all>"
   },
   "we4Lby": {
     "string": "Info"
