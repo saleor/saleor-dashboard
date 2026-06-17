@@ -9,9 +9,9 @@ const settingsIconStyle: CSSProperties = {
 
 const groupedModelTypeTabsContextual = (
   <Text>
-    Model types whose names contain your separator are grouped into one tab. Open the dropdown on a
-    grouped tab to filter by <em>All</em> or a single type. Adjust the separator, read how grouping
-    works, or turn it off in the settings{" "}
+    Model types whose names contain a configured separator are grouped into one tab. Open the
+    dropdown on a grouped tab to filter by <em>All</em> or a single type. Adjust separators, read
+    how grouping works, or turn it off in the settings{" "}
     <Settings2 size={16} aria-hidden style={settingsIconStyle} />.
   </Text>
 );
@@ -19,10 +19,10 @@ const groupedModelTypeTabsContextual = (
 const groupedModelTypeTabsGlobal = (
   <Text>
     The Models list can group model types by splitting their names at a separator. For example,{" "}
-    <em>&ldquo;Storefront - Cart&rdquo;</em> and <em>&ldquo;Storefront - Checkout&rdquo;</em> appear
+    <em>&ldquo;Storefront — Cart&rdquo;</em> and <em>&ldquo;Storefront — Checkout&rdquo;</em> appear
     under one Storefront tab. Letter case is ignored when matching prefixes. Use the tab dropdown to
-    filter by all grouped types or one type, and open settings next to the tabs to change the
-    separator or disable grouping.
+    filter by all grouped types or one type, and open settings next to the tabs to change separators
+    or disable grouping.
   </Text>
 );
 

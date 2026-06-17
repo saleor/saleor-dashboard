@@ -152,7 +152,7 @@ const ModelTypeTabsSettings = ({
           <Settings2 size={16} />
         </button>
       </Popover.Trigger>
-      <Popover.Content align="end">
+      <Popover.Content align="end" onOpenAutoFocus={event => event.preventDefault()}>
         <Box
           padding={4}
           display="flex"
@@ -167,15 +167,20 @@ const ModelTypeTabsSettings = ({
             <Text size={3} fontWeight="bold">
               {intl.formatMessage(modelTypeTabsMessages.settingsTitle)}
             </Text>
-            <ModelTypeTabGroupingHelp />
+            <ModelTypeTabGroupingHelp settingsOpen={open} />
           </Box>
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={2}>{intl.formatMessage(modelTypeTabsMessages.separatorLabel)}</Text>
             <Input
               value={separator}
               onChange={event => onSeparatorChange(event.target.value)}
+              placeholder={intl.formatMessage(modelTypeTabsMessages.separatorPlaceholder)}
+              disabled={!groupingEnabled}
               data-test-id="model-type-tabs-separator"
             />
+            <Text size={1} color="default2">
+              {intl.formatMessage(modelTypeTabsMessages.separatorHint)}
+            </Text>
           </Box>
           <Checkbox
             checked={groupingEnabled}

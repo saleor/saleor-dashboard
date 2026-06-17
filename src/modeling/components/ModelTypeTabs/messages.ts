@@ -27,9 +27,19 @@ export const modelTypeTabsMessages = defineMessages({
     description: "title for model type tab settings",
   },
   separatorLabel: {
-    id: "SjMQrX",
-    defaultMessage: "Group separator",
+    id: "oyXhGL",
+    defaultMessage: "Split on",
     description: "label for model type tab grouping separator input",
+  },
+  separatorHint: {
+    id: "xUUaUR",
+    defaultMessage: "Split at the first match. Separate multiple with commas.",
+    description: "hint for model type tab grouping separator input",
+  },
+  separatorPlaceholder: {
+    id: "tELvPJ",
+    defaultMessage: "Comma-separated list of separators",
+    description: "placeholder for model type tab grouping separator input",
   },
   groupingEnabledLabel: {
     id: "wu/9MB",
@@ -52,27 +62,52 @@ export const modelTypeTabsMessages = defineMessages({
     description: "aria label for model type tab grouping help",
   },
   groupingHelpIntro: {
-    id: "DtSn3X",
+    id: "TZZ8Z7",
     defaultMessage:
-      "Model type names are split at the separator you enter. The part before it becomes the tab name; the part after appears in the tab menu.",
+      "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu.",
     description: "intro for model type tab grouping help tooltip",
   },
-  groupingHelpExample: {
-    id: "pNKz+B",
-    defaultMessage:
-      'Example: with separator " - ", types named "Storefront - Cart" and "Storefront - Checkout" appear under one Storefront tab.',
-    description: "example for model type tab grouping help tooltip",
+  groupingHelpExamplesHeading: {
+    id: "EE8PaG",
+    defaultMessage: "Examples",
+    description: "section heading for examples in model type tab grouping help tooltip",
   },
-  groupingHelpCase: {
-    id: "E2QWJR",
+  groupingHelpExampleStorefront: {
+    id: "gbo0sd",
     defaultMessage:
-      'Letter case is ignored, so "a page" and "A page" are grouped together. Types without the separator stay as separate tabs.',
-    description: "case sensitivity note for model type tab grouping help tooltip",
+      'With separator "—", types named <em>Storefront — Cart</em> and <em>Storefront — Checkout</em> appear under one <strong>Storefront</strong> tab.',
+    description: "storefront example in model type tab grouping help tooltip",
+  },
+  groupingHelpExampleHelp: {
+    id: "UhqCK5",
+    defaultMessage:
+      '<em>Help section for Docs</em> with separator "section for" appears under a <strong>Help</strong> tab.',
+    description: "help section example in model type tab grouping help tooltip",
+  },
+  groupingHelpNotesHeading: {
+    id: "mSxdrx",
+    defaultMessage: "Notes",
+    description: "section heading for notes in model type tab grouping help tooltip",
+  },
+  groupingHelpNoteSeparators: {
+    id: "SdnSCt",
+    defaultMessage: "Enter multiple separators as a comma-separated list.",
+    description: "note about separators input in model type tab grouping help",
+  },
+  groupingHelpNoteCase: {
+    id: "oK7729",
+    defaultMessage: "Letter case is ignored when matching prefixes.",
+    description: "note about case insensitivity in model type tab grouping help",
+  },
+  groupingHelpNoteStandalone: {
+    id: "F2Ng8N",
+    defaultMessage: "Types without a separator stay as separate tabs.",
+    description: "note about standalone tabs in model type tab grouping help",
   },
   groupingHelpScope: {
-    id: "V/HG7k",
+    id: "AJF7N5",
     defaultMessage:
-      "This is only a display convenience saved in your browser. It does not rename, merge, or change your model types, models, or any other store data.",
+      "Browser-only display — does not rename, merge, or change your model types or data.",
     description: "scope note for model type tab grouping help tooltip",
   },
 });

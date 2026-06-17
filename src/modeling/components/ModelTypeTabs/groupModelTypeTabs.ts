@@ -20,12 +20,43 @@ export interface GroupModelTypeTabsOptions {
   enabled?: boolean;
 }
 
-export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " - ";
+/** Default value shown in the separator input (comma-separated list). */
+export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " - , —, :";
+
+export const MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER = ",";
 
 export const GROUP_TAB_ID_PREFIX = "group:";
 
 export const getGroupTabId = (prefix: string) =>
   `${GROUP_TAB_ID_PREFIX}${prefix.toLocaleLowerCase()}`;
+
+const normalizeSeparatorPart = (part: string, index: number): string =>
+  index === 0 ? part : part.trimStart();
+
+const splitSeparatorList = (value: string): string[] => {
+  if (!value.includes(MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER)) {
+    return [value];
+  }
+
+  const parts = value
+    .split(MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER)
+    .map(normalizeSeparatorPart)
+    .filter(Boolean);
+
+  if (parts.length > 0) {
+    return parts;
+  }
+
+  return [value];
+};
+
+export const parseModelTypeTabSeparators = (value: string): string[] => {
+  if (!value.trim()) {
+    return [];
+  }
+
+  return splitSeparatorList(value);
+};
 
 interface ModelTypeBucket {
   displayPrefix: string;
@@ -34,16 +65,35 @@ interface ModelTypeBucket {
 
 const getBucketKey = (prefix: string) => prefix.toLocaleLowerCase();
 
-const splitModelTypeName = (
-  name: string,
-  separator: string,
-): { prefix: string; suffix: string } | null => {
-  const index = name.indexOf(separator);
+interface ModelTypeNameSplit {
+  prefix: string;
+  suffix: string;
+}
 
-  if (index === -1) {
+const splitModelTypeName = (name: string, separators: string[]): ModelTypeNameSplit | null => {
+  let bestMatch: { index: number; separator: string } | null = null;
+
+  separators.forEach(separator => {
+    const index = name.indexOf(separator);
+
+    if (index === -1) {
+      return;
+    }
+
+    if (
+      !bestMatch ||
+      index < bestMatch.index ||
+      (index === bestMatch.index && separator.length > bestMatch.separator.length)
+    ) {
+      bestMatch = { index, separator };
+    }
+  });
+
+  if (!bestMatch) {
     return null;
   }
 
+  const { index, separator } = bestMatch;
   const prefix = name.slice(0, index).trim();
   const suffix = name.slice(index + separator.length).trim();
 
@@ -58,10 +108,10 @@ export const groupModelTypeTabs = (
   pageTypes: ModelTypeRef[],
   options: GroupModelTypeTabsOptions = {},
 ): ModelTabNode[] => {
-  const separator = options.separator ?? DEFAULT_MODEL_TYPE_TAB_SEPARATOR;
+  const separators = parseModelTypeTabSeparators(options.separator ?? "");
   const enabled = options.enabled ?? true;
 
-  if (!enabled || pageTypes.length === 0) {
+  if (!enabled || pageTypes.length === 0 || separators.length === 0) {
     return pageTypes.map(pageType => ({
       kind: "type",
       id: pageType.id,
@@ -72,7 +122,7 @@ export const groupModelTypeTabs = (
   const buckets = new Map<string, ModelTypeBucket>();
 
   pageTypes.forEach(pageType => {
-    const parts = splitModelTypeName(pageType.name, separator);
+    const parts = splitModelTypeName(pageType.name, separators);
 
     if (!parts) {
       return;
@@ -102,7 +152,7 @@ export const groupModelTypeTabs = (
   const nodes: ModelTabNode[] = [];
 
   pageTypes.forEach(pageType => {
-    const parts = splitModelTypeName(pageType.name, separator);
+    const parts = splitModelTypeName(pageType.name, separators);
 
     if (!parts) {
       nodes.push({
