@@ -17,7 +17,7 @@ export class ProductsExportParameters {
 
   private readonly filter?: InputMaybe<ProductFilterInput>;
 
-  private readonly ids?: InputMaybe<Array<Scalars["ID"]>>;
+  private readonly ids?: InputMaybe<Array<Scalars["ID"]["input"]>>;
 
   private readonly scope: ExportScope;
 
