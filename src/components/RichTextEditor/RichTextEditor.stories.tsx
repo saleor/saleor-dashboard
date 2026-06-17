@@ -4,8 +4,22 @@ import { type ComponentProps, type ComponentType, useRef, useState } from "react
 
 import fixtures from "./fixtures.json";
 import RichTextEditor from "./RichTextEditor";
+import { RichTextImageUploadContext } from "./RichTextImageUploadContext";
+import { type UploadRichTextImage } from "./useUploadRichTextImage";
 
 const defaultValue = fixtures.richTextEditor as unknown as OutputData;
+
+// Simulates Saleor's image upload without a backend: reads the dropped/pasted
+// file in-memory and returns it as a base64 data URL, so uploaded images render
+// immediately in Storybook.
+const inMemoryBase64Uploader: UploadRichTextImage = file =>
+  new Promise(resolve => {
+    const reader = new FileReader();
+
+    reader.onload = () => resolve({ success: 1, file: { url: reader.result as string } });
+    reader.onerror = () => resolve({ success: 0, file: { url: "" } });
+    reader.readAsDataURL(file);
+  });
 
 type Props = ComponentProps<typeof RichTextEditor>;
 
@@ -55,19 +69,21 @@ const EditorWithLivePreview = (args: Props): React.ReactElement => {
   const [data, setData] = useState<OutputData | undefined>(args.defaultValue);
 
   return (
-    <div style={layout.container}>
-      <div style={layout.editor}>
-        <RichTextEditor {...args} editorRef={ref} onChange={setData} />
+    <RichTextImageUploadContext.Provider value={inMemoryBase64Uploader}>
+      <div style={layout.container}>
+        <div style={layout.editor}>
+          <RichTextEditor {...args} editorRef={ref} onChange={setData} />
+        </div>
+        <aside style={layout.preview}>
+          <div style={layout.previewTitle}>Live blocks</div>
+          <pre style={layout.pre}>
+            {data?.blocks?.length
+              ? JSON.stringify(data.blocks, null, 2)
+              : "// Start typing to see blocks"}
+          </pre>
+        </aside>
       </div>
-      <aside style={layout.preview}>
-        <div style={layout.previewTitle}>Live blocks</div>
-        <pre style={layout.pre}>
-          {data?.blocks?.length
-            ? JSON.stringify(data.blocks, null, 2)
-            : "// Start typing to see blocks"}
-        </pre>
-      </aside>
-    </div>
+    </RichTextImageUploadContext.Provider>
   );
 };
 
