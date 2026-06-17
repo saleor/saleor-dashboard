@@ -1,4 +1,4 @@
-import { OrderDetailsWithMetadataDocument, useOrderSendRefundMutation } from "@dashboard/graphql";
+import { OrderDetailsDocument, useOrderSendRefundMutation } from "@dashboard/graphql";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 
 interface OrderSendRefundProps {
@@ -12,7 +12,7 @@ export const useOrderSendRefund = ({ transactionId, orderId, amount }: OrderSend
   const [sendRefund, { status, loading, error, data }] = useOrderSendRefundMutation({
     refetchQueries: [
       {
-        query: OrderDetailsWithMetadataDocument,
+        query: OrderDetailsDocument,
         variables: { id: orderId, hasManageProducts },
       },
     ],

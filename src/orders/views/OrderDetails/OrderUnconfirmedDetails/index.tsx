@@ -414,9 +414,9 @@ export const OrderUnconfirmedDetails = ({
         orderId={id}
       />
       <OrderMetadataDialog
-        open={params.action === "view-order-metadata" && !!data?.order}
+        open={params.action === "view-order-metadata"}
         onClose={closeModal}
-        order={data?.order}
+        orderId={id}
       />
       <OrderPaymentVoidDialog
         confirmButtonState={orderVoid.opts.status}

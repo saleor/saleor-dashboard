@@ -2,11 +2,10 @@
 import {
   FulfillmentStatus,
   type OrderDetailsFragment,
-  type OrderDetailsWithMetadataFragment,
   type OrderDiscountFragment,
   OrderDiscountType,
   type OrderFulfillLineFragment,
-  type OrderLineWithMetadataFragment,
+  type OrderLineFragment,
   type OrderRefundDataQuery,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -508,13 +507,11 @@ describe("Get get all fulfillment lines price sum", () => {
 });
 describe("Get the total value of all replaced products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineWithMetadataFragment[] = [
+    const unfulfilledLines: OrderLineFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -531,8 +528,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
-          metadata: [],
-          privateMetadata: [],
           preorder: null,
           __typename: "ProductVariant",
           product: {
@@ -666,8 +661,6 @@ describe("Get the total value of all replaced products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -685,8 +678,6 @@ describe("Get the total value of all replaced products", () => {
           name: "Milk 1",
           quantityAvailable: 50,
           preorder: null,
-          metadata: [],
-          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -819,8 +810,6 @@ describe("Get the total value of all replaced products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -838,8 +827,6 @@ describe("Get the total value of all replaced products", () => {
           name: "Milk 2",
           quantityAvailable: 50,
           preorder: null,
-          metadata: [],
-          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -969,7 +956,7 @@ describe("Get the total value of all replaced products", () => {
         taxClass: null,
       },
     ];
-    const fulfilledLines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] = [
+    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -977,8 +964,6 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -996,8 +981,6 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1135,8 +1118,6 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1154,8 +1135,6 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1293,8 +1272,6 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1312,8 +1289,6 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 2",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1451,8 +1426,6 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1470,8 +1443,6 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1609,8 +1580,6 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1628,8 +1597,6 @@ describe("Get the total value of all replaced products", () => {
             name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1891,13 +1858,11 @@ describe("Get the total value of all replaced products", () => {
 });
 describe("Get the total value of all selected products", () => {
   it("sums up correctly", () => {
-    const unfulfilledLines: OrderLineWithMetadataFragment[] = [
+    const unfulfilledLines: OrderLineFragment[] = [
       {
         id: "1",
         isShippingRequired: false,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1915,8 +1880,6 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
-          metadata: [],
-          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -2049,8 +2012,6 @@ describe("Get the total value of all selected products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -2068,8 +2029,6 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
-          metadata: [],
-          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -2202,8 +2161,6 @@ describe("Get the total value of all selected products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
-        metadata: [],
-        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -2221,8 +2178,6 @@ describe("Get the total value of all selected products", () => {
           name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
-          metadata: [],
-          privateMetadata: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -2352,7 +2307,7 @@ describe("Get the total value of all selected products", () => {
         taxClass: null,
       },
     ];
-    const fulfilledLines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] = [
+    const fulfilledLines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "4",
         quantity: 1,
@@ -2360,8 +2315,6 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2379,8 +2332,6 @@ describe("Get the total value of all selected products", () => {
             name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2518,8 +2469,6 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2536,8 +2485,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
-            metadata: [],
-            privateMetadata: [],
             preorder: null,
             stocks: [
               {
@@ -2676,8 +2623,6 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2695,8 +2640,6 @@ describe("Get the total value of all selected products", () => {
             name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2948,7 +2891,7 @@ describe("Get the total value of all selected products", () => {
 });
 describe("Merge repeated order lines of fulfillment lines", () => {
   it("is able to merge repeated order lines and sum their quantities", () => {
-    const lines: OrderDetailsWithMetadataFragment["fulfillments"][0]["lines"] = [
+    const lines: OrderDetailsFragment["fulfillments"][0]["lines"] = [
       {
         id: "RnVsZmlsbG1lbnRMaW5lOjMx",
         quantity: 1,
@@ -2956,8 +2899,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2975,8 +2916,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3114,8 +3053,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -3133,8 +3070,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3272,8 +3207,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
-          metadata: [],
-          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -3291,8 +3224,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
-            metadata: [],
-            privateMetadata: [],
             stocks: [
               {
                 id: "stock_test_id1",

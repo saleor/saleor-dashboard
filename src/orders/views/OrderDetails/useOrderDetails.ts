@@ -1,12 +1,10 @@
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
-import { useOrderDetailsWithMetadataQuery } from "@dashboard/graphql";
-import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
+import { useOrderDetailsQuery } from "@dashboard/graphql";
 
 export const useOrderDetails = (id: string) => {
-  const hasManageProducts = useHasManageProductsPermission();
-  const { data, loading, refetch } = useOrderDetailsWithMetadataQuery({
+  const { data, loading, refetch } = useOrderDetailsQuery({
     displayLoader: true,
-    variables: { id, hasManageProducts },
+    variables: { id },
   });
 
   useRegisterEntityRefresh(refetch);

@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import {
-  OrderDetailsWithMetadataDocument,
+  OrderDetailsDocument,
   PermissionEnum,
   useOrderSendRefundMutation,
 } from "@dashboard/graphql";
@@ -36,7 +36,7 @@ describe("useOrderSendRefund", () => {
     expect(useOrderSendRefundMutation).toHaveBeenCalledWith({
       refetchQueries: [
         {
-          query: OrderDetailsWithMetadataDocument,
+          query: OrderDetailsDocument,
           variables: { id: "456", hasManageProducts: true },
         },
       ],
@@ -69,7 +69,7 @@ describe("useOrderSendRefund", () => {
     expect(useOrderSendRefundMutation).toHaveBeenCalledWith({
       refetchQueries: [
         {
-          query: OrderDetailsWithMetadataDocument,
+          query: OrderDetailsDocument,
           variables: { id: "456", hasManageProducts: false },
         },
       ],

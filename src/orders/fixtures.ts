@@ -12,7 +12,6 @@ import {
   OrderChargeStatusEnum,
   type OrderDetailsFragment,
   type OrderDetailsQuery,
-  type OrderDetailsWithMetadataFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   type OrderFulfillLineFragment,
@@ -1054,7 +1053,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 
 export const ORDER_AMOUNT = 234.93;
 
-export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
+export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   voucher: null,
   giftCards: [],
@@ -1117,7 +1116,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     streetAddress1: "487 Roberto Shores",
     streetAddress2: "",
   },
-  canFinalize: true,
   channel: {
     __typename: "Channel",
     slug: "channel-default",
@@ -1357,9 +1355,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
-      metadata: [],
       created: "2019-09-17T13:22:24.376193+00:00",
-      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1374,8 +1370,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
-            metadata: [],
-            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1481,8 +1475,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
-              metadata: [],
-              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1528,8 +1520,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
-      metadata: [],
-      privateMetadata: [],
       created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
@@ -1545,8 +1535,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
-            metadata: [],
-            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1652,8 +1640,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
-              metadata: [],
-              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -2009,18 +1995,10 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       taxClass: null,
     },
   ],
-  metadata: [
-    {
-      __typename: "MetadataItem",
-      key: "integration.key",
-      value: "some-value",
-    },
-  ],
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
   chargeStatus: OrderChargeStatusEnum.NONE,
   authorizeStatus: OrderAuthorizeStatusEnum.NONE,
-  privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
     city: "West Patriciastad",
@@ -2121,7 +2099,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   voucherCode: null,
 });
 
-export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
+export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as const,
   voucher: null,
   chargeStatus: OrderChargeStatusEnum.NONE,
@@ -2131,7 +2109,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],
   billingAddress: null,
-  canFinalize: true,
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
   totalAuthorizePending: prepareMoney(0),
@@ -2478,10 +2455,8 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       taxClass: null,
     },
   ],
-  metadata: [],
   number: "24",
   paymentStatus: null,
-  privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,

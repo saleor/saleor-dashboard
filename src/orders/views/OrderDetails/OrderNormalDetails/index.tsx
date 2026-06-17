@@ -6,7 +6,7 @@ import {
   type CreateManualTransactionCaptureMutationVariables,
   type FulfillmentFragment,
   FulfillmentStatus,
-  type OrderDetailsWithMetadataQueryResult,
+  type OrderDetailsQueryResult,
   type OrderFulfillmentApproveMutation,
   type OrderFulfillmentApproveMutationVariables,
   type OrderNoteUpdateMutation,
@@ -69,7 +69,7 @@ import {
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: OrderDetailsWithMetadataQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
   loading: boolean;
   orderAddNote: any;
   orderUpdateNote: PartialMutationProviderOutput<
@@ -339,14 +339,15 @@ export const OrderNormalDetails = ({
         orderId={id}
       />
       <OrderMetadataDialog
-        open={params.action === "view-order-metadata" && !!data?.order}
+        open={params.action === "view-order-metadata"}
         onClose={closeModal}
-        order={data?.order}
+        orderId={id}
       />
       <OrderFulfillmentMetadataDialog
         open={params.action === "view-fulfillment-metadata"}
         onClose={closeModal}
-        fulfillment={data?.order?.fulfillments?.find(f => f.id === params.id)}
+        orderId={id}
+        fulfillmentId={params.id}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}

@@ -2192,7 +2192,6 @@ export const OrderEventFragmentDoc = gql`
     `;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
-  ...Metadata
   id
   created
   lines {
@@ -2210,8 +2209,7 @@ export const FulfillmentFragmentDoc = gql`
     name
   }
 }
-    ${MetadataFragmentDoc}
-${OrderLineFragmentDoc}`;
+    ${OrderLineFragmentDoc}`;
 export const InvoiceFragmentDoc = gql`
     fragment Invoice on Invoice {
   id
@@ -2225,7 +2223,6 @@ export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
   displayGrossPrices
-  ...Metadata
   billingAddress {
     ...Address
   }
@@ -2242,7 +2239,6 @@ export const OrderDetailsFragmentDoc = gql`
     ...OrderGrantedRefund
   }
   isShippingRequired
-  canFinalize
   created
   customerNote
   discounts {
@@ -2389,8 +2385,7 @@ export const OrderDetailsFragmentDoc = gql`
   chargeStatus
   authorizeStatus
 }
-    ${MetadataFragmentDoc}
-${AddressFragmentDoc}
+    ${AddressFragmentDoc}
 ${TransactionItemFragmentDoc}
 ${OrderPaymentFragmentDoc}
 ${OrderGiftCardFragmentDoc}
@@ -2401,37 +2396,18 @@ ${FulfillmentFragmentDoc}
 ${OrderLineFragmentDoc}
 ${MoneyFragmentDoc}
 ${InvoiceFragmentDoc}`;
-export const OrderLineWithMetadataFragmentDoc = gql`
-    fragment OrderLineWithMetadata on OrderLine {
-  ...OrderLine
-  ...OrderLineMetadata
+export const OrderMetadataFragmentDoc = gql`
+    fragment OrderMetadata on Order {
+  id
+  ...Metadata
 }
-    ${OrderLineFragmentDoc}
-${OrderLineMetadataFragmentDoc}`;
-export const FulfillmentWithMetadataFragmentDoc = gql`
-    fragment FulfillmentWithMetadata on Fulfillment {
-  ...Fulfillment
-  lines {
-    orderLine {
-      ...OrderLineWithMetadata
-    }
-  }
+    ${MetadataFragmentDoc}`;
+export const FulfillmentMetadataFragmentDoc = gql`
+    fragment FulfillmentMetadata on Fulfillment {
+  id
+  ...Metadata
 }
-    ${FulfillmentFragmentDoc}
-${OrderLineWithMetadataFragmentDoc}`;
-export const OrderDetailsWithMetadataFragmentDoc = gql`
-    fragment OrderDetailsWithMetadata on Order {
-  ...OrderDetails
-  fulfillments {
-    ...FulfillmentWithMetadata
-  }
-  lines {
-    ...OrderLine
-  }
-}
-    ${OrderDetailsFragmentDoc}
-${FulfillmentWithMetadataFragmentDoc}
-${OrderLineFragmentDoc}`;
+    ${MetadataFragmentDoc}`;
 export const OrderSettingsFragmentDoc = gql`
     fragment OrderSettings on OrderSettings {
   automaticallyConfirmAllNewOrders
@@ -13552,55 +13528,6 @@ export function useOrderDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery>;
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
-export const OrderDetailsWithMetadataDocument = gql`
-    query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
-  order(id: $id) {
-    ...OrderDetailsWithMetadata
-  }
-  shop {
-    countries {
-      code
-      country
-    }
-    defaultWeightUnit
-    fulfillmentAllowUnpaid
-    fulfillmentAutoApprove
-    availablePaymentGateways {
-      ...PaymentGateway
-    }
-  }
-}
-    ${OrderDetailsWithMetadataFragmentDoc}
-${PaymentGatewayFragmentDoc}`;
-
-/**
- * __useOrderDetailsWithMetadataQuery__
- *
- * To run a query within a React component, call `useOrderDetailsWithMetadataQuery` and pass it any options that fit your needs.
- * When your component renders, `useOrderDetailsWithMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useOrderDetailsWithMetadataQuery({
- *   variables: {
- *      id: // value for 'id'
- *      hasManageProducts: // value for 'hasManageProducts'
- *   },
- * });
- */
-export function useOrderDetailsWithMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataDocument, options);
-      }
-export function useOrderDetailsWithMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataDocument, options);
-        }
-export type OrderDetailsWithMetadataQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataQuery>;
-export type OrderDetailsWithMetadataLazyQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataLazyQuery>;
-export type OrderDetailsWithMetadataQueryResult = Apollo.QueryResult<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>;
 export const OrderLinesMetadataDocument = gql`
     query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
   order(id: $id) {
@@ -13639,6 +13566,79 @@ export function useOrderLinesMetadataLazyQuery(baseOptions?: ApolloReactHooks.La
 export type OrderLinesMetadataQueryHookResult = ReturnType<typeof useOrderLinesMetadataQuery>;
 export type OrderLinesMetadataLazyQueryHookResult = ReturnType<typeof useOrderLinesMetadataLazyQuery>;
 export type OrderLinesMetadataQueryResult = Apollo.QueryResult<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>;
+export const OrderMetadataDocument = gql`
+    query OrderMetadata($id: ID!) {
+  order(id: $id) {
+    ...OrderMetadata
+  }
+}
+    ${OrderMetadataFragmentDoc}`;
+
+/**
+ * __useOrderMetadataQuery__
+ *
+ * To run a query within a React component, call `useOrderMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderMetadataQuery, Types.OrderMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderMetadataQuery, Types.OrderMetadataQueryVariables>(OrderMetadataDocument, options);
+      }
+export function useOrderMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderMetadataQuery, Types.OrderMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderMetadataQuery, Types.OrderMetadataQueryVariables>(OrderMetadataDocument, options);
+        }
+export type OrderMetadataQueryHookResult = ReturnType<typeof useOrderMetadataQuery>;
+export type OrderMetadataLazyQueryHookResult = ReturnType<typeof useOrderMetadataLazyQuery>;
+export type OrderMetadataQueryResult = Apollo.QueryResult<Types.OrderMetadataQuery, Types.OrderMetadataQueryVariables>;
+export const OrderFulfillmentMetadataDocument = gql`
+    query OrderFulfillmentMetadata($id: ID!) {
+  order(id: $id) {
+    id
+    fulfillments {
+      ...FulfillmentMetadata
+    }
+  }
+}
+    ${FulfillmentMetadataFragmentDoc}`;
+
+/**
+ * __useOrderFulfillmentMetadataQuery__
+ *
+ * To run a query within a React component, call `useOrderFulfillmentMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderFulfillmentMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderFulfillmentMetadataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderFulfillmentMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderFulfillmentMetadataQuery, Types.OrderFulfillmentMetadataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderFulfillmentMetadataQuery, Types.OrderFulfillmentMetadataQueryVariables>(OrderFulfillmentMetadataDocument, options);
+      }
+export function useOrderFulfillmentMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderFulfillmentMetadataQuery, Types.OrderFulfillmentMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderFulfillmentMetadataQuery, Types.OrderFulfillmentMetadataQueryVariables>(OrderFulfillmentMetadataDocument, options);
+        }
+export type OrderFulfillmentMetadataQueryHookResult = ReturnType<typeof useOrderFulfillmentMetadataQuery>;
+export type OrderFulfillmentMetadataLazyQueryHookResult = ReturnType<typeof useOrderFulfillmentMetadataLazyQuery>;
+export type OrderFulfillmentMetadataQueryResult = Apollo.QueryResult<Types.OrderFulfillmentMetadataQuery, Types.OrderFulfillmentMetadataQueryVariables>;
 export const OrderDetailsGrantRefundDocument = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {
