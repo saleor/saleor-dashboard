@@ -37,6 +37,7 @@ jest.mock("react-intl", () => {
 });
 
 jest.mock("./utils", () => ({
+  ...jest.requireActual("./utils"),
   getErrorMessage: (error: any) => error?.message || "",
   getSingleDisplayValue: (attribute: any, values: any[]) => {
     const value = attribute.value[0];
