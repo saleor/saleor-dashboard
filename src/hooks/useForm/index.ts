@@ -9,7 +9,7 @@ import { toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import type * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import useStateFromProps from "./../useStateFromProps";
 import { type FormData } from "./types";
@@ -59,6 +59,7 @@ export interface UseFormResult<TData>
   setIsSubmitDisabled: (value: boolean) => void;
   cleanChanged: () => void;
   changedData: TData;
+  isSubmitting: boolean;
 }
 
 /** @deprecated Use react-hook-form instead */
@@ -102,6 +103,8 @@ function useForm<T extends FormData, TErrors>(
     mergeData = true,
   } = opts;
   const [errors, setErrors] = useState<FormErrors<T>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: mergeData ? merge : undefined,
   });
@@ -217,13 +220,19 @@ function useForm<T extends FormData, TErrors>(
   }
 
   async function submit() {
-    if (typeof onSubmit === "function" && !Object.keys(errors).length) {
-      const result = handleFormSubmit(data);
-
-      return result;
+    if (isSubmittingRef.current || typeof onSubmit !== "function" || Object.keys(errors).length) {
+      return [];
     }
 
-    return [];
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
+
+    try {
+      return await handleFormSubmit(data);
+    } finally {
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
+    }
   }
 
   const setError = (field: keyof T, error: string | React.ReactNode) =>
@@ -254,6 +263,7 @@ function useForm<T extends FormData, TErrors>(
     triggerChange: handleSetChanged,
     setIsSubmitDisabled,
     isSaveDisabled: isSaveDisabled(),
+    isSubmitting,
   };
 }
 

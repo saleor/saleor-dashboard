@@ -1,0 +1,7 @@
+/* While the action is in progress or showing success feedback the button keeps
+ * its variant appearance. Disabling pointer events prevents hover/active styles
+ * from shifting the color and blocks repeated clicks without the "inactive"
+ * (disabled) look. */
+.noInteraction {
+  pointer-events: none;
+}

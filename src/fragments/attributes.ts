@@ -39,6 +39,25 @@ export const attributeFragment = gql`
   }
 `;
 
+export const attributeUpdateResultFragment = gql`
+  fragment AttributeUpdateResult on Attribute {
+    ...Attribute
+    availableInGrid
+    storefrontSearchPosition
+    valueRequired
+    referenceTypes {
+      ... on ProductType {
+        id
+        name
+      }
+      ... on PageType {
+        id
+        name
+      }
+    }
+  }
+`;
+
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
