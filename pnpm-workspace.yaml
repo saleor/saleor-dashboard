@@ -14,6 +14,15 @@ trustPolicy: no-downgrade
 trustPolicyExclude:
   # Semver packages are not signed before 7.x. Check pnpm-lock which package is still using 6.x and plan upgrade entire tree.
   - "semver@6.3.1"
+  # @graphql-codegen/cli@5 pins several @graphql-tools/* packages to old major
+  # ranges (via url-loader/github-loader) whose latest in-range releases lack
+  # provenance attestation — The Guild restored signing only in newer majors that
+  # the cli's ranges don't allow. Build-time-only deps from a trusted publisher.
+  - "@graphql-tools/executor-http@1.3.3"
+  - "@graphql-tools/executor-graphql-ws@2.0.7"
+  - "@graphql-tools/wrap@10.1.4"
+  - "@graphql-tools/delegate@10.2.23"
+  - "@graphql-tools/batch-execute@9.0.19"
   # jose 4.15.9 (transitive via @graphql-codegen/cli -> @graphql-tools/prisma-loader)
   # was published without provenance attestation, unlike later releases, so the
   # no-downgrade check flags it. It is already the version shipped in the lockfile.
