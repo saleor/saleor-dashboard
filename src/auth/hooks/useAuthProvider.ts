@@ -1,6 +1,7 @@
 import { type ApolloClient, ApolloError } from "@apollo/client";
 import { type INotificationCallback } from "@dashboard/components/notifications";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
+import { clearPersistedCache } from "@dashboard/graphql/cachePersistence";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -105,6 +106,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     // Forget last logged in user data.
     // On next login, user details query will be refetched due to cache-and-network fetch policy.
     apolloClient.clearStore();
+    clearPersistedCache();
 
     const errors = result?.errors || [];
     const externalLogoutUrl = result
