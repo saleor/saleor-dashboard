@@ -1,9 +1,12 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
+
+import styles from "./ConfirmButton.module.css";
 
 const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 
@@ -38,13 +41,18 @@ export const ConfirmButton = ({
   disabled,
   children,
   variant,
+  className,
   ...props
 }: ConfirmButtonProps) => {
   const intl = useIntl();
   const [displayCompletedActionState, setDisplayCompletedActionState] = useState(false);
   const timeout = useRef<number>();
+  const isLoading = transitionState === "loading";
   const isCompleted = noTransition ? transitionState !== "default" : displayCompletedActionState;
+  const isSaveDisabled = !isCompleted && !!disabled;
+  const isSuccess = transitionState === "success" && isCompleted;
   const isError = transitionState === "error" && isCompleted;
+  const isInteractionLocked = isLoading || isSuccess;
   const defaultLabels: ConfirmButtonLabels = {
     confirm: intl.formatMessage(buttonMessages.save),
     error: intl.formatMessage(messages.tryAgain),
@@ -122,9 +130,12 @@ export const ConfirmButton = ({
   return (
     <Button
       {...props}
+      className={clsx(className, isInteractionLocked && styles.noInteraction)}
       variant={isError ? "error" : variant}
-      disabled={!isCompleted && disabled}
-      onClick={transitionState === "loading" ? undefined : onClick}
+      disabled={isSaveDisabled}
+      aria-busy={isLoading}
+      tabIndex={isInteractionLocked ? -1 : undefined}
+      onClick={isInteractionLocked ? undefined : onClick}
       data-test-state={isCompleted ? transitionState : "default"}
     >
       {renderContent()}

@@ -220,6 +220,7 @@ const AttributePage = ({
         set,
         data,
         isSaveDisabled,
+        isSubmitting,
         submit,
         errors,
         setError,
@@ -399,7 +400,7 @@ const AttributePage = ({
                 <Savebar.Spacer />
                 <Savebar.CancelButton onClick={() => navigate(attributePageBackLink)} />
                 <Savebar.ConfirmButton
-                  transitionState={saveButtonBarState}
+                  transitionState={isSubmitting ? "loading" : saveButtonBarState}
                   onClick={submit}
                   disabled={!!isSaveDisabled}
                 />
