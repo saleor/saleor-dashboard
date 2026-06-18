@@ -2253,6 +2253,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
+  "AJF7N5": {
+    "context": "scope note for model type tab grouping help tooltip",
+    "string": "Browser-only display — does not rename, merge, or change your model types or data."
+  },
   "AJMlmz": {
     "context": "customer overview stat label: sum of recent orders",
     "string": "Recent orders total"
@@ -2968,6 +2972,10 @@
   "EDihQs": {
     "string": "Staff member updated"
   },
+  "EE8PaG": {
+    "context": "section heading for examples in model type tab grouping help tooltip",
+    "string": "Examples"
+  },
   "EEWsPs": {
     "string": "Plugin built-in to Saleor's core codebase"
   },
@@ -3101,6 +3109,10 @@
   "F0BhK/": {
     "context": "Status when product is visible and purchasable",
     "string": "Live"
+  },
+  "F2Ng8N": {
+    "context": "note about standalone tabs in model type tab grouping help",
+    "string": "Types without a separator stay as separate tabs."
   },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
@@ -5436,10 +5448,6 @@
     "context": "add new refund button",
     "string": "New refund"
   },
-  "Qu4wS5": {
-    "context": "label for selecting all subtypes in a grouped model type tab",
-    "string": "{prefix}{separator}All"
-  },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
     "string": "Already captured"
@@ -5750,13 +5758,13 @@
   "SceSNp": {
     "string": "Remove following permissions:"
   },
+  "SdnSCt": {
+    "context": "note about separators input in model type tab grouping help",
+    "string": "Enter multiple separators as a comma-separated list."
+  },
   "SgFE10": {
     "context": "product type digital",
     "string": "Digital"
-  },
-  "SjMQrX": {
-    "context": "label for model type tab grouping separator input",
-    "string": "Group separator"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5897,6 +5905,10 @@
   },
   "TWoYMj": {
     "string": "Redirect to the App Page"
+  },
+  "TZZ8Z7": {
+    "context": "intro for model type tab grouping help tooltip",
+    "string": "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu."
   },
   "TZq1Tm": {
     "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
@@ -6091,6 +6103,10 @@
     "context": "attribute name",
     "string": "Name"
   },
+  "UhqCK5": {
+    "context": "help section example in model type tab grouping help tooltip",
+    "string": "<em>Help section for Docs</em> with separator \"section for\" appears under a <strong>Help</strong> tab."
+  },
   "UjoSZB": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
@@ -6275,6 +6291,10 @@
   },
   "VrFy8e": {
     "string": "No notes from customer"
+  },
+  "Vsax0N": {
+    "context": "aria label for model type tab grouping help",
+    "string": "How tab grouping works"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -8269,6 +8289,10 @@
     "context": "notification, form submitted",
     "string": "Refund grant for order #{orderNumber} was updated"
   },
+  "gbo0sd": {
+    "context": "storefront example in model type tab grouping help tooltip",
+    "string": "With separator \"—\", types named <em>Storefront — Cart</em> and <em>Storefront — Checkout</em> appear under one <strong>Storefront</strong> tab."
+  },
   "gelco+": {
     "string": "Metadata updated"
   },
@@ -9408,6 +9432,10 @@
   "mSS92b": {
     "string": "Untitled rule"
   },
+  "mSxdrx": {
+    "context": "section heading for notes in model type tab grouping help tooltip",
+    "string": "Notes"
+  },
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
@@ -9742,6 +9770,10 @@
   "oJkeS6": {
     "string": "Attribute Code"
   },
+  "oK7729": {
+    "context": "note about case insensitivity in model type tab grouping help",
+    "string": "Letter case is ignored when matching prefixes."
+  },
   "oL7VUz": {
     "string": "Order Metadata"
   },
@@ -9832,6 +9864,10 @@
   "owCz2y": {
     "context": "message when matrix view cannot be shown",
     "string": "Matrix view requires exactly 2 attributes with selected values"
+  },
+  "oyXhGL": {
+    "context": "label for model type tab grouping separator input",
+    "string": "Split on"
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
@@ -10649,6 +10685,10 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tELvPJ": {
+    "context": "placeholder for model type tab grouping separator input",
+    "string": "Comma-separated list of separators"
+  },
   "tFx7UX": {
     "context": "Reassurance under verification badge when product is not visible to public API",
     "string": "The public API cannot find this product. Confirm it is published and listed in this channel."
@@ -11421,6 +11461,10 @@
   "wbsq7O": {
     "string": "Usage"
   },
+  "wdqbOW": {
+    "context": "label for selecting all subtypes in a grouped model type tab",
+    "string": "{prefix} <all>All</all>"
+  },
   "we4Lby": {
     "string": "Info"
   },
@@ -11576,6 +11620,10 @@
   },
   "xTyg+p": {
     "string": "No options to select"
+  },
+  "xUUaUR": {
+    "context": "hint for model type tab grouping separator input",
+    "string": "Split at the first match. Separate multiple with commas."
   },
   "xVn5B0": {
     "context": "added new attribute value",

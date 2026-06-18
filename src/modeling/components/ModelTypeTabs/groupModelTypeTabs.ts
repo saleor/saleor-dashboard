@@ -20,24 +20,83 @@ export interface GroupModelTypeTabsOptions {
   enabled?: boolean;
 }
 
-export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = " — ";
+/** Default value shown in the separator input (comma-separated list). */
+export const DEFAULT_MODEL_TYPE_TAB_SEPARATOR = "—, :, -";
+
+export const MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER = ",";
 
 export const GROUP_TAB_ID_PREFIX = "group:";
 
-export const getGroupTabId = (prefix: string) => `${GROUP_TAB_ID_PREFIX}${prefix}`;
+export const getGroupTabId = (prefix: string) =>
+  `${GROUP_TAB_ID_PREFIX}${prefix.toLocaleLowerCase()}`;
 
-const splitModelTypeName = (
-  name: string,
-  separator: string,
-): { prefix: string; suffix: string } | null => {
-  const index = name.indexOf(separator);
+const normalizeSeparatorPart = (part: string, index: number): string =>
+  index === 0 ? part : part.trimStart();
 
-  if (index === -1) {
+const splitSeparatorList = (value: string): string[] => {
+  if (!value.includes(MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER)) {
+    return [value];
+  }
+
+  const parts = value
+    .split(MODEL_TYPE_TAB_SEPARATOR_LIST_DELIMITER)
+    .map(normalizeSeparatorPart)
+    .filter(Boolean);
+
+  if (parts.length > 0) {
+    return parts;
+  }
+
+  return [value];
+};
+
+export const parseModelTypeTabSeparators = (value: string): string[] => {
+  if (!value.trim()) {
+    return [];
+  }
+
+  return splitSeparatorList(value);
+};
+
+interface ModelTypeBucket {
+  displayPrefix: string;
+  subtypes: ModelTypeSubtype[];
+}
+
+const getBucketKey = (prefix: string) => prefix.toLocaleLowerCase();
+
+interface ModelTypeNameSplit {
+  prefix: string;
+  suffix: string;
+}
+
+const splitModelTypeName = (name: string, separators: string[]): ModelTypeNameSplit | null => {
+  let bestIndex = -1;
+  let bestSeparator = "";
+
+  for (const separator of separators) {
+    const index = name.indexOf(separator);
+
+    if (index === -1) {
+      continue;
+    }
+
+    if (
+      bestIndex === -1 ||
+      index < bestIndex ||
+      (index === bestIndex && separator.length > bestSeparator.length)
+    ) {
+      bestIndex = index;
+      bestSeparator = separator;
+    }
+  }
+
+  if (bestIndex === -1) {
     return null;
   }
 
-  const prefix = name.slice(0, index).trim();
-  const suffix = name.slice(index + separator.length).trim();
+  const prefix = name.slice(0, bestIndex).trim();
+  const suffix = name.slice(bestIndex + bestSeparator.length).trim();
 
   if (!prefix || !suffix) {
     return null;
@@ -50,10 +109,10 @@ export const groupModelTypeTabs = (
   pageTypes: ModelTypeRef[],
   options: GroupModelTypeTabsOptions = {},
 ): ModelTabNode[] => {
-  const separator = options.separator ?? DEFAULT_MODEL_TYPE_TAB_SEPARATOR;
+  const separators = parseModelTypeTabSeparators(options.separator ?? "");
   const enabled = options.enabled ?? true;
 
-  if (!enabled || pageTypes.length === 0) {
+  if (!enabled || pageTypes.length === 0 || separators.length === 0) {
     return pageTypes.map(pageType => ({
       kind: "type",
       id: pageType.id,
@@ -61,35 +120,42 @@ export const groupModelTypeTabs = (
     }));
   }
 
-  const buckets = new Map<string, ModelTypeSubtype[]>();
+  const buckets = new Map<string, ModelTypeBucket>();
 
   pageTypes.forEach(pageType => {
-    const parts = splitModelTypeName(pageType.name, separator);
+    const parts = splitModelTypeName(pageType.name, separators);
 
     if (!parts) {
       return;
     }
 
-    const existing = buckets.get(parts.prefix) ?? [];
-
-    existing.push({
+    const bucketKey = getBucketKey(parts.prefix);
+    const subtype: ModelTypeSubtype = {
       id: pageType.id,
       name: pageType.name,
       suffix: parts.suffix,
+    };
+    const existing = buckets.get(bucketKey);
+
+    if (existing) {
+      existing.subtypes.push(subtype);
+
+      return;
+    }
+
+    buckets.set(bucketKey, {
+      displayPrefix: parts.prefix,
+      subtypes: [subtype],
     });
-    buckets.set(parts.prefix, existing);
   });
 
-  const groupedPrefixes = new Set(
-    [...buckets.entries()].filter(([, members]) => members.length >= 2).map(([prefix]) => prefix),
-  );
   const emittedGroups = new Set<string>();
   const nodes: ModelTabNode[] = [];
 
   pageTypes.forEach(pageType => {
-    const parts = splitModelTypeName(pageType.name, separator);
+    const parts = splitModelTypeName(pageType.name, separators);
 
-    if (!parts || !groupedPrefixes.has(parts.prefix)) {
+    if (!parts) {
       nodes.push({
         kind: "type",
         id: pageType.id,
@@ -99,19 +165,25 @@ export const groupModelTypeTabs = (
       return;
     }
 
-    if (emittedGroups.has(parts.prefix)) {
+    const bucketKey = getBucketKey(parts.prefix);
+
+    if (emittedGroups.has(bucketKey)) {
       return;
     }
 
-    emittedGroups.add(parts.prefix);
+    emittedGroups.add(bucketKey);
 
-    const subtypes = buckets.get(parts.prefix) ?? [];
+    const bucket = buckets.get(bucketKey);
+
+    if (!bucket) {
+      return;
+    }
 
     nodes.push({
       kind: "group",
-      id: getGroupTabId(parts.prefix),
-      prefix: parts.prefix,
-      subtypes,
+      id: getGroupTabId(bucket.displayPrefix),
+      prefix: bucket.displayPrefix,
+      subtypes: bucket.subtypes,
     });
   });
 
