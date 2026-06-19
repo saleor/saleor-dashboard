@@ -2126,6 +2126,22 @@ export type AssignedSwatchAttributeValue = {
   name: Maybe<Scalars['String']['output']>;
   /** Slug of the selected swatch value. */
   slug: Maybe<Scalars['String']['output']>;
+  /**
+   * Translation of the name.
+   *
+   * Added in Saleor 3.22.
+   */
+  translation: Maybe<Scalars['String']['output']>;
+};
+
+
+/**
+ * Represents a single swatch value.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AssignedSwatchAttributeValueTranslationArgs = {
+  languageCode: LanguageCodeEnum;
 };
 
 /**

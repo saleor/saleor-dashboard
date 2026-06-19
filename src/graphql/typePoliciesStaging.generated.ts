@@ -635,12 +635,13 @@ export type AssignedSwatchAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AssignedSwatchAttributeValueKeySpecifier = ('file' | 'hexColor' | 'name' | 'slug' | AssignedSwatchAttributeValueKeySpecifier)[];
+export type AssignedSwatchAttributeValueKeySpecifier = ('file' | 'hexColor' | 'name' | 'slug' | 'translation' | AssignedSwatchAttributeValueKeySpecifier)[];
 export type AssignedSwatchAttributeValueFieldPolicy = {
 	file?: FieldPolicy<any> | FieldReadFunction<any>,
 	hexColor?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	slug?: FieldPolicy<any> | FieldReadFunction<any>
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AssignedTextAttributeKeySpecifier = ('attribute' | 'translation' | 'value' | AssignedTextAttributeKeySpecifier)[];
 export type AssignedTextAttributeFieldPolicy = {
