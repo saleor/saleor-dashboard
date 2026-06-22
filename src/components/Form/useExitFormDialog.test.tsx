@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
-import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
+import { isDialogOnlyQueryChange, useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
 jest.mock("../../hooks/useNotifier", () => ({
   useNotifier: () => jest.fn(),
@@ -107,6 +107,61 @@ describe("useExitFormDialog", () => {
 
     // Then
     expect(result.current.exit.shouldBlockNavigation()).toBe(true);
+    expect(result.current.history.location.search).toBe("");
+  });
+  it("allows opening a dialog (action query param) on same pathname when form is dirty", async () => {
+    // Given
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = setup(submitFn);
+
+    // When
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.push("/?action=assign-attribute-value&id=123");
+    });
+
+    // Then - modal opens, no exit prompt, form stays dirty
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
+    expect(result.current.history.location.search).toBe("?action=assign-attribute-value&id=123");
+  });
+  it("allows closing a dialog (clearing action query params) on same pathname when form is dirty", async () => {
+    // Given - start with an open dialog
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = renderHook(
+      () => {
+        const form = useForm({ field: "" }, submitFn, { confirmLeave: true });
+        const exit = useExitFormDialog();
+        const history = useHistory();
+
+        return { form, exit, history };
+      },
+      {
+        wrapper: ({ children }) => (
+          <MemoryRouter
+            initialEntries={[{ pathname: "/", search: "?action=assign-attribute-value&id=123" }]}
+          >
+            <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
+          </MemoryRouter>
+        ),
+      },
+    );
+
+    // When - assigning marks the form dirty and then closes the dialog
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.replace("/");
+    });
+
+    // Then - dialog closes without an exit prompt
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.search).toBe("");
   });
   it("allows query navigation on same pathname when form is clean", async () => {
@@ -316,5 +371,39 @@ describe("useExitFormDialog", () => {
     // Assert - must stay on single-field edit, not revert to bulk query
     expect(provider?.showDialog).toBe(true);
     expect(result.current.history.location.search).toBe("?activeField=name");
+  });
+});
+
+describe("isDialogOnlyQueryChange", () => {
+  it("treats opening a dialog as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("", "?action=assign-attribute-value&id=123")).toBe(true);
+  });
+  it("treats closing a dialog as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?action=assign-attribute-value&id=123", "")).toBe(true);
+  });
+  it("ignores ordering of preserved params", () => {
+    expect(
+      isDialogOnlyQueryChange(
+        "?activeField=name&action=remove&id=1",
+        "?action=assign-attribute-value&activeField=name",
+      ),
+    ).toBe(true);
+  });
+  it("does not treat a bulk mode change as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("", "?bulk=1")).toBe(false);
+  });
+  it("does not treat an inline-edit (activeField) change as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("", "?activeField=name")).toBe(false);
+  });
+  it("does not treat a change in a non-dialog param as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?activeField=name", "?activeField=price")).toBe(false);
+  });
+  it("does not treat a simultaneous dialog and non-dialog param change as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?activeField=name", "?activeField=price&action=remove")).toBe(
+      false,
+    );
+  });
+  it("does not treat an identical query string as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?action=remove&id=1", "?action=remove&id=1")).toBe(false);
   });
 });
