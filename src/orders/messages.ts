@@ -97,4 +97,8 @@ export const refundReasonSelectHelperMessages = defineMessages({
     defaultMessage: "Selecting reason is required",
     id: "T9zLm6",
   }),
+  reasonRequiredError: defineMessage({
+    defaultMessage: "Reason is required",
+    id: "TTWEc9",
+  }),
 });

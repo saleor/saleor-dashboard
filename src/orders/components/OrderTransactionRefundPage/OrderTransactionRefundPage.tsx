@@ -93,8 +93,19 @@ const ModelsPickerTransactionRefund = (props: {
   control: Control<OrderTransactionRefundPageFormData>;
   disabled: boolean;
 }) => {
-  const { field } = useController({ name: "reasonReference", control: props.control });
   const intl = useIntl();
+  // When a reason reference type is configured (not disabled), selecting a reason is required.
+  const isRequired = !props.disabled;
+  const { field, fieldState } = useController({
+    name: "reasonReference",
+    control: props.control,
+    rules: {
+      validate: value =>
+        isRequired && !value
+          ? intl.formatMessage(refundReasonSelectHelperMessages.reasonRequiredError)
+          : true,
+    },
+  });
 
   return (
     <ModelsPicker
@@ -103,6 +114,8 @@ const ModelsPickerTransactionRefund = (props: {
       field={field}
       sortByName
       skip={props.disabled}
+      error={!!fieldState.error}
+      helperText={fieldState.error?.message}
       emptyOptionLabel={intl.formatMessage({
         defaultMessage: "Select a reason type",
         id: "vSLaZ7",
