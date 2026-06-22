@@ -1393,6 +1393,9 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "5e6fxf": {
+    "string": "Selecting reason is not obligatory for lines"
+  },
   "5elC9k": {
     "context": "taxes section name",
     "string": "Taxes"
@@ -2028,6 +2031,10 @@
   "8y4+0a": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
+  },
+  "8zOO4H": {
+    "context": "order return reason card, structured reason required helper text",
+    "string": "Return reason is required"
   },
   "9+iLpf": {
     "context": "link text to product type settings",
@@ -4122,6 +4129,10 @@
     "context": "title for required non-selection attributes section",
     "string": "Required attributes"
   },
+  "JaicxZ": {
+    "context": "order return reason card, structured reason select placeholder",
+    "string": "Select a reason type"
+  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -5889,6 +5900,9 @@
   "T83iU7": {
     "string": "Search categories..."
   },
+  "T9zLm6": {
+    "string": "Selecting reason is required"
+  },
   "TBdxTP": {
     "context": "promotion type order discount",
     "string": "Promotion"
@@ -5963,6 +5977,9 @@
   "TTVPyd": {
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
+  },
+  "TTWEc9": {
+    "string": "Reason is required"
   },
   "TV940D": {
     "string": "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}"
@@ -9673,10 +9690,6 @@
   "nAm4XY": {
     "context": "customer detail sidebar, section header",
     "string": "External reference"
-  },
-  "nAmCTW": {
-    "context": "order return reason card, empty structured reason option",
-    "string": "None"
   },
   "nBzIBG": {
     "string": "Delete permission group"
