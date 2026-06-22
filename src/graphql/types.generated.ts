@@ -3,44 +3,46 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /**
    * The `Date` scalar type represents a Date
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
-  Date: string;
+  Date: { input: string; output: string; }
   /**
    * The `DateTime` scalar type represents a DateTime
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
-  DateTime: any;
+  DateTime: { input: any; output: any; }
   /** The `Day` scalar type represents number of days by integer value. */
-  Day: number;
+  Day: { input: number; output: number; }
   /**
    * Custom Decimal implementation.
    *
    * Returns Decimal as a float in the API,
    * parses float to the Decimal on the way back.
    */
-  Decimal: any;
+  Decimal: { input: any; output: any; }
   /**
    * The `GenericScalar` scalar type represents a generic
    * GraphQL scalar value that could be:
    * String, Boolean, Int, Float, List or Object.
    */
-  GenericScalar: any;
+  GenericScalar: { input: any; output: any; }
   /** The `Hour` scalar type represents number of hours by integer value. */
-  Hour: number;
-  JSON: unknown;
-  JSONString: string;
+  Hour: { input: number; output: number; }
+  JSON: { input: unknown; output: unknown; }
+  JSONString: { input: string; output: string; }
   /**
    * Metadata is a map of key-value pairs, both keys and values are `String`.
    *
@@ -52,27 +54,27 @@ export type Scalars = {
    * }
    * ```
    */
-  Metadata: any;
+  Metadata: { input: any; output: any; }
   /** The `Minute` scalar type represents number of minutes by integer value. */
-  Minute: any;
+  Minute: { input: any; output: any; }
   /**
    * Nonnegative Decimal scalar implementation.
    *
    * Should be used in places where value must be nonnegative (0 or greater).
    */
-  PositiveDecimal: any;
+  PositiveDecimal: { input: any; output: any; }
   /**
    * Positive Integer scalar implementation.
    *
    * Should be used in places where value must be positive (greater than 0).
    */
-  PositiveInt: any;
-  UUID: any;
+  PositiveInt: { input: any; output: any; }
+  UUID: { input: any; output: any; }
   /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
-  Upload: any;
-  WeightScalar: any;
+  Upload: { input: any; output: any; }
+  WeightScalar: { input: any; output: any; }
   /** _Any value scalar as defined by Federation spec. */
-  _Any: any;
+  _Any: { input: any; output: any; }
 };
 
 export enum AccountErrorCode {
@@ -123,11 +125,11 @@ export type AccountInput = {
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -139,15 +141,15 @@ export type AccountInput = {
 /** Fields required to create a user. */
 export type AccountRegisterInput = {
   /** Slug of a channel which will be used to notify users. Optional when only one channel exists. */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** The email address of the user. */
-  email: Scalars['String'];
+  email: Scalars['String']['input'];
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * User public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -155,9 +157,9 @@ export type AccountRegisterInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Password. */
-  password: Scalars['String'];
+  password: Scalars['String']['input'];
   /** Base of frontend URL that will be needed to create confirmation URL. Required when account confirmation is enabled. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Filtering options for addresses. */
@@ -168,19 +170,19 @@ export type AddressFilterInput = {
 
 export type AddressInput = {
   /** City. */
-  city?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']['input']>;
   /** District. */
-  cityArea?: InputMaybe<Scalars['String']>;
+  cityArea?: InputMaybe<Scalars['String']['input']>;
   /** Company or organization. */
-  companyName?: InputMaybe<Scalars['String']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
   /** Country. */
   country?: InputMaybe<CountryCode>;
   /** State or province. */
-  countryArea?: InputMaybe<Scalars['String']>;
+  countryArea?: InputMaybe<Scalars['String']['input']>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Address public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -192,9 +194,9 @@ export type AddressInput = {
    *
    * Phone numbers are validated with Google's [libphonenumber](https://github.com/google/libphonenumber) library.
    */
-  phone?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
   /** Postal code. */
-  postalCode?: InputMaybe<Scalars['String']>;
+  postalCode?: InputMaybe<Scalars['String']['input']>;
   /**
    * Determine if the address should be validated. By default, Saleor accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
    *
@@ -202,11 +204,11 @@ export type AddressInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  skipValidation?: InputMaybe<Scalars['Boolean']>;
+  skipValidation?: InputMaybe<Scalars['Boolean']['input']>;
   /** Address. */
-  streetAddress1?: InputMaybe<Scalars['String']>;
+  streetAddress1?: InputMaybe<Scalars['String']['input']>;
   /** Address. */
-  streetAddress2?: InputMaybe<Scalars['String']>;
+  streetAddress2?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum AddressTypeEnum {
@@ -251,18 +253,18 @@ export type AppExtensionFilterInput = {
    *
    * Added in Saleor 3.22.
    */
-  mountName?: InputMaybe<Array<Scalars['String']>>;
+  mountName?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * Plain-text target name (case insensitive)
    *
    * Added in Saleor 3.22.
    */
-  targetName?: InputMaybe<Scalars['String']>;
+  targetName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AppFilterInput = {
-  isActive?: InputMaybe<Scalars['Boolean']>;
-  search?: InputMaybe<Scalars['String']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<AppTypeEnum>;
 };
 
@@ -272,20 +274,20 @@ export type AppInput = {
    *
    * Added in Saleor 3.19.
    */
-  identifier?: InputMaybe<Scalars['String']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Name of the app. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
 
 export type AppInstallInput = {
   /** Determine if app will be set active or not. */
-  activateAfterInstallation?: InputMaybe<Scalars['Boolean']>;
+  activateAfterInstallation?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of the app to install. */
-  appName: Scalars['String'];
+  appName: Scalars['String']['input'];
   /** URL to app's manifest in JSON format. */
-  manifestUrl: Scalars['String'];
+  manifestUrl: Scalars['String']['input'];
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
@@ -299,35 +301,35 @@ export enum AppProblemCreateErrorCode {
 
 export type AppProblemCreateInput = {
   /** Time window in minutes for aggregating problems with the same key. Defaults to 60. If 0, a new problem is always created. */
-  aggregationPeriod?: InputMaybe<Scalars['Minute']>;
+  aggregationPeriod?: InputMaybe<Scalars['Minute']['input']>;
   /** If set, the problem becomes critical when count reaches this value. If sent again with higher value than already counted, problem can be de-escalated. */
-  criticalThreshold?: InputMaybe<Scalars['PositiveInt']>;
+  criticalThreshold?: InputMaybe<Scalars['PositiveInt']['input']>;
   /** Key identifying the type of problem. App can add multiple problems under the same key, to merge them together or delete them in batch. Must be between 3 and 128 characters. */
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
   /** The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix. */
-  message: Scalars['String'];
+  message: Scalars['String']['input'];
 };
 
 /** Input for app callers to dismiss their own problems. */
 export type AppProblemDismissByAppInput = {
   /** List of problem IDs to dismiss. Cannot be combined with keys. Max 100. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of problem keys to dismiss. Cannot be combined with ids. Max 100. */
-  keys?: InputMaybe<Array<Scalars['String']>>;
+  keys?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /** Input for staff callers to dismiss problems by IDs. */
 export type AppProblemDismissByStaffWithIdsInput = {
   /** List of problem IDs to dismiss. Max 100. */
-  ids: Array<Scalars['ID']>;
+  ids: Array<Scalars['ID']['input']>;
 };
 
 /** Input for staff callers to dismiss problems by keys. */
 export type AppProblemDismissByStaffWithKeysInput = {
   /** ID of the app whose problems to dismiss. */
-  app: Scalars['ID'];
+  app: Scalars['ID']['input'];
   /** List of problem keys to dismiss. Max 100. */
-  keys: Array<Scalars['String']>;
+  keys: Array<Scalars['String']['input']>;
 };
 
 export enum AppProblemDismissErrorCode {
@@ -369,9 +371,9 @@ export type AppSortingInput = {
 
 export type AppTokenInput = {
   /** ID of app. */
-  app: Scalars['ID'];
+  app: Scalars['ID']['input'];
   /** Name of the token. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Enum determining type of your App. */
@@ -410,7 +412,7 @@ export type AssignedAttributeReferenceInput = {
 
 export type AssignedAttributeValueInput = {
   /** Filter by boolean value for attributes of boolean type. */
-  boolean?: InputMaybe<Scalars['Boolean']>;
+  boolean?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by date value for attributes of date type. */
   date?: InputMaybe<DateRangeInput>;
   /** Filter by date time value for attributes of date time type. */
@@ -427,7 +429,7 @@ export type AssignedAttributeValueInput = {
 
 export type AssignedAttributeWhereInput = {
   /** Filter by attribute slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
   value?: InputMaybe<AssignedAttributeValueInput>;
 };
@@ -446,9 +448,9 @@ export enum AttributeBulkCreateErrorCode {
 
 export type AttributeBulkTranslateInput = {
   /** External reference of an attribute. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Attribute ID. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Translation language code. */
   languageCode: LanguageCodeEnum;
   /** Translation fields. */
@@ -469,11 +471,11 @@ export enum AttributeBulkUpdateErrorCode {
 
 export type AttributeBulkUpdateInput = {
   /** External ID of this attribute. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Fields to update. */
   fields: AttributeUpdateInput;
   /** ID of an attribute to update. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum AttributeChoicesSortField {
@@ -500,24 +502,24 @@ export type AttributeCreateInput = {
    * Whether the attribute can be displayed in the admin product list.
    * @deprecated Field no longer supported
    */
-  availableInGrid?: InputMaybe<Scalars['Boolean']>;
+  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
   /** External ID of this attribute. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute can be filtered in dashboard. */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
+  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Whether the attribute can be filtered in storefront.
    * @deprecated Field no longer supported
    */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
+  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
   /** Whether the attribute is for variants only. */
-  isVariantOnly?: InputMaybe<Scalars['Boolean']>;
+  isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /**
    * Specifies reference types to narrow down the choices of reference objects. Applicable only for `REFERENCE` and `SINGLE_REFERENCE` attributes with `PRODUCT`, `PRODUCT_VARIANT` and `PAGE` entity types. Accepts `ProductType` IDs for `PRODUCT` and `PRODUCT_VARIANT` entity types, and `PageType` IDs for `PAGE` entity type. If omitted, all objects of the selected entity type are available as attribute values.
    *
@@ -525,24 +527,24 @@ export type AttributeCreateInput = {
    *
    * Added in Saleor 3.22.
    */
-  referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
+  referenceTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /**
    * The position of the attribute in the storefront navigation (0 by default).
    * @deprecated Field no longer supported
    */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
+  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The attribute type. */
   type: AttributeTypeEnum;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
   /** Whether the attribute requires values to be passed or not. */
-  valueRequired?: InputMaybe<Scalars['Boolean']>;
+  valueRequired?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of attribute's values. */
   values?: InputMaybe<Array<AttributeValueCreateInput>>;
   /** Whether the attribute should be visible or not in storefront. */
-  visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
+  visibleInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum AttributeEntityTypeEnum {
@@ -570,24 +572,24 @@ export enum AttributeErrorCode {
 }
 
 export type AttributeFilterInput = {
-  availableInGrid?: InputMaybe<Scalars['Boolean']>;
+  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Specifies the channel by which the data should be filtered.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  inCategory?: InputMaybe<Scalars['ID']>;
-  inCollection?: InputMaybe<Scalars['ID']>;
-  isVariantOnly?: InputMaybe<Scalars['Boolean']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
+  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
+  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  inCategory?: InputMaybe<Scalars['ID']['input']>;
+  inCollection?: InputMaybe<Scalars['ID']['input']>;
+  isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
   type?: InputMaybe<AttributeTypeEnum>;
-  valueRequired?: InputMaybe<Scalars['Boolean']>;
-  visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
+  valueRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  visibleInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type AttributeInput = {
@@ -595,7 +597,7 @@ export type AttributeInput = {
    * The boolean value of the attribute. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
    */
-  boolean?: InputMaybe<Scalars['Boolean']>;
+  boolean?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
@@ -607,14 +609,14 @@ export type AttributeInput = {
    */
   dateTime?: InputMaybe<DateTimeRangeInput>;
   /** Internal representation of an attribute name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`. */
   value?: InputMaybe<AssignedAttributeValueInput>;
   /**
    * Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
    */
-  values?: InputMaybe<Array<Scalars['String']>>;
+  values?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * The range that the returned values should be in. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
@@ -703,20 +705,20 @@ export type AttributeUpdateInput = {
    * Whether the attribute can be displayed in the admin product list.
    * @deprecated Field no longer supported
    */
-  availableInGrid?: InputMaybe<Scalars['Boolean']>;
+  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** External ID of this product. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Whether the attribute can be filtered in dashboard. */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
+  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Whether the attribute can be filtered in storefront.
    * @deprecated Field no longer supported
    */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
+  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether the attribute is for variants only. */
-  isVariantOnly?: InputMaybe<Scalars['Boolean']>;
+  isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Specifies reference types to narrow down the choices of reference objects. Applicable only for `REFERENCE` and `SINGLE_REFERENCE` attributes with `PRODUCT`, `PRODUCT_VARIANT` and `PAGE` entity types. Accepts `ProductType` IDs for `PRODUCT` and `PRODUCT_VARIANT` entity types, and `PageType` IDs for `PAGE` entity type. If omitted, all objects of the selected entity type are available as attribute values.
    *
@@ -724,29 +726,29 @@ export type AttributeUpdateInput = {
    *
    * Added in Saleor 3.22.
    */
-  referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
+  referenceTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** IDs of values to be removed from this attribute. */
-  removeValues?: InputMaybe<Array<Scalars['ID']>>;
+  removeValues?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /**
    * The position of the attribute in the storefront navigation (0 by default).
    * @deprecated Field no longer supported
    */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
+  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
   /** Whether the attribute requires values to be passed or not. */
-  valueRequired?: InputMaybe<Scalars['Boolean']>;
+  valueRequired?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether the attribute should be visible or not in storefront. */
-  visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
+  visibleInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type AttributeValueBulkTranslateInput = {
   /** External reference of an attribute value. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Attribute value ID. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Translation language code. */
   languageCode: LanguageCodeEnum;
   /** Translation fields. */
@@ -755,75 +757,75 @@ export type AttributeValueBulkTranslateInput = {
 
 export type AttributeValueCreateInput = {
   /** File content type. */
-  contentType?: InputMaybe<Scalars['String']>;
+  contentType?: InputMaybe<Scalars['String']['input']>;
   /** External ID of this attribute value. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** URL of the file attribute. Every time, a new value is created. */
-  fileUrl?: InputMaybe<Scalars['String']>;
+  fileUrl?: InputMaybe<Scalars['String']['input']>;
   /** Name of a value displayed in the interface. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /**
    * Represents the text of the attribute value, plain text without formatting.
    * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
-  plainText?: InputMaybe<Scalars['String']>;
+  plainText?: InputMaybe<Scalars['String']['input']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
    * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
-  richText?: InputMaybe<Scalars['JSONString']>;
+  richText?: InputMaybe<Scalars['JSONString']['input']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AttributeValueFilterInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type AttributeValueInput = {
   /** Represents the boolean value of the attribute value. */
-  boolean?: InputMaybe<Scalars['Boolean']>;
+  boolean?: InputMaybe<Scalars['Boolean']['input']>;
   /** File content type. */
-  contentType?: InputMaybe<Scalars['String']>;
+  contentType?: InputMaybe<Scalars['String']['input']>;
   /** Represents the date value of the attribute value. */
-  date?: InputMaybe<Scalars['Date']>;
+  date?: InputMaybe<Scalars['Date']['input']>;
   /** Represents the date/time value of the attribute value. */
-  dateTime?: InputMaybe<Scalars['DateTime']>;
+  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   /** Attribute value ID or external reference. */
   dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
   /** External ID of this attribute. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** URL of the file attribute. Every time, a new value is created. */
-  file?: InputMaybe<Scalars['String']>;
+  file?: InputMaybe<Scalars['String']['input']>;
   /** ID of the selected attribute. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** List of attribute value IDs or external references. */
   multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
   /** Numeric value of an attribute. */
-  numeric?: InputMaybe<Scalars['String']>;
+  numeric?: InputMaybe<Scalars['String']['input']>;
   /** Plain text content. */
-  plainText?: InputMaybe<Scalars['String']>;
+  plainText?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of the referenced entity for single reference attribute.
    *
    * Added in Saleor 3.22.
    */
-  reference?: InputMaybe<Scalars['ID']>;
+  reference?: InputMaybe<Scalars['ID']['input']>;
   /** List of entity IDs that will be used as references. */
-  references?: InputMaybe<Array<Scalars['ID']>>;
+  references?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Text content in JSON format. */
-  richText?: InputMaybe<Scalars['JSONString']>;
+  richText?: InputMaybe<Scalars['JSONString']['input']>;
   /** Attribute value ID or external reference. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /**
    * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
    * @deprecated Field no longer supported
    */
-  values?: InputMaybe<Array<Scalars['String']>>;
+  values?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /**
@@ -835,11 +837,11 @@ export type AttributeValueInput = {
  */
 export type AttributeValueSelectableTypeInput = {
   /** External reference of an attribute value. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** ID of an attribute value. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum AttributeValueTranslateErrorCode {
@@ -850,40 +852,40 @@ export enum AttributeValueTranslateErrorCode {
 }
 
 export type AttributeValueTranslationInput = {
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Translated text. */
-  plainText?: InputMaybe<Scalars['String']>;
+  plainText?: InputMaybe<Scalars['String']['input']>;
   /**
    * Translated text.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  richText?: InputMaybe<Scalars['JSONString']>;
+  richText?: InputMaybe<Scalars['JSONString']['input']>;
 };
 
 export type AttributeValueUpdateInput = {
   /** File content type. */
-  contentType?: InputMaybe<Scalars['String']>;
+  contentType?: InputMaybe<Scalars['String']['input']>;
   /** External ID of this attribute value. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** URL of the file attribute. Every time, a new value is created. */
-  fileUrl?: InputMaybe<Scalars['String']>;
+  fileUrl?: InputMaybe<Scalars['String']['input']>;
   /** Name of a value displayed in the interface. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Represents the text of the attribute value, plain text without formatting.
    * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
-  plainText?: InputMaybe<Scalars['String']>;
+  plainText?: InputMaybe<Scalars['String']['input']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
    * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
-  richText?: InputMaybe<Scalars['JSONString']>;
+  richText?: InputMaybe<Scalars['JSONString']['input']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Where filtering options for attribute values. */
@@ -892,7 +894,7 @@ export type AttributeValueWhereInput = {
   AND?: InputMaybe<Array<AttributeValueWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<AttributeValueWhereInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   name?: InputMaybe<StringFilterInput>;
   slug?: InputMaybe<StringFilterInput>;
 };
@@ -904,96 +906,96 @@ export type AttributeWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<AttributeWhereInput>>;
   entityType?: InputMaybe<AttributeEntityTypeEnumFilterInput>;
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  inCategory?: InputMaybe<Scalars['ID']>;
-  inCollection?: InputMaybe<Scalars['ID']>;
+  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  inCategory?: InputMaybe<Scalars['ID']['input']>;
+  inCollection?: InputMaybe<Scalars['ID']['input']>;
   inputType?: InputMaybe<AttributeInputTypeEnumFilterInput>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   name?: InputMaybe<StringFilterInput>;
   slug?: InputMaybe<StringFilterInput>;
   type?: InputMaybe<AttributeTypeEnumFilterInput>;
   unit?: InputMaybe<MeasurementUnitsEnumFilterInput>;
-  valueRequired?: InputMaybe<Scalars['Boolean']>;
-  visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
-  withChoices?: InputMaybe<Scalars['Boolean']>;
+  valueRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  visibleInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
+  withChoices?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type BulkAttributeValueInput = {
   /** The boolean value of an attribute to resolve. If the passed value is non-existent, it will be created. */
-  boolean?: InputMaybe<Scalars['Boolean']>;
+  boolean?: InputMaybe<Scalars['Boolean']['input']>;
   /** File content type. */
-  contentType?: InputMaybe<Scalars['String']>;
+  contentType?: InputMaybe<Scalars['String']['input']>;
   /** Represents the date value of the attribute value. */
-  date?: InputMaybe<Scalars['Date']>;
+  date?: InputMaybe<Scalars['Date']['input']>;
   /** Represents the date/time value of the attribute value. */
-  dateTime?: InputMaybe<Scalars['DateTime']>;
+  dateTime?: InputMaybe<Scalars['DateTime']['input']>;
   /** Attribute value ID. */
   dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
   /** External ID of this attribute. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** URL of the file attribute. Every time, a new value is created. */
-  file?: InputMaybe<Scalars['String']>;
+  file?: InputMaybe<Scalars['String']['input']>;
   /** ID of the selected attribute. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** List of attribute value IDs. */
   multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
   /** Numeric value of an attribute. */
-  numeric?: InputMaybe<Scalars['String']>;
+  numeric?: InputMaybe<Scalars['String']['input']>;
   /** Plain text content. */
-  plainText?: InputMaybe<Scalars['String']>;
+  plainText?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of the referenced entity for single reference attribute.
    *
    * Added in Saleor 3.22.
    */
-  reference?: InputMaybe<Scalars['ID']>;
+  reference?: InputMaybe<Scalars['ID']['input']>;
   /** List of entity IDs that will be used as references. */
-  references?: InputMaybe<Array<Scalars['ID']>>;
+  references?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Text content in JSON format. */
-  richText?: InputMaybe<Scalars['JSONString']>;
+  richText?: InputMaybe<Scalars['JSONString']['input']>;
   /** Attribute value ID. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /**
    * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
    * @deprecated Field no longer supported
    */
-  values?: InputMaybe<Array<Scalars['String']>>;
+  values?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type CardInput = {
   /** Payment method nonce, a token returned by the appropriate provider's SDK. */
-  code: Scalars['String'];
+  code: Scalars['String']['input'];
   /** Card security code. */
-  cvc?: InputMaybe<Scalars['String']>;
+  cvc?: InputMaybe<Scalars['String']['input']>;
   /** Information about currency and amount. */
   money: MoneyInput;
 };
 
 export type CardPaymentMethodDetailsInput = {
   /** Brand of the payment method used for the transaction. Max length is 40 characters. */
-  brand?: InputMaybe<Scalars['String']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
   /** Expiration month of the card used for the transaction. Value must be between 1 and 12. */
-  expMonth?: InputMaybe<Scalars['Int']>;
+  expMonth?: InputMaybe<Scalars['Int']['input']>;
   /** Expiration year of the card used for the transaction. Value must be between 2000 and 9999. */
-  expYear?: InputMaybe<Scalars['Int']>;
+  expYear?: InputMaybe<Scalars['Int']['input']>;
   /** First digits of the card used for the transaction. Max length is 4 characters. */
-  firstDigits?: InputMaybe<Scalars['String']>;
+  firstDigits?: InputMaybe<Scalars['String']['input']>;
   /** Last digits of the card used for the transaction. Max length is 4 characters. */
-  lastDigits?: InputMaybe<Scalars['String']>;
+  lastDigits?: InputMaybe<Scalars['String']['input']>;
   /** Name of the payment method used for the transaction. Max length is 256 characters. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
 };
 
 export type CatalogueInput = {
   /** Categories related to the discount. */
-  categories?: InputMaybe<Array<Scalars['ID']>>;
+  categories?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Collections related to the discount. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Products related to the discount. */
-  products?: InputMaybe<Array<Scalars['ID']>>;
+  products?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Product variant related to the discount. */
-  variants?: InputMaybe<Array<Scalars['ID']>>;
+  variants?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type CataloguePredicateInput = {
@@ -1012,25 +1014,25 @@ export type CataloguePredicateInput = {
 };
 
 export type CategoryFilterInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type CategoryInput = {
   /** Background image file. */
-  backgroundImage?: InputMaybe<Scalars['Upload']>;
+  backgroundImage?: InputMaybe<Scalars['Upload']['input']>;
   /** Alt text for a product media. */
-  backgroundImageAlt?: InputMaybe<Scalars['String']>;
+  backgroundImageAlt?: InputMaybe<Scalars['String']['input']>;
   /**
    * Category description.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /**
    * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1038,7 +1040,7 @@ export type CategoryInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Category name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the category private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -1048,7 +1050,7 @@ export type CategoryInput = {
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Category slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum CategorySortField {
@@ -1065,7 +1067,7 @@ export type CategorySortingInput = {
    * Specifies the channel in which to sort the data.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the direction in which to sort categories. */
   direction: OrderDirection;
   /** Sort categories by the selected field. */
@@ -1077,23 +1079,23 @@ export type CategoryWhereInput = {
   AND?: InputMaybe<Array<CategoryWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<CategoryWhereInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
 };
 
 export type ChannelCreateInput = {
   /** List of shipping zones to assign to the channel. */
-  addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
+  addShippingZones?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to assign to the channel. */
-  addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  addWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The channel checkout settings */
   checkoutSettings?: InputMaybe<CheckoutSettingsInput>;
   /** Currency of the channel. */
-  currencyCode: Scalars['String'];
+  currencyCode: Scalars['String']['input'];
   /** Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
   defaultCountry: CountryCode;
   /** Determine if channel will be set active or not. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Channel public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1101,7 +1103,7 @@ export type ChannelCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the channel. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** The channel order settings */
   orderSettings?: InputMaybe<OrderSettingsInput>;
   /** The channel payment settings */
@@ -1113,14 +1115,14 @@ export type ChannelCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Slug of the channel. */
-  slug: Scalars['String'];
+  slug: Scalars['String']['input'];
   /** The channel stock settings. */
   stockSettings?: InputMaybe<StockSettingsInput>;
 };
 
 export type ChannelDeleteInput = {
   /** ID of a channel to migrate orders from the origin channel. Target channel has to have the same currency as the origin. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
 };
 
 export enum ChannelErrorCode {
@@ -1137,28 +1139,28 @@ export enum ChannelErrorCode {
 
 export type ChannelListingUpdateInput = {
   /** ID of a channel listing. */
-  channelListing: Scalars['ID'];
+  channelListing: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
-  costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The threshold for preorder variant in channel. */
-  preorderThreshold?: InputMaybe<Scalars['Int']>;
+  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
-  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Price of the variant before discount. */
-  priorPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  priorPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
 };
 
 export type ChannelUpdateInput = {
   /** List of shipping zones to assign to the channel. */
-  addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
+  addShippingZones?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to assign to the channel. */
-  addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  addWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The channel checkout settings */
   checkoutSettings?: InputMaybe<CheckoutSettingsInput>;
   /** Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
   defaultCountry?: InputMaybe<CountryCode>;
   /** Determine if channel will be set active or not. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Channel public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1166,7 +1168,7 @@ export type ChannelUpdateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the channel. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The channel order settings */
   orderSettings?: InputMaybe<OrderSettingsInput>;
   /** The channel payment settings */
@@ -1178,22 +1180,22 @@ export type ChannelUpdateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of shipping zones to unassign from the channel. */
-  removeShippingZones?: InputMaybe<Array<Scalars['ID']>>;
+  removeShippingZones?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to unassign from the channel. */
-  removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  removeWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Slug of the channel. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The channel stock settings. */
   stockSettings?: InputMaybe<StockSettingsInput>;
 };
 
 export type CheckoutAddressValidationRules = {
   /** Determines if an error should be raised when the provided address doesn't match the expected format. Example: using letters for postal code when the numbers are expected. */
-  checkFieldsFormat?: InputMaybe<Scalars['Boolean']>;
+  checkFieldsFormat?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if an error should be raised when the provided address doesn't have all the required fields. The list of required fields is dynamic and depends on the country code (use the `addressValidationRules` query to fetch them). Note: country code is mandatory for all addresses regardless of the rules provided in this input. */
-  checkRequiredFields?: InputMaybe<Scalars['Boolean']>;
+  checkRequiredFields?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters. */
-  enableFieldsNormalization?: InputMaybe<Scalars['Boolean']>;
+  enableFieldsNormalization?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /**
@@ -1218,11 +1220,11 @@ export enum CheckoutAuthorizeStatusEnum {
 
 export type CheckoutAutoCompleteInput = {
   /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
-  cutOffDate?: InputMaybe<Scalars['DateTime']>;
+  cutOffDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
-  delay?: InputMaybe<Scalars['Minute']>;
+  delay?: InputMaybe<Scalars['Minute']['input']>;
   /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
-  enabled: Scalars['Boolean'];
+  enabled: Scalars['Boolean']['input'];
 };
 
 /**
@@ -1269,9 +1271,9 @@ export type CheckoutCreateInput = {
   /** Billing address of the customer. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
   billingAddress?: InputMaybe<AddressInput>;
   /** Slug of a channel in which to create a checkout. */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** The customer's email address. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Checkout language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** A list of checkout lines, each containing information about an item in the checkout. */
@@ -1299,13 +1301,13 @@ export type CheckoutCreateInput = {
    *
    * Added in Saleor 3.21.
    */
-  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address.
    *
    * Added in Saleor 3.21.
    */
-  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** The checkout validation rules that can be changed. */
@@ -1349,18 +1351,18 @@ export enum CheckoutErrorCode {
 
 export type CheckoutFilterInput = {
   authorizeStatus?: InputMaybe<Array<CheckoutAuthorizeStatusEnum>>;
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   chargeStatus?: InputMaybe<Array<CheckoutChargeStatusEnum>>;
   created?: InputMaybe<DateRangeInput>;
-  customer?: InputMaybe<Scalars['String']>;
+  customer?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<DateRangeInput>;
 };
 
 export type CheckoutLineInput = {
   /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
-  forceNewLine?: InputMaybe<Scalars['Boolean']>;
+  forceNewLine?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Fields required to update the object's metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1368,16 +1370,16 @@ export type CheckoutLineInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
-  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The number of items purchased. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** ID of the product variant. */
-  variantId: Scalars['ID'];
+  variantId: Scalars['ID']['input'];
 };
 
 export type CheckoutLineUpdateInput = {
   /** ID of the line. */
-  lineId?: InputMaybe<Scalars['ID']>;
+  lineId?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation.
    *
@@ -1387,14 +1389,14 @@ export type CheckoutLineUpdateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
-  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
-  quantity?: InputMaybe<Scalars['Int']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
   /**
    * ID of the product variant.
    * @deprecated Use `lineId` instead.
    */
-  variantId?: InputMaybe<Scalars['ID']>;
+  variantId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CheckoutSettingsInput = {
@@ -1403,7 +1405,7 @@ export type CheckoutSettingsInput = {
    *
    * Added in Saleor 3.23.
    */
-  allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']>;
+  allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Settings for automatic completion of fully paid checkouts.
    *
@@ -1416,12 +1418,12 @@ export type CheckoutSettingsInput = {
    * Added in Saleor 3.20.
    * @deprecated Use `automatic_completion` instead.
    */
-  automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
+  automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
    * @deprecated Field no longer supported
    */
-  useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']>;
+  useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum CheckoutSortField {
@@ -1463,22 +1465,22 @@ export type CollectionChannelListingUpdateInput = {
   /** List of channels to which the collection should be assigned. */
   addChannels?: InputMaybe<Array<PublishableChannelListingInput>>;
   /** List of channels from which the collection should be unassigned. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type CollectionCreateInput = {
   /** Background image file. */
-  backgroundImage?: InputMaybe<Scalars['Upload']>;
+  backgroundImage?: InputMaybe<Scalars['Upload']['input']>;
   /** Alt text for an image. */
-  backgroundImageAlt?: InputMaybe<Scalars['String']>;
+  backgroundImageAlt?: InputMaybe<Scalars['String']['input']>;
   /**
    * Description of the collection.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Fields required to update the collection metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1486,7 +1488,7 @@ export type CollectionCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the collection. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the collection private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -1494,16 +1496,16 @@ export type CollectionCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
-  products?: InputMaybe<Array<Scalars['ID']>>;
+  products?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Publication date. ISO 8601 standard.
    * @deprecated Field no longer supported
    */
-  publicationDate?: InputMaybe<Scalars['Date']>;
+  publicationDate?: InputMaybe<Scalars['Date']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Slug of the collection. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum CollectionErrorCode {
@@ -1523,27 +1525,27 @@ export type CollectionFilterInput = {
    * Specifies the channel by which the data should be filtered.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  channel?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   published?: InputMaybe<CollectionPublished>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type CollectionInput = {
   /** Background image file. */
-  backgroundImage?: InputMaybe<Scalars['Upload']>;
+  backgroundImage?: InputMaybe<Scalars['Upload']['input']>;
   /** Alt text for an image. */
-  backgroundImageAlt?: InputMaybe<Scalars['String']>;
+  backgroundImageAlt?: InputMaybe<Scalars['String']['input']>;
   /**
    * Description of the collection.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** Informs whether a collection is published. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Fields required to update the collection metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1551,7 +1553,7 @@ export type CollectionInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the collection. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the collection private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -1562,11 +1564,11 @@ export type CollectionInput = {
    * Publication date. ISO 8601 standard.
    * @deprecated Field no longer supported
    */
-  publicationDate?: InputMaybe<Scalars['Date']>;
+  publicationDate?: InputMaybe<Scalars['Date']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Slug of the collection. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum CollectionPublished {
@@ -1605,7 +1607,7 @@ export type CollectionSortingInput = {
    * Specifies the channel in which to sort the data.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the direction in which to sort collections. */
   direction: OrderDirection;
   /** Sort collections by the selected field. */
@@ -1617,15 +1619,15 @@ export type CollectionWhereInput = {
   AND?: InputMaybe<Array<CollectionWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<CollectionWhereInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
 };
 
 export type ConfigurationItemInput = {
   /** Name of the field to update. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** Value of the given field to update. */
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ConfigurationTypeFieldEnum {
@@ -1641,9 +1643,9 @@ export enum ConfigurationTypeFieldEnum {
 /** Define the filtering options for fields that can contain multiple values. */
 export type ContainsFilterInput = {
   /** The field contains all of the specified values. */
-  containsAll?: InputMaybe<Array<Scalars['String']>>;
+  containsAll?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The field contains at least one of the specified values. */
-  containsAny?: InputMaybe<Array<Scalars['String']>>;
+  containsAny?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /**
@@ -2168,21 +2170,21 @@ export type CountryCodeEnumFilterInput = {
 
 export type CountryFilterInput = {
   /** Boolean for filtering countries by having shipping zone assigned.If 'true', return countries with shipping zone assigned.If 'false', return countries without any shipping zone assigned.If the argument is not provided (null), return all countries. */
-  attachedToShippingZones?: InputMaybe<Scalars['Boolean']>;
+  attachedToShippingZones?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type CountryRateInput = {
   /** Country in which this rate applies. */
   countryCode: CountryCode;
   /** Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate. */
-  rate: Scalars['Float'];
+  rate: Scalars['Float']['input'];
 };
 
 export type CountryRateUpdateInput = {
   /** Country in which this rate applies. */
   countryCode: CountryCode;
   /** Tax rate value provided as percentage. Example: provide `23` to represent `23%` tax rate. Provide `null` to remove the particular rate. */
-  rate?: InputMaybe<Scalars['Float']>;
+  rate?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export enum CustomerBulkUpdateErrorCode {
@@ -2198,9 +2200,9 @@ export enum CustomerBulkUpdateErrorCode {
 
 export type CustomerBulkUpdateInput = {
   /** External ID of a customer to update. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** ID of a customer to update. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Fields required to update a customer. */
   input: CustomerInput;
 };
@@ -2226,11 +2228,11 @@ export enum CustomerEventsEnum {
 export type CustomerFilterInput = {
   dateJoined?: InputMaybe<DateRangeInput>;
   /** Filter by ids. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numberOfOrders?: InputMaybe<IntRangeInput>;
   placedOrders?: InputMaybe<DateRangeInput>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
@@ -2240,19 +2242,19 @@ export type CustomerInput = {
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
   /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** External ID of the customer. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User account is active. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** User account is confirmed. */
-  isConfirmed?: InputMaybe<Scalars['Boolean']>;
+  isConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -2260,7 +2262,7 @@ export type CustomerInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
-  note?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -2289,18 +2291,18 @@ export type CustomerOrderWhereInput = {
   /** Filter order by created at date. */
   createdAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by whether the order has any fulfillments. */
-  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
+  hasFulfillments?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by whether the order has any invoices. */
-  hasInvoices?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  hasInvoices?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   invoices?: InputMaybe<Array<InvoiceFilterInput>>;
   /** Filter by whether the order uses the click and collect delivery method. */
-  isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter based on whether the order includes a gift card purchase. */
-  isGiftCardBought?: InputMaybe<Scalars['Boolean']>;
+  isGiftCardBought?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter based on whether a gift card was used in the order. */
-  isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
+  isGiftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by number of lines in the order. */
   linesCount?: InputMaybe<IntFilterInput>;
   /** Filter by metadata fields. */
@@ -2338,9 +2340,9 @@ export type CustomerWhereInput = {
   email?: InputMaybe<StringFilterInput>;
   /** Filter by first name. */
   firstName?: InputMaybe<StringFilterInput>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by whether the user is active. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by last name. */
   lastName?: InputMaybe<StringFilterInput>;
   /** Filter by metadata fields. */
@@ -2355,43 +2357,43 @@ export type CustomerWhereInput = {
 
 export type DateRangeInput = {
   /** Start date. */
-  gte?: InputMaybe<Scalars['Date']>;
+  gte?: InputMaybe<Scalars['Date']['input']>;
   /** End date. */
-  lte?: InputMaybe<Scalars['Date']>;
+  lte?: InputMaybe<Scalars['Date']['input']>;
 };
 
 /** Define the filtering options for date time fields. */
 export type DateTimeFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['DateTime']>;
+  eq?: InputMaybe<Scalars['DateTime']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['DateTime']>>;
+  oneOf?: InputMaybe<Array<Scalars['DateTime']['input']>>;
   /** The value in range. */
   range?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type DateTimeRangeInput = {
   /** Start date. */
-  gte?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
   /** End date. */
-  lte?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 /** Define the filtering options for decimal fields. */
 export type DecimalFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['Decimal']>;
+  eq?: InputMaybe<Scalars['Decimal']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['Decimal']>>;
+  oneOf?: InputMaybe<Array<Scalars['Decimal']['input']>>;
   /** The value in range. */
   range?: InputMaybe<DecimalRangeInput>;
 };
 
 export type DecimalRangeInput = {
   /** Decimal value greater than or equal to. */
-  gte?: InputMaybe<Scalars['Decimal']>;
+  gte?: InputMaybe<Scalars['Decimal']['input']>;
   /** Decimal value less than or equal to. */
-  lte?: InputMaybe<Scalars['Decimal']>;
+  lte?: InputMaybe<Scalars['Decimal']['input']>;
 };
 
 export enum DeliveryOptionsCalculateErrorCode {
@@ -2449,16 +2451,16 @@ export type DraftOrderCreateInput = {
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
   /** ID of the channel associated with the order. */
-  channelId?: InputMaybe<Scalars['ID']>;
+  channelId?: InputMaybe<Scalars['ID']['input']>;
   /** A note from a customer. Visible by customers in the order summary. */
-  customerNote?: InputMaybe<Scalars['String']>;
+  customerNote?: InputMaybe<Scalars['String']['input']>;
   /**
    * Discount amount for the order.
    * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
-  discount?: InputMaybe<Scalars['PositiveDecimal']>;
+  discount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** External ID of this order. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Order language code.
    *
@@ -2484,54 +2486,54 @@ export type DraftOrderCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
   /**
    * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
    * Added in Saleor 3.21.
    */
-  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
    * Added in Saleor 3.21.
    */
-  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** ID of a selected shipping method. */
-  shippingMethod?: InputMaybe<Scalars['ID']>;
+  shippingMethod?: InputMaybe<Scalars['ID']['input']>;
   /** Customer associated with the draft order. */
-  user?: InputMaybe<Scalars['ID']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
   /** Email address of the customer. */
-  userEmail?: InputMaybe<Scalars['String']>;
+  userEmail?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of the voucher associated with the order.
    * @deprecated Use `voucherCode` instead.
    */
-  voucher?: InputMaybe<Scalars['ID']>;
+  voucher?: InputMaybe<Scalars['ID']['input']>;
   /**
    * A code of the voucher associated with the order.
    *
    * Added in Saleor 3.18.
    */
-  voucherCode?: InputMaybe<Scalars['String']>;
+  voucherCode?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DraftOrderInput = {
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
   /** ID of the channel associated with the order. */
-  channelId?: InputMaybe<Scalars['ID']>;
+  channelId?: InputMaybe<Scalars['ID']['input']>;
   /** A note from a customer. Visible by customers in the order summary. */
-  customerNote?: InputMaybe<Scalars['String']>;
+  customerNote?: InputMaybe<Scalars['String']['input']>;
   /**
    * Discount amount for the order.
    * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
-  discount?: InputMaybe<Scalars['PositiveDecimal']>;
+  discount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** External ID of this order. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Order language code.
    *
@@ -2555,38 +2557,38 @@ export type DraftOrderInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
   /**
    * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
    * Added in Saleor 3.21.
    */
-  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
    * Added in Saleor 3.21.
    */
-  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** ID of a selected shipping method. */
-  shippingMethod?: InputMaybe<Scalars['ID']>;
+  shippingMethod?: InputMaybe<Scalars['ID']['input']>;
   /** Customer associated with the draft order. */
-  user?: InputMaybe<Scalars['ID']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
   /** Email address of the customer. */
-  userEmail?: InputMaybe<Scalars['String']>;
+  userEmail?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of the voucher associated with the order.
    * @deprecated Use `voucherCode` instead.
    */
-  voucher?: InputMaybe<Scalars['ID']>;
+  voucher?: InputMaybe<Scalars['ID']['input']>;
   /**
    * A code of the voucher associated with the order.
    *
    * Added in Saleor 3.18.
    */
-  voucherCode?: InputMaybe<Scalars['String']>;
+  voucherCode?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DraftOrderWhereInput = {
@@ -2606,9 +2608,9 @@ export type DraftOrderWhereInput = {
   createdAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by order events. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   events?: InputMaybe<Array<OrderEventFilterInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by whether the order uses the click and collect delivery method. */
-  isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   lines?: InputMaybe<Array<LinesFilterInput>>;
   /** Filter by number of lines in the order. */
@@ -2698,11 +2700,11 @@ export enum ExportEventsEnum {
 }
 
 export type ExportFileFilterInput = {
-  app?: InputMaybe<Scalars['String']>;
+  app?: InputMaybe<Scalars['String']['input']>;
   createdAt?: InputMaybe<DateTimeRangeInput>;
   status?: InputMaybe<JobStatusEnum>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
-  user?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ExportFileSortField {
@@ -2726,20 +2728,20 @@ export type ExportGiftCardsInput = {
   /** Filtering options for gift cards. */
   filter?: InputMaybe<GiftCardFilterInput>;
   /** List of gift cards IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Determine which gift cards should be exported. */
   scope: ExportScope;
 };
 
 export type ExportInfoInput = {
   /** List of attribute ids witch should be exported. */
-  attributes?: InputMaybe<Array<Scalars['ID']>>;
+  attributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of channels ids which should be exported. */
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of product fields witch should be exported. */
   fields?: InputMaybe<Array<ProductFieldEnum>>;
   /** List of warehouse ids witch should be exported. */
-  warehouses?: InputMaybe<Array<Scalars['ID']>>;
+  warehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type ExportProductsInput = {
@@ -2750,7 +2752,7 @@ export type ExportProductsInput = {
   /** Filtering options for products. */
   filter?: InputMaybe<ProductFilterInput>;
   /** List of products IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Determine which products should be exported. */
   scope: ExportScope;
 };
@@ -2768,9 +2770,9 @@ export type ExportVoucherCodesInput = {
   /** Type of exported file. */
   fileType: FileTypesEnum;
   /** List of voucher code IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The ID of the voucher. If provided, exports all codes belonging to the voucher. */
-  voucherId?: InputMaybe<Scalars['ID']>;
+  voucherId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum ExternalNotificationErrorCodes {
@@ -2782,11 +2784,11 @@ export enum ExternalNotificationErrorCodes {
 
 export type ExternalNotificationTriggerInput = {
   /** External event type. This field is passed to a plugin as an event type. */
-  externalEventType: Scalars['String'];
+  externalEventType: Scalars['String']['input'];
   /** Additional payload that will be merged with the one based on the business object ID. */
-  extraPayload?: InputMaybe<Scalars['JSONString']>;
+  extraPayload?: InputMaybe<Scalars['JSONString']['input']>;
   /** The list of customers or orders node IDs that will be serialized and included in the notification payload. */
-  ids: Array<Scalars['ID']>;
+  ids: Array<Scalars['ID']['input']>;
 };
 
 export enum FileTypesEnum {
@@ -2796,7 +2798,7 @@ export enum FileTypesEnum {
 
 export type FulfillmentCancelInput = {
   /** ID of a warehouse where items will be restocked. Optional when fulfillment is in WAITING_FOR_APPROVAL state. */
-  warehouseId?: InputMaybe<Scalars['ID']>;
+  warehouseId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Filter input for order fulfillments data. */
@@ -2829,9 +2831,9 @@ export type FulfillmentStatusEnumFilterInput = {
 
 export type FulfillmentUpdateTrackingInput = {
   /** If true, send an email notification to the customer. */
-  notifyCustomer?: InputMaybe<Scalars['Boolean']>;
+  notifyCustomer?: InputMaybe<Scalars['Boolean']['input']>;
   /** Fulfillment tracking number. */
-  trackingNumber?: InputMaybe<Scalars['String']>;
+  trackingNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Filter input for fulfillment warehouses. */
@@ -2846,43 +2848,43 @@ export type FulfillmentWarehouseFilterInput = {
 
 export type GiftCardAddNoteInput = {
   /** Note message. */
-  message: Scalars['String'];
+  message: Scalars['String']['input'];
 };
 
 export type GiftCardBulkCreateInput = {
   /** Balance of the gift card. */
   balance: PriceInput;
   /** The number of cards to issue. */
-  count: Scalars['Int'];
+  count: Scalars['Int']['input'];
   /** The gift card expiry date. */
-  expiryDate?: InputMaybe<Scalars['Date']>;
+  expiryDate?: InputMaybe<Scalars['Date']['input']>;
   /** Determine if gift card is active. */
-  isActive: Scalars['Boolean'];
+  isActive: Scalars['Boolean']['input'];
   /** The gift card tags. */
-  tags?: InputMaybe<Array<Scalars['String']>>;
+  tags?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type GiftCardCreateInput = {
   /** The gift card tags to add. */
-  addTags?: InputMaybe<Array<Scalars['String']>>;
+  addTags?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Balance of the gift card. */
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /**
    * Code to use the gift card.
    * @deprecated The code is now auto generated.
    */
-  code?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']['input']>;
   /**
    * End date of the gift card in ISO 8601 format.
    * @deprecated Use `expiryDate` from `expirySettings` instead.
    */
-  endDate?: InputMaybe<Scalars['Date']>;
+  endDate?: InputMaybe<Scalars['Date']['input']>;
   /** The gift card expiry date. */
-  expiryDate?: InputMaybe<Scalars['Date']>;
+  expiryDate?: InputMaybe<Scalars['Date']['input']>;
   /** Determine if gift card is active. */
-  isActive: Scalars['Boolean'];
+  isActive: Scalars['Boolean']['input'];
   /**
    * Gift Card public metadata.
    *
@@ -2892,7 +2894,7 @@ export type GiftCardCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** The gift card note from the staff member. */
-  note?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**
    * Gift Card private metadata.
    *
@@ -2905,9 +2907,9 @@ export type GiftCardCreateInput = {
    * Start date of the gift card in ISO 8601 format.
    * @deprecated Field no longer supported
    */
-  startDate?: InputMaybe<Scalars['Date']>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
   /** Email of the customer to whom gift card will be sent. */
-  userEmail?: InputMaybe<Scalars['String']>;
+  userEmail?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum GiftCardErrorCode {
@@ -2922,7 +2924,7 @@ export enum GiftCardErrorCode {
 }
 
 export type GiftCardEventFilterInput = {
-  orders?: InputMaybe<Array<Scalars['ID']>>;
+  orders?: InputMaybe<Array<Scalars['ID']['input']>>;
   type?: InputMaybe<GiftCardEventsEnum>;
 };
 
@@ -2943,17 +2945,17 @@ export enum GiftCardEventsEnum {
 }
 
 export type GiftCardFilterInput = {
-  code?: InputMaybe<Scalars['String']>;
-  createdByEmail?: InputMaybe<Scalars['String']>;
-  currency?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  createdByEmail?: InputMaybe<Scalars['String']['input']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
   currentBalance?: InputMaybe<PriceRangeInput>;
   initialBalance?: InputMaybe<PriceRangeInput>;
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  products?: InputMaybe<Array<Scalars['ID']>>;
-  tags?: InputMaybe<Array<Scalars['String']>>;
-  used?: InputMaybe<Scalars['Boolean']>;
-  usedBy?: InputMaybe<Array<Scalars['ID']>>;
+  products?: InputMaybe<Array<Scalars['ID']['input']>>;
+  tags?: InputMaybe<Array<Scalars['String']['input']>>;
+  used?: InputMaybe<Scalars['Boolean']['input']>;
+  usedBy?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type GiftCardPaymentMethodDetailsInput = {
@@ -2962,28 +2964,28 @@ export type GiftCardPaymentMethodDetailsInput = {
    *
    * Added in Saleor 3.23.
    */
-  brand?: InputMaybe<Scalars['String']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
   /**
    * Last characters of the gift card used for the transaction. Max length is 4 characters.
    *
    * Added in Saleor 3.23.
    */
-  lastChars?: InputMaybe<Scalars['String']>;
+  lastChars?: InputMaybe<Scalars['String']['input']>;
   /**
    * Name of the payment method used for the transaction. Max length is 256 characters.
    *
    * Added in Saleor 3.23.
    */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
 };
 
 export type GiftCardResendInput = {
   /** Slug of a channel from which the email should be sent. */
-  channel: Scalars['String'];
+  channel: Scalars['String']['input'];
   /** Email to which gift card should be send. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** ID of a gift card to resend. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 export enum GiftCardSettingsErrorCode {
@@ -3025,21 +3027,21 @@ export type GiftCardSortingInput = {
 };
 
 export type GiftCardTagFilterInput = {
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GiftCardUpdateInput = {
   /** The gift card tags to add. */
-  addTags?: InputMaybe<Array<Scalars['String']>>;
+  addTags?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The gift card balance amount. */
-  balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
+  balanceAmount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /**
    * End date of the gift card in ISO 8601 format.
    * @deprecated Use `expiryDate` from `expirySettings` instead.
    */
-  endDate?: InputMaybe<Scalars['Date']>;
+  endDate?: InputMaybe<Scalars['Date']['input']>;
   /** The gift card expiry date. */
-  expiryDate?: InputMaybe<Scalars['Date']>;
+  expiryDate?: InputMaybe<Scalars['Date']['input']>;
   /**
    * Gift Card public metadata.
    *
@@ -3057,20 +3059,20 @@ export type GiftCardUpdateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The gift card tags to remove. */
-  removeTags?: InputMaybe<Array<Scalars['String']>>;
+  removeTags?: InputMaybe<Array<Scalars['String']['input']>>;
   /**
    * Start date of the gift card in ISO 8601 format.
    * @deprecated Field no longer supported
    */
-  startDate?: InputMaybe<Scalars['Date']>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
 /** Define the filtering options for foreign key fields. */
 export type GlobalIdFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['ID']>;
+  eq?: InputMaybe<Scalars['ID']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['ID']>>;
+  oneOf?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 /** Thumbnail formats for icon images. */
@@ -3082,18 +3084,18 @@ export enum IconThumbnailFormatEnum {
 /** Define the filtering options for integer fields. */
 export type IntFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['Int']>;
+  eq?: InputMaybe<Scalars['Int']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['Int']>>;
+  oneOf?: InputMaybe<Array<Scalars['Int']['input']>>;
   /** The value in range. */
   range?: InputMaybe<IntRangeInput>;
 };
 
 export type IntRangeInput = {
   /** Value greater than or equal to. */
-  gte?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
   /** Value less than or equal to. */
-  lte?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type InvoiceCreateInput = {
@@ -3104,7 +3106,7 @@ export type InvoiceCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number. */
-  number: Scalars['String'];
+  number: Scalars['String']['input'];
   /**
    * Fields required to update the invoice private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -3112,7 +3114,7 @@ export type InvoiceCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of an invoice to download. */
-  url: Scalars['String'];
+  url: Scalars['String']['input'];
 };
 
 export enum InvoiceErrorCode {
@@ -4772,11 +4774,11 @@ export enum MediaChoicesSortField {
 
 export type MediaInput = {
   /** Alt text for a product media. */
-  alt?: InputMaybe<Scalars['String']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
   /** Represents an image file in a multipart request. */
-  image?: InputMaybe<Scalars['Upload']>;
+  image?: InputMaybe<Scalars['Upload']['input']>;
   /** Represents an URL to an external media. */
-  mediaUrl?: InputMaybe<Scalars['String']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MediaSortingInput = {
@@ -4790,9 +4792,9 @@ export type MenuCreateInput = {
   /** List of menu items. */
   items?: InputMaybe<Array<MenuItemInput>>;
   /** Name of the menu. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** Slug of the menu. Will be generated if not provided. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum MenuErrorCode {
@@ -4809,60 +4811,60 @@ export enum MenuErrorCode {
 
 export type MenuFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
-  slug?: InputMaybe<Array<Scalars['String']>>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Array<Scalars['String']['input']>>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type MenuInput = {
   /** Name of the menu. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Slug of the menu. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MenuItemCreateInput = {
   /** Category to which item points. */
-  category?: InputMaybe<Scalars['ID']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
   /** Collection to which item points. */
-  collection?: InputMaybe<Scalars['ID']>;
+  collection?: InputMaybe<Scalars['ID']['input']>;
   /** Menu to which item belongs. */
-  menu: Scalars['ID'];
+  menu: Scalars['ID']['input'];
   /** Name of the menu item. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** Page to which item points. */
-  page?: InputMaybe<Scalars['ID']>;
+  page?: InputMaybe<Scalars['ID']['input']>;
   /** ID of the parent menu. If empty, menu will be top level menu. */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** URL of the pointed item. */
-  url?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MenuItemFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MenuItemInput = {
   /** Category to which item points. */
-  category?: InputMaybe<Scalars['ID']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
   /** Collection to which item points. */
-  collection?: InputMaybe<Scalars['ID']>;
+  collection?: InputMaybe<Scalars['ID']['input']>;
   /** Name of the menu item. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Page to which item points. */
-  page?: InputMaybe<Scalars['ID']>;
+  page?: InputMaybe<Scalars['ID']['input']>;
   /** URL of the pointed item. */
-  url?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MenuItemMoveInput = {
   /** The menu item ID to move. */
-  itemId: Scalars['ID'];
+  itemId: Scalars['ID']['input'];
   /** ID of the parent menu. If empty, menu will be top level menu. */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
-  sortOrder?: InputMaybe<Scalars['Int']>;
+  sortOrder?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MenuItemSortingInput = {
@@ -4901,9 +4903,9 @@ export enum MetadataErrorCode {
 
 export type MetadataFilter = {
   /** Key of a metadata item. */
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
   /** Value of a metadata item. */
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 /**
@@ -4919,42 +4921,42 @@ export type MetadataFilter = {
  */
 export type MetadataFilterInput = {
   /** Key to filter by. If not other fields provided - checking the existence of the key in metadata. */
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
   /** Value to filter by. */
   value?: InputMaybe<MetadataValueFilterInput>;
 };
 
 export type MetadataInput = {
   /** Key of a metadata item. */
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
   /** Value of a metadata item. */
-  value: Scalars['String'];
+  value: Scalars['String']['input'];
 };
 
 /** Define the filtering options for metadata value fields. */
 export type MetadataValueFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['String']>>;
+  oneOf?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type MoneyInput = {
   /** Amount of money. */
-  amount: Scalars['PositiveDecimal'];
+  amount: Scalars['PositiveDecimal']['input'];
   /** Currency code. */
-  currency: Scalars['String'];
+  currency: Scalars['String']['input'];
 };
 
 export type MoveProductInput = {
   /** The ID of the product to move. */
-  productId: Scalars['ID'];
+  productId: Scalars['ID']['input'];
   /** The relative sorting position of the product (from -inf to +inf) starting from the first given product's actual position.1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
-  sortOrder?: InputMaybe<Scalars['Int']>;
+  sortOrder?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type NameTranslationInput = {
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum NavigationType {
@@ -4977,7 +4979,7 @@ export enum OrderAction {
 
 export type OrderAddNoteInput = {
   /** Note message. */
-  message: Scalars['String'];
+  message: Scalars['String']['input'];
 };
 
 /**
@@ -5012,13 +5014,13 @@ export type OrderAuthorizeStatusEnumFilterInput = {
 
 export type OrderBulkCreateDeliveryMethodInput = {
   /** The ID of the shipping method. */
-  shippingMethodId?: InputMaybe<Scalars['ID']>;
+  shippingMethodId?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the shipping method. */
-  shippingMethodName?: InputMaybe<Scalars['String']>;
+  shippingMethodName?: InputMaybe<Scalars['String']['input']>;
   /** The price of the shipping. */
   shippingPrice?: InputMaybe<TaxedMoneyInput>;
   /** The ID of the tax class. */
-  shippingTaxClassId?: InputMaybe<Scalars['ID']>;
+  shippingTaxClassId?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Metadata of the tax class. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -5026,7 +5028,7 @@ export type OrderBulkCreateDeliveryMethodInput = {
    */
   shippingTaxClassMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the tax class. */
-  shippingTaxClassName?: InputMaybe<Scalars['String']>;
+  shippingTaxClassName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Private metadata of the tax class. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -5034,11 +5036,11 @@ export type OrderBulkCreateDeliveryMethodInput = {
    */
   shippingTaxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Tax rate of the shipping. */
-  shippingTaxRate?: InputMaybe<Scalars['PositiveDecimal']>;
+  shippingTaxRate?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The ID of the warehouse. */
-  warehouseId?: InputMaybe<Scalars['ID']>;
+  warehouseId?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the warehouse. */
-  warehouseName?: InputMaybe<Scalars['String']>;
+  warehouseName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum OrderBulkCreateErrorCode {
@@ -5066,47 +5068,47 @@ export type OrderBulkCreateFulfillmentInput = {
   /** List of items informing how to fulfill the order. */
   lines?: InputMaybe<Array<OrderBulkCreateFulfillmentLineInput>>;
   /** Fulfillment's tracking code. */
-  trackingCode?: InputMaybe<Scalars['String']>;
+  trackingCode?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderBulkCreateFulfillmentLineInput = {
   /** 0-based index of order line, which the fulfillment line refers to. */
-  orderLineIndex: Scalars['Int'];
+  orderLineIndex: Scalars['Int']['input'];
   /** The number of line items to be fulfilled from given warehouse. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** The external ID of the product variant. */
-  variantExternalReference?: InputMaybe<Scalars['String']>;
+  variantExternalReference?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the product variant. */
-  variantId?: InputMaybe<Scalars['ID']>;
+  variantId?: InputMaybe<Scalars['ID']['input']>;
   /** The SKU of the product variant. */
-  variantSku?: InputMaybe<Scalars['String']>;
+  variantSku?: InputMaybe<Scalars['String']['input']>;
   /** ID of the warehouse from which the item will be fulfilled. */
-  warehouse: Scalars['ID'];
+  warehouse: Scalars['ID']['input'];
 };
 
 export type OrderBulkCreateInput = {
   /** Billing address of the customer. */
   billingAddress: AddressInput;
   /** Slug of the channel associated with the order. */
-  channel: Scalars['String'];
+  channel: Scalars['String']['input'];
   /** The date, when the order was inserted to Saleor database. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime']['input'];
   /** Currency code. */
-  currency: Scalars['String'];
+  currency: Scalars['String']['input'];
   /** Note about customer. */
-  customerNote?: InputMaybe<Scalars['String']>;
+  customerNote?: InputMaybe<Scalars['String']['input']>;
   /** The delivery method selected for this order. */
   deliveryMethod?: InputMaybe<OrderBulkCreateDeliveryMethodInput>;
   /** List of discounts. */
   discounts?: InputMaybe<Array<OrderDiscountCommonInput>>;
   /** Determines whether displayed prices should include taxes. */
-  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** External ID of the order. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Fulfillments of the order. */
   fulfillments?: InputMaybe<Array<OrderBulkCreateFulfillmentInput>>;
   /** List of gift card codes associated with the order. */
-  giftCards?: InputMaybe<Array<Scalars['String']>>;
+  giftCards?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Invoices related to the order. */
   invoices?: InputMaybe<Array<OrderBulkCreateInvoiceInput>>;
   /** Order language code. */
@@ -5128,7 +5130,7 @@ export type OrderBulkCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view, where users should be redirected to see the order details. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** Status of the order. */
@@ -5142,14 +5144,14 @@ export type OrderBulkCreateInput = {
    *
    * Added in Saleor 3.18.
    */
-  voucherCode?: InputMaybe<Scalars['String']>;
+  voucherCode?: InputMaybe<Scalars['String']['input']>;
   /** Weight of the order in kg. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export type OrderBulkCreateInvoiceInput = {
   /** The date, when the invoice was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime']['input'];
   /**
    * Metadata of the invoice. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -5157,7 +5159,7 @@ export type OrderBulkCreateInvoiceInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number. */
-  number?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['String']['input']>;
   /**
    * Private metadata of the invoice. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -5165,31 +5167,31 @@ export type OrderBulkCreateInvoiceInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of the invoice to download. */
-  url?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderBulkCreateNoteInput = {
   /** The app ID associated with the message. */
-  appId?: InputMaybe<Scalars['ID']>;
+  appId?: InputMaybe<Scalars['ID']['input']>;
   /** The date associated with the message. */
-  date?: InputMaybe<Scalars['DateTime']>;
+  date?: InputMaybe<Scalars['DateTime']['input']>;
   /** Note message. Max characters: 255. */
-  message: Scalars['String'];
+  message: Scalars['String']['input'];
   /** The user email associated with the message. */
-  userEmail?: InputMaybe<Scalars['ID']>;
+  userEmail?: InputMaybe<Scalars['ID']['input']>;
   /** The user external ID associated with the message. */
-  userExternalReference?: InputMaybe<Scalars['ID']>;
+  userExternalReference?: InputMaybe<Scalars['ID']['input']>;
   /** The user ID associated with the message. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type OrderBulkCreateOrderLineInput = {
   /** The date, when the order line was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime']['input'];
   /** Gift card flag. */
-  isGiftCard: Scalars['Boolean'];
+  isGiftCard: Scalars['Boolean']['input'];
   /** Determines whether shipping of the order line items is required. */
-  isShippingRequired: Scalars['Boolean'];
+  isShippingRequired: Scalars['Boolean']['input'];
   /**
    * Metadata of the order line. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -5203,17 +5205,17 @@ export type OrderBulkCreateOrderLineInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the product. */
-  productName?: InputMaybe<Scalars['String']>;
+  productName?: InputMaybe<Scalars['String']['input']>;
   /**
    * The SKU of the product.
    *
    * Added in Saleor 3.18.
    */
-  productSku?: InputMaybe<Scalars['String']>;
+  productSku?: InputMaybe<Scalars['String']['input']>;
   /** Number of items in the order line */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** The ID of the tax class. */
-  taxClassId?: InputMaybe<Scalars['ID']>;
+  taxClassId?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Metadata of the tax class. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -5221,7 +5223,7 @@ export type OrderBulkCreateOrderLineInput = {
    */
   taxClassMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the tax class. */
-  taxClassName?: InputMaybe<Scalars['String']>;
+  taxClassName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Private metadata of the tax class. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -5229,13 +5231,13 @@ export type OrderBulkCreateOrderLineInput = {
    */
   taxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Tax rate of the order line. */
-  taxRate?: InputMaybe<Scalars['PositiveDecimal']>;
+  taxRate?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Price of the order line. */
   totalPrice: TaxedMoneyInput;
   /** Translation of the product name. */
-  translatedProductName?: InputMaybe<Scalars['String']>;
+  translatedProductName?: InputMaybe<Scalars['String']['input']>;
   /** Translation of the product variant name. */
-  translatedVariantName?: InputMaybe<Scalars['String']>;
+  translatedVariantName?: InputMaybe<Scalars['String']['input']>;
   /** Price of the order line excluding applied discount. */
   undiscountedTotalPrice: TaxedMoneyInput;
   /**
@@ -5243,7 +5245,7 @@ export type OrderBulkCreateOrderLineInput = {
    *
    * Added in Saleor 3.19.
    */
-  unitDiscountReason?: InputMaybe<Scalars['String']>;
+  unitDiscountReason?: InputMaybe<Scalars['String']['input']>;
   /**
    * Type of the discount: fixed or percent
    *
@@ -5255,26 +5257,26 @@ export type OrderBulkCreateOrderLineInput = {
    *
    * Added in Saleor 3.19.
    */
-  unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']>;
+  unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The external ID of the product variant. */
-  variantExternalReference?: InputMaybe<Scalars['String']>;
+  variantExternalReference?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the product variant. */
-  variantId?: InputMaybe<Scalars['ID']>;
+  variantId?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the product variant. */
-  variantName?: InputMaybe<Scalars['String']>;
+  variantName?: InputMaybe<Scalars['String']['input']>;
   /** The SKU of the product variant. */
-  variantSku?: InputMaybe<Scalars['String']>;
+  variantSku?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the warehouse, where the line will be allocated. */
-  warehouse: Scalars['ID'];
+  warehouse: Scalars['ID']['input'];
 };
 
 export type OrderBulkCreateUserInput = {
   /** Customer email associated with the order. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Customer external ID associated with the order. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Customer ID associated with the order. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /**
@@ -5338,9 +5340,9 @@ export enum OrderDirection {
 
 export type OrderDiscountCommonInput = {
   /** Explanation for the applied discount. */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /** Value of the discount. Can store fixed value or percent value */
-  value: Scalars['PositiveDecimal'];
+  value: Scalars['PositiveDecimal']['input'];
   /** Type of the discount: fixed or percent */
   valueType: DiscountValueTypeEnum;
 };
@@ -5354,11 +5356,11 @@ export enum OrderDiscountType {
 }
 
 export type OrderDraftFilterInput = {
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   created?: InputMaybe<DateRangeInput>;
-  customer?: InputMaybe<Scalars['String']>;
+  customer?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum OrderErrorCode {
@@ -5484,48 +5486,48 @@ export enum OrderEventsEnum {
 
 export type OrderFilterInput = {
   authorizeStatus?: InputMaybe<Array<OrderAuthorizeStatusEnum>>;
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   chargeStatus?: InputMaybe<Array<OrderChargeStatusEnum>>;
-  checkoutIds?: InputMaybe<Array<Scalars['ID']>>;
-  checkoutTokens?: InputMaybe<Array<Scalars['UUID']>>;
+  checkoutIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  checkoutTokens?: InputMaybe<Array<Scalars['UUID']['input']>>;
   created?: InputMaybe<DateRangeInput>;
-  customer?: InputMaybe<Scalars['String']>;
-  giftCardBought?: InputMaybe<Scalars['Boolean']>;
-  giftCardUsed?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
-  isPreorder?: InputMaybe<Scalars['Boolean']>;
+  customer?: InputMaybe<Scalars['String']['input']>;
+  giftCardBought?: InputMaybe<Scalars['Boolean']['input']>;
+  giftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
+  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  numbers?: InputMaybe<Array<Scalars['String']>>;
+  numbers?: InputMaybe<Array<Scalars['String']['input']>>;
   paymentStatus?: InputMaybe<Array<PaymentChargeStatusEnum>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Array<OrderStatusFilter>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type OrderFulfillInput = {
   /** If true, then allow proceed fulfillment when stock is exceeded. */
-  allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']>;
+  allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of items informing how to fulfill the order. */
   lines: Array<OrderFulfillLineInput>;
   /** If true, send an email notification to the customer. */
-  notifyCustomer?: InputMaybe<Scalars['Boolean']>;
+  notifyCustomer?: InputMaybe<Scalars['Boolean']['input']>;
   /** Fulfillment tracking number. */
-  trackingNumber?: InputMaybe<Scalars['String']>;
+  trackingNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderFulfillLineInput = {
   /** The ID of the order line. */
-  orderLineId?: InputMaybe<Scalars['ID']>;
+  orderLineId?: InputMaybe<Scalars['ID']['input']>;
   /** List of stock items to create. */
   stocks: Array<OrderFulfillStockInput>;
 };
 
 export type OrderFulfillStockInput = {
   /** The number of line items to be fulfilled from given warehouse. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** ID of the warehouse from which the item will be fulfilled. */
-  warehouse: Scalars['ID'];
+  warehouse: Scalars['ID']['input'];
 };
 
 export enum OrderGrantRefundCreateErrorCode {
@@ -5540,19 +5542,19 @@ export enum OrderGrantRefundCreateErrorCode {
 
 export type OrderGrantRefundCreateInput = {
   /** Amount of the granted refund. If not provided, the amount will be calculated automatically based on provided `lines` and `grantRefundForShipping`. */
-  amount?: InputMaybe<Scalars['Decimal']>;
+  amount?: InputMaybe<Scalars['Decimal']['input']>;
   /** Determine if granted refund should include shipping costs. */
-  grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
+  grantRefundForShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** Lines to assign to granted refund. */
   lines?: InputMaybe<Array<OrderGrantRefundCreateLineInput>>;
   /** Reason of the granted refund. */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason.
    *
    * Added in Saleor 3.22.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
    *
@@ -5560,7 +5562,7 @@ export type OrderGrantRefundCreateInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  transactionId: Scalars['ID'];
+  transactionId: Scalars['ID']['input'];
 };
 
 export enum OrderGrantRefundCreateLineErrorCode {
@@ -5573,17 +5575,17 @@ export enum OrderGrantRefundCreateLineErrorCode {
 
 export type OrderGrantRefundCreateLineInput = {
   /** The ID of the order line. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The quantity of line items to be marked to refund. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Reason of the granted refund for the line. */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason for the line.
    *
    * Added in Saleor 3.23.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum OrderGrantRefundUpdateErrorCode {
@@ -5600,19 +5602,19 @@ export type OrderGrantRefundUpdateInput = {
   /** Lines to assign to granted refund. */
   addLines?: InputMaybe<Array<OrderGrantRefundUpdateLineAddInput>>;
   /** Amount of the granted refund. if not provided and `addLines` or `removeLines` or `grantRefundForShipping` is provided, amount will be calculated automatically. */
-  amount?: InputMaybe<Scalars['Decimal']>;
+  amount?: InputMaybe<Scalars['Decimal']['input']>;
   /** Determine if granted refund should include shipping costs. */
-  grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
+  grantRefundForShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** Reason of the granted refund. */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason.
    *
    * Added in Saleor 3.22.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** Lines to remove from granted refund. */
-  removeLines?: InputMaybe<Array<Scalars['ID']>>;
+  removeLines?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
    *
@@ -5620,22 +5622,22 @@ export type OrderGrantRefundUpdateInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  transactionId?: InputMaybe<Scalars['ID']>;
+  transactionId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type OrderGrantRefundUpdateLineAddInput = {
   /** The ID of the order line. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The quantity of line items to be marked to refund. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Reason of the granted refund for the line. */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason for the line.
    *
    * Added in Saleor 3.23.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum OrderGrantRefundUpdateLineErrorCode {
@@ -5663,18 +5665,18 @@ export enum OrderGrantedRefundStatusEnum {
 
 export type OrderLineCreateInput = {
   /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
-  forceNewLine?: InputMaybe<Scalars['Boolean']>;
+  forceNewLine?: InputMaybe<Scalars['Boolean']['input']>;
   /** Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used. */
-  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Number of variant items ordered. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Product variant ID. */
-  variantId: Scalars['ID'];
+  variantId: Scalars['ID']['input'];
 };
 
 export type OrderLineInput = {
   /** Number of variant items ordered. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
 };
 
 export enum OrderNoteAddErrorCode {
@@ -5684,7 +5686,7 @@ export enum OrderNoteAddErrorCode {
 
 export type OrderNoteInput = {
   /** Note message. */
-  message: Scalars['String'];
+  message: Scalars['String']['input'];
 };
 
 export enum OrderNoteUpdateErrorCode {
@@ -5711,78 +5713,78 @@ export type OrderPredicateInput = {
 
 export type OrderRefundFulfillmentLineInput = {
   /** The ID of the fulfillment line to refund. */
-  fulfillmentLineId: Scalars['ID'];
+  fulfillmentLineId: Scalars['ID']['input'];
   /** The number of items to be refunded. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
 };
 
 export type OrderRefundLineInput = {
   /** The ID of the order line to refund. */
-  orderLineId: Scalars['ID'];
+  orderLineId: Scalars['ID']['input'];
   /** The number of items to be refunded. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
 };
 
 export type OrderRefundProductsInput = {
   /** The total amount of refund when the value is provided manually. */
-  amountToRefund?: InputMaybe<Scalars['PositiveDecimal']>;
+  amountToRefund?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** List of fulfilled lines to refund. */
   fulfillmentLines?: InputMaybe<Array<OrderRefundFulfillmentLineInput>>;
   /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
-  includeShippingCosts?: InputMaybe<Scalars['Boolean']>;
+  includeShippingCosts?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of unfulfilled lines to refund. */
   orderLines?: InputMaybe<Array<OrderRefundLineInput>>;
 };
 
 export type OrderReturnFulfillmentLineInput = {
   /** The ID of the fulfillment line to return. */
-  fulfillmentLineId: Scalars['ID'];
+  fulfillmentLineId: Scalars['ID']['input'];
   /** The number of items to be returned. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /**
    * Reason for returning this fulfillment line.
    *
    * Added in Saleor 3.23.
    */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason for this fulfillment line.
    *
    * Added in Saleor 3.23.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** Determines, if the line should be added to replace order. */
-  replace?: InputMaybe<Scalars['Boolean']>;
+  replace?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type OrderReturnLineInput = {
   /** The ID of the order line to return. */
-  orderLineId: Scalars['ID'];
+  orderLineId: Scalars['ID']['input'];
   /** The number of items to be returned. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /**
    * Reason for returning this line.
    *
    * Added in Saleor 3.23.
    */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason for this line.
    *
    * Added in Saleor 3.23.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** Determines, if the line should be added to replace order. */
-  replace?: InputMaybe<Scalars['Boolean']>;
+  replace?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type OrderReturnProductsInput = {
   /** The total amount of refund when the value is provided manually. */
-  amountToRefund?: InputMaybe<Scalars['PositiveDecimal']>;
+  amountToRefund?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** List of fulfilled lines to return. */
   fulfillmentLines?: InputMaybe<Array<OrderReturnFulfillmentLineInput>>;
   /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
-  includeShippingCosts?: InputMaybe<Scalars['Boolean']>;
+  includeShippingCosts?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of unfulfilled lines to return. */
   orderLines?: InputMaybe<Array<OrderReturnLineInput>>;
   /**
@@ -5790,15 +5792,15 @@ export type OrderReturnProductsInput = {
    *
    * Added in Saleor 3.23.
    */
-  reason?: InputMaybe<Scalars['String']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   /**
    * ID of a `Page` (Model) to reference in reason for this return.
    *
    * Added in Saleor 3.23.
    */
-  reasonReference?: InputMaybe<Scalars['ID']>;
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** If true, Saleor will call refund action for all lines. */
-  refund?: InputMaybe<Scalars['Boolean']>;
+  refund?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum OrderSettingsErrorCode {
@@ -5807,13 +5809,13 @@ export enum OrderSettingsErrorCode {
 
 export type OrderSettingsInput = {
   /** Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation. */
-  allowUnpaidOrders?: InputMaybe<Scalars['Boolean']>;
+  allowUnpaidOrders?: InputMaybe<Scalars['Boolean']['input']>;
   /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True */
-  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
+  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']['input']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True. */
-  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
+  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']['input']>;
   /** The time in days after expired orders will be deleted.Allowed range is from 1 to 120. */
-  deleteExpiredOrdersAfter?: InputMaybe<Scalars['Day']>;
+  deleteExpiredOrdersAfter?: InputMaybe<Scalars['Day']['input']>;
   /**
    * Time in hours after which the draft order line price will be refreshed. Default value is 24 hours. Enter 0 or null to disable.
    *
@@ -5821,9 +5823,9 @@ export type OrderSettingsInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  draftOrderLinePriceFreezePeriod?: InputMaybe<Scalars['Hour']>;
+  draftOrderLinePriceFreezePeriod?: InputMaybe<Scalars['Hour']['input']>;
   /** Expiration time in minutes. Default null - means do not expire any orders. Enter 0 or null to disable. */
-  expireOrdersAfter?: InputMaybe<Scalars['Minute']>;
+  expireOrdersAfter?: InputMaybe<Scalars['Minute']['input']>;
   /**
    * Specify whether a coupon applied to draft orders will count toward voucher usage.
    *
@@ -5833,7 +5835,7 @@ export type OrderSettingsInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  includeDraftOrderInVoucherUsage?: InputMaybe<Scalars['Boolean']>;
+  includeDraftOrderInVoucherUsage?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Determine what strategy will be used to mark the order as paid. Based on the chosen option, the proper object will be created and attached to the order when it's manually marked as paid.
    * `PAYMENT_FLOW` - [default option] creates the `Payment` object.
@@ -5848,14 +5850,14 @@ export type OrderSettingsInput = {
    *
    * Added in Saleor 3.21.
    */
-  useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']>;
+  useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type OrderSettingsUpdateInput = {
   /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True */
-  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
+  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']['input']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True. */
-  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
+  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum OrderSortField {
@@ -5930,7 +5932,7 @@ export type OrderUpdateInput = {
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
   /** External ID of this order. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Order language code.
    *
@@ -5956,12 +5958,12 @@ export type OrderUpdateInput = {
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** Email address of the customer. */
-  userEmail?: InputMaybe<Scalars['String']>;
+  userEmail?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderUpdateShippingInput = {
   /** ID of the selected shipping method, pass null to remove currently assigned shipping method. */
-  shippingMethod?: InputMaybe<Scalars['ID']>;
+  shippingMethod?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type OrderWhereInput = {
@@ -5988,18 +5990,18 @@ export type OrderWhereInput = {
   /** Filter by fulfillment data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   fulfillments?: InputMaybe<Array<FulfillmentFilterInput>>;
   /** Filter by whether the order has any fulfillments. */
-  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
+  hasFulfillments?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by whether the order has any invoices. */
-  hasInvoices?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  hasInvoices?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   invoices?: InputMaybe<Array<InvoiceFilterInput>>;
   /** Filter by whether the order uses the click and collect delivery method. */
-  isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter based on whether the order includes a gift card purchase. */
-  isGiftCardBought?: InputMaybe<Scalars['Boolean']>;
+  isGiftCardBought?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter based on whether a gift card was used in the order. */
-  isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
+  isGiftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
   lines?: InputMaybe<Array<LinesFilterInput>>;
   /** Filter by number of lines in the order. */
@@ -6032,7 +6034,7 @@ export type OrderWhereInput = {
 
 export type OtherPaymentMethodDetailsInput = {
   /** Name of the payment method used for the transaction. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
 };
 
 export type PageCreateInput = {
@@ -6043,24 +6045,24 @@ export type PageCreateInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  content?: InputMaybe<Scalars['JSONString']>;
+  content?: InputMaybe<Scalars['JSONString']['input']>;
   /** Determines if page is visible in the storefront. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /** ID of the page type that page belongs to. */
-  pageType: Scalars['ID'];
+  pageType: Scalars['ID']['input'];
   /**
    * Publication date. ISO 8601 standard.
    * @deprecated Use `publishedAt` field instead.
    */
-  publicationDate?: InputMaybe<Scalars['String']>;
+  publicationDate?: InputMaybe<Scalars['String']['input']>;
   /** Publication date time. ISO 8601 standard. */
-  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Page internal name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** Page title. */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum PageErrorCode {
@@ -6074,11 +6076,11 @@ export enum PageErrorCode {
 }
 
 export type PageFilterInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  pageTypes?: InputMaybe<Array<Scalars['ID']>>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  pageTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type PageInput = {
@@ -6089,22 +6091,22 @@ export type PageInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  content?: InputMaybe<Scalars['JSONString']>;
+  content?: InputMaybe<Scalars['JSONString']['input']>;
   /** Determines if page is visible in the storefront. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Publication date. ISO 8601 standard.
    * @deprecated Use `publishedAt` field instead.
    */
-  publicationDate?: InputMaybe<Scalars['String']>;
+  publicationDate?: InputMaybe<Scalars['String']['input']>;
   /** Publication date time. ISO 8601 standard. */
-  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Page internal name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** Page title. */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum PageSortField {
@@ -6145,25 +6147,25 @@ export type PageTranslationInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  content?: InputMaybe<Scalars['JSONString']>;
-  seoDescription?: InputMaybe<Scalars['String']>;
-  seoTitle?: InputMaybe<Scalars['String']>;
-  slug?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['JSONString']['input']>;
+  seoDescription?: InputMaybe<Scalars['String']['input']>;
+  seoTitle?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PageTypeCreateInput = {
   /** List of attribute IDs to be assigned to the page type. */
-  addAttributes?: InputMaybe<Array<Scalars['ID']>>;
+  addAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Name of the page type. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Page type slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PageTypeFilterInput = {
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export enum PageTypeSortField {
@@ -6182,13 +6184,13 @@ export type PageTypeSortingInput = {
 
 export type PageTypeUpdateInput = {
   /** List of attribute IDs to be assigned to the page type. */
-  addAttributes?: InputMaybe<Array<Scalars['ID']>>;
+  addAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Name of the page type. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of attribute IDs to be unassigned from the page type. */
-  removeAttributes?: InputMaybe<Array<Scalars['ID']>>;
+  removeAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Page type slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PageWhereInput = {
@@ -6198,7 +6200,7 @@ export type PageWhereInput = {
   OR?: InputMaybe<Array<PageWhereInput>>;
   /** Filter by attributes associated with the page. */
   attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by metadata fields. */
   metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by page type. */
@@ -6237,11 +6239,11 @@ export type PaymentCheckBalanceInput = {
   /** Information about card. */
   card: CardInput;
   /** Slug of a channel for which the data should be returned. */
-  channel: Scalars['String'];
+  channel: Scalars['String']['input'];
   /** An ID of a payment gateway to check. */
-  gatewayId: Scalars['String'];
+  gatewayId: Scalars['String']['input'];
   /** Payment method name. */
-  method: Scalars['String'];
+  method: Scalars['String']['input'];
 };
 
 export enum PaymentErrorCode {
@@ -6267,9 +6269,9 @@ export enum PaymentErrorCode {
 }
 
 export type PaymentFilterInput = {
-  checkouts?: InputMaybe<Array<Scalars['ID']>>;
+  checkouts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by ids. */
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum PaymentGatewayConfigErrorCode {
@@ -6308,16 +6310,16 @@ export enum PaymentGatewayInitializeTokenizationResult {
 
 export type PaymentGatewayToInitialize = {
   /** The data that will be passed to the payment gateway. */
-  data?: InputMaybe<Scalars['JSON']>;
+  data?: InputMaybe<Scalars['JSON']['input']>;
   /** The identifier of the payment gateway app to initialize. */
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type PaymentInput = {
   /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
-  amount?: InputMaybe<Scalars['PositiveDecimal']>;
+  amount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** A gateway to use with that payment. */
-  gateway: Scalars['String'];
+  gateway: Scalars['String']['input'];
   /**
    * User public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -6325,11 +6327,11 @@ export type PaymentInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
-  returnUrl?: InputMaybe<Scalars['String']>;
+  returnUrl?: InputMaybe<Scalars['String']['input']>;
   /** Payment store type. */
   storePaymentMethod?: InputMaybe<StorePaymentMethodEnum>;
   /** Client-side generated payment token, representing customer's billing data in a secure manner. */
-  token?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PaymentMethodDetailsCardFilterInput = {
@@ -6423,13 +6425,13 @@ export type PaymentSettingsInput = {
    *
    * Added in Saleor 3.20.
    */
-  checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']>;
+  checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']['input']>;
   /**
    * The time in hours after which funds for expired checkouts will be released.
    *
    * Added in Saleor 3.20.
    */
-  checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']>;
+  checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']['input']>;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
   /**
@@ -6437,7 +6439,7 @@ export type PaymentSettingsInput = {
    *
    * Added in Saleor 3.20.
    */
-  releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']>;
+  releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum PermissionEnum {
@@ -6469,15 +6471,15 @@ export enum PermissionEnum {
 
 export type PermissionGroupCreateInput = {
   /** List of channels to assign to this group. */
-  addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  addChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of permission code names to assign to this group. */
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to assign to this group. */
-  addUsers?: InputMaybe<Array<Scalars['ID']>>;
+  addUsers?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Group name. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** Determine if the group has restricted access to channels.  DEFAULT: False */
-  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
+  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum PermissionGroupErrorCode {
@@ -6493,8 +6495,8 @@ export enum PermissionGroupErrorCode {
 }
 
 export type PermissionGroupFilterInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  search?: InputMaybe<Scalars['String']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Sorting options for permission groups. */
@@ -6512,21 +6514,21 @@ export type PermissionGroupSortingInput = {
 
 export type PermissionGroupUpdateInput = {
   /** List of channels to assign to this group. */
-  addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  addChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of permission code names to assign to this group. */
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to assign to this group. */
-  addUsers?: InputMaybe<Array<Scalars['ID']>>;
+  addUsers?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Group name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of channels to unassign from this group. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of permission code names to unassign from this group. */
   removePermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to unassign from this group. */
-  removeUsers?: InputMaybe<Array<Scalars['ID']>>;
+  removeUsers?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Determine if the group has restricted access to channels. */
-  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
+  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum PluginConfigurationType {
@@ -6544,7 +6546,7 @@ export enum PluginErrorCode {
 }
 
 export type PluginFilterInput = {
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   statusInChannels?: InputMaybe<PluginStatusInChannelsInput>;
   type?: InputMaybe<PluginConfigurationType>;
 };
@@ -6562,13 +6564,13 @@ export type PluginSortingInput = {
 };
 
 export type PluginStatusInChannelsInput = {
-  active: Scalars['Boolean'];
-  channels: Array<Scalars['ID']>;
+  active: Scalars['Boolean']['input'];
+  channels: Array<Scalars['ID']['input']>;
 };
 
 export type PluginUpdateInput = {
   /** Indicates whether the plugin should be enabled. */
-  active?: InputMaybe<Scalars['Boolean']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
   /** Configuration of the plugin. */
   configuration?: InputMaybe<Array<ConfigurationItemInput>>;
 };
@@ -6580,46 +6582,46 @@ export enum PostalCodeRuleInclusionTypeEnum {
 
 export type PreorderSettingsInput = {
   /** The end date for preorder. */
-  endDate?: InputMaybe<Scalars['DateTime']>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** The global threshold for preorder variant. */
-  globalThreshold?: InputMaybe<Scalars['Int']>;
+  globalThreshold?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type PriceFilterInput = {
   /** The amount of the price to filter by. */
   amount: DecimalFilterInput;
   /** The currency of the price to filter by. */
-  currency?: InputMaybe<Scalars['String']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PriceInput = {
   /** Amount of money. */
-  amount: Scalars['PositiveDecimal'];
+  amount: Scalars['PositiveDecimal']['input'];
   /** Currency code. */
-  currency: Scalars['String'];
+  currency: Scalars['String']['input'];
 };
 
 export type PriceRangeInput = {
   /** Price greater than or equal to. */
-  gte?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
   /** Price less than or equal to. */
-  lte?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type ProductAttributeAssignInput = {
   /** The ID of the attribute to assign. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The attribute type to be assigned as. */
   type: ProductAttributeType;
   /** Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
-  variantSelection?: InputMaybe<Scalars['Boolean']>;
+  variantSelection?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ProductAttributeAssignmentUpdateInput = {
   /** The ID of the attribute to assign. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
-  variantSelection: Scalars['Boolean'];
+  variantSelection: Scalars['Boolean']['input'];
 };
 
 export enum ProductAttributeType {
@@ -6650,24 +6652,24 @@ export type ProductBulkCreateInput = {
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
-  category?: InputMaybe<Scalars['ID']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
   /** List of channels in which the product is available. */
   channelListings?: InputMaybe<Array<ProductChannelListingCreateInput>>;
   /**
    * Determine if taxes are being charged for the product.
    * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
-  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  chargeTaxes?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of IDs of collections that the product belongs to. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Product description.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** External ID of this product. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** List of media inputs associated with the product. */
   media?: InputMaybe<Array<MediaInput>>;
   /**
@@ -6677,7 +6679,7 @@ export type ProductBulkCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -6685,31 +6687,31 @@ export type ProductBulkCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
-  productType: Scalars['ID'];
+  productType: Scalars['ID']['input'];
   /** Defines the product rating value. */
-  rating?: InputMaybe<Scalars['Float']>;
+  rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Product slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
-  taxClass?: InputMaybe<Scalars['ID']>;
+  taxClass?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Tax rate for enabled tax gateway.
    * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
-  taxCode?: InputMaybe<Scalars['String']>;
+  taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Input list of product variants to create. */
   variants?: InputMaybe<Array<ProductVariantBulkCreateInput>>;
   /** Weight of the Product. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export type ProductBulkTranslateInput = {
   /** External reference of an product. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Product ID. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Translation language code. */
   languageCode: LanguageCodeEnum;
   /** Translation fields. */
@@ -6718,51 +6720,51 @@ export type ProductBulkTranslateInput = {
 
 export type ProductChannelListingAddInput = {
   /** List of variants to which the channel should be assigned. */
-  addVariants?: InputMaybe<Array<Scalars['ID']>>;
+  addVariants?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
-  availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
+  availableForPurchaseAt?: InputMaybe<Scalars['DateTime']['input']>;
   /**
    * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
    * @deprecated Use `availableForPurchaseAt` field instead.
    */
-  availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
+  availableForPurchaseDate?: InputMaybe<Scalars['Date']['input']>;
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased. */
-  isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
+  isAvailableForPurchase?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if object is visible to customers. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Publication date. ISO 8601 standard.
    * @deprecated Use `publishedAt` field instead.
    */
-  publicationDate?: InputMaybe<Scalars['Date']>;
+  publicationDate?: InputMaybe<Scalars['Date']['input']>;
   /** Publication date time. ISO 8601 standard. */
-  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** List of variants from which the channel should be unassigned. */
-  removeVariants?: InputMaybe<Array<Scalars['ID']>>;
+  removeVariants?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Determines if product is visible in product listings (doesn't apply to product collections). */
-  visibleInListings?: InputMaybe<Scalars['Boolean']>;
+  visibleInListings?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ProductChannelListingCreateInput = {
   /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
-  availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
+  availableForPurchaseAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased. */
-  isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
+  isAvailableForPurchase?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if object is visible to customers. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /** Publication date time. ISO 8601 standard. */
-  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** Determines if product is visible in product listings (doesn't apply to product collections). */
-  visibleInListings?: InputMaybe<Scalars['Boolean']>;
+  visibleInListings?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ProductChannelListingUpdateInput = {
   /** List of channels from which the product should be unassigned. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of channels to which the product should be assigned or updated. */
   updateChannels?: InputMaybe<Array<ProductChannelListingAddInput>>;
 };
@@ -6771,22 +6773,22 @@ export type ProductCreateInput = {
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
-  category?: InputMaybe<Scalars['ID']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Determine if taxes are being charged for the product.
    * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
-  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  chargeTaxes?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of IDs of collections that the product belongs to. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Product description.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** External ID of this product. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -6794,7 +6796,7 @@ export type ProductCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -6802,22 +6804,22 @@ export type ProductCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
-  productType: Scalars['ID'];
+  productType: Scalars['ID']['input'];
   /** Defines the product rating value. */
-  rating?: InputMaybe<Scalars['Float']>;
+  rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Product slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
-  taxClass?: InputMaybe<Scalars['ID']>;
+  taxClass?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Tax rate for enabled tax gateway.
    * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
-  taxCode?: InputMaybe<Scalars['String']>;
+  taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Weight of the Product. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export enum ProductErrorCode {
@@ -6863,33 +6865,33 @@ export enum ProductFieldEnum {
 export type ProductFilterInput = {
   attributes?: InputMaybe<Array<AttributeInput>>;
   /** Filter by the date of availability for purchase. */
-  availableFrom?: InputMaybe<Scalars['DateTime']>;
-  categories?: InputMaybe<Array<Scalars['ID']>>;
+  availableFrom?: InputMaybe<Scalars['DateTime']['input']>;
+  categories?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  channel?: InputMaybe<Scalars['String']['input']>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter on whether product is a gift card or not. */
-  giftCard?: InputMaybe<Scalars['Boolean']>;
-  hasCategory?: InputMaybe<Scalars['Boolean']>;
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  giftCard?: InputMaybe<Scalars['Boolean']['input']>;
+  hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
+  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
-  isAvailable?: InputMaybe<Scalars['Boolean']>;
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isAvailable?: InputMaybe<Scalars['Boolean']['input']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by visibility in product listings. */
-  isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
+  isVisibleInListing?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
   price?: InputMaybe<PriceRangeInput>;
-  productTypes?: InputMaybe<Array<Scalars['ID']>>;
+  productTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by the publication date. */
-  publishedFrom?: InputMaybe<Scalars['DateTime']>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  publishedFrom?: InputMaybe<Scalars['DateTime']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Filter by variants having specific stock status. */
   stockAvailability?: InputMaybe<StockAvailability>;
   stocks?: InputMaybe<ProductStockFilterInput>;
@@ -6901,22 +6903,22 @@ export type ProductInput = {
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
-  category?: InputMaybe<Scalars['ID']>;
+  category?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Determine if taxes are being charged for the product.
    * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
-  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  chargeTaxes?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of IDs of collections that the product belongs to. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Product description.
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** External ID of this product. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -6924,7 +6926,7 @@ export type ProductInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -6932,31 +6934,31 @@ export type ProductInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Defines the product rating value. */
-  rating?: InputMaybe<Scalars['Float']>;
+  rating?: InputMaybe<Scalars['Float']['input']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
   /** Product slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
-  taxClass?: InputMaybe<Scalars['ID']>;
+  taxClass?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Tax rate for enabled tax gateway.
    * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
-  taxCode?: InputMaybe<Scalars['String']>;
+  taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Weight of the Product. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export type ProductMediaCreateInput = {
   /** Alt text for a product media. */
-  alt?: InputMaybe<Scalars['String']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
   /** Represents an image file in a multipart request. */
-  image?: InputMaybe<Scalars['Upload']>;
+  image?: InputMaybe<Scalars['Upload']['input']>;
   /** Represents an URL to an external media. */
-  mediaUrl?: InputMaybe<Scalars['String']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
   /** ID of an product. */
-  product: Scalars['ID'];
+  product: Scalars['ID']['input'];
 };
 
 export enum ProductMediaType {
@@ -6966,7 +6968,7 @@ export enum ProductMediaType {
 
 export type ProductMediaUpdateInput = {
   /** Alt text for a product media. */
-  alt?: InputMaybe<Scalars['String']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductOrder = {
@@ -6974,12 +6976,12 @@ export type ProductOrder = {
    * Sort product by the selected attribute's values.
    * Note: this doesn't take translations into account yet.
    */
-  attributeId?: InputMaybe<Scalars['ID']>;
+  attributeId?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Specifies the channel in which to sort the data.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the direction in which to sort products. */
   direction: OrderDirection;
   /** Sort products by the selected field. */
@@ -7050,7 +7052,7 @@ export enum ProductOrderField {
 
 export type ProductStockFilterInput = {
   quantity?: InputMaybe<IntRangeInput>;
-  warehouseIds?: InputMaybe<Array<Scalars['ID']>>;
+  warehouseIds?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum ProductTranslateErrorCode {
@@ -7074,12 +7076,12 @@ export enum ProductTypeEnum {
 export type ProductTypeFilterInput = {
   /** @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting. */
   configurable?: InputMaybe<ProductTypeConfigurable>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   productType?: InputMaybe<ProductTypeEnum>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type ProductTypeInput = {
@@ -7087,30 +7089,30 @@ export type ProductTypeInput = {
    * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
    * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
    */
-  hasVariants?: InputMaybe<Scalars['Boolean']>;
+  hasVariants?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
-  isDigital?: InputMaybe<Scalars['Boolean']>;
+  isDigital?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if shipping is required for products of this variant. */
-  isShippingRequired?: InputMaybe<Scalars['Boolean']>;
+  isShippingRequired?: InputMaybe<Scalars['Boolean']['input']>;
   /** The product type kind. */
   kind?: InputMaybe<ProductTypeKindEnum>;
   /** Name of the product type. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of attributes shared among all product variants. */
-  productAttributes?: InputMaybe<Array<Scalars['ID']>>;
+  productAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Product type slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
-  taxClass?: InputMaybe<Scalars['ID']>;
+  taxClass?: InputMaybe<Scalars['ID']['input']>;
   /**
    * Tax rate for enabled tax gateway.
    * @deprecated Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
-  taxCode?: InputMaybe<Scalars['String']>;
+  taxCode?: InputMaybe<Scalars['String']['input']>;
   /** List of attributes used to distinguish between different variants of a product. */
-  variantAttributes?: InputMaybe<Array<Scalars['ID']>>;
+  variantAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Weight of the ProductType items. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export enum ProductTypeKindEnum {
@@ -7143,7 +7145,7 @@ export type ProductVariantBulkCreateInput = {
   /** List of prices assigned to channels. */
   channelListings?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
   /** External ID of this product variant. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7151,7 +7153,7 @@ export type ProductVariantBulkCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
@@ -7161,15 +7163,15 @@ export type ProductVariantBulkCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
-  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']['input']>;
   /** Stock keeping unit. */
-  sku?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used. */
-  trackInventory?: InputMaybe<Scalars['Boolean']>;
+  trackInventory?: InputMaybe<Scalars['Boolean']['input']>;
   /** Weight of the Product Variant. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export enum ProductVariantBulkErrorCode {
@@ -7190,9 +7192,9 @@ export enum ProductVariantBulkErrorCode {
 
 export type ProductVariantBulkTranslateInput = {
   /** External reference of a product variant. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Product variant ID. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Translation language code. */
   languageCode: LanguageCodeEnum;
   /** Translation fields. */
@@ -7206,9 +7208,9 @@ export type ProductVariantBulkUpdateInput = {
   /** Channel listings input. */
   channelListings?: InputMaybe<ProductVariantChannelListingUpdateInput>;
   /** External ID of this product variant. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** ID of the product variant to update. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /**
    * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7216,7 +7218,7 @@ export type ProductVariantBulkUpdateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
@@ -7226,39 +7228,39 @@ export type ProductVariantBulkUpdateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
-  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']['input']>;
   /** Stock keeping unit. */
-  sku?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
   /** Stocks input. */
   stocks?: InputMaybe<ProductVariantStocksUpdateInput>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used. */
-  trackInventory?: InputMaybe<Scalars['Boolean']>;
+  trackInventory?: InputMaybe<Scalars['Boolean']['input']>;
   /** Weight of the Product Variant. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export type ProductVariantChannelListingAddInput = {
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Cost price of the variant in channel. */
-  costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  costPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The threshold for preorder variant in channel. */
-  preorderThreshold?: InputMaybe<Scalars['Int']>;
+  preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
-  price: Scalars['PositiveDecimal'];
+  price: Scalars['PositiveDecimal']['input'];
   /**
    * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
    *
    * Added in Saleor 3.21.
    */
-  priorPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  priorPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
 };
 
 export type ProductVariantChannelListingUpdateInput = {
   /** List of channels to create variant channel listings. */
   create?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
   /** List of channel listings to remove. */
-  remove?: InputMaybe<Array<Scalars['ID']>>;
+  remove?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of channel listings to update. */
   update?: InputMaybe<Array<ChannelListingUpdateInput>>;
 };
@@ -7267,7 +7269,7 @@ export type ProductVariantCreateInput = {
   /** List of attributes specific to this variant. */
   attributes: Array<AttributeValueInput>;
   /** External ID of this product variant. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7275,7 +7277,7 @@ export type ProductVariantCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
@@ -7285,24 +7287,24 @@ export type ProductVariantCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Product ID of which type is the variant. */
-  product: Scalars['ID'];
+  product: Scalars['ID']['input'];
   /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
-  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']['input']>;
   /** Stock keeping unit. */
-  sku?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
   /** Stocks of a product available for sale. */
   stocks?: InputMaybe<Array<StockInput>>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used. */
-  trackInventory?: InputMaybe<Scalars['Boolean']>;
+  trackInventory?: InputMaybe<Scalars['Boolean']['input']>;
   /** Weight of the Product Variant. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export type ProductVariantFilterInput = {
-  isPreorder?: InputMaybe<Scalars['Boolean']>;
+  isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
-  sku?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  sku?: InputMaybe<Array<Scalars['String']['input']>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
@@ -7310,7 +7312,7 @@ export type ProductVariantInput = {
   /** List of attributes specific to this variant. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** External ID of this product variant. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -7318,7 +7320,7 @@ export type ProductVariantInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
@@ -7328,13 +7330,13 @@ export type ProductVariantInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
-  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
+  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']['input']>;
   /** Stock keeping unit. */
-  sku?: InputMaybe<Scalars['String']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used. */
-  trackInventory?: InputMaybe<Scalars['Boolean']>;
+  trackInventory?: InputMaybe<Scalars['Boolean']['input']>;
   /** Weight of the Product Variant. */
-  weight?: InputMaybe<Scalars['WeightScalar']>;
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
 };
 
 export enum ProductVariantSortField {
@@ -7353,7 +7355,7 @@ export type ProductVariantStocksUpdateInput = {
   /** List of warehouses to create stocks. */
   create?: InputMaybe<Array<StockInput>>;
   /** List of stocks to remove. */
-  remove?: InputMaybe<Array<Scalars['ID']>>;
+  remove?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of stocks to update. */
   update?: InputMaybe<Array<StockUpdateInput>>;
 };
@@ -7376,7 +7378,7 @@ export type ProductVariantWhereInput = {
    * Added in Saleor 3.22.
    */
   attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by product SKU. */
   sku?: InputMaybe<StringFilterInput>;
@@ -7392,24 +7394,24 @@ export type ProductWhereInput = {
   /** Filter by attributes associated with the product. */
   attributes?: InputMaybe<Array<AttributeInput>>;
   /** Filter by the date of availability for purchase. */
-  availableFrom?: InputMaybe<Scalars['DateTime']>;
+  availableFrom?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter by product category. */
   category?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by collection. */
   collection?: InputMaybe<GlobalIdFilterInput>;
   /** Filter on whether product is a gift card or not. */
-  giftCard?: InputMaybe<Scalars['Boolean']>;
+  giftCard?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with category assigned. */
-  hasCategory?: InputMaybe<Scalars['Boolean']>;
+  hasCategory?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by product with preordered variants. */
-  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  hasPreorderedVariants?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by availability for purchase. */
-  isAvailable?: InputMaybe<Scalars['Boolean']>;
+  isAvailable?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by public visibility. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by visibility on the channel. */
-  isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
+  isVisibleInListing?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<DecimalFilterInput>;
@@ -7420,7 +7422,7 @@ export type ProductWhereInput = {
   /** Filter by product type. */
   productType?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by the publication date. */
-  publishedFrom?: InputMaybe<Scalars['DateTime']>;
+  publishedFrom?: InputMaybe<Scalars['DateTime']['input']>;
   /** Filter by product slug. */
   slug?: InputMaybe<StringFilterInput>;
   /** Filter by variants having specific stock status. */
@@ -7446,15 +7448,15 @@ export enum PromotionCreateErrorCode {
 
 export type PromotionCreateInput = {
   /** Promotion description. */
-  description?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
-  endDate?: InputMaybe<Scalars['DateTime']>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Promotion name. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** List of promotion rules. */
   rules?: InputMaybe<Array<PromotionRuleInput>>;
   /** The start date of the promotion in ISO 8601 format. */
-  startDate?: InputMaybe<Scalars['DateTime']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
   /**
    * Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
    *
@@ -7495,9 +7497,9 @@ export type PromotionRuleCreateInput = {
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   /**
    * Product variant IDs available as a gift to choose.
    *
@@ -7505,9 +7507,9 @@ export type PromotionRuleCreateInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  gifts?: InputMaybe<Array<Scalars['ID']>>;
+  gifts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
@@ -7517,7 +7519,7 @@ export type PromotionRuleCreateInput = {
    */
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** The ID of the promotion that rule belongs to. */
-  promotion: Scalars['ID'];
+  promotion: Scalars['ID']['input'];
   /**
    * Defines the reward type of the promotion rule.
    *
@@ -7527,7 +7529,7 @@ export type PromotionRuleCreateInput = {
    */
   rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
-  rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
+  rewardValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
   rewardValueType?: InputMaybe<RewardValueTypeEnum>;
 };
@@ -7541,9 +7543,9 @@ export type PromotionRuleInput = {
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   /**
    * Product variant IDs available as a gift to choose.
    *
@@ -7551,9 +7553,9 @@ export type PromotionRuleInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  gifts?: InputMaybe<Array<Scalars['ID']>>;
+  gifts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
@@ -7571,7 +7573,7 @@ export type PromotionRuleInput = {
    */
   rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
-  rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
+  rewardValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
   rewardValueType?: InputMaybe<RewardValueTypeEnum>;
 };
@@ -7582,8 +7584,8 @@ export type PromotionRuleTranslationInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSON']>;
-  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum PromotionRuleUpdateErrorCode {
@@ -7601,7 +7603,7 @@ export enum PromotionRuleUpdateErrorCode {
 
 export type PromotionRuleUpdateInput = {
   /** List of channel ids to add. */
-  addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  addChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * List of variant IDs available as a gift to add.
    *
@@ -7609,13 +7611,13 @@ export type PromotionRuleUpdateInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  addGifts?: InputMaybe<Array<Scalars['ID']>>;
+  addGifts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Defines the conditions on the catalogue level that must be met for the reward to be applied. */
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** Promotion rule description. */
-  description?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   /** Promotion rule name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
@@ -7625,7 +7627,7 @@ export type PromotionRuleUpdateInput = {
    */
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** List of channel ids to remove. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * List of variant IDs available as a gift to remove.
    *
@@ -7633,7 +7635,7 @@ export type PromotionRuleUpdateInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  removeGifts?: InputMaybe<Array<Scalars['ID']>>;
+  removeGifts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Defines the reward type of the promotion rule.
    *
@@ -7643,7 +7645,7 @@ export type PromotionRuleUpdateInput = {
    */
   rewardType?: InputMaybe<RewardTypeEnum>;
   /** Defines the discount value. Required when catalogue predicate is provided. */
-  rewardValue?: InputMaybe<Scalars['PositiveDecimal']>;
+  rewardValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Defines the promotion rule reward value type. Must be provided together with reward value. */
   rewardValueType?: InputMaybe<RewardValueTypeEnum>;
 };
@@ -7672,8 +7674,8 @@ export type PromotionTranslationInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSON']>;
-  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum PromotionTypeEnum {
@@ -7697,13 +7699,13 @@ export enum PromotionUpdateErrorCode {
 
 export type PromotionUpdateInput = {
   /** Promotion description. */
-  description?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
   /** The end date of the promotion in ISO 8601 format. */
-  endDate?: InputMaybe<Scalars['DateTime']>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Promotion name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The start date of the promotion in ISO 8601 format. */
-  startDate?: InputMaybe<Scalars['DateTime']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type PromotionWhereInput = {
@@ -7713,8 +7715,8 @@ export type PromotionWhereInput = {
   OR?: InputMaybe<Array<PromotionWhereInput>>;
   /** Filter promotions by end date. */
   endDate?: InputMaybe<DateTimeFilterInput>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  isOldSale?: InputMaybe<Scalars['Boolean']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  isOldSale?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by promotion name. */
   name?: InputMaybe<StringFilterInput>;
@@ -7725,16 +7727,16 @@ export type PromotionWhereInput = {
 
 export type PublishableChannelListingInput = {
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Determines if object is visible to customers. */
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Publication date. ISO 8601 standard.
    * @deprecated Use `publishedAt` field instead.
    */
-  publicationDate?: InputMaybe<Scalars['Date']>;
+  publicationDate?: InputMaybe<Scalars['Date']['input']>;
   /** Publication date time. ISO 8601 standard. */
-  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export enum RefundSettingsErrorCode {
@@ -7749,14 +7751,14 @@ export type RefundSettingsUpdateInput = {
    *
    * Added in Saleor 3.22.
    */
-  refundReasonReferenceType: Scalars['ID'];
+  refundReasonReferenceType: Scalars['ID']['input'];
 };
 
 export type ReorderInput = {
   /** The ID of the item to move. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The new relative sorting position of the item (from -inf to +inf). 1 moves the item one position forward, -1 moves the item one position backward, 0 leaves the item unchanged. */
-  sortOrder?: InputMaybe<Scalars['Int']>;
+  sortOrder?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum ReportingPeriod {
@@ -7777,7 +7779,7 @@ export type ReturnSettingsUpdateInput = {
    *
    * Added in Saleor 3.23.
    */
-  returnReasonReferenceType: Scalars['ID'];
+  returnReasonReferenceType: Scalars['ID']['input'];
 };
 
 export enum RewardTypeEnum {
@@ -7792,22 +7794,22 @@ export enum RewardValueTypeEnum {
 
 export type SaleChannelListingAddInput = {
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** The value of the discount. */
-  discountValue: Scalars['PositiveDecimal'];
+  discountValue: Scalars['PositiveDecimal']['input'];
 };
 
 export type SaleChannelListingInput = {
   /** List of channels to which the sale should be assigned. */
   addChannels?: InputMaybe<Array<SaleChannelListingAddInput>>;
   /** List of channels from which the sale should be unassigned. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type SaleFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   saleType?: InputMaybe<DiscountValueTypeEnum>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   started?: InputMaybe<DateTimeRangeInput>;
   status?: InputMaybe<Array<DiscountStatusEnum>>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
@@ -7815,22 +7817,22 @@ export type SaleFilterInput = {
 
 export type SaleInput = {
   /** Categories related to the discount. */
-  categories?: InputMaybe<Array<Scalars['ID']>>;
+  categories?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Collections related to the discount. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** End date of the voucher in ISO 8601 format. */
-  endDate?: InputMaybe<Scalars['DateTime']>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Voucher name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Products related to the discount. */
-  products?: InputMaybe<Array<Scalars['ID']>>;
+  products?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Start date of the voucher in ISO 8601 format. */
-  startDate?: InputMaybe<Scalars['DateTime']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Fixed or percentage. */
   type?: InputMaybe<DiscountValueTypeEnum>;
   /** Value of the voucher. */
-  value?: InputMaybe<Scalars['PositiveDecimal']>;
-  variants?: InputMaybe<Array<Scalars['ID']>>;
+  value?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  variants?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum SaleSortField {
@@ -7859,7 +7861,7 @@ export type SaleSortingInput = {
    * Specifies the channel in which to sort the data.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the direction in which to sort sales. */
   direction: OrderDirection;
   /** Sort sales by the selected field. */
@@ -7880,9 +7882,9 @@ export enum SendConfirmationEmailErrorCode {
 
 export type SeoInput = {
   /** SEO description. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** SEO title. */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ShippingErrorCode {
@@ -7898,20 +7900,20 @@ export enum ShippingErrorCode {
 
 export type ShippingMethodChannelListingAddInput = {
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Maximum order price to use this shipping method. */
-  maximumOrderPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  maximumOrderPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Minimum order price to use this shipping method. */
-  minimumOrderPrice?: InputMaybe<Scalars['PositiveDecimal']>;
+  minimumOrderPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Shipping price of the shipping method in this channel. */
-  price?: InputMaybe<Scalars['PositiveDecimal']>;
+  price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
 };
 
 export type ShippingMethodChannelListingInput = {
   /** List of channels to which the shipping method should be assigned. */
   addChannels?: InputMaybe<Array<ShippingMethodChannelListingAddInput>>;
   /** List of channels from which the shipping method should be unassigned. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum ShippingMethodTypeEnum {
@@ -7921,39 +7923,39 @@ export enum ShippingMethodTypeEnum {
 
 export type ShippingPostalCodeRulesCreateInputRange = {
   /** End range of the postal code. */
-  end?: InputMaybe<Scalars['String']>;
+  end?: InputMaybe<Scalars['String']['input']>;
   /** Start range of the postal code. */
-  start: Scalars['String'];
+  start: Scalars['String']['input'];
 };
 
 export type ShippingPriceExcludeProductsInput = {
   /** List of products which will be excluded. */
-  products: Array<Scalars['ID']>;
+  products: Array<Scalars['ID']['input']>;
 };
 
 export type ShippingPriceInput = {
   /** Postal code rules to add. */
   addPostalCodeRules?: InputMaybe<Array<ShippingPostalCodeRulesCreateInputRange>>;
   /** Postal code rules to delete. */
-  deletePostalCodeRules?: InputMaybe<Array<Scalars['ID']>>;
+  deletePostalCodeRules?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Shipping method description. */
-  description?: InputMaybe<Scalars['JSONString']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
   /** Inclusion type for currently assigned postal code rules. */
   inclusionType?: InputMaybe<PostalCodeRuleInclusionTypeEnum>;
   /** Maximum number of days for delivery. */
-  maximumDeliveryDays?: InputMaybe<Scalars['Int']>;
+  maximumDeliveryDays?: InputMaybe<Scalars['Int']['input']>;
   /** Maximum order weight to use this shipping method. */
-  maximumOrderWeight?: InputMaybe<Scalars['WeightScalar']>;
+  maximumOrderWeight?: InputMaybe<Scalars['WeightScalar']['input']>;
   /** Minimal number of days for delivery. */
-  minimumDeliveryDays?: InputMaybe<Scalars['Int']>;
+  minimumDeliveryDays?: InputMaybe<Scalars['Int']['input']>;
   /** Minimum order weight to use this shipping method. */
-  minimumOrderWeight?: InputMaybe<Scalars['WeightScalar']>;
+  minimumOrderWeight?: InputMaybe<Scalars['WeightScalar']['input']>;
   /** Name of the shipping method. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Shipping zone this method belongs to. */
-  shippingZone?: InputMaybe<Scalars['ID']>;
+  shippingZone?: InputMaybe<Scalars['ID']['input']>;
   /** ID of a tax class to assign to this shipping method. If not provided, the default tax class will be used. */
-  taxClass?: InputMaybe<Scalars['ID']>;
+  taxClass?: InputMaybe<Scalars['ID']['input']>;
   /** Shipping type: price or weight based. */
   type?: InputMaybe<ShippingMethodTypeEnum>;
 };
@@ -7964,47 +7966,47 @@ export type ShippingPriceTranslationInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
-  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ShippingZoneCreateInput = {
   /** List of channels to assign to the shipping zone. */
-  addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  addChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to assign to a shipping zone */
-  addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  addWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of countries in this shipping zone. */
-  countries?: InputMaybe<Array<Scalars['String']>>;
+  countries?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Default shipping zone will be used for countries not covered by other zones. */
-  default?: InputMaybe<Scalars['Boolean']>;
+  default?: InputMaybe<Scalars['Boolean']['input']>;
   /** Description of the shipping zone. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** Shipping zone's name. Visible only to the staff. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ShippingZoneFilterInput = {
-  channels?: InputMaybe<Array<Scalars['ID']>>;
-  search?: InputMaybe<Scalars['String']>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ShippingZoneUpdateInput = {
   /** List of channels to assign to the shipping zone. */
-  addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  addChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to assign to a shipping zone */
-  addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  addWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of countries in this shipping zone. */
-  countries?: InputMaybe<Array<Scalars['String']>>;
+  countries?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Default shipping zone will be used for countries not covered by other zones. */
-  default?: InputMaybe<Scalars['Boolean']>;
+  default?: InputMaybe<Scalars['Boolean']['input']>;
   /** Description of the shipping zone. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** Shipping zone's name. Visible only to the staff. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of channels to unassign from the shipping zone. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** List of warehouses to unassign from a shipping zone */
-  removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
+  removeWarehouses?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum ShopErrorCode {
@@ -8020,42 +8022,42 @@ export enum ShopErrorCode {
 
 export type ShopSettingsInput = {
   /** Enable possibility to login without account confirmation. */
-  allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
+  allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Charge taxes on shipping.
    * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
    */
-  chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
+  chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** URL of a view where customers can set their password. */
-  customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
+  customerSetPasswordUrl?: InputMaybe<Scalars['String']['input']>;
   /** Default email sender's address. */
-  defaultMailSenderAddress?: InputMaybe<Scalars['String']>;
+  defaultMailSenderAddress?: InputMaybe<Scalars['String']['input']>;
   /** Default email sender's name. */
-  defaultMailSenderName?: InputMaybe<Scalars['String']>;
+  defaultMailSenderName?: InputMaybe<Scalars['String']['input']>;
   /** Default weight unit. */
   defaultWeightUnit?: InputMaybe<WeightUnitsEnum>;
   /** SEO description. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /**
    * Display prices with tax in store.
    * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
-  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** Enable automatic account confirmation by email. */
-  enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']>;
+  enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']['input']>;
   /** Enable ability to approve fulfillments which are unpaid. */
-  fulfillmentAllowUnpaid?: InputMaybe<Scalars['Boolean']>;
+  fulfillmentAllowUnpaid?: InputMaybe<Scalars['Boolean']['input']>;
   /** Enable automatic approval of all new fulfillments. */
-  fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']>;
+  fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']['input']>;
   /** Header text. */
-  headerText?: InputMaybe<Scalars['String']>;
+  headerText?: InputMaybe<Scalars['String']['input']>;
   /**
    * Include taxes in prices.
    * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
-  includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
+  includeTaxesInPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
-  limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
+  limitQuantityPerCheckout?: InputMaybe<Scalars['Int']['input']>;
   /**
    * Shop public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8073,7 +8075,7 @@ export type ShopSettingsInput = {
    *
    * Added in Saleor 3.22.
    */
-  preserveAllAddressFields?: InputMaybe<Scalars['Boolean']>;
+  preserveAllAddressFields?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Shop private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -8081,50 +8083,50 @@ export type ShopSettingsInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable. */
-  reserveStockDurationAnonymousUser?: InputMaybe<Scalars['Int']>;
+  reserveStockDurationAnonymousUser?: InputMaybe<Scalars['Int']['input']>;
   /** Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable. */
-  reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
+  reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']['input']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
-  trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  trackInventoryByDefault?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
    *
    * Added in Saleor 3.23.
    */
-  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']>;
+  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
    * Added in Saleor 3.22.
    * @deprecated Field no longer supported
    */
-  useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']>;
+  useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ShopSettingsTranslationInput = {
-  description?: InputMaybe<Scalars['String']>;
-  headerText?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  headerText?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SiteDomainInput = {
   /** Domain name for shop. */
-  domain?: InputMaybe<Scalars['String']>;
+  domain?: InputMaybe<Scalars['String']['input']>;
   /** Shop site name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Fields required to create a staff user. */
 export type StaffCreateInput = {
   /** List of permission group IDs to which user should be assigned. */
-  addGroups?: InputMaybe<Array<Scalars['ID']>>;
+  addGroups?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User account is active. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8132,7 +8134,7 @@ export type StaffCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
-  note?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -8140,7 +8142,7 @@ export type StaffCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents status of a staff account. */
@@ -8153,25 +8155,25 @@ export enum StaffMemberStatus {
 
 export type StaffNotificationRecipientInput = {
   /** Determines if a notification active. */
-  active?: InputMaybe<Scalars['Boolean']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
   /** Email address of a user subscribed to email notifications. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the user subscribed to email notifications.. */
-  user?: InputMaybe<Scalars['ID']>;
+  user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Fields required to update a staff user. */
 export type StaffUpdateInput = {
   /** List of permission group IDs to which user should be assigned. */
-  addGroups?: InputMaybe<Array<Scalars['ID']>>;
+  addGroups?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User account is active. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8179,7 +8181,7 @@ export type StaffUpdateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
-  note?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -8187,12 +8189,12 @@ export type StaffUpdateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs from which user should be unassigned. */
-  removeGroups?: InputMaybe<Array<Scalars['ID']>>;
+  removeGroups?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export type StaffUserInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  search?: InputMaybe<Scalars['String']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<StaffMemberStatus>;
 };
 
@@ -8210,15 +8212,15 @@ export enum StockBulkUpdateErrorCode {
 
 export type StockBulkUpdateInput = {
   /** Quantity of items available for sell. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Variant external reference. */
-  variantExternalReference?: InputMaybe<Scalars['String']>;
+  variantExternalReference?: InputMaybe<Scalars['String']['input']>;
   /** Variant ID. */
-  variantId?: InputMaybe<Scalars['ID']>;
+  variantId?: InputMaybe<Scalars['ID']['input']>;
   /** Warehouse external reference. */
-  warehouseExternalReference?: InputMaybe<Scalars['String']>;
+  warehouseExternalReference?: InputMaybe<Scalars['String']['input']>;
   /** Warehouse ID. */
-  warehouseId?: InputMaybe<Scalars['ID']>;
+  warehouseId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum StockErrorCode {
@@ -8231,15 +8233,15 @@ export enum StockErrorCode {
 }
 
 export type StockFilterInput = {
-  quantity?: InputMaybe<Scalars['Float']>;
-  search?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StockInput = {
   /** Quantity of items available for sell. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Warehouse in which stock is located. */
-  warehouse: Scalars['ID'];
+  warehouse: Scalars['ID']['input'];
 };
 
 export type StockSettingsInput = {
@@ -8249,9 +8251,9 @@ export type StockSettingsInput = {
 
 export type StockUpdateInput = {
   /** Quantity of items available for sell. */
-  quantity: Scalars['Int'];
+  quantity: Scalars['Int']['input'];
   /** Stock. */
-  stock: Scalars['ID'];
+  stock: Scalars['ID']['input'];
 };
 
 /**
@@ -8303,9 +8305,9 @@ export enum StoredPaymentMethodRequestDeleteResult {
 /** Define the filtering options for string fields. */
 export type StringFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['String']>>;
+  oneOf?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export enum TaxCalculationStrategy {
@@ -8323,7 +8325,7 @@ export type TaxClassCreateInput = {
   /** List of country-specific tax rates to create for this tax class. */
   createCountryRates?: InputMaybe<Array<CountryRateInput>>;
   /** Name of the tax class. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
 };
 
 export enum TaxClassDeleteErrorCode {
@@ -8334,15 +8336,15 @@ export enum TaxClassDeleteErrorCode {
 
 export type TaxClassFilterInput = {
   countries?: InputMaybe<Array<CountryCode>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
 };
 
 export type TaxClassRateInput = {
   /** Tax rate value. */
-  rate?: InputMaybe<Scalars['Float']>;
+  rate?: InputMaybe<Scalars['Float']['input']>;
   /** ID of a tax class for which to update the tax rate */
-  taxClassId?: InputMaybe<Scalars['ID']>;
+  taxClassId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum TaxClassSortField {
@@ -8366,7 +8368,7 @@ export enum TaxClassUpdateErrorCode {
 
 export type TaxClassUpdateInput = {
   /** Name of the tax class. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** List of country codes for which to remove the tax class rates. Note: It removes all rates for given country code. */
   removeCountryRates?: InputMaybe<Array<CountryCode>>;
   /** List of country-specific tax rates to create or update for this tax class. */
@@ -8374,23 +8376,23 @@ export type TaxClassUpdateInput = {
 };
 
 export type TaxConfigurationFilterInput = {
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
 };
 
 export type TaxConfigurationPerCountryInput = {
   /** Determines whether taxes are charged in this country. */
-  chargeTaxes: Scalars['Boolean'];
+  chargeTaxes: Scalars['Boolean']['input'];
   /** Country in which this configuration applies. */
   countryCode: CountryCode;
   /** Determines whether displayed prices should include taxes for this country. */
-  displayGrossPrices: Scalars['Boolean'];
+  displayGrossPrices: Scalars['Boolean']['input'];
   /**
    * The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
    *
    * Added in Saleor 3.19.
    */
-  taxAppId?: InputMaybe<Scalars['String']>;
+  taxAppId?: InputMaybe<Scalars['String']['input']>;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /**
@@ -8398,7 +8400,7 @@ export type TaxConfigurationPerCountryInput = {
    *
    * Added in Saleor 3.21.
    */
-  useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']>;
+  useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum TaxConfigurationUpdateErrorCode {
@@ -8410,11 +8412,11 @@ export enum TaxConfigurationUpdateErrorCode {
 
 export type TaxConfigurationUpdateInput = {
   /** Determines whether taxes are charged in the given channel. */
-  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  chargeTaxes?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines whether displayed prices should include taxes. */
-  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines whether prices are entered with the tax included. */
-  pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']>;
+  pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
   /**
@@ -8422,7 +8424,7 @@ export type TaxConfigurationUpdateInput = {
    *
    * Added in Saleor 3.19.
    */
-  taxAppId?: InputMaybe<Scalars['String']>;
+  taxAppId?: InputMaybe<Scalars['String']['input']>;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /** List of tax country configurations to create or update (identified by a country code). */
@@ -8432,7 +8434,7 @@ export type TaxConfigurationUpdateInput = {
    *
    * Added in Saleor 3.21.
    */
-  useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']>;
+  useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum TaxCountryConfigurationDeleteErrorCode {
@@ -8464,9 +8466,9 @@ export enum TaxableObjectDiscountTypeEnum {
 
 export type TaxedMoneyInput = {
   /** Gross value of an item. */
-  gross: Scalars['PositiveDecimal'];
+  gross: Scalars['PositiveDecimal']['input'];
   /** Net value of an item. */
-  net: Scalars['PositiveDecimal'];
+  net: Scalars['PositiveDecimal']['input'];
 };
 
 export enum ThumbnailFormatEnum {
@@ -8477,7 +8479,7 @@ export enum ThumbnailFormatEnum {
 
 export type TimePeriodInputType = {
   /** The length of the period. */
-  amount: Scalars['Int'];
+  amount: Scalars['Int']['input'];
   /** The type of the period. */
   type: TimePeriodTypeEnum;
 };
@@ -8535,9 +8537,9 @@ export type TransactionCreateInput = {
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** The url that will allow to redirect user to payment provider page with transaction event details. */
-  externalUrl?: InputMaybe<Scalars['String']>;
+  externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** The message of the transaction. */
-  message?: InputMaybe<Scalars['String']>;
+  message?: InputMaybe<Scalars['String']['input']>;
   /**
    * Payment public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8545,7 +8547,7 @@ export type TransactionCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Payment name of the transaction. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Details of the payment method used for the transaction.
    *
@@ -8559,7 +8561,7 @@ export type TransactionCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** PSP Reference of the transaction. */
-  pspReference?: InputMaybe<Scalars['String']>;
+  pspReference?: InputMaybe<Scalars['String']['input']>;
 };
 
 /**
@@ -8584,9 +8586,9 @@ export type TransactionEventFilterInput = {
 
 export type TransactionEventInput = {
   /** The message related to the event. */
-  message?: InputMaybe<Scalars['String']>;
+  message?: InputMaybe<Scalars['String']['input']>;
   /** PSP Reference related to this action. */
-  pspReference?: InputMaybe<Scalars['String']>;
+  pspReference?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum TransactionEventReportErrorCode {
@@ -8770,9 +8772,9 @@ export type TransactionUpdateInput = {
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** The url that will allow to redirect user to payment provider page with transaction event details. */
-  externalUrl?: InputMaybe<Scalars['String']>;
+  externalUrl?: InputMaybe<Scalars['String']['input']>;
   /** The message of the transaction. */
-  message?: InputMaybe<Scalars['String']>;
+  message?: InputMaybe<Scalars['String']['input']>;
   /**
    * Payment public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8780,7 +8782,7 @@ export type TransactionUpdateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Payment name of the transaction. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /**
    * Details of the payment method used for the transaction.
    *
@@ -8794,7 +8796,7 @@ export type TransactionUpdateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** PSP Reference of the transaction. */
-  pspReference?: InputMaybe<Scalars['String']>;
+  pspReference?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TransactionWhereInput = {
@@ -8816,7 +8818,7 @@ export type TransactionWhereInput = {
    * Added in Saleor 3.23.
    */
   events?: InputMaybe<Array<TransactionEventFilterInput>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Filter transactions by modified at date.
    *
@@ -8857,19 +8859,19 @@ export type TranslationInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    */
-  description?: InputMaybe<Scalars['JSONString']>;
-  name?: InputMaybe<Scalars['String']>;
-  seoDescription?: InputMaybe<Scalars['String']>;
-  seoTitle?: InputMaybe<Scalars['String']>;
-  slug?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['JSONString']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  seoDescription?: InputMaybe<Scalars['String']['input']>;
+  seoTitle?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Define the filtering options for string fields. */
 export type UuidFilterInput = {
   /** The value equal to. */
-  eq?: InputMaybe<Scalars['UUID']>;
+  eq?: InputMaybe<Scalars['UUID']['input']>;
   /** The value included in. */
-  oneOf?: InputMaybe<Array<Scalars['UUID']>>;
+  oneOf?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 
 export type UpdateInvoiceInput = {
@@ -8880,7 +8882,7 @@ export type UpdateInvoiceInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number */
-  number?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the invoice private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -8888,7 +8890,7 @@ export type UpdateInvoiceInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of an invoice to download. */
-  url?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum UploadErrorCode {
@@ -8899,28 +8901,28 @@ export enum UploadErrorCode {
 
 export type UserCreateInput = {
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
   /** The unique email address of the user. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** External ID of the customer. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Given name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User account is active. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * User account is confirmed.
    * @deprecated The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
    */
-  isConfirmed?: InputMaybe<Scalars['Boolean']>;
+  isConfirmed?: InputMaybe<Scalars['Boolean']['input']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -8928,7 +8930,7 @@ export type UserCreateInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
-  note?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**
    * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -8936,7 +8938,7 @@ export type UserCreateInput = {
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
-  redirectUrl?: InputMaybe<Scalars['String']>;
+  redirectUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum UserSortField {
@@ -8987,18 +8989,18 @@ export enum VolumeUnitsEnum {
 
 export type VoucherChannelListingAddInput = {
   /** ID of a channel. */
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   /** Value of the voucher. */
-  discountValue?: InputMaybe<Scalars['PositiveDecimal']>;
+  discountValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** Min purchase amount required to apply the voucher. */
-  minAmountSpent?: InputMaybe<Scalars['PositiveDecimal']>;
+  minAmountSpent?: InputMaybe<Scalars['PositiveDecimal']['input']>;
 };
 
 export type VoucherChannelListingInput = {
   /** List of channels to which the voucher should be assigned. */
   addChannels?: InputMaybe<Array<VoucherChannelListingAddInput>>;
   /** List of channels from which the voucher should be unassigned. */
-  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  removeChannels?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum VoucherCodeBulkDeleteErrorCode {
@@ -9015,9 +9017,9 @@ export enum VoucherDiscountType {
 
 export type VoucherFilterInput = {
   discountType?: InputMaybe<Array<VoucherDiscountType>>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   started?: InputMaybe<DateTimeRangeInput>;
   status?: InputMaybe<Array<DiscountStatusEnum>>;
   timesUsed?: InputMaybe<IntRangeInput>;
@@ -9031,34 +9033,34 @@ export type VoucherInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  addCodes?: InputMaybe<Array<Scalars['String']>>;
+  addCodes?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Voucher should be applied once per customer. */
-  applyOncePerCustomer?: InputMaybe<Scalars['Boolean']>;
+  applyOncePerCustomer?: InputMaybe<Scalars['Boolean']['input']>;
   /** Voucher should be applied to the cheapest item or entire order. */
-  applyOncePerOrder?: InputMaybe<Scalars['Boolean']>;
+  applyOncePerOrder?: InputMaybe<Scalars['Boolean']['input']>;
   /** Categories discounted by the voucher. */
-  categories?: InputMaybe<Array<Scalars['ID']>>;
+  categories?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Code to use the voucher.
    * @deprecated Use `addCodes` instead.
    */
-  code?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']['input']>;
   /** Collections discounted by the voucher. */
-  collections?: InputMaybe<Array<Scalars['ID']>>;
+  collections?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Country codes that can be used with the shipping voucher. */
-  countries?: InputMaybe<Array<Scalars['String']>>;
+  countries?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Choices: fixed or percentage. */
   discountValueType?: InputMaybe<DiscountValueTypeEnum>;
   /** End date of the voucher in ISO 8601 format. */
-  endDate?: InputMaybe<Scalars['DateTime']>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Minimal quantity of checkout items required to apply the voucher. */
-  minCheckoutItemsQuantity?: InputMaybe<Scalars['Int']>;
+  minCheckoutItemsQuantity?: InputMaybe<Scalars['Int']['input']>;
   /** Voucher name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Voucher can be used only by staff user. */
-  onlyForStaff?: InputMaybe<Scalars['Boolean']>;
+  onlyForStaff?: InputMaybe<Scalars['Boolean']['input']>;
   /** Products discounted by the voucher. */
-  products?: InputMaybe<Array<Scalars['ID']>>;
+  products?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * When set to 'True', each voucher code can be used only once; otherwise, codes can be used multiple times depending on `usageLimit`.
    *
@@ -9068,15 +9070,15 @@ export type VoucherInput = {
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  singleUse?: InputMaybe<Scalars['Boolean']>;
+  singleUse?: InputMaybe<Scalars['Boolean']['input']>;
   /** Start date of the voucher in ISO 8601 format. */
-  startDate?: InputMaybe<Scalars['DateTime']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
   /** Voucher type: PRODUCT, CATEGORY SHIPPING or ENTIRE_ORDER. */
   type?: InputMaybe<VoucherTypeEnum>;
   /** Limit number of times this voucher can be used in total. */
-  usageLimit?: InputMaybe<Scalars['Int']>;
+  usageLimit?: InputMaybe<Scalars['Int']['input']>;
   /** Variants discounted by the voucher. */
-  variants?: InputMaybe<Array<Scalars['ID']>>;
+  variants?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 export enum VoucherSortField {
@@ -9118,7 +9120,7 @@ export type VoucherSortingInput = {
    * Specifies the channel in which to sort the data.
    * @deprecated Use root-level channel argument instead.
    */
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the direction in which to sort vouchers. */
   direction: OrderDirection;
   /** Sort vouchers by the selected field. */
@@ -9141,18 +9143,18 @@ export type WarehouseCreateInput = {
   /** Address of the warehouse. */
   address: AddressInput;
   /** The email address of the warehouse. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** External ID of the warehouse. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Warehouse name. */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /**
    * Shipping zones supported by the warehouse.
    * @deprecated Providing the zone ids will raise a ValidationError.
    */
-  shippingZones?: InputMaybe<Array<Scalars['ID']>>;
+  shippingZones?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Warehouse slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum WarehouseErrorCode {
@@ -9165,13 +9167,13 @@ export enum WarehouseErrorCode {
 }
 
 export type WarehouseFilterInput = {
-  channels?: InputMaybe<Array<Scalars['ID']>>;
+  channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
-  ids?: InputMaybe<Array<Scalars['ID']>>;
-  isPrivate?: InputMaybe<Scalars['Boolean']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
-  search?: InputMaybe<Scalars['String']>;
-  slugs?: InputMaybe<Array<Scalars['String']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  slugs?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export enum WarehouseSortField {
@@ -9192,44 +9194,44 @@ export type WarehouseUpdateInput = {
   /** Click and collect options: local, all or disabled. */
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
   /** The email address of the warehouse. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** External ID of the warehouse. */
-  externalReference?: InputMaybe<Scalars['String']>;
+  externalReference?: InputMaybe<Scalars['String']['input']>;
   /** Visibility of warehouse stocks. */
-  isPrivate?: InputMaybe<Scalars['Boolean']>;
+  isPrivate?: InputMaybe<Scalars['Boolean']['input']>;
   /** Warehouse name. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Warehouse slug. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type WebhookCreateInput = {
   /** ID of the app to which webhook belongs. */
-  app?: InputMaybe<Scalars['ID']>;
+  app?: InputMaybe<Scalars['ID']['input']>;
   /** The asynchronous events that webhook wants to subscribe. */
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
-  customHeaders?: InputMaybe<Scalars['JSONString']>;
+  customHeaders?: InputMaybe<Scalars['JSONString']['input']>;
   /**
    * The events that webhook wants to subscribe.
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Subscription query used to define a webhook payload. */
-  query?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']['input']>;
   /**
    * The secret key used to create a hash signature with each payload.
    * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
-  secretKey?: InputMaybe<Scalars['String']>;
+  secretKey?: InputMaybe<Scalars['String']['input']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
   /** The url to receive the payload. */
-  targetUrl?: InputMaybe<Scalars['String']>;
+  targetUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum WebhookDryRunErrorCode {
@@ -10164,31 +10166,31 @@ export enum WebhookTriggerErrorCode {
 
 export type WebhookUpdateInput = {
   /** ID of the app to which webhook belongs. */
-  app?: InputMaybe<Scalars['ID']>;
+  app?: InputMaybe<Scalars['ID']['input']>;
   /** The asynchronous events that webhook wants to subscribe. */
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
-  customHeaders?: InputMaybe<Scalars['JSONString']>;
+  customHeaders?: InputMaybe<Scalars['JSONString']['input']>;
   /**
    * The events that webhook wants to subscribe.
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
-  isActive?: InputMaybe<Scalars['Boolean']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Subscription query used to define a webhook payload. */
-  query?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']['input']>;
   /**
    * Use to create a hash signature with each payload.
    * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
-  secretKey?: InputMaybe<Scalars['String']>;
+  secretKey?: InputMaybe<Scalars['String']['input']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
   /** The url to receive the payload. */
-  targetUrl?: InputMaybe<Scalars['String']>;
+  targetUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum WeightUnitsEnum {
@@ -10200,21 +10202,21 @@ export enum WeightUnitsEnum {
 }
 
 export type AttributeBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type AttributeBulkDeleteMutation = { __typename: 'Mutation', attributeBulkDelete: { __typename: 'AttributeBulkDelete', errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type AttributeDeleteMutation = { __typename: 'Mutation', attributeDelete: { __typename: 'AttributeDelete', errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AttributeUpdateInput;
 }>;
 
@@ -10222,35 +10224,35 @@ export type AttributeUpdateMutationVariables = Exact<{
 export type AttributeUpdateMutation = { __typename: 'Mutation', attributeUpdate: { __typename: 'AttributeUpdate', attribute: { __typename: 'Attribute', availableInGrid: boolean, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeValueDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AttributeValueDeleteMutation = { __typename: 'Mutation', attributeValueDelete: { __typename: 'AttributeValueDelete', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeValueUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AttributeValueUpdateInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AttributeValueUpdateMutation = { __typename: 'Mutation', attributeValueUpdate: { __typename: 'AttributeValueUpdate', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeValueCreateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AttributeValueCreateInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -10264,24 +10266,24 @@ export type AttributeCreateMutationVariables = Exact<{
 export type AttributeCreateMutation = { __typename: 'Mutation', attributeCreate: { __typename: 'AttributeCreate', attribute: { __typename: 'Attribute', id: string } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeValueReorderMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   move: ReorderInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AttributeValueReorderMutation = { __typename: 'Mutation', attributeReorderValues: { __typename: 'AttributeReorderValues', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string } }> } | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
 
 export type AttributeDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -10289,10 +10291,10 @@ export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typena
 
 export type AttributeListQueryVariables = Exact<{
   filter?: InputMaybe<AttributeFilterInput>;
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<AttributeSortingInput>;
 }>;
 
@@ -10300,8 +10302,8 @@ export type AttributeListQueryVariables = Exact<{
 export type AttributeListQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type RequestPasswordResetMutationVariables = Exact<{
-  email: Scalars['String'];
-  redirectUrl: Scalars['String'];
+  email: Scalars['String']['input'];
+  redirectUrl: Scalars['String']['input'];
 }>;
 
 
@@ -10318,14 +10320,14 @@ export type UserDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 export type UserDetailsQuery = { __typename: 'Query', me: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, dateJoined: any, restrictedAccessToChannels: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null } | null };
 
 export type CategoryDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type CategoryDeleteMutation = { __typename: 'Mutation', categoryDelete: { __typename: 'CategoryDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CategoryCreateMutationVariables = Exact<{
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   input: CategoryInput;
 }>;
 
@@ -10333,7 +10335,7 @@ export type CategoryCreateMutationVariables = Exact<{
 export type CategoryCreateMutation = { __typename: 'Mutation', categoryCreate: { __typename: 'CategoryCreate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CategoryUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: CategoryInput;
 }>;
 
@@ -10341,17 +10343,17 @@ export type CategoryUpdateMutationVariables = Exact<{
 export type CategoryUpdateMutation = { __typename: 'Mutation', categoryUpdate: { __typename: 'CategoryUpdate', category: { __typename: 'Category', id: string, name: string, slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CategoryBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type CategoryBulkDeleteMutation = { __typename: 'Mutation', categoryBulkDelete: { __typename: 'CategoryBulkDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type RootCategoriesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<CategoryFilterInput>;
   sort?: InputMaybe<CategorySortingInput>;
 }>;
@@ -10360,11 +10362,11 @@ export type RootCategoriesQueryVariables = Exact<{
 export type RootCategoriesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, children: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CategoryDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -10378,7 +10380,7 @@ export type ChannelCreateMutationVariables = Exact<{
 export type ChannelCreateMutation = { __typename: 'Mutation', channelCreate: { __typename: 'ChannelCreate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ChannelUpdateInput;
 }>;
 
@@ -10386,7 +10388,7 @@ export type ChannelUpdateMutationVariables = Exact<{
 export type ChannelUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input?: InputMaybe<ChannelDeleteInput>;
 }>;
 
@@ -10394,21 +10396,21 @@ export type ChannelDeleteMutationVariables = Exact<{
 export type ChannelDeleteMutation = { __typename: 'Mutation', channelDelete: { __typename: 'ChannelDelete', errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelActivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ChannelActivateMutation = { __typename: 'Mutation', channelActivate: { __typename: 'ChannelActivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelDeactivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ChannelDeactivateMutation = { __typename: 'Mutation', channelDeactivate: { __typename: 'ChannelDeactivate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ChannelReorderWarehousesMutationVariables = Exact<{
-  channelId: Scalars['ID'];
+  channelId: Scalars['ID']['input'];
   moves: Array<ReorderInput> | ReorderInput;
 }>;
 
@@ -10426,14 +10428,14 @@ export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
 export type ChannelQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
 
 export type CollectionUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: CollectionInput;
 }>;
 
@@ -10441,8 +10443,8 @@ export type CollectionUpdateMutationVariables = Exact<{
 export type CollectionUpdateMutation = { __typename: 'Mutation', collectionUpdate: { __typename: 'CollectionUpdate', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CollectionAssignProductMutationVariables = Exact<{
-  collectionId: Scalars['ID'];
-  productIds: Array<Scalars['ID']> | Scalars['ID'];
+  collectionId: Scalars['ID']['input'];
+  productIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
   moves: Array<MoveProductInput> | MoveProductInput;
 }>;
 
@@ -10457,33 +10459,33 @@ export type CreateCollectionMutationVariables = Exact<{
 export type CreateCollectionMutation = { __typename: 'Mutation', collectionCreate: { __typename: 'CollectionCreate', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type RemoveCollectionMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type RemoveCollectionMutation = { __typename: 'Mutation', collectionDelete: { __typename: 'CollectionDelete', errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type UnassignCollectionProductMutationVariables = Exact<{
-  collectionId: Scalars['ID'];
-  productIds: Array<Scalars['ID']> | Scalars['ID'];
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  collectionId: Scalars['ID']['input'];
+  productIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type UnassignCollectionProductMutation = { __typename: 'Mutation', collectionRemoveProducts: { __typename: 'CollectionRemoveProducts', collection: { __typename: 'Collection', id: string, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null, errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CollectionBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type CollectionBulkDeleteMutation = { __typename: 'Mutation', collectionBulkDelete: { __typename: 'CollectionBulkDelete', errors: Array<{ __typename: 'CollectionError', code: CollectionErrorCode, field: string | null, message: string | null }> } | null };
 
 export type CollectionChannelListingUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: CollectionChannelListingUpdateInput;
 }>;
 
@@ -10491,7 +10493,7 @@ export type CollectionChannelListingUpdateMutationVariables = Exact<{
 export type CollectionChannelListingUpdateMutation = { __typename: 'Mutation', collectionChannelListingUpdate: { __typename: 'CollectionChannelListingUpdate', errors: Array<{ __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null }> } | null };
 
 export type ReorderProductsInCollectionMutationVariables = Exact<{
-  collectionId: Scalars['ID'];
+  collectionId: Scalars['ID']['input'];
   moves: Array<MoveProductInput> | MoveProductInput;
 }>;
 
@@ -10499,31 +10501,31 @@ export type ReorderProductsInCollectionMutationVariables = Exact<{
 export type ReorderProductsInCollectionMutation = { __typename: 'Mutation', collectionReorderProducts: { __typename: 'CollectionReorderProducts', errors: Array<{ __typename: 'CollectionError', message: string | null }> } | null };
 
 export type CollectionListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<CollectionFilterInput>;
   sort?: InputMaybe<CollectionSortingInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type CollectionListQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CollectionDetailsQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
 export type CollectionDetailsQuery = { __typename: 'Query', collection: { __typename: 'Collection', slug: string, description: string | null, seoDescription: string | null, seoTitle: string | null, id: string, name: string, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type CollectionProductsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -10537,8 +10539,8 @@ export type AddressValidationRulesQueryVariables = Exact<{
 export type AddressValidationRulesQuery = { __typename: 'Query', addressValidationRules: { __typename: 'AddressValidationData', allowedFields: Array<string>, countryAreaChoices: Array<{ __typename: 'ChoiceValue', raw: string | null, verbose: string | null }> } | null };
 
 export type _GetDynamicLeftOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
@@ -10555,190 +10557,190 @@ export type _GetLegacyChannelOperandsQueryVariables = Exact<{ [key: string]: nev
 export type _GetLegacyChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string }> | null };
 
 export type _SearchCollectionsOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  collectionsSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  first: Scalars['Int']['input'];
+  collectionsSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchCollectionsOperandsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchCategoriesOperandsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  categoriesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  categoriesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchCategoriesOperandsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchProductTypesOperandsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  productTypesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  productTypesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchProductTypesOperandsQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchPageTypesOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  pageTypesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  first: Scalars['Int']['input'];
+  pageTypesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchPageTypesOperandsQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchAttributeOperandsQueryVariables = Exact<{
-  attributesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-  choicesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-  first: Scalars['Int'];
+  attributesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+  choicesIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  first: Scalars['Int']['input'];
 }>;
 
 
 export type _SearchAttributeOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string, originalSlug: string | null } }> } | null } }> } | null };
 
 export type _GetAttributeChoicesQueryVariables = Exact<{
-  slug: Scalars['String'];
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  slug: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string, originalSlug: string | null } }> } | null } | null };
 
 export type _GetCollectionsChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetCollectionsChoicesQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
 
 export type _GetCategoriesChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetCategoriesChoicesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
 
 export type _GetProductTypesChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetProductTypesChoicesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
 
 export type _GetPageTypesChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetPageTypesChoicesQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, slug: string } }> } | null };
 
 export type _GetPagesChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetPagesChoicesQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, slug: string, name: string, originalSlug: string } }> } | null };
 
 export type _GetProductChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetProductChoicesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string } }> } | null };
 
 export type _GetProductVariantChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetProductVariantChoicesQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, slug: string, originalSlug: string, product: { __typename: 'Product', name: string } } }> } | null };
 
 export type _GetGiftCardTagsChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetGiftCardTagsChoicesQuery = { __typename: 'Query', giftCardTags: { __typename: 'GiftCardTagCountableConnection', edges: Array<{ __typename: 'GiftCardTagCountableEdge', node: { __typename: 'GiftCardTag', id: string, name: string } }> } | null };
 
 export type _GetCustomersChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetCustomersChoicesQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
 
 export type _SearchCustomersOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  customersIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  first: Scalars['Int']['input'];
+  customersIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
 export type _SearchCustomersOperandsQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
 
 export type _SearchPageOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  pageSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  first: Scalars['Int']['input'];
+  pageSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchPageOperandsQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, slug: string, name: string, originalSlug: string } }> } | null };
 
 export type _SearchProductOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  productSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  first: Scalars['Int']['input'];
+  productSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string, originalSlug: string } }> } | null };
 
 export type _SearchProductVariantOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  ids?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  first: Scalars['Int']['input'];
+  ids?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
 export type _SearchProductVariantOperandsQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, slug: string, originalSlug: string, product: { __typename: 'Product', name: string } } }> } | null };
 
 export type _GetWarehouseChoicesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type _GetWarehouseChoicesQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchWarehouseOperandsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  warehouseSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  first: Scalars['Int']['input'];
+  warehouseSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
 export type _SearchWarehouseOperandsQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, slug: string } }> } | null };
 
 export type TriggerWebhookDryRunMutationVariables = Exact<{
-  objectId: Scalars['ID'];
-  query: Scalars['String'];
+  objectId: Scalars['ID']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type TriggerWebhookDryRunMutation = { __typename: 'Mutation', webhookDryRun: { __typename: 'WebhookDryRun', payload: string | null, errors: Array<{ __typename: 'WebhookDryRunError', field: string | null, message: string | null }> } | null };
 
 export type CheckoutListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -10750,7 +10752,7 @@ export type ChannelListQueryVariables = Exact<{ [key: string]: never; }>;
 export type ChannelListQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null };
 
 export type NavigatorSearchQueryVariables = Exact<{
-  query: Scalars['String'];
+  query: Scalars['String']['input'];
 }>;
 
 
@@ -10769,32 +10771,32 @@ export type ShopCountriesQueryVariables = Exact<{
 export type ShopCountriesQuery = { __typename: 'Query', shop: { __typename: 'Shop', countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } };
 
 export type RefreshLimitsQueryVariables = Exact<{
-  channels: Scalars['Boolean'];
-  orders: Scalars['Boolean'];
-  productVariants: Scalars['Boolean'];
-  staffUsers: Scalars['Boolean'];
-  warehouses: Scalars['Boolean'];
+  channels: Scalars['Boolean']['input'];
+  orders: Scalars['Boolean']['input'];
+  productVariants: Scalars['Boolean']['input'];
+  staffUsers: Scalars['Boolean']['input'];
+  warehouses: Scalars['Boolean']['input'];
 }>;
 
 
 export type RefreshLimitsQuery = { __typename: 'Query', shop: { __typename: 'Shop', limits: { __typename: 'LimitInfo', currentUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null }, allowedUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null } } } };
 
 export type CheckExportFileStatusQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type CheckExportFileStatusQuery = { __typename: 'Query', exportFile: { __typename: 'ExportFile', id: string, status: JobStatusEnum } | null };
 
 export type CheckOrderInvoicesStatusQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type CheckOrderInvoicesStatusQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }> } | null };
 
 export type UpdateCustomerMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: CustomerInput;
 }>;
 
@@ -10809,15 +10811,15 @@ export type CreateCustomerMutationVariables = Exact<{
 export type CreateCustomerMutation = { __typename: 'Mutation', customerCreate: { __typename: 'CustomerCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string } | null } | null };
 
 export type RemoveCustomerMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type RemoveCustomerMutation = { __typename: 'Mutation', customerDelete: { __typename: 'CustomerDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type SetCustomerDefaultAddressMutationVariables = Exact<{
-  addressId: Scalars['ID'];
-  userId: Scalars['ID'];
+  addressId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
   type: AddressTypeEnum;
 }>;
 
@@ -10825,7 +10827,7 @@ export type SetCustomerDefaultAddressMutationVariables = Exact<{
 export type SetCustomerDefaultAddressMutation = { __typename: 'Mutation', addressSetDefault: { __typename: 'AddressSetDefault', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type CreateCustomerAddressMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AddressInput;
 }>;
 
@@ -10833,7 +10835,7 @@ export type CreateCustomerAddressMutationVariables = Exact<{
 export type CreateCustomerAddressMutation = { __typename: 'Mutation', addressCreate: { __typename: 'AddressCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type UpdateCustomerAddressMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AddressInput;
 }>;
 
@@ -10841,43 +10843,43 @@ export type UpdateCustomerAddressMutationVariables = Exact<{
 export type UpdateCustomerAddressMutation = { __typename: 'Mutation', addressUpdate: { __typename: 'AddressUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
 
 export type RemoveCustomerAddressMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type RemoveCustomerAddressMutation = { __typename: 'Mutation', addressDelete: { __typename: 'AddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type BulkRemoveCustomersMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type BulkRemoveCustomersMutation = { __typename: 'Mutation', customerBulkDelete: { __typename: 'CustomerBulkDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type ListCustomersQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<CustomerFilterInput>;
   sort?: InputMaybe<UserSortingInput>;
-  PERMISSION_MANAGE_ORDERS: Scalars['Boolean'];
+  PERMISSION_MANAGE_ORDERS: Scalars['Boolean']['input'];
 }>;
 
 
 export type ListCustomersQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CustomerDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  PERMISSION_MANAGE_ORDERS: Scalars['Boolean'];
-  PERMISSION_MANAGE_STAFF: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  PERMISSION_MANAGE_ORDERS: Scalars['Boolean']['input'];
+  PERMISSION_MANAGE_STAFF: Scalars['Boolean']['input'];
 }>;
 
 
 export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } } } }> } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
 
 export type CustomerAddressesQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -10889,7 +10891,7 @@ export type CustomerCreateDataQueryVariables = Exact<{ [key: string]: never; }>;
 export type CustomerCreateDataQuery = { __typename: 'Query', shop: { __typename: 'Shop', countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } };
 
 export type VoucherChannelListingUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: VoucherChannelListingInput;
 }>;
 
@@ -10898,7 +10900,7 @@ export type VoucherChannelListingUpdateMutation = { __typename: 'Mutation', vouc
 
 export type VoucherUpdateMutationVariables = Exact<{
   input: VoucherInput;
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -10906,15 +10908,15 @@ export type VoucherUpdateMutation = { __typename: 'Mutation', voucherUpdate: { _
 
 export type VoucherCataloguesAddMutationVariables = Exact<{
   input: CatalogueInput;
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  includeProducts: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
-  includeVariants: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  includeProducts: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
+  includeVariants: Scalars['Boolean']['input'];
 }>;
 
 
@@ -10922,15 +10924,15 @@ export type VoucherCataloguesAddMutation = { __typename: 'Mutation', voucherCata
 
 export type VoucherCataloguesRemoveMutationVariables = Exact<{
   input: CatalogueInput;
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  includeProducts: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
-  includeVariants: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  includeProducts: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
+  includeVariants: Scalars['Boolean']['input'];
 }>;
 
 
@@ -10944,21 +10946,21 @@ export type VoucherCreateMutationVariables = Exact<{
 export type VoucherCreateMutation = { __typename: 'Mutation', voucherCreate: { __typename: 'VoucherCreate', errors: Array<{ __typename: 'DiscountError', voucherCodes: Array<string> | null, code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null }>, voucher: { __typename: 'Voucher', id: string, name: string | null, startDate: any, endDate: any | null, usageLimit: number | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type VoucherDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type VoucherDeleteMutation = { __typename: 'Mutation', voucherDelete: { __typename: 'VoucherDelete', errors: Array<{ __typename: 'DiscountError', voucherCodes: Array<string> | null, code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null }> } | null };
 
 export type VoucherBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type VoucherBulkDeleteMutation = { __typename: 'Mutation', voucherBulkDelete: { __typename: 'VoucherBulkDelete', errors: Array<{ __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, message: string | null }> } | null };
 
 export type VoucherCodeBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
@@ -10972,7 +10974,7 @@ export type PromotionCreateMutationVariables = Exact<{
 export type PromotionCreateMutation = { __typename: 'Mutation', promotionCreate: { __typename: 'PromotionCreate', errors: Array<{ __typename: 'PromotionCreateError', field: string | null, message: string | null, code: PromotionCreateErrorCode, index: number | null }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: unknown | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null } | null };
 
 export type PromotionUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PromotionUpdateInput;
 }>;
 
@@ -10980,14 +10982,14 @@ export type PromotionUpdateMutationVariables = Exact<{
 export type PromotionUpdateMutation = { __typename: 'Mutation', promotionUpdate: { __typename: 'PromotionUpdate', errors: Array<{ __typename: 'PromotionUpdateError', field: string | null, message: string | null, code: PromotionUpdateErrorCode }>, promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: unknown | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null } | null };
 
 export type PromotionDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PromotionDeleteMutation = { __typename: 'Mutation', promotionDelete: { __typename: 'PromotionDelete', errors: Array<{ __typename: 'PromotionDeleteError', field: string | null, message: string | null, code: PromotionDeleteErrorCode }> } | null };
 
 export type PromotionRuleUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PromotionRuleUpdateInput;
 }>;
 
@@ -11002,30 +11004,30 @@ export type PromotionRuleCreateMutationVariables = Exact<{
 export type PromotionRuleCreateMutation = { __typename: 'Mutation', promotionRuleCreate: { __typename: 'PromotionRuleCreate', errors: Array<{ __typename: 'PromotionRuleCreateError', field: string | null, message: string | null, code: PromotionRuleCreateErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null } | null } | null };
 
 export type PromotionRuleDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PromotionRuleDeleteMutation = { __typename: 'Mutation', promotionRuleDelete: { __typename: 'PromotionRuleDelete', errors: Array<{ __typename: 'PromotionRuleDeleteError', field: string | null, message: string | null, code: PromotionRuleDeleteErrorCode }>, promotionRule: { __typename: 'PromotionRule', id: string } | null } | null };
 
 export type SaleListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<SaleFilterInput>;
   sort?: InputMaybe<SaleSortingInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SaleListQuery = { __typename: 'Query', sales: { __typename: 'SaleCountableConnection', edges: Array<{ __typename: 'SaleCountableEdge', node: { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PromotionsListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PromotionWhereInput>;
   sort?: InputMaybe<PromotionSortingInput>;
 }>;
@@ -11034,99 +11036,99 @@ export type PromotionsListQueryVariables = Exact<{
 export type PromotionsListQuery = { __typename: 'Query', promotions: { __typename: 'PromotionCountableConnection', edges: Array<{ __typename: 'PromotionCountableEdge', node: { __typename: 'Promotion', id: string, name: string, startDate: any, endDate: any | null, type: PromotionTypeEnum | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type VoucherListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<VoucherFilterInput>;
   sort?: InputMaybe<VoucherSortingInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type VoucherListQuery = { __typename: 'Query', vouchers: { __typename: 'VoucherCountableConnection', edges: Array<{ __typename: 'VoucherCountableEdge', node: { __typename: 'Voucher', id: string, name: string | null, startDate: any, endDate: any | null, usageLimit: number | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SaleDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  includeVariants: Scalars['Boolean'];
-  includeProducts: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  includeVariants: Scalars['Boolean']['input'];
+  includeProducts: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
 }>;
 
 
 export type SaleDetailsQuery = { __typename: 'Query', sale: { __typename: 'Sale', id: string, name: string, type: SaleType, startDate: any, endDate: any | null, variantsCount: { __typename: 'ProductVariantCountableConnection', totalCount: number | null } | null, productsCount: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, collectionsCount: { __typename: 'CollectionCountableConnection', totalCount: number | null } | null, categoriesCount: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, variants?: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, channelListings: Array<{ __typename: 'SaleChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type VoucherDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  includeProducts: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
-  includeVariants: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  includeProducts: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
+  includeVariants: Scalars['Boolean']['input'];
 }>;
 
 
 export type VoucherDetailsQuery = { __typename: 'Query', voucher: { __typename: 'Voucher', usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, singleUse: boolean, id: string, name: string | null, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, variantsCount: { __typename: 'ProductVariantCountableConnection', totalCount: number | null } | null, productsCount: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, collectionsCount: { __typename: 'CollectionCountableConnection', totalCount: number | null } | null, categoriesCount: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, variants?: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type VoucherCodesQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type VoucherCodesQuery = { __typename: 'Query', voucher: { __typename: 'Voucher', codes: { __typename: 'VoucherCodeCountableConnection', edges: Array<{ __typename: 'VoucherCodeCountableEdge', node: { __typename: 'VoucherCode', id: string, code: string | null, used: number | null, isActive: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type PromotionDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PromotionDetailsQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, type: PromotionTypeEnum | null, description: unknown | null, startDate: any, endDate: any | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null };
 
 export type RuleConditionsSelectedOptionsDetailsQueryVariables = Exact<{
-  categoriesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-  collectionsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-  variantsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  categoriesIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  collectionsIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  productsIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  variantsIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
 export type RuleConditionsSelectedOptionsDetailsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string } }> } | null, productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string } } }> } | null };
 
 export type GiftLabelsQueryVariables = Exact<{
-  ids?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
 export type GiftLabelsQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string } } }> } | null };
 
 export type PromotionDetailsQueryQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PromotionDetailsQueryQuery = { __typename: 'Query', promotion: { __typename: 'Promotion', id: string, name: string, description: unknown | null, startDate: any, endDate: any | null, type: PromotionTypeEnum | null, rules: Array<{ __typename: 'PromotionRule', id: string, name: string | null, description: unknown | null, giftIds: Array<string> | null, rewardType: RewardTypeEnum | null, rewardValueType: RewardValueTypeEnum | null, rewardValue: any | null, cataloguePredicate: unknown | null, orderPredicate: unknown | null, channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string } }> | null }> | null } | null };
 
 export type AppFailedPendingWebhooksQueryVariables = Exact<{
-  canFetchAppEvents: Scalars['Boolean'];
+  canFetchAppEvents: Scalars['Boolean']['input'];
 }>;
 
 
 export type AppFailedPendingWebhooksQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
 export type AppDeleteFailedInstallationMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -11140,7 +11142,7 @@ export type WebhookCreateMutationVariables = Exact<{
 export type WebhookCreateMutation = { __typename: 'Mutation', webhookCreate: { __typename: 'WebhookCreate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, subscriptionQuery: string | null, customHeaders: string | null, id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
 
 export type WebhookUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: WebhookUpdateInput;
 }>;
 
@@ -11148,15 +11150,15 @@ export type WebhookUpdateMutationVariables = Exact<{
 export type WebhookUpdateMutation = { __typename: 'Mutation', webhookUpdate: { __typename: 'WebhookUpdate', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }>, webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, subscriptionQuery: string | null, customHeaders: string | null, id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null } | null };
 
 export type WebhookDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type WebhookDeleteMutation = { __typename: 'Mutation', webhookDelete: { __typename: 'WebhookDelete', errors: Array<{ __typename: 'WebhookError', code: WebhookErrorCode, field: string | null, message: string | null }> } | null };
 
 export type PluginUpdateMutationVariables = Exact<{
-  channelId?: InputMaybe<Scalars['ID']>;
-  id: Scalars['ID'];
+  channelId?: InputMaybe<Scalars['ID']['input']>;
+  id: Scalars['ID']['input'];
   input: PluginUpdateInput;
 }>;
 
@@ -11165,22 +11167,22 @@ export type PluginUpdateMutation = { __typename: 'Mutation', pluginUpdate: { __t
 
 export type AppCreateMutationVariables = Exact<{
   input: AppInput;
-  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
 export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
-  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID']['input'];
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
 export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppFetchMutationVariables = Exact<{
-  manifestUrl: Scalars['String'];
+  manifestUrl: Scalars['String']['input'];
 }>;
 
 
@@ -11194,16 +11196,16 @@ export type AppInstallMutationVariables = Exact<{
 export type AppInstallMutation = { __typename: 'Mutation', appInstall: { __typename: 'AppInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppRetryInstallMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type AppRetryInstallMutation = { __typename: 'Mutation', appRetryInstall: { __typename: 'AppRetryInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AppInput;
-  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
+  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -11217,21 +11219,21 @@ export type AppTokenCreateMutationVariables = Exact<{
 export type AppTokenCreateMutation = { __typename: 'Mutation', appTokenCreate: { __typename: 'AppTokenCreate', authToken: string | null, appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppTokenDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type AppTokenDeleteMutation = { __typename: 'Mutation', appTokenDelete: { __typename: 'AppTokenDelete', appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppActivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type AppActivateMutation = { __typename: 'Mutation', appActivate: { __typename: 'AppActivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppDeactivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -11245,7 +11247,7 @@ export type AppProblemDismissMutationVariables = Exact<{
 export type AppProblemDismissMutation = { __typename: 'Mutation', appProblemDismiss: { __typename: 'AppProblemDismiss', errors: Array<{ __typename: 'AppProblemDismissError', message: string | null }> } | null };
 
 export type AppUpdatePermissionsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   permissions: Array<PermissionEnum> | PermissionEnum;
 }>;
 
@@ -11253,10 +11255,10 @@ export type AppUpdatePermissionsMutationVariables = Exact<{
 export type AppUpdatePermissionsMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type InstalledAppsQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<AppFilterInput>;
 }>;
 
@@ -11264,10 +11266,10 @@ export type InstalledAppsQueryVariables = Exact<{
 export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null } }> } | null };
 
 export type InstalledAppsListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<AppFilterInput>;
 }>;
 
@@ -11275,12 +11277,12 @@ export type InstalledAppsListQueryVariables = Exact<{
 export type InstalledAppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, appUrl: string | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type EventDeliveryQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<AppFilterInput>;
-  canFetchAppEvents: Scalars['Boolean'];
+  canFetchAppEvents: Scalars['Boolean']['input'];
 }>;
 
 
@@ -11292,8 +11294,8 @@ export type AppsInstallationsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AppsInstallationsQuery = { __typename: 'Query', appsInstallations: Array<{ __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> };
 
 export type AppQueryVariables = Exact<{
-  id: Scalars['ID'];
-  hasManagedAppsPermission: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  hasManagedAppsPermission: Scalars['Boolean']['input'];
 }>;
 
 
@@ -11307,38 +11309,38 @@ export type ExtensionListQueryVariables = Exact<{
 export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mountName: string, targetName: string, settings: unknown, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } } }> } | null };
 
 export type AppWebhookDeliveriesQueryVariables = Exact<{
-  appId: Scalars['ID'];
+  appId: Scalars['ID']['input'];
 }>;
 
 
 export type AppWebhookDeliveriesQuery = { __typename: 'Query', app: { __typename: 'App', webhooks: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', name: string }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', name: string }>, eventDeliveries: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, status: EventDeliveryStatusEnum, eventType: WebhookEventTypeEnum, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, createdAt: any, status: EventDeliveryStatusEnum, response: string | null, responseStatusCode: number | null } }> } | null } }> } | null }> | null } | null };
 
 export type AppHasProblemsQueryVariables = Exact<{
-  first: Scalars['Int'];
+  first: Scalars['Int']['input'];
 }>;
 
 
 export type AppHasProblemsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, problems: Array<{ __typename: 'AppProblem' }> | null } }> } | null };
 
 export type AppAllProblemsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type AppAllProblemsQuery = { __typename: 'Query', app: { __typename: 'App', id: string, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null } | null };
 
 export type WebhookDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type WebhookDetailsQuery = { __typename: 'Query', webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, subscriptionQuery: string | null, customHeaders: string | null, id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null };
 
 export type PluginsQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<PluginFilterInput>;
   sort?: InputMaybe<PluginSortingInput>;
 }>;
@@ -11347,27 +11349,27 @@ export type PluginsQueryVariables = Exact<{
 export type PluginsQuery = { __typename: 'Query', plugins: { __typename: 'PluginCountableConnection', edges: Array<{ __typename: 'PluginCountableEdge', node: { __typename: 'Plugin', id: string, name: string, description: string, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }>, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type PluginQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PluginQuery = { __typename: 'Query', plugin: { __typename: 'Plugin', id: string, name: string, description: string, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }> } | null };
 
 export type AppsListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<AppSortingInput>;
   filter?: InputMaybe<AppFilterInput>;
-  canFetchAppEvents: Scalars['Boolean'];
+  canFetchAppEvents: Scalars['Boolean']['input'];
 }>;
 
 
 export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, version: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
 export type FileUploadMutationVariables = Exact<{
-  file: Scalars['Upload'];
+  file: Scalars['Upload']['input'];
 }>;
 
 
@@ -11969,30 +11971,30 @@ export type GiftCardResendMutationVariables = Exact<{
 export type GiftCardResendMutation = { __typename: 'Mutation', giftCardResend: { __typename: 'GiftCardResend', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardActivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type GiftCardActivateMutation = { __typename: 'Mutation', giftCardActivate: { __typename: 'GiftCardActivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardDeactivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type GiftCardDeactivateMutation = { __typename: 'Mutation', giftCardDeactivate: { __typename: 'GiftCardDeactivate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: GiftCardUpdateInput;
-  showCreatedBy: Scalars['Boolean'];
+  showCreatedBy: Scalars['Boolean']['input'];
 }>;
 
 
 export type GiftCardUpdateMutation = { __typename: 'Mutation', giftCardUpdate: { __typename: 'GiftCardUpdate', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy?: { __typename: 'User', id: string, firstName: string, lastName: string } | null, events: Array<{ __typename: 'GiftCardEvent', expiryDate: string | null, oldExpiryDate: string | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type GiftCardAddNoteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: GiftCardAddNoteInput;
 }>;
 
@@ -12000,50 +12002,50 @@ export type GiftCardAddNoteMutationVariables = Exact<{
 export type GiftCardAddNoteMutation = { __typename: 'Mutation', giftCardAddNote: { __typename: 'GiftCardAddNote', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }>, giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, event: { __typename: 'GiftCardEvent', expiryDate: string | null, oldExpiryDate: string | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null } | null } | null };
 
 export type GiftCardBulkActivateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type GiftCardBulkActivateMutation = { __typename: 'Mutation', giftCardBulkActivate: { __typename: 'GiftCardBulkActivate', count: number, errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
 
 export type GiftCardBulkDeactivateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type GiftCardBulkDeactivateMutation = { __typename: 'Mutation', giftCardBulkDeactivate: { __typename: 'GiftCardBulkDeactivate', count: number, errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
 
 export type GiftCardDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  canSeeApp: Scalars['Boolean'];
-  canSeeUser: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  canSeeApp: Scalars['Boolean']['input'];
+  canSeeUser: Scalars['Boolean']['input'];
 }>;
 
 
 export type GiftCardDetailsQuery = { __typename: 'Query', giftCard: { __typename: 'GiftCard', last4CodeChars: string, boughtInChannel: string | null, usedByEmail: string | null, createdByEmail: string | null, created: any, expiryDate: string | null, lastUsedOn: any | null, isActive: boolean, id: string, events: Array<{ __typename: 'GiftCardEvent', expiryDate: string | null, oldExpiryDate: string | null, id: string, date: any | null, type: GiftCardEventsEnum | null, message: string | null, email: string | null, orderId: string | null, orderNumber: string | null, tags: Array<string> | null, oldTags: Array<string> | null, app?: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, user?: { __typename: 'User', email: string, id: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }>, createdBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, product: { __typename: 'Product', id: string, name: string } | null, usedBy: { __typename: 'User', id: string, firstName: string, lastName: string } | null, initialBalance: { __typename: 'Money', amount: number, currency: string }, currentBalance: { __typename: 'Money', amount: number, currency: string }, tags: Array<{ __typename: 'GiftCardTag', name: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type DeleteGiftCardMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type DeleteGiftCardMutation = { __typename: 'Mutation', giftCardDelete: { __typename: 'GiftCardDelete', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
 
 export type BulkDeleteGiftCardMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type BulkDeleteGiftCardMutation = { __typename: 'Mutation', giftCardBulkDelete: { __typename: 'GiftCardBulkDelete', errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
 
 export type GiftCardListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<GiftCardFilterInput>;
   sort?: InputMaybe<GiftCardSortingInput>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -12060,15 +12062,15 @@ export type GiftCardProductsCountQueryVariables = Exact<{ [key: string]: never; 
 export type GiftCardProductsCountQuery = { __typename: 'Query', giftCardProductTypes: { __typename: 'ProductTypeCountableConnection', totalCount: number | null } | null };
 
 export type CustomerGiftCardListQueryVariables = Exact<{
-  userId: Scalars['ID'];
-  first?: InputMaybe<Scalars['Int']>;
+  userId: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type CustomerGiftCardListQuery = { __typename: 'Query', user: { __typename: 'User', id: string, giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: string | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null } | null };
 
 export type PageTypeUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PageTypeUpdateInput;
 }>;
 
@@ -12083,30 +12085,30 @@ export type PageTypeCreateMutationVariables = Exact<{
 export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type AssignPageAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  id: Scalars['ID']['input'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UnassignPageAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  id: Scalars['ID']['input'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageTypeDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PageTypeDeleteMutation = { __typename: 'Mutation', pageTypeDelete: { __typename: 'PageTypeDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string } | null } | null };
 
 export type PageTypeBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
@@ -12114,17 +12116,17 @@ export type PageTypeBulkDeleteMutation = { __typename: 'Mutation', pageTypeBulkD
 
 export type PageTypeAttributeReorderMutationVariables = Exact<{
   move: ReorderInput;
-  pageTypeId: Scalars['ID'];
+  pageTypeId: Scalars['ID']['input'];
 }>;
 
 
 export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageTypeListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<PageTypeFilterInput>;
   sort?: InputMaybe<PageTypeSortingInput>;
 }>;
@@ -12133,7 +12135,7 @@ export type PageTypeListQueryVariables = Exact<{
 export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PageTypeDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12147,45 +12149,45 @@ export type PageCreateMutationVariables = Exact<{
 export type PageCreateMutation = { __typename: 'Mutation', pageCreate: { __typename: 'PageCreate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', id: string } | null } | null };
 
 export type PageUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PageInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: string | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type PageRemoveMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type PageRemoveMutation = { __typename: 'Mutation', pageDelete: { __typename: 'PageDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
 
 export type PageBulkPublishMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-  isPublished: Scalars['Boolean'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  isPublished: Scalars['Boolean']['input'];
 }>;
 
 
 export type PageBulkPublishMutation = { __typename: 'Mutation', pageBulkPublish: { __typename: 'PageBulkPublish', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
 
 export type PageBulkRemoveMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type PageBulkRemoveMutation = { __typename: 'Mutation', pageBulkDelete: { __typename: 'PageBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
 
 export type PageListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<PageSortingInput>;
   filter?: InputMaybe<PageFilterInput>;
 }>;
@@ -12194,24 +12196,24 @@ export type PageListQueryVariables = Exact<{
 export type PageListQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string } } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type PageDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type PageDetailsQuery = { __typename: 'Query', page: { __typename: 'Page', content: string | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type PageTypeQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -12225,14 +12227,14 @@ export type PageCountQueryVariables = Exact<{
 export type PageCountQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', totalCount: number | null } | null };
 
 export type ModelsOfTypeQueryVariables = Exact<{
-  pageTypeId: Scalars['ID'];
+  pageTypeId: Scalars['ID']['input'];
 }>;
 
 
 export type ModelsOfTypeQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }> } | null };
 
 export type OrderCancelMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12240,21 +12242,21 @@ export type OrderCancelMutation = { __typename: 'Mutation', orderCancel: { __typ
 
 export type OrderDiscountAddMutationVariables = Exact<{
   input: OrderDiscountCommonInput;
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDiscountAddMutation = { __typename: 'Mutation', orderDiscountAdd: { __typename: 'OrderDiscountAdd', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderDiscountDeleteMutationVariables = Exact<{
-  discountId: Scalars['ID'];
+  discountId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDiscountDeleteMutation = { __typename: 'Mutation', orderDiscountDelete: { __typename: 'OrderDiscountDelete', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderLineDiscountRemoveMutationVariables = Exact<{
-  orderLineId: Scalars['ID'];
+  orderLineId: Scalars['ID']['input'];
 }>;
 
 
@@ -12262,7 +12264,7 @@ export type OrderLineDiscountRemoveMutation = { __typename: 'Mutation', orderLin
 
 export type OrderLineDiscountUpdateMutationVariables = Exact<{
   input: OrderDiscountCommonInput;
-  orderLineId: Scalars['ID'];
+  orderLineId: Scalars['ID']['input'];
 }>;
 
 
@@ -12270,42 +12272,42 @@ export type OrderLineDiscountUpdateMutation = { __typename: 'Mutation', orderLin
 
 export type OrderDiscountUpdateMutationVariables = Exact<{
   input: OrderDiscountCommonInput;
-  discountId: Scalars['ID'];
+  discountId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDiscountUpdateMutation = { __typename: 'Mutation', orderDiscountUpdate: { __typename: 'OrderDiscountUpdate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderDraftCancelMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDraftCancelMutation = { __typename: 'Mutation', draftOrderDelete: { __typename: 'DraftOrderDelete', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderDraftBulkCancelMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type OrderDraftBulkCancelMutation = { __typename: 'Mutation', draftOrderBulkDelete: { __typename: 'DraftOrderBulkDelete', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }> } | null };
 
 export type OrderConfirmMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderConfirmMutation = { __typename: 'Mutation', orderConfirm: { __typename: 'OrderConfirm', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderDraftFinalizeMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDraftFinalizeMutation = { __typename: 'Mutation', draftOrderComplete: { __typename: 'DraftOrderComplete', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type FulfillmentReturnProductsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: OrderReturnProductsInput;
 }>;
 
@@ -12313,8 +12315,8 @@ export type FulfillmentReturnProductsMutationVariables = Exact<{
 export type FulfillmentReturnProductsMutation = { __typename: 'Mutation', orderFulfillmentReturnProducts: { __typename: 'FulfillmentReturnProducts', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null, replaceOrder: { __typename: 'Order', id: string } | null } | null };
 
 export type OrderRefundMutationVariables = Exact<{
-  id: Scalars['ID'];
-  amount: Scalars['PositiveDecimal'];
+  id: Scalars['ID']['input'];
+  amount: Scalars['PositiveDecimal']['input'];
 }>;
 
 
@@ -12322,37 +12324,37 @@ export type OrderRefundMutation = { __typename: 'Mutation', orderRefund: { __typ
 
 export type OrderFulfillmentRefundProductsMutationVariables = Exact<{
   input: OrderRefundProductsInput;
-  order: Scalars['ID'];
+  order: Scalars['ID']['input'];
 }>;
 
 
 export type OrderFulfillmentRefundProductsMutation = { __typename: 'Mutation', orderFulfillmentRefundProducts: { __typename: 'FulfillmentRefundProducts', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, fulfillment: { __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null } | null, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderVoidMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderVoidMutation = { __typename: 'Mutation', orderVoid: { __typename: 'OrderVoid', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderMarkAsPaidMutationVariables = Exact<{
-  id: Scalars['ID'];
-  transactionReference?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  transactionReference?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type OrderMarkAsPaidMutation = { __typename: 'Mutation', orderMarkAsPaid: { __typename: 'OrderMarkAsPaid', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderCaptureMutationVariables = Exact<{
-  id: Scalars['ID'];
-  amount: Scalars['PositiveDecimal'];
+  id: Scalars['ID']['input'];
+  amount: Scalars['PositiveDecimal']['input'];
 }>;
 
 
 export type OrderCaptureMutation = { __typename: 'Mutation', orderCapture: { __typename: 'OrderCapture', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderFulfillmentUpdateTrackingMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: FulfillmentUpdateTrackingInput;
 }>;
 
@@ -12360,16 +12362,16 @@ export type OrderFulfillmentUpdateTrackingMutationVariables = Exact<{
 export type OrderFulfillmentUpdateTrackingMutation = { __typename: 'Mutation', orderFulfillmentUpdateTracking: { __typename: 'FulfillmentUpdateTracking', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderFulfillmentApproveMutationVariables = Exact<{
-  id: Scalars['ID'];
-  notifyCustomer: Scalars['Boolean'];
-  allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID']['input'];
+  notifyCustomer: Scalars['Boolean']['input'];
+  allowStockToBeExceeded?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
 export type OrderFulfillmentApproveMutation = { __typename: 'Mutation', orderFulfillmentApprove: { __typename: 'FulfillmentApprove', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderFulfillmentCancelMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: FulfillmentCancelInput;
 }>;
 
@@ -12377,7 +12379,7 @@ export type OrderFulfillmentCancelMutationVariables = Exact<{
 export type OrderFulfillmentCancelMutation = { __typename: 'Mutation', orderFulfillmentCancel: { __typename: 'FulfillmentCancel', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderNoteAddMutationVariables = Exact<{
-  order: Scalars['ID'];
+  order: Scalars['ID']['input'];
   input: OrderNoteInput;
 }>;
 
@@ -12385,7 +12387,7 @@ export type OrderNoteAddMutationVariables = Exact<{
 export type OrderNoteAddMutation = { __typename: 'Mutation', orderNoteAdd: { __typename: 'OrderNoteAdd', errors: Array<{ __typename: 'OrderNoteAddError', code: OrderNoteAddErrorCode | null, field: string | null, message: string | null }>, order: { __typename: 'Order', id: string, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }> } | null } | null };
 
 export type OrderNoteUpdateMutationVariables = Exact<{
-  order: Scalars['ID'];
+  order: Scalars['ID']['input'];
   input: OrderNoteInput;
 }>;
 
@@ -12393,7 +12395,7 @@ export type OrderNoteUpdateMutationVariables = Exact<{
 export type OrderNoteUpdateMutation = { __typename: 'Mutation', orderNoteUpdate: { __typename: 'OrderNoteUpdate', errors: Array<{ __typename: 'OrderNoteUpdateError', code: OrderNoteUpdateErrorCode | null, field: string | null, message: string | null }>, order: { __typename: 'Order', id: string, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }> } | null } | null };
 
 export type OrderUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: OrderUpdateInput;
 }>;
 
@@ -12401,7 +12403,7 @@ export type OrderUpdateMutationVariables = Exact<{
 export type OrderUpdateMutation = { __typename: 'Mutation', orderUpdate: { __typename: 'OrderUpdate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderDraftUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: DraftOrderInput;
 }>;
 
@@ -12409,7 +12411,7 @@ export type OrderDraftUpdateMutationVariables = Exact<{
 export type OrderDraftUpdateMutation = { __typename: 'Mutation', draftOrderUpdate: { __typename: 'DraftOrderUpdate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderShippingMethodUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: OrderUpdateShippingInput;
 }>;
 
@@ -12424,14 +12426,14 @@ export type OrderDraftCreateMutationVariables = Exact<{
 export type OrderDraftCreateMutation = { __typename: 'Mutation', draftOrderCreate: { __typename: 'DraftOrderCreate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string } | null } | null };
 
 export type OrderLineDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderLineDeleteMutation = { __typename: 'Mutation', orderLineDelete: { __typename: 'OrderLineDelete', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, isShippingRequired: boolean, shippingMethodName: string | null, collectionPointName: string | null, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }> } | null } | null };
 
 export type OrderLinesAddMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: Array<OrderLineCreateInput> | OrderLineCreateInput;
 }>;
 
@@ -12439,7 +12441,7 @@ export type OrderLinesAddMutationVariables = Exact<{
 export type OrderLinesAddMutation = { __typename: 'Mutation', orderLinesCreate: { __typename: 'OrderLinesCreate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, isShippingRequired: boolean, shippingMethodName: string | null, collectionPointName: string | null, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }> } | null } | null };
 
 export type OrderLineUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: OrderLineInput;
 }>;
 
@@ -12447,7 +12449,7 @@ export type OrderLineUpdateMutationVariables = Exact<{
 export type OrderLineUpdateMutation = { __typename: 'Mutation', orderLineUpdate: { __typename: 'OrderLineUpdate', errors: Array<{ __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null, order: { __typename: 'Order', id: string, isShippingRequired: boolean, shippingMethodName: string | null, collectionPointName: string | null, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }> } | null } | null };
 
 export type FulfillOrderMutationVariables = Exact<{
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
   input: OrderFulfillInput;
 }>;
 
@@ -12455,14 +12457,14 @@ export type FulfillOrderMutationVariables = Exact<{
 export type FulfillOrderMutation = { __typename: 'Mutation', orderFulfill: { __typename: 'OrderFulfill', errors: Array<{ __typename: 'OrderError', warehouse: string | null, code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null }>, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type InvoiceRequestMutationVariables = Exact<{
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
 }>;
 
 
 export type InvoiceRequestMutation = { __typename: 'Mutation', invoiceRequest: { __typename: 'InvoiceRequest', errors: Array<{ __typename: 'InvoiceError', code: InvoiceErrorCode, field: string | null, message: string | null }>, invoice: { __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum } | null, order: { __typename: 'Order', id: string, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }> } | null } | null };
 
 export type InvoiceEmailSendMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12478,100 +12480,100 @@ export type OrderSettingsUpdateMutation = { __typename: 'Mutation', orderSetting
 
 export type OrderTransactionRequestActionMutationVariables = Exact<{
   action: TransactionActionEnum;
-  transactionId: Scalars['ID'];
-  amount?: InputMaybe<Scalars['PositiveDecimal']>;
-  reason?: InputMaybe<Scalars['String']>;
-  reasonReferenceId?: InputMaybe<Scalars['ID']>;
+  transactionId: Scalars['ID']['input'];
+  amount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
+  reasonReferenceId?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
 export type OrderTransactionRequestActionMutation = { __typename: 'Mutation', transactionRequestAction: { __typename: 'TransactionRequestAction', errors: Array<{ __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode }> } | null };
 
 export type OrderGrantRefundAddMutationVariables = Exact<{
-  orderId: Scalars['ID'];
-  amount?: InputMaybe<Scalars['Decimal']>;
-  reason?: InputMaybe<Scalars['String']>;
-  reasonReferenceId?: InputMaybe<Scalars['ID']>;
+  orderId: Scalars['ID']['input'];
+  amount?: InputMaybe<Scalars['Decimal']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
+  reasonReferenceId?: InputMaybe<Scalars['ID']['input']>;
   lines?: InputMaybe<Array<OrderGrantRefundCreateLineInput> | OrderGrantRefundCreateLineInput>;
-  grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
-  transactionId: Scalars['ID'];
+  grantRefundForShipping?: InputMaybe<Scalars['Boolean']['input']>;
+  transactionId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderGrantRefundAddMutation = { __typename: 'Mutation', orderGrantRefundCreate: { __typename: 'OrderGrantRefundCreate', errors: Array<{ __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode, lines: Array<{ __typename: 'OrderGrantRefundCreateLineError', field: string | null, message: string | null, code: OrderGrantRefundCreateLineErrorCode, lineId: string }> | null }>, grantedRefund: { __typename: 'OrderGrantedRefund', id: string } | null } | null };
 
 export type OrderGrantRefundAddWithOrderMutationVariables = Exact<{
-  orderId: Scalars['ID'];
-  amount?: InputMaybe<Scalars['Decimal']>;
-  reason?: InputMaybe<Scalars['String']>;
-  reasonReferenceId?: InputMaybe<Scalars['ID']>;
+  orderId: Scalars['ID']['input'];
+  amount?: InputMaybe<Scalars['Decimal']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
+  reasonReferenceId?: InputMaybe<Scalars['ID']['input']>;
   lines?: InputMaybe<Array<OrderGrantRefundCreateLineInput> | OrderGrantRefundCreateLineInput>;
-  grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
-  transactionId: Scalars['ID'];
+  grantRefundForShipping?: InputMaybe<Scalars['Boolean']['input']>;
+  transactionId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderGrantRefundAddWithOrderMutation = { __typename: 'Mutation', orderGrantRefundCreate: { __typename: 'OrderGrantRefundCreate', errors: Array<{ __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode, lines: Array<{ __typename: 'OrderGrantRefundCreateLineError', field: string | null, message: string | null, code: OrderGrantRefundCreateLineErrorCode, lineId: string }> | null }>, grantedRefund: { __typename: 'OrderGrantedRefund', id: string } | null, order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null } | null };
 
 export type OrderGrantRefundEditMutationVariables = Exact<{
-  refundId: Scalars['ID'];
-  amount?: InputMaybe<Scalars['Decimal']>;
-  reason?: InputMaybe<Scalars['String']>;
+  refundId: Scalars['ID']['input'];
+  amount?: InputMaybe<Scalars['Decimal']['input']>;
+  reason?: InputMaybe<Scalars['String']['input']>;
   addLines?: InputMaybe<Array<OrderGrantRefundUpdateLineAddInput> | OrderGrantRefundUpdateLineAddInput>;
-  removeLines?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-  grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
-  transactionId?: InputMaybe<Scalars['ID']>;
-  reasonReferenceId?: InputMaybe<Scalars['ID']>;
+  removeLines?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  grantRefundForShipping?: InputMaybe<Scalars['Boolean']['input']>;
+  transactionId?: InputMaybe<Scalars['ID']['input']>;
+  reasonReferenceId?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
 export type OrderGrantRefundEditMutation = { __typename: 'Mutation', orderGrantRefundUpdate: { __typename: 'OrderGrantRefundUpdate', errors: Array<{ __typename: 'OrderGrantRefundUpdateError', field: string | null, message: string | null, code: OrderGrantRefundUpdateErrorCode, addLines: Array<{ __typename: 'OrderGrantRefundUpdateLineError', field: string | null, message: string | null, code: OrderGrantRefundUpdateLineErrorCode, lineId: string }> | null, removeLines: Array<{ __typename: 'OrderGrantRefundUpdateLineError', field: string | null, message: string | null, code: OrderGrantRefundUpdateLineErrorCode, lineId: string }> | null }>, order: { __typename: 'Order', id: string, number: string, lines: Array<{ __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null }>, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, reason: string | null, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reasonReference: { __typename: 'Page', id: string, title: string } | null, amount: { __typename: 'Money', amount: number, currency: string }, transaction: { __typename: 'TransactionItem', id: string } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } }> | null }>, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }> } | null } | null };
 
 export type OrderSendRefundMutationVariables = Exact<{
-  amount: Scalars['PositiveDecimal'];
-  transactionId: Scalars['ID'];
+  amount: Scalars['PositiveDecimal']['input'];
+  transactionId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderSendRefundMutation = { __typename: 'Mutation', transactionRequestAction: { __typename: 'TransactionRequestAction', transaction: { __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode }> } | null };
 
 export type OrderSendRefundForGrantedRefundMutationVariables = Exact<{
-  grantedRefundId: Scalars['ID'];
-  transactionId: Scalars['ID'];
+  grantedRefundId: Scalars['ID']['input'];
+  transactionId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderSendRefundForGrantedRefundMutation = { __typename: 'Mutation', transactionRequestRefundForGrantedRefund: { __typename: 'TransactionRequestRefundForGrantedRefund', transaction: { __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionRequestRefundForGrantedRefundError', field: string | null, message: string | null, code: TransactionRequestRefundForGrantedRefundErrorCode }> } | null };
 
 export type CreateManualTransactionCaptureMutationVariables = Exact<{
-  orderId: Scalars['ID'];
-  amount: Scalars['PositiveDecimal'];
-  currency: Scalars['String'];
-  description?: InputMaybe<Scalars['String']>;
-  pspReference?: InputMaybe<Scalars['String']>;
+  orderId: Scalars['ID']['input'];
+  amount: Scalars['PositiveDecimal']['input'];
+  currency: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  pspReference?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type CreateManualTransactionCaptureMutation = { __typename: 'Mutation', transactionCreate: { __typename: 'TransactionCreate', transaction: { __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode }> } | null };
 
 export type CreateManualTransactionRefundMutationVariables = Exact<{
-  orderId: Scalars['ID'];
-  amount: Scalars['PositiveDecimal'];
-  currency: Scalars['String'];
-  description?: InputMaybe<Scalars['String']>;
-  pspReference?: InputMaybe<Scalars['String']>;
+  orderId: Scalars['ID']['input'];
+  amount: Scalars['PositiveDecimal']['input'];
+  currency: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  pspReference?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type CreateManualTransactionRefundMutation = { __typename: 'Mutation', transactionCreate: { __typename: 'TransactionCreate', transaction: { __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } } | null, errors: Array<{ __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode }> } | null };
 
 export type OrderListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   where?: InputMaybe<OrderWhereInput>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<OrderSortingInput>;
 }>;
 
@@ -12579,10 +12581,10 @@ export type OrderListQueryVariables = Exact<{
 export type OrderListQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', created: any, id: string, number: string, paymentStatus: PaymentChargeStatusEnum, status: OrderStatus, userEmail: string | null, chargeStatus: OrderChargeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, channel: { __typename: 'Channel', name: string, id: string }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type OrderDraftListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<OrderDraftFilterInput>;
   sort?: InputMaybe<OrderSortingInput>;
 }>;
@@ -12591,50 +12593,50 @@ export type OrderDraftListQueryVariables = Exact<{
 export type OrderDraftListQuery = { __typename: 'Query', draftOrders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', created: any, id: string, number: string, paymentStatus: PaymentChargeStatusEnum, status: OrderStatus, userEmail: string | null, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, channel: { __typename: 'Channel', name: string, id: string }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type OrderDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDetailsQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, displayGrossPrices: boolean, isShippingRequired: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, voucherCode: string | null, chargeStatus: OrderChargeStatusEnum, authorizeStatus: OrderAuthorizeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } }> | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string }, total: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, related: { __typename: 'OrderEvent', id: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, created: any, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, reason: string | null, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } | null }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'ShippingMethod', id: string } | { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, voucher: { __typename: 'Voucher', id: string, name: string | null, code: string | null, type: VoucherTypeEnum } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } } } | null, shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null, fulfillmentAllowUnpaid: boolean, fulfillmentAutoApprove: boolean, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, availablePaymentGateways: Array<{ __typename: 'PaymentGateway', name: string, id: string }> } };
 
 export type OrderLinesMetadataQueryVariables = Exact<{
-  id: Scalars['ID'];
-  hasManageProducts: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  hasManageProducts: Scalars['Boolean']['input'];
 }>;
 
 
 export type OrderLinesMetadataQuery = { __typename: 'Query', order: { __typename: 'Order', lines: Array<{ __typename: 'OrderLine', id: string, productName: string, productSku: string | null, quantity: number, thumbnail: { __typename: 'Image', url: string } | null, variant: { __typename: 'ProductVariant', id: string, name: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> } | null };
 
 export type OrderMetadataQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderMetadataQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type OrderFulfillmentMetadataQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderFulfillmentMetadataQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, fulfillments: Array<{ __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> } | null };
 
 export type OrderDetailsGrantRefundQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDetailsGrantRefundQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, number: string, lines: Array<{ __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null }>, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, reason: string | null, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reasonReference: { __typename: 'Page', id: string, title: string } | null, amount: { __typename: 'Money', amount: number, currency: string }, transaction: { __typename: 'TransactionItem', id: string } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } }> | null }>, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }> } | null };
 
 export type OrderDetailsGrantRefundEditQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type OrderDetailsGrantRefundEditQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, number: string, lines: Array<{ __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null }>, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, reason: string | null, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reasonReference: { __typename: 'Page', id: string, title: string } | null, amount: { __typename: 'Money', amount: number, currency: string }, transaction: { __typename: 'TransactionItem', id: string } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, reason: string | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, isGift: boolean | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, taxRate: number, voucherCode: string | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, name: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string, fractionDigits: number }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, undiscountedTotalPrice: { __typename: 'TaxedMoney', tax: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, thumbnail: { __typename: 'Image', url: string } | null, discounts: Array<{ __typename: 'OrderLineDiscount', id: string, type: OrderDiscountType, name: string | null, translatedName: string | null, valueType: DiscountValueTypeEnum, value: any, reason: string | null, total: { __typename: 'Money', amount: number, currency: string }, unit: { __typename: 'Money', amount: number, currency: string } }> | null } }> | null }>, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }> } | null };
 
 export type OrderFulfillDataQueryVariables = Exact<{
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
 }>;
 
 
@@ -12651,28 +12653,28 @@ export type OrderSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 export type OrderSettingsQuery = { __typename: 'Query', orderSettings: { __typename: 'OrderSettings', automaticallyConfirmAllNewOrders: boolean, automaticallyFulfillNonShippableGiftCard: boolean } | null, shop: { __typename: 'Shop', fulfillmentAutoApprove: boolean, fulfillmentAllowUnpaid: boolean } };
 
 export type OrderRefundDataQueryVariables = Exact<{
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderRefundDataQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, number: string, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, totalCaptured: { __typename: 'Money', amount: number, currency: string }, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, lines: Array<{ __typename: 'OrderLine', quantityToFulfill: number, id: string, productName: string, quantity: number, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, status: FulfillmentStatus, fulfillmentOrder: number, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null }> } | null };
 
 export type OrderTransactionsDataQueryVariables = Exact<{
-  orderId: Scalars['ID'];
+  orderId: Scalars['ID']['input'];
 }>;
 
 
 export type OrderTransactionsDataQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, transactions: Array<{ __typename: 'TransactionItem', pspReference: string, externalUrl: string, createdAt: any, id: string, name: string, actions: Array<TransactionActionEnum>, createdBy: { __typename: 'App', name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User' } | null, paymentMethodDetails: { __typename: 'CardPaymentMethodDetails', name: string, brand: string | null, expMonth: number | null, expYear: number | null, firstDigits: string | null, lastDigits: string | null } | { __typename: 'GiftCardPaymentMethodDetails', name: string, brand: string | null, lastChars: string | null, isSaleorGiftcard: boolean } | { __typename: 'OtherPaymentMethodDetails', name: string } | null, events: Array<{ __typename: 'TransactionEvent', externalUrl: string, id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, createdBy: { __typename: 'App', id: string, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } | { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | null, amount: { __typename: 'Money', amount: number, currency: string }, reasonReference: { __typename: 'Page', id: string, title: string } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null };
 
 export type ChannelUsabilityDataQueryVariables = Exact<{
-  channel: Scalars['String'];
+  channel: Scalars['String']['input'];
 }>;
 
 
 export type ChannelUsabilityDataQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
 export type OrderDetailsGraphiQlQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12697,7 +12699,7 @@ export type ReturnSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ReturnSettingsQuery = { __typename: 'Query', returnSettings: { __typename: 'ReturnSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
 
 export type PermissionGroupDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12711,7 +12713,7 @@ export type PermissionGroupCreateMutationVariables = Exact<{
 export type PermissionGroupCreateMutation = { __typename: 'Mutation', permissionGroupCreate: { __typename: 'PermissionGroupCreate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
 
 export type PermissionGroupUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PermissionGroupUpdateInput;
 }>;
 
@@ -12719,10 +12721,10 @@ export type PermissionGroupUpdateMutationVariables = Exact<{
 export type PermissionGroupUpdateMutation = { __typename: 'Mutation', permissionGroupUpdate: { __typename: 'PermissionGroupUpdate', errors: Array<{ __typename: 'PermissionGroupError', code: PermissionGroupErrorCode, field: string | null, message: string | null }>, group: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null } | null };
 
 export type PermissionGroupListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<PermissionGroupFilterInput>;
   sort?: InputMaybe<PermissionGroupSortingInput>;
 }>;
@@ -12731,29 +12733,29 @@ export type PermissionGroupListQueryVariables = Exact<{
 export type PermissionGroupListQuery = { __typename: 'Query', permissionGroups: { __typename: 'GroupCountableConnection', edges: Array<{ __typename: 'GroupCountableEdge', node: { __typename: 'Group', id: string, name: string, userCanManage: boolean, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PermissionGroupDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  userId: Scalars['ID'];
+  id: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 }>;
 
 
 export type PermissionGroupDetailsQuery = { __typename: 'Query', permissionGroup: { __typename: 'Group', restrictedAccessToChannels: boolean, id: string, name: string, userCanManage: boolean, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, users: Array<{ __typename: 'User', id: string, firstName: string, lastName: string, email: string, isActive: boolean, avatar: { __typename: 'Image', url: string } | null }> | null } | null, user: { __typename: 'User', editableGroups: Array<{ __typename: 'Group', id: string }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, sourcePermissionGroups: Array<{ __typename: 'Group', id: string }> | null }> | null } | null };
 
 export type ProductTypeDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ProductTypeDeleteMutation = { __typename: 'Mutation', productTypeDelete: { __typename: 'ProductTypeDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string } | null } | null };
 
 export type ProductTypeBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type ProductTypeBulkDeleteMutation = { __typename: 'Mutation', productTypeBulkDelete: { __typename: 'ProductTypeBulkDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductTypeUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ProductTypeInput;
 }>;
 
@@ -12761,7 +12763,7 @@ export type ProductTypeUpdateMutationVariables = Exact<{
 export type ProductTypeUpdateMutation = { __typename: 'Mutation', productTypeUpdate: { __typename: 'ProductTypeUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type AssignProductAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   operations: Array<ProductAttributeAssignInput> | ProductAttributeAssignInput;
 }>;
 
@@ -12769,8 +12771,8 @@ export type AssignProductAttributeMutationVariables = Exact<{
 export type AssignProductAttributeMutation = { __typename: 'Mutation', productAttributeAssign: { __typename: 'ProductAttributeAssign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UnassignProductAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  id: Scalars['ID']['input'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
@@ -12785,7 +12787,7 @@ export type ProductTypeCreateMutation = { __typename: 'Mutation', productTypeCre
 
 export type ProductTypeAttributeReorderMutationVariables = Exact<{
   move: ReorderInput;
-  productTypeId: Scalars['ID'];
+  productTypeId: Scalars['ID']['input'];
   type: ProductAttributeType;
 }>;
 
@@ -12794,17 +12796,17 @@ export type ProductTypeAttributeReorderMutation = { __typename: 'Mutation', prod
 
 export type ProductAttributeAssignmentUpdateMutationVariables = Exact<{
   operations: Array<ProductAttributeAssignmentUpdateInput> | ProductAttributeAssignmentUpdateInput;
-  productTypeId: Scalars['ID'];
+  productTypeId: Scalars['ID']['input'];
 }>;
 
 
 export type ProductAttributeAssignmentUpdateMutation = { __typename: 'Mutation', productAttributeAssignmentUpdate: { __typename: 'ProductAttributeAssignmentUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null, attributes: Array<string> | null }>, productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductTypeListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<ProductTypeFilterInput>;
   sort?: InputMaybe<ProductTypeSortingInput>;
 }>;
@@ -12813,7 +12815,7 @@ export type ProductTypeListQueryVariables = Exact<{
 export type ProductTypeListQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, taxClass: { __typename: 'TaxClass', id: string, name: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ProductTypeDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12825,40 +12827,40 @@ export type ProductTypeCreateDataQueryVariables = Exact<{ [key: string]: never; 
 export type ProductTypeCreateDataQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null } };
 
 export type ProductMediaCreateMutationVariables = Exact<{
-  product: Scalars['ID'];
-  image?: InputMaybe<Scalars['Upload']>;
-  alt?: InputMaybe<Scalars['String']>;
-  mediaUrl?: InputMaybe<Scalars['String']>;
+  product: Scalars['ID']['input'];
+  image?: InputMaybe<Scalars['Upload']['input']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductMediaCreateMutation = { __typename: 'Mutation', productMediaCreate: { __typename: 'ProductMediaCreate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null } | null } | null };
 
 export type ProductDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ProductDeleteMutation = { __typename: 'Mutation', productDelete: { __typename: 'ProductDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductMediaReorderMutationVariables = Exact<{
-  productId: Scalars['ID'];
-  mediaIds: Array<Scalars['ID']> | Scalars['ID'];
+  productId: Scalars['ID']['input'];
+  mediaIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type ProductMediaReorderMutation = { __typename: 'Mutation', productMediaReorder: { __typename: 'ProductMediaReorder', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null } | null } | null };
 
 export type ProductVariantSetDefaultMutationVariables = Exact<{
-  productId: Scalars['ID'];
-  variantId: Scalars['ID'];
+  productId: Scalars['ID']['input'];
+  variantId: Scalars['ID']['input'];
 }>;
 
 
 export type ProductVariantSetDefaultMutation = { __typename: 'Mutation', productVariantSetDefault: { __typename: 'ProductVariantSetDefault', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, defaultVariant: { __typename: 'ProductVariant', id: string, name: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string }> | null } | null } | null };
 
 export type ProductUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ProductInput;
 }>;
 
@@ -12873,7 +12875,7 @@ export type ProductCreateMutationVariables = Exact<{
 export type ProductCreateMutation = { __typename: 'Mutation', productCreate: { __typename: 'ProductCreate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string } | null } | null };
 
 export type VariantDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -12881,20 +12883,20 @@ export type VariantDeleteMutation = { __typename: 'Mutation', productVariantDele
 
 export type VariantUpdateMutationVariables = Exact<{
   addStocks: Array<StockInput> | StockInput;
-  removeStocks: Array<Scalars['ID']> | Scalars['ID'];
-  id: Scalars['ID'];
+  removeStocks: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  id: Scalars['ID']['input'];
   attributes?: InputMaybe<Array<AttributeValueInput> | AttributeValueInput>;
-  sku?: InputMaybe<Scalars['String']>;
-  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
-  trackInventory: Scalars['Boolean'];
+  sku?: InputMaybe<Scalars['String']['input']>;
+  quantityLimitPerCustomer?: InputMaybe<Scalars['Int']['input']>;
+  trackInventory: Scalars['Boolean']['input'];
   stocks: Array<StockInput> | StockInput;
   preorder?: InputMaybe<PreorderSettingsInput>;
-  weight?: InputMaybe<Scalars['WeightScalar']>;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
+  weight?: InputMaybe<Scalars['WeightScalar']['input']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 }>;
 
 
@@ -12902,55 +12904,55 @@ export type VariantUpdateMutation = { __typename: 'Mutation', productVariantStoc
 
 export type VariantCreateMutationVariables = Exact<{
   input: ProductVariantCreateInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type VariantCreateMutation = { __typename: 'Mutation', productVariantCreate: { __typename: 'ProductVariantCreate', errors: Array<{ __typename: 'ProductError', attributes: Array<string> | null, code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: string }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: string }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type ProductMediaDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ProductMediaDeleteMutation = { __typename: 'Mutation', productMediaDelete: { __typename: 'ProductMediaDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null } | null } | null };
 
 export type ProductMediaUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  alt: Scalars['String'];
+  id: Scalars['ID']['input'];
+  alt: Scalars['String']['input'];
 }>;
 
 
 export type ProductMediaUpdateMutation = { __typename: 'Mutation', productMediaUpdate: { __typename: 'ProductMediaUpdate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null } | null } | null };
 
 export type VariantMediaAssignMutationVariables = Exact<{
-  variantId: Scalars['ID'];
-  mediaId: Scalars['ID'];
+  variantId: Scalars['ID']['input'];
+  mediaId: Scalars['ID']['input'];
 }>;
 
 
 export type VariantMediaAssignMutation = { __typename: 'Mutation', variantMediaAssign: { __typename: 'VariantMediaAssign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null }> | null } } | null } | null };
 
 export type VariantMediaUnassignMutationVariables = Exact<{
-  variantId: Scalars['ID'];
-  mediaId: Scalars['ID'];
+  variantId: Scalars['ID']['input'];
+  mediaId: Scalars['ID']['input'];
 }>;
 
 
 export type VariantMediaUnassignMutation = { __typename: 'Mutation', variantMediaUnassign: { __typename: 'VariantMediaUnassign', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, product: { __typename: 'Product', id: string, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null }> | null } } | null } | null };
 
 export type ProductBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type ProductBulkDeleteMutation = { __typename: 'Mutation', productBulkDelete: { __typename: 'ProductBulkDelete', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductVariantBulkCreateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   inputs: Array<ProductVariantBulkCreateInput> | ProductVariantBulkCreateInput;
   errorPolicy?: InputMaybe<ErrorPolicyEnum>;
 }>;
@@ -12959,7 +12961,7 @@ export type ProductVariantBulkCreateMutationVariables = Exact<{
 export type ProductVariantBulkCreateMutation = { __typename: 'Mutation', productVariantBulkCreate: { __typename: 'ProductVariantBulkCreate', errors: Array<{ __typename: 'BulkProductError', field: string | null, code: ProductErrorCode, index: number | null, channels: Array<string> | null, message: string | null }>, results: Array<{ __typename: 'ProductVariantBulkResult', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> | null, productVariant: { __typename: 'ProductVariant', id: string, name: string } | null }>, productVariants: Array<{ __typename: 'ProductVariant', id: string, name: string }> } | null };
 
 export type ProductVariantBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
@@ -12973,7 +12975,7 @@ export type ProductExportMutationVariables = Exact<{
 export type ProductExportMutation = { __typename: 'Mutation', exportProducts: { __typename: 'ExportProducts', exportFile: { __typename: 'ExportFile', id: string, status: JobStatusEnum, url: string | null } | null, errors: Array<{ __typename: 'ExportError', code: ExportErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductChannelListingUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ProductChannelListingUpdateInput;
 }>;
 
@@ -12982,14 +12984,14 @@ export type ProductChannelListingUpdateMutation = { __typename: 'Mutation', prod
 
 export type ProductVariantReorderMutationVariables = Exact<{
   move: ReorderInput;
-  productId: Scalars['ID'];
+  productId: Scalars['ID']['input'];
 }>;
 
 
 export type ProductVariantReorderMutation = { __typename: 'Mutation', productVariantReorder: { __typename: 'ProductVariantReorder', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductVariantChannelListingUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: Array<ProductVariantChannelListingAddInput> | ProductVariantChannelListingAddInput;
 }>;
 
@@ -12997,14 +12999,14 @@ export type ProductVariantChannelListingUpdateMutationVariables = Exact<{
 export type ProductVariantChannelListingUpdateMutation = { __typename: 'Mutation', productVariantChannelListingUpdate: { __typename: 'ProductVariantChannelListingUpdate', variant: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, product: { __typename: 'Product', id: string, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null } } | null, errors: Array<{ __typename: 'ProductChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null }> } | null };
 
 export type ProductVariantPreorderDeactivateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ProductVariantPreorderDeactivateMutation = { __typename: 'Mutation', productVariantPreorderDeactivate: { __typename: 'ProductVariantPreorderDeactivate', errors: Array<{ __typename: 'ProductError', code: ProductErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ProductVariantBulkUpdateMutationVariables = Exact<{
-  product: Scalars['ID'];
+  product: Scalars['ID']['input'];
   input: Array<ProductVariantBulkUpdateInput> | ProductVariantBulkUpdateInput;
   errorPolicy?: InputMaybe<ErrorPolicyEnum>;
 }>;
@@ -13013,18 +13015,18 @@ export type ProductVariantBulkUpdateMutationVariables = Exact<{
 export type ProductVariantBulkUpdateMutation = { __typename: 'Mutation', productVariantBulkUpdate: { __typename: 'ProductVariantBulkUpdate', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }>, results: Array<{ __typename: 'ProductVariantBulkResult', errors: Array<{ __typename: 'ProductVariantBulkError', field: string | null, code: ProductVariantBulkErrorCode, message: string | null, attributes: Array<string> | null, values: Array<string> | null, warehouses: Array<string> | null, channels: Array<string> | null }> | null }> } | null };
 
 export type ProductListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<ProductFilterInput>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   where?: InputMaybe<ProductWhereInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<ProductOrder>;
-  hasChannel: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
+  hasChannel: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
 }>;
 
 
@@ -13032,95 +13034,95 @@ export type ProductListQuery = { __typename: 'Query', products: { __typename: 'P
 
 export type ProductCountQueryVariables = Exact<{
   filter?: InputMaybe<ProductFilterInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductCountQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
 export type ProductDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  channel?: InputMaybe<Scalars['String']>;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductDetailsQuery = { __typename: 'Query', product: { __typename: 'Product', name: string, slug: string, description: string | null, seoTitle: string | null, seoDescription: string | null, rating: number | null, isAvailable: boolean | null, id: string, category: { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, collections: Array<{ __typename: 'Collection', id: string, name: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string, slug: string } }> | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, sku: string | null, name: string, trackInventory: boolean, quantityLimitPerCustomer: number | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', url: string }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null }> | null, productType: { __typename: 'ProductType', id: string, name: string, slug: string, hasVariants: boolean, isShippingRequired: boolean, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type ProductTypeQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-  searchValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
+  searchValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductTypeQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, productAttributes: Array<{ __typename: 'Attribute', availableInGrid: boolean, entityType: AttributeEntityTypeEnum | null, storefrontSearchPosition: number, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null } | null };
 
 export type ProductVariantDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductVariantDetailsQuery = { __typename: 'Query', productVariant: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, trackInventory: boolean, quantityLimitPerCustomer: number | null, selectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, nonSelectionAttributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: string }> | null, product: { __typename: 'Product', id: string, name: string, defaultVariant: { __typename: 'ProductVariant', id: string } | null, media: Array<{ __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, type: ProductMediaType, oembedData: string }> | null, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, publishedAt: any | null, isPublished: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType, oembedData: string }> | null }> | null }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, costPrice: { __typename: 'Money', amount: number, currency: string } | null, preorderThreshold: { __typename: 'PreorderThreshold', quantity: number | null, soldUnits: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, preorder: { __typename: 'PreorderData', globalThreshold: number | null, globalSoldUnits: number, endDate: any | null } | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type ProductVariantCreateDataQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID']['input'];
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type ProductVariantCreateDataQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, media: Array<{ __typename: 'ProductMedia', id: string, sortOrder: number | null, url: string }> | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean, selectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null, nonSelectionVariantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, thumbnail: { __typename: 'Image', url: string } | null, defaultVariant: { __typename: 'ProductVariant', id: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, type: ProductMediaType }> | null }> | null } | null };
 
 export type ProductMediaByIdQueryVariables = Exact<{
-  productId: Scalars['ID'];
-  mediaId: Scalars['ID'];
+  productId: Scalars['ID']['input'];
+  mediaId: Scalars['ID']['input'];
 }>;
 
 
 export type ProductMediaByIdQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, name: string, mainImage: { __typename: 'ProductMedia', id: string, alt: string, url: string, type: ProductMediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, media: Array<{ __typename: 'ProductMedia', id: string, url: string, alt: string, type: ProductMediaType, oembedData: string }> | null } | null };
 
 export type GridAttributesQueryVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-  hasAttributes: Scalars['Boolean'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  hasAttributes: Scalars['Boolean']['input'];
   type: AttributeTypeEnum;
 }>;
 
 
-export type GridAttributesQuery = { __typename: 'Query', availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }> } | null };
+export type GridAttributesQuery = { __typename: 'Query', availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedAttributes?: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }> } | null };
 
 export type AvailableColumnAttributesQueryVariables = Exact<{
-  search: Scalars['String'];
+  search: Scalars['String']['input'];
   type: AttributeTypeEnum;
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type AvailableColumnAttributesQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type GridWarehousesQueryVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-  hasWarehouses: Scalars['Boolean'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  hasWarehouses: Scalars['Boolean']['input'];
 }>;
 
 
-export type GridWarehousesQuery = { __typename: 'Query', selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
+export type GridWarehousesQuery = { __typename: 'Query', selectedWarehouses?: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
 
 export type StockVisibilityModeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -13133,7 +13135,7 @@ export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ChannelDiagnosticsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean }, channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
 
 export type SetRefundReasonTypeMutationVariables = Exact<{
-  modelTypeId: Scalars['ID'];
+  modelTypeId: Scalars['ID']['input'];
 }>;
 
 
@@ -13155,70 +13157,70 @@ export type ModelTypesQueryVariables = Exact<{ [key: string]: never; }>;
 export type ModelTypesQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
 
 export type GlobalSearchQueryVariables = Exact<{
-  query: Scalars['String'];
-  includeOrders: Scalars['Boolean'];
-  includeCategories: Scalars['Boolean'];
-  includeCollections: Scalars['Boolean'];
-  includeProducts: Scalars['Boolean'];
-  includeVariants: Scalars['Boolean'];
-  includeModels: Scalars['Boolean'];
-  includeModelTypes: Scalars['Boolean'];
+  query: Scalars['String']['input'];
+  includeOrders: Scalars['Boolean']['input'];
+  includeCategories: Scalars['Boolean']['input'];
+  includeCollections: Scalars['Boolean']['input'];
+  includeProducts: Scalars['Boolean']['input'];
+  includeVariants: Scalars['Boolean']['input'];
+  includeModels: Scalars['Boolean']['input'];
+  includeModelTypes: Scalars['Boolean']['input'];
 }>;
 
 
-export type GlobalSearchQuery = { __typename: 'Query', orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, updatedAt: any, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }> } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, updatedAt: any, level: number, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } }> } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null } }> } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, updatedAt: any, category: { __typename: 'Category', name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } }> } | null, productVariants?: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, updatedAt: any, media: Array<{ __typename: 'ProductMedia', alt: string, url: string }> | null, product: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', name: string } | null } } }> } | null, models: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, publishedAt: any | null, pageType: { __typename: 'PageType', name: string } } }> } | null, modelTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
+export type GlobalSearchQuery = { __typename: 'Query', orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, updatedAt: any, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }> } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, updatedAt: any, level: number, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } }> } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null } }> } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, updatedAt: any, category: { __typename: 'Category', name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } }> } | null, productVariants?: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, updatedAt: any, media: Array<{ __typename: 'ProductMedia', alt: string, url: string }> | null, product: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', name: string } | null } } }> } | null, models?: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, publishedAt: any | null, pageType: { __typename: 'PageType', name: string } } }> } | null, modelTypes?: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
 
 export type SearchAttributesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchAttributesQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchAttributeValuesQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']>;
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  id?: InputMaybe<Scalars['ID']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type SearchAvailableInGridAttributesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
-  query: Scalars['String'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchAvailableInGridAttributesQuery = { __typename: 'Query', availableInGrid: { __typename: 'AttributeCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchAvailablePageAttributesQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchAvailablePageAttributesQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type SearchAvailableProductAttributesQueryVariables = Exact<{
-  id: Scalars['ID'];
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchAvailableProductAttributesQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
 export type SearchCategoriesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
   filter?: InputMaybe<CategoryFilterInput>;
 }>;
 
@@ -13226,8 +13228,8 @@ export type SearchCategoriesQueryVariables = Exact<{
 export type SearchCategoriesQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, level: number, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCategoriesWithTotalProductsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
   filter?: InputMaybe<CategoryFilterInput>;
 }>;
 
@@ -13235,9 +13237,9 @@ export type SearchCategoriesWithTotalProductsQueryVariables = Exact<{
 export type SearchCategoriesWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCollectionsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  channel?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<CollectionFilterInput>;
 }>;
 
@@ -13245,42 +13247,42 @@ export type SearchCollectionsQueryVariables = Exact<{
 export type SearchCollectionsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCollectionsWithTotalProductsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
   filter?: InputMaybe<CollectionFilterInput>;
-  channel?: InputMaybe<Scalars['String']>;
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SearchCollectionsWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCustomersQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchCustomersQuery = { __typename: 'Query', search: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchGiftCardTagsQueryVariables = Exact<{
-  query: Scalars['String'];
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  query: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SearchGiftCardTagsQuery = { __typename: 'Query', search: { __typename: 'GiftCardTagCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'GiftCardTagCountableEdge', node: { __typename: 'GiftCardTag', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchOrderVariantQueryVariables = Exact<{
-  channel: Scalars['String'];
-  first: Scalars['Int'];
-  query: Scalars['String'];
-  after?: InputMaybe<Scalars['String']>;
+  channel: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
   address?: InputMaybe<AddressInput>;
-  isPublished?: InputMaybe<Scalars['Boolean']>;
+  isPublished?: InputMaybe<Scalars['Boolean']['input']>;
   stockAvailability?: InputMaybe<StockAvailability>;
 }>;
 
@@ -13288,9 +13290,9 @@ export type SearchOrderVariantQueryVariables = Exact<{
 export type SearchOrderVariantQuery = { __typename: 'Query', search: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, pricing: { __typename: 'VariantPricingInfo', onSale: boolean | null, priceUndiscounted: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null, price: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null } | null }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchPagesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
   where?: InputMaybe<PageWhereInput>;
 }>;
 
@@ -13298,28 +13300,28 @@ export type SearchPagesQueryVariables = Exact<{
 export type SearchPagesQuery = { __typename: 'Query', search: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchPageTypesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchPageTypesQuery = { __typename: 'Query', search: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchPermissionGroupsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchPermissionGroupsQuery = { __typename: 'Query', search: { __typename: 'GroupCountableConnection', edges: Array<{ __typename: 'GroupCountableEdge', node: { __typename: 'Group', id: string, name: string, userCanManage: boolean } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchProductsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
-  channel?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
   where?: InputMaybe<ProductWhereInput>;
 }>;
 
@@ -13327,73 +13329,73 @@ export type SearchProductsQueryVariables = Exact<{
 export type SearchProductsQuery = { __typename: 'Query', search: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', id: string, isPublished: boolean, publishedAt: any | null, isAvailableForPurchase: boolean | null, availableForPurchaseAt: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string } }> | null, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null, product: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string } }, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string, isActive: boolean, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null }> | null }> | null, collections: Array<{ __typename: 'Collection', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchProductTypesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchProductTypesQuery = { __typename: 'Query', search: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchShippingZonesQueryVariables = Exact<{
-  query: Scalars['String'];
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  query: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SearchShippingZonesQuery = { __typename: 'Query', search: { __typename: 'ShippingZoneCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchStaffMembersQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
 }>;
 
 
 export type SearchStaffMembersQuery = { __typename: 'Query', search: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean, avatar: { __typename: 'Image', alt: string | null, url: string } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchVariantsQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
-  channel?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SearchVariantsQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchVariantsWithProductDataQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
-  channel?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  channel?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type SearchVariantsWithProductDataQuery = { __typename: 'Query', search: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, product: { __typename: 'Product', name: string } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchWarehousesQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  first: Scalars['Int'];
-  query: Scalars['String'];
-  channnelsId?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  channnelsId?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
 }>;
 
 
 export type SearchWarehousesQuery = { __typename: 'Query', search: { __typename: 'WarehouseCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type DeleteShippingZoneMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type DeleteShippingZoneMutation = { __typename: 'Mutation', shippingZoneDelete: { __typename: 'ShippingZoneDelete', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }> } | null };
 
 export type BulkDeleteShippingZoneMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
@@ -13414,7 +13416,7 @@ export type CreateShippingZoneMutationVariables = Exact<{
 export type CreateShippingZoneMutation = { __typename: 'Mutation', shippingZoneCreate: { __typename: 'ShippingZoneCreate', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }>, shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UpdateShippingZoneMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ShippingZoneUpdateInput;
 }>;
 
@@ -13422,7 +13424,7 @@ export type UpdateShippingZoneMutationVariables = Exact<{
 export type UpdateShippingZoneMutation = { __typename: 'Mutation', shippingZoneUpdate: { __typename: 'ShippingZoneUpdate', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }>, shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UpdateShippingRateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ShippingPriceInput;
 }>;
 
@@ -13437,21 +13439,21 @@ export type CreateShippingRateMutationVariables = Exact<{
 export type CreateShippingRateMutation = { __typename: 'Mutation', shippingPriceCreate: { __typename: 'ShippingPriceCreate', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }>, shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> | null, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, shippingMethod: { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type DeleteShippingRateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type DeleteShippingRateMutation = { __typename: 'Mutation', shippingPriceDelete: { __typename: 'ShippingPriceDelete', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }>, shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> | null, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type BulkDeleteShippingRateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type BulkDeleteShippingRateMutation = { __typename: 'Mutation', shippingPriceBulkDelete: { __typename: 'ShippingPriceBulkDelete', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ShippingMethodChannelListingUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ShippingMethodChannelListingInput;
 }>;
 
@@ -13459,7 +13461,7 @@ export type ShippingMethodChannelListingUpdateMutationVariables = Exact<{
 export type ShippingMethodChannelListingUpdateMutation = { __typename: 'Mutation', shippingMethodChannelListingUpdate: { __typename: 'ShippingMethodChannelListingUpdate', shippingMethod: { __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, channels: Array<string> | null, message: string | null }> } | null };
 
 export type ShippingPriceExcludeProductMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ShippingPriceExcludeProductsInput;
 }>;
 
@@ -13467,18 +13469,18 @@ export type ShippingPriceExcludeProductMutationVariables = Exact<{
 export type ShippingPriceExcludeProductMutation = { __typename: 'Mutation', shippingPriceExcludeProducts: { __typename: 'ShippingPriceExcludeProducts', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ShippingPriceRemoveProductFromExcludeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  products: Array<Scalars['ID']> | Scalars['ID'];
+  id: Scalars['ID']['input'];
+  products: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type ShippingPriceRemoveProductFromExcludeMutation = { __typename: 'Mutation', shippingPriceRemoveProductFromExclude: { __typename: 'ShippingPriceRemoveProductFromExclude', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }> } | null };
 
 export type ShippingZonesQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<ShippingZoneFilterInput>;
 }>;
 
@@ -13486,18 +13488,18 @@ export type ShippingZonesQueryVariables = Exact<{
 export type ShippingZonesQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, description: string | null, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ShippingZoneQueryVariables = Exact<{
-  id: Scalars['ID'];
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  id: Scalars['ID']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type ShippingZoneQuery = { __typename: 'Query', shippingZone: { __typename: 'ShippingZone', default: boolean, id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, excludedProducts: { __typename: 'ProductCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null, startCursor: string | null }, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> | null, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
 export type ShippingZoneChannelsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -13560,7 +13562,7 @@ export type StaffMemberAddMutationVariables = Exact<{
 export type StaffMemberAddMutation = { __typename: 'Mutation', staffCreate: { __typename: 'StaffCreate', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type StaffMemberUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: StaffUpdateInput;
 }>;
 
@@ -13568,8 +13570,8 @@ export type StaffMemberUpdateMutationVariables = Exact<{
 export type StaffMemberUpdateMutation = { __typename: 'Mutation', staffUpdate: { __typename: 'StaffUpdate', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UserPassowrdChangeMutationVariables = Exact<{
-  newPassword: Scalars['String'];
-  oldPassword: Scalars['String'];
+  newPassword: Scalars['String']['input'];
+  oldPassword: Scalars['String']['input'];
 }>;
 
 
@@ -13583,14 +13585,14 @@ export type UserAccountUpdateMutationVariables = Exact<{
 export type UserAccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', user: { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type StaffMemberDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type StaffMemberDeleteMutation = { __typename: 'Mutation', staffDelete: { __typename: 'StaffDelete', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
 
 export type UserAvatarUpdateMutationVariables = Exact<{
-  image: Scalars['Upload'];
+  image: Scalars['Upload']['input'];
 }>;
 
 
@@ -13602,28 +13604,28 @@ export type UserAvatarDeleteMutationVariables = Exact<{ [key: string]: never; }>
 export type UserAvatarDeleteMutation = { __typename: 'Mutation', userAvatarDelete: { __typename: 'UserAvatarDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
 export type ChangeUserPasswordMutationVariables = Exact<{
-  newPassword: Scalars['String'];
-  oldPassword: Scalars['String'];
+  newPassword: Scalars['String']['input'];
+  oldPassword: Scalars['String']['input'];
 }>;
 
 
 export type ChangeUserPasswordMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type StaffListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<StaffUserInput>;
   sort?: InputMaybe<UserSortingInput>;
-  includeCustomerData?: InputMaybe<Scalars['Boolean']>;
+  includeCustomerData?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
 export type StaffListQuery = { __typename: 'Query', staffUsers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', cursor: string, node: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null, orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string } }> } | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type StaffMemberDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -13637,14 +13639,14 @@ export type MenuCreateMutationVariables = Exact<{
 export type MenuCreateMutation = { __typename: 'Mutation', menuCreate: { __typename: 'MenuCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menu: { __typename: 'Menu', id: string } | null } | null };
 
 export type MenuBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type MenuBulkDeleteMutation = { __typename: 'Mutation', menuBulkDelete: { __typename: 'MenuBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
 
 export type MenuDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -13658,17 +13660,17 @@ export type MenuItemCreateMutationVariables = Exact<{
 export type MenuItemCreateMutation = { __typename: 'Mutation', menuItemCreate: { __typename: 'MenuItemCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', menu: { __typename: 'Menu', id: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } } | null } | null };
 
 export type MenuUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
   moves: Array<MenuItemMoveInput> | MenuItemMoveInput;
-  removeIds: Array<Scalars['ID']> | Scalars['ID'];
+  removeIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
 export type MenuUpdateMutation = { __typename: 'Mutation', menuUpdate: { __typename: 'MenuUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemMove: { __typename: 'MenuItemMove', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemBulkDelete: { __typename: 'MenuItemBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
 
 export type MenuItemUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: MenuItemInput;
 }>;
 
@@ -13676,10 +13678,10 @@ export type MenuItemUpdateMutationVariables = Exact<{
 export type MenuItemUpdateMutation = { __typename: 'Mutation', menuItemUpdate: { __typename: 'MenuItemUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null } | null };
 
 export type MenuListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<MenuSortingInput>;
 }>;
 
@@ -13687,14 +13689,14 @@ export type MenuListQueryVariables = Exact<{
 export type MenuListQuery = { __typename: 'Query', menus: { __typename: 'MenuCountableConnection', edges: Array<{ __typename: 'MenuCountableEdge', node: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type MenuDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
 
 export type TaxConfigurationUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: TaxConfigurationUpdateInput;
 }>;
 
@@ -13717,7 +13719,7 @@ export type TaxCountryConfigurationDeleteMutationVariables = Exact<{
 export type TaxCountryConfigurationDeleteMutation = { __typename: 'Mutation', taxCountryConfigurationDelete: { __typename: 'TaxCountryConfigurationDelete', errors: Array<{ __typename: 'TaxCountryConfigurationDeleteError', field: string | null, code: TaxCountryConfigurationDeleteErrorCode, message: string | null }> } | null };
 
 export type TaxClassUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: TaxClassUpdateInput;
 }>;
 
@@ -13732,17 +13734,17 @@ export type TaxClassCreateMutationVariables = Exact<{
 export type TaxClassCreateMutation = { __typename: 'Mutation', taxClassCreate: { __typename: 'TaxClassCreate', errors: Array<{ __typename: 'TaxClassCreateError', field: string | null, code: TaxClassCreateErrorCode, message: string | null }>, taxClass: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type TaxClassDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type TaxClassDeleteMutation = { __typename: 'Mutation', taxClassDelete: { __typename: 'TaxClassDelete', errors: Array<{ __typename: 'TaxClassDeleteError', field: string | null, code: TaxClassDeleteErrorCode, message: string | null }> } | null };
 
 export type TaxConfigurationsListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<TaxConfigurationFilterInput>;
 }>;
 
@@ -13755,10 +13757,10 @@ export type TaxCountriesListQueryVariables = Exact<{ [key: string]: never; }>;
 export type TaxCountriesListQuery = { __typename: 'Query', taxCountryConfigurations: Array<{ __typename: 'TaxCountryConfiguration', country: { __typename: 'CountryDisplay', country: string, code: string }, taxClassCountryRates: Array<{ __typename: 'TaxClassCountryRate', rate: number, taxClass: { __typename: 'TaxClass', id: string, name: string } | null }> }> | null };
 
 export type TaxClassesListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<TaxClassFilterInput>;
   sortBy?: InputMaybe<TaxClassSortingInput>;
 }>;
@@ -13767,8 +13769,8 @@ export type TaxClassesListQueryVariables = Exact<{
 export type TaxClassesListQuery = { __typename: 'Query', taxClasses: { __typename: 'TaxClassCountableConnection', edges: Array<{ __typename: 'TaxClassCountableEdge', node: { __typename: 'TaxClass', id: string, name: string, countries: Array<{ __typename: 'TaxClassCountryRate', rate: number, country: { __typename: 'CountryDisplay', country: string, code: string } }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } }> } | null };
 
 export type TaxClassAssignQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13780,7 +13782,7 @@ export type TaxStrategyChoicesQueryVariables = Exact<{ [key: string]: never; }>;
 export type TaxStrategyChoicesQuery = { __typename: 'Query', shop: { __typename: 'Shop', availableTaxApps: Array<{ __typename: 'App', id: string, name: string | null, version: string | null, identifier: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> } };
 
 export type UpdateProductTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: TranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13789,7 +13791,7 @@ export type UpdateProductTranslationsMutationVariables = Exact<{
 export type UpdateProductTranslationsMutation = { __typename: 'Mutation', productTranslate: { __typename: 'ProductTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null, translation: { __typename: 'ProductTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
 export type UpdateProductVariantTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: NameTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13798,7 +13800,7 @@ export type UpdateProductVariantTranslationsMutationVariables = Exact<{
 export type UpdateProductVariantTranslationsMutation = { __typename: 'Mutation', productVariantTranslate: { __typename: 'ProductVariantTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, productVariant: { __typename: 'ProductVariant', id: string, name: string, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
 export type UpdateCategoryTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: TranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13807,7 +13809,7 @@ export type UpdateCategoryTranslationsMutationVariables = Exact<{
 export type UpdateCategoryTranslationsMutation = { __typename: 'Mutation', categoryTranslate: { __typename: 'CategoryTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, category: { __typename: 'Category', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null, translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
 export type UpdateCollectionTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: TranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13816,7 +13818,7 @@ export type UpdateCollectionTranslationsMutationVariables = Exact<{
 export type UpdateCollectionTranslationsMutation = { __typename: 'Mutation', collectionTranslate: { __typename: 'CollectionTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, collection: { __typename: 'Collection', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
 export type UpdatePageTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: PageTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13825,7 +13827,7 @@ export type UpdatePageTranslationsMutationVariables = Exact<{
 export type UpdatePageTranslationsMutation = { __typename: 'Mutation', pageTranslate: { __typename: 'PageTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, page: { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: string | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: string | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | null } | null };
 
 export type UpdateVoucherTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: NameTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13834,7 +13836,7 @@ export type UpdateVoucherTranslationsMutationVariables = Exact<{
 export type UpdateVoucherTranslationsMutation = { __typename: 'Mutation', voucherTranslate: { __typename: 'VoucherTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, voucher: { __typename: 'Voucher', id: string, name: string | null, translation: { __typename: 'VoucherTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
 export type UpdateSaleTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: NameTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13843,7 +13845,7 @@ export type UpdateSaleTranslationsMutationVariables = Exact<{
 export type UpdateSaleTranslationsMutation = { __typename: 'Mutation', saleTranslate: { __typename: 'SaleTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, sale: { __typename: 'Sale', id: string, name: string, translation: { __typename: 'SaleTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
 export type UpdateAttributeTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: NameTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13852,7 +13854,7 @@ export type UpdateAttributeTranslationsMutationVariables = Exact<{
 export type UpdateAttributeTranslationsMutation = { __typename: 'Mutation', attributeTranslate: { __typename: 'AttributeTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attribute: { __typename: 'Attribute', id: string, name: string, translation: { __typename: 'AttributeTranslation', id: string, name: string } | null } | null } | null };
 
 export type UpdateAttributeValueTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: AttributeValueTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13861,7 +13863,7 @@ export type UpdateAttributeValueTranslationsMutationVariables = Exact<{
 export type UpdateAttributeValueTranslationsMutation = { __typename: 'Mutation', attributeValueTranslate: { __typename: 'AttributeValueTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, attributeValue: { __typename: 'AttributeValue', id: string, name: string | null, richText: string | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, richText: string | null } | null } | null } | null };
 
 export type UpdateShippingMethodTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: ShippingPriceTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13870,7 +13872,7 @@ export type UpdateShippingMethodTranslationsMutationVariables = Exact<{
 export type UpdateShippingMethodTranslationsMutation = { __typename: 'Mutation', shippingPriceTranslate: { __typename: 'ShippingPriceTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, shippingMethod: { __typename: 'ShippingMethodType', id: string, name: string, description: string | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | null } | null };
 
 export type UpdateMenuItemTranslationsMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: NameTranslationInput;
   language: LanguageCodeEnum;
 }>;
@@ -13880,10 +13882,10 @@ export type UpdateMenuItemTranslationsMutation = { __typename: 'Mutation', menuI
 
 export type CategoryTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13891,10 +13893,10 @@ export type CategoryTranslationsQuery = { __typename: 'Query', translations: { _
 
 export type CollectionTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13902,10 +13904,10 @@ export type CollectionTranslationsQuery = { __typename: 'Query', translations: {
 
 export type ProductTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13913,10 +13915,10 @@ export type ProductTranslationsQuery = { __typename: 'Query', translations: { __
 
 export type PageTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13924,10 +13926,10 @@ export type PageTranslationsQuery = { __typename: 'Query', translations: { __typ
 
 export type VoucherTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13935,10 +13937,10 @@ export type VoucherTranslationsQuery = { __typename: 'Query', translations: { __
 
 export type SaleTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13946,10 +13948,10 @@ export type SaleTranslationsQuery = { __typename: 'Query', translations: { __typ
 
 export type AttributeTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13957,10 +13959,10 @@ export type AttributeTranslationsQuery = { __typename: 'Query', translations: { 
 
 export type ShippingMethodTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -13968,17 +13970,17 @@ export type ShippingMethodTranslationsQuery = { __typename: 'Query', translation
 
 export type MenuItemTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type MenuItemTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ProductTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -13986,14 +13988,14 @@ export type ProductTranslationDetailsQueryVariables = Exact<{
 export type ProductTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type ProductVariantListQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type ProductVariantListQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null }> | null } | null };
 
 export type ProductVariantTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14001,7 +14003,7 @@ export type ProductVariantTranslationDetailsQueryVariables = Exact<{
 export type ProductVariantTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type CategoryTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14009,7 +14011,7 @@ export type CategoryTranslationDetailsQueryVariables = Exact<{
 export type CategoryTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type CollectionTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14017,7 +14019,7 @@ export type CollectionTranslationDetailsQueryVariables = Exact<{
 export type CollectionTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: string | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type PageTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14025,7 +14027,7 @@ export type PageTranslationDetailsQueryVariables = Exact<{
 export type PageTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: string | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: string | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type SaleTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14033,7 +14035,7 @@ export type SaleTranslationDetailsQueryVariables = Exact<{
 export type SaleTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent', sale: { __typename: 'Sale', id: string, name: string } | null, translation: { __typename: 'SaleTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type VoucherTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14041,19 +14043,19 @@ export type VoucherTranslationDetailsQueryVariables = Exact<{
 export type VoucherTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent', name: string | null, voucher: { __typename: 'Voucher', id: string, name: string | null } | null, translation: { __typename: 'VoucherTranslation', id: string, name: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null };
 
 export type AttributeTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
+  firstValues?: InputMaybe<Scalars['Int']['input']>;
+  afterValues?: InputMaybe<Scalars['String']['input']>;
+  lastValues?: InputMaybe<Scalars['Int']['input']>;
+  beforeValues?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type AttributeTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent', translation: { __typename: 'AttributeTranslation', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, name: string, inputType: AttributeInputTypeEnum | null, withChoices: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: string | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null } | null } }> } | null } | null } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type ShippingMethodTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14061,7 +14063,7 @@ export type ShippingMethodTranslationDetailsQueryVariables = Exact<{
 export type ShippingMethodTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: string | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type MenuItemTranslationDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   language: LanguageCodeEnum;
 }>;
 
@@ -14069,25 +14071,25 @@ export type MenuItemTranslationDetailsQueryVariables = Exact<{
 export type MenuItemTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent', translation: { __typename: 'MenuItemTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', language: string } } | null, menuItem: { __typename: 'MenuItem', id: string, name: string } | null } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type UpdateMetadataMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: Array<MetadataInput> | MetadataInput;
-  keysToDelete: Array<Scalars['String']> | Scalars['String'];
+  keysToDelete: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
 
 export type UpdateMetadataMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'Address', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Channel', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CheckoutLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'OrderLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Promotion', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Shop', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deleteMetadata: { __typename: 'DeleteMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'Address', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Channel', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CheckoutLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'OrderLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Promotion', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Shop', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type UpdatePrivateMetadataMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: Array<MetadataInput> | MetadataInput;
-  keysToDelete: Array<Scalars['String']> | Scalars['String'];
+  keysToDelete: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
 
 export type UpdatePrivateMetadataMutation = { __typename: 'Mutation', updatePrivateMetadata: { __typename: 'UpdatePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'Address', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Channel', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CheckoutLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'OrderLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Promotion', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Shop', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null, deletePrivateMetadata: { __typename: 'DeletePrivateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }>, item: { __typename: 'Address', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'App', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Attribute', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Category', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Channel', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Checkout', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CheckoutLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Collection', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Fulfillment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'GiftCard', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Invoice', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Menu', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'MenuItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Order', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'OrderLine', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Page', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Payment', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Product', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductVariant', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Promotion', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Sale', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethod', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingMethodType', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ShippingZone', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Shop', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxClass', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TaxConfiguration', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'TransactionItem', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Voucher', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'Warehouse', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
 export type WarehouseDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -14101,7 +14103,7 @@ export type WarehouseCreateMutationVariables = Exact<{
 export type WarehouseCreateMutation = { __typename: 'Mutation', createWarehouse: { __typename: 'WarehouseCreate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } | null } | null };
 
 export type WarehouseUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: WarehouseUpdateInput;
 }>;
 
@@ -14109,10 +14111,10 @@ export type WarehouseUpdateMutationVariables = Exact<{
 export type WarehouseUpdateMutation = { __typename: 'Mutation', updateWarehouse: { __typename: 'WarehouseUpdate', errors: Array<{ __typename: 'WarehouseError', code: WarehouseErrorCode, field: string | null, message: string | null }>, warehouse: { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } | null } | null };
 
 export type WarehouseListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<WarehouseFilterInput>;
   sort?: InputMaybe<WarehouseSortingInput>;
 }>;
@@ -14121,7 +14123,7 @@ export type WarehouseListQueryVariables = Exact<{
 export type WarehouseListQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type WarehouseDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 
@@ -14133,7 +14135,7 @@ export type WarehousesCountQueryVariables = Exact<{ [key: string]: never; }>;
 export type WarehousesCountQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', totalCount: number | null } | null };
 
 export type SaveOnBoardingStateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: Array<MetadataInput> | MetadataInput;
 }>;
 
@@ -14141,22 +14143,22 @@ export type SaveOnBoardingStateMutationVariables = Exact<{
 export type SaveOnBoardingStateMutation = { __typename: 'Mutation', updateMetadata: { __typename: 'UpdateMetadata', errors: Array<{ __typename: 'MetadataError', code: MetadataErrorCode, field: string | null, message: string | null }> } | null };
 
 export type WelcomePageActivitiesQueryVariables = Exact<{
-  hasPermissionToManageOrders: Scalars['Boolean'];
+  hasPermissionToManageOrders: Scalars['Boolean']['input'];
 }>;
 
 
-export type WelcomePageActivitiesQuery = { __typename: 'Query', activities: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
+export type WelcomePageActivitiesQuery = { __typename: 'Query', activities?: { __typename: 'OrderEventCountableConnection', edges: Array<{ __typename: 'OrderEventCountableEdge', node: { __typename: 'OrderEvent', date: any | null, email: string | null, message: string | null, orderNumber: string | null, type: OrderEventsEnum | null, user: { __typename: 'User', email: string } | null } }> } | null };
 
 export type WelcomePageAnalyticsQueryVariables = Exact<{
-  channel: Scalars['String'];
-  hasPermissionToManageOrders: Scalars['Boolean'];
+  channel: Scalars['String']['input'];
+  hasPermissionToManageOrders: Scalars['Boolean']['input'];
 }>;
 
 
-export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
+export type WelcomePageAnalyticsQuery = { __typename: 'Query', salesToday?: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } | null };
 
 export type WelcomePageNotificationsQueryVariables = Exact<{
-  channel: Scalars['String'];
+  channel: Scalars['String']['input'];
 }>;
 
 
