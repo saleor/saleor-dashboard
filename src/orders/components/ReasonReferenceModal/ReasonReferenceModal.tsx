@@ -70,6 +70,12 @@ export const ReasonReferenceModal = ({
           />
         </DashboardModal.Header>
 
+        {!!referenceModelTypeId && (
+          <Text color="default2" size={3}>
+            <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceHelperText} />
+          </Text>
+        )}
+
         <Box display="flex" flexDirection="column" gap={4}>
           {!!referenceModelTypeId && (
             <Box display="flex" flexDirection="column" gap={1}>

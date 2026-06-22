@@ -17,6 +17,10 @@ export const reasonReferenceModalMessages = defineMessages({
     defaultMessage: "Reason",
     id: "AkCxS/",
   },
+  reasonReferenceHelperText: {
+    defaultMessage: "Selecting reason is not obligatory for lines",
+    id: "5e6fxf",
+  },
   noneOption: {
     defaultMessage: "None",
     id: "450Fty",

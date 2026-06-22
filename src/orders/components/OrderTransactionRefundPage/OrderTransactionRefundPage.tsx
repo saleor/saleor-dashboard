@@ -295,6 +295,13 @@ const OrderTransactionRefundPage = ({
                   <DashboardCard.Title>Refund reason</DashboardCard.Title>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
+                  {modelForRefundReasonRefId && (
+                    <Box marginBottom={2}>
+                      <Text color="default2" size={3}>
+                        {intl.formatMessage(refundReasonSelectHelperMessages.reasonRequired)}
+                      </Text>
+                    </Box>
+                  )}
                   <ModelsPickerTransactionRefund
                     disabled={!modelForRefundReasonRefId}
                     referenceModelTypeId={modelForRefundReasonRefId ?? ""}
