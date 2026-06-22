@@ -1,9 +1,9 @@
 ---
-name: saleor-dashboard-audit
-description: Triage `pnpm audit` results and propose batched, accept-first dependency fixes. Use when asked to run a security audit, fix vulnerabilities, update vulnerable packages, or analyze pnpm audit output.
+name: saleor-dashboard-security-audit
+description: Triage `pnpm audit` security findings and propose batched, accept-first dependency fixes. Use when asked to run a security audit, fix security vulnerabilities, update vulnerable packages, or analyze pnpm audit output.
 ---
 
-# Dependency Audit & Fix Triage
+# Dependency Security Audit & Fix Triage
 
 Goal: turn `pnpm audit` noise into a small set of **accept-first** batches the user can approve and merge independently. Do NOT apply fixes until the user accepts the proposal. NEVER fix everything in one commit.
 
@@ -77,10 +77,3 @@ Present a report: per batch list package, current→target, severity/CVSS, dep p
 3. `pnpm audit` to confirm the targeted findings are gone and nothing regressed.
 4. For build/runtime-affecting deps (`vite`, etc.), run `pnpm run build` / relevant tests.
 5. One commit per batch. Skip changesets — dependency security bumps are internal (see `saleor-dashboard-changesets`).
-
-## Notes from the first run (2026-06)
-
-- 53 findings (3 critical, 16 high / 9 ignored, 29 moderate, 5 low). Almost all transitive → overrides.
-- Criticals (`@vitest/browser` RCE, `shell-quote`) happened to have age-OK patches — no bypass needed. Don't assume; always check.
-- Production-path highs whose only fix was too-new (`protobufjs`, `form-data`, `@opentelemetry/core`) are the typical "wait or bypass" decision points — surface them, let the user choose.
-- `dompurify` (via `@glideapps/glide-data-grid-cells`) is a recurring multi-advisory offender; the latest patches are often <21 days old, so pin to the newest age-OK version and accept a partial clear.
