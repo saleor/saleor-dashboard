@@ -4506,6 +4506,10 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MDLYPO": {
+    "context": "fallback widget title when extension label and app name are missing",
+    "string": "App"
+  },
   "MFC20a": {
     "context": "Number of warehouses configured",
     "string": "{count, plural, one {# warehouse} other {# warehouses}}"
@@ -8666,6 +8670,10 @@
   "iSp+AA": {
     "context": "field translation status",
     "string": "Needs translation"
+  },
+  "iSpMDE": {
+    "context": "accessible label for app widget card header link",
+    "string": "{extensionLabel} — {appName}"
   },
   "iUIn50": {
     "context": "section notice",
