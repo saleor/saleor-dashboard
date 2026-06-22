@@ -33,10 +33,10 @@ export const OrderReturnReasonCard = ({
     skip: !reasonReferenceTypeId,
   });
 
-  // The return reason is configured only when a reason reference type is set.
-  // Without it the whole section is disabled.
+  // The structured reason reference is configured only when a reason reference type is set.
+  // Without it the reference select is disabled, while the free-text reason note stays enabled.
   const isConfigured = !!reasonReferenceTypeId;
-  const sectionDisabled = disabled || !isConfigured;
+  const referenceDisabled = disabled || !isConfigured;
 
   const referenceOptions = useMemo(
     () => [
@@ -62,7 +62,7 @@ export const OrderReturnReasonCard = ({
           </Text>
           <Select
             data-test-id="returnReasonReferenceSelect"
-            disabled={sectionDisabled || loading}
+            disabled={referenceDisabled || loading}
             error={error}
             helperText={
               isConfigured
@@ -81,7 +81,7 @@ export const OrderReturnReasonCard = ({
           <Textarea
             data-test-id="returnReasonInput"
             rows={4}
-            disabled={sectionDisabled}
+            disabled={disabled}
             value={reason}
             onChange={event => onChangeReason(event.target.value)}
           />
