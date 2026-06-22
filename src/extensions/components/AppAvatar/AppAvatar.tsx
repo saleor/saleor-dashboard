@@ -6,20 +6,37 @@ import { Package } from "lucide-react";
 type Logo = AppLogo | undefined;
 type Size = 4 | 6 | 8 | 12;
 
-export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Size } & BoxProps) =>
-  logo ? (
-    <Box
-      width={size}
-      height={size}
-      display="flex"
-      placeItems="center"
-      borderRadius={2}
-      overflow="hidden"
-      {...props}
-    >
-      <Box as="img" src={logo.source} width="100%" />
-    </Box>
-  ) : (
+export const AppAvatar = ({
+  logo,
+  size = 8,
+  variant = "default",
+  ...props
+}: { logo?: Logo; size?: Size; variant?: "default" | "plain" } & BoxProps) => {
+  if (logo) {
+    return (
+      <Box
+        width={size}
+        height={size}
+        display="flex"
+        placeItems="center"
+        borderRadius={variant === "plain" ? undefined : 2}
+        overflow="hidden"
+        {...props}
+      >
+        <Box as="img" src={logo.source} width="100%" />
+      </Box>
+    );
+  }
+
+  if (variant === "plain") {
+    return (
+      <Box width={size} height={size} display="flex" placeItems="center" {...props}>
+        <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />
+      </Box>
+    );
+  }
+
+  return (
     <Box
       backgroundColor="default2"
       width={size}
@@ -36,3 +53,4 @@ export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Si
       <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />
     </Box>
   );
+};
