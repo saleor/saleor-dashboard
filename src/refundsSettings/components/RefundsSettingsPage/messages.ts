@@ -51,8 +51,8 @@ export const refundsSettingsPageMessages = defineMessages({
   },
   // Shared
   noneOption: {
-    defaultMessage: "None",
-    id: "450Fty",
+    defaultMessage: "Disabled",
+    id: "tthToS",
   },
   createModelTypeLink: {
     defaultMessage: "Create new Model Type",

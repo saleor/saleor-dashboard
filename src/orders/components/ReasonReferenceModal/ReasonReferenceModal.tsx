@@ -46,6 +46,11 @@ export const ReasonReferenceModal = ({
     skip: !referenceModelTypeId,
   });
 
+  // The reference picker is configured only when a reason reference type is set.
+  // Without it the reference select is shown but disabled, while the free-text reason note stays enabled.
+  const isConfigured = !!referenceModelTypeId;
+  const referenceDisabled = !isConfigured;
+
   const referenceOptions = useMemo(() => {
     const edges = [...(data?.pages?.edges ?? [])].sort((a, b) =>
       a.node.title.localeCompare(b.node.title),
@@ -70,27 +75,23 @@ export const ReasonReferenceModal = ({
           />
         </DashboardModal.Header>
 
-        {!!referenceModelTypeId && (
-          <Text color="default2" size={3}>
-            <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceHelperText} />
-          </Text>
-        )}
+        <Text color="default2" size={3}>
+          <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceHelperText} />
+        </Text>
 
         <Box display="flex" flexDirection="column" gap={4}>
-          {!!referenceModelTypeId && (
-            <Box display="flex" flexDirection="column" gap={1}>
-              <Text fontWeight="medium" size={3}>
-                <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceLabel} />
-              </Text>
-              <Select
-                data-test-id="line-reason-reference-select"
-                disabled={loading}
-                options={referenceOptions}
-                value={tempReference}
-                onChange={value => setTempReference(value as string)}
-              />
-            </Box>
-          )}
+          <Box display="flex" flexDirection="column" gap={1}>
+            <Text fontWeight="medium" size={3}>
+              <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceLabel} />
+            </Text>
+            <Select
+              data-test-id="line-reason-reference-select"
+              disabled={referenceDisabled || loading}
+              options={referenceOptions}
+              value={tempReference}
+              onChange={value => setTempReference(value as string)}
+            />
+          </Box>
 
           <Box display="flex" flexDirection="column" gap={1}>
             <Text fontWeight="medium" size={3}>
