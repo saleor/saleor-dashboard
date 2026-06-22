@@ -3774,6 +3774,9 @@
     "context": "alert message",
     "string": "one of"
   },
+  "I06jIl": {
+    "string": "Note: some languages might have incomplete translations that will be displayed in English."
+  },
   "I0975K": {
     "context": "configuration menu item title",
     "string": "Model attributes"
@@ -7917,9 +7920,6 @@
   "e7yOai": {
     "context": "shipping address is not set in draft order",
     "string": "Not set"
-  },
-  "e822us": {
-    "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
   },
   "e8O72h": {
     "context": "password login mode option",
