@@ -141,7 +141,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
         }
       />
       {(fulfillment.reason || fulfillment.reasonReference) && (
-        <Box paddingX={6} paddingY={4} backgroundColor="default2">
+        <Box __paddingLeft="3.2rem" paddingTop={0} paddingBottom={4} backgroundColor="default2">
           <ReasonDisplay
             reasonReference={fulfillment.reasonReference?.title}
             reason={fulfillment.reason}
