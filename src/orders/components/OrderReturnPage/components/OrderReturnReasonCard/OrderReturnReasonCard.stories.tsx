@@ -36,7 +36,13 @@ type Story = StoryObj<typeof OrderReturnReasonCard>;
 
 export const WithStructuredReason: Story = {};
 
-export const FreeTextOnly: Story = {
+export const Errored: Story = {
+  args: {
+    error: true,
+  },
+};
+
+export const NotConfiguredDisabled: Story = {
   args: {
     reasonReferenceTypeId: "",
     reason: "Customer changed their mind",

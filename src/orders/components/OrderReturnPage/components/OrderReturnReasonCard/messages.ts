@@ -16,9 +16,14 @@ export const orderReturnReasonCardMessages = defineMessages({
     id: "aTDks/",
     description: "order return reason card, structured reason select label",
   },
-  none: {
-    defaultMessage: "None",
-    id: "nAmCTW",
-    description: "order return reason card, empty structured reason option",
+  selectPlaceholder: {
+    defaultMessage: "Select a reason type",
+    id: "JaicxZ",
+    description: "order return reason card, structured reason select placeholder",
+  },
+  requiredHelper: {
+    defaultMessage: "Return reason is required",
+    id: "8zOO4H",
+    description: "order return reason card, structured reason required helper text",
   },
 });
