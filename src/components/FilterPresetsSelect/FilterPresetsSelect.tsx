@@ -20,6 +20,7 @@ import { getSeparatorWidth } from "./utils";
 
 interface FilterPresetsSelectProps {
   activePreset?: number;
+  builtInPresets?: string[];
   savedPresets: string[];
   selectAllLabel: string;
   isOpen?: boolean;
@@ -32,11 +33,22 @@ interface FilterPresetsSelectProps {
   onOpenChange?: (isOpen: boolean) => void;
 }
 
+const PresetSeparator = () => (
+  <Box
+    height="px"
+    marginY={1}
+    __backgroundColor={vars.colors.border.default1}
+    __marginLeft={-4}
+    __width={getSeparatorWidth("4px")}
+  />
+);
+
 export const FilterPresetsSelect = ({
   onSelect,
   onRemove,
   onSave,
   savedPresets,
+  builtInPresets = [],
   activePreset,
   onSelectAll,
   selectAllLabel,
@@ -46,14 +58,19 @@ export const FilterPresetsSelect = ({
   presetsChanged,
 }: FilterPresetsSelectProps) => {
   const intl = useIntl();
-  const showUpdateButton = presetsChanged && savedPresets.length > 0 && activePreset;
+  const allPresetNames = [...builtInPresets, ...savedPresets];
+  const hasBuiltInPresets = builtInPresets.length > 0;
+  const hasCustomPresets = savedPresets.length > 0;
+  const hasPresetsToShow = hasBuiltInPresets || hasCustomPresets;
+  const isCustomPresetActive = activePreset !== undefined && activePreset > builtInPresets.length;
+  const showUpdateButton = presetsChanged && hasCustomPresets && isCustomPresetActive;
   const showSaveButton = presetsChanged;
   const getLabel = () => {
     if (!activePreset) {
       return selectAllLabel;
     }
 
-    return savedPresets[activePreset - 1];
+    return allPresetNames[activePreset - 1];
   };
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
     const target = e.target as HTMLElement;
@@ -66,7 +83,7 @@ export const FilterPresetsSelect = ({
     onSelect(index);
   };
   const renderDropdown = () => {
-    if (!savedPresets?.length) {
+    if (!hasPresetsToShow) {
       return (
         <Box display="flex" alignItems="center">
           <Tooltip>
@@ -130,29 +147,41 @@ export const FilterPresetsSelect = ({
                 <Text fontWeight={activePreset === 0 ? "bold" : "regular"}>{selectAllLabel}</Text>
               </List.Item>
             </Dropdown.Item>
-            {savedPresets.length > 0 && (
-              <Box
-                height="px"
-                marginY={1}
-                __backgroundColor={vars.colors.border.default1}
-                __marginLeft={-4}
-                __width={getSeparatorWidth("4px")}
-              />
+            {hasPresetsToShow && <PresetSeparator />}
+            {hasBuiltInPresets && (
+              <Box display="flex" flexDirection="column" gap={0.5}>
+                {builtInPresets.map((preset, index) => (
+                  <FilterPresetItem
+                    isActive={activePreset === index + 1}
+                    onSelect={e => handleSelectPreset(e, index + 1)}
+                    key={`built-in-filter-preset-${index}`}
+                  >
+                    {preset}
+                  </FilterPresetItem>
+                ))}
+              </Box>
             )}
-            <Box display="flex" flexDirection="column" gap={0.5}>
-              {savedPresets.map((preset, index) => (
-                <FilterPresetItem
-                  isActive={activePreset === index + 1}
-                  onSelect={e => handleSelectPreset(e, index + 1)}
-                  onRemove={() => {
-                    onRemove(index + 1);
-                  }}
-                  key={`filter-preset-${index}`}
-                >
-                  {preset}
-                </FilterPresetItem>
-              ))}
-            </Box>
+            {hasBuiltInPresets && hasCustomPresets && <PresetSeparator />}
+            {hasCustomPresets && (
+              <Box display="flex" flexDirection="column" gap={0.5}>
+                {savedPresets.map((preset, index) => {
+                  const presetIndex = builtInPresets.length + index + 1;
+
+                  return (
+                    <FilterPresetItem
+                      isActive={activePreset === presetIndex}
+                      onSelect={e => handleSelectPreset(e, presetIndex)}
+                      onRemove={() => {
+                        onRemove(presetIndex);
+                      }}
+                      key={`filter-preset-${index}`}
+                    >
+                      {preset}
+                    </FilterPresetItem>
+                  );
+                })}
+              </Box>
+            )}
           </List>
         </Dropdown.Content>
       </Dropdown>
@@ -168,7 +197,7 @@ export const FilterPresetsSelect = ({
           className={sprinkles({
             marginLeft: 3,
           })}
-          onClick={() => onUpdate(savedPresets[activePreset - 1])}
+          onClick={() => onUpdate(allPresetNames[activePreset - 1])}
           variant="secondary"
           size="small"
         >

@@ -277,4 +277,133 @@ describe("useFilterPresets", () => {
     // Assert
     expect(result.current.getPresetNameToDelete()).toEqual("preset1");
   });
+  it("should navigate to built-in preset when activeTab points to built-in index", () => {
+    // Arrange
+    const builtInPresets = [
+      { name: "Product attributes", data: "attributeType=PRODUCT_TYPE" },
+      { name: "Model attributes", data: "attributeType=PAGE_TYPE" },
+    ];
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(() => baseUrl),
+        params: {},
+        reset: jest.fn(),
+        builtInPresets,
+        storageUtils: {
+          deleteFilterTab: jest.fn(),
+          getFilterTabs: jest.fn(() => []),
+          saveFilterTab: jest.fn(),
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.onPresetChange(2);
+    });
+    // Assert
+    expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?attributeType=PAGE_TYPE&activeTab=2`);
+  });
+  it("should not delete built-in presets", () => {
+    // Arrange
+    const mockDeleteStorage = jest.fn();
+    const builtInPresets = [{ name: "Product attributes", data: "attributeType=PRODUCT_TYPE" }];
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(() => baseUrl),
+        params: {
+          action: "delete",
+          activeTab: "1",
+        },
+        reset: jest.fn(),
+        builtInPresets,
+        storageUtils: {
+          deleteFilterTab: mockDeleteStorage,
+          getFilterTabs: jest.fn(() => []),
+          saveFilterTab: jest.fn(),
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.setPresetIdToDelete(1);
+    });
+    act(() => {
+      result.current.onPresetDelete();
+    });
+    // Assert
+    expect(mockDeleteStorage).not.toHaveBeenCalled();
+  });
+  it("should save custom preset after built-in presets", () => {
+    // Arrange
+    const mockSaveStorage = jest.fn();
+    const builtInPresets = [
+      { name: "Product attributes", data: "attributeType=PRODUCT_TYPE" },
+      { name: "Model attributes", data: "attributeType=PAGE_TYPE" },
+    ];
+
+    window.location.search = "?query=John";
+
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(() => baseUrl),
+        params: {},
+        reset: jest.fn(),
+        builtInPresets,
+        storageUtils: {
+          deleteFilterTab: jest.fn(),
+          getFilterTabs: jest.fn(() => []),
+          saveFilterTab: mockSaveStorage,
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.onPresetSave({ name: "new-preset" });
+    });
+    // Assert
+    expect(mockSaveStorage).toHaveBeenCalledWith("new-preset", "query=John");
+    expect(mockNavigate).toHaveBeenCalledWith(`${baseUrl}?activeTab=3`);
+  });
+  it("should delete custom preset using offset built-in count", () => {
+    // Arrange
+    const mockDeleteStorage = jest.fn();
+    const builtInPresets = [
+      { name: "Product attributes", data: "attributeType=PRODUCT_TYPE" },
+      { name: "Model attributes", data: "attributeType=PAGE_TYPE" },
+    ];
+    const { result } = renderHook(() =>
+      useFilterPresets({
+        getUrl: jest.fn(() => baseUrl),
+        params: {
+          action: "delete",
+          activeTab: "3",
+        },
+        reset: jest.fn(),
+        builtInPresets,
+        storageUtils: {
+          deleteFilterTab: mockDeleteStorage,
+          getFilterTabs: jest.fn(() => [{ name: "custom", data: "query=John" }]),
+          saveFilterTab: jest.fn(),
+          updateFilterTab: jest.fn(),
+        },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current.setPresetIdToDelete(3);
+    });
+    act(() => {
+      result.current.onPresetDelete();
+    });
+    // Assert
+    expect(mockDeleteStorage).toHaveBeenCalledWith(1);
+    expect(mockNavigate).toHaveBeenCalledWith(baseUrl);
+  });
 });

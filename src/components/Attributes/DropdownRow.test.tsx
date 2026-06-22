@@ -36,14 +36,19 @@ jest.mock("react-intl", () => {
   };
 });
 
-jest.mock("./utils", () => ({
-  getErrorMessage: (error: any) => error?.message || "",
-  getSingleDisplayValue: (attribute: any, values: any[]) => {
-    const value = attribute.value[0];
+jest.mock("./utils", () => {
+  const actual = jest.requireActual("./utils") as typeof import("./utils");
 
-    return values.find(v => v.slug === value)?.name || value || "";
-  },
-}));
+  return {
+    ...actual,
+    getErrorMessage: (error: any) => error?.message || "",
+    getSingleDisplayValue: (attribute: any, values: any[]) => {
+      const value = attribute.value[0];
+
+      return values.find(v => v.slug === value)?.name || value || "";
+    },
+  };
+});
 
 const mockAttribute: AttributeInput = {
   data: {

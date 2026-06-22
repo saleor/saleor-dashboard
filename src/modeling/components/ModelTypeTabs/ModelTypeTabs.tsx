@@ -27,6 +27,7 @@ import {
   type ModelTabNode,
 } from "./groupModelTypeTabs";
 import { modelTypeTabsMessages } from "./messages";
+import { ModelTypeTabGroupingHelp } from "./ModelTypeTabGroupingHelp";
 import styles from "./ModelTypeTabs.module.css";
 import { type ModelTypeTabGrouping, useModelTypeTabGrouping } from "./useModelTypeTabGrouping";
 
@@ -151,7 +152,7 @@ const ModelTypeTabsSettings = ({
           <Settings2 size={16} />
         </button>
       </Popover.Trigger>
-      <Popover.Content align="end">
+      <Popover.Content align="end" onOpenAutoFocus={event => event.preventDefault()}>
         <Box
           padding={4}
           display="flex"
@@ -162,16 +163,24 @@ const ModelTypeTabsSettings = ({
           boxShadow="defaultModal"
           __minWidth="280px"
         >
-          <Text size={3} fontWeight="bold">
-            {intl.formatMessage(modelTypeTabsMessages.settingsTitle)}
-          </Text>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Text size={3} fontWeight="bold">
+              {intl.formatMessage(modelTypeTabsMessages.settingsTitle)}
+            </Text>
+            <ModelTypeTabGroupingHelp settingsOpen={open} />
+          </Box>
           <Box display="flex" flexDirection="column" gap={2}>
             <Text size={2}>{intl.formatMessage(modelTypeTabsMessages.separatorLabel)}</Text>
             <Input
               value={separator}
               onChange={event => onSeparatorChange(event.target.value)}
+              placeholder={intl.formatMessage(modelTypeTabsMessages.separatorPlaceholder)}
+              disabled={!groupingEnabled}
               data-test-id="model-type-tabs-separator"
             />
+            <Text size={1} color="default2">
+              {intl.formatMessage(modelTypeTabsMessages.separatorHint)}
+            </Text>
           </Box>
           <Checkbox
             checked={groupingEnabled}
@@ -191,16 +200,9 @@ interface GroupTabDropdownProps {
   selectedIds: string[];
   counts: Record<string, ModelTypeTabCount | undefined>;
   onTabChange: (ids: string[]) => void;
-  separator: string;
 }
 
-const GroupTabDropdown = ({
-  group,
-  selectedIds,
-  counts,
-  onTabChange,
-  separator,
-}: GroupTabDropdownProps) => {
+const GroupTabDropdown = ({ group, selectedIds, counts, onTabChange }: GroupTabDropdownProps) => {
   const intl = useIntl();
 
   const options = useMemo(() => {
@@ -208,7 +210,11 @@ const GroupTabDropdown = ({
     const allCount = aggregateCounts(allIds, counts);
     const allLabel = intl.formatMessage(modelTypeTabsMessages.groupAllLabel, {
       prefix: group.prefix,
-      separator,
+      all: (...chunks) => (
+        <Box as="span" fontStyle="italic">
+          {chunks}
+        </Box>
+      ),
     });
 
     return [
@@ -227,7 +233,7 @@ const GroupTabDropdown = ({
         isActive: selectedIds.length === 1 && selectedIds[0] === subtype.id,
       })),
     ];
-  }, [counts, group, intl, onTabChange, selectedIds, separator]);
+  }, [counts, group, intl, onTabChange, selectedIds]);
 
   const handleCaretClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -526,7 +532,6 @@ export const ModelTypeTabs = ({
             selectedIds={selectedIds}
             counts={counts}
             onTabChange={onTabChange}
-            separator={separator}
           />
           {renderTabPin(item, isActive)}
         </div>

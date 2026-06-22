@@ -611,9 +611,6 @@
     "context": "section header",
     "string": "Fulfilled"
   },
-  "19/lwV": {
-    "string": "Determine attributes used to create product types"
-  },
   "19o9WS": {
     "string": "Learn more about {userPermissions}"
   },
@@ -1709,6 +1706,10 @@
     "context": "Number of variants that have stock available",
     "string": "{count, plural, one {# variant in stock} other {# variants in stock}}"
   },
+  "7GcWC8": {
+    "context": "configuration section label",
+    "string": "Tax Settings"
+  },
   "7H2D5m": {
     "context": "attribute value deleted",
     "string": "Value deleted"
@@ -2285,6 +2286,10 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "AJF7N5": {
+    "context": "scope note for model type tab grouping help tooltip",
+    "string": "Browser-only display — does not rename, merge, or change your model types or data."
   },
   "AJMlmz": {
     "context": "customer overview stat label: sum of recent orders",
@@ -3007,6 +3012,10 @@
   "EDihQs": {
     "string": "Staff member updated"
   },
+  "EE8PaG": {
+    "context": "section heading for examples in model type tab grouping help tooltip",
+    "string": "Examples"
+  },
   "EEWsPs": {
     "string": "Plugin built-in to Saleor's core codebase"
   },
@@ -3140,6 +3149,10 @@
   "F0BhK/": {
     "context": "Status when product is visible and purchasable",
     "string": "Live"
+  },
+  "F2Ng8N": {
+    "context": "note about standalone tabs in model type tab grouping help",
+    "string": "Types without a separator stay as separate tabs."
   },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
@@ -3459,6 +3472,10 @@
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
+  "GTg7rP": {
+    "context": "configuration menu item title",
+    "string": "Product attributes"
+  },
   "GUeIcq": {
     "context": "edit structure, header",
     "string": "Edit Item"
@@ -3664,9 +3681,6 @@
     "context": "seo description field hint",
     "string": "Meta description shown in search engine previews"
   },
-  "HP6m+q": {
-    "string": "Attributes and Product Types"
-  },
   "HQR2y0": {
     "context": "attribute value is required",
     "string": "Value Required"
@@ -3802,6 +3816,10 @@
   "I/y4IU": {
     "context": "alert message",
     "string": "one of"
+  },
+  "I0975K": {
+    "context": "configuration menu item title",
+    "string": "Model attributes"
   },
   "I1Mz7h": {
     "string": "Manage Collection Channel Availability"
@@ -5032,6 +5050,10 @@
     "context": "button",
     "string": "Assign members"
   },
+  "OjNTfe": {
+    "context": "built-in attribute list filter preset",
+    "string": "Product attributes"
+  },
   "Om1LKj": {
     "context": "stock input label",
     "string": "Initial stock (all warehouses)"
@@ -5294,6 +5316,10 @@
     "context": "confirmation dialog description",
     "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
   },
+  "Q/8Uby": {
+    "context": "configuration section label for model types and attributes",
+    "string": "Model Settings"
+  },
   "Q/Nbku": {
     "context": "product field",
     "string": "Type"
@@ -5492,10 +5518,6 @@
   "QslFl8": {
     "context": "add new refund button",
     "string": "New refund"
-  },
-  "Qu4wS5": {
-    "context": "label for selecting all subtypes in a grouped model type tab",
-    "string": "{prefix}{separator}All"
   },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
@@ -5807,13 +5829,13 @@
   "SceSNp": {
     "string": "Remove following permissions:"
   },
+  "SdnSCt": {
+    "context": "note about separators input in model type tab grouping help",
+    "string": "Enter multiple separators as a comma-separated list."
+  },
   "SgFE10": {
     "context": "product type digital",
     "string": "Digital"
-  },
-  "SjMQrX": {
-    "context": "label for model type tab grouping separator input",
-    "string": "Group separator"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5954,6 +5976,10 @@
   },
   "TWoYMj": {
     "string": "Redirect to the App Page"
+  },
+  "TZZ8Z7": {
+    "context": "intro for model type tab grouping help tooltip",
+    "string": "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu."
   },
   "TZq1Tm": {
     "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
@@ -6152,6 +6178,10 @@
     "context": "attribute name",
     "string": "Name"
   },
+  "UhqCK5": {
+    "context": "help section example in model type tab grouping help tooltip",
+    "string": "<em>Help section for Docs</em> with separator \"section for\" appears under a <strong>Help</strong> tab."
+  },
   "UjoSZB": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
@@ -6336,6 +6366,10 @@
   },
   "VrFy8e": {
     "string": "No notes from customer"
+  },
+  "Vsax0N": {
+    "context": "aria label for model type tab grouping help",
+    "string": "How tab grouping works"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -6845,6 +6879,10 @@
     "context": "automatic completion delay input label",
     "string": "Delay before completion (minutes). Default is 30."
   },
+  "YNUHeb": {
+    "context": "attribute metadata dialog header",
+    "string": "Attribute Metadata"
+  },
   "YPCB7b": {
     "context": "label for fixed amount discount type",
     "string": "Fixed amount"
@@ -7005,6 +7043,10 @@
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
+  "ZCUS72": {
+    "context": "configuration section label for product types and attributes",
+    "string": "Product Settings"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -7041,6 +7083,10 @@
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "ZNnEEs": {
+    "context": "attribute type",
+    "string": "Model Attribute"
   },
   "ZOamBQ": {
     "context": "charge status overcharged",
@@ -7728,6 +7774,10 @@
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
   },
+  "cjaUrx": {
+    "context": "attribute type column",
+    "string": "Attribute type"
+  },
   "ckSjjv": {
     "string": "Too complex conditions to display, use playground to see details."
   },
@@ -8101,6 +8151,10 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
+  "fFwHC3": {
+    "context": "configuration menu item description",
+    "string": "Manage attributes used for model types"
+  },
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
@@ -8244,6 +8298,10 @@
   "g0GAdN": {
     "string": "Delete attributes"
   },
+  "g1KZlx": {
+    "context": "caption explaining numeric attribute unit",
+    "string": "If enabled, values for this attribute will be stored together with a measurement unit (e.g. kg, cm)."
+  },
   "g1bk+A": {
     "context": "payment method type other",
     "string": "Other"
@@ -8344,6 +8402,10 @@
   "gaOXvo": {
     "context": "notification, form submitted",
     "string": "Refund grant for order #{orderNumber} was updated"
+  },
+  "gbo0sd": {
+    "context": "storefront example in model type tab grouping help tooltip",
+    "string": "With separator \"—\", types named <em>Storefront — Cart</em> and <em>Storefront — Checkout</em> appear under one <strong>Storefront</strong> tab."
   },
   "gelco+": {
     "string": "Metadata updated"
@@ -8725,6 +8787,10 @@
     "context": "password login mode option description",
     "string": "All users can log in with a password"
   },
+  "ij+L2R": {
+    "context": "attribute class scope link in attribute header, opens filtered attribute list",
+    "string": "View {attributeClassName} attributes"
+  },
   "ij3dWD": {
     "context": "custom extension page create, error message",
     "string": "Extension name is required"
@@ -8808,6 +8874,10 @@
     "context": "order history message",
     "string": "Shipping tracking number was sent to customer"
   },
+  "j4dRq/": {
+    "context": "configuration menu item description",
+    "string": "Define types of models you use"
+  },
   "j5hGyJ": {
     "context": "attribute is filterable in dashboard",
     "string": "Filterable in dashboard"
@@ -8826,9 +8896,6 @@
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
-  },
-  "jFrdB5": {
-    "string": "Product Settings"
   },
   "jGGnSZ": {
     "context": "page header",
@@ -8887,6 +8954,10 @@
   "jhyt3I": {
     "context": "label for max capturable amount when partial authorization",
     "string": "Remaining max (authorized)"
+  },
+  "jiQ7vn": {
+    "context": "attribute input type column",
+    "string": "Input type"
   },
   "jiXbx5": {
     "context": "fulfillment status canceled",
@@ -9483,6 +9554,10 @@
   "mSS92b": {
     "string": "Untitled rule"
   },
+  "mSxdrx": {
+    "context": "section heading for notes in model type tab grouping help tooltip",
+    "string": "Notes"
+  },
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
@@ -9641,6 +9716,10 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
+  },
+  "nKZUy3": {
+    "context": "attribute detail page, top-bar metadata button tooltip",
+    "string": "Edit attribute metadata"
   },
   "nKwgxY": {
     "context": "select label",
@@ -9821,6 +9900,10 @@
   "oJkeS6": {
     "string": "Attribute Code"
   },
+  "oK7729": {
+    "context": "note about case insensitivity in model type tab grouping help",
+    "string": "Letter case is ignored when matching prefixes."
+  },
   "oL7VUz": {
     "string": "Order Metadata"
   },
@@ -9911,6 +9994,10 @@
   "owCz2y": {
     "context": "message when matrix view cannot be shown",
     "string": "Matrix view requires exactly 2 attributes with selected values"
+  },
+  "oyXhGL": {
+    "context": "label for model type tab grouping separator input",
+    "string": "Split on"
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
@@ -10726,6 +10813,10 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tELvPJ": {
+    "context": "placeholder for model type tab grouping separator input",
+    "string": "Comma-separated list of separators"
+  },
   "tFx7UX": {
     "context": "Reassurance under verification badge when product is not visible to public API",
     "string": "The public API cannot find this product. Confirm it is published and listed in this channel."
@@ -10993,6 +11084,10 @@
     "context": "note about customer",
     "string": "Note"
   },
+  "uUZ2Z8": {
+    "context": "attribute class a11y label prefix",
+    "string": "Attribute class"
+  },
   "uX+Vg7": {
     "string": "Voucher updated"
   },
@@ -11079,6 +11174,10 @@
     "context": "column picker section header",
     "string": "Columns"
   },
+  "usPgB+": {
+    "context": "configuration menu item description",
+    "string": "Manage attributes used for product types"
+  },
   "usjqAQ": {
     "context": "Badge showing number of issues in a channel",
     "string": "{count, plural, one {# issue} other {# issues}}"
@@ -11113,12 +11212,13 @@
     "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
   },
+  "v17EX7": {
+    "context": "built-in attribute list filter preset",
+    "string": "Model attributes"
+  },
   "v17Lly": {
     "context": "label",
     "string": "Max Delivery Time"
-  },
-  "v1pNHW": {
-    "string": "Attribute Class"
   },
   "v1vJ77": {
     "string": "Edit rule"
@@ -11365,6 +11465,10 @@
     "context": "generate variants button",
     "string": "Generate variants"
   },
+  "vz1vWe": {
+    "context": "caption",
+    "string": "If enabled, customers can use this attribute to filter products in the storefront."
+  },
   "vz3yxp": {
     "string": "Channels permissions"
   },
@@ -11386,6 +11490,10 @@
   "w067gF": {
     "context": "refund section header",
     "string": "Refunds"
+  },
+  "w1puHO": {
+    "context": "caption",
+    "string": "If enabled, a value must be provided when this attribute is used."
   },
   "w2Cewo": {
     "string": "Search engine title"
@@ -11500,6 +11608,10 @@
   },
   "wbsq7O": {
     "string": "Usage"
+  },
+  "wdqbOW": {
+    "context": "label for selecting all subtypes in a grouped model type tab",
+    "string": "{prefix} <all>All</all>"
   },
   "we4Lby": {
     "string": "Info"
@@ -11660,6 +11772,10 @@
   },
   "xTyg+p": {
     "string": "No options to select"
+  },
+  "xUUaUR": {
+    "context": "hint for model type tab grouping separator input",
+    "string": "Split at the first match. Separate multiple with commas."
   },
   "xVn5B0": {
     "context": "added new attribute value",
@@ -12037,10 +12153,6 @@
   "zb1rmx": {
     "context": "alert message",
     "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
-  },
-  "zbJHl7": {
-    "context": "attribute type",
-    "string": "Content Attribute"
   },
   "zcyBm+": {
     "context": "tooltip title for undiscounted subtotal next to order subtotal",

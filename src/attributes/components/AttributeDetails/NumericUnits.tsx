@@ -3,60 +3,54 @@ import { Select } from "@dashboard/components/Select";
 import { type MeasurementUnitsEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Checkbox, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, type Option, Paragraph, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import * as M from "./messages";
+import styles from "./NumericUnits.module.css";
 import {
   getUnitChoices,
+  type ResolvedUnitData,
+  resolveUnitDataFromExistingUnit,
   type UnitSystem,
   unitSystemChoices,
   type UnitType,
   unitTypeChoices,
 } from "./utils";
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      border: "none",
-      borderTop: `1px solid ${theme.palette.divider}`,
-      height: 0,
-      margin: "0.5rem 0",
-      width: "100%",
-    },
-  }),
-  { name: "NumericUnits" },
-);
-
-interface UnitData {
-  unit: MeasurementUnitsEnum | null | undefined;
-  system?: UnitSystem;
-  type?: UnitType;
-}
-
 interface NumericUnitsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "errors" | "clearErrors"
+    "setError" | "data" | "errors" | "clearErrors"
   > {
   disabled: boolean;
+  onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }
+
+const getInitialUnitData = (
+  unit: MeasurementUnitsEnum | null | undefined,
+  formatMessage: ReturnType<typeof useIntl>["formatMessage"],
+): ResolvedUnitData => {
+  if (!unit) {
+    return { unit: unit ?? null };
+  }
+
+  return resolveUnitDataFromExistingUnit(unit, getUnitChoices(formatMessage));
+};
 
 export const NumericUnits = ({
   data,
   disabled,
   errors,
-  set,
   setError,
   clearErrors,
+  onUnitChange,
 }: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
-  const classes = useStyles();
-  const [unitData, setUnitData] = useState<UnitData>({
-    unit: data.unit ?? null,
-  });
+  const [unitData, setUnitData] = useState<ResolvedUnitData>(() =>
+    getInitialUnitData(data.unit, formatMessage),
+  );
   const { unit, system, type } = unitData;
   const errorProps = {
     error: !!errors.unit,
@@ -74,65 +68,53 @@ export const NumericUnits = ({
       })),
       getUnitChoices(formatMessage),
     ],
-    [],
+    [formatMessage],
   );
 
-  useEffect(() => set({ unit }), [unit]);
-  useEffect(() => {
-    if (data.unit) {
-      const selectInitialUnitData = () => {
-        const initialData: UnitData = { unit: data.unit };
+  useEffect(
+    function syncUnitToForm() {
+      const normalizedUnit = unit ?? null;
 
-        Object.entries(unitChoices).some(([system, types]) => {
-          const systemMatch = Object.entries(types).some(([type, units]) => {
-            const unitMatch = units.some(({ value }) => value === data.unit);
+      if ((data.unit ?? null) !== normalizedUnit) {
+        onUnitChange(normalizedUnit);
+      }
+    },
+    [data.unit, onUnitChange, unit],
+  );
 
-            if (unitMatch) {
-              initialData.type = type as UnitType;
-            }
+  useEffect(
+    function validateUnitSelection() {
+      if (unit === undefined && !errors.unit) {
+        setError("unit", formatMessage(commonMessages.requiredField));
+      }
 
-            return unitMatch;
-          });
-
-          if (systemMatch) {
-            initialData.system = system as UnitSystem;
-          }
-
-          return systemMatch;
-        });
-
-        return initialData;
-      };
-
-      setUnitData(selectInitialUnitData());
-    }
-  }, []);
-  useEffect(() => {
-    if (unit === undefined && !errors.unit) {
-      setError("unit", formatMessage(commonMessages.requiredField));
-    }
-
-    if (errors.unit && (unit || unit === null)) {
-      clearErrors("unit");
-    }
-  }, [unitData, errors]);
+      if (errors.unit && (unit || unit === null)) {
+        clearErrors("unit");
+      }
+    },
+    [clearErrors, errors.unit, formatMessage, setError, unit],
+  );
 
   return (
-    <div>
-      <div className={classes.hr} />
-
-      <Checkbox
-        data-test-id="numeric-with-unit"
-        name="selectUnit"
-        checked={data.unit !== null}
-        onCheckedChange={checked => setUnitData({ unit: checked ? undefined : null })}
-        disabled={disabled}
-        marginY={2}
-      >
-        <Text fontSize={3}>{formatMessage(M.messages.selectUnit)}</Text>
-      </Checkbox>
-      {data.unit !== null && (
-        <Box display="flex" gap={4} justifyContent="space-between">
+    <Box marginTop={5}>
+      <Box className={styles.propertyControl}>
+        <Checkbox
+          data-test-id="numeric-with-unit"
+          name="selectUnit"
+          checked={unit !== null}
+          onCheckedChange={checked => setUnitData({ unit: checked ? undefined : null })}
+          disabled={disabled}
+        >
+          <Paragraph fontWeight="medium" fontSize={3} margin={0}>
+            <FormattedMessage {...M.messages.selectUnit} />
+            <Text size={2} color="default2" display="block">
+              <FormattedMessage {...M.messages.selectUnitCaption} />
+            </Text>
+          </Paragraph>
+        </Checkbox>
+      </Box>
+      {unit !== null && (
+        <Box display="flex" gap={4} justifyContent="space-between" marginTop={4}>
           <Box width="100%">
             <Select
               error={!system && errorProps.error}
@@ -142,8 +124,8 @@ export const NumericUnits = ({
               label={formatMessage(M.messages.unitSystem)}
               name="system"
               onChange={({ target }) => {
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   system: target.value as UnitSystem,
                 }));
               }}
@@ -161,8 +143,8 @@ export const NumericUnits = ({
               label={formatMessage(M.messages.unitOf)}
               name="type"
               onChange={({ target }) => {
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   type: target.value as UnitType,
                 }));
               }}
@@ -178,10 +160,10 @@ export const NumericUnits = ({
               data-test-id="unit"
               disabled={!type || disabled}
               label={formatMessage(M.messages.unit)}
-              name="type"
+              name="unit"
               onChange={({ target }) =>
-                setUnitData(data => ({
-                  ...data,
+                setUnitData(current => ({
+                  ...current,
                   unit: target.value as MeasurementUnitsEnum,
                 }))
               }
@@ -191,6 +173,6 @@ export const NumericUnits = ({
           </Box>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };

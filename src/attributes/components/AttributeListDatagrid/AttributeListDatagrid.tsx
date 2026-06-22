@@ -1,6 +1,7 @@
-import { type AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
+import { AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { LIST_INSET_ROW_MARKER_WIDTH } from "@dashboard/components/Datagrid/const";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -51,6 +52,7 @@ export const AttributeListDatagrid = ({
   );
   const { handlers, visibleColumns, recentlyAddedColumn, staticColumns, selectedColumns } =
     useColumns({
+      gridName: "attribute_list",
       selectedColumns: settings?.columns ?? [],
       staticColumns: attributesListStaticColumns,
       onSave: onColumnChange,
@@ -81,9 +83,15 @@ export const AttributeListDatagrid = ({
   );
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = visibleColumns[col].id as AttributeListUrlSortField;
+      const columnName = visibleColumns[col].id;
 
-      onSort(columnName);
+      if (
+        !Object.values(AttributeListUrlSortField).includes(columnName as AttributeListUrlSortField)
+      ) {
+        return;
+      }
+
+      onSort(columnName as AttributeListUrlSortField);
     },
     [visibleColumns, onSort],
   );
@@ -94,6 +102,7 @@ export const AttributeListDatagrid = ({
         readonly
         loading={disabled}
         rowMarkers="checkbox-visible"
+        rowMarkerWidth={LIST_INSET_ROW_MARKER_WIDTH}
         columnSelect="single"
         hasRowHover={true}
         onColumnMoved={handlers.onMove}

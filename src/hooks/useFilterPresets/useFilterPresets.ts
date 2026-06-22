@@ -13,6 +13,7 @@ export interface UseFilterPresets {
   presetIdToDelete: number | null;
   setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
   presets: GetFilterTabsOutput<string>;
+  builtInPresetCount: number;
   selectedPreset: number | undefined;
   onPresetChange: (index: number) => void;
   onPresetDelete: () => void;
@@ -27,16 +28,20 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
   reset,
   storageUtils,
   getUrl,
+  builtInPresets = [],
 }: {
   params: T;
   reset?: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
+  builtInPresets?: GetFilterTabsOutput<string>;
 }): UseFilterPresets => {
   const navigate = useNavigator();
   const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);
-  const presets = storageUtils.getFilterTabs();
+  const customPresets = storageUtils.getFilterTabs();
+  const builtInPresetCount = builtInPresets.length;
+  const getAllPresets = () => [...builtInPresets, ...storageUtils.getFilterTabs()];
   const selectedPreset =
     params.activeTab !== undefined && typeof params.activeTab === "string"
       ? parseInt(params.activeTab, 10)
@@ -44,18 +49,20 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
   const onPresetChange = (index: number) => {
     reset?.();
 
-    const currentPresets = storageUtils.getFilterTabs();
-    const qs = new URLSearchParams(currentPresets[index - 1]?.data ?? "");
+    const allPresets = getAllPresets();
+    const qs = new URLSearchParams(allPresets[index - 1]?.data ?? "");
 
     qs.append("activeTab", index.toString());
     navigate(baseUrl.endsWith("?") ? baseUrl + qs.toString() : baseUrl + "?" + qs.toString());
   };
   const onPresetDelete = () => {
-    if (!presetIdToDelete) {
+    if (!presetIdToDelete || presetIdToDelete <= builtInPresetCount) {
       return;
     }
 
-    storageUtils.deleteFilterTab(presetIdToDelete);
+    const customPresetId = presetIdToDelete - builtInPresetCount;
+
+    storageUtils.deleteFilterTab(customPresetId);
     reset?.();
 
     // When deleting the current tab, navigate to the All products
@@ -77,21 +84,25 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
   };
   const onPresetSave = (data: SaveFilterTabDialogFormData) => {
     const { parsedQs } = prepareQs(location.search);
+    const currentCustomPresets = storageUtils.getFilterTabs();
 
     storageUtils.saveFilterTab(
-      getNextUniqueTabName(
-        data.name,
-        presets.map(tab => tab.name),
-      ),
+      getNextUniqueTabName(data.name, [
+        ...builtInPresets.map(tab => tab.name),
+        ...currentCustomPresets.map(tab => tab.name),
+      ]),
       stringify(parsedQs),
     );
-    onPresetChange(presets.length + 1);
+    onPresetChange(builtInPresetCount + currentCustomPresets.length + 1);
   };
   const onPresetUpdate = (tabName: string) => {
     const { parsedQs } = prepareQs(location.search);
+    const currentCustomPresets = storageUtils.getFilterTabs();
 
     storageUtils.updateFilterTab(tabName, stringify(parsedQs));
-    onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
+    onPresetChange(
+      builtInPresetCount + currentCustomPresets.findIndex(tab => tab.name === tabName) + 1,
+    );
   };
   const hasPresetsChanged = () => {
     const { parsedQs } = prepareQs(location.search);
@@ -100,7 +111,7 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
       return location.search !== "" && stringify(parsedQs) !== "";
     }
 
-    const activeTab = presets[selectedPreset - 1];
+    const activeTab = getAllPresets()[selectedPreset - 1];
 
     return (
       activeTab?.data !== stringify(parsedQs) &&
@@ -109,8 +120,8 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
     );
   };
   const getPresetNameToDelete = (): string => {
-    const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
-    const preset = presets?.[presetIndex];
+    const customPresetIndex = presetIdToDelete ? presetIdToDelete - builtInPresetCount - 1 : 0;
+    const preset = customPresets?.[customPresetIndex];
 
     return preset?.name ?? "...";
   };
@@ -119,7 +130,8 @@ export const useFilterPresets = <T extends { activeTab?: string; action?: string
     presetIdToDelete,
     setPresetIdToDelete,
     getPresetNameToDelete,
-    presets,
+    presets: customPresets,
+    builtInPresetCount,
     selectedPreset,
     onPresetChange,
     onPresetDelete,

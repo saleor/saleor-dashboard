@@ -1,5 +1,9 @@
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
-import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import {
+  getAttributeRowLabelProps,
+  getErrorMessage,
+  getSingleDisplayValue,
+} from "@dashboard/components/Attributes/utils";
 import {
   type AttributeValueFragment,
   type PageErrorWithAttributesFragment,
@@ -85,7 +89,7 @@ export const DropdownRow = ({
   };
 
   return (
-    <BasicAttributeRow label={attribute.label}>
+    <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
       <DynamicCombobox
         size="small"
         disabled={disabled}

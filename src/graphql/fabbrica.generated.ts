@@ -4117,6 +4117,12 @@ export type OptionalAssignedSwatchAttributeValue = {
   name?: AssignedSwatchAttributeValue['name'] | undefined;
   /** Slug of the selected swatch value. */
   slug?: AssignedSwatchAttributeValue['slug'] | undefined;
+  /**
+ * Translation of the name.
+ *
+ * Added in Saleor 3.22.
+ */
+  translation?: AssignedSwatchAttributeValue['translation'] | undefined;
 };
 
 /**

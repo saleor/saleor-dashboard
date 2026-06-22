@@ -6,7 +6,7 @@ import * as React from "react";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;
-  onRemove: () => void;
+  onRemove?: () => void;
   isActive?: boolean;
   children: React.ReactNode;
 }
@@ -38,7 +38,7 @@ export const FilterPresetItem = ({
         <Text ellipsis fontWeight={isActive ? "bold" : "regular"}>
           {children}
         </Text>
-        {hasHover && (
+        {hasHover && onRemove && (
           <Box
             cursor="pointer"
             zIndex="2"

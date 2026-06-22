@@ -1,11 +1,59 @@
 // @ts-strict-ignore
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { parseQs } from "@dashboard/url-utils";
+import { stringifyQs } from "@dashboard/utils/urls";
 import { type Action, type Location } from "history";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
 import { type ExitFormDialogData, type FormData, type FormsData } from "./types";
+
+// Query params used solely to drive URL-based dialogs/modals (see
+// `createDialogActionHandlers`). Toggling these opens/closes a modal on the
+// same page and must never trigger the "leave without saving" prompt.
+const DIALOG_QUERY_PARAMS = ["action", "id", "ids"];
+
+// Stringifies with keys sorted so two equivalent query objects with different
+// key ordering produce the same string and compare equal.
+const sortedStringify = (params: Record<string, unknown>): string => {
+  const sorted: Record<string, unknown> = {};
+
+  Object.keys(params)
+    .sort((a, b) => a.localeCompare(b))
+    .forEach(key => {
+      sorted[key] = params[key];
+    });
+
+  return stringifyQs(sorted);
+};
+
+const splitDialogParams = (search: string) => {
+  const parsed = parseQs(search.startsWith("?") ? search.slice(1) : search);
+  const dialog: Record<string, unknown> = {};
+  const rest: Record<string, unknown> = {};
+
+  Object.keys(parsed).forEach(key => {
+    if (DIALOG_QUERY_PARAMS.includes(key)) {
+      dialog[key] = parsed[key];
+    } else {
+      rest[key] = parsed[key];
+    }
+  });
+
+  return { dialog: sortedStringify(dialog), rest: sortedStringify(rest) };
+};
+
+// Returns true when a transition only opens or closes a URL-driven modal:
+// the dialog params change while every other query param stays the same.
+// Navigating to an identical or differently-scoped location is not treated
+// as a dialog toggle, so the regular exit-prompt logic still applies there.
+export const isDialogOnlyQueryChange = (currentSearch: string, nextSearch: string): boolean => {
+  const current = splitDialogParams(currentSearch);
+  const next = splitDialogParams(nextSearch);
+
+  return current.rest === next.rest && current.dialog !== next.dialog;
+};
 
 const defaultValues = {
   isDirty: false,
@@ -165,6 +213,14 @@ export function useExitFormDialogProvider() {
       // needs to be done before the shouldBlockNav condition
       // so it doesn't trigger setting default values
       if (isOnlyQuerying(transition)) {
+        // Opening/closing a URL-driven modal (dialog params only) is part of
+        // editing the form, not leaving it, so it must never be blocked.
+        if (isDialogOnlyQueryChange(currentLocation.current.search, transition.search)) {
+          setCurrentLocation(transition);
+
+          return null;
+        }
+
         if (shouldBlockNavRef.current()) {
           navAction.current = transition;
           lastBlockedAction.current = action;

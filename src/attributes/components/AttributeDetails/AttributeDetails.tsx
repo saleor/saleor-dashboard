@@ -1,4 +1,8 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
+import { getAttributeInputTypeLabel } from "@dashboard/attributes/utils/getAttributeInputTypeLabel";
+import { AttributeInputTypeOptionAdornment } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeOptionAdornment";
+import { AttributeInputTypeOptionLabel } from "@dashboard/components/AttributeInputTypeIcon/AttributeInputTypeOptionLabel";
+import { isAttributeInputTypeEnum } from "@dashboard/components/AttributeInputTypeIcon/isAttributeInputTypeEnum";
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
@@ -12,13 +16,16 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Box, Combobox } from "@saleor/macaw-ui-next";
+import { useMemo, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { type AttributePageFormData } from "../AttributePage";
-import { inputTypeMessages, messages } from "./messages";
+import { messages } from "./messages";
+
+const attributeInputTypeOptions = Object.values(AttributeInputTypeEnum);
 
 const entityTypeMessages = defineMessages({
   page: {
@@ -51,68 +58,40 @@ const entityTypeMessages = defineMessages({
 interface AttributeDetailsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "clearErrors" | "errors"
+    "setError" | "data" | "clearErrors" | "errors"
   > {
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
   onChange: FormChange;
+  onUnitChange: (unit: AttributePageFormData["unit"]) => void;
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
-  const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
-    props;
+  const {
+    canChangeType,
+    errors,
+    clearErrors,
+    setError,
+    data,
+    disabled,
+    apiErrors,
+    onChange,
+    onUnitChange,
+  } = props;
   const intl = useIntl();
-  const inputTypeChoices = [
-    {
-      label: intl.formatMessage(inputTypeMessages.dropdown),
-      value: AttributeInputTypeEnum.DROPDOWN,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.multiselect),
-      value: AttributeInputTypeEnum.MULTISELECT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.file),
-      value: AttributeInputTypeEnum.FILE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.references),
-      value: AttributeInputTypeEnum.REFERENCE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.singleReference),
-      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.plainText),
-      value: AttributeInputTypeEnum.PLAIN_TEXT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.richText),
-      value: AttributeInputTypeEnum.RICH_TEXT,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.numeric),
-      value: AttributeInputTypeEnum.NUMERIC,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.boolean),
-      value: AttributeInputTypeEnum.BOOLEAN,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.date),
-      value: AttributeInputTypeEnum.DATE,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.dateTime),
-      value: AttributeInputTypeEnum.DATE_TIME,
-    },
-    {
-      label: intl.formatMessage(inputTypeMessages.swatch),
-      value: AttributeInputTypeEnum.SWATCH,
-    },
-  ];
+  const [inputTypeInputActive, setInputTypeInputActive] = useState(false);
+  const showInputTypeDisplay =
+    !inputTypeInputActive && Boolean(data.inputType) && isAttributeInputTypeEnum(data.inputType);
+  const inputTypeChoices = useMemo(
+    () =>
+      attributeInputTypeOptions.map(inputType => ({
+        label: getAttributeInputTypeLabel(intl, inputType),
+        value: inputType,
+        startAdornment: <AttributeInputTypeOptionAdornment inputType={inputType} />,
+      })),
+    [intl],
+  );
   const entityTypeChoices = [
     {
       label: intl.formatMessage(entityTypeMessages.page),
@@ -179,17 +158,46 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
         <FormSpacer />
         <Box display="flex" justifyContent="space-between" gap={4}>
           <Box width="100%">
-            <Select
+            {/*
+              Macaw Combobox renders startAdornment and the selected label as siblings
+              (icon wrapper + native <input>), so they cannot be aligned. Same workaround
+              as ProductOrganization: render icon + label in startAdornment and hide the
+              duplicate input text until focus. Revisit when Macaw supports field adornments.
+            */}
+            <Combobox
               data-test-id="attribute-type-select"
-              aria-disabled={disabled || !canChangeType}
               disabled={disabled || !canChangeType}
               error={!!formApiErrors.inputType}
               helperText={getAttributeErrorMessage(formApiErrors.inputType, intl)}
               label={intl.formatMessage(messages.inputType)}
               name="inputType"
-              onChange={onChange}
               value={data.inputType}
               options={inputTypeChoices}
+              onFocus={() => setInputTypeInputActive(true)}
+              onBlur={() => setInputTypeInputActive(false)}
+              startAdornment={value => {
+                if (!showInputTypeDisplay || !value || !isAttributeInputTypeEnum(value)) {
+                  return null;
+                }
+
+                return (
+                  <AttributeInputTypeOptionLabel inputType={value} iconSize="small" textSize={3} />
+                );
+              }}
+              onChange={value => {
+                if (!value) {
+                  return;
+                }
+
+                onChange({
+                  target: { name: "inputType", value },
+                });
+              }}
+              {...(showInputTypeDisplay && {
+                width: "100%",
+                __opacity: 0,
+                position: "absolute",
+              })}
             />
           </Box>
           {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
@@ -210,18 +218,6 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
             </Box>
           )}
         </Box>
-        <FormSpacer />
-        <Checkbox
-          name={"valueRequired" as keyof AttributePageFormData}
-          checked={data.valueRequired}
-          onCheckedChange={checked =>
-            onChange({ target: { name: "valueRequired", value: checked } })
-          }
-          disabled={disabled}
-          marginY={2}
-        >
-          <Text fontSize={3}>{intl.formatMessage(messages.valueRequired)}</Text>
-        </Checkbox>
         {data.inputType === AttributeInputTypeEnum.NUMERIC && (
           <NumericUnits
             data={data}
@@ -229,7 +225,7 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
             disabled={disabled}
             clearErrors={clearErrors}
             setError={setError}
-            set={set}
+            onUnitChange={onUnitChange}
           />
         )}
       </DashboardCard.Content>

@@ -105,8 +105,8 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: 10,
   },
   [ListViews.ATTRIBUTE_LIST]: {
-    rowNumber: 10,
-    columns: ["slug", "name", "visible", "searchable", "use-in-faceted-search"],
+    rowNumber: PAGINATE_BY,
+    columns: ["name", "slug", "input-type", "attribute-type", "visible", "use-in-faceted-search"],
   },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY,

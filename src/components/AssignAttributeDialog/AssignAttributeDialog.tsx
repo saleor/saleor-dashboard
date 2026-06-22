@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import Checkbox from "@dashboard/components/Checkbox";
 import {
   ConfirmButton,
@@ -129,7 +130,10 @@ const AssignAttributeDialog = ({
                         <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
                       </TableCell>
                       <TableCell className={classes.wideCell}>
-                        {attribute.name}
+                        <AttributeNameWithTypeIcon
+                          name={attribute.name}
+                          inputType={attribute.inputType}
+                        />
                         <Text size={2} fontWeight="light" display="block">
                           {attribute.slug}
                         </Text>

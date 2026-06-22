@@ -1,5 +1,9 @@
 import { Tag } from "lucide-react";
 
-import { createNavigationLucideIcon } from "./createNavigationLucideIcon";
+import {
+  createConfigurationLucideIcon,
+  createNavigationLucideIcon,
+} from "./createNavigationLucideIcon";
 
 export const ProductsIcon = createNavigationLucideIcon(Tag);
+export const ConfigurationProductsIcon = createConfigurationLucideIcon(Tag);

@@ -4,6 +4,8 @@ import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
+import { attributeInputTypeCellRenderer } from "./AttributeInputTypeCell"; // canvas-only
+import { attributeTypeCellRenderer } from "./AttributeTypeCell"; // canvas-only
 import { dropdownCellRenderer } from "./DropdownCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
@@ -20,6 +22,8 @@ export function useCustomCellRenderers() {
   const renderers = useMemo(
     () => [
       pillCellRenderer(),
+      attributeInputTypeCellRenderer,
+      attributeTypeCellRenderer,
       statusCellRenderer(themeValues),
       moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),
@@ -30,7 +34,7 @@ export function useCustomCellRenderers() {
       thumbnailCellRenderer,
       ...customRenderers,
     ],
-    [customRenderers, locale],
+    [customRenderers, locale, themeValues],
   );
 
   return renderers;

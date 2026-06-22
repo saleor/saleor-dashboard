@@ -8,8 +8,6 @@ import {
   useAttributeValueDeleteMutation,
   useAttributeValueReorderMutation,
   useAttributeValueUpdateMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
@@ -19,13 +17,13 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
+import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
@@ -45,8 +43,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
     AttributeUrlQueryParams
@@ -73,6 +69,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     data: currentData,
     previousData,
     loading,
+    refetch,
   } = useAttributeDetailsQuery({
     variables: {
       id,
@@ -208,7 +205,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         beforeValues: valuesPaginationState.before,
       },
     });
-  const handleUpdate = async (data: AttributePageFormData) =>
+  const handleSubmit = async (data: AttributePageFormData) =>
     extractMutationErrors(
       attributeUpdate({
         variables: {
@@ -221,12 +218,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         },
       }),
     );
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.attribute!,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
 
   return (
     <AttributePage
@@ -235,6 +226,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       params={params}
       onDelete={() => openModal("remove")}
+      onShowMetadata={() => openModal("view-metadata", { id: undefined })}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
@@ -262,6 +254,12 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     >
       {attributeFormData => (
         <>
+          <AttributeMetadataDialog
+            open={params.action === "view-metadata" && !!data?.attribute}
+            onClose={closeModal}
+            attribute={data?.attribute}
+            refetchAttribute={refetch}
+          />
           <AttributeDeleteDialog
             open={params.action === "remove"}
             name={data?.attribute?.name ?? "..."}

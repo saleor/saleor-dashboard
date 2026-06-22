@@ -27,6 +27,7 @@ import {
   type AttributeAddUrlDialog,
   type AttributeAddUrlQueryParams,
   attributeUrl,
+  parseAttributeTypeFromQueryParam,
 } from "../../urls";
 import { type AttributeValueEditDialogFormData, getAttributeData } from "../../utils/data";
 
@@ -149,9 +150,12 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
     updatePrivateMetadata,
   );
 
+  const defaultAttributeType = parseAttributeTypeFromQueryParam(params.type);
+
   return (
     <AttributePage
       attribute={null}
+      defaultAttributeType={defaultAttributeType}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
       params={params}

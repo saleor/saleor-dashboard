@@ -45,10 +45,10 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
 };
 
-const getMeasurementUnitMessage = (
+export const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
   formatMessage: IntlShape["formatMessage"],
-): MessageDescriptor | React.ReactNode => {
+): React.ReactNode => {
   const message = UNIT_MESSAGES_MAPPING[unit];
 
   return typeof message === "string" || React.isValidElement(message)
@@ -163,3 +163,36 @@ export const getUnitChoices = (
       [key in UnitType]: Option[];
     };
   };
+
+export interface ResolvedUnitData {
+  unit: MeasurementUnitsEnum | null | undefined;
+  system?: UnitSystem;
+  type?: UnitType;
+}
+
+export const resolveUnitDataFromExistingUnit = (
+  unit: MeasurementUnitsEnum,
+  unitChoices: ReturnType<typeof getUnitChoices>,
+): ResolvedUnitData => {
+  const initialData: ResolvedUnitData = { unit };
+
+  Object.entries(unitChoices).some(([systemKey, types]) => {
+    const systemMatch = Object.entries(types).some(([typeKey, units]) => {
+      const unitMatch = units.some(({ value }) => value === unit);
+
+      if (unitMatch) {
+        initialData.type = typeKey as UnitType;
+      }
+
+      return unitMatch;
+    });
+
+    if (systemMatch) {
+      initialData.system = systemKey as UnitSystem;
+    }
+
+    return systemMatch;
+  });
+
+  return initialData;
+};

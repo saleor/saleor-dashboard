@@ -1,17 +1,19 @@
 // @ts-strict-ignore
-import { attributeListUrl } from "@dashboard/attributes/urls";
+import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
-import { PermissionEnum } from "@dashboard/graphql";
+import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import Attributes from "@dashboard/icons/Attributes";
 import Channels from "@dashboard/icons/Channels";
+import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
 import PermissionGroups from "@dashboard/icons/PermissionGroups";
-import ProductTypes from "@dashboard/icons/ProductTypes";
+import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
 import ShippingMethods from "@dashboard/icons/ShippingMethods";
 import SiteSettings from "@dashboard/icons/SiteSettings";
 import StaffMembers from "@dashboard/icons/StaffMembers";
 import Taxes from "@dashboard/icons/Taxes";
 import Warehouses from "@dashboard/icons/Warehouses";
 import { sectionNames } from "@dashboard/intl";
+import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
@@ -29,42 +31,82 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
       label: intl.formatMessage({
-        id: "HP6m+q",
-        defaultMessage: "Attributes and Product Types",
+        id: "ZCUS72",
+        defaultMessage: "Product Settings",
+        description: "configuration section label for product types and attributes",
       }),
       menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "19/lwV",
-            defaultMessage: "Determine attributes used to create product types",
-          }),
-          icon: <Attributes />,
-          requireAllPermissions: true,
-          permissions: [
-            PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-          ],
-          title: intl.formatMessage(sectionNames.attributes),
-          url: attributeListUrl(),
-          testId: "configuration-menu-attributes",
-        },
         {
           description: intl.formatMessage({
             id: "n0RwMK",
             defaultMessage: "Define types of products you sell",
           }),
-          icon: <ProductTypes />,
+          icon: <ConfigurationProductsIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),
           testId: "configuration-menu-product-types",
         },
+        {
+          description: intl.formatMessage({
+            id: "usPgB+",
+            defaultMessage: "Manage attributes used for product types",
+            description: "configuration menu item description",
+          }),
+          icon: <Attributes />,
+          permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage({
+            id: "GTg7rP",
+            defaultMessage: "Product attributes",
+            description: "configuration menu item title",
+          }),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.PRODUCT_TYPE),
+          testId: "configuration-menu-product-attributes",
+        },
       ],
     },
     {
       label: intl.formatMessage({
-        id: "jFrdB5",
-        defaultMessage: "Product Settings",
+        id: "Q/8Uby",
+        defaultMessage: "Model Settings",
+        description: "configuration section label for model types and attributes",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "j4dRq/",
+            defaultMessage: "Define types of models you use",
+            description: "configuration menu item description",
+          }),
+          icon: <ConfigurationModelingIcon />,
+          permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage(sectionNames.modelTypes),
+          url: pageTypeListUrl(),
+          testId: "configuration-menu-model-types",
+        },
+        {
+          description: intl.formatMessage({
+            id: "fFwHC3",
+            defaultMessage: "Manage attributes used for model types",
+            description: "configuration menu item description",
+          }),
+          icon: <Attributes />,
+          permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage({
+            id: "I0975K",
+            defaultMessage: "Model attributes",
+            description: "configuration menu item title",
+          }),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.PAGE_TYPE),
+          testId: "configuration-menu-model-attributes",
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage({
+        id: "7GcWC8",
+        defaultMessage: "Tax Settings",
+        description: "configuration section label",
       }),
       menuItems: [
         {

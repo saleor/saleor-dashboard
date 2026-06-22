@@ -26,15 +26,16 @@ export const messages = defineMessages({
     defaultMessage: "Catalog Input type for Store Owner",
     description: "attribute's editor component",
   },
-  valueRequired: {
-    id: "njBulj",
-    defaultMessage: "Value Required",
-    description: "check to require attribute to have value",
-  },
   selectUnit: {
     id: "PiSXjb",
     defaultMessage: "Select unit",
     description: "check to require numeric attribute unit",
+  },
+  selectUnitCaption: {
+    id: "g1KZlx",
+    defaultMessage:
+      "If enabled, values for this attribute will be stored together with a measurement unit (e.g. kg, cm).",
+    description: "caption explaining numeric attribute unit",
   },
   unitSystem: {
     id: "ghje1I",

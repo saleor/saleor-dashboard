@@ -16,10 +16,10 @@ const samplePageTypes = [
 
 const groupedPageTypes = [
   { id: "pt-article", name: "Article" },
-  { id: "pt-cart", name: "Storefront — Cart" },
-  { id: "pt-checkout", name: "Storefront — Checkout" },
-  { id: "pt-chrome", name: "Storefront — Chrome" },
-  { id: "pt-homepage", name: "Storefront — Homepage" },
+  { id: "pt-cart", name: "Storefront - Cart" },
+  { id: "pt-checkout", name: "Storefront - Checkout" },
+  { id: "pt-chrome", name: "Storefront - Chrome" },
+  { id: "pt-homepage", name: "Storefront - Homepage" },
   { id: "pt-legal", name: "Legal" },
 ];
 
