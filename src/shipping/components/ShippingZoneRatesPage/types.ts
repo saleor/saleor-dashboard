@@ -1,5 +1,4 @@
 import { type ChannelShippingData } from "@dashboard/channels/utils";
-import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { type ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { type OutputData } from "@editorjs/editorjs";
 
@@ -15,4 +14,4 @@ export interface ShippingZoneRateCommonFormData {
   taxClassId: string;
 }
 
-export type ShippingZoneRateUpdateFormData = ShippingZoneRateCommonFormData & MetadataFormData;
+export type ShippingZoneRateUpdateFormData = ShippingZoneRateCommonFormData;

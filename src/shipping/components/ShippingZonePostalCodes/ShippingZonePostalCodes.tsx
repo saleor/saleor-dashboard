@@ -189,7 +189,8 @@ const ShippingZonePostalCodes = ({
                   alignItems="center"
                   justifyContent="space-between"
                   paddingY={3}
-                  paddingX={5}
+                  paddingLeft={5}
+                  paddingRight={2}
                   data-test-id="assigned-postal-codes-rows"
                 >
                   <Text size={2}>{getPostalCodeRangeLabel(postalCodeRange)}</Text>

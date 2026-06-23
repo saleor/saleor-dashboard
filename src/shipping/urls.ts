@@ -48,6 +48,7 @@ type ZipCodeRangeActions = "add-range" | "remove-range";
 export type ShippingRateUrlDialog =
   | ZipCodeRangeActions
   | "remove"
+  | "view-metadata"
   | ShippingMethodActions
   | ChannelsAction;
 

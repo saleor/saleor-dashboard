@@ -18,8 +18,6 @@ import {
   useShippingPriceExcludeProductMutation,
   useShippingPriceRemoveProductFromExcludeMutation,
   useShippingZoneQuery,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
   useUpdateShippingRateMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
@@ -33,6 +31,7 @@ import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
+import { ShippingMethodMetadataDialog } from "@dashboard/shipping/components/ShippingMethodMetadataDialog/ShippingMethodMetadataDialog";
 import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
@@ -60,7 +59,6 @@ import {
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -193,8 +191,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       }
     },
   });
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
     havePostalCodesChanged: false,
@@ -256,12 +252,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
     return errors;
   };
-  const handleSubmit = createMetadataUpdateHandler(
-    rate!,
-    updateData,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
   const handleProductAssign = (ids: string[]) =>
     assignProduct({
       variables: { id: rateId, input: { products: ids } },
@@ -392,7 +382,8 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         saveButtonBarState={updateShippingRateOpts.status}
         onDelete={() => openModal("remove")}
         backHref={shippingZoneUrl(id)}
-        onSubmit={handleSubmit}
+        onSubmit={updateData}
+        onShowMetadata={() => openModal("view-metadata")}
         rate={rate!}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate?.errors || []}
         channelErrors={
@@ -432,6 +423,11 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         onClose={closeModal}
         onSubmit={code => onPostalCodeAssign(code)}
         open={params.action === "add-range"}
+      />
+      <ShippingMethodMetadataDialog
+        open={params.action === "view-metadata" && !!rate}
+        onClose={closeModal}
+        shippingMethod={rate}
       />
     </PaginatorContext.Provider>
   );

@@ -7,7 +7,6 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type WithFormId } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -35,8 +34,7 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboard/types";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { type FormEventHandler, useMemo } from "react";
@@ -63,6 +61,7 @@ interface ShippingZoneRatesPageProps
   postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
   backHref: string;
   onDelete?: () => void;
+  onShowMetadata: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
   onPostalCodeAssign: () => void;
@@ -88,6 +87,7 @@ const ShippingZoneRatesPage = ({
   errors,
   backHref,
   onDelete,
+  onShowMetadata,
   onSubmit,
   onPostalCodeInclusionChange,
   onChannelsChange,
@@ -119,11 +119,9 @@ const ShippingZoneRatesPage = ({
       channelListings: shippingChannels,
       maxDays: rate?.maximumDeliveryDays?.toString() || "",
       maxValue: rate?.maximumOrderWeight?.value.toString() || "",
-      metadata: rate?.metadata.map(mapMetadataItemToInput),
       minDays: rate?.minimumDeliveryDays?.toString() || "",
       minValue: rate?.minimumOrderWeight?.value.toString() || "",
       name: rate?.name || "",
-      privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
       type: rate?.type || null,
       taxClassId: rate?.taxClass?.id || "",
     }),
@@ -145,7 +143,6 @@ const ShippingZoneRatesPage = ({
     loading: !rate,
     triggerChange,
   });
-  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const data: ShippingZoneRateUpdateFormData = {
     ...formData,
     description: null,
@@ -166,7 +163,6 @@ const ShippingZoneRatesPage = ({
     triggerChange,
   );
   const isValid = !formData.channelListings?.some(channel => validatePrice(channel.price));
-  const changeMetadata = makeMetadataChangeHandler(change);
   const isSaveDisabled = disabled || !isValid;
 
   setIsSubmitDisabled(isSaveDisabled);
@@ -175,7 +171,17 @@ const ShippingZoneRatesPage = ({
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
         <DetailPageLayout>
-          <TopNav href={backHref} title={rate?.name}>
+          <TopNav href={backHref} title={rate?.name} actionsGap={3}>
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={!rate}
+              data-test-id="show-shipping-method-metadata"
+              title={intl.formatMessage({
+                defaultMessage: "Edit shipping method metadata",
+                description: "shipping method detail page, top-bar metadata button tooltip",
+                id: "leb986",
+              })}
+            />
             {canTranslate && rate?.id && (
               <TranslationsButton
                 onClick={() =>
@@ -190,7 +196,7 @@ const ShippingZoneRatesPage = ({
               />
             )}
           </TopNav>
-          <DetailPageLayout.Content>
+          <DetailPageLayout.Content paddingBottom={10}>
             <ShippingRateInfo data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
             {isPriceVariant ? (
@@ -235,9 +241,6 @@ const ShippingZoneRatesPage = ({
               disabled={disabled}
               {...listProps}
             />
-            <CardSpacer />
-            <Metadata data={data} onChange={changeMetadata} />
-            <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
