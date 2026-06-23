@@ -2,6 +2,7 @@
 import { type Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import type { ReactNode } from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
 import ChannelsAvailabilityDialogWrapper from "../ChannelsAvailabilityDialogWrapper";
@@ -13,6 +14,7 @@ interface ChannelsAvailabilityDialogProps {
   channels: Channel[];
   confirmButtonState: ConfirmButtonTransitionState;
   contentType?: string;
+  description?: ReactNode;
   disabled?: boolean;
   open: boolean;
   onClose: () => void;
@@ -28,6 +30,7 @@ const ChannelsAvailabilityDialog = ({
   channels,
   confirmButtonState,
   contentType,
+  description,
   disabled,
   open,
   onClose,
@@ -49,6 +52,7 @@ const ChannelsAvailabilityDialog = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={title}
+      subtitle={description}
       disabled={disabled}
     >
       {hasChannels ? (

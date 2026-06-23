@@ -40,6 +40,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import {
+  shippingRateChannelSetupUrl,
   shippingRateCreateUrl,
   shippingRateEditUrl,
   shippingZonesListUrl,
@@ -77,7 +78,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
     displayLoader: true,
     variables: { id, ...paginationState },
   });
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
     ShippingZoneUrlQueryParams
@@ -199,6 +200,9 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
           navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE }))
         }
         getPriceRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
+        getRateChannelSetupHref={(rateId, channelId) =>
+          shippingRateChannelSetupUrl(id, rateId, channelId)
+        }
         onRateRemove={rateId =>
           openModal("remove-rate", {
             id: rateId,
@@ -218,7 +222,6 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
-        selectedChannelId={channel?.id}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}

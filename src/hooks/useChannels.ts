@@ -3,6 +3,7 @@ import { type Channel } from "@dashboard/channels/utils";
 import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { useCallback } from "react";
 
 interface Modal {
   openModal: (action: ChannelsAction) => void;
@@ -49,8 +50,24 @@ function useChannels<T extends Channel, A>(
       setChannels([]);
     }
   };
+  const addChannel = useCallback(
+    (channel: T) => {
+      if (currentChannels.some(existingChannel => existingChannel.id === channel.id)) {
+        return;
+      }
+
+      setCurrentChannels(
+        [...currentChannels, channel].sort((firstChannel, secondChannel) =>
+          firstChannel.name.localeCompare(secondChannel.name),
+        ),
+      );
+      setIsDirty(true);
+    },
+    [currentChannels, setCurrentChannels, setIsDirty],
+  );
 
   return {
+    addChannel,
     channelListElements,
     channelsToggle,
     currentChannels,

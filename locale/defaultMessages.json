@@ -3,6 +3,10 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+0+RJj": {
+    "context": "shipping method types help example row one result",
+    "string": "Both methods"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -341,6 +345,10 @@
   "/rsk2X": {
     "context": "Badge shown when channel is newly added",
     "string": "new"
+  },
+  "/tC+ce": {
+    "context": "shipping method types help example table cart column",
+    "string": "Cart"
   },
   "/uu/aV": {
     "context": "product media delete dialog content",
@@ -999,6 +1007,10 @@
   "3fgyFh": {
     "context": "order history message",
     "string": "Payment was refunded"
+  },
+  "3jnyYs": {
+    "context": "shipping method types help example price method",
+    "string": "\"Free over $100\" (price-based, minimum order value $100)"
   },
   "3kVRE2": {
     "context": "Checkbox label for setting publication date",
@@ -1661,6 +1673,10 @@
   "7A+FJl": {
     "context": "link",
     "string": "View profile"
+  },
+  "7B5AK5": {
+    "context": "link to configure shipping method channel pricing",
+    "string": "Set up pricing"
   },
   "7CZ8Tp": {
     "context": "Description for no shipping zones info when shop uses direct warehouse-channel stock availability",
@@ -2508,6 +2524,10 @@
     "context": "variant availability in channel",
     "string": "Available"
   },
+  "Be1Tws": {
+    "context": "shipping method types help example row two cart",
+    "string": "$50, 8 kg"
+  },
   "BfJGij": {
     "context": "header",
     "string": "Address Information"
@@ -2554,6 +2574,10 @@
   },
   "C0MnAi": {
     "string": "off"
+  },
+  "C1aDzb": {
+    "context": "shipping method types help example row three cart",
+    "string": "$150, 2 kg"
   },
   "C2N30x": {
     "context": "app has been removed",
@@ -3111,6 +3135,10 @@
     "context": "Status when product is visible and purchasable",
     "string": "Live"
   },
+  "F1f4+A": {
+    "context": "shipping method types help example row two result",
+    "string": "Weight-based only"
+  },
   "F2Ng8N": {
     "context": "note about standalone tabs in model type tab grouping help",
     "string": "Types without a separator stay as separate tabs."
@@ -3143,6 +3171,10 @@
   "F8pCg4": {
     "context": "input placeholder",
     "string": "Optional"
+  },
+  "F9o33g": {
+    "context": "shipping method channel coverage summary",
+    "string": "Priced for {configured} of {total} channels"
   },
   "FBtqtl": {
     "context": "payment status",
@@ -3234,10 +3266,6 @@
   },
   "FiO/W/": {
     "string": "Delete categories"
-  },
-  "FjrExY": {
-    "context": "price based shipping methods, section header",
-    "string": "Price Based Rates"
   },
   "FjywW1": {
     "context": "automatic completion delay input description",
@@ -3334,6 +3362,10 @@
   "G0+gAp": {
     "context": "shipping section header",
     "string": "Shipping"
+  },
+  "G0QhNI": {
+    "context": "shipping method types help example title",
+    "string": "Example"
   },
   "G2WJ1J": {
     "context": "order header date, less than an hour ago",
@@ -3642,6 +3674,10 @@
     "context": "attribute value is required",
     "string": "Value Required"
   },
+  "HQxM32": {
+    "context": "button",
+    "string": "Add shipping method"
+  },
   "HR9OTW": {
     "context": "staff member's account",
     "string": "Active"
@@ -3653,6 +3689,10 @@
   "HRy5qF": {
     "context": "customer overview stat label",
     "string": "Total orders"
+  },
+  "HSYLgD": {
+    "context": "shipping method missing channel listings count",
+    "string": "{count, plural, one {# channel without pricing} other {# channels without pricing}}"
   },
   "HSYM17": {
     "context": "outcome prediction showing resulting order status after capture",
@@ -4409,6 +4449,10 @@
   "LYKO9m": {
     "context": "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
     "string": "Shipping"
+  },
+  "LZ//yK": {
+    "context": "shipping method types help example row three result",
+    "string": "Price-based only"
   },
   "La3xKC": {
     "context": "Description of public API verification feature",
@@ -5274,6 +5318,10 @@
     "context": "product field",
     "string": "Type"
   },
+  "Q/qE2a": {
+    "context": "search channels in shipping method breakdown",
+    "string": "Search channels"
+  },
   "Q0JJ4F": {
     "context": "dialog header",
     "string": "Delete Vouchers"
@@ -5550,9 +5598,6 @@
   },
   "RUwHjA": {
     "string": "Bug Fix"
-  },
-  "RUzdUH": {
-    "string": "No shipping rates found"
   },
   "RXPGi/": {
     "context": "page title",
@@ -6425,6 +6470,10 @@
   "WK62MN": {
     "string": "Fulfillment"
   },
+  "WKF21x": {
+    "context": "shipping method channel picker dialog title with method name",
+    "string": "Set up pricing for {methodName} for additional channels"
+  },
   "WMGoqz": {
     "context": "used by filter label",
     "string": "Used by"
@@ -6442,10 +6491,6 @@
   "WQMTKI": {
     "context": "list of warehouses",
     "string": "Warehouses A to Z"
-  },
-  "WR8rir": {
-    "context": "button",
-    "string": "Create rate"
   },
   "WS4ov0": {
     "context": "notifier message",
@@ -7249,10 +7294,6 @@
   "aXytBR": {
     "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
   },
-  "aYhcie": {
-    "context": "shipping method weight range",
-    "string": "Weight Range"
-  },
   "aYnI0N": {
     "context": "customer overview stat label",
     "string": "Last login"
@@ -7326,6 +7367,10 @@
   "axFFaD": {
     "context": "range input label",
     "string": "Postal codes (end)"
+  },
+  "ayGq6n": {
+    "context": "shipping method types help tooltip aria label",
+    "string": "How price-based and weight-based shipping methods work"
   },
   "ayylzh": {
     "context": "status pill for partial authorization",
@@ -7502,6 +7547,10 @@
     "context": "ExitFormPrompt ignore changes button",
     "string": "Ignore changes"
   },
+  "blhBcp": {
+    "context": "shipping method types help example row one cart",
+    "string": "$150, 8 kg"
+  },
   "bnMF4j": {
     "context": "notification",
     "string": "Selected models were unpublished."
@@ -7662,6 +7711,10 @@
     "context": "section header",
     "string": "Media View"
   },
+  "cW7hFJ": {
+    "context": "shipping method channel column",
+    "string": "Channel"
+  },
   "cXAlMR": {
     "string": "Scheduled"
   },
@@ -7793,6 +7846,10 @@
   },
   "d68yq7": {
     "string": "Delete gift cards"
+  },
+  "d6ZaoI": {
+    "context": "shipping method types help tooltip title",
+    "string": "Price-based vs weight-based methods"
   },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
@@ -8167,10 +8224,6 @@
     "context": "fixed amount",
     "string": "Fixed Amount"
   },
-  "foB6wx": {
-    "context": "weight based shipping methods, section header",
-    "string": "Weight Based Rates"
-  },
   "fpafCx": {
     "context": "deleted multiple attributes",
     "string": "Attributes deleted"
@@ -8302,6 +8355,10 @@
   "gMwpNC": {
     "context": "page content",
     "string": "Content"
+  },
+  "gNDlQY": {
+    "context": "shipping method types help price-based bullet",
+    "string": "<strong>Price-based</strong> — shown when the order subtotal is between your minimum and maximum order value for that channel."
   },
   "gNm1li": {
     "context": "Refunded transaction amount, data display header",
@@ -8520,6 +8577,10 @@
   },
   "hkSkNx": {
     "string": "Search Customers"
+  },
+  "hks/QN": {
+    "context": "shipping method channel listing missing",
+    "string": "Not configured"
   },
   "hnBvH7": {
     "context": "copied to clipboard alert title",
@@ -8742,6 +8803,10 @@
   "imYtnq": {
     "string": "Selected {number, plural, one {# item} other {# items}}"
   },
+  "imwdWo": {
+    "context": "shipping method types help example table result column",
+    "string": "Methods shown"
+  },
   "inWs4U": {
     "context": "attribute visibility in storefront",
     "string": "Visible in storefront"
@@ -8867,6 +8932,10 @@
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
+  },
+  "jfJnP7": {
+    "context": "shipping method types help checkout note",
+    "string": "If several methods match the same cart, the customer sees all of them and picks one. Saleor does not hide price-based methods in favor of weight-based ones, or the other way around."
   },
   "jg1Kcw": {
     "context": "aria label for unpinning a tab",
@@ -9210,6 +9279,10 @@
     "context": "invalid date in expirydate field header",
     "string": "Incorrect date entered"
   },
+  "l1n7y2": {
+    "context": "weight based shipping methods, section header",
+    "string": "Weight-based shipping methods"
+  },
   "l1pZJx": {
     "string": "Not fully authorised"
   },
@@ -9314,6 +9387,10 @@
   "lT5MYM": {
     "context": "dialog title",
     "string": "Unassign users"
+  },
+  "lTWrsA": {
+    "context": "shipping method order value range column",
+    "string": "Order value range"
   },
   "lTrKHs": {
     "string": "Go to products"
@@ -9420,6 +9497,10 @@
   },
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
+  },
+  "m3vP8x": {
+    "context": "shipping method channel picker dialog description",
+    "string": "Select channels in the {zoneName} shipping zone where this method will be offered at checkout."
   },
   "m6IBe5": {
     "context": "invoice number prefix",
@@ -9735,10 +9816,6 @@
     "context": "check to require attribute to have value",
     "string": "Value Required"
   },
-  "njUQPz": {
-    "context": "shipping method price range",
-    "string": "Value Range"
-  },
   "nngeI3": {
     "context": "amount title",
     "string": "Refunded amount"
@@ -9780,6 +9857,10 @@
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
+  },
+  "o/BzOd": {
+    "context": "price based shipping methods, section header",
+    "string": "Price-based shipping methods"
   },
   "o5GUx9": {
     "string": "Outstanding balance"
@@ -10433,6 +10514,10 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rT4nQ1": {
+    "context": "shipping method channel picker dialog description with method name",
+    "string": "Select channels in {zoneName} where {methodName} will be offered at checkout."
+  },
   "rUnw7n": {
     "string": "Configure refunds behavior"
   },
@@ -10607,6 +10692,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {name}?"
   },
+  "sRB887": {
+    "context": "empty shipping methods list in shipping zone",
+    "string": "No shipping methods in this zone"
+  },
   "sS5aVm": {
     "context": "voucher discount type",
     "string": "Free Shipping"
@@ -10702,6 +10791,10 @@
   },
   "swOKYO": {
     "string": "Discover the latest enhancements, new features, fixes, and performance improvements that make your dashboard experience even better."
+  },
+  "sxpMt3": {
+    "context": "shipping method types help tooltip intro",
+    "string": "When you add a shipping method, choose whether it applies based on order value or order weight. One method cannot use both."
   },
   "sy+pv5": {
     "string": "Email"
@@ -10978,6 +11071,10 @@
   },
   "uOC/uQ": {
     "string": "Image updated"
+  },
+  "uOmlLG": {
+    "context": "shipping method types help example weight method",
+    "string": "\"Heavy parcel 5–20 kg\" (weight-based)"
   },
   "uQNm59": {
     "context": "add header,button",
@@ -11481,6 +11578,10 @@
     "context": "refund amounts were settled",
     "string": "Settled"
   },
+  "wKpHnC": {
+    "context": "shipping method channel picker dialog title without method name",
+    "string": "Set up pricing for additional channels"
+  },
   "wL850U": {
     "context": "draft order lines, section header",
     "string": "Order lines"
@@ -11713,6 +11814,10 @@
     "context": "dialog header",
     "string": "Assign Products"
   },
+  "xbnx+m": {
+    "context": "shipping method types help weight-based bullet",
+    "string": "<strong>Weight-based</strong> — shown when the total order weight is between your minimum and maximum weight limits."
+  },
   "xeMcID": {
     "string": "Warehouse created"
   },
@@ -11925,6 +12030,10 @@
   "ytKTTO": {
     "context": "draft orders section name",
     "string": "Drafts"
+  },
+  "yveiQA": {
+    "context": "shipping method types help example setup",
+    "string": "Your zone includes:"
   },
   "ywLJ93": {
     "context": "attribute translation section subtitle",

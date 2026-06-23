@@ -10,6 +10,7 @@ import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/erro
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
 import { sprinkles, Text } from "@saleor/macaw-ui-next";
+import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -24,15 +25,78 @@ interface PricingCardProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
+  focusChannelId?: string;
   onChange: (channelId: string, value: Value) => void;
+  onFocusChannelHandled?: () => void;
 }
 
 const numberOfColumns = 2;
+const FOCUS_RETRY_INTERVAL_MS = 100;
+const FOCUS_RETRY_TIMEOUT_MS = 5000;
 
-const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
+const PricingCard = ({
+  channels,
+  disabled,
+  errors,
+  focusChannelId,
+  onChange,
+  onFocusChannelHandled,
+}: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);
+  const focusInputRef = useRef<HTMLInputElement | null>(null);
+  const handledFocusChannelId = useRef<string | undefined>();
+
+  useEffect(
+    function focusChannelPriceInput() {
+      if (!focusChannelId || handledFocusChannelId.current === focusChannelId) {
+        return;
+      }
+
+      let intervalId: number;
+      let timeoutId: number;
+
+      const tryFocus = () => {
+        const priceInput = focusInputRef.current;
+
+        if (!priceInput || disabled || priceInput.disabled) {
+          return false;
+        }
+
+        priceInput.closest("tr")?.scrollIntoView({ behavior: "auto", block: "center" });
+        priceInput.focus({ preventScroll: true });
+
+        return document.activeElement === priceInput;
+      };
+
+      const completeFocus = () => {
+        handledFocusChannelId.current = focusChannelId;
+        onFocusChannelHandled?.();
+      };
+
+      if (tryFocus()) {
+        completeFocus();
+
+        return;
+      }
+
+      intervalId = window.setInterval(() => {
+        if (tryFocus()) {
+          window.clearInterval(intervalId);
+          completeFocus();
+        }
+      }, FOCUS_RETRY_INTERVAL_MS);
+
+      timeoutId = window.setTimeout(() => window.clearInterval(intervalId), FOCUS_RETRY_TIMEOUT_MS);
+
+      return () => {
+        window.clearInterval(intervalId);
+        window.clearTimeout(timeoutId);
+      };
+    },
+    [channels, disabled, focusChannelId, onFocusChannelHandled],
+  );
 
   return (
     <DashboardCard>
@@ -66,14 +130,20 @@ const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps)
           <TableBody>
             {channels?.map(channel => {
               const error = getFormChannelError(formErrors.price, channel.id);
+              const shouldFocusChannel = channel.id === focusChannelId;
 
               return (
-                <TableRowLink key={channel.id} data-test-id={channel.name}>
+                <TableRowLink
+                  key={channel.id}
+                  data-test-id={channel.name}
+                  data-pricing-channel-id={channel.id}
+                >
                   <TableCell>
                     <Text>{channel.name}</Text>
                   </TableCell>
                   <TableCell>
                     <PriceField
+                      ref={shouldFocusChannel ? focusInputRef : undefined}
                       className={sprinkles({ marginY: 2 })}
                       data-test-id="price-input"
                       disabled={disabled}

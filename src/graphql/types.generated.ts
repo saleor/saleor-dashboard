@@ -13427,7 +13427,7 @@ export type ShippingZoneChannelsQueryVariables = Exact<{
 }>;
 
 
-export type ShippingZoneChannelsQuery = { __typename: 'Query', shippingZone: { __typename: 'ShippingZone', id: string, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }> } | null };
+export type ShippingZoneChannelsQuery = { __typename: 'Query', shippingZone: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string, name: string, currencyCode: string }> } | null };
 
 export type ChannelShippingZonesQueryVariables = Exact<{
   filter?: InputMaybe<ShippingZoneFilterInput>;

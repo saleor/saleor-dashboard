@@ -43,6 +43,7 @@ import {
   getUpdateShippingPriceRateVariables,
   getUpdateShippingWeightRateVariables,
 } from "@dashboard/shipping/handlers";
+import { shippingMethodChannelsDialogMessages } from "@dashboard/shipping/messages/channelAvailabilityDialogMessages";
 import {
   shippingRateEditUrl,
   type ShippingRateUrlDialog,
@@ -60,7 +61,7 @@ import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useReducer } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
@@ -82,6 +83,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     variables: { id, ...paginationState },
   });
   const channelsData = data?.shippingZone?.channels;
+  const zoneName = data?.shippingZone?.name;
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
   const {
     loadMore,
@@ -122,6 +124,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   );
   const allChannels = createSortedShippingChannels(channelsData);
   const {
+    addChannel,
     channelListElements,
     channelsToggle,
     currentChannels,
@@ -132,12 +135,44 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels<Channel, ShippingRateUrlDialog | undefined>(
+  } = useChannels<ChannelShippingData, ShippingRateUrlDialog | undefined>(
     shippingChannels,
     params?.action,
     { closeModal, openModal },
     { formId: FORM_ID },
   );
+  const focusChannelId = params.channelId;
+  const preparedFocusChannelId = useRef<string | undefined>();
+
+  useEffect(
+    function prepareFocusedChannel() {
+      if (
+        !focusChannelId ||
+        !allChannels?.length ||
+        preparedFocusChannelId.current === focusChannelId
+      ) {
+        return;
+      }
+
+      const channel = allChannels.find(zoneChannel => zoneChannel.id === focusChannelId);
+
+      if (channel) {
+        addChannel(channel);
+        preparedFocusChannelId.current = focusChannelId;
+      }
+    },
+    [addChannel, allChannels, focusChannelId],
+  );
+
+  const handleFocusChannelHandled = useCallback(() => {
+    if (!params.channelId) {
+      return;
+    }
+
+    const { channelId: _channelId, ...restParams } = params;
+
+    navigate(shippingRateEditUrl(id, rateId, restParams), { replace: true });
+  }, [id, navigate, params, rateId]);
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({});
   const handleSuccess = () => {
@@ -278,19 +313,33 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       <WindowTitle title={intl.formatMessage(sectionNames.shipping)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
-          isSelected={isChannelSelected}
-          channels={allChannels}
-          onChange={channelsToggle}
+          isSelected={option => isChannelSelected(option as ChannelShippingData)}
+          channels={allChannels as Channel[]}
+          onChange={option => channelsToggle(option as ChannelShippingData)}
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
-          title={intl.formatMessage({
-            id: "EM730i",
-            defaultMessage: "Manage Channel Availability",
-          })}
+          title={intl.formatMessage(
+            rate?.name
+              ? shippingMethodChannelsDialogMessages.titleWithMethod
+              : shippingMethodChannelsDialogMessages.title,
+            { methodName: rate?.name },
+          )}
+          description={
+            zoneName ? (
+              <FormattedMessage
+                {...(rate?.name
+                  ? shippingMethodChannelsDialogMessages.descriptionWithMethod
+                  : shippingMethodChannelsDialogMessages.description)}
+                values={{ zoneName, methodName: rate?.name }}
+              />
+            ) : undefined
+          }
           selected={channelListElements.length}
           confirmButtonState="default"
           onConfirm={handleChannelsConfirm}
-          toggleAll={toggleAllChannels}
+          toggleAll={(items, selected) =>
+            toggleAllChannels(items as ChannelShippingData[], selected)
+          }
         />
       )}
       <DeleteShippingRateDialog
@@ -351,6 +400,8 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
             ?.errors || []
         }
         openChannelsModal={handleChannelsModalOpen}
+        focusChannelId={focusChannelId}
+        onFocusChannelHandled={handleFocusChannelHandled}
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
         onProductAssign={() => openModal("assign-product")}

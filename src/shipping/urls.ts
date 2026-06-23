@@ -50,7 +50,12 @@ export type ShippingRateUrlDialog =
   | ShippingMethodActions
   | ChannelsAction;
 
-export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> & SingleAction & BulkAction;
+export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
+  SingleAction &
+  BulkAction &
+  Partial<{
+    channelId: string;
+  }>;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
 export type ShippingRateCreateUrlQueryParams = Dialog<ShippingRateCreateUrlDialog> &
   SingleAction &
@@ -72,6 +77,9 @@ export const shippingRateEditUrl = (
   shippingRateEditPath(encodeURIComponent(id), encodeURIComponent(rateId)) +
   "?" +
   stringifyQs(params);
+
+export const shippingRateChannelSetupUrl = (id: string, rateId: string, channelId: string) =>
+  shippingRateEditUrl(id, rateId, { channelId });
 
 export const shippingZoneAddPath = urlJoin(shippingZonesListPath, "add");
 export const shippingZoneAddUrl = shippingZoneAddPath + "?";

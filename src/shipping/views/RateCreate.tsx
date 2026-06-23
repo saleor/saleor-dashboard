@@ -9,6 +9,7 @@ import { sectionNames } from "@dashboard/intl";
 import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@dashboard/shipping/handlers";
+import { shippingMethodChannelsDialogMessages } from "@dashboard/shipping/messages/channelAvailabilityDialogMessages";
 import {
   shippingRateCreateUrl,
   type ShippingRateCreateUrlDialog,
@@ -25,7 +26,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useReducer } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
 
@@ -47,6 +48,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const allChannels = createSortedShippingChannels(shippingZoneData?.shippingZone?.channels);
+  const zoneName = shippingZoneData?.shippingZone?.name;
   const {
     channelListElements,
     channelsToggle,
@@ -110,10 +112,15 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
-          title={intl.formatMessage({
-            id: "EM730i",
-            defaultMessage: "Manage Channel Availability",
-          })}
+          title={intl.formatMessage(shippingMethodChannelsDialogMessages.title)}
+          description={
+            zoneName ? (
+              <FormattedMessage
+                {...shippingMethodChannelsDialogMessages.description}
+                values={{ zoneName }}
+              />
+            ) : undefined
+          }
           confirmButtonState="default"
           selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}

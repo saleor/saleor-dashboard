@@ -29,10 +29,10 @@ import { type Option } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
-import { type ChannelProps, type FetchMoreProps, type SearchProps } from "../../../types";
+import { type FetchMoreProps, type SearchProps } from "../../../types";
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneInfo from "../ShippingZoneInfo";
-import ShippingZoneRates from "../ShippingZoneRates";
+import { ShippingZoneRates } from "../ShippingZoneRates/ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";
 import { getInitialFormData } from "./utils";
 
@@ -53,7 +53,7 @@ const messages = defineMessages({
   },
 });
 
-interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
+interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -64,6 +64,7 @@ interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, Chan
   onDelete: () => void;
   onPriceRateAdd: () => void;
   getPriceRateEditHref: (id: string) => string;
+  getRateChannelSetupHref: (rateId: string, channelId: string) => string;
   onRateRemove: (rateId: string) => void;
   onSubmit: (data: ShippingZoneUpdateFormData) => SubmitPromise;
   onWarehouseAdd: () => void;
@@ -90,6 +91,7 @@ const ShippingZoneDetailsPage = ({
   onFetchMore,
   onPriceRateAdd,
   getPriceRateEditHref,
+  getRateChannelSetupHref,
   onRateRemove,
   onSearchChange,
   onSubmit,
@@ -97,7 +99,6 @@ const ShippingZoneDetailsPage = ({
   onWeightRateAdd,
   getWeightRateEditHref,
   saveButtonBarState,
-  selectedChannelId,
   shippingZone,
   warehouses,
   allChannels,
@@ -110,6 +111,12 @@ const ShippingZoneDetailsPage = ({
   const initialForm = getInitialFormData(shippingZone);
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+  const zoneChannels =
+    shippingZone?.channels.map(channel => ({
+      id: channel.id,
+      name: channel.name,
+      currencyCode: channel.currencyCode,
+    })) ?? [];
 
   const shippingZonesListBackLink = useBackLinkWithState({
     path: shippingZonesListPath,
@@ -155,12 +162,13 @@ const ShippingZoneDetailsPage = ({
                 disabled={disabled}
                 onRateAdd={onPriceRateAdd}
                 getRateEditHref={getPriceRateEditHref}
+                getRateChannelSetupHref={getRateChannelSetupHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
                   method => method.type === ShippingMethodTypeEnum.PRICE,
                 )}
                 variant="price"
-                selectedChannelId={selectedChannelId}
+                zoneChannels={zoneChannels}
                 testId="add-price-rate"
               />
               <CardSpacer />
@@ -168,12 +176,13 @@ const ShippingZoneDetailsPage = ({
                 disabled={disabled}
                 onRateAdd={onWeightRateAdd}
                 getRateEditHref={getWeightRateEditHref}
+                getRateChannelSetupHref={getRateChannelSetupHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
                   method => method.type === ShippingMethodTypeEnum.WEIGHT,
                 )}
                 variant="weight"
-                selectedChannelId={selectedChannelId}
+                zoneChannels={zoneChannels}
                 testId="add-weight-rate"
               />
               <CardSpacer />
