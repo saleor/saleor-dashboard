@@ -1986,6 +1986,10 @@
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
   },
+  "8r8XBO": {
+    "context": "shipping method channel picker dialog title without method name",
+    "string": "Choose channels for this shipping method"
+  },
   "8sOnqE": {
     "context": "Warning when scheduling an available product for the future",
     "string": "Product will not be purchasable until this date."
@@ -2320,6 +2324,10 @@
   "AbyDC7": {
     "context": "section header",
     "string": "Eligible Categories"
+  },
+  "AcKksu": {
+    "context": "shipping method channel picker dialog description with method name",
+    "string": "Select channels in {zoneName} where {methodName} will be offered at checkout. You'll set prices for each channel next."
   },
   "Ad9EZ1": {
     "string": "Product updated"
@@ -2912,6 +2920,10 @@
   },
   "DWWw3M": {
     "string": "Model type Name"
+  },
+  "DYn8fL": {
+    "context": "shipping method channel picker dialog description",
+    "string": "Select channels in the {zoneName} shipping zone where this method will be offered at checkout. You'll set prices for each channel next."
   },
   "DbNXK5": {
     "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
@@ -6470,10 +6482,6 @@
   "WK62MN": {
     "string": "Fulfillment"
   },
-  "WKF21x": {
-    "context": "shipping method channel picker dialog title with method name",
-    "string": "Set up pricing for {methodName} for additional channels"
-  },
   "WMGoqz": {
     "context": "used by filter label",
     "string": "Used by"
@@ -9498,10 +9506,6 @@
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
   },
-  "m3vP8x": {
-    "context": "shipping method channel picker dialog description",
-    "string": "Select channels in the {zoneName} shipping zone where this method will be offered at checkout."
-  },
   "m6IBe5": {
     "context": "invoice number prefix",
     "string": "Invoice"
@@ -10514,10 +10518,6 @@
     "context": "status label active",
     "string": "Active"
   },
-  "rT4nQ1": {
-    "context": "shipping method channel picker dialog description with method name",
-    "string": "Select channels in {zoneName} where {methodName} will be offered at checkout."
-  },
   "rUnw7n": {
     "string": "Configure refunds behavior"
   },
@@ -10565,6 +10565,10 @@
   "rj9PBV": {
     "context": "caption introducing the list of records that contributed to a combined order-level factor",
     "string": "Includes:"
+  },
+  "rjHiaH": {
+    "context": "shipping method channel picker dialog title with method name",
+    "string": "Choose channels for {methodName}"
   },
   "rjy9/k": {
     "context": "button",
@@ -11577,10 +11581,6 @@
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
-  },
-  "wKpHnC": {
-    "context": "shipping method channel picker dialog title without method name",
-    "string": "Set up pricing for additional channels"
   },
   "wL850U": {
     "context": "draft order lines, section header",

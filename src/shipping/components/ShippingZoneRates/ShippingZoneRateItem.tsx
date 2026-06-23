@@ -93,7 +93,7 @@ export const ShippingZoneRateItem = ({
                   )}
             </Text>
           )}
-          <Box display="flex" gap={1} alignItems="center">
+          <Box display="flex" gap={1} alignItems="center" __marginRight="-8px">
             <Button
               disabled={disabled}
               variant="tertiary"
